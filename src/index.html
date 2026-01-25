@@ -286,24 +286,30 @@
         }
 
         .intro.is-animating {
-            transition: opacity 1s ease;
+            transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .intro.is-animating .intro__brand {
-            animation: introBrandShrink 1.2s var(--ease-out-expo) forwards;
+            animation: introBrandShrink 1s var(--ease-out-expo) forwards;
         }
 
-        .intro.is-animating .intro__glow--orange,
+        .intro.is-animating .intro__glow--orange {
+            animation: introGlowFadeToHero 1.2s ease forwards;
+        }
+
         .intro.is-animating .intro__glow--blue {
-            animation: none;
-            opacity: 0;
-            transition: opacity 0.6s ease;
+            animation: introGlowFadeToHero 1.2s ease 0.1s forwards;
+        }
+
+        @keyframes introGlowFadeToHero {
+            0% { opacity: 0.18; }
+            100% { opacity: 0; transform: scale(1.2); }
         }
 
         .intro.is-animating .intro__grid {
             animation: none;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
         }
 
         @keyframes introBrandShrink {
@@ -311,6 +317,7 @@
                 font-size: 0.875rem;
                 letter-spacing: 0.1em;
                 opacity: 0;
+                transform: translateY(-20px);
             }
         }
 
@@ -455,7 +462,11 @@
 
             opacity: 0;
             transform: translateY(40px);
-            animation: heroReveal var(--duration-slow) var(--ease-out-expo) 0.2s forwards;
+        }
+
+        /* Hero animations start only after intro exits */
+        .intro-complete .hero__title {
+            animation: heroReveal var(--duration-slow) var(--ease-out-expo) forwards;
         }
 
         .hero__title span { display: block; }
@@ -476,7 +487,10 @@
             line-height: 1.7;
 
             opacity: 0;
-            animation: fadeIn var(--duration-medium) ease 0.8s forwards;
+        }
+
+        .intro-complete .hero__subtitle {
+            animation: fadeIn var(--duration-medium) ease 0.4s forwards;
         }
 
         @keyframes fadeIn { to { opacity: 1; } }
@@ -497,7 +511,10 @@
             border-radius: var(--radius-sm);
 
             opacity: 0;
-            animation: fadeIn var(--duration-medium) ease 1s forwards;
+        }
+
+        .intro-complete .hero__cta {
+            animation: fadeIn var(--duration-medium) ease 0.6s forwards;
         }
 
         .hero__cta:hover {
@@ -1451,9 +1468,10 @@
 
         // Cinematic intro animation (one-way)
         (function() {
-            // Skip for reduced motion
+            // Skip for reduced motion - show everything immediately
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 document.querySelector('.header__logo')?.classList.add('show-text');
+                document.body.classList.add('intro-complete');
                 return;
             }
 
@@ -1474,16 +1492,21 @@
                 // Start shrink animation
                 intro.classList.add('is-animating');
 
+                // Trigger hero animations as intro starts fading
+                setTimeout(() => {
+                    document.body.classList.add('intro-complete');
+                }, 400);
+
                 // After shrink animation, fade out and show header text
                 setTimeout(() => {
                     intro.classList.add('is-complete');
                     logo.classList.add('show-text');
-                }, 1000);
+                }, 800);
 
                 // Remove intro from DOM after fade
                 setTimeout(() => {
                     intro.remove();
-                }, 2000);
+                }, 2200);
 
                 // Clean up listeners
                 window.removeEventListener('wheel', triggerExit);
