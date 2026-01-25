@@ -173,23 +173,60 @@
             overflow: hidden;
         }
 
-        .intro::before {
-            content: '';
+        /* Orange glow - top right */
+        .intro__glow {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 150vmax;
-            height: 150vmax;
-            background: radial-gradient(ellipse at center, var(--accent-muted) 0%, transparent 50%);
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            animation: introGlow 2s ease-out 0.3s forwards;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
         }
 
-        @keyframes introGlow {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+        .intro__glow--orange {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -15%;
+            right: -10%;
+            opacity: 0;
+            animation: introGlowOrange 2.5s ease-out 0.2s forwards;
+        }
+
+        .intro__glow--blue {
+            width: 500px;
+            height: 500px;
+            background: #2563eb;
+            bottom: -20%;
+            left: -5%;
+            opacity: 0;
+            animation: introGlowBlue 2.5s ease-out 0.5s forwards;
+        }
+
+        @keyframes introGlowOrange {
+            0% { opacity: 0; transform: scale(0.6) translate(20%, -20%); }
+            50% { opacity: 0.25; }
+            100% { opacity: 0.18; transform: scale(1) translate(0, 0); }
+        }
+
+        @keyframes introGlowBlue {
+            0% { opacity: 0; transform: scale(0.6) translate(-20%, 20%); }
+            50% { opacity: 0.2; }
+            100% { opacity: 0.12; transform: scale(1) translate(0, 0); }
+        }
+
+        /* Subtle grid overlay */
+        .intro__grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0;
+            animation: introGridFade 1.5s ease 0.8s forwards;
+        }
+
+        @keyframes introGridFade {
+            to { opacity: 1; }
         }
 
         .intro__brand {
@@ -203,8 +240,8 @@
             position: relative;
             z-index: 1;
             opacity: 0;
-            transform: translateY(20px);
-            animation: introBrandReveal 1s var(--ease-out-expo) 0.2s forwards;
+            transform: translateY(30px);
+            animation: introBrandReveal 1.2s var(--ease-out-expo) 0.4s forwards;
         }
 
         .intro__brand span {
@@ -223,7 +260,7 @@
             color: var(--text-muted);
             margin-top: 0.5em;
             opacity: 0;
-            animation: fadeIn 0.8s ease 0.8s forwards;
+            animation: fadeIn 1s ease 1.2s forwards;
         }
 
         @keyframes introBrandReveal {
@@ -231,17 +268,24 @@
         }
 
         .intro.is-animating {
-            transition: opacity 0.8s ease;
+            transition: opacity 1s ease;
         }
 
         .intro.is-animating .intro__brand {
-            animation: introBrandShrink 1s var(--ease-out-expo) forwards;
+            animation: introBrandShrink 1.2s var(--ease-out-expo) forwards;
         }
 
-        .intro.is-animating::before {
+        .intro.is-animating .intro__glow--orange,
+        .intro.is-animating .intro__glow--blue {
             animation: none;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
+        }
+
+        .intro.is-animating .intro__grid {
+            animation: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         @keyframes introBrandShrink {
@@ -1047,6 +1091,9 @@
 
     <!-- Cinematic Intro -->
     <div class="intro">
+        <div class="intro__glow intro__glow--orange"></div>
+        <div class="intro__glow intro__glow--blue"></div>
+        <div class="intro__grid"></div>
         <div class="intro__brand">
             <span class="intro__brand-main">Bertrand</span>
             <span class="intro__brand-main">Brands</span>
@@ -1413,12 +1460,12 @@
                 setTimeout(() => {
                     intro.classList.add('is-complete');
                     logo.classList.add('show-text');
-                }, 800);
+                }, 1000);
 
                 // Remove intro from DOM after fade
                 setTimeout(() => {
                     intro.remove();
-                }, 1400);
+                }, 2000);
 
                 // Clean up listeners
                 window.removeEventListener('wheel', triggerExit);
