@@ -188,7 +188,9 @@
             top: -15%;
             right: -10%;
             opacity: 0;
-            animation: introGlowOrange 2.5s ease-out 0.2s forwards;
+            animation:
+                introGlowOrange 2.5s ease-out 0.2s forwards,
+                introGlowFloat 8s ease-in-out 2.5s infinite;
         }
 
         .intro__glow--blue {
@@ -198,7 +200,9 @@
             bottom: -20%;
             left: -5%;
             opacity: 0;
-            animation: introGlowBlue 2.5s ease-out 0.5s forwards;
+            animation:
+                introGlowBlue 2.5s ease-out 0.5s forwards,
+                introGlowFloatAlt 10s ease-in-out 2.8s infinite;
         }
 
         @keyframes introGlowOrange {
@@ -211,6 +215,20 @@
             0% { opacity: 0; transform: scale(0.6) translate(-20%, 20%); }
             50% { opacity: 0.2; }
             100% { opacity: 0.12; transform: scale(1) translate(0, 0); }
+        }
+
+        @keyframes introGlowFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-15px, 10px) scale(1.02); }
+            50% { transform: translate(10px, 20px) scale(0.98); }
+            75% { transform: translate(20px, -10px) scale(1.01); }
+        }
+
+        @keyframes introGlowFloatAlt {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, -15px) scale(0.98); }
+            50% { transform: translate(-10px, -20px) scale(1.03); }
+            75% { transform: translate(-15px, 15px) scale(0.99); }
         }
 
         /* Subtle grid overlay */
