@@ -27,7 +27,7 @@
     <style>
         /* ============================================================
            BERTRAND BRANDS — Brand & Web Systems
-           V3 Visual Language: Bold, Dark, Minimal, Motion-forward
+           V1 Visual Language: Bold, Dark, Minimal, Motion-forward
            ============================================================ */
 
         /* === RESET === */
@@ -377,7 +377,108 @@
             margin-bottom: 0;
         }
 
+        /* === EXPLORATORY SERVICES (Start Here) === */
+        .exploratory {
+            margin-bottom: var(--space-xl);
+        }
+
+        .exploratory__label {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            margin-bottom: var(--space-sm);
+        }
+
+        .exploratory__grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-sm);
+        }
+
+        @media (max-width: 640px) {
+            .exploratory__grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .exploratory-card {
+            padding: var(--space-md);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all var(--duration-fast) ease;
+        }
+
+        .exploratory-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .exploratory-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            margin-bottom: 0.75rem;
+        }
+
+        .exploratory-card__title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .exploratory-card__meta {
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            white-space: nowrap;
+        }
+
+        .exploratory-card__description {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: var(--space-sm);
+        }
+
+        .exploratory-card__footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exploratory-card__price {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .exploratory-card__price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-subtle);
+        }
+
+        .exploratory-card__cta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            transition: color var(--duration-fast) ease;
+        }
+
+        .exploratory-card__cta:hover {
+            color: var(--text);
+        }
+
         /* === SERVICES === */
+        .services-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin-bottom: var(--space-lg);
+        }
+
         .services {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -391,6 +492,8 @@
             position: relative;
             overflow: hidden;
             transition: all var(--duration-medium) var(--ease-out-expo);
+            display: flex;
+            flex-direction: column;
         }
 
         .service::before {
@@ -430,11 +533,25 @@
             margin-bottom: var(--space-sm);
         }
 
+        .service__meta {
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            margin-bottom: var(--space-sm);
+        }
+
         .service__description {
             font-size: 0.9375rem;
             color: var(--text-muted);
             line-height: 1.7;
             margin-bottom: var(--space-md);
+            flex-grow: 1;
+        }
+
+        .service__footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
         }
 
         .service__price {
@@ -448,6 +565,16 @@
             font-size: 0.875rem;
             font-weight: 400;
             color: var(--text-subtle);
+        }
+
+        .service__cta {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            transition: color var(--duration-fast) ease;
+        }
+
+        .service__cta:hover {
+            color: var(--text);
         }
 
         /* === PROCESS === */
@@ -497,20 +624,154 @@
             font-weight: 300;
             line-height: 1;
             letter-spacing: -0.04em;
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space-md);
         }
 
-        .contact__email {
-            display: inline-block;
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            padding-bottom: 4px;
-            border-bottom: 1px solid var(--text-subtle);
+        .contact__subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: var(--space-lg);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .contact-form__group {
+            margin-bottom: var(--space-md);
+        }
+
+        .contact-form__label {
+            display: block;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form__input,
+        .contact-form__select,
+        .contact-form__textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color var(--duration-fast) ease;
+        }
+
+        .contact-form__input:focus,
+        .contact-form__select:focus,
+        .contact-form__textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .contact-form__input::placeholder,
+        .contact-form__textarea::placeholder {
+            color: var(--text-subtle);
+        }
+
+        .contact-form__select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23888888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        .contact-form__select option {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .contact-form__textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form__submit {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 1px solid var(--text-subtle);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
             transition: all var(--duration-fast) ease;
         }
 
-        .contact__email:hover {
-            color: var(--accent);
+        .contact-form__submit:hover {
             border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .contact__email-fallback {
+            margin-top: var(--space-lg);
+            font-size: 0.875rem;
+            color: var(--text-subtle);
+        }
+
+        .contact__email-fallback a {
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            transition: all var(--duration-fast) ease;
+        }
+
+        .contact__email-fallback a:hover {
+            color: var(--text);
+            border-color: var(--text);
+        }
+
+        /* === CLIENT PORTAL === */
+        .portal {
+            text-align: center;
+            padding: var(--space-xl) 0;
+        }
+
+        .portal__content {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: var(--space-lg);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+
+        .portal__title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: var(--space-sm);
+        }
+
+        .portal__description {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .portal__status {
+            margin-top: var(--space-md);
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         /* === FOOTER === */
@@ -572,6 +833,8 @@
         .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 200ms; opacity: 1; transform: translateY(0); }
         .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 300ms; opacity: 1; transform: translateY(0); }
         .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 500ms; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 600ms; opacity: 1; transform: translateY(0); }
 
         /* === CURSOR GLOW === */
         @media (hover: hover) and (pointer: fine) {
@@ -691,40 +954,112 @@
                     <h2 class="section__title">What we offer</h2>
                 </div>
 
+                <!-- Start Here: Exploratory Options -->
+                <div class="exploratory reveal">
+                    <p class="exploratory__label">Start Here</p>
+                    <div class="exploratory__grid">
+                        <div class="exploratory-card">
+                            <div class="exploratory-card__header">
+                                <h3 class="exploratory-card__title">Express Brand Signal Check</h3>
+                                <span class="exploratory-card__meta">15 min · Live</span>
+                            </div>
+                            <p class="exploratory-card__description">A short, focused conversation to sense-check your brand or website and determine whether a deeper review is warranted.</p>
+                            <div class="exploratory-card__footer">
+                                <p class="exploratory-card__price">$75 <span>CAD</span></p>
+                                <a href="#contact" class="exploratory-card__cta">Request this service →</a>
+                            </div>
+                        </div>
+
+                        <div class="exploratory-card">
+                            <div class="exploratory-card__header">
+                                <h3 class="exploratory-card__title">Exploratory Brand & System Consult</h3>
+                                <span class="exploratory-card__meta">30 min · Live</span>
+                            </div>
+                            <p class="exploratory-card__description">A paid discovery conversation to assess fit, surface real constraints, and outline viable next steps.</p>
+                            <div class="exploratory-card__footer">
+                                <p class="exploratory-card__price">$145 <span>CAD</span></p>
+                                <a href="#contact" class="exploratory-card__cta">Request this service →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="services-divider">
+
+                <!-- Main Services Grid -->
                 <div class="services reveal-stagger">
                     <div class="service">
                         <p class="service__number">01</p>
-                        <h3 class="service__title">Website Audit</h3>
+                        <h3 class="service__title">Website Snapshot Review</h3>
+                        <p class="service__meta">30 min · Live</p>
                         <p class="service__description">Full site review with prioritized recommendations. Understand what's working and what needs attention.</p>
-                        <p class="service__price">$450 <span>CAD</span></p>
+                        <div class="service__footer">
+                            <p class="service__price">$195 <span>CAD</span></p>
+                            <a href="#contact" class="service__cta">Request this service →</a>
+                        </div>
                     </div>
 
                     <div class="service">
                         <p class="service__number">02</p>
-                        <h3 class="service__title">Brand Audit</h3>
+                        <h3 class="service__title">Brand Clarity Session</h3>
+                        <p class="service__meta">45 min · Live</p>
                         <p class="service__description">Brand positioning and identity assessment. A clear view of where you stand and where to go.</p>
-                        <p class="service__price">$550 <span>CAD</span></p>
+                        <div class="service__footer">
+                            <p class="service__price">$245 <span>CAD</span></p>
+                            <a href="#contact" class="service__cta">Request this service →</a>
+                        </div>
                     </div>
 
                     <div class="service">
                         <p class="service__number">03</p>
-                        <h3 class="service__title">Brand Reset</h3>
-                        <p class="service__description">Complete brand system and guidelines. Visual identity that works across every touchpoint.</p>
-                        <p class="service__price">$3,000 <span>CAD</span></p>
+                        <h3 class="service__title">Comprehensive Website Audit</h3>
+                        <p class="service__meta">PDF Deliverable</p>
+                        <p class="service__description">In-depth analysis with documented findings and actionable recommendations.</p>
+                        <div class="service__footer">
+                            <p class="service__price">$450 <span>CAD</span></p>
+                            <a href="#contact" class="service__cta">Request this service →</a>
+                        </div>
                     </div>
 
                     <div class="service">
                         <p class="service__number">04</p>
-                        <h3 class="service__title">Website Foundation</h3>
-                        <p class="service__description">Conversion-focused website build. Fast, accessible, built to perform.</p>
-                        <p class="service__price">$4,250 <span>CAD</span></p>
+                        <h3 class="service__title">Strategic Brand Audit</h3>
+                        <p class="service__meta">PDF Deliverable</p>
+                        <p class="service__description">Comprehensive brand assessment with strategic direction and positioning insights.</p>
+                        <div class="service__footer">
+                            <p class="service__price">$550 <span>CAD</span></p>
+                            <a href="#contact" class="service__cta">Request this service →</a>
+                        </div>
                     </div>
 
                     <div class="service">
                         <p class="service__number">05</p>
-                        <h3 class="service__title">Full Reset</h3>
+                        <h3 class="service__title">Brand Reset</h3>
+                        <p class="service__description">Complete brand system and guidelines. Visual identity that works across every touchpoint.</p>
+                        <div class="service__footer">
+                            <p class="service__price">$3,000 <span>CAD</span></p>
+                            <a href="#contact" class="service__cta">Request this service →</a>
+                        </div>
+                    </div>
+
+                    <div class="service">
+                        <p class="service__number">06</p>
+                        <h3 class="service__title">Website Foundation</h3>
+                        <p class="service__description">Conversion-focused website build. Fast, accessible, built to perform.</p>
+                        <div class="service__footer">
+                            <p class="service__price">$4,250 <span>CAD</span></p>
+                            <a href="#contact" class="service__cta">Request this service →</a>
+                        </div>
+                    </div>
+
+                    <div class="service">
+                        <p class="service__number">07</p>
+                        <h3 class="service__title">Full Brand + Website Reset</h3>
                         <p class="service__description">Complete brand and web system. The full transformation, end to end.</p>
-                        <p class="service__price">$6,900 <span>CAD</span></p>
+                        <div class="service__footer">
+                            <p class="service__price">$6,900 <span>CAD</span></p>
+                            <a href="#contact" class="service__cta">Request this service →</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -735,7 +1070,58 @@
             <div class="container">
                 <div class="contact reveal">
                     <h2 class="contact__title">Let's talk</h2>
-                    <a href="mailto:hello@bertrandbrands.com" class="contact__email">hello@bertrandbrands.com</a>
+                    <p class="contact__subtitle">Select a service or describe your project. Responses within 1-2 business days.</p>
+
+                    <form class="contact-form" action="https://formspree.io/f/xnjjgoay" method="POST">
+                        <div class="contact-form__group">
+                            <label class="contact-form__label" for="name">Name</label>
+                            <input class="contact-form__input" type="text" id="name" name="name" required placeholder="Your name">
+                        </div>
+
+                        <div class="contact-form__group">
+                            <label class="contact-form__label" for="email">Email</label>
+                            <input class="contact-form__input" type="email" id="email" name="email" required placeholder="you@example.com">
+                        </div>
+
+                        <div class="contact-form__group">
+                            <label class="contact-form__label" for="service">Service Interest</label>
+                            <select class="contact-form__select" id="service" name="service">
+                                <option value="">Select a service (optional)</option>
+                                <option value="Express Brand Signal Check ($75)">Express Brand Signal Check — $75</option>
+                                <option value="Exploratory Brand & System Consult ($145)">Exploratory Brand & System Consult — $145</option>
+                                <option value="Website Snapshot Review ($195)">Website Snapshot Review — $195</option>
+                                <option value="Brand Clarity Session ($245)">Brand Clarity Session — $245</option>
+                                <option value="Comprehensive Website Audit ($450)">Comprehensive Website Audit — $450</option>
+                                <option value="Strategic Brand Audit ($550)">Strategic Brand Audit — $550</option>
+                                <option value="Brand Reset ($3,000)">Brand Reset — $3,000</option>
+                                <option value="Website Foundation ($4,250)">Website Foundation — $4,250</option>
+                                <option value="Full Brand + Website Reset ($6,900)">Full Brand + Website Reset — $6,900</option>
+                                <option value="Not sure yet">Not sure yet</option>
+                            </select>
+                        </div>
+
+                        <div class="contact-form__group">
+                            <label class="contact-form__label" for="message">Message</label>
+                            <textarea class="contact-form__textarea" id="message" name="message" required placeholder="Tell us about your project or what you're looking to accomplish..."></textarea>
+                        </div>
+
+                        <button class="contact-form__submit" type="submit">Send Request</button>
+                    </form>
+
+                    <p class="contact__email-fallback">Or email directly: <a href="mailto:hello@bertrandbrands.com">hello@bertrandbrands.com</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Client Portal -->
+        <section class="section" id="portal">
+            <div class="container">
+                <div class="portal reveal">
+                    <div class="portal__content">
+                        <h2 class="portal__title">Client Portal</h2>
+                        <p class="portal__description">A dedicated space for active clients to access project files, timelines, and communication.</p>
+                        <p class="portal__status">Coming Soon</p>
+                    </div>
                 </div>
             </div>
         </section>
