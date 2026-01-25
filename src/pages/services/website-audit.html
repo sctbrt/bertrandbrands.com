@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- SEO -->
+    <link rel="canonical" href="https://bertrandbrands.com/services/website-audit">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Website Audit — Bertrand Brands</title>
+    <meta name="description" content="Comprehensive website review with prioritized recommendations. UX, messaging, performance, and SEO assessment. $450 CAD. Based in Sudbury, available across Canada.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Website Audit — Bertrand Brands">
+    <meta property="og:description" content="Comprehensive website review with prioritized recommendations. $450 CAD.">
+    <meta property="og:url" content="https://bertrandbrands.com/services/website-audit">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           SERVICE PAGE — V3 Theme
+           ============================================================ */
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0a;
+            --bg-elevated: #111111;
+            --bg-subtle: #161616;
+            --text: #fafafa;
+            --text-muted: #888888;
+            --text-subtle: #555555;
+            --accent: #D97706;
+            --accent-glow: rgba(217, 119, 6, 0.4);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-slow: 1.2s;
+            --duration-medium: 0.6s;
+            --duration-fast: 0.3s;
+        }
+
+        html { font-size: 16px; scroll-behavior: smooth; }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .page { min-height: 100vh; display: flex; flex-direction: column; }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 5vw, 4rem);
+        }
+
+        /* === HEADER === */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: var(--space-md) 0;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header__logo {
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
+            opacity: 0.8;
+            transition: opacity var(--duration-fast) ease;
+        }
+
+        .header__logo:hover { opacity: 1; }
+
+        .header__nav {
+            display: flex;
+            gap: var(--space-md);
+        }
+
+        @media (max-width: 768px) {
+            .header__nav { display: none; }
+        }
+
+        .header__link {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            transition: color var(--duration-fast) ease;
+        }
+
+        .header__link:hover { color: var(--text); }
+
+        /* === SERVICE HERO === */
+        .service-hero {
+            padding: calc(var(--space-xl) + 80px) 0 var(--space-lg);
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: var(--space-lg);
+        }
+
+        .breadcrumb a {
+            color: var(--text-muted);
+            transition: color var(--duration-fast) ease;
+        }
+
+        .breadcrumb a:hover { color: var(--accent); }
+
+        .breadcrumb span { opacity: 0.5; }
+
+        .service-hero__inner {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: var(--space-xl);
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .service-hero__inner {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .service-hero__content {
+            max-width: 700px;
+        }
+
+        .service-hero__tag {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .service-hero__tag::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .service-hero__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+        }
+
+        .service-hero__description {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: var(--space-lg);
+        }
+
+        /* === PRICE CARD === */
+        .price-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            padding: var(--space-md);
+            position: sticky;
+            top: 120px;
+        }
+
+        .price-card__price {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: var(--space-xs);
+        }
+
+        .price-card__price span {
+            font-size: 1rem;
+            color: var(--text-subtle);
+        }
+
+        .price-card__details {
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .price-card__detail {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            padding: var(--space-xs) 0;
+        }
+
+        .price-card__detail-label { color: var(--text-subtle); }
+        .price-card__detail-value { color: var(--text); }
+
+        .price-card__cta {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--text);
+            color: var(--bg);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: opacity var(--duration-fast) ease;
+        }
+
+        .price-card__cta:hover { opacity: 0.85; }
+
+        /* === SECTION === */
+        .section {
+            padding: var(--space-lg) 0;
+        }
+
+        .section--alt {
+            background: var(--bg-elevated);
+        }
+
+        .section__title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-md);
+        }
+
+        /* === WHAT'S INCLUDED === */
+        .includes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .include-item {
+            padding: var(--space-md);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+        }
+
+        .include-item__title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+        }
+
+        .include-item__description {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* === PROCESS === */
+        .process-steps {
+            list-style: none;
+        }
+
+        .process-step {
+            display: flex;
+            gap: var(--space-md);
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .process-step__number {
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--accent);
+            min-width: 2rem;
+        }
+
+        .process-step__content h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: var(--space-xs);
+        }
+
+        .process-step__content p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* === WHO IT'S FOR === */
+        .audience-list {
+            list-style: none;
+        }
+
+        .audience-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            padding: var(--space-sm) 0;
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .audience-list li::before {
+            content: '→';
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        /* === CTA SECTION === */
+        .cta-section {
+            text-align: center;
+            padding: var(--space-xl) 0;
+        }
+
+        .cta-section__title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-md);
+        }
+
+        .cta-section__text {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: var(--space-lg);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section__btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 1px solid var(--text-subtle);
+            color: var(--text);
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all var(--duration-fast) ease;
+        }
+
+        .cta-section__btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: var(--space-lg) 0;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+
+        .footer__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+
+        .footer__copyright { font-size: 0.875rem; color: var(--text-subtle); }
+
+        .footer__parent { font-size: 0.875rem; color: var(--text-subtle); }
+
+        .footer__parent a {
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            transition: all var(--duration-fast) ease;
+        }
+
+        .footer__parent a:hover {
+            color: var(--text);
+            border-color: var(--text);
+        }
+
+        /* === SCROLL REVEAL === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all var(--duration-medium) var(--ease-out-expo);
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header__inner">
+                    <a href="/" class="header__logo">Bertrand Brands</a>
+                    <nav class="header__nav">
+                        <a href="/#services" class="header__link">Services</a>
+                        <a href="/#process" class="header__link">Process</a>
+                        <a href="/#contact" class="header__link">Contact</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Service Hero -->
+            <section class="service-hero">
+                <div class="container">
+                    <nav class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span>/</span>
+                        <a href="/#services">Services</a>
+                        <span>/</span>
+                        <span>Website Audit</span>
+                    </nav>
+
+                    <div class="service-hero__inner">
+                        <div class="service-hero__content reveal">
+                            <p class="service-hero__tag">Starting Point</p>
+                            <h1 class="service-hero__title">Website Audit</h1>
+                            <p class="service-hero__description">
+                                A comprehensive assessment of your website's user experience, messaging, performance, and SEO fundamentals. You'll receive a detailed PDF report with prioritized recommendations organized into Now / Next / Later action items.
+                            </p>
+                        </div>
+
+                        <aside class="price-card reveal">
+                            <p class="price-card__price">$450 <span>CAD</span></p>
+                            <div class="price-card__details">
+                                <div class="price-card__detail">
+                                    <span class="price-card__detail-label">Delivery</span>
+                                    <span class="price-card__detail-value">5 business days</span>
+                                </div>
+                                <div class="price-card__detail">
+                                    <span class="price-card__detail-label">Format</span>
+                                    <span class="price-card__detail-value">PDF Report</span>
+                                </div>
+                                <div class="price-card__detail">
+                                    <span class="price-card__detail-label">Length</span>
+                                    <span class="price-card__detail-value">15-25 pages</span>
+                                </div>
+                            </div>
+                            <a href="mailto:hello@bertrandbrands.com?subject=Website%20Audit%20Inquiry" class="price-card__cta">Get Started</a>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <!-- What's Included -->
+            <section class="section section--alt">
+                <div class="container">
+                    <h2 class="section__title reveal">What's included</h2>
+                    <div class="includes-grid">
+                        <div class="include-item reveal">
+                            <h3 class="include-item__title">UX Assessment</h3>
+                            <p class="include-item__description">Navigation, layout, mobile experience, and user flow analysis with specific improvement recommendations.</p>
+                        </div>
+                        <div class="include-item reveal">
+                            <h3 class="include-item__title">Messaging Review</h3>
+                            <p class="include-item__description">Clarity of value proposition, calls to action, and overall communication effectiveness.</p>
+                        </div>
+                        <div class="include-item reveal">
+                            <h3 class="include-item__title">Performance Check</h3>
+                            <p class="include-item__description">Page speed, core web vitals, and technical factors affecting user experience.</p>
+                        </div>
+                        <div class="include-item reveal">
+                            <h3 class="include-item__title">SEO Fundamentals</h3>
+                            <p class="include-item__description">Basic SEO health check including meta tags, structure, and local search presence.</p>
+                        </div>
+                        <div class="include-item reveal">
+                            <h3 class="include-item__title">Prioritized Roadmap</h3>
+                            <p class="include-item__description">All findings organized into Now / Next / Later buckets so you know exactly where to start.</p>
+                        </div>
+                        <div class="include-item reveal">
+                            <h3 class="include-item__title">Competitor Context</h3>
+                            <p class="include-item__description">Brief comparison with 2-3 competitors to understand your positioning in the market.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Process -->
+            <section class="section">
+                <div class="container">
+                    <h2 class="section__title reveal">How it works</h2>
+                    <ol class="process-steps">
+                        <li class="process-step reveal">
+                            <span class="process-step__number">01</span>
+                            <div class="process-step__content">
+                                <h3>Submit your site</h3>
+                                <p>Send us your website URL and any specific concerns or goals you have.</p>
+                            </div>
+                        </li>
+                        <li class="process-step reveal">
+                            <span class="process-step__number">02</span>
+                            <div class="process-step__content">
+                                <h3>We analyze</h3>
+                                <p>Deep dive into your site's UX, messaging, performance, and SEO over 3-4 days.</p>
+                            </div>
+                        </li>
+                        <li class="process-step reveal">
+                            <span class="process-step__number">03</span>
+                            <div class="process-step__content">
+                                <h3>Receive your report</h3>
+                                <p>Detailed PDF with findings and prioritized recommendations delivered to your inbox.</p>
+                            </div>
+                        </li>
+                        <li class="process-step reveal">
+                            <span class="process-step__number">04</span>
+                            <div class="process-step__content">
+                                <h3>Optional follow-up</h3>
+                                <p>30-minute call to walk through the findings if you'd like (included).</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Who it's for -->
+            <section class="section section--alt">
+                <div class="container">
+                    <h2 class="section__title reveal">Who this is for</h2>
+                    <ul class="audience-list reveal">
+                        <li>Business owners who know their website isn't performing but aren't sure why</li>
+                        <li>Teams preparing for a redesign who want a clear starting point</li>
+                        <li>Anyone who wants an objective, professional assessment of their web presence</li>
+                        <li>Companies considering a larger engagement who want to start with a defined scope</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="cta-section">
+                <div class="container">
+                    <h2 class="cta-section__title reveal">Ready to start?</h2>
+                    <p class="cta-section__text reveal">Send us your website and any specific concerns. We'll follow up within 24 hours.</p>
+                    <a href="mailto:hello@bertrandbrands.com?subject=Website%20Audit%20Inquiry" class="cta-section__btn reveal">
+                        Get in touch <span>→</span>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__inner">
+                    <p class="footer__copyright">© 2025 Bertrand Brands</p>
+                    <p class="footer__parent">A <a href="https://scottbertrand.com">Scott Bertrand</a> venture</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Scroll reveal
+        (function() {
+            const reveals = document.querySelectorAll('.reveal');
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                reveals.forEach(el => el.classList.add('is-visible'));
+                return;
+            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            reveals.forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>
