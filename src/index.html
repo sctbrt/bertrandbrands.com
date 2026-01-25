@@ -1526,6 +1526,24 @@
             window.addEventListener('keydown', handleKeydown);
         })();
 
+        // Visitor notification (silent push on page load)
+        (function() {
+            // Don't notify for localhost/dev
+            if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
+
+            fetch('/api/notify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: 'visitor',
+                    page: location.pathname,
+                    referrer: document.referrer || null
+                })
+            }).catch(() => {
+                // Silently fail - visitor tracking is non-essential
+            });
+        })();
+
         // Contact form with Pushover notification
         (function() {
             const form = document.querySelector('.contact-form');
@@ -1536,6 +1554,7 @@
                 // But also send a notification via our API
 
                 const formData = {
+                    type: 'form',
                     name: form.querySelector('#name')?.value || '',
                     email: form.querySelector('#email')?.value || '',
                     service: form.querySelector('#service')?.value || '',

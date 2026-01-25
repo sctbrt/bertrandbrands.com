@@ -1,4 +1,4 @@
-// Vercel Serverless Function: Form Submission Notification via Pushover
+// Vercel Serverless Function: Visitor & Form Notification via Pushover
 // Endpoint: /api/notify
 
 export default async function handler(req, res) {
@@ -7,8 +7,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Get form data from request
-  const { name, email, service, message } = req.body || {};
+  // Determine notification type based on request body
+  const { type, name, email, service, message, page, referrer } = req.body || {};
 
   // Pushover credentials (from environment variables)
   const PUSHOVER_USER = process.env.PUSHOVER_USER_KEY;
@@ -20,11 +20,73 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Build notification message
-    let notificationMessage = `New inquiry from ${name || 'Unknown'}`;
-    if (email) notificationMessage += `\nEmail: ${email}`;
-    if (service) notificationMessage += `\nService: ${service}`;
-    if (message) notificationMessage += `\n\n${message.substring(0, 200)}${message.length > 200 ? '...' : ''}`;
+    let notificationMessage;
+    let notificationTitle;
+    let notificationUrl;
+    let notificationUrlTitle;
+    let priority;
+    let sound;
+
+    if (type === 'visitor') {
+      // Visitor notification (silent, low priority)
+      const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
+                 req.headers['x-real-ip'] ||
+                 req.connection?.remoteAddress ||
+                 'unknown';
+
+      // Get location from IP (using free ip-api.com service)
+      let location = '';
+      if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
+        try {
+          const geoRes = await fetch(`http://ip-api.com/json/${ip}?fields=city,regionCode,country`);
+          if (geoRes.ok) {
+            const geo = await geoRes.json();
+            if (geo.city) {
+              location = `${geo.city}${geo.regionCode ? `, ${geo.regionCode}` : ''}${geo.country ? `, ${geo.country}` : ''}`;
+            }
+          }
+        } catch (geoErr) {
+          // Silently fail - location is optional
+        }
+      }
+
+      notificationMessage = `📍 ${page || 'Homepage'}`;
+      if (referrer) notificationMessage += `\nFrom: ${referrer}`;
+      if (location) notificationMessage += `\n📌 ${location}`;
+
+      notificationTitle = 'Visitor on Bertrand Brands';
+      notificationUrl = `https://bertrandbrands.com${page || '/'}`;
+      notificationUrlTitle = 'View Page';
+      priority = -1; // Low priority (silent, no sound)
+      sound = null;
+    } else {
+      // Form submission notification (normal priority with sound)
+      notificationMessage = `New inquiry from ${name || 'Unknown'}`;
+      if (email) notificationMessage += `\nEmail: ${email}`;
+      if (service) notificationMessage += `\nService: ${service}`;
+      if (message) notificationMessage += `\n\n${message.substring(0, 200)}${message.length > 200 ? '...' : ''}`;
+
+      notificationTitle = 'Bertrand Brands Inquiry';
+      notificationUrl = 'https://bertrandbrands.com/#contact';
+      notificationUrlTitle = 'View Contact Form';
+      priority = 0; // Normal priority
+      sound = 'pushover';
+    }
+
+    // Build Pushover payload
+    const pushoverPayload = {
+      token: PUSHOVER_TOKEN,
+      user: PUSHOVER_USER,
+      message: notificationMessage,
+      title: notificationTitle,
+      url: notificationUrl,
+      url_title: notificationUrlTitle,
+      priority: priority,
+    };
+
+    if (sound) {
+      pushoverPayload.sound = sound;
+    }
 
     // Send to Pushover
     const response = await fetch('https://api.pushover.net/1/messages.json', {
@@ -32,16 +94,7 @@ export default async function handler(req, res) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        token: PUSHOVER_TOKEN,
-        user: PUSHOVER_USER,
-        message: notificationMessage,
-        title: 'Bertrand Brands Inquiry',
-        url: 'https://bertrandbrands.com/#contact',
-        url_title: 'View Contact Form',
-        priority: 0, // Normal priority
-        sound: 'pushover',
-      }),
+      body: JSON.stringify(pushoverPayload),
     });
 
     if (!response.ok) {
