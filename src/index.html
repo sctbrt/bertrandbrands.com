@@ -1525,6 +1525,33 @@
             window.addEventListener('touchstart', triggerExit, { passive: true });
             window.addEventListener('keydown', handleKeydown);
         })();
+
+        // Contact form with Pushover notification
+        (function() {
+            const form = document.querySelector('.contact-form');
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                // Don't prevent default - let Formspree handle the actual submission
+                // But also send a notification via our API
+
+                const formData = {
+                    name: form.querySelector('#name')?.value || '',
+                    email: form.querySelector('#email')?.value || '',
+                    service: form.querySelector('#service')?.value || '',
+                    message: form.querySelector('#message')?.value || ''
+                };
+
+                // Fire and forget - don't block the form submission
+                fetch('/api/notify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                }).catch(() => {
+                    // Silently fail - notification is secondary to actual form submission
+                });
+            });
+        })();
     </script>
 </body>
 </html>
