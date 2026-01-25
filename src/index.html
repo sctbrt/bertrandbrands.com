@@ -148,6 +148,124 @@
             opacity: 1;
         }
 
+        .header__logo-text {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .header__logo.show-text .header__logo-text {
+            opacity: 1;
+        }
+
+        /* === CINEMATIC INTRO === */
+        .intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .intro::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150vmax;
+            height: 150vmax;
+            background: radial-gradient(ellipse at center, var(--accent-muted) 0%, transparent 50%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            animation: introGlow 2s ease-out 0.3s forwards;
+        }
+
+        @keyframes introGlow {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .intro__brand {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 10vw, 6rem);
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: introBrandReveal 1s var(--ease-out-expo) 0.2s forwards;
+        }
+
+        .intro__brand span {
+            display: block;
+        }
+
+        .intro__brand-main {
+            font-weight: 500;
+            letter-spacing: 0.2em;
+        }
+
+        .intro__brand-sub {
+            font-size: 0.4em;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            color: var(--text-muted);
+            margin-top: 0.5em;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 0.8s forwards;
+        }
+
+        @keyframes introBrandReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro.is-animating {
+            transition: opacity 0.8s ease;
+        }
+
+        .intro.is-animating .intro__brand {
+            animation: introBrandShrink 1s var(--ease-out-expo) forwards;
+        }
+
+        .intro.is-animating::before {
+            animation: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes introBrandShrink {
+            to {
+                font-size: 0.875rem;
+                letter-spacing: 0.1em;
+                opacity: 0;
+            }
+        }
+
+        .intro.is-complete {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro {
+                display: none;
+            }
+            .header__logo-text {
+                opacity: 1;
+            }
+        }
+
         .header__nav {
             display: flex;
             gap: var(--space-md);
@@ -927,12 +1045,21 @@
 <body>
     <div class="cursor-glow" id="cursorGlow"></div>
 
+    <!-- Cinematic Intro -->
+    <div class="intro">
+        <div class="intro__brand">
+            <span class="intro__brand-main">Bertrand</span>
+            <span class="intro__brand-main">Brands</span>
+            <span class="intro__brand-sub">Brand & Web Systems</span>
+        </div>
+    </div>
+
     <div class="page">
         <!-- Header: BERTRAND BRANDS -->
         <header class="header">
             <div class="container">
                 <div class="header__inner">
-                    <a href="/" class="header__logo">Bertrand Brands</a>
+                    <a href="/" class="header__logo"><span class="header__logo-text">Bertrand Brands</span></a>
                     <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false">
                         <span></span>
                         <span></span>
@@ -1255,6 +1382,60 @@
                     toggle.setAttribute('aria-expanded', 'false');
                 });
             });
+        })();
+
+        // Cinematic intro animation (one-way)
+        (function() {
+            // Skip for reduced motion
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector('.header__logo')?.classList.add('show-text');
+                return;
+            }
+
+            const intro = document.querySelector('.intro');
+            const logo = document.querySelector('.header__logo');
+            if (!intro || !logo) return;
+
+            let triggered = false;
+
+            function triggerExit(e) {
+                if (triggered) return;
+
+                // For wheel events, only trigger on downward scroll
+                if (e.type === 'wheel' && e.deltaY <= 0) return;
+
+                triggered = true;
+
+                // Start shrink animation
+                intro.classList.add('is-animating');
+
+                // After shrink animation, fade out and show header text
+                setTimeout(() => {
+                    intro.classList.add('is-complete');
+                    logo.classList.add('show-text');
+                }, 800);
+
+                // Remove intro from DOM after fade
+                setTimeout(() => {
+                    intro.remove();
+                }, 1400);
+
+                // Clean up listeners
+                window.removeEventListener('wheel', triggerExit);
+                window.removeEventListener('touchstart', triggerExit);
+                window.removeEventListener('keydown', handleKeydown);
+            }
+
+            function handleKeydown(e) {
+                // Trigger on down arrow, space, or page down
+                if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+                    triggerExit(e);
+                }
+            }
+
+            window.addEventListener('wheel', triggerExit, { passive: true });
+            window.addEventListener('touchstart', triggerExit, { passive: true });
+            window.addEventListener('keydown', handleKeydown);
         })();
     </script>
 </body>
