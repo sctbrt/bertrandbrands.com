@@ -20,6 +20,49 @@
     <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
+    <!-- Schema.org LocalBusiness + Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Bertrand Brands",
+      "description": "Clear, structured brand and web work for businesses that value clarity. Audits, brand systems, and website foundations.",
+      "url": "https://bertrandbrands.com",
+      "email": "hello@bertrandbrands.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Greater Sudbury",
+        "addressRegion": "Ontario",
+        "addressCountry": "CA"
+      },
+      "areaServed": [
+        { "@type": "Place", "name": "Northern Ontario" },
+        { "@type": "Country", "name": "Canada" }
+      ],
+      "priceRange": "$95 - $6,900 CAD",
+      "founder": {
+        "@type": "Person",
+        "name": "Scott Bertrand",
+        "url": "https://scottbertrand.com"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Brand & Web Services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Founders Direction Check" }, "price": "95", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand & Website Starter Map" }, "price": "145", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Snapshot Review" }, "price": "195", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Clarity Session" }, "price": "245", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Comprehensive Website Audit" }, "price": "450", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "price": "550", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "price": "3000", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation" }, "price": "4250", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Website Reset" }, "price": "6900", "priceCurrency": "CAD" }
+        ]
+      }
+    }
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1549,12 +1592,21 @@
             line-height: 1.7;
         }
 
-        .portal__status {
+        .portal__link {
+            display: inline-block;
             margin-top: var(--space-md);
-            font-size: 0.75rem;
-            color: var(--text-subtle);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: all var(--duration-fast) ease;
+        }
+
+        .portal__link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         /* === FOOTER === */
@@ -1930,7 +1982,7 @@
                     <div class="portal__content">
                         <h2 class="portal__title">Client Portal</h2>
                         <p class="portal__description">A dedicated space for active clients to access project files, timelines, and communication.</p>
-                        <p class="portal__status">Coming Soon</p>
+                        <a href="https://clients.scottbertrand.com" class="portal__link">Access Portal →</a>
                     </div>
                 </div>
             </div>
