@@ -23,7 +23,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400&display=swap" rel="stylesheet">
 
     <style>
         /* ============================================================
@@ -117,35 +117,107 @@
 
         /* === HEADER === */
         .header {
+            padding: 0.75rem clamp(1rem, 4vw, 2rem);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            padding: var(--space-md) 0;
-            background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .header.hidden-scroll {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+
+        /* Glass container with orange ambient lighting */
+        .header__glass {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 1.5rem;
+            background: color-mix(in srgb, var(--bg) 25%, transparent);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+            /* Dynamic lighting positions - updated by JS */
+            --orange-pos-1: 15%;
+            --orange-pos-2: 85%;
+        }
+
+        /* Ambient orange lighting */
+        .header__glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse 280px 90px at var(--orange-pos-1) 60%, var(--light-orange-1, transparent), transparent),
+                radial-gradient(ellipse 220px 80px at var(--orange-pos-2) 40%, var(--light-orange-2, transparent), transparent);
             pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 2s ease-out;
+            border-radius: inherit;
+        }
+
+        .header.lights-on .header__glass::before {
+            opacity: 1;
+        }
+
+        .header.lights-on .header__glass {
+            --light-orange-1: rgba(217, 119, 6, 0.15);
+            --light-orange-2: rgba(217, 119, 6, 0.10);
         }
 
         .header__inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            pointer-events: auto;
+            position: relative;
+            z-index: 1;
         }
 
         .header__logo {
+            display: flex;
+            align-items: center;
             font-family: var(--font-display);
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             font-weight: 500;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--text);
-            opacity: 0.8;
-            transition: opacity var(--duration-fast) ease;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .header__logo:hover {
+            opacity: 0.7;
+        }
+
+        .header__logo-icon {
+            width: 24px;
+            height: auto;
+            margin-right: 0.75rem;
+            filter: brightness(0) invert(1);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .header__logo.show-text .header__logo-icon {
             opacity: 1;
         }
 
@@ -159,6 +231,11 @@
         }
 
         /* === CINEMATIC INTRO === */
+        /* Lock scroll while intro animation is playing */
+        body:has(.intro:not(.intro--static)) {
+            overflow: hidden;
+        }
+
         .intro {
             position: fixed;
             top: 0;
@@ -172,6 +249,79 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+        }
+
+        /* After animation completes, intro becomes a static header */
+        .intro.intro--static {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: auto;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Fade overlay that darkens the intro when it becomes static */
+        .intro__fade {
+            position: absolute;
+            inset: 0;
+            background: var(--bg);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease-out;
+        }
+
+        .intro.intro--static .intro__fade {
+            opacity: 0.4;
+        }
+
+        /* Fade intro to full black when user scrolls past */
+        .intro.intro--hidden .intro__fade {
+            opacity: 1;
+            transition: opacity 0.8s ease-out;
+        }
+
+        /* Then hide the entire intro after fade completes */
+        .intro.intro--hidden {
+            pointer-events: none;
+            animation: introFadeOut 0.6s ease-out 0.8s forwards;
+        }
+
+        @keyframes introFadeOut {
+            to { opacity: 0; }
+        }
+
+        /* Main content wrapper that scrolls over the intro */
+        .page {
+            position: relative;
+            z-index: 2;
+            background: transparent;
+        }
+
+        /* When intro is static, add top margin to page so content starts below viewport */
+        body.intro-static .page {
+            margin-top: 100vh;
+        }
+
+        /* Sections after hero need their own backgrounds */
+        .section {
+            background: var(--bg);
+        }
+
+        /* Prevent scrolling back past the main content */
+        body.intro-static {
+            overflow-y: auto;
+        }
+
+        body.intro-static.scroll-locked {
+            scroll-snap-type: y mandatory;
+        }
+
+        body.intro-static .page {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
 
         /* Orange glow - top right */
@@ -248,6 +398,98 @@
             to { opacity: 1; }
         }
 
+        /* Logo above wordmark - same lighting treatment as wordmark */
+        .intro__logo {
+            width: clamp(70px, 14vw, 120px);
+            height: auto;
+            position: relative;
+            z-index: 1;
+            margin-bottom: var(--space-md);
+            filter: brightness(0) invert(1);
+            /* Start completely hidden, same as wordmark */
+            opacity: 0;
+            animation: logoSpotlight 2s ease-in-out 1.2s forwards;
+        }
+
+        @keyframes logoSpotlight {
+            0% {
+                opacity: 1;
+                -webkit-mask-image: linear-gradient(
+                    100deg,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0) 35%,
+                    rgba(0, 0, 0, 0.4) 45%,
+                    rgba(0, 0, 0, 1) 50%,
+                    rgba(0, 0, 0, 0.4) 55%,
+                    rgba(0, 0, 0, 0) 65%,
+                    rgba(0, 0, 0, 0) 100%
+                );
+                mask-image: linear-gradient(
+                    100deg,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0) 35%,
+                    rgba(0, 0, 0, 0.4) 45%,
+                    rgba(0, 0, 0, 1) 50%,
+                    rgba(0, 0, 0, 0.4) 55%,
+                    rgba(0, 0, 0, 0) 65%,
+                    rgba(0, 0, 0, 0) 100%
+                );
+                -webkit-mask-size: 300% 100%;
+                mask-size: 300% 100%;
+                -webkit-mask-position: 100% 0;
+                mask-position: 100% 0;
+            }
+            90% {
+                opacity: 1;
+                -webkit-mask-position: 0% 0;
+                mask-position: 0% 0;
+            }
+            100% {
+                opacity: 1;
+                -webkit-mask-image: none;
+                mask-image: none;
+                filter: brightness(0) invert(1)
+                    drop-shadow(0 0 15px rgba(255, 255, 255, 0.6))
+                    drop-shadow(0 0 30px rgba(255, 255, 255, 0.4))
+                    drop-shadow(0 0 45px rgba(255, 255, 255, 0.2));
+            }
+        }
+
+        /* Option 2: Logo centered, then scales up as wordmark reveals */
+        .intro--option2 .intro__logo {
+            position: absolute;
+            width: clamp(80px, 15vw, 140px);
+            margin-bottom: 0;
+            animation: introLogoOption2 2.5s var(--ease-out-expo) 0.2s forwards;
+        }
+
+        @keyframes introLogoOption2 {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            30% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.3;
+                transform: scale(1.5) translateY(-60px);
+            }
+        }
+
+        .intro--option2 .intro__brand {
+            animation-delay: 1.2s;
+        }
+
+        .intro--option2 .intro__brand-main {
+            animation-delay: 2s;
+        }
+
         .intro__brand {
             font-family: var(--font-display);
             font-size: clamp(2.5rem, 10vw, 6rem);
@@ -270,62 +512,147 @@
         .intro__brand-main {
             font-weight: 500;
             letter-spacing: 0.2em;
+            line-height: 1.1;
+            /* Start invisible - fade in then light reveals text */
+            opacity: 0;
+            background: linear-gradient(
+                100deg,
+                rgba(10, 10, 10, 1) 0%,
+                rgba(10, 10, 10, 1) 35%,
+                rgba(120, 120, 120, 1) 45%,
+                rgba(220, 220, 220, 1) 50%,
+                rgba(120, 120, 120, 1) 55%,
+                rgba(10, 10, 10, 1) 65%,
+                rgba(10, 10, 10, 1) 100%
+            );
+            background-size: 300% 100%;
+            background-position: 100% 0;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: spotlight 3.5s ease-in-out 1.2s forwards;
+        }
+
+        @keyframes spotlight {
+            /* Fade in while light is off to the right */
+            0% {
+                opacity: 0;
+                background-position: 100% 0;
+            }
+            6% {
+                opacity: 1;
+                background-position: 100% 0;
+            }
+            /* Single slow sweep across - light reveals the text */
+            50% {
+                opacity: 1;
+                background-position: 0% 0;
+            }
+            /* Flood to full white with glow emphasis */
+            60% {
+                opacity: 1;
+                color: rgba(255, 255, 255, 1);
+                text-shadow:
+                    0 0 30px rgba(255, 255, 255, 0.6),
+                    0 0 60px rgba(255, 255, 255, 0.4),
+                    0 0 90px rgba(255, 255, 255, 0.2);
+            }
+            /* Dim down the glow */
+            100% {
+                opacity: 1;
+                color: rgba(255, 255, 255, 0.9);
+                text-shadow:
+                    0 0 10px rgba(255, 255, 255, 0.2),
+                    0 0 20px rgba(255, 255, 255, 0.1);
+            }
         }
 
         .intro__brand-sub {
-            font-size: 0.4em;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 0.3em;
             font-weight: 400;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.08em;
+            text-transform: none;
             color: var(--text-muted);
-            margin-top: 0.5em;
+            margin-top: 1.25em;
             opacity: 0;
-            animation: fadeIn 1s ease 1.2s forwards;
+            /* Delay until after wordmark reveals, subtle glow */
+            animation: subtitleReveal 0.8s ease 3s forwards;
+        }
+
+        @keyframes subtitleReveal {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            }
         }
 
         @keyframes introBrandReveal {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .intro.is-animating {
-            transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .intro.is-animating .intro__brand {
-            animation: introBrandShrink 1s var(--ease-out-expo) forwards;
-        }
-
-        .intro.is-animating .intro__glow--orange {
-            animation: introGlowFadeToHero 1.2s ease forwards;
-        }
-
-        .intro.is-animating .intro__glow--blue {
-            animation: introGlowFadeToHero 1.2s ease 0.1s forwards;
-        }
-
-        @keyframes introGlowFadeToHero {
-            0% { opacity: 0.18; }
-            100% { opacity: 0; transform: scale(1.2); }
-        }
-
-        .intro.is-animating .intro__grid {
-            animation: none;
+        /* Scroll indicator chevron */
+        .intro__scroll-hint {
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
             opacity: 0;
-            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 5;
         }
 
-        @keyframes introBrandShrink {
-            to {
-                font-size: 0.875rem;
-                letter-spacing: 0.1em;
+        .intro__scroll-hint svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--text-muted);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* Show and pulse when intro is static (ready to scroll) */
+        .intro.intro--static .intro__scroll-hint {
+            animation:
+                scrollHintAppear 0.6s ease-out 0.5s forwards,
+                scrollHintPulse 1.8s ease-in-out 1.1s infinite;
+        }
+
+        /* Hide when user has scrolled */
+        .intro.intro--static.hint-hidden .intro__scroll-hint {
+            animation: scrollHintFade 0.3s ease-out forwards;
+        }
+
+        @keyframes scrollHintAppear {
+            0% {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateX(-50%) translateY(-10px);
+            }
+            100% {
+                opacity: 0.7;
+                transform: translateX(-50%) translateY(0);
             }
         }
 
-        .intro.is-complete {
-            opacity: 0;
-            pointer-events: none;
+        @keyframes scrollHintPulse {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(8px);
+            }
         }
+
+        @keyframes scrollHintFade {
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        /* Remove old transition animations - no longer fading out intro */
 
         @media (prefers-reduced-motion: reduce) {
             .intro {
@@ -338,7 +665,8 @@
 
         .header__nav {
             display: flex;
-            gap: var(--space-md);
+            align-items: center;
+            gap: 1.5rem;
         }
 
         @media (max-width: 768px) {
@@ -406,9 +734,11 @@
         }
 
         .header__link {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: var(--text-muted);
-            transition: color var(--duration-fast) ease;
+            padding: 0.5rem 0;
+            transition: color 0.2s ease;
+            white-space: nowrap;
         }
 
         .header__link:hover {
@@ -425,12 +755,16 @@
         }
 
         .header__link--portal {
-            padding: 0.5rem 1rem;
+            padding: 0.375rem 0.75rem;
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             font-size: 0.75rem;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+        }
+
+        .header__link--portal:hover {
+            border-color: var(--text-subtle);
         }
 
         .header__link--portal:hover {
@@ -444,7 +778,22 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            padding-top: 4rem;
+            background: var(--bg);
+        }
+
+        /* Extend hero background upward into the margin gap to eliminate black bar */
+        /* Only show after intro is hidden so it doesn't cover the intro */
+        body.intro-static.intro-scrolled .hero::before {
+            content: '';
+            position: absolute;
+            top: -100vh;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            background: var(--bg);
+            z-index: -1;
         }
 
         .hero__content {
@@ -471,9 +820,67 @@
         }
 
         .hero__title span { display: block; }
+
+        /* White text glow animation - triggered by JS when scrolled to hero */
+        .hero__title-glow {
+            display: inline;
+        }
+
+        .hero__title.hero-animate .hero__title-glow {
+            animation: heroTextGlow 3s ease-out forwards;
+        }
+
+        @keyframes heroTextGlow {
+            0% {
+                text-shadow: none;
+                color: var(--text);
+            }
+            30% {
+                text-shadow:
+                    0 0 30px rgba(255, 255, 255, 0.6),
+                    0 0 60px rgba(255, 255, 255, 0.4);
+                color: #fff;
+            }
+            /* Hold the glow while Systems flickers (1s delay + 1.2s animation) */
+            70% {
+                text-shadow:
+                    0 0 20px rgba(255, 255, 255, 0.4),
+                    0 0 40px rgba(255, 255, 255, 0.25);
+                color: #fff;
+            }
+            /* Fade back to normal once Systems is lit */
+            100% {
+                text-shadow: none;
+                color: var(--text);
+            }
+        }
+
         .hero__title .accent {
-            color: var(--accent);
             font-weight: 500;
+            position: relative;
+            display: inline-block;
+            color: var(--accent);
+            text-shadow:
+                0 0 20px rgba(217, 119, 6, 0.6),
+                0 0 40px rgba(217, 119, 6, 0.3);
+            opacity: 0;
+        }
+
+        /* Fluorescent flicker using opacity for reliability */
+        .hero__title.hero-animate .accent {
+            animation: fluorescentFlicker 1.2s ease-out 1s forwards;
+        }
+
+        @keyframes fluorescentFlicker {
+            0% { opacity: 0; }
+            /* First flicker - quick, dim */
+            12% { opacity: 0.4; }
+            18% { opacity: 0.05; }
+            /* Second flicker - brighter, longer */
+            35% { opacity: 0.85; }
+            52% { opacity: 0.1; }
+            /* Catches on */
+            68%, 100% { opacity: 1; }
         }
 
         @keyframes heroReveal {
@@ -537,7 +944,109 @@
             position: absolute;
             inset: 0;
             z-index: -1;
-            overflow: hidden;
+            overflow: visible;
+        }
+
+        /* Extend background elements upward when intro is hidden */
+        body.intro-static.intro-scrolled .hero__bg {
+            top: -100vh;
+        }
+
+        /* Fluid spotlights - activated after intro is gone */
+        .hero__spotlight {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Organic positions - swapped from intro but not perfectly mirrored */
+        /* Intro: orange top-right, blue bottom-left */
+        /* Hero: orange lower-left area, blue upper-right area */
+        .hero__spotlight--orange {
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, var(--accent) 0%, rgba(217, 119, 6, 0.3) 45%, transparent 70%);
+            bottom: 8%;
+            left: -6%;
+        }
+
+        .hero__spotlight--blue {
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, #2563eb 0%, rgba(37, 99, 235, 0.28) 45%, transparent 70%);
+            top: 5%;
+            right: -4%;
+        }
+
+        /* Activate spotlights after intro scrolled */
+        body.intro-scrolled .hero__spotlight--orange {
+            animation: spotlightRevealOrange 2s ease-out forwards, spotlightFloatOrange 20s ease-in-out 2s infinite;
+        }
+
+        body.intro-scrolled .hero__spotlight--blue {
+            animation: spotlightRevealBlue 2s ease-out 0.15s forwards, spotlightFloatBlue 24s ease-in-out 2.15s infinite;
+        }
+
+        @keyframes spotlightRevealOrange {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) translate(-15%, 10%);
+            }
+            100% {
+                opacity: 0.5;
+                transform: scale(1) translate(0, 0);
+            }
+        }
+
+        @keyframes spotlightRevealBlue {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) translate(10%, -10%);
+            }
+            100% {
+                opacity: 0.42;
+                transform: scale(1) translate(0, 0);
+            }
+        }
+
+        /* Subtle, slow breathing motion */
+        @keyframes spotlightFloatOrange {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(12px, -8px) scale(1.02);
+            }
+        }
+
+        @keyframes spotlightFloatBlue {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-10px, 6px) scale(0.98);
+            }
+        }
+
+        /* Soft organic fade from hero to next section */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 300px;
+            background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(10, 10, 10, 0.1) 30%,
+                rgba(10, 10, 10, 0.4) 50%,
+                rgba(10, 10, 10, 0.8) 70%,
+                var(--bg) 100%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .hero__gradient {
@@ -585,6 +1094,22 @@
 
         .section--alt {
             background: var(--bg-elevated);
+            position: relative;
+        }
+
+        .section--alt::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to bottom,
+                var(--bg) 0%,
+                rgba(17, 17, 17, 0.3) 30%,
+                rgba(17, 17, 17, 0.7) 60%,
+                var(--bg-elevated) 100%);
+            pointer-events: none;
         }
 
         .section__header {
@@ -1037,6 +1562,7 @@
             padding: var(--space-lg) 0;
             border-top: 1px solid var(--border);
             margin-top: auto;
+            background: var(--bg);
         }
 
         .footer__inner {
@@ -1129,20 +1655,27 @@
     <div class="intro">
         <div class="intro__glow intro__glow--orange"></div>
         <div class="intro__glow intro__glow--blue"></div>
+        <div class="intro__fade"></div>
         <div class="intro__grid"></div>
+        <img src="/assets/bertrand-brands-logomark.png" alt="" class="intro__logo">
         <div class="intro__brand">
             <span class="intro__brand-main">Bertrand</span>
             <span class="intro__brand-main">Brands</span>
-            <span class="intro__brand-sub">Brand & Web Systems</span>
+            <span class="intro__brand-sub">Brand &amp; Web Systems</span>
+        </div>
+        <div class="intro__scroll-hint">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
         </div>
     </div>
 
     <div class="page">
         <!-- Header: BERTRAND BRANDS -->
         <header class="header">
-            <div class="container">
+            <div class="header__glass">
                 <div class="header__inner">
-                    <a href="/" class="header__logo"><span class="header__logo-text">Bertrand Brands</span></a>
+                    <a href="/" class="header__logo"><img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon"><span class="header__logo-text">Bertrand Brands</span></a>
                     <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false">
                         <span></span>
                         <span></span>
@@ -1166,11 +1699,13 @@
                 <div class="hero__gradient hero__gradient--2"></div>
                 <div class="hero__grid"></div>
             </div>
+            <div class="hero__spotlight hero__spotlight--orange"></div>
+            <div class="hero__spotlight hero__spotlight--blue"></div>
 
             <div class="hero__content">
                 <h1 class="hero__title">
-                    <span>Brand &</span>
-                    <span>Web <span class="accent">Systems</span></span>
+                    <span class="hero__title-glow">Brand &</span>
+                    <span><span class="hero__title-glow">Web</span> <span class="accent">Systems</span></span>
                 </h1>
                 <p class="hero__subtitle">
                     Clear, structured work for businesses that value clarity over noise.
@@ -1413,6 +1948,14 @@
     </div>
 
     <script>
+        // Intro option toggle (use ?intro=2 for option 2)
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('intro') === '2') {
+                document.querySelector('.intro')?.classList.add('intro--option2');
+            }
+        })();
+
         // Cursor glow
         (function() {
             const glow = document.getElementById('cursorGlow');
@@ -1467,64 +2010,128 @@
             });
         })();
 
-        // Cinematic intro animation (one-way)
+        // Cinematic intro animation - becomes static header, scrolls away one-way
         (function() {
+            const header = document.querySelector('.header');
+            const headerGlass = document.querySelector('.header__glass');
+            const logo = document.querySelector('.header__logo');
+            const intro = document.querySelector('.intro');
+
             // Skip for reduced motion - show everything immediately
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector('.header__logo')?.classList.add('show-text');
+                logo?.classList.add('show-text');
+                header?.classList.add('visible', 'lights-on');
                 document.body.classList.add('intro-complete');
+                intro?.remove();
                 return;
             }
 
-            const intro = document.querySelector('.intro');
-            const logo = document.querySelector('.header__logo');
-            if (!intro || !logo) return;
+            if (!intro || !logo || !header) return;
 
-            let triggered = false;
+            // Calculate when intro animation completes
+            // Logo/wordmark: 1.2s delay + 2s duration = 3.2s
+            // Subtitle: 3s delay + 0.8s duration = 3.8s
+            // Add small buffer = 4s total
+            const introAnimationDuration = 4000;
 
-            function triggerExit(e) {
-                if (triggered) return;
+            // After intro animation completes, make it static and enable scrolling
+            setTimeout(() => {
+                intro.classList.add('intro--static');
+                document.body.classList.add('intro-static', 'intro-complete');
+                // Header will be shown once user scrolls to main content
+            }, introAnimationDuration);
 
-                // For wheel events, only trigger on downward scroll
-                if (e.type === 'wheel' && e.deltaY <= 0) return;
+            // Handle scroll to lock user from scrolling back to intro
+            let hasScrolledPastIntro = false;
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+            let isSnapping = false;
 
-                triggered = true;
+            window.addEventListener('scroll', () => {
+                if (!ticking && !isSnapping) {
+                    window.requestAnimationFrame(() => {
+                        const currentScrollY = window.scrollY;
+                        const viewportHeight = window.innerHeight;
 
-                // Start shrink animation
-                intro.classList.add('is-animating');
+                        // Only apply scroll locking once intro is static
+                        if (!document.body.classList.contains('intro-static')) {
+                            ticking = false;
+                            return;
+                        }
 
-                // Trigger hero animations as intro starts fading
-                setTimeout(() => {
-                    document.body.classList.add('intro-complete');
-                }, 400);
+                        // Hide scroll hint early when user starts scrolling
+                        if (currentScrollY > 50 && !intro.classList.contains('hint-hidden')) {
+                            intro.classList.add('hint-hidden');
+                        }
 
-                // After shrink animation, fade out and show header text
-                setTimeout(() => {
-                    intro.classList.add('is-complete');
-                    logo.classList.add('show-text');
-                }, 800);
+                        // Once user scrolls significantly past intro, hide it and show header
+                        if (!hasScrolledPastIntro && currentScrollY > viewportHeight * 0.85) {
+                            hasScrolledPastIntro = true;
+                            // Enable hero background extension and hide the intro
+                            document.body.classList.add('intro-scrolled');
+                            intro.classList.add('intro--hidden');
+                            header.classList.add('visible');
+                            logo.classList.add('show-text');
+                            setTimeout(() => {
+                                header.classList.add('lights-on');
+                            }, 400);
+                            // Trigger hero text animations
+                            const heroTitle = document.querySelector('.hero__title');
+                            if (heroTitle) {
+                                heroTitle.classList.add('hero-animate');
+                            }
+                        }
 
-                // Remove intro from DOM after fade
-                setTimeout(() => {
-                    intro.remove();
-                }, 2200);
+                        // If locked and trying to scroll back, snap to hero
+                        if (hasScrolledPastIntro && currentScrollY < viewportHeight) {
+                            window.scrollTo(0, viewportHeight);
+                        }
 
-                // Clean up listeners
-                window.removeEventListener('wheel', triggerExit);
-                window.removeEventListener('touchstart', triggerExit);
-                window.removeEventListener('keydown', handleKeydown);
-            }
+                        // Header visibility (hide on scroll down, show on scroll up)
+                        if (header.classList.contains('visible') && currentScrollY > viewportHeight + 100) {
+                            // Normal header behavior
+                            if (currentScrollY > lastScrollY && currentScrollY > viewportHeight + 150) {
+                                header.classList.add('hidden-scroll');
+                            } else {
+                                header.classList.remove('hidden-scroll');
+                            }
+                        } else {
+                            header.classList.remove('hidden-scroll');
+                        }
 
-            function handleKeydown(e) {
-                // Trigger on down arrow, space, or page down
-                if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
-                    triggerExit(e);
+                        lastScrollY = currentScrollY;
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
-            }
+            });
 
-            window.addEventListener('wheel', triggerExit, { passive: true });
-            window.addEventListener('touchstart', triggerExit, { passive: true });
-            window.addEventListener('keydown', handleKeydown);
+            // Ambient orange light animation
+            let orangePos1 = 15;
+            let orangePos2 = 85;
+            let direction1 = 1;
+            let direction2 = -1;
+
+            function animateLights() {
+                if (!header.classList.contains('lights-on')) {
+                    requestAnimationFrame(animateLights);
+                    return;
+                }
+
+                // Gentle organic movement
+                orangePos1 += direction1 * 0.03;
+                orangePos2 += direction2 * 0.025;
+
+                if (orangePos1 > 35 || orangePos1 < 10) direction1 *= -1;
+                if (orangePos2 > 90 || orangePos2 < 60) direction2 *= -1;
+
+                if (headerGlass) {
+                    headerGlass.style.setProperty('--orange-pos-1', orangePos1 + '%');
+                    headerGlass.style.setProperty('--orange-pos-2', orangePos2 + '%');
+                }
+                requestAnimationFrame(animateLights);
+            }
+            requestAnimationFrame(animateLights);
         })();
 
         // Visitor notification (silent push on page load)
