@@ -1545,14 +1545,14 @@
             });
         })();
 
-        // Contact form with Pushover notification
+        // Contact form with Pushover notification + Zapier webhook
         (function() {
             const form = document.querySelector('.contact-form');
             if (!form) return;
 
             form.addEventListener('submit', async (e) => {
                 // Don't prevent default - let Formspree handle the actual submission
-                // But also send a notification via our API
+                // But also send notifications via our API and Zapier
 
                 const formData = {
                     type: 'form',
@@ -1563,13 +1563,19 @@
                 };
 
                 // Fire and forget - don't block the form submission
+                // 1. Send to local notify API (Pushover)
                 fetch('/api/notify', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
-                }).catch(() => {
-                    // Silently fail - notification is secondary to actual form submission
-                });
+                }).catch(() => {});
+
+                // 2. Send to Zapier webhook (for dashboard sync)
+                fetch('https://hooks.zapier.com/hooks/catch/26192099/uqqr4uk/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                }).catch(() => {});
             });
         })();
     </script>
