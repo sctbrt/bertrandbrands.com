@@ -76,13 +76,12 @@
             width: 64px;
             height: auto;
             margin-bottom: 1rem;
-            opacity: 0.9;
+            filter: brightness(0) saturate(100%) invert(48%) sepia(89%) saturate(1000%) hue-rotate(4deg) brightness(88%);
         }
 
         .thanks-page__wordmark {
             height: 24px;
             width: auto;
-            opacity: 0.8;
         }
 
         .thanks-page__title {
@@ -128,15 +127,53 @@
             background: var(--accent-hover);
         }
 
+        @keyframes rgb-rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
         .thanks-page__link--secondary {
-            background: transparent;
+            background: var(--bg);
             color: var(--text-muted);
-            border: 1px solid var(--border);
+            border: none;
+            position: relative;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .thanks-page__link--secondary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(
+                from 0deg,
+                #ff3333 0deg,
+                #33ff33 120deg,
+                #3366ff 240deg,
+                #ff3333 360deg
+            );
+            animation: rgb-rotate 4s linear infinite;
+            z-index: -2;
+        }
+
+        .thanks-page__link--secondary::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            background: var(--bg);
+            border-radius: calc(var(--radius-md) - 1px);
+            z-index: -1;
         }
 
         .thanks-page__link--secondary:hover {
             color: var(--text);
-            border-color: var(--text-subtle);
+            box-shadow:
+                0 0 20px rgba(255, 60, 60, 0.2),
+                0 0 20px rgba(60, 255, 60, 0.2),
+                0 0 20px rgba(60, 100, 255, 0.2);
         }
 
         /* === FOOTER === */
