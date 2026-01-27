@@ -1226,106 +1226,140 @@
             }
         }
 
-        /* === ABOUT SECTION: Blue spotlight overshoot on "focused" === */
+        /* === ABOUT SECTION: Blue spotlight searches then locks on "focused" === */
         .section__header--about {
             position: relative;
             overflow: visible;
         }
 
-        /* Blue directional spotlight beam */
+        /* Blue radial spotlight - like a stage light searching */
         .section__header--about::before {
             content: '';
             position: absolute;
-            width: 120px;
-            height: 300px;
-            top: -100px;
+            width: 200px;
+            height: 200px;
+            top: 50%;
             left: 0;
-            background: linear-gradient(
-                180deg,
-                transparent 0%,
-                rgba(37, 99, 235, 0.15) 20%,
-                rgba(37, 99, 235, 0.4) 50%,
-                rgba(37, 99, 235, 0.15) 80%,
-                transparent 100%
+            transform: translate(-50%, -50%);
+            background: radial-gradient(
+                circle,
+                rgba(37, 99, 235, 0.7) 0%,
+                rgba(37, 99, 235, 0.4) 30%,
+                rgba(37, 99, 235, 0.1) 60%,
+                transparent 80%
             );
             border-radius: 50%;
             pointer-events: none;
             opacity: 0;
             z-index: 0;
-            filter: blur(20px);
-            transform: rotate(-15deg);
+            filter: blur(8px);
         }
 
         .reveal.is-visible.section__header--about::before {
-            animation: blueSpotlightOvershoot 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+            animation: spotlightSearch 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
         }
 
-        @keyframes blueSpotlightOvershoot {
+        @keyframes spotlightSearch {
+            /* Start from left, invisible */
             0% {
                 opacity: 0;
-                left: -10%;
-                transform: rotate(-15deg) scale(0.8);
+                left: 10%;
+                transform: translate(-50%, -50%) scale(0.6);
             }
-            25% {
-                opacity: 0.8;
-                left: 75%;
-                transform: rotate(-15deg) scale(1);
-            }
-            35% {
+            /* Fade in, move right quickly */
+            15% {
                 opacity: 0.9;
-                left: 80%;
-                transform: rotate(-12deg) scale(1.05);
+                left: 40%;
+                transform: translate(-50%, -50%) scale(1);
             }
-            50% {
-                opacity: 0.7;
-                left: 58%;
-                transform: rotate(-15deg) scale(1);
+            /* Overshoot past "focused" */
+            30% {
+                opacity: 1;
+                left: 85%;
+                transform: translate(-50%, -50%) scale(1.1);
             }
+            /* Quick correction back - operator adjusting */
+            45% {
+                opacity: 0.95;
+                left: 70%;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+            /* Slight overshoot again */
+            55% {
+                opacity: 1;
+                left: 78%;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+            /* Lock on "focused" - settle */
+            70% {
+                opacity: 0.9;
+                left: 72%;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            /* Hold and slowly fade to ambient */
             100% {
-                opacity: 0.3;
-                left: 55%;
-                transform: rotate(-15deg) scale(1.1);
+                opacity: 0.4;
+                left: 72%;
+                transform: translate(-50%, -50%) scale(1.2);
             }
         }
 
-        /* "focused" text glows orange when blue light hits */
+        /* "focused" text - starts normal, glows orange when spotlight lands */
         .text-spotlight--focused {
-            color: var(--text);
+            position: relative;
+            z-index: 1;
         }
 
         .reveal.is-visible .text-spotlight--focused {
-            animation: focusedOrangeGlow 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+            animation: focusedGlow 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
         }
 
-        @keyframes focusedOrangeGlow {
+        @keyframes focusedGlow {
+            /* Normal state */
             0% {
                 color: var(--text);
                 text-shadow: none;
             }
-            25% {
+            /* Spotlight passes by first time - brief blue flash */
+            15% {
+                color: var(--text);
+                text-shadow: none;
+            }
+            /* Gets hit by overshoot - blue glow */
+            30% {
                 color: #fff;
                 text-shadow:
-                    0 0 30px rgba(37, 99, 235, 0.8),
-                    0 0 60px rgba(37, 99, 235, 0.5);
+                    0 0 30px rgba(37, 99, 235, 0.9),
+                    0 0 60px rgba(37, 99, 235, 0.6),
+                    0 0 90px rgba(37, 99, 235, 0.3);
             }
-            35% {
+            /* Spotlight moves away briefly */
+            45% {
+                color: rgba(255, 255, 255, 0.8);
+                text-shadow:
+                    0 0 15px rgba(37, 99, 235, 0.4);
+            }
+            /* Spotlight returns - transitions to orange */
+            55% {
                 color: #fff;
                 text-shadow:
-                    0 0 40px rgba(37, 99, 235, 0.9),
-                    0 0 80px rgba(37, 99, 235, 0.6);
+                    0 0 25px rgba(37, 99, 235, 0.6),
+                    0 0 50px rgba(217, 119, 6, 0.3);
             }
-            50% {
+            /* Locked on - full orange glow */
+            70% {
                 color: var(--accent);
                 text-shadow:
-                    0 0 25px var(--accent-glow),
-                    0 0 50px rgba(217, 119, 6, 0.5),
-                    0 0 80px rgba(217, 119, 6, 0.3);
+                    0 0 30px var(--accent-glow),
+                    0 0 60px rgba(217, 119, 6, 0.6),
+                    0 0 100px rgba(217, 119, 6, 0.3);
             }
+            /* Settle to warm ambient */
             100% {
                 color: var(--text);
                 text-shadow:
-                    0 0 10px rgba(217, 119, 6, 0.2),
-                    0 0 20px rgba(217, 119, 6, 0.1);
+                    0 0 15px rgba(217, 119, 6, 0.3),
+                    0 0 30px rgba(217, 119, 6, 0.15);
             }
         }
 
