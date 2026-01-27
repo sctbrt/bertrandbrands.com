@@ -1,6 +1,7 @@
 {
   "buildCommand": null,
   "outputDirectory": "src",
+  "cleanUrls": true,
   "redirects": [
     {
       "source": "/about",
