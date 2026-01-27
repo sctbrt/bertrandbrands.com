@@ -1320,7 +1320,7 @@
                 color: var(--text);
                 text-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
             }
-            /* First pass - blue light hits, text glows orange! */
+            /* First pass - blue light hits, text starts glowing orange */
             30% {
                 color: var(--accent);
                 text-shadow:
@@ -1328,13 +1328,14 @@
                     0 0 40px rgba(217, 119, 6, 0.7),
                     0 0 60px rgba(217, 119, 6, 0.4);
             }
-            /* Spotlight overshoots, glow fades slightly */
+            /* Spotlight overshoots, glow dims slightly but stays */
             40% {
-                color: rgba(217, 119, 6, 0.7);
+                color: var(--accent);
                 text-shadow:
-                    0 0 15px rgba(217, 119, 6, 0.4);
+                    0 0 15px rgba(217, 119, 6, 0.5),
+                    0 0 30px rgba(217, 119, 6, 0.3);
             }
-            /* Spotlight comes back - another orange flash */
+            /* Spotlight comes back - glow intensifies */
             55% {
                 color: var(--accent);
                 text-shadow:
@@ -1343,18 +1344,19 @@
             }
             /* Locked on - intense orange glow */
             70% {
-                color: #fff;
+                color: var(--accent);
                 text-shadow:
                     0 0 30px var(--accent-glow),
                     0 0 60px rgba(217, 119, 6, 0.8),
-                    0 0 100px rgba(217, 119, 6, 0.4);
+                    0 0 100px rgba(217, 119, 6, 0.5);
             }
-            /* Settle to warm ambient - stays slightly glowing */
+            /* STAYS glowing orange - persistent warm glow */
             100% {
-                color: var(--text);
+                color: var(--accent);
                 text-shadow:
-                    0 0 12px rgba(217, 119, 6, 0.4),
-                    0 0 25px rgba(217, 119, 6, 0.2);
+                    0 0 20px var(--accent-glow),
+                    0 0 40px rgba(217, 119, 6, 0.6),
+                    0 0 60px rgba(217, 119, 6, 0.3);
             }
         }
 
