@@ -1363,6 +1363,7 @@
 
         /* === PROCESS SECTION: Beam sweep fills background === */
         .section--process {
+            position: relative;
             overflow: hidden;
         }
 
@@ -1370,23 +1371,65 @@
             position: relative;
         }
 
-        /* Long horizontal beam that sweeps through */
+        /* Sweeping beam of light - starts from left, crosses through section */
+        .section--process::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(
+                105deg,
+                transparent 0%,
+                transparent 35%,
+                rgba(217, 119, 6, 0.15) 45%,
+                rgba(217, 119, 6, 0.25) 50%,
+                rgba(217, 119, 6, 0.15) 55%,
+                transparent 65%,
+                transparent 100%
+            );
+            pointer-events: none;
+            opacity: 0;
+            z-index: 0;
+            transform: translateX(-100%);
+        }
+
+        .section--process.reveal-triggered::before {
+            animation: beamSweep 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes beamSweep {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            10% {
+                opacity: 1;
+            }
+            60% {
+                opacity: 1;
+                transform: translateX(100%);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        /* Ambient glow that stays after the sweep */
         .section--process::after {
             content: '';
             position: absolute;
-            width: 200%;
-            height: 150px;
-            top: 50%;
-            left: -100%;
-            transform: translateY(-50%) skewX(-15deg);
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(217, 119, 6, 0.08) 20%,
-                rgba(217, 119, 6, 0.2) 40%,
-                rgba(37, 99, 235, 0.15) 60%,
-                rgba(37, 99, 235, 0.08) 80%,
-                transparent 100%
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(
+                ellipse 80% 60% at 50% 100%,
+                rgba(217, 119, 6, 0.12) 0%,
+                rgba(217, 119, 6, 0.05) 40%,
+                transparent 70%
             );
             pointer-events: none;
             opacity: 0;
@@ -1394,34 +1437,22 @@
         }
 
         .section--process.reveal-triggered::after {
-            animation: beamSweepFill 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: ambientFadeIn 2s ease-out 1.5s forwards;
         }
 
-        @keyframes beamSweepFill {
-            0% {
-                opacity: 0;
-                left: -100%;
-            }
-            20% {
-                opacity: 1;
-            }
-            70% {
-                opacity: 0.8;
-                left: 0%;
-            }
-            100% {
-                opacity: 0.15;
-                left: 0%;
-            }
+        @keyframes ambientFadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
-        /* "clear" text glow synced with beam */
+        /* "clear" text glow synced with beam - starts white, gets orange glow */
         .text-spotlight--clear {
-            color: var(--text);
+            position: relative;
+            z-index: 1;
         }
 
         .reveal.is-visible .text-spotlight--clear {
-            animation: clearTextGlow 3s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+            animation: clearTextGlow 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         @keyframes clearTextGlow {
@@ -1429,23 +1460,32 @@
                 color: var(--text);
                 text-shadow: none;
             }
-            30% {
+            /* Beam approaching */
+            20% {
+                color: var(--text);
+                text-shadow: 0 0 10px rgba(217, 119, 6, 0.2);
+            }
+            /* Beam hits - bright flash */
+            35% {
+                color: #fff;
+                text-shadow:
+                    0 0 30px rgba(217, 119, 6, 0.9),
+                    0 0 60px rgba(217, 119, 6, 0.6),
+                    0 0 100px rgba(217, 119, 6, 0.3);
+            }
+            /* Beam passes, settle to orange glow */
+            60% {
                 color: var(--accent);
                 text-shadow:
                     0 0 20px var(--accent-glow),
                     0 0 40px rgba(217, 119, 6, 0.4);
             }
-            50% {
-                color: #fff;
-                text-shadow:
-                    0 0 30px rgba(255, 255, 255, 0.8),
-                    0 0 60px rgba(37, 99, 235, 0.4);
-            }
+            /* Stay glowing orange */
             100% {
-                color: var(--text);
+                color: var(--accent);
                 text-shadow:
-                    0 0 8px rgba(255, 255, 255, 0.1),
-                    0 0 16px rgba(37, 99, 235, 0.08);
+                    0 0 15px var(--accent-glow),
+                    0 0 30px rgba(217, 119, 6, 0.3);
             }
         }
 
