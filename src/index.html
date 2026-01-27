@@ -1226,6 +1226,197 @@
             }
         }
 
+        /* === ABOUT SECTION: Blue spotlight overshoot on "focused" === */
+        .section__header--about {
+            position: relative;
+            overflow: visible;
+        }
+
+        /* Blue directional spotlight beam */
+        .section__header--about::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 300px;
+            top: -100px;
+            left: 0;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(37, 99, 235, 0.15) 20%,
+                rgba(37, 99, 235, 0.4) 50%,
+                rgba(37, 99, 235, 0.15) 80%,
+                transparent 100%
+            );
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 0;
+            filter: blur(20px);
+            transform: rotate(-15deg);
+        }
+
+        .reveal.is-visible.section__header--about::before {
+            animation: blueSpotlightOvershoot 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+        }
+
+        @keyframes blueSpotlightOvershoot {
+            0% {
+                opacity: 0;
+                left: -10%;
+                transform: rotate(-15deg) scale(0.8);
+            }
+            25% {
+                opacity: 0.8;
+                left: 75%;
+                transform: rotate(-15deg) scale(1);
+            }
+            35% {
+                opacity: 0.9;
+                left: 80%;
+                transform: rotate(-12deg) scale(1.05);
+            }
+            50% {
+                opacity: 0.7;
+                left: 58%;
+                transform: rotate(-15deg) scale(1);
+            }
+            100% {
+                opacity: 0.3;
+                left: 55%;
+                transform: rotate(-15deg) scale(1.1);
+            }
+        }
+
+        /* "focused" text glows orange when blue light hits */
+        .text-spotlight--focused {
+            color: var(--text);
+        }
+
+        .reveal.is-visible .text-spotlight--focused {
+            animation: focusedOrangeGlow 2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+        }
+
+        @keyframes focusedOrangeGlow {
+            0% {
+                color: var(--text);
+                text-shadow: none;
+            }
+            25% {
+                color: #fff;
+                text-shadow:
+                    0 0 30px rgba(37, 99, 235, 0.8),
+                    0 0 60px rgba(37, 99, 235, 0.5);
+            }
+            35% {
+                color: #fff;
+                text-shadow:
+                    0 0 40px rgba(37, 99, 235, 0.9),
+                    0 0 80px rgba(37, 99, 235, 0.6);
+            }
+            50% {
+                color: var(--accent);
+                text-shadow:
+                    0 0 25px var(--accent-glow),
+                    0 0 50px rgba(217, 119, 6, 0.5),
+                    0 0 80px rgba(217, 119, 6, 0.3);
+            }
+            100% {
+                color: var(--text);
+                text-shadow:
+                    0 0 10px rgba(217, 119, 6, 0.2),
+                    0 0 20px rgba(217, 119, 6, 0.1);
+            }
+        }
+
+        /* === PROCESS SECTION: Beam sweep fills background === */
+        .section--process {
+            overflow: hidden;
+        }
+
+        .section__header--process {
+            position: relative;
+        }
+
+        /* Long horizontal beam that sweeps through */
+        .section--process::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 150px;
+            top: 50%;
+            left: -100%;
+            transform: translateY(-50%) skewX(-15deg);
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(217, 119, 6, 0.08) 20%,
+                rgba(217, 119, 6, 0.2) 40%,
+                rgba(37, 99, 235, 0.15) 60%,
+                rgba(37, 99, 235, 0.08) 80%,
+                transparent 100%
+            );
+            pointer-events: none;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        .section--process.reveal-triggered::after {
+            animation: beamSweepFill 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes beamSweepFill {
+            0% {
+                opacity: 0;
+                left: -100%;
+            }
+            20% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.8;
+                left: 0%;
+            }
+            100% {
+                opacity: 0.15;
+                left: 0%;
+            }
+        }
+
+        /* "clear" text glow synced with beam */
+        .text-spotlight--clear {
+            color: var(--text);
+        }
+
+        .reveal.is-visible .text-spotlight--clear {
+            animation: clearTextGlow 3s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+        }
+
+        @keyframes clearTextGlow {
+            0% {
+                color: var(--text);
+                text-shadow: none;
+            }
+            30% {
+                color: var(--accent);
+                text-shadow:
+                    0 0 20px var(--accent-glow),
+                    0 0 40px rgba(217, 119, 6, 0.4);
+            }
+            50% {
+                color: #fff;
+                text-shadow:
+                    0 0 30px rgba(255, 255, 255, 0.8),
+                    0 0 60px rgba(37, 99, 235, 0.4);
+            }
+            100% {
+                color: var(--text);
+                text-shadow:
+                    0 0 8px rgba(255, 255, 255, 0.1),
+                    0 0 16px rgba(37, 99, 235, 0.08);
+            }
+        }
+
         /* === ABOUT === */
         .about {
             max-width: 700px;
@@ -1937,9 +2128,9 @@
         <!-- About -->
         <section class="section" id="about">
             <div class="container">
-                <div class="section__header reveal">
+                <div class="section__header section__header--about reveal">
                     <p class="section__label">About</p>
-                    <h2 class="section__title">Clear thinking, <span class="text-spotlight">focused</span> work</h2>
+                    <h2 class="section__title">Clear thinking, <span class="text-spotlight text-spotlight--focused">focused</span> work</h2>
                 </div>
 
                 <div class="about reveal">
@@ -1951,11 +2142,11 @@
         </section>
 
         <!-- Process (How It Works) -->
-        <section class="section section--alt" id="process">
+        <section class="section section--alt section--process" id="process">
             <div class="container">
-                <div class="section__header reveal">
+                <div class="section__header section__header--process reveal">
                     <p class="section__label">How It Works</p>
-                    <h2 class="section__title">A <span class="text-spotlight">clear</span> path forward</h2>
+                    <h2 class="section__title">A <span class="text-spotlight text-spotlight--clear">clear</span> path forward</h2>
                 </div>
 
                 <div class="process reveal">
@@ -2196,12 +2387,20 @@
             const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 reveals.forEach(el => el.classList.add('is-visible'));
+                // Also trigger section-level effects
+                document.querySelectorAll('.section--process').forEach(el => el.classList.add('reveal-triggered'));
                 return;
             }
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
             }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
             reveals.forEach(el => observer.observe(el));
+
+            // Section-level ambient light triggers (for effects that span the whole section)
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('reveal-triggered'); });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.section--process').forEach(el => sectionObserver.observe(el));
         })();
 
         // Mobile menu toggle
