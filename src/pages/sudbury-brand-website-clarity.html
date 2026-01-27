@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- SEO -->
+    <link rel="canonical" href="https://bertrandbrands.com/sudbury-brand-website-clarity">
+    <meta name="theme-color" content="#1C1C1E">
+    <title>Brand & Website Clarity for Sudbury Businesses | Bertrand Brands</title>
+    <meta name="description" content="Get clarity on your brand and website. Serving founders and small businesses in Greater Sudbury and Northern Ontario. Most first steps range from $95–$295.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Brand & Website Clarity for Sudbury Businesses | Bertrand Brands">
+    <meta property="og:description" content="Get clarity on your brand and website. Serving founders and small businesses in Greater Sudbury and Northern Ontario.">
+    <meta property="og:url" content="https://bertrandbrands.com/sudbury-brand-website-clarity">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_CA">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Brand & Website Clarity for Sudbury Businesses | Bertrand Brands">
+    <meta name="twitter:description" content="Get clarity on your brand and website. Serving founders and small businesses in Greater Sudbury and Northern Ontario.">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Brand & Website Clarity for Sudbury Businesses",
+      "description": "Get clarity on your brand and website. Serving founders and small businesses in Greater Sudbury and Northern Ontario.",
+      "url": "https://bertrandbrands.com/sudbury-brand-website-clarity",
+      "provider": {
+        "@type": "ProfessionalService",
+        "name": "Bertrand Brands",
+        "url": "https://bertrandbrands.com"
+      },
+      "areaServed": [
+        { "@type": "Place", "name": "Greater Sudbury" },
+        { "@type": "Place", "name": "Northern Ontario" }
+      ]
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/main.css">
+
+    <style>
+        /* Page-specific styles for lead page */
+        .lead-page {
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .lead-hero {
+            padding: var(--space-3xl) 0 var(--space-2xl);
+            text-align: center;
+        }
+
+        .lead-hero__title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+            color: var(--text);
+        }
+
+        .lead-hero__subtitle {
+            font-size: var(--text-lg);
+            color: var(--text-muted);
+            max-width: 580px;
+            margin: 0 auto var(--space-xl);
+            line-height: 1.7;
+        }
+
+        .lead-hero__cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: #000;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            transition: background var(--duration-fast) var(--ease-out);
+        }
+
+        .lead-hero__cta:hover {
+            background: var(--accent-hover);
+        }
+
+        .lead-hero__price {
+            margin-top: var(--space-sm);
+            font-size: var(--text-sm);
+            color: var(--text-subtle);
+        }
+
+        .lead-section {
+            padding: var(--space-2xl) 0;
+        }
+
+        .lead-section--alt {
+            background: var(--bg-alt);
+        }
+
+        .lead-section__title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: var(--text-2xl);
+            font-weight: 400;
+            margin-bottom: var(--space-sm);
+            text-align: center;
+            color: var(--text);
+        }
+
+        .lead-section__intro {
+            font-size: var(--text-base);
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 620px;
+            margin: 0 auto var(--space-xl);
+            line-height: 1.7;
+        }
+
+        .expect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .expect-item {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+        }
+
+        .expect-item__title {
+            font-size: var(--text-base);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .expect-item__text {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-md);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+        }
+
+        .service-card__title {
+            font-size: var(--text-base);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+        }
+
+        .service-card__price {
+            font-size: var(--text-sm);
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card__text {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .lead-cta-section {
+            text-align: center;
+            padding: var(--space-3xl) 0;
+        }
+
+        .lead-cta-section__title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: var(--text-2xl);
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .lead-cta-section__text {
+            color: var(--text-muted);
+            margin-bottom: var(--space-lg);
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .lead-footer {
+            border-top: 1px solid var(--border);
+            padding: var(--space-xl) var(--gutter);
+            text-align: center;
+        }
+
+        .lead-footer__text {
+            font-size: var(--text-sm);
+            color: var(--text-subtle);
+            margin-bottom: 0.5rem;
+        }
+
+        .lead-footer__links {
+            font-size: var(--text-xs);
+            color: var(--text-subtle);
+        }
+
+        .lead-footer__links a {
+            color: inherit;
+            text-decoration: none;
+            transition: color var(--duration-fast);
+        }
+
+        .lead-footer__links a:hover {
+            color: var(--text-muted);
+        }
+
+        /* Simple header for lead pages */
+        .lead-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-sm) var(--gutter);
+            background: rgba(28, 28, 30, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lead-header__inner {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .lead-header__logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .lead-header__logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .lead-header__logo-text {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: var(--text-base);
+            font-weight: 400;
+        }
+
+        .lead-header__nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .lead-header__link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: var(--text-sm);
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            transition: color var(--duration-fast), background var(--duration-fast);
+        }
+
+        .lead-header__link:hover {
+            color: var(--text);
+            background: var(--bg-subtle);
+        }
+
+        .lead-header__link--cta {
+            background: var(--accent);
+            color: #000;
+            font-weight: 500;
+        }
+
+        .lead-header__link--cta:hover {
+            background: var(--accent-hover);
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .lead-header__nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="lead-header">
+        <div class="lead-header__inner">
+            <a href="/" class="lead-header__logo">
+                <img src="/assets/bertrand-brands-logomark.png" alt="" class="lead-header__logo-icon">
+                <span class="lead-header__logo-text">Bertrand Brands</span>
+            </a>
+            <nav class="lead-header__nav">
+                <a href="/#services" class="lead-header__link">Services</a>
+                <a href="/#about" class="lead-header__link">About</a>
+                <a href="/#contact" class="lead-header__link lead-header__link--cta">Make a Request</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="lead-page">
+        <div class="container">
+            <!-- Hero -->
+            <section class="lead-hero">
+                <h1 class="lead-hero__title">Get clarity on your brand and website</h1>
+                <p class="lead-hero__subtitle">
+                    Serving founders and small businesses in Greater Sudbury and Northern Ontario. Clear direction without the pressure of a sales call.
+                </p>
+                <a href="/#contact" class="lead-hero__cta">Get clarity on your business</a>
+                <p class="lead-hero__price">Most first steps range from $95–$295</p>
+            </section>
+        </div>
+
+        <!-- What to Expect -->
+        <section class="lead-section lead-section--alt">
+            <div class="container">
+                <h2 class="lead-section__title">What happens after you contact us</h2>
+                <p class="lead-section__intro">
+                    Every inquiry is captured and reviewed before follow-up. No automated responses—just thoughtful consideration of your situation before we respond.
+                </p>
+
+                <div class="expect-grid">
+                    <div class="expect-item">
+                        <h3 class="expect-item__title">Your inquiry is captured</h3>
+                        <p class="expect-item__text">Whether you call or fill out a form, your details are documented so nothing gets missed.</p>
+                    </div>
+                    <div class="expect-item">
+                        <h3 class="expect-item__title">Intentional review</h3>
+                        <p class="expect-item__text">We review each inquiry to understand your situation before reaching out. No rushed responses.</p>
+                    </div>
+                    <div class="expect-item">
+                        <h3 class="expect-item__title">Thoughtful follow-up</h3>
+                        <p class="expect-item__text">You'll hear back by email or phone—whichever makes sense for your specific question.</p>
+                    </div>
+                    <div class="expect-item">
+                        <h3 class="expect-item__title">Async work begins</h3>
+                        <p class="expect-item__text">If we move forward, structured async work starts. Calls are available when clarification would genuinely help.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Starting Points -->
+        <section class="lead-section">
+            <div class="container">
+                <h2 class="lead-section__title">Starting points</h2>
+                <p class="lead-section__intro">
+                    Entry-level services designed to provide direction without a major commitment.
+                </p>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3 class="service-card__title">Founders Direction Check</h3>
+                        <p class="service-card__price">$95 CAD</p>
+                        <p class="service-card__text">A 20-minute live orientation for early-stage founders. Get clarity on what to focus on next.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3 class="service-card__title">Website Snapshot Review</h3>
+                        <p class="service-card__price">$195 CAD</p>
+                        <p class="service-card__text">Full site review with prioritized recommendations. Understand what's working and what needs attention.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3 class="service-card__title">Brand Clarity Session</h3>
+                        <p class="service-card__price">$245 CAD</p>
+                        <p class="service-card__text">Brand positioning and identity assessment. A clear view of where you stand and where to go.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="lead-cta-section">
+            <div class="container">
+                <h2 class="lead-cta-section__title">Ready to get clarity?</h2>
+                <p class="lead-cta-section__text">
+                    Share what's on your mind. We'll review your inquiry and follow up with the right next step.
+                </p>
+                <a href="/#contact" class="lead-hero__cta">Get clarity on your business</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="lead-footer">
+        <p class="lead-footer__text">Based in Greater Sudbury, serving Northern Ontario & Canada remotely</p>
+        <p class="lead-footer__links">
+            &copy; <script>document.write(new Date().getFullYear())</script> Bertrand Brands &middot;
+            <a href="/">Home</a> &middot;
+            <a href="/#contact">Contact</a>
+        </p>
+    </footer>
+</body>
+</html>

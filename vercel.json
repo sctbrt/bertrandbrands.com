@@ -37,6 +37,26 @@
       "source": "/client-portal",
       "destination": "/#portal",
       "permanent": false
+    },
+    {
+      "source": "/founders-direction-check",
+      "destination": "/pages/founders-direction-check",
+      "permanent": false
+    },
+    {
+      "source": "/brand-website-starter-map",
+      "destination": "/pages/brand-website-starter-map",
+      "permanent": false
+    },
+    {
+      "source": "/sudbury-brand-website-clarity",
+      "destination": "/pages/sudbury-brand-website-clarity",
+      "permanent": false
+    },
+    {
+      "source": "/sudbury-small-business-website-leads",
+      "destination": "/pages/sudbury-small-business-website-leads",
+      "permanent": false
     }
   ],
   "headers": [
