@@ -1263,44 +1263,44 @@
             /* Start from left, invisible */
             0% {
                 opacity: 0;
-                left: 10%;
+                left: 5%;
                 transform: translate(-50%, -50%) scale(0.6);
             }
             /* Fade in, move right quickly */
             15% {
                 opacity: 0.9;
-                left: 40%;
+                left: 30%;
                 transform: translate(-50%, -50%) scale(1);
             }
-            /* Overshoot past "focused" */
+            /* Overshoot past "focused" - goes too far right */
             30% {
                 opacity: 1;
-                left: 85%;
+                left: 70%;
                 transform: translate(-50%, -50%) scale(1.1);
             }
-            /* Quick correction back - operator adjusting */
+            /* Quick correction back - operator adjusting, back towards focused */
             45% {
                 opacity: 0.95;
-                left: 70%;
+                left: 50%;
                 transform: translate(-50%, -50%) scale(0.95);
             }
-            /* Slight overshoot again */
+            /* Slight overshoot again past focused */
             55% {
                 opacity: 1;
-                left: 78%;
+                left: 62%;
                 transform: translate(-50%, -50%) scale(1.05);
             }
-            /* Lock on "focused" - settle */
+            /* Lock on "focused" - settle directly behind it (~57%) */
             70% {
                 opacity: 0.9;
-                left: 72%;
+                left: 57%;
                 transform: translate(-50%, -50%) scale(1);
             }
             /* Hold and slowly fade to ambient */
             100% {
-                opacity: 0.4;
-                left: 72%;
-                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.5;
+                left: 57%;
+                transform: translate(-50%, -50%) scale(1.3);
             }
         }
 
@@ -1320,46 +1320,46 @@
                 color: var(--text);
                 text-shadow: none;
             }
-            /* Spotlight passes by first time - brief blue flash */
+            /* Spotlight approaching - slight anticipation */
             15% {
                 color: var(--text);
-                text-shadow: none;
+                text-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
             }
-            /* Gets hit by overshoot - blue glow */
+            /* First pass - blue light hits, text glows orange! */
             30% {
-                color: #fff;
-                text-shadow:
-                    0 0 30px rgba(37, 99, 235, 0.9),
-                    0 0 60px rgba(37, 99, 235, 0.6),
-                    0 0 90px rgba(37, 99, 235, 0.3);
-            }
-            /* Spotlight moves away briefly */
-            45% {
-                color: rgba(255, 255, 255, 0.8);
-                text-shadow:
-                    0 0 15px rgba(37, 99, 235, 0.4);
-            }
-            /* Spotlight returns - transitions to orange */
-            55% {
-                color: #fff;
-                text-shadow:
-                    0 0 25px rgba(37, 99, 235, 0.6),
-                    0 0 50px rgba(217, 119, 6, 0.3);
-            }
-            /* Locked on - full orange glow */
-            70% {
                 color: var(--accent);
                 text-shadow:
-                    0 0 30px var(--accent-glow),
-                    0 0 60px rgba(217, 119, 6, 0.6),
-                    0 0 100px rgba(217, 119, 6, 0.3);
+                    0 0 20px var(--accent-glow),
+                    0 0 40px rgba(217, 119, 6, 0.7),
+                    0 0 60px rgba(217, 119, 6, 0.4);
             }
-            /* Settle to warm ambient */
+            /* Spotlight overshoots, glow fades slightly */
+            40% {
+                color: rgba(217, 119, 6, 0.7);
+                text-shadow:
+                    0 0 15px rgba(217, 119, 6, 0.4);
+            }
+            /* Spotlight comes back - another orange flash */
+            55% {
+                color: var(--accent);
+                text-shadow:
+                    0 0 25px var(--accent-glow),
+                    0 0 50px rgba(217, 119, 6, 0.6);
+            }
+            /* Locked on - intense orange glow */
+            70% {
+                color: #fff;
+                text-shadow:
+                    0 0 30px var(--accent-glow),
+                    0 0 60px rgba(217, 119, 6, 0.8),
+                    0 0 100px rgba(217, 119, 6, 0.4);
+            }
+            /* Settle to warm ambient - stays slightly glowing */
             100% {
                 color: var(--text);
                 text-shadow:
-                    0 0 15px rgba(217, 119, 6, 0.3),
-                    0 0 30px rgba(217, 119, 6, 0.15);
+                    0 0 12px rgba(217, 119, 6, 0.4),
+                    0 0 25px rgba(217, 119, 6, 0.2);
             }
         }
 
