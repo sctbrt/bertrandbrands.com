@@ -1320,43 +1320,44 @@
                 color: var(--text);
                 text-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
             }
-            /* First pass - blue light hits, text goes white with orange glow */
+            /* First pass - iris WIDE open, diffuse orange bloom */
             30% {
                 color: #fff;
                 text-shadow:
-                    0 0 20px var(--accent-glow),
-                    0 0 40px rgba(217, 119, 6, 0.7),
-                    0 0 60px rgba(217, 119, 6, 0.4);
+                    0 0 60px rgba(217, 119, 6, 0.5),
+                    0 0 100px rgba(217, 119, 6, 0.3),
+                    0 0 140px rgba(217, 119, 6, 0.15);
             }
-            /* Spotlight overshoots, glow dims slightly but stays */
+            /* Spotlight overshoots - iris contracts slightly */
             40% {
                 color: #fff;
                 text-shadow:
-                    0 0 15px rgba(217, 119, 6, 0.5),
-                    0 0 30px rgba(217, 119, 6, 0.3);
+                    0 0 40px rgba(217, 119, 6, 0.5),
+                    0 0 70px rgba(217, 119, 6, 0.25);
             }
-            /* Spotlight comes back - glow intensifies */
+            /* Spotlight comes back - iris opens again, searching */
             55% {
                 color: #fff;
                 text-shadow:
-                    0 0 25px var(--accent-glow),
-                    0 0 50px rgba(217, 119, 6, 0.6);
+                    0 0 50px rgba(217, 119, 6, 0.6),
+                    0 0 90px rgba(217, 119, 6, 0.35),
+                    0 0 120px rgba(217, 119, 6, 0.15);
             }
-            /* Locked on - intense orange glow */
+            /* Locking on - iris CONTRACTS to sharp focus */
             70% {
                 color: #fff;
                 text-shadow:
-                    0 0 30px var(--accent-glow),
-                    0 0 60px rgba(217, 119, 6, 0.8),
-                    0 0 100px rgba(217, 119, 6, 0.5);
+                    0 0 8px var(--accent-glow),
+                    0 0 16px rgba(217, 119, 6, 0.9),
+                    0 0 28px rgba(217, 119, 6, 0.5);
             }
-            /* STAYS white with persistent orange glow */
+            /* FOCUSED - tight, crisp glow like a focused lens */
             100% {
                 color: #fff;
                 text-shadow:
-                    0 0 20px var(--accent-glow),
-                    0 0 40px rgba(217, 119, 6, 0.6),
-                    0 0 60px rgba(217, 119, 6, 0.3);
+                    0 0 6px var(--accent-glow),
+                    0 0 12px rgba(217, 119, 6, 0.8),
+                    0 0 20px rgba(217, 119, 6, 0.4);
             }
         }
 
