@@ -1,4 +1,60 @@
 {
   "buildCommand": null,
-  "outputDirectory": "src"
+  "outputDirectory": "src",
+  "redirects": [
+    {
+      "source": "/about",
+      "destination": "/#about",
+      "permanent": false
+    },
+    {
+      "source": "/services",
+      "destination": "/#services",
+      "permanent": false
+    },
+    {
+      "source": "/process",
+      "destination": "/#process",
+      "permanent": false
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/#process",
+      "permanent": false
+    },
+    {
+      "source": "/contact",
+      "destination": "/#contact",
+      "permanent": false
+    },
+    {
+      "source": "/portal",
+      "destination": "/#portal",
+      "permanent": false
+    },
+    {
+      "source": "/client-portal",
+      "destination": "/#portal",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ]
 }

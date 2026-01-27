@@ -33,28 +33,6 @@
         });
     }
 
-    // === Header Scroll Effect ===
-    function initHeaderScroll() {
-        const header = document.querySelector('.header');
-        if (!header) return;
-
-        let lastScroll = 0;
-
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-
-            if (currentScroll > 100) {
-                header.style.background = 'var(--bg)';
-                header.style.boxShadow = 'var(--shadow-sm)';
-            } else {
-                header.style.background = 'linear-gradient(to bottom, var(--bg) 60%, transparent 100%)';
-                header.style.boxShadow = 'none';
-            }
-
-            lastScroll = currentScroll;
-        }, { passive: true });
-    }
-
     // === Mobile Menu ===
     function initMobileMenu() {
         const menuBtn = document.querySelector('.header__menu-btn');
@@ -71,7 +49,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         initTheme();
         initSmoothScroll();
-        initHeaderScroll();
         initMobileMenu();
     });
 
