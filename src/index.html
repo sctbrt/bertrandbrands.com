@@ -1232,82 +1232,77 @@
             overflow: visible;
         }
 
-        /* Blue radial spotlight - like a stage light searching */
-        .section__header--about::before {
+        /* "focused" text - container for the spotlight */
+        .text-spotlight--focused {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+        }
+
+        /* Blue radial spotlight - attached to "focused" text itself */
+        /* Uses pixel-based transforms so it always positions relative to the word */
+        .text-spotlight--focused::before {
             content: '';
             position: absolute;
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 250px;
             top: 50%;
-            left: 0;
-            transform: translate(-50%, -50%);
+            left: 50%;
+            transform: translate(-50%, -50%) translate(-300px, 0) scale(0.6);
             background: radial-gradient(
                 circle,
-                rgba(37, 99, 235, 0.7) 0%,
-                rgba(37, 99, 235, 0.4) 30%,
-                rgba(37, 99, 235, 0.1) 60%,
-                transparent 80%
+                rgba(37, 99, 235, 0.8) 0%,
+                rgba(37, 99, 235, 0.5) 25%,
+                rgba(37, 99, 235, 0.2) 50%,
+                transparent 70%
             );
             border-radius: 50%;
             pointer-events: none;
             opacity: 0;
-            z-index: 0;
-            filter: blur(8px);
+            z-index: -1;
+            filter: blur(12px);
         }
 
-        .reveal.is-visible.section__header--about::before {
+        .reveal.is-visible .text-spotlight--focused::before {
             animation: spotlightSearch 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
         }
 
         @keyframes spotlightSearch {
-            /* Start from left, invisible */
+            /* Start from far left of "focused" text, invisible */
             0% {
                 opacity: 0;
-                left: 5%;
-                transform: translate(-50%, -50%) scale(0.6);
+                transform: translate(-50%, -50%) translate(-300px, 0) scale(0.6);
             }
-            /* Fade in, move right quickly */
+            /* Fade in, move right quickly toward text */
             15% {
                 opacity: 0.9;
-                left: 30%;
-                transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) translate(-100px, 0) scale(1);
             }
             /* Overshoot past "focused" - goes too far right */
             30% {
                 opacity: 1;
-                left: 70%;
-                transform: translate(-50%, -50%) scale(1.1);
+                transform: translate(-50%, -50%) translate(150px, 0) scale(1.1);
             }
-            /* Quick correction back - operator adjusting, back towards focused */
+            /* Quick correction back - operator adjusting */
             45% {
                 opacity: 0.95;
-                left: 50%;
-                transform: translate(-50%, -50%) scale(0.95);
+                transform: translate(-50%, -50%) translate(-30px, 0) scale(0.95);
             }
-            /* Slight overshoot again past focused */
+            /* Slight overshoot again past center */
             55% {
                 opacity: 1;
-                left: 62%;
-                transform: translate(-50%, -50%) scale(1.05);
+                transform: translate(-50%, -50%) translate(40px, 0) scale(1.05);
             }
-            /* Lock on "focused" - settle directly behind it (~57%) */
+            /* Lock on "focused" - settle directly behind it (centered) */
             70% {
                 opacity: 0.9;
-                left: 57%;
-                transform: translate(-50%, -50%) scale(1);
+                transform: translate(-50%, -50%) translate(0, 0) scale(1);
             }
-            /* Hold and slowly fade to ambient */
+            /* Hold and slowly expand to ambient */
             100% {
                 opacity: 0.5;
-                left: 57%;
-                transform: translate(-50%, -50%) scale(1.3);
+                transform: translate(-50%, -50%) translate(0, 0) scale(1.4);
             }
-        }
-
-        /* "focused" text - starts normal, glows orange when spotlight lands */
-        .text-spotlight--focused {
-            position: relative;
-            z-index: 1;
         }
 
         .reveal.is-visible .text-spotlight--focused {
