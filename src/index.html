@@ -349,6 +349,24 @@
             margin-top: 100vh;
         }
 
+        /* Soft vignette at bottom of intro that follows scroll */
+        body.intro-static .intro::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40vh;
+            background: linear-gradient(to top,
+                var(--bg) 0%,
+                rgba(10, 10, 10, 0.8) 25%,
+                rgba(10, 10, 10, 0.4) 50%,
+                rgba(10, 10, 10, 0.1) 75%,
+                transparent 100%);
+            pointer-events: none;
+            z-index: 5;
+        }
+
         /* Sections after hero need their own backgrounds */
         .section {
             background: var(--bg);
@@ -482,32 +500,66 @@
                 mask-size: 300% 100%;
                 -webkit-mask-position: 100% 0;
                 mask-position: 100% 0;
-                filter: brightness(0) invert(1);
+                filter: brightness(0) invert(1)
+                    drop-shadow(0 0 2px rgba(255, 255, 255, 0.08));
             }
-            /* Spotlight sweeps across - center of logo */
-            50% {
+            /* Early glow begins */
+            10% {
                 opacity: 1;
-                -webkit-mask-position: 50% 0;
-                mask-position: 50% 0;
-                filter: brightness(0) invert(1);
+                -webkit-mask-position: 85% 0;
+                mask-position: 85% 0;
+                filter: brightness(0) invert(1)
+                    drop-shadow(0 0 3px rgba(255, 255, 255, 0.1));
             }
-            /* Spotlight continues past, leaving logo illuminated behind it */
-            80% {
+            /* Glow building */
+            25% {
                 opacity: 1;
-                -webkit-mask-position: -20% 0;
-                mask-position: -20% 0;
+                -webkit-mask-position: 70% 0;
+                mask-position: 70% 0;
                 filter: brightness(0) invert(1)
                     drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
             }
-            /* Spotlight exits, logo stays revealed with glow */
+            /* Spotlight sweeps to center - glow building */
+            40% {
+                opacity: 1;
+                -webkit-mask-position: 50% 0;
+                mask-position: 50% 0;
+                filter: brightness(0) invert(1)
+                    drop-shadow(0 0 8px rgba(255, 255, 255, 0.3))
+                    drop-shadow(0 0 16px rgba(255, 255, 255, 0.15));
+            }
+            /* Spotlight exits while mask opens up - glow intensifies */
+            65% {
+                opacity: 1;
+                -webkit-mask-image: linear-gradient(
+                    100deg,
+                    rgba(0, 0, 0, 0.5) 0%,
+                    rgba(0, 0, 0, 0.8) 25%,
+                    rgba(0, 0, 0, 1) 45%,
+                    rgba(0, 0, 0, 1) 100%
+                );
+                mask-image: linear-gradient(
+                    100deg,
+                    rgba(0, 0, 0, 0.5) 0%,
+                    rgba(0, 0, 0, 0.8) 25%,
+                    rgba(0, 0, 0, 1) 45%,
+                    rgba(0, 0, 0, 1) 100%
+                );
+                -webkit-mask-position: 15% 0;
+                mask-position: 15% 0;
+                filter: brightness(0) invert(1)
+                    drop-shadow(0 0 10px rgba(255, 255, 255, 0.35))
+                    drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+            }
+            /* Fully revealed with rich glow */
             100% {
                 opacity: 1;
-                -webkit-mask-position: -50% 0;
-                mask-position: -50% 0;
+                -webkit-mask-image: none;
+                mask-image: none;
                 filter: brightness(0) invert(1)
-                    drop-shadow(0 0 10px rgba(255, 255, 255, 0.4))
-                    drop-shadow(0 0 20px rgba(255, 255, 255, 0.25))
-                    drop-shadow(0 0 35px rgba(255, 255, 255, 0.1));
+                    drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))
+                    drop-shadow(0 0 18px rgba(255, 255, 255, 0.3))
+                    drop-shadow(0 0 35px rgba(255, 255, 255, 0.15));
             }
         }
 
@@ -613,13 +665,14 @@
                     0 0 60px rgba(255, 255, 255, 0.4),
                     0 0 90px rgba(255, 255, 255, 0.2);
             }
-            /* Dim down the glow */
+            /* Settle to ambient glow - stays warm */
             100% {
                 opacity: 1;
-                color: rgba(255, 255, 255, 0.9);
+                color: rgba(255, 255, 255, 1);
                 text-shadow:
-                    0 0 10px rgba(255, 255, 255, 0.2),
-                    0 0 20px rgba(255, 255, 255, 0.1);
+                    0 0 12px rgba(255, 255, 255, 0.35),
+                    0 0 25px rgba(255, 255, 255, 0.25),
+                    0 0 45px rgba(255, 255, 255, 0.12);
             }
         }
 
@@ -642,7 +695,9 @@
             }
             100% {
                 opacity: 1;
-                text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+                text-shadow:
+                    0 0 10px rgba(255, 255, 255, 0.25),
+                    0 0 20px rgba(255, 255, 255, 0.15);
             }
         }
 
@@ -837,6 +892,15 @@
             overflow: visible;
             padding-top: 4rem;
             background: var(--bg);
+            /* Soft fade at top edge */
+            -webkit-mask-image: linear-gradient(to bottom,
+                transparent 0%,
+                black 15%,
+                black 100%);
+            mask-image: linear-gradient(to bottom,
+                transparent 0%,
+                black 15%,
+                black 100%);
         }
 
         /* Extend hero background upward into the margin gap to eliminate black bar */
@@ -1485,20 +1549,30 @@
                     0 0 60px rgba(217, 119, 6, 0.6),
                     0 0 100px rgba(217, 119, 6, 0.3);
             }
-            /* Beam passes, settle to orange glow */
+            /* Beam passes, settle bright */
             60% {
-                color: var(--accent);
+                color: #fff;
                 text-shadow:
                     0 0 20px var(--accent-glow),
-                    0 0 40px rgba(217, 119, 6, 0.4);
+                    0 0 40px rgba(217, 119, 6, 0.5);
             }
-            /* Stay glowing orange */
+            /* Stay solid white with warm orange glow */
             100% {
-                color: var(--accent);
+                color: #fff;
                 text-shadow:
-                    0 0 15px var(--accent-glow),
-                    0 0 30px rgba(217, 119, 6, 0.3);
+                    0 0 12px rgba(217, 119, 6, 0.6),
+                    0 0 25px rgba(217, 119, 6, 0.4),
+                    0 0 45px rgba(217, 119, 6, 0.2);
             }
+        }
+
+        /* Surrounding text fades to translucent */
+        .section__title--clear-phrase .text-fade {
+            transition: color 1.5s ease 1.8s, opacity 1.5s ease 1.8s;
+        }
+
+        .reveal.is-visible .section__title--clear-phrase .text-fade {
+            color: rgba(255, 255, 255, 0.3);
         }
 
         /* === ABOUT === */
@@ -2260,7 +2334,7 @@
             <div class="container">
                 <div class="section__header section__header--process reveal">
                     <p class="section__label">How It Works</p>
-                    <h2 class="section__title">A <span class="text-spotlight text-spotlight--clear">clear</span> path forward</h2>
+                    <h2 class="section__title section__title--clear-phrase"><span class="text-fade">A </span><span class="text-spotlight text-spotlight--clear">clear</span><span class="text-fade"> path forward</span></h2>
                 </div>
 
                 <div class="process reveal">
