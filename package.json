@@ -2,12 +2,18 @@
   "name": "bertrandbrands.com",
   "version": "1.0.0",
   "description": "Bertrand Brands — Brand & Web Systems studio site",
+  "type": "module",
   "scripts": {
     "dev": "npx serve . -l 8005",
     "build": "echo 'Static site - no build required'",
-    "start": "npx serve . -l 8005"
+    "start": "npx serve . -l 8005",
+    "db:init": "node scripts/init-db.js"
   },
   "author": "Scott Bertrand",
   "license": "UNLICENSED",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@vercel/postgres": "^0.10.0",
+    "resend": "^4.0.0"
+  }
 }

@@ -18,11 +18,11 @@
     --border: rgba(255, 255, 255, 0.08);
     --border-hover: rgba(255, 255, 255, 0.15);
 
-    /* Accent — Warm Amber (shared across ecosystem) */
-    --accent: #F59E0B;
-    --accent-hover: #D97706;
-    --accent-muted: rgba(245, 158, 11, 0.15);
-    --accent-glow: rgba(245, 158, 11, 0.3);
+    /* Accent — Warm Amber 600 (shared across ecosystem, matches main.css) */
+    --accent: #D97706;
+    --accent-hover: #B45309;
+    --accent-muted: rgba(217, 119, 6, 0.15);
+    --accent-glow: rgba(217, 119, 6, 0.3);
 
     /* === Typography === */
     --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;

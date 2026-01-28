@@ -80,7 +80,7 @@
         <div class="intro__glow intro__glow--blue"></div>
         <div class="intro__fade"></div>
         <div class="intro__grid"></div>
-        <img src="/assets/bertrand-brands-logomark.png" alt="" class="intro__logo">
+        <img src="/assets/bertrand-brands-logomark.png" alt="Bertrand Brands" class="intro__logo">
         <div class="intro__brand">
             <span class="intro__brand-main">Bertrand</span>
             <span class="intro__brand-main">Brands</span>
@@ -98,13 +98,13 @@
         <header class="header">
             <div class="header__glass">
                 <div class="header__inner">
-                    <a href="/" class="header__logo"><img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon"><span class="header__logo-text">Bertrand Brands</span></a>
-                    <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false">
+                    <a href="/" class="header__logo"><img src="/assets/bertrand-brands-logomark.png" alt="Bertrand Brands" class="header__logo-icon"><span class="header__logo-text">Bertrand Brands</span></a>
+                    <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
-                    <nav class="header__nav">
+                    <nav class="header__nav" id="mainNav">
                         <a href="#about" class="header__link">About</a>
                         <a href="#process" class="header__link">How It Works</a>
                         <a href="#services" class="header__link">Services</a>
@@ -384,7 +384,7 @@
             <div class="container">
                 <div class="footer__inner">
                     <div class="footer__left">
-                        <p class="footer__copyright">© <script>document.write(new Date().getFullYear())</script> Bertrand Brands</p>
+                        <p class="footer__copyright">© <span id="currentYear"></span> Bertrand Brands</p>
                         <p class="footer__parent"><a href="#work">Selected Work</a></p>
                     </div>
                     <div class="footer__contact">
@@ -480,25 +480,78 @@
             document.querySelectorAll('.section--process').forEach(el => sectionObserver.observe(el));
         })();
 
-        // Mobile menu toggle
+        // Mobile menu toggle with focus trap
         (function() {
             const toggle = document.querySelector('.header__toggle');
             const nav = document.querySelector('.header__nav');
             const navLinks = document.querySelectorAll('.header__link');
 
+            // Get focusable elements within the nav
+            function getFocusableElements() {
+                return nav.querySelectorAll('a, button');
+            }
+
+            function openMenu() {
+                nav.classList.add('is-open');
+                toggle.classList.add('is-open');
+                toggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+
+                // Focus first nav link
+                const firstLink = nav.querySelector('.header__link');
+                if (firstLink) firstLink.focus();
+            }
+
+            function closeMenu() {
+                nav.classList.remove('is-open');
+                toggle.classList.remove('is-open');
+                toggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+                toggle.focus();
+            }
+
             toggle.addEventListener('click', () => {
-                const isOpen = nav.classList.toggle('is-open');
-                toggle.classList.toggle('is-open');
-                toggle.setAttribute('aria-expanded', isOpen);
+                const isOpen = nav.classList.contains('is-open');
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
             });
 
             // Close menu when clicking a link
             navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    nav.classList.remove('is-open');
-                    toggle.classList.remove('is-open');
-                    toggle.setAttribute('aria-expanded', 'false');
-                });
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Focus trap for mobile menu
+            nav.addEventListener('keydown', (e) => {
+                if (!nav.classList.contains('is-open')) return;
+
+                if (e.key === 'Escape') {
+                    closeMenu();
+                    return;
+                }
+
+                if (e.key === 'Tab') {
+                    const focusable = getFocusableElements();
+                    const firstFocusable = focusable[0];
+                    const lastFocusable = focusable[focusable.length - 1];
+
+                    if (e.shiftKey) {
+                        // Shift+Tab: if on first element, wrap to last
+                        if (document.activeElement === firstFocusable) {
+                            e.preventDefault();
+                            lastFocusable.focus();
+                        }
+                    } else {
+                        // Tab: if on last element, wrap to first
+                        if (document.activeElement === lastFocusable) {
+                            e.preventDefault();
+                            firstFocusable.focus();
+                        }
+                    }
+                }
             });
         })();
 
@@ -792,6 +845,12 @@
             checkPricingAccess();
         })();
 
+        // Set current year in footer
+        (function() {
+            const yearEl = document.getElementById('currentYear');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+        })();
+
         // Contact form with AJAX submission, notifications, and feedback
         (function() {
             const form = document.querySelector('.contact-form');
@@ -897,14 +956,8 @@
                         feedback.textContent = 'Thank you! Your request has been sent. We\'ll be in touch within 1-2 business days.';
                         form.reset();
 
-                        // Also send notifications (fire and forget)
+                        // Send Pushover notification (fire and forget)
                         fetch('/api/notify', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(formData)
-                        }).catch(() => {});
-
-                        fetch('https://hooks.zapier.com/hooks/catch/26192099/uqqr4uk/', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(formData)
