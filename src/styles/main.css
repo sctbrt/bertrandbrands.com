@@ -282,10 +282,16 @@
             transition: opacity 0.8s ease-out;
         }
 
+        /* Fade glows gradually when intro is hidden */
+        .intro.intro--hidden .intro__glow {
+            opacity: 0 !important;
+            transition: opacity 1.2s ease-out;
+        }
+
         /* Then hide the entire intro after fade completes */
         .intro.intro--hidden {
             pointer-events: none;
-            animation: introFadeOut 0.6s ease-out 0.8s forwards;
+            animation: introFadeOut 0.6s ease-out 1.2s forwards;
         }
 
         @keyframes introFadeOut {
