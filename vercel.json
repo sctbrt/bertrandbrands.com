@@ -2,6 +2,12 @@
   "buildCommand": null,
   "outputDirectory": "src",
   "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/pricing/access",
+      "destination": "/api/pricing/access"
+    }
+  ],
   "redirects": [
     {
       "source": "/about",
@@ -25,7 +31,22 @@
     },
     {
       "source": "/contact",
-      "destination": "/#contact",
+      "destination": "/#intake",
+      "permanent": false
+    },
+    {
+      "source": "/intake",
+      "destination": "/#intake",
+      "permanent": false
+    },
+    {
+      "source": "/start",
+      "destination": "/#intake",
+      "permanent": false
+    },
+    {
+      "source": "/start-here",
+      "destination": "/#intake",
       "permanent": false
     },
     {
@@ -40,12 +61,12 @@
     },
     {
       "source": "/founders-direction-check",
-      "destination": "/pages/founders-direction-check",
+      "destination": "/#services",
       "permanent": false
     },
     {
       "source": "/brand-website-starter-map",
-      "destination": "/pages/brand-website-starter-map",
+      "destination": "/#services",
       "permanent": false
     },
     {
