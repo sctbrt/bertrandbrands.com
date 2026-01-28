@@ -391,15 +391,69 @@
         /* Mobile: reduce glow sizes and blur for performance */
         @media (max-width: 768px) {
             .intro__glow {
-                filter: blur(80px);
+                filter: blur(60px);
+                /* Disable floating animation on mobile for performance */
+                animation-iteration-count: 1 !important;
             }
             .intro__glow--orange {
-                width: 400px;
-                height: 400px;
+                width: 300px;
+                height: 300px;
+                /* Simpler fade-in only, no float */
+                animation: introGlowOrangeMobile 2s ease-out 0.2s forwards;
             }
             .intro__glow--blue {
-                width: 350px;
-                height: 350px;
+                width: 250px;
+                height: 250px;
+                /* Simpler fade-in only, no float */
+                animation: introGlowBlueMobile 2s ease-out 0.5s forwards;
+            }
+
+            /* Simplified mobile glow animations - no continuous floating */
+            @keyframes introGlowOrangeMobile {
+                0% { opacity: 0; transform: translateZ(0); }
+                100% { opacity: 0.15; transform: translateZ(0); }
+            }
+            @keyframes introGlowBlueMobile {
+                0% { opacity: 0; transform: translateZ(0); }
+                100% { opacity: 0.1; transform: translateZ(0); }
+            }
+
+            /* Simplified logo animation - remove expensive mask/filter changes */
+            .intro__logo {
+                animation: logoSpotlightMobile 1.5s ease-out 1.2s forwards;
+            }
+
+            @keyframes logoSpotlightMobile {
+                0% { opacity: 0; transform: translateY(10px) translateZ(0); }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0) translateZ(0);
+                    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+                }
+            }
+
+            /* Simplified text animations - reduce text-shadow complexity */
+            .intro__brand-main {
+                animation: spotlightMobile 2.5s ease-out 1.2s forwards;
+            }
+
+            @keyframes spotlightMobile {
+                0% { opacity: 0; color: rgba(255, 255, 255, 0); }
+                30% { opacity: 1; color: rgba(255, 255, 255, 0.5); }
+                100% {
+                    opacity: 1;
+                    color: rgba(255, 255, 255, 1);
+                    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+                }
+            }
+
+            .intro__brand-sub {
+                animation: subtitleRevealMobile 0.6s ease-out 2.5s forwards;
+            }
+
+            @keyframes subtitleRevealMobile {
+                0% { opacity: 0; }
+                100% { opacity: 1; }
             }
         }
 
