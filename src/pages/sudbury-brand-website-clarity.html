@@ -7,20 +7,20 @@
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/sudbury-brand-website-clarity">
     <meta name="theme-color" content="#1C1C1E">
-    <title>Brand & Website Clarity for Sudbury Businesses | Bertrand Brands</title>
-    <meta name="description" content="Get clarity on your brand and website. Serving founders and small businesses in Greater Sudbury and Northern Ontario. Entry reviews start at $195.">
+    <title>Website Snapshot Review for Sudbury Small Businesses | Bertrand Brands</title>
+    <meta name="description" content="Get a fast, expert second opinion on your website — not a redesign pitch. Serving small businesses in Greater Sudbury and Northern Ontario. Launch Access Rate: $145 CAD.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Brand & Website Clarity for Sudbury Businesses | Bertrand Brands">
-    <meta property="og:description" content="Get clarity on your brand and website. Serving founders and small businesses in Greater Sudbury and Northern Ontario.">
+    <meta property="og:title" content="Website Snapshot Review for Sudbury Small Businesses | Bertrand Brands">
+    <meta property="og:description" content="Get a fast, expert second opinion on your website — not a redesign pitch. Launch Access Rate: $145 CAD.">
     <meta property="og:url" content="https://bertrandbrands.com/sudbury-brand-website-clarity">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Brand & Website Clarity for Sudbury Businesses | Bertrand Brands">
-    <meta name="twitter:description" content="Get clarity on your brand and website. Serving founders and small businesses in Greater Sudbury and Northern Ontario.">
+    <meta name="twitter:title" content="Website Snapshot Review for Sudbury Small Businesses | Bertrand Brands">
+    <meta name="twitter:description" content="Get a fast, expert second opinion on your website — not a redesign pitch. Launch Access Rate: $145 CAD.">
 
     <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -30,9 +30,9 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Brand & Website Clarity for Sudbury Businesses",
-      "description": "Get clarity on your brand and website. Serving founders and small businesses in Greater Sudbury and Northern Ontario.",
+      "@type": "Service",
+      "name": "Website Snapshot Review",
+      "description": "A fast, expert second opinion on your existing website — not a redesign pitch. Structured review with prioritized recommendations.",
       "url": "https://bertrandbrands.com/sudbury-brand-website-clarity",
       "provider": {
         "@type": "ProfessionalService",
@@ -42,7 +42,14 @@
       "areaServed": [
         { "@type": "Place", "name": "Greater Sudbury" },
         { "@type": "Place", "name": "Northern Ontario" }
-      ]
+      ],
+      "offers": {
+        "@type": "Offer",
+        "name": "Launch Access Rate",
+        "price": "145",
+        "priceCurrency": "CAD",
+        "priceValidUntil": "2026-02-16"
+      }
     }
     </script>
 
@@ -471,6 +478,255 @@
                 animation: spotlightFadeIn 1.5s ease-out 0.3s forwards !important;
             }
         }
+
+        /* === HERO PRICE STYLING === */
+        .lead-hero__price {
+            margin-top: var(--space-sm);
+            font-size: var(--text-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .lead-hero__price-sale {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .lead-hero__price-regular {
+            color: var(--text-subtle);
+            font-size: var(--text-sm);
+        }
+
+        .lead-hero__trust {
+            margin-top: var(--space-xs);
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .lead-hero__price-note {
+            margin-top: 0.25rem;
+            font-size: var(--text-xs);
+            color: var(--text-subtle);
+        }
+
+        /* === LAUNCH RATE BOX === */
+        .launch-rate-box {
+            max-width: 520px;
+            margin: 0 auto;
+            text-align: center;
+            padding: var(--space-xl);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            position: relative;
+        }
+
+        .launch-rate-box::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--radius-lg);
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.4), transparent 50%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .launch-rate-box__label {
+            font-size: var(--text-xs);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: var(--space-xs);
+        }
+
+        .launch-rate-box__title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 300;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .launch-rate-box__currency {
+            font-size: 0.5em;
+            color: var(--text-muted);
+        }
+
+        .launch-rate-box__regular {
+            font-size: var(--text-sm);
+            color: var(--text-subtle);
+            margin-bottom: var(--space-md);
+        }
+
+        .launch-rate-box__text {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: var(--space-sm);
+        }
+
+        .launch-rate-box__list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+        }
+
+        .launch-rate-box__list li {
+            padding: 0.25rem 0;
+        }
+
+        .launch-rate-box__list li::before {
+            content: '✓';
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+
+        /* === SNAPSHOT FORM === */
+        .snapshot-form {
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        .snapshot-form__row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+        }
+
+        @media (max-width: 540px) {
+            .snapshot-form__row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .snapshot-form__field {
+            margin-bottom: var(--space-sm);
+        }
+
+        .snapshot-form__label {
+            display: block;
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.375rem;
+        }
+
+        .snapshot-form__optional {
+            font-weight: 400;
+            color: var(--text-subtle);
+        }
+
+        .snapshot-form__input,
+        .snapshot-form__textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: var(--text-base);
+            font-family: inherit;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .snapshot-form__input:focus,
+        .snapshot-form__textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+        }
+
+        .snapshot-form__input::placeholder,
+        .snapshot-form__textarea::placeholder {
+            color: var(--text-subtle);
+        }
+
+        .snapshot-form__textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .snapshot-form__btn {
+            width: 100%;
+            margin-top: var(--space-sm);
+            padding: 1rem 2rem;
+            font-size: var(--text-base);
+            font-weight: 500;
+            font-family: inherit;
+            color: #000;
+            background: rgba(217, 119, 6, 0.85);
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+            position: relative;
+        }
+
+        .snapshot-form__btn:hover {
+            background: rgba(217, 119, 6, 0.95);
+        }
+
+        .snapshot-form__btn:active {
+            transform: scale(0.98);
+        }
+
+        .snapshot-form__btn::before {
+            content: '';
+            position: absolute;
+            inset: -15px -25px;
+            background: radial-gradient(ellipse, rgba(217, 119, 6, 0.2) 0%, transparent 70%);
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .snapshot-form__btn:hover::before {
+            opacity: 1;
+        }
+
+        .snapshot-form__note {
+            text-align: center;
+            font-size: var(--text-xs);
+            color: var(--text-subtle);
+            margin-top: 0.5rem;
+        }
+
+        /* Success state */
+        .snapshot-form__success {
+            max-width: 540px;
+            margin: 0 auto;
+            text-align: center;
+            padding: var(--space-xl);
+            background: var(--bg-subtle);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: var(--radius-lg);
+        }
+
+        .snapshot-form__success-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: var(--text-xl);
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .snapshot-form__success-text {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
@@ -499,75 +755,104 @@
         <div class="container">
             <!-- Hero -->
             <section class="lead-hero">
-                <h1 class="lead-hero__title">Get clarity on your brand and website</h1>
+                <h1 class="lead-hero__title">A fast, expert second opinion on your website</h1>
                 <p class="lead-hero__subtitle">
-                    Serving founders and small businesses in Greater Sudbury and Northern Ontario. Clear direction without the pressure of a sales call.
+                    Not a redesign pitch. Just a clear, structured review of what's working, what's not, and where to focus next. For small businesses in Greater Sudbury and Northern Ontario.
                 </p>
-                <a href="/#intake" class="lead-hero__cta">Get clarity on your business</a>
-                <p class="lead-hero__price">Entry reviews start at $195</p>
+                <a href="#book" class="lead-hero__cta">Book a Website Snapshot — Launch Rate</a>
+                <p class="lead-hero__price"><span class="lead-hero__price-sale">$145 CAD</span> <span class="lead-hero__price-regular">· Launch Access Rate</span></p>
+                <p class="lead-hero__price-note">(regular rate resumes at $195)</p>
+                <p class="lead-hero__trust">Same process. Same deliverable. Same attention.</p>
             </section>
         </div>
 
-        <!-- What to Expect -->
+        <!-- What You Get -->
         <section class="lead-section lead-section--alt">
             <div class="container">
-                <h2 class="lead-section__title">What happens after you contact us</h2>
+                <h2 class="lead-section__title">What you get</h2>
                 <p class="lead-section__intro">
-                    Every inquiry is captured and reviewed before follow-up. No automated responses—just thoughtful consideration of your situation before we respond.
+                    A Website Snapshot Review is a structured, written assessment of your site's most visible issues — delivered within 3–5 business days.
                 </p>
 
                 <div class="expect-grid">
                     <div class="expect-item">
-                        <h3 class="expect-item__title">Your inquiry is captured</h3>
-                        <p class="expect-item__text">Your details are documented so nothing gets missed. Every inquiry gets reviewed.</p>
+                        <h3 class="expect-item__title">First impressions audit</h3>
+                        <p class="expect-item__text">How your site reads in the first 5 seconds. Is the message clear? Does it build trust?</p>
                     </div>
                     <div class="expect-item">
-                        <h3 class="expect-item__title">Intentional review</h3>
-                        <p class="expect-item__text">We review each inquiry to understand your situation before responding. No rushed replies.</p>
+                        <h3 class="expect-item__title">Conversion clarity check</h3>
+                        <p class="expect-item__text">Can visitors easily understand what to do next? We assess your calls-to-action and contact flow.</p>
                     </div>
                     <div class="expect-item">
-                        <h3 class="expect-item__title">Thoughtful follow-up</h3>
-                        <p class="expect-item__text">You'll hear back within 1-2 business days with clear next steps.</p>
+                        <h3 class="expect-item__title">Mobile & speed review</h3>
+                        <p class="expect-item__text">How the site performs on phones and whether load times are hurting you.</p>
                     </div>
                     <div class="expect-item">
-                        <h3 class="expect-item__title">Written deliverable</h3>
-                        <p class="expect-item__text">All reviews are delivered in writing—clear, structured, and actionable. No sales calls required.</p>
+                        <h3 class="expect-item__title">Prioritized recommendations</h3>
+                        <p class="expect-item__text">Clear next steps ranked by impact. No jargon, no upsell — just actionable direction.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Starting Points -->
+        <!-- Launch Rate -->
         <section class="lead-section">
             <div class="container">
-                <h2 class="lead-section__title">Starting points</h2>
-                <p class="lead-section__intro">
-                    Entry-level services designed to provide direction without a major commitment.
-                </p>
-
-                <div class="services-grid">
-                    <div class="service-card">
-                        <h3 class="service-card__title">Website Snapshot Review</h3>
-                        <p class="service-card__price">$195 CAD</p>
-                        <p class="service-card__text">A structured review of your website with prioritized recommendations. Understand what's working, what needs attention, and where to focus next.</p>
-                    </div>
-                    <div class="service-card">
-                        <h3 class="service-card__title">Brand Clarity Diagnostic</h3>
-                        <p class="service-card__price">$295 CAD</p>
-                        <p class="service-card__text">A positioning and messaging assessment with clear direction. Know where you stand and what needs to shift.</p>
-                    </div>
+                <div class="launch-rate-box">
+                    <p class="launch-rate-box__label">Launch Access Rate</p>
+                    <h2 class="launch-rate-box__title">$145 <span class="launch-rate-box__currency">CAD</span></h2>
+                    <p class="launch-rate-box__regular">Standard rate: $195 CAD</p>
+                    <p class="launch-rate-box__text">To mark the Sudbury launch of Bertrand Brands, we're offering a reduced access rate on our Website Snapshot Review for a limited time.</p>
+                    <ul class="launch-rate-box__list">
+                        <li>Same process. Same deliverable. Same attention.</li>
+                        <li>Launch access available for a limited time.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
-        <section class="lead-cta-section">
+        <!-- Book Form -->
+        <section class="lead-section lead-section--alt" id="book">
             <div class="container">
-                <h2 class="lead-cta-section__title">Ready to get clarity?</h2>
-                <p class="lead-cta-section__text">
-                    Share what's on your mind. We'll review your inquiry and follow up with the right next step.
+                <h2 class="lead-section__title">Book your Website Snapshot Review</h2>
+                <p class="lead-section__intro">
+                    Fill out the form below. We'll confirm your booking within 1–2 business days and deliver your review within 3–5 business days after that.
                 </p>
-                <a href="/#intake" class="lead-hero__cta">Get clarity on your business</a>
+
+                <form class="snapshot-form" id="snapshot-form" action="/api/pricing/request-access" method="POST">
+                    <input type="hidden" name="source" value="sudbury-launch-campaign">
+                    <input type="hidden" name="offer" value="website-snapshot-review">
+                    <input type="hidden" name="rate" value="launch-145">
+
+                    <div class="snapshot-form__row">
+                        <div class="snapshot-form__field">
+                            <label for="name" class="snapshot-form__label">Your name</label>
+                            <input type="text" id="name" name="name" required class="snapshot-form__input" placeholder="Jane Smith">
+                        </div>
+                        <div class="snapshot-form__field">
+                            <label for="email" class="snapshot-form__label">Email address</label>
+                            <input type="email" id="email" name="email" required class="snapshot-form__input" placeholder="jane@example.com">
+                        </div>
+                    </div>
+
+                    <div class="snapshot-form__field">
+                        <label for="website" class="snapshot-form__label">Your website URL</label>
+                        <input type="url" id="website" name="website" required class="snapshot-form__input" placeholder="https://yoursite.com">
+                    </div>
+
+                    <div class="snapshot-form__field">
+                        <label for="concern" class="snapshot-form__label">What's your main concern? <span class="snapshot-form__optional">(optional)</span></label>
+                        <textarea id="concern" name="concern" rows="3" class="snapshot-form__textarea" placeholder="e.g. I'm not getting inquiries from my website..."></textarea>
+                    </div>
+
+                    <button type="submit" class="snapshot-form__btn">Book a Website Snapshot — Launch Rate</button>
+                    <p class="snapshot-form__note">You'll receive confirmation within 1–2 business days.</p>
+                </form>
+
+                <div class="snapshot-form__success" id="form-success" hidden>
+                    <h3 class="snapshot-form__success-title">You're booked.</h3>
+                    <p class="snapshot-form__success-text">We'll confirm your Website Snapshot Review within 1–2 business days. Check your inbox.</p>
+                </div>
             </div>
         </section>
     </main>
@@ -577,9 +862,53 @@
         <p class="lead-footer__text">Based in Greater Sudbury, serving Northern Ontario & Canada remotely</p>
         <p class="lead-footer__links">
             &copy; <script>document.write(new Date().getFullYear())</script> Bertrand Brands &middot;
-            <a href="/">Home</a> &middot;
-            <a href="/#intake">Contact</a>
+            <a href="/">Home</a>
         </p>
     </footer>
+
+    <script>
+        // Form submission handler
+        const form = document.getElementById('snapshot-form');
+        const successEl = document.getElementById('form-success');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = form.querySelector('.snapshot-form__btn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Submitting...';
+            btn.disabled = true;
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/api/snapshot/book', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    form.hidden = true;
+                    successEl.hidden = false;
+                    // Track conversion for Google Ads
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+                            'value': 145,
+                            'currency': 'CAD'
+                        });
+                    }
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (err) {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                alert('Something went wrong. Please try again or email hello@bertrandbrands.com directly.');
+            }
+        });
+    </script>
 </body>
 </html>
