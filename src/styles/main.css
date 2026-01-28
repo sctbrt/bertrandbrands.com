@@ -685,9 +685,23 @@
             bottom: 8%;
             left: 50%;
             transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
             opacity: 0;
             pointer-events: none;
             z-index: 5;
+            cursor: pointer;
+        }
+
+        .intro__scroll-hint-text {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
         }
 
         .intro__scroll-hint svg {
@@ -698,8 +712,9 @@
             fill: none;
         }
 
-        /* Show and pulse when intro is static (ready to scroll) */
+        /* Show and pulse when intro is static (ready to scroll/tap) */
         .intro.intro--static .intro__scroll-hint {
+            pointer-events: auto;
             animation:
                 scrollHintAppear 0.6s ease-out 0.5s forwards,
                 scrollHintPulse 1.8s ease-in-out 1.1s infinite;
@@ -789,7 +804,7 @@
                 align-items: center;
                 justify-content: center;
                 gap: 2rem;
-                z-index: 200;
+                z-index: 1100; /* Above intro (1000) */
                 padding: 4rem 2rem;
                 box-sizing: border-box;
                 overflow-y: auto;
@@ -815,7 +830,7 @@
             justify-content: center;
             gap: 5px;
             cursor: pointer;
-            z-index: 201;
+            z-index: 1101; /* Above nav (1100) */
             background: none;
             border: none;
             padding: 0;

@@ -87,6 +87,7 @@
             <span class="intro__brand-sub">Brand &amp; Web Systems</span>
         </div>
         <div class="intro__scroll-hint">
+            <span class="intro__scroll-hint-text">Tap to begin</span>
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
@@ -616,6 +617,16 @@
                 window.removeEventListener('touchmove', preventScroll);
                 // Header will be shown once user scrolls to main content
             }, introAnimationDuration);
+
+            // Handle "Tap to begin" click on intro scroll hint
+            const introScrollHint = intro.querySelector('.intro__scroll-hint');
+            if (introScrollHint) {
+                introScrollHint.addEventListener('click', () => {
+                    if (!document.body.classList.contains('intro-static')) return;
+                    // Scroll to hero section (past intro)
+                    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+                });
+            }
 
             // Handle scroll to lock user from scrolling back to intro
             let hasScrolledPastIntro = false;
@@ -1161,6 +1172,9 @@
                 }, { passive: false });
 
                 // Touch handling - same logic as wheel: free scroll in scrollable sections
+                // Higher threshold on mobile to prevent accidental section skips
+                const touchThreshold = 80; // px - higher than desktop for deliberate swipes
+
                 window.addEventListener('touchstart', (e) => {
                     if (isIntroActive()) return;
                     touchStartY = e.touches[0].clientY;
@@ -1177,7 +1191,7 @@
                         }
                     }
 
-                    if (deltaY > 50) {
+                    if (deltaY > touchThreshold) {
                         // Swipe up (scroll down)
                         // In scrollable section and not at bottom - let natural scroll handle it
                         if (isInScrollableSection() && !isAtSectionBottom()) {
@@ -1188,7 +1202,7 @@
                         if (currentSection < sections.length - 1) {
                             goToSection(currentSection + 1);
                         }
-                    } else if (deltaY < -50) {
+                    } else if (deltaY < -touchThreshold) {
                         // Swipe down (scroll up) - always allow, sync after
                         clearTimeout(scrollUpTimeout);
                         scrollUpTimeout = setTimeout(() => {
