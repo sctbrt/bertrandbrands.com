@@ -758,6 +758,9 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
+                width: 100vw;
+                height: 100vh;
+                height: 100dvh;
                 background: rgba(10, 10, 10, 0.98);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
@@ -766,6 +769,9 @@
                 justify-content: center;
                 gap: 2rem;
                 z-index: 200;
+                padding: 4rem 2rem;
+                box-sizing: border-box;
+                overflow-y: auto;
             }
             .header__nav.is-open {
                 display: flex;
@@ -775,6 +781,7 @@
             }
             .header__nav .header__link--portal {
                 font-size: 0.875rem;
+                margin-top: 1rem;
             }
         }
 
