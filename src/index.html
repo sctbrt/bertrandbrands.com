@@ -618,14 +618,18 @@
                 // Header will be shown once user scrolls to main content
             }, introAnimationDuration);
 
-            // Handle "Tap to begin" click on intro scroll hint
+            // Handle "Tap to begin" click/tap on intro scroll hint
             const introScrollHint = intro.querySelector('.intro__scroll-hint');
             if (introScrollHint) {
-                introScrollHint.addEventListener('click', () => {
+                function handleTapToBegin(e) {
                     if (!document.body.classList.contains('intro-static')) return;
+                    e.preventDefault();
+                    e.stopPropagation();
                     // Scroll to hero section (past intro)
                     window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-                });
+                }
+                introScrollHint.addEventListener('click', handleTapToBegin);
+                introScrollHint.addEventListener('touchend', handleTapToBegin);
             }
 
             // Handle scroll to lock user from scrolling back to intro
