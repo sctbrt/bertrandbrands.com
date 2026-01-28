@@ -72,17 +72,16 @@
         }
 
         /* Scroll snap - sections snap to viewport */
-        @media (min-width: 769px) {
-            html {
-                scroll-snap-type: y proximity;
-                scroll-behavior: smooth;
-            }
+        html {
+            scroll-snap-type: y proximity;
+            scroll-behavior: smooth;
+            overflow-y: scroll;
+            height: 100%;
+        }
 
-            .hero,
-            .section {
-                scroll-snap-align: start;
-                scroll-snap-stop: normal;
-            }
+        .hero,
+        .section {
+            scroll-snap-align: start;
         }
 
         /* Respect reduced motion preference */
