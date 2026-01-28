@@ -14,6 +14,22 @@
     {
       "source": "/sudbury-small-business-website-leads",
       "destination": "/pages/sudbury-small-business-website-leads.html"
+    },
+    {
+      "source": "/website-snapshot-review",
+      "destination": "/pages/ads/website-snapshot-review.html"
+    },
+    {
+      "source": "/brand-clarity-diagnostic",
+      "destination": "/pages/ads/brand-clarity-diagnostic.html"
+    },
+    {
+      "source": "/intake/website-snapshot-review",
+      "destination": "/pages/intake/website-snapshot-review.html"
+    },
+    {
+      "source": "/intake/brand-clarity-diagnostic",
+      "destination": "/pages/intake/brand-clarity-diagnostic.html"
     }
   ],
   "redirects": [
