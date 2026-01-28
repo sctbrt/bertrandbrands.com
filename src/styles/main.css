@@ -706,11 +706,13 @@
         }
 
         .intro__scroll-hint svg {
+            display: block;
             width: 32px;
             height: 32px;
             stroke: var(--text-muted);
             stroke-width: 1.5;
             fill: none;
+            margin: 0 auto;
         }
 
         /* Show and pulse when intro is static (ready to scroll/tap) */
