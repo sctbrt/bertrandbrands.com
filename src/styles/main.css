@@ -267,6 +267,14 @@
             pointer-events: none;
         }
 
+        /* Mobile: enable pointer-events so "tap anywhere to begin" works */
+        @media (max-width: 768px) {
+            .intro.intro--static {
+                pointer-events: auto;
+                cursor: pointer;
+            }
+        }
+
         /* Fade overlay that darkens the intro when it becomes static */
         .intro__fade {
             position: absolute;
