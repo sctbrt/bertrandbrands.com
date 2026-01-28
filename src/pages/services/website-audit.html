@@ -602,7 +602,7 @@
         <footer class="footer">
             <div class="container">
                 <div class="footer__inner">
-                    <p class="footer__copyright">© <script>document.write(new Date().getFullYear())</script> Bertrand Brands</p>
+                    <p class="footer__copyright">© <span class="js-year"></span> Bertrand Brands</p>
                     <p class="footer__parent">A <a href="https://scottbertrand.com">Scott Bertrand</a> venture</p>
                 </div>
             </div>
@@ -610,6 +610,9 @@
     </div>
 
     <script>
+        // Set current year
+        document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
+
         // Scroll reveal
         (function() {
             const reveals = document.querySelectorAll('.reveal');

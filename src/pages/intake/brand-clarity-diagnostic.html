@@ -422,10 +422,13 @@
 
     <!-- Footer -->
     <footer class="intake-footer">
-        <p class="intake-footer__text">&copy; <script>document.write(new Date().getFullYear())</script> Bertrand Brands</p>
+        <p class="intake-footer__text">&copy; <span class="js-year"></span> Bertrand Brands</p>
     </footer>
 
     <script>
+        // Set current year
+        document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
+
         const form = document.getElementById('intakeForm');
         const submitBtn = document.getElementById('submitBtn');
         const successState = document.getElementById('successState');

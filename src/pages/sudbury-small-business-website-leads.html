@@ -515,10 +515,11 @@
     <footer class="lead-footer">
         <p class="lead-footer__text">Serving Sudbury, Northern Ontario, and clients across Canada</p>
         <p class="lead-footer__links">
-            &copy; <script>document.write(new Date().getFullYear())</script> Bertrand Brands &middot;
+            &copy; <span class="js-year"></span> Bertrand Brands &middot;
             <a href="/">Home</a> &middot;
             <a href="/#intake">Contact</a>
         </p>
     </footer>
+    <script>document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());</script>
 </body>
 </html>

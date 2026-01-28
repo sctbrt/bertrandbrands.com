@@ -861,12 +861,15 @@
     <footer class="lead-footer">
         <p class="lead-footer__text">Based in Greater Sudbury, serving Northern Ontario & Canada remotely</p>
         <p class="lead-footer__links">
-            &copy; <script>document.write(new Date().getFullYear())</script> Bertrand Brands &middot;
+            &copy; <span class="js-year"></span> Bertrand Brands &middot;
             <a href="/">Home</a>
         </p>
     </footer>
 
     <script>
+        // Set current year
+        document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
+
         // Form submission handler
         const form = document.getElementById('snapshot-form');
         const successEl = document.getElementById('form-success');
