@@ -6,6 +6,14 @@
     {
       "source": "/pricing/access",
       "destination": "/api/pricing/access"
+    },
+    {
+      "source": "/sudbury-brand-website-clarity",
+      "destination": "/pages/sudbury-brand-website-clarity.html"
+    },
+    {
+      "source": "/sudbury-small-business-website-leads",
+      "destination": "/pages/sudbury-small-business-website-leads.html"
     }
   ],
   "redirects": [
@@ -67,16 +75,6 @@
     {
       "source": "/brand-website-starter-map",
       "destination": "/#services",
-      "permanent": false
-    },
-    {
-      "source": "/sudbury-brand-website-clarity",
-      "destination": "/pages/sudbury-brand-website-clarity",
-      "permanent": false
-    },
-    {
-      "source": "/sudbury-small-business-website-leads",
-      "destination": "/pages/sudbury-small-business-website-leads",
       "permanent": false
     }
   ],
