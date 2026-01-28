@@ -435,6 +435,11 @@
     </div>
 
     <script>
+        // Prevent pinch-to-zoom (iOS Safari workaround)
+        document.addEventListener('gesturestart', (e) => e.preventDefault());
+        document.addEventListener('gesturechange', (e) => e.preventDefault());
+        document.addEventListener('gestureend', (e) => e.preventDefault());
+
         // Intro option toggle (use ?intro=2 for option 2)
         (function() {
             const params = new URLSearchParams(window.location.search);

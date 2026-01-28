@@ -10,6 +10,11 @@
             box-sizing: border-box;
         }
 
+        /* Prevent pinch-to-zoom on iOS */
+        html {
+            touch-action: manipulation;
+        }
+
         /* === TOKENS === */
         :root {
             --bg: #0a0a0a;
