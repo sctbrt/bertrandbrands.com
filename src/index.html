@@ -87,7 +87,7 @@
             <span class="intro__brand-sub">Brand &amp; Web Systems</span>
         </div>
         <div class="intro__scroll-hint">
-            <span class="intro__scroll-hint-text">Tap to begin</span>
+            <span class="intro__scroll-hint-text">Tap anywhere to begin</span>
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
@@ -623,19 +623,22 @@
                 // Header will be shown once user scrolls to main content
             }, introAnimationDuration);
 
-            // Handle "Tap to begin" click/tap on intro scroll hint
-            const introScrollHint = intro.querySelector('.intro__scroll-hint');
-            if (introScrollHint) {
-                function handleTapToBegin(e) {
-                    if (!document.body.classList.contains('intro-static')) return;
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // Scroll to hero section (past intro)
-                    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-                }
-                introScrollHint.addEventListener('click', handleTapToBegin);
-                introScrollHint.addEventListener('touchend', handleTapToBegin);
-            }
+            // Handle "Tap anywhere to begin" - mobile only (touch events)
+            let tapStarted = false;
+
+            intro.addEventListener('touchstart', (e) => {
+                if (!document.body.classList.contains('intro-static')) return;
+                tapStarted = true;
+            }, { passive: true });
+
+            intro.addEventListener('touchend', (e) => {
+                if (!document.body.classList.contains('intro-static')) return;
+                if (!tapStarted) return;
+                tapStarted = false;
+                e.preventDefault();
+                // Scroll to hero section (past intro)
+                window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            }, { passive: false });
 
             // Handle scroll to lock user from scrolling back to intro
             let hasScrolledPastIntro = false;
