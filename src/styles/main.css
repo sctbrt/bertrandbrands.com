@@ -116,11 +116,16 @@
             opacity: 0;
             transform: translateY(-20px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            visibility: hidden;
+            pointer-events: none;
         }
 
         .header.visible {
             opacity: 1;
             transform: translateY(0);
+            z-index: 1050; /* Above intro (1000) when visible */
+            visibility: visible;
+            pointer-events: auto;
         }
 
         .header.hidden-scroll {
@@ -212,8 +217,13 @@
         }
 
         .header__logo-text {
+            height: 14px !important;
+            width: auto !important;
+            max-width: 150px !important;
             opacity: 0;
             transition: opacity 0.5s ease;
+            filter: brightness(1.5);
+            object-fit: contain;
         }
 
         .header__logo.show-text .header__logo-text {
@@ -351,13 +361,16 @@
             overflow-y: auto;
         }
 
-        body.intro-static.scroll-locked {
-            scroll-snap-type: y mandatory;
-        }
+        /* Mobile-only scroll snap - simpler, CSS-native approach */
+        @media (max-width: 768px) {
+            body.scroll-snap-enabled {
+                scroll-snap-type: y proximity;
+            }
 
-        body.intro-static .page {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
+            body.scroll-snap-enabled .hero,
+            body.scroll-snap-enabled .section {
+                scroll-snap-align: start;
+            }
         }
 
         /* Orange glow - top right */
@@ -2077,6 +2090,49 @@
 
         .exploratory-card__cta:hover {
             color: var(--text);
+        }
+
+        /* Primary card styling - visually dominant */
+        .exploratory-card--primary {
+            background: var(--bg-subtle);
+            border-color: var(--accent-muted);
+        }
+
+        .exploratory-card--primary:hover {
+            border-color: var(--accent);
+        }
+
+        .exploratory-card__cta--primary {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .exploratory-card__cta--primary:hover {
+            color: var(--accent-hover);
+        }
+
+        /* Secondary card styling - de-emphasized */
+        .exploratory-card--secondary {
+            background: transparent;
+            border-style: dashed;
+            opacity: 0.85;
+        }
+
+        .exploratory-card--secondary:hover {
+            opacity: 1;
+            border-style: solid;
+        }
+
+        .exploratory-card--secondary .exploratory-card__title {
+            font-size: 0.9375rem;
+        }
+
+        .exploratory-card--secondary .exploratory-card__description {
+            font-size: 0.75rem;
+        }
+
+        .exploratory-card--secondary .exploratory-card__price {
+            font-size: 0.9375rem;
         }
 
         /* === SERVICES === */

@@ -25,11 +25,27 @@
     },
     {
       "source": "/intake/website-snapshot-review",
-      "destination": "/pages/intake/website-snapshot-review.html"
+      "destination": "/pages/intake/website-snapshot-review"
     },
     {
       "source": "/intake/brand-clarity-diagnostic",
-      "destination": "/pages/intake/brand-clarity-diagnostic.html"
+      "destination": "/pages/intake/brand-clarity-diagnostic"
+    },
+    {
+      "source": "/direction-session",
+      "destination": "/pages/ads/direction-session"
+    },
+    {
+      "source": "/founders-check",
+      "destination": "/pages/ads/founders-check"
+    },
+    {
+      "source": "/intake/direction-session",
+      "destination": "/pages/intake/direction-session"
+    },
+    {
+      "source": "/intake/founders-check",
+      "destination": "/pages/intake/founders-check"
     }
   ],
   "redirects": [
@@ -55,22 +71,22 @@
     },
     {
       "source": "/contact",
-      "destination": "/#intake",
+      "destination": "/#contact",
       "permanent": false
     },
     {
       "source": "/intake",
-      "destination": "/#intake",
+      "destination": "/direction-session",
       "permanent": false
     },
     {
       "source": "/start",
-      "destination": "/#intake",
+      "destination": "/direction-session",
       "permanent": false
     },
     {
       "source": "/start-here",
-      "destination": "/#intake",
+      "destination": "/direction-session",
       "permanent": false
     },
     {
@@ -85,7 +101,7 @@
     },
     {
       "source": "/founders-direction-check",
-      "destination": "/#services",
+      "destination": "/founders-check",
       "permanent": false
     },
     {

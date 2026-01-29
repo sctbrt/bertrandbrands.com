@@ -18,8 +18,12 @@
     <meta property="og:locale" content="en_CA">
 
     <!-- Favicon & Touch Icons -->
-    <link rel="icon" type="image/png" href="/assets/favicon.png">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Bertrand Brands" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Schema.org LocalBusiness + Service -->
     <script type="application/ld+json">
@@ -40,7 +44,7 @@
         { "@type": "Place", "name": "Northern Ontario" },
         { "@type": "Country", "name": "Canada" }
       ],
-      "priceRange": "$195 - $8,500 CAD",
+      "priceRange": "$95 - $8,500 CAD",
       "founder": {
         "@type": "Person",
         "name": "Scott Bertrand",
@@ -50,6 +54,8 @@
         "@type": "OfferCatalog",
         "name": "Brand & Web Services",
         "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Founder's Direction Check" }, "price": "95", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand & Website Direction Session" }, "price": "145", "priceCurrency": "CAD" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Snapshot Review" }, "price": "195", "priceCurrency": "CAD" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Clarity Diagnostic" }, "price": "295", "priceCurrency": "CAD" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Comprehensive Website Audit" }, "price": "795", "priceCurrency": "CAD" },
@@ -99,7 +105,7 @@
         <header class="header">
             <div class="header__glass">
                 <div class="header__inner">
-                    <a href="/" class="header__logo"><img src="/assets/bertrand-brands-logomark.png" alt="Bertrand Brands" class="header__logo-icon"><span class="header__logo-text">Bertrand Brands</span></a>
+                    <a href="/" class="header__logo"><img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon"><img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text"></a>
                     <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
                         <span></span>
                         <span></span>
@@ -109,7 +115,7 @@
                         <a href="#about" class="header__link">About</a>
                         <a href="#process" class="header__link">How It Works</a>
                         <a href="#services" class="header__link">Services</a>
-                        <a href="#intake" class="header__link header__link--cta">Start Here</a>
+                        <a href="/direction-session" class="header__link header__link--cta">Book a Session</a>
                         <a href="#portal" class="header__link header__link--portal">Client Portal</a>
                     </nav>
                 </div>
@@ -190,31 +196,33 @@
                     <h2 class="section__title">What we offer</h2>
                 </div>
 
-                <!-- Tier 1: Entry Reviews -->
+                <!-- Tier 1: Entry — Direction Sessions -->
                 <div class="exploratory reveal">
                     <p class="exploratory__label">Start Here</p>
-                    <div class="exploratory__grid">
-                        <div class="exploratory-card">
+                    <div class="exploratory__grid exploratory__grid--primary">
+                        <!-- Primary CTA: Direction Session -->
+                        <div class="exploratory-card exploratory-card--primary">
                             <div class="exploratory-card__header">
-                                <h3 class="exploratory-card__title">Website Snapshot Review</h3>
-                                <span class="exploratory-card__meta">Written Deliverable</span>
+                                <h3 class="exploratory-card__title">Brand & Website Direction Session</h3>
+                                <span class="exploratory-card__meta">45 min · Live Video · Written Summary</span>
                             </div>
-                            <p class="exploratory-card__description">A structured review of your website with prioritized recommendations. Understand what's working, what needs attention, and where to focus next.</p>
+                            <p class="exploratory-card__description">A focused conversation about what's unclear, what's not working, and what to do next. Walk away with a written summary and 2–3 concrete next-step options.</p>
                             <div class="exploratory-card__footer">
-                                <p class="exploratory-card__price">$195 <span>CAD</span></p>
-                                <a href="#intake" class="exploratory-card__cta">Start here →</a>
+                                <p class="exploratory-card__price">$145 <span>CAD</span></p>
+                                <a href="/direction-session" class="exploratory-card__cta exploratory-card__cta--primary">Book a Direction Session →</a>
                             </div>
                         </div>
 
-                        <div class="exploratory-card">
+                        <!-- Secondary CTA: Founder's Check -->
+                        <div class="exploratory-card exploratory-card--secondary">
                             <div class="exploratory-card__header">
-                                <h3 class="exploratory-card__title">Brand Clarity Diagnostic</h3>
-                                <span class="exploratory-card__meta">Written Deliverable</span>
+                                <h3 class="exploratory-card__title">Founder's Direction Check</h3>
+                                <span class="exploratory-card__meta">25 min · Live Video · Verbal Clarity</span>
                             </div>
-                            <p class="exploratory-card__description">A positioning and messaging assessment with clear direction. Know where you stand and what needs to shift.</p>
+                            <p class="exploratory-card__description">A quick sanity check for when you're not sure where to start. No written deliverable—just a focused conversation to get unstuck.</p>
                             <div class="exploratory-card__footer">
-                                <p class="exploratory-card__price">$295 <span>CAD</span></p>
-                                <a href="#intake" class="exploratory-card__cta">Start here →</a>
+                                <p class="exploratory-card__price">$95 <span>CAD</span></p>
+                                <a href="/founders-check" class="exploratory-card__cta">Book a Quick Check →</a>
                             </div>
                         </div>
                     </div>
@@ -322,14 +330,16 @@
             </div>
         </section>
 
-        <!-- Intake -->
-        <section class="section section--alt" id="intake">
+        <!-- Contact -->
+        <section class="section section--alt" id="contact">
             <div class="container">
                 <div class="contact reveal">
-                    <h2 class="contact__title">Start here</h2>
-                    <p class="contact__subtitle">Tell us about your business and what you're working on. We'll review and respond within 1-2 business days.</p>
+                    <h2 class="contact__title">Get in touch</h2>
+                    <p class="contact__subtitle">Have a question or want to discuss something specific? Send us a message and we'll respond within 1-2 business days.</p>
 
                     <form class="contact-form" action="https://formspree.io/f/xnjjgoay" method="POST">
+                        <input type="hidden" name="source" value="homepage_contact">
+
                         <div class="contact-form__group">
                             <label class="contact-form__label" for="name">Name</label>
                             <input class="contact-form__input" type="text" id="name" name="name" required placeholder="Your name">
@@ -341,26 +351,11 @@
                         </div>
 
                         <div class="contact-form__group">
-                            <label class="contact-form__label" for="service">Service Interest</label>
-                            <select class="contact-form__select" id="service" name="service">
-                                <option value="">Select a service (optional)</option>
-                                <option value="Website Snapshot Review ($195)">Website Snapshot Review — $195</option>
-                                <option value="Brand Clarity Diagnostic ($295)">Brand Clarity Diagnostic — $295</option>
-                                <option value="Comprehensive Website Audit ($795)">Comprehensive Website Audit — $795</option>
-                                <option value="Strategic Brand Audit ($995)">Strategic Brand Audit — $995</option>
-                                <option value="Brand Reset ($2,500)">Brand Reset — $2,500</option>
-                                <option value="Website Foundation ($4,500)">Website Foundation — $4,500</option>
-                                <option value="Full Brand + Website Reset ($8,500)">Full Brand + Website Reset — $8,500</option>
-                                <option value="Not sure yet">Not sure yet</option>
-                            </select>
-                        </div>
-
-                        <div class="contact-form__group">
                             <label class="contact-form__label" for="message">Message</label>
-                            <textarea class="contact-form__textarea" id="message" name="message" required placeholder="Tell us about your project or what you're looking to accomplish..."></textarea>
+                            <textarea class="contact-form__textarea" id="message" name="message" required placeholder="What's on your mind?"></textarea>
                         </div>
 
-                        <button class="contact-form__submit" type="submit">Send Request</button>
+                        <button class="contact-form__submit" type="submit">Send Message</button>
                         <div class="contact-form__feedback" id="formFeedback"></div>
                     </form>
 
@@ -494,6 +489,8 @@
             const nav = document.querySelector('.header__nav');
             const navLinks = document.querySelectorAll('.header__link');
 
+            if (!toggle || !nav) return;
+
             // Get focusable elements within the nav
             function getFocusableElements() {
                 return nav.querySelectorAll('a, button');
@@ -518,7 +515,8 @@
                 toggle.focus();
             }
 
-            toggle.addEventListener('click', () => {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
                 const isOpen = nav.classList.contains('is-open');
                 if (isOpen) {
                     closeMenu();
@@ -563,12 +561,22 @@
             });
         })();
 
-        // Cinematic intro animation - becomes static header, scrolls away one-way
+        // Cinematic intro animation - plays on first visit only
         (function() {
             const header = document.querySelector('.header');
             const headerGlass = document.querySelector('.header__glass');
             const logo = document.querySelector('.header__logo');
             const intro = document.querySelector('.intro');
+
+            // Skip intro if already seen this session
+            const introSeen = sessionStorage.getItem('bb_intro_seen');
+            if (introSeen) {
+                logo?.classList.add('show-text');
+                header?.classList.add('visible', 'lights-on');
+                document.body.classList.add('intro-complete', 'intro-scrolled');
+                intro?.remove();
+                return;
+            }
 
             // Skip for reduced motion - show everything immediately
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -576,6 +584,7 @@
                 header?.classList.add('visible', 'lights-on');
                 document.body.classList.add('intro-complete');
                 intro?.remove();
+                sessionStorage.setItem('bb_intro_seen', '1');
                 return;
             }
 
@@ -623,22 +632,23 @@
                 // Header will be shown once user scrolls to main content
             }, introAnimationDuration);
 
-            // Handle "Tap anywhere to begin" - mobile only (touch events)
-            let tapStarted = false;
+            // Handle "Tap anywhere to begin" - works on entire document
+            let hasBegun = false;
 
-            intro.addEventListener('touchstart', (e) => {
-                if (!document.body.classList.contains('intro-static')) return;
-                tapStarted = true;
-            }, { passive: true });
+            function beginSite() {
+                if (!document.body.classList.contains('intro-static') || hasBegun) return;
+                hasBegun = true;
 
-            intro.addEventListener('touchend', (e) => {
-                if (!document.body.classList.contains('intro-static')) return;
-                if (!tapStarted) return;
-                tapStarted = false;
-                e.preventDefault();
+                // Mark intro as seen for this session
+                sessionStorage.setItem('bb_intro_seen', '1');
+
                 // Scroll to hero section (past intro)
                 window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-            }, { passive: false });
+            }
+
+            // Listen for tap/click anywhere on document
+            document.addEventListener('click', beginSite);
+            document.addEventListener('touchstart', beginSite, { passive: true });
 
             // Handle scroll to lock user from scrolling back to intro
             let hasScrolledPastIntro = false;
@@ -1035,7 +1045,9 @@
             if (!sections.length) return;
 
             const params = new URLSearchParams(window.location.search);
-            const scrollMode = params.get('scroll') || 'fullpage'; // Default to fullpage
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+            // Default: fullpage on mobile, free on desktop
+            const scrollMode = params.get('scroll') || (isMobile ? 'fullpage' : 'free');
 
             function isIntroActive() {
                 return document.body.classList.contains('intro-playing') ||
@@ -1044,210 +1056,24 @@
 
             const contentOffset = 100; // Position section content 100px from viewport top
 
-            // === FULLPAGE: Section-by-section scrolling (down locked, up smooth) ===
+            // === FULLPAGE: Simple CSS scroll-snap for mobile ===
             if (scrollMode === 'fullpage') {
-                let currentSection = 0;
-                let isAnimating = false;
-                let touchStartY = 0;
-                let accumulatedDelta = 0;
-                let deltaResetTimeout = null;
-                const scrollThreshold = 60; // Accumulated scroll needed to trigger
-
-                function goToSection(index) {
-                    if (index < 0 || index >= sections.length || isAnimating) return;
-
-                    isAnimating = true;
-                    currentSection = index;
-
-                    const section = sections[index];
-
-                    // Hero (index 0) starts at top
-                    // Other sections: find the label and position it 100px from top
-                    let targetTop;
-                    if (index === 0) {
-                        targetTop = 0;
-                    } else {
-                        // Find the section label or first heading to position
-                        const label = section.querySelector('.section__label') || section.querySelector('h2');
-                        if (label) {
-                            const labelRect = label.getBoundingClientRect();
-                            targetTop = window.scrollY + labelRect.top - contentOffset;
-                        } else {
-                            // Fallback: use section top with padding estimate
-                            const rect = section.getBoundingClientRect();
-                            targetTop = window.scrollY + rect.top + 192 - contentOffset;
-                        }
+                // Enable CSS scroll-snap on body once intro is done
+                function enableSnapScroll() {
+                    if (!document.body.classList.contains('intro-complete')) {
+                        setTimeout(enableSnapScroll, 100);
+                        return;
                     }
-                    targetTop = Math.max(0, targetTop);
-
-                    window.scrollTo({ top: targetTop, behavior: 'smooth' });
-
-                    setTimeout(() => {
-                        isAnimating = false;
-                        accumulatedDelta = 0;
-                    }, 600);
+                    document.body.classList.add('scroll-snap-enabled');
                 }
+                enableSnapScroll();
 
-                function syncCurrentSection() {
-                    const scrollY = window.scrollY;
-                    for (let i = sections.length - 1; i >= 0; i--) {
-                        const section = sections[i];
-                        // Find section content start (label or heading)
-                        const label = section.querySelector('.section__label') || section.querySelector('h2');
-                        let contentTop;
-                        if (label) {
-                            const labelRect = label.getBoundingClientRect();
-                            contentTop = scrollY + labelRect.top - contentOffset;
-                        } else {
-                            const rect = section.getBoundingClientRect();
-                            contentTop = scrollY + rect.top;
-                        }
-                        if (scrollY >= contentTop - 50) {
-                            currentSection = i;
-                            return;
-                        }
-                    }
-                    currentSection = 0;
-                }
-
-                // Sections that need internal scrolling (larger content)
-                const scrollableSectionIds = ['services', 'intake'];
-
-                function isInScrollableSection() {
-                    const current = sections[currentSection];
-                    return current && scrollableSectionIds.includes(current.id);
-                }
-
-                function isAtSectionBottom() {
-                    const current = sections[currentSection];
-                    if (!current) return true;
-                    const rect = current.getBoundingClientRect();
-                    // At bottom if section bottom is at or above viewport bottom (with 50px buffer)
-                    return rect.bottom <= window.innerHeight + 50;
-                }
-
-                function isAtSectionTop() {
-                    const current = sections[currentSection];
-                    if (!current) return true;
-                    // For hero, check if at page top
-                    if (currentSection === 0) return window.scrollY <= 10;
-                    // For other sections, find the label position
-                    const label = current.querySelector('.section__label') || current.querySelector('h2');
-                    if (label) {
-                        const labelRect = label.getBoundingClientRect();
-                        // At top if label is at or below the target position (with buffer)
-                        return labelRect.top >= contentOffset - 20;
-                    }
-                    return true;
-                }
-
-                // Scroll behavior: snap for short sections, free scroll for long sections
-                // Scroll UP is always free, sync section when stopped
-                let scrollUpTimeout = null;
-
-                window.addEventListener('wheel', (e) => {
-                    if (isIntroActive()) return;
-
-                    // Hide scroll hint on first scroll
+                // Hide scroll hint on first scroll
+                window.addEventListener('scroll', () => {
                     if (!document.body.classList.contains('has-scrolled')) {
                         document.body.classList.add('has-scrolled');
                     }
-
-                    if (isAnimating) return;
-
-                    if (e.deltaY > 0) {
-                        // Scrolling DOWN
-                        if (isInScrollableSection() && !isAtSectionBottom()) {
-                            // In a scrollable section and not at bottom - allow normal scroll
-                            return; // Don't prevent default
-                        }
-
-                        // At section bottom or in a short section - snap to next
-                        e.preventDefault();
-                        accumulatedDelta += e.deltaY;
-                        clearTimeout(deltaResetTimeout);
-                        deltaResetTimeout = setTimeout(() => { accumulatedDelta = 0; }, 200);
-
-                        if (accumulatedDelta > scrollThreshold) {
-                            if (currentSection < sections.length - 1) {
-                                goToSection(currentSection + 1);
-                            }
-                            accumulatedDelta = 0;
-                        }
-                    } else {
-                        // Scrolling UP - always allow free scroll, sync section when stopped
-                        clearTimeout(scrollUpTimeout);
-                        scrollUpTimeout = setTimeout(() => {
-                            syncCurrentSection();
-                        }, 150);
-                    }
-                }, { passive: false });
-
-                // Touch handling - same logic as wheel: free scroll in scrollable sections
-                // Higher threshold on mobile to prevent accidental section skips
-                const touchThreshold = 80; // px - higher than desktop for deliberate swipes
-
-                window.addEventListener('touchstart', (e) => {
-                    if (isIntroActive()) return;
-                    touchStartY = e.touches[0].clientY;
                 }, { passive: true });
-
-                window.addEventListener('touchend', (e) => {
-                    if (isIntroActive() || isAnimating) return;
-
-                    const deltaY = touchStartY - e.changedTouches[0].clientY;
-                    if (Math.abs(deltaY) > 30) {
-                        // Hide scroll hint on first swipe
-                        if (!document.body.classList.contains('has-scrolled')) {
-                            document.body.classList.add('has-scrolled');
-                        }
-                    }
-
-                    if (deltaY > touchThreshold) {
-                        // Swipe up (scroll down)
-                        // In scrollable section and not at bottom - let natural scroll handle it
-                        if (isInScrollableSection() && !isAtSectionBottom()) {
-                            syncCurrentSection();
-                            return;
-                        }
-                        // At section bottom or short section - snap to next
-                        if (currentSection < sections.length - 1) {
-                            goToSection(currentSection + 1);
-                        }
-                    } else if (deltaY < -touchThreshold) {
-                        // Swipe down (scroll up) - always allow, sync after
-                        clearTimeout(scrollUpTimeout);
-                        scrollUpTimeout = setTimeout(() => {
-                            syncCurrentSection();
-                        }, 150);
-                    }
-                }, { passive: true });
-
-                // Keyboard
-                window.addEventListener('keydown', (e) => {
-                    if (isIntroActive() || isAnimating) return;
-
-                    if (['ArrowDown', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey)) {
-                        e.preventDefault();
-                        if (currentSection < sections.length - 1) goToSection(currentSection + 1);
-                    } else if (['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey)) {
-                        e.preventDefault();
-                        if (currentSection > 0) goToSection(currentSection - 1);
-                    }
-                });
-
-                // Sync current section during free scrolling (for scrollable sections)
-                let scrollSyncTimeout = null;
-                window.addEventListener('scroll', () => {
-                    if (isIntroActive() || isAnimating) return;
-                    clearTimeout(scrollSyncTimeout);
-                    scrollSyncTimeout = setTimeout(() => {
-                        syncCurrentSection();
-                    }, 100);
-                }, { passive: true });
-
-                // Sync current section on load
-                setTimeout(syncCurrentSection, 100);
             }
 
             // === SNAP: Assisted snap (normal scroll + snap when stop) ===
