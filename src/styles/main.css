@@ -2262,6 +2262,21 @@
             }
         }
 
+        /* Mobile optimization for Core Services glow */
+        @media (max-width: 768px) {
+            .core-services__glow {
+                left: -100px;
+                right: -100px;
+                top: -50px;
+                bottom: -50px;
+            }
+
+            .core-services__glow::before {
+                filter: blur(40px);
+                background: radial-gradient(ellipse 90% 70% at 50% 50%, rgba(217, 119, 6, 0.15) 0%, rgba(217, 119, 6, 0.08) 40%, rgba(217, 119, 6, 0.03) 60%, transparent 80%);
+            }
+        }
+
         /* Ensure Core Services content stays above glow */
         .core-services,
         .exploratory,
@@ -2393,6 +2408,29 @@
             .focused-studio__glow::before,
             .focused-studio__glow::after {
                 animation: none;
+            }
+        }
+
+        /* Mobile optimization for Focus Studio glow */
+        @media (max-width: 768px) {
+            .focused-studio__glow {
+                left: -100px;
+                right: -100px;
+                top: -50px;
+                bottom: -50px;
+            }
+
+            .focused-studio__glow::before {
+                filter: blur(40px);
+                background: radial-gradient(ellipse 90% 70% at 50% 50%, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 40%, rgba(139, 92, 246, 0.04) 60%, transparent 80%);
+            }
+
+            .focused-studio__glow::after {
+                width: 250px;
+                height: 250px;
+                filter: blur(50px);
+                right: -10%;
+                background: radial-gradient(circle, rgba(217, 119, 6, 0.2) 0%, rgba(217, 119, 6, 0.08) 50%, transparent 70%);
             }
         }
 
@@ -2961,6 +2999,82 @@
 
         .work__item:hover {
             border-color: var(--border-hover);
+        }
+
+        /* ScottBertrand.com styled card - RGB prism wash aesthetic */
+        .work__item--scottbertrand {
+            background: #1C1C1E;
+            border-color: rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* RGB prism color wash */
+        .work__item--scottbertrand::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                /* Red/magenta - top left */
+                radial-gradient(ellipse 50% 60% at 10% 20%, rgba(239, 68, 132, 0.15) 0%, transparent 60%),
+                /* Yellow/amber - top center */
+                radial-gradient(ellipse 40% 50% at 40% 10%, rgba(245, 158, 11, 0.12) 0%, transparent 55%),
+                /* Green/teal - center right */
+                radial-gradient(ellipse 45% 55% at 85% 50%, rgba(52, 211, 153, 0.1) 0%, transparent 55%),
+                /* Blue/cyan - bottom */
+                radial-gradient(ellipse 60% 50% at 60% 90%, rgba(59, 130, 246, 0.12) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.9;
+            transition: opacity var(--duration-fast) ease;
+        }
+
+        /* Subtle dot grid overlay */
+        .work__item--scottbertrand::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at center, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .work__item--scottbertrand > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .work__item--scottbertrand:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .work__item--scottbertrand:hover::before {
+            opacity: 1;
+        }
+
+        /* Mobile optimization for ScottBertrand prism card */
+        @media (max-width: 768px) {
+            .work__item--scottbertrand::before {
+                background:
+                    /* Simplified prism - fewer, softer gradients */
+                    radial-gradient(ellipse 60% 70% at 15% 25%, rgba(239, 68, 132, 0.12) 0%, transparent 55%),
+                    radial-gradient(ellipse 50% 60% at 85% 60%, rgba(52, 211, 153, 0.08) 0%, transparent 50%),
+                    radial-gradient(ellipse 70% 60% at 50% 85%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+                opacity: 0.85;
+            }
+
+            .work__item--scottbertrand::after {
+                background-size: 24px 24px;
+                background: radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            }
         }
 
         .work__label {
