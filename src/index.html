@@ -117,7 +117,8 @@
                     <nav class="header__nav" id="mainNav">
                         <a href="#about" class="header__link">About</a>
                         <a href="#process" class="header__link">How It Works</a>
-                        <a href="#services" class="header__link">Services</a>
+                        <a href="#services" class="header__link">Core Services</a>
+                        <a href="#focus-studio" class="header__link">Focus Studio</a>
                         <a href="/direction-session" class="header__link header__link--cta">Book a Session</a>
                         <a href="#portal" class="header__link header__link--portal">Client Portal</a>
                     </nav>
@@ -198,6 +199,10 @@
                     <p class="section__label">Services</p>
                     <h2 class="section__title">What we offer</h2>
                 </div>
+
+                <!-- B Core Services Wrapper with Ambient Glow -->
+                <div class="core-services-wrapper">
+                    <div class="core-services__glow" aria-hidden="true"></div>
 
                 <!-- B Core Services -->
                 <div class="core-services reveal">
@@ -314,10 +319,13 @@
                     </div>
                 </div>
 
+                </div><!-- /.core-services-wrapper -->
+
                 <!-- B Focus Studio (Secondary Services) -->
                 <hr class="services-divider services-divider--section">
 
-                <div class="focused-studio reveal">
+                <div class="focused-studio reveal" id="focus-studio">
+                    <div class="focused-studio__glow" aria-hidden="true"></div>
                     <div class="focused-studio__header">
                         <div class="focused-studio__brand">
                             <img src="/assets/bertrand-brands-logomark.png" alt="" class="focused-studio__mark">
@@ -647,6 +655,37 @@
                         }
                     }
                 }
+            });
+        })();
+
+        // Clickable service cards - clicking anywhere on card navigates to its CTA link
+        (function() {
+            // Handle exploratory cards (Direction Session, Founder's Check)
+            document.querySelectorAll('.exploratory-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Don't navigate if clicking on an interactive element
+                    if (e.target.closest('a, button')) return;
+                    const link = card.querySelector('.exploratory-card__cta');
+                    if (link) window.location.href = link.href;
+                });
+            });
+
+            // Handle service cards (gated services)
+            document.querySelectorAll('.service').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('a, button')) return;
+                    const link = card.querySelector('.service__cta--visible');
+                    if (link) window.location.href = link.href;
+                });
+            });
+
+            // Handle Focus Studio cards
+            document.querySelectorAll('.focused-studio__card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('a, button')) return;
+                    const link = card.querySelector('.focused-studio__card-cta');
+                    if (link) window.location.href = link.href;
+                });
             });
         })();
 
