@@ -150,6 +150,13 @@
             --orange-pos-2: 85%;
         }
 
+        /* Allow mobile nav to escape glass container */
+        @media (max-width: 768px) {
+            .header__glass:has(.header__nav.is-open) {
+                overflow: visible;
+            }
+        }
+
         /* Ambient orange lighting */
         .header__glass::before {
             content: '';
@@ -296,7 +303,7 @@
         }
 
         .intro.intro--static .intro__fade {
-            opacity: 0.4;
+            opacity: 0;
         }
 
         /* Fade intro to full black when user scrolls past */
@@ -373,294 +380,222 @@
             }
         }
 
-        /* Orange glow - top right */
+        /* Ambient light sources — refined, natural feeling */
         .intro__glow {
             position: absolute;
             border-radius: 50%;
-            filter: blur(120px);
             pointer-events: none;
-            /* GPU acceleration for blur performance */
-            will-change: transform, opacity;
+            will-change: opacity;
             transform: translateZ(0);
-            backface-visibility: hidden;
         }
 
+        /* Orange/amber — primary warm light, top-right */
         .intro__glow--orange {
-            width: 600px;
-            height: 600px;
-            background: var(--accent);
-            top: -15%;
-            right: -10%;
+            width: 70vmax;
+            height: 70vmax;
+            max-width: 900px;
+            max-height: 900px;
+            background: radial-gradient(
+                circle at center,
+                rgba(217, 119, 6, 0.22) 0%,
+                rgba(217, 119, 6, 0.06) 45%,
+                transparent 70%
+            );
+            top: -25%;
+            right: -20%;
             opacity: 0;
-            animation:
-                introGlowOrange 2.5s ease-out 0.2s forwards,
-                introGlowFloat 8s ease-in-out 2.5s infinite;
+            filter: blur(80px);
+            animation: introGlowWarm 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
         }
 
+        /* Blue — secondary cool light, bottom-left */
         .intro__glow--blue {
-            width: 500px;
-            height: 500px;
-            background: #2563eb;
-            bottom: -20%;
-            left: -5%;
+            width: 55vmax;
+            height: 55vmax;
+            max-width: 650px;
+            max-height: 650px;
+            background: radial-gradient(
+                circle at center,
+                rgba(37, 99, 235, 0.14) 0%,
+                rgba(37, 99, 235, 0.04) 50%,
+                transparent 70%
+            );
+            bottom: -30%;
+            left: -15%;
             opacity: 0;
-            animation:
-                introGlowBlue 2.5s ease-out 0.5s forwards,
-                introGlowFloatAlt 10s ease-in-out 2.8s infinite;
+            filter: blur(100px);
+            animation: introGlowCool 2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
         }
 
-        /* Mobile: reduce glow sizes and blur for performance */
+        @keyframes introGlowWarm {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes introGlowCool {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Mobile: simpler, lighter glows */
         @media (max-width: 768px) {
             .intro__glow {
-                filter: blur(60px);
-                /* Disable floating animation on mobile for performance */
-                animation-iteration-count: 1 !important;
+                filter: blur(50px);
             }
             .intro__glow--orange {
-                width: 300px;
-                height: 300px;
-                /* Simpler fade-in only, no float */
-                animation: introGlowOrangeMobile 2s ease-out 0.2s forwards;
+                width: 75vw;
+                height: 75vw;
+                top: -15%;
+                right: -20%;
+                background: radial-gradient(
+                    circle at center,
+                    rgba(217, 119, 6, 0.18) 0%,
+                    rgba(217, 119, 6, 0.04) 50%,
+                    transparent 70%
+                );
+                animation: introGlowWarm 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
             }
             .intro__glow--blue {
-                width: 250px;
-                height: 250px;
-                /* Simpler fade-in only, no float */
-                animation: introGlowBlueMobile 2s ease-out 0.5s forwards;
+                width: 60vw;
+                height: 60vw;
+                bottom: -20%;
+                left: -15%;
+                background: radial-gradient(
+                    circle at center,
+                    rgba(37, 99, 235, 0.1) 0%,
+                    rgba(37, 99, 235, 0.02) 50%,
+                    transparent 70%
+                );
+                animation: introGlowCool 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
             }
 
-            /* Simplified mobile glow animations - no continuous floating */
-            @keyframes introGlowOrangeMobile {
-                0% { opacity: 0; transform: translateZ(0); }
-                100% { opacity: 0.15; transform: translateZ(0); }
-            }
-            @keyframes introGlowBlueMobile {
-                0% { opacity: 0; transform: translateZ(0); }
-                100% { opacity: 0.1; transform: translateZ(0); }
-            }
-
-            /* Simplified logo animation - remove expensive mask/filter changes */
+            /* Simplified logo animation for mobile */
             .intro__logo {
-                animation: logoSpotlightMobile 1.5s ease-out 1.2s forwards;
+                animation: logoRevealMobile 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
             }
 
-            @keyframes logoSpotlightMobile {
-                0% { opacity: 0; transform: translateY(10px) translateZ(0); }
+            @keyframes logoRevealMobile {
+                0% {
+                    opacity: 0;
+                    transform: translateY(6px) translateZ(0);
+                }
                 100% {
                     opacity: 1;
                     transform: translateY(0) translateZ(0);
-                    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+                    filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
                 }
             }
 
-            /* Simplified text animations - reduce text-shadow complexity */
+            /* Simplified text animations for mobile */
             .intro__brand-main {
-                animation: spotlightMobile 2.5s ease-out 1.2s forwards;
+                animation: textRevealMobile 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
             }
 
-            @keyframes spotlightMobile {
-                0% { opacity: 0; color: rgba(255, 255, 255, 0); }
-                30% { opacity: 1; color: rgba(255, 255, 255, 0.5); }
+            @keyframes textRevealMobile {
+                0% {
+                    opacity: 0;
+                    color: rgba(255, 255, 255, 0);
+                }
+                50% {
+                    opacity: 1;
+                    color: rgba(255, 255, 255, 0.7);
+                }
                 100% {
                     opacity: 1;
                     color: rgba(255, 255, 255, 1);
-                    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+                    text-shadow: 0 0 40px rgba(255, 255, 255, 0.08);
                 }
             }
 
             .intro__brand-sub {
-                animation: subtitleRevealMobile 0.6s ease-out 2.5s forwards;
+                animation: subtitleRevealMobile 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards;
             }
 
             @keyframes subtitleRevealMobile {
                 0% { opacity: 0; }
-                100% { opacity: 1; }
+                100% { opacity: 0.65; }
             }
         }
 
-        @keyframes introGlowOrange {
-            0% { opacity: 0; transform: scale(0.6) translate(20%, -20%); }
-            50% { opacity: 0.25; }
-            100% { opacity: 0.18; transform: scale(1) translate(0, 0); }
-        }
-
-        @keyframes introGlowBlue {
-            0% { opacity: 0; transform: scale(0.6) translate(-20%, 20%); }
-            50% { opacity: 0.2; }
-            100% { opacity: 0.12; transform: scale(1) translate(0, 0); }
-        }
-
-        @keyframes introGlowFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(-15px, 10px) scale(1.02); }
-            50% { transform: translate(10px, 20px) scale(0.98); }
-            75% { transform: translate(20px, -10px) scale(1.01); }
-        }
-
-        @keyframes introGlowFloatAlt {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(20px, -15px) scale(0.98); }
-            50% { transform: translate(-10px, -20px) scale(1.03); }
-            75% { transform: translate(-15px, 15px) scale(0.99); }
-        }
-
-        /* Subtle grid overlay - increased line opacity for visibility */
+        /* Grid — barely perceptible texture */
         .intro__grid {
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 80px 80px;
             opacity: 0;
-            animation: introGridFade 1.5s ease 0.8s forwards;
+            animation: introGridFade 2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
         }
 
         @keyframes introGridFade {
             to { opacity: 1; }
         }
 
-        /* Logo above wordmark - same lighting treatment as wordmark */
+        /* Logo — refined spotlight reveal */
         .intro__logo {
-            width: clamp(70px, 14vw, 120px);
+            width: clamp(65px, 12vw, 100px);
             height: auto;
             position: relative;
             z-index: 1;
             margin-bottom: var(--space-md);
             filter: brightness(0) invert(1);
-            /* Start completely hidden, same as wordmark */
             opacity: 0;
-            animation: logoSpotlight 2s ease-in-out 1.2s forwards;
+            animation: logoSpotlight 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
         }
 
         @keyframes logoSpotlight {
             0% {
-                opacity: 1;
+                opacity: 0;
                 -webkit-mask-image: linear-gradient(
-                    100deg,
-                    rgba(0, 0, 0, 0) 0%,
-                    rgba(0, 0, 0, 0) 30%,
-                    rgba(0, 0, 0, 0.3) 40%,
+                    105deg,
+                    transparent 0%,
+                    transparent 35%,
+                    rgba(0, 0, 0, 0.4) 45%,
                     rgba(0, 0, 0, 1) 50%,
-                    rgba(0, 0, 0, 0.3) 60%,
-                    rgba(0, 0, 0, 0) 70%,
-                    rgba(0, 0, 0, 0) 100%
+                    rgba(0, 0, 0, 0.4) 55%,
+                    transparent 65%,
+                    transparent 100%
                 );
                 mask-image: linear-gradient(
-                    100deg,
-                    rgba(0, 0, 0, 0) 0%,
-                    rgba(0, 0, 0, 0) 30%,
-                    rgba(0, 0, 0, 0.3) 40%,
+                    105deg,
+                    transparent 0%,
+                    transparent 35%,
+                    rgba(0, 0, 0, 0.4) 45%,
                     rgba(0, 0, 0, 1) 50%,
-                    rgba(0, 0, 0, 0.3) 60%,
-                    rgba(0, 0, 0, 0) 70%,
-                    rgba(0, 0, 0, 0) 100%
+                    rgba(0, 0, 0, 0.4) 55%,
+                    transparent 65%,
+                    transparent 100%
                 );
                 -webkit-mask-size: 300% 100%;
                 mask-size: 300% 100%;
                 -webkit-mask-position: 100% 0;
                 mask-position: 100% 0;
-                filter: brightness(0) invert(1)
-                    drop-shadow(0 0 2px rgba(255, 255, 255, 0.08));
+                filter: brightness(0) invert(1);
             }
-            /* Early glow begins */
-            10% {
+            15% {
                 opacity: 1;
-                -webkit-mask-position: 85% 0;
-                mask-position: 85% 0;
-                filter: brightness(0) invert(1)
-                    drop-shadow(0 0 3px rgba(255, 255, 255, 0.1));
+                -webkit-mask-position: 80% 0;
+                mask-position: 80% 0;
             }
-            /* Glow building */
-            25% {
+            60% {
                 opacity: 1;
-                -webkit-mask-position: 70% 0;
-                mask-position: 70% 0;
-                filter: brightness(0) invert(1)
-                    drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+                -webkit-mask-position: 20% 0;
+                mask-position: 20% 0;
             }
-            /* Spotlight sweeps to center - glow building */
-            40% {
-                opacity: 1;
-                -webkit-mask-position: 50% 0;
-                mask-position: 50% 0;
-                filter: brightness(0) invert(1)
-                    drop-shadow(0 0 8px rgba(255, 255, 255, 0.3))
-                    drop-shadow(0 0 16px rgba(255, 255, 255, 0.15));
-            }
-            /* Spotlight exits while mask opens up - glow intensifies */
-            65% {
-                opacity: 1;
-                -webkit-mask-image: linear-gradient(
-                    100deg,
-                    rgba(0, 0, 0, 0.5) 0%,
-                    rgba(0, 0, 0, 0.8) 25%,
-                    rgba(0, 0, 0, 1) 45%,
-                    rgba(0, 0, 0, 1) 100%
-                );
-                mask-image: linear-gradient(
-                    100deg,
-                    rgba(0, 0, 0, 0.5) 0%,
-                    rgba(0, 0, 0, 0.8) 25%,
-                    rgba(0, 0, 0, 1) 45%,
-                    rgba(0, 0, 0, 1) 100%
-                );
-                -webkit-mask-position: 15% 0;
-                mask-position: 15% 0;
-                filter: brightness(0) invert(1)
-                    drop-shadow(0 0 10px rgba(255, 255, 255, 0.35))
-                    drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
-            }
-            /* Fully revealed with rich glow */
             100% {
                 opacity: 1;
                 -webkit-mask-image: none;
                 mask-image: none;
                 filter: brightness(0) invert(1)
-                    drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))
-                    drop-shadow(0 0 18px rgba(255, 255, 255, 0.3))
-                    drop-shadow(0 0 35px rgba(255, 255, 255, 0.15));
+                    drop-shadow(0 0 20px rgba(255, 255, 255, 0.12));
             }
-        }
-
-        /* Option 2: Logo centered, then scales up as wordmark reveals */
-        .intro--option2 .intro__logo {
-            position: absolute;
-            width: clamp(80px, 15vw, 140px);
-            margin-bottom: 0;
-            animation: introLogoOption2 2.5s var(--ease-out-expo) 0.2s forwards;
-        }
-
-        @keyframes introLogoOption2 {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            30% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            70% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0.3;
-                transform: scale(1.5) translateY(-60px);
-            }
-        }
-
-        .intro--option2 .intro__brand {
-            animation-delay: 1.2s;
-        }
-
-        .intro--option2 .intro__brand-main {
-            animation-delay: 2s;
         }
 
         .intro__brand {
             font-family: var(--font-display);
-            font-size: clamp(2.5rem, 10vw, 6rem);
+            font-size: clamp(2.5rem, 10vw, 5.5rem);
             font-weight: 300;
             letter-spacing: 0.15em;
             text-transform: uppercase;
@@ -669,8 +604,8 @@
             position: relative;
             z-index: 1;
             opacity: 0;
-            transform: translateY(30px);
-            animation: introBrandReveal 1.2s var(--ease-out-expo) 0.4s forwards;
+            transform: translateY(20px);
+            animation: introBrandReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
         }
 
         .intro__brand span {
@@ -681,84 +616,65 @@
             font-weight: 500;
             letter-spacing: 0.2em;
             line-height: 1.1;
-            /* Start invisible - fade in then light reveals text */
             opacity: 0;
             background: linear-gradient(
-                100deg,
-                rgba(10, 10, 10, 1) 0%,
-                rgba(10, 10, 10, 1) 30%,
-                rgba(80, 80, 80, 1) 40%,
-                rgba(180, 180, 180, 1) 50%,
-                rgba(80, 80, 80, 1) 60%,
-                rgba(10, 10, 10, 1) 70%,
-                rgba(10, 10, 10, 1) 100%
+                105deg,
+                rgba(28, 28, 30, 1) 0%,
+                rgba(28, 28, 30, 1) 35%,
+                rgba(120, 120, 120, 1) 45%,
+                rgba(220, 220, 220, 1) 50%,
+                rgba(120, 120, 120, 1) 55%,
+                rgba(28, 28, 30, 1) 65%,
+                rgba(28, 28, 30, 1) 100%
             );
             background-size: 300% 100%;
             background-position: 100% 0;
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            animation: spotlight 3.5s ease-in-out 1.2s forwards;
+            animation: spotlight 2.4s cubic-bezier(0.25, 0.1, 0.25, 1) 0.8s forwards;
         }
 
         @keyframes spotlight {
-            /* Fade in while light is off to the right */
             0% {
                 opacity: 0;
                 background-position: 100% 0;
             }
-            6% {
+            8% {
                 opacity: 1;
                 background-position: 100% 0;
             }
-            /* Single slow sweep across - light reveals the text */
-            50% {
+            55% {
                 opacity: 1;
                 background-position: 0% 0;
             }
-            /* Flood to full white with glow emphasis */
-            60% {
+            70% {
                 opacity: 1;
                 color: rgba(255, 255, 255, 1);
-                text-shadow:
-                    0 0 30px rgba(255, 255, 255, 0.6),
-                    0 0 60px rgba(255, 255, 255, 0.4),
-                    0 0 90px rgba(255, 255, 255, 0.2);
+                text-shadow: 0 0 50px rgba(255, 255, 255, 0.25);
             }
-            /* Settle to ambient glow - stays warm */
             100% {
                 opacity: 1;
                 color: rgba(255, 255, 255, 1);
-                text-shadow:
-                    0 0 12px rgba(255, 255, 255, 0.35),
-                    0 0 25px rgba(255, 255, 255, 0.25),
-                    0 0 45px rgba(255, 255, 255, 0.12);
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
             }
         }
 
         .intro__brand-sub {
             font-family: var(--font-display);
-            font-size: 0.3em;
+            font-size: 0.28em;
             font-weight: 400;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin-top: 1.25em;
+            margin-top: 1.5em;
             opacity: 0;
-            /* Delay until after wordmark reveals, subtle glow */
-            animation: subtitleReveal 0.8s ease 3s forwards;
+            animation: subtitleReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 2.4s forwards;
         }
 
         @keyframes subtitleReveal {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-                text-shadow:
-                    0 0 10px rgba(255, 255, 255, 0.25),
-                    0 0 20px rgba(255, 255, 255, 0.15);
-            }
+            0% { opacity: 0; }
+            100% { opacity: 0.6; }
         }
 
         @keyframes introBrandReveal {
@@ -805,22 +721,22 @@
         .intro.intro--static .intro__scroll-hint {
             pointer-events: auto;
             animation:
-                scrollHintAppear 0.6s ease-out 0.5s forwards,
-                scrollHintPulse 1.8s ease-in-out 1.1s infinite;
+                scrollHintAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards,
+                scrollHintPulse 2.5s cubic-bezier(0.45, 0, 0.55, 1) 0.8s infinite;
         }
 
         /* Hide when user has scrolled */
         .intro.intro--static.hint-hidden .intro__scroll-hint {
-            animation: scrollHintFade 0.3s ease-out forwards;
+            animation: scrollHintFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes scrollHintAppear {
             0% {
                 opacity: 0;
-                transform: translateX(-50%) translateY(-10px);
+                transform: translateX(-50%) translateY(-6px);
             }
             100% {
-                opacity: 0.7;
+                opacity: 0.5;
                 transform: translateX(-50%) translateY(0);
             }
         }
@@ -830,7 +746,7 @@
                 transform: translateX(-50%) translateY(0);
             }
             50% {
-                transform: translateX(-50%) translateY(8px);
+                transform: translateX(-50%) translateY(6px);
             }
         }
 
@@ -928,8 +844,10 @@
             display: block;
             width: 100%;
             height: 2px;
-            background: var(--text);
-            transition: all 0.3s ease;
+            background: #ffffff;
+            border-radius: 1px;
+            filter: brightness(0) invert(1);
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
         .header__toggle.is-open span:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
@@ -1087,19 +1005,16 @@
 
         /* Fluorescent flicker using opacity for reliability */
         .hero__title.hero-animate .accent {
-            animation: fluorescentFlicker 1.2s ease-out 1s forwards;
+            animation: fluorescentFlicker 0.75s ease-out 1s forwards;
         }
 
         @keyframes fluorescentFlicker {
             0% { opacity: 0; }
-            /* First flicker - quick, dim */
-            12% { opacity: 0.4; }
-            18% { opacity: 0.05; }
-            /* Second flicker - brighter, longer */
-            35% { opacity: 0.85; }
-            52% { opacity: 0.1; }
+            /* Quick flash */
+            15% { opacity: 0.8; }
+            30% { opacity: 0.05; }
             /* Catches on */
-            68%, 100% { opacity: 1; }
+            50%, 100% { opacity: 1; }
         }
 
         @keyframes heroReveal {
@@ -2291,6 +2206,208 @@
 
         .service__cta:hover {
             color: var(--text);
+        }
+
+        /* === CORE SERVICES (Primary Services) === */
+        .core-services {
+            margin-bottom: var(--space-lg);
+        }
+
+        .core-services__brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .core-services__mark {
+            width: 40px;
+            height: 40px;
+            opacity: 1;
+            filter: brightness(0) invert(1);
+        }
+
+        .core-services__name {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.875rem;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            color: var(--text);
+        }
+
+        .core-services__description {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            max-width: 500px;
+        }
+
+        /* === FOCUSED STUDIO WORK (Secondary Services) === */
+        .services-divider--section {
+            margin: var(--space-xl) 0 var(--space-lg);
+        }
+
+        .focused-studio {
+            margin-top: var(--space-md);
+        }
+
+        .focused-studio__header {
+            margin-bottom: var(--space-md);
+        }
+
+        .focused-studio__brand {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .focused-studio__mark {
+            width: 40px;
+            height: 40px;
+            opacity: 1;
+            filter: brightness(0) invert(1);
+        }
+
+        .focused-studio__name {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.875rem;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            color: var(--text);
+        }
+
+        .focused-studio__description {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            max-width: 500px;
+        }
+
+        .focused-studio__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-sm);
+        }
+
+        .focused-studio__card {
+            padding: var(--space-md) var(--space-md) var(--space-sm);
+            background: transparent;
+            border: 1px dashed var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: border-color var(--duration-fast) ease, border-style var(--duration-fast) ease;
+        }
+
+        .focused-studio__card:hover {
+            border-style: solid;
+            border-color: var(--border-hover);
+        }
+
+        .focused-studio__card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: var(--space-xs);
+            gap: var(--space-sm);
+        }
+
+        .focused-studio__card-title {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .focused-studio__card-timeline {
+            font-size: 0.6875rem;
+            color: var(--text-subtle);
+            white-space: nowrap;
+        }
+
+        .focused-studio__card-description {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: var(--space-xs);
+        }
+
+        .focused-studio__card-includes {
+            list-style: none;
+            margin-bottom: var(--space-xs);
+            padding-left: 0;
+        }
+
+        .focused-studio__card-includes li {
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            line-height: 1.5;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .focused-studio__card-includes li::before {
+            content: '·';
+            position: absolute;
+            left: 0.25rem;
+            color: var(--accent);
+        }
+
+        .focused-studio__card-best-for {
+            font-size: 0.6875rem;
+            color: var(--text-subtle);
+            font-style: italic;
+            margin-bottom: var(--space-sm);
+            flex-grow: 1;
+        }
+
+        .focused-studio__card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--space-xs);
+            border-top: 1px solid var(--border);
+        }
+
+        .focused-studio__card-price {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .focused-studio__card-price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-subtle);
+        }
+
+        .focused-studio__card-cta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            transition: color var(--duration-fast) ease;
+        }
+
+        .focused-studio__card-cta:hover {
+            color: var(--text);
+        }
+
+        .focused-studio__boundary {
+            margin-top: var(--space-md);
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            font-style: italic;
+        }
+
+        /* Mobile adjustments for focused studio */
+        @media (max-width: 768px) {
+            .focused-studio__card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            .focused-studio__card-timeline {
+                order: -1;
+            }
         }
 
         /* === PROCESS === */

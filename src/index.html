@@ -62,7 +62,10 @@
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "price": "995", "priceCurrency": "CAD" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "price": "2500", "priceCurrency": "CAD" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation" }, "price": "4500", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Website Reset" }, "price": "8500", "priceCurrency": "CAD" }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Website Reset" }, "price": "8500", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Fix Sprint" }, "price": "750", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page Website Rebuild" }, "price": "1250", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmarking Package" }, "price": "950", "priceCurrency": "CAD" }
         ]
       }
     }
@@ -73,7 +76,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400&display=swap" rel="stylesheet">
 
-    <\!-- Styles -->
+    <!-- Styles -->
     <link rel="stylesheet" href="/styles/tokens.css">
     <link rel="stylesheet" href="/styles/main.css">
 </head>
@@ -196,6 +199,15 @@
                     <h2 class="section__title">What we offer</h2>
                 </div>
 
+                <!-- B Core Services -->
+                <div class="core-services reveal">
+                    <div class="core-services__brand">
+                        <img src="/assets/bertrand-brands-logomark.png" alt="" class="core-services__mark">
+                        <span class="core-services__name">Core Services</span>
+                    </div>
+                    <p class="core-services__description">Strategic brand and web systems work. Discovery-led, relationship-based engagements.</p>
+                </div>
+
                 <!-- Tier 1: Entry — Direction Sessions -->
                 <div class="exploratory reveal">
                     <p class="exploratory__label">Start Here</p>
@@ -300,6 +312,83 @@
                             <button type="button" class="service__cta service__cta--gated" data-pricing-trigger>Email me the pricing →</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- B Focus Studio (Secondary Services) -->
+                <hr class="services-divider services-divider--section">
+
+                <div class="focused-studio reveal">
+                    <div class="focused-studio__header">
+                        <div class="focused-studio__brand">
+                            <img src="/assets/bertrand-brands-logomark.png" alt="" class="focused-studio__mark">
+                            <span class="focused-studio__name">Focus Studio</span>
+                        </div>
+                        <p class="focused-studio__description">Focused, fixed-scope studio work for immediate clarity and impact. Clear scope, clear timelines, clear outcomes.</p>
+                    </div>
+
+                    <div class="focused-studio__grid">
+                        <!-- Website Fix Sprint -->
+                        <div class="focused-studio__card">
+                            <div class="focused-studio__card-header">
+                                <h3 class="focused-studio__card-title">Website Fix Sprint</h3>
+                                <span class="focused-studio__card-timeline">1 business day</span>
+                            </div>
+                            <p class="focused-studio__card-description">A focused improvement pass on an existing website. We address the most obvious blockers affecting clarity, mobile usability, and conversion.</p>
+                            <ul class="focused-studio__card-includes">
+                                <li>Homepage clarity and messaging cleanup</li>
+                                <li>Mobile usability fixes</li>
+                                <li>CTA and contact flow improvements</li>
+                                <li>Targeted layout and visual polish</li>
+                            </ul>
+                            <p class="focused-studio__card-best-for">Best for businesses that know their website isn't quite right, but don't need a rebuild.</p>
+                            <div class="focused-studio__card-footer">
+                                <p class="focused-studio__card-price">$750 <span>CAD</span></p>
+                                <a href="/focus-studio" class="focused-studio__card-cta">Request →</a>
+                            </div>
+                        </div>
+
+                        <!-- One-Page Website Rebuild -->
+                        <div class="focused-studio__card">
+                            <div class="focused-studio__card-header">
+                                <h3 class="focused-studio__card-title">One-Page Website Rebuild</h3>
+                                <span class="focused-studio__card-timeline">2–3 business days</span>
+                            </div>
+                            <p class="focused-studio__card-description">A clean, modern replacement for cluttered or outdated sites. One clear page that communicates what you do, who it's for, and how to take the next step.</p>
+                            <ul class="focused-studio__card-includes">
+                                <li>One scroll-based, mobile-first page</li>
+                                <li>Clear message and structure</li>
+                                <li>Contact or booking call-to-action</li>
+                                <li>Clean layout using existing brand assets</li>
+                            </ul>
+                            <p class="focused-studio__card-best-for">Best for restaurants, clinics, trades, and service businesses that need clarity fast.</p>
+                            <div class="focused-studio__card-footer">
+                                <p class="focused-studio__card-price">$1,250 <span>CAD</span></p>
+                                <a href="/focus-studio" class="focused-studio__card-cta">Request →</a>
+                            </div>
+                        </div>
+
+                        <!-- Brandmarking Package -->
+                        <div class="focused-studio__card">
+                            <div class="focused-studio__card-header">
+                                <h3 class="focused-studio__card-title">Brandmarking Package</h3>
+                                <span class="focused-studio__card-timeline">5–7 business days</span>
+                            </div>
+                            <p class="focused-studio__card-description">A complete, usable brandmark designed to work wherever your brand appears. Core brandmarking — not a full brand system.</p>
+                            <ul class="focused-studio__card-includes">
+                                <li>Two brandmark concepts, one refinement round</li>
+                                <li>Horizontal, stacked, and icon versions</li>
+                                <li>Web + print files (SVG, PNG, PDF, EPS)</li>
+                                <li>Light/dark variants + basic usage guide</li>
+                            </ul>
+                            <p class="focused-studio__card-best-for">Best for businesses that need a credible, flexible mark without a full rebrand.</p>
+                            <div class="focused-studio__card-footer">
+                                <p class="focused-studio__card-price">$950 <span>CAD</span></p>
+                                <a href="/focus-studio" class="focused-studio__card-cta">Request →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="focused-studio__boundary">B Focus Studio engagements are intentionally fixed-scope. Full brand systems, naming, strategy, and multi-phase work are scoped separately.</p>
                 </div>
 
                 </div>
@@ -574,6 +663,7 @@
                 logo?.classList.add('show-text');
                 header?.classList.add('visible', 'lights-on');
                 document.body.classList.add('intro-complete', 'intro-scrolled');
+                document.querySelector('.hero__title')?.classList.add('hero-animate');
                 intro?.remove();
                 return;
             }
@@ -583,6 +673,7 @@
                 logo?.classList.add('show-text');
                 header?.classList.add('visible', 'lights-on');
                 document.body.classList.add('intro-complete');
+                document.querySelector('.hero__title')?.classList.add('hero-animate');
                 intro?.remove();
                 sessionStorage.setItem('bb_intro_seen', '1');
                 return;
@@ -616,10 +707,9 @@
             });
 
             // Calculate when intro animation completes
-            // Logo/wordmark: 1.2s delay + 2s duration = 3.2s
-            // Subtitle: 3s delay + 0.8s duration = 3.8s
-            // Add small buffer = 4s total
-            const introAnimationDuration = 4000;
+            // Subtitle reveal: 2.4s delay + 0.6s duration = 3s
+            // Add small buffer = 3.2s total
+            const introAnimationDuration = 3200;
 
             // After intro animation completes, make it static and enable scrolling
             setTimeout(() => {
