@@ -798,32 +798,51 @@
             document.addEventListener('touchstart', beginSite, { passive: true });
 
             // Handle scroll to lock user from scrolling back to intro
+            // V5.0: Optimized with cached values and batched DOM operations
             let hasScrolledPastIntro = false;
             let lastScrollY = window.scrollY;
             let ticking = false;
             let isSnapping = false;
+            let cachedViewportHeight = window.innerHeight;
+            let isIntroStatic = false;
+            let isHeaderVisible = false;
+            let hintHidden = false;
+            const heroTitle = document.querySelector('.hero__title');
+
+            // Cache viewport height on resize (debounced)
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    cachedViewportHeight = window.innerHeight;
+                }, 150);
+            }, { passive: true });
 
             window.addEventListener('scroll', () => {
                 if (!ticking && !isSnapping) {
                     window.requestAnimationFrame(() => {
                         const currentScrollY = window.scrollY;
-                        const viewportHeight = window.innerHeight;
 
-                        // Only apply scroll locking once intro is static
-                        if (!document.body.classList.contains('intro-static')) {
-                            ticking = false;
-                            return;
+                        // Cache intro-static check (only check DOM once)
+                        if (!isIntroStatic) {
+                            isIntroStatic = document.body.classList.contains('intro-static');
+                            if (!isIntroStatic) {
+                                ticking = false;
+                                return;
+                            }
                         }
 
                         // Hide scroll hint early when user starts scrolling
-                        if (currentScrollY > 50 && !intro.classList.contains('hint-hidden')) {
+                        if (!hintHidden && currentScrollY > 50) {
                             intro.classList.add('hint-hidden');
+                            hintHidden = true;
                         }
 
                         // Once user scrolls significantly past intro, hide it and show header
-                        if (!hasScrolledPastIntro && currentScrollY > viewportHeight * 0.85) {
+                        if (!hasScrolledPastIntro && currentScrollY > cachedViewportHeight * 0.85) {
                             hasScrolledPastIntro = true;
-                            // Enable hero background extension and hide the intro
+                            isHeaderVisible = true;
+                            // Batch class additions
                             document.body.classList.add('intro-scrolled');
                             intro.classList.add('intro--hidden');
                             header.classList.add('visible');
@@ -832,26 +851,25 @@
                                 header.classList.add('lights-on');
                             }, 400);
                             // Trigger hero text animations
-                            const heroTitle = document.querySelector('.hero__title');
                             if (heroTitle) {
                                 heroTitle.classList.add('hero-animate');
                             }
                         }
 
                         // If locked and trying to scroll back, snap to hero
-                        if (hasScrolledPastIntro && currentScrollY < viewportHeight) {
-                            window.scrollTo(0, viewportHeight);
+                        if (hasScrolledPastIntro && currentScrollY < cachedViewportHeight) {
+                            window.scrollTo(0, cachedViewportHeight);
                         }
 
                         // Header visibility (hide on scroll down, show on scroll up)
-                        if (header.classList.contains('visible') && currentScrollY > viewportHeight + 100) {
-                            // Normal header behavior
-                            if (currentScrollY > lastScrollY && currentScrollY > viewportHeight + 150) {
+                        if (isHeaderVisible && currentScrollY > cachedViewportHeight + 100) {
+                            const shouldHide = currentScrollY > lastScrollY && currentScrollY > cachedViewportHeight + 150;
+                            if (shouldHide && !header.classList.contains('hidden-scroll')) {
                                 header.classList.add('hidden-scroll');
-                            } else {
+                            } else if (!shouldHide && header.classList.contains('hidden-scroll')) {
                                 header.classList.remove('hidden-scroll');
                             }
-                        } else {
+                        } else if (header.classList.contains('hidden-scroll')) {
                             header.classList.remove('hidden-scroll');
                         }
 
@@ -860,9 +878,10 @@
                     });
                     ticking = true;
                 }
-            });
+            }, { passive: true });
 
             // Ambient orange light animation - disabled on mobile for performance
+            // V5.0: Throttled to 30fps for smoother performance
             const isMobileDevice = window.matchMedia('(max-width: 768px)').matches;
 
             if (!isMobileDevice && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -871,16 +890,25 @@
                 let direction1 = 1;
                 let direction2 = -1;
                 let lightsAnimationId = null;
+                let lastLightsFrame = 0;
+                const LIGHTS_FRAME_INTERVAL = 1000 / 30; // 30fps throttle
 
-                function animateLights() {
+                function animateLights(timestamp) {
                     if (!header.classList.contains('lights-on')) {
                         lightsAnimationId = requestAnimationFrame(animateLights);
                         return;
                     }
 
-                    // Gentle organic movement
-                    orangePos1 += direction1 * 0.03;
-                    orangePos2 += direction2 * 0.025;
+                    // Throttle to 30fps - skip frames if needed
+                    if (timestamp - lastLightsFrame < LIGHTS_FRAME_INTERVAL) {
+                        lightsAnimationId = requestAnimationFrame(animateLights);
+                        return;
+                    }
+                    lastLightsFrame = timestamp;
+
+                    // Gentle organic movement (adjusted for 30fps)
+                    orangePos1 += direction1 * 0.06;
+                    orangePos2 += direction2 * 0.05;
 
                     if (orangePos1 > 35 || orangePos1 < 10) direction1 *= -1;
                     if (orangePos2 > 90 || orangePos2 < 60) direction2 *= -1;
@@ -899,6 +927,7 @@
                         cancelAnimationFrame(lightsAnimationId);
                         lightsAnimationId = null;
                     } else if (!document.hidden && !lightsAnimationId) {
+                        lastLightsFrame = 0;
                         lightsAnimationId = requestAnimationFrame(animateLights);
                     }
                 });

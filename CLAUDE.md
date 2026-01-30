@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 4.1.0 (Current)
+## Version 5.0.0 (Current)
 
 This document is the **Bertrand Brands-specific** guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -46,23 +46,43 @@ All decisions must align with BRIGHTS:
 
 If a technical or UX decision introduces confusion, pressure, or ambiguity, it violates BRIGHTS.
 
-### 1.3 Service Model (Locked)
+### 1.3 Service Architecture (Locked)
 
-Bertrand Brands operates on clearly defined, fixed-price service tiers tailored to the Sudbury market.
+Bertrand Brands operates two distinct service categories:
+
+**Category A: B Core Services**
+- Strategic, discovery-led engagements
+- Relationship-based work
+- Variable scope based on client needs
+- Includes: Direction Sessions, Audits, Brand Resets, Website Foundations
+
+**Category B: B Focus Studio**
+- Fixed-scope, fixed-price offerings
+- Clear timelines, clear outcomes
+- Cash-stabilization tier for immediate revenue
+- Includes: Website Fix Sprint ($750), One-Page Website Rebuild ($1,250), Brandmarking Package ($950)
 
 Key principles:
 - No open-ended scope
 - No vague deliverables
 - No ad-hoc calls outside defined services
 - Each service has:
-  - A dedicated landing page
+  - A dedicated landing page (or shared intake for Focus Studio)
   - A single CTA
   - A defined intake flow
   - A fixed price
 
 **Never invent new services, pricing, or scopes.**
 
-### 1.4 AI Positioning (Critical)
+### 1.4 Visual Hierarchy (Critical)
+
+B Core Services always takes visual precedence over B Focus Studio:
+- Core Services appears first in services section
+- Focus Studio uses dashed borders (vs solid for Core)
+- Focus Studio section separated by horizontal divider
+- Both use shared B logomark with differentiated wordmarks
+
+### 1.5 AI Positioning (Critical)
 
 **AI is never positioned as the product.**
 
@@ -77,7 +97,7 @@ Internally:
 
 If a solution makes AI visible to clients, flag it as a risk.
 
-### 1.5 Decision Rules
+### 1.6 Decision Rules
 
 When unsure, default to:
 1. Simpler
@@ -92,7 +112,7 @@ If something:
 
 → It should be redesigned.
 
-### 1.6 Success Criteria
+### 1.7 Success Criteria
 
 A successful implementation:
 - Feels calm
@@ -134,7 +154,13 @@ A successful implementation:
 │   ├── styles/
 │   │   ├── tokens.css      # Design system variables
 │   │   └── main.css        # Main stylesheet
-│   ├── pages/              # Landing pages (ads/, intake/, services/)
+│   ├── pages/
+│   │   ├── ads/            # Landing pages
+│   │   │   ├── direction-session.html
+│   │   │   ├── founders-check.html
+│   │   │   ├── focus-studio.html      # B Focus Studio intake
+│   │   │   └── ...
+│   │   └── intake/         # Intake forms
 │   └── assets/             # Logos & images
 ├── api/                    # Vercel serverless functions
 │   ├── notify.js           # Visitor notifications → Pushover
@@ -147,11 +173,11 @@ A successful implementation:
 
 ---
 
-## 5. V4.0 Design Philosophy
+## 5. V5.0 Design Philosophy
 
 ### 5.1 Core Aesthetic Principles
 
-V4.0.0 represents a **refined, minimal, architectural** approach:
+V5.0.0 builds on the refined, minimal, architectural approach with **performance-first optimizations**:
 
 - **Restraint over spectacle** — Effects should be barely perceptible
 - **Content-first** — Design serves content, never competes with it
@@ -441,6 +467,127 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 1. Design tokens in `src/styles/tokens.css`
 2. Component styles in `src/styles/main.css`
+
+---
+
+## 16. Routes Reference
+
+### Core Service Routes
+- `/direction-session` → Direction Session landing page
+- `/founders-check` → Founder's Direction Check landing page
+- `/website-snapshot-review` → Website Snapshot Review
+- `/brand-clarity-diagnostic` → Brand Clarity Diagnostic
+
+### Focus Studio Routes
+- `/focus-studio` → B Focus Studio intake page (serves all three offerings)
+
+### Intake Routes
+- `/intake/direction-session` → Direction Session intake form
+- `/intake/founders-check` → Founder's Check intake form
+
+---
+
+## 17. Sub-Brand Visual System
+
+### B Core Services
+- Shared B logomark (40px, white)
+- "Core Services" wordmark in Fraunces (1.875rem, 300 weight)
+- Positioned below "What we offer" heading
+- Solid borders on service cards
+
+### B Focus Studio
+- Shared B logomark (40px, white)
+- "Focus Studio" wordmark in Fraunces (1.875rem, 300 weight)
+- Positioned within Focus Studio section header
+- Dashed borders on service cards
+- Includes boundary statement at bottom
+
+Both sub-brands use identical logomark + wordmark styling for consistency.
+
+---
+
+## 18. V5.0.0 Performance Optimizations
+
+V5.0.0 is a polish pass focused on eliminating janky animations and improving mobile performance.
+
+### 18.1 Animation Performance
+
+**Header Ambient Lights**
+- Throttled from 60fps to 30fps for reduced GPU load
+- Movement values doubled to compensate (same visual speed)
+- Disabled entirely on mobile via CSS
+
+**Scroll Handler**
+- Cached viewport height (updated on debounced resize)
+- Cached DOM state flags to avoid repeated reads
+- Batched class mutations
+- Added passive event listeners
+
+**Hero Spotlights**
+- Mobile blur reduced: 50px → 30px (768px), 35px → 20px (480px)
+- Mobile keyframes simplified to avoid `filter` animation (expensive)
+- Animation duration reduced: 3s → 2s on mobile, 1.5s on small screens
+- Added `contain: layout style` for isolation
+
+### 18.2 Mobile Optimizations
+
+**Header**
+- Backdrop blur reduced: 20px → 12px on mobile
+- GPU layer promotion via `transform: translateZ(0)`
+- Ambient lighting pseudo-element disabled on mobile
+
+**Intro Animation**
+- Added `contain: layout style paint` to intro container
+- `will-change` cleanup after animation completes
+
+**Touch Targets**
+- All CTAs minimum 44px height
+- Improved tap feedback with scale transform
+
+### 18.3 CSS Containment
+
+Added `contain: layout style` to:
+- `.intro` (full containment with paint)
+- `.hero`
+- `.section`
+- `.section--alt`
+- `.hero__spotlight`
+- `.intro__glow`
+
+### 18.4 Card Interactions
+
+**Service Cards**
+- Refined hover transitions (border, transform, shadow)
+- Subtle lift on hover (3px)
+- Active state feedback
+
+**Focus Studio Cards**
+- Added hover lift (2px)
+- Violet-tinted shadow on hover
+
+**Exploratory Cards**
+- Added hover lift (2px)
+- Active state scale feedback
+
+**Pricing Modal**
+- Improved entrance animation with scale + fade
+- Backdrop fade-in separate from content animation
+
+### 18.5 Mobile Service Layout
+
+- Improved spacing consistency
+- Touch target minimums (44px)
+- Disabled hover lift on touch devices
+- Active state uses scale(0.98) for feedback
+
+---
+
+## 19. Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 4.2.0 | Jan 2026 | Focus Studio color tokens, mobile typography |
+| 5.0.0 | Jan 2026 | Performance polish pass: 30fps throttling, reduced blur, CSS containment, improved touch targets |
 
 ---
 

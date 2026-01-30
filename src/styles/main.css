@@ -157,10 +157,25 @@
             --orange-pos-2: 85%;
         }
 
-        /* Allow mobile nav to escape glass container */
+        /* V5.0: Mobile header performance optimizations */
         @media (max-width: 768px) {
+            .header__glass {
+                /* Reduce blur for better mobile performance */
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                /* GPU layer promotion */
+                transform: translateZ(0);
+                will-change: transform;
+            }
+
+            /* Allow mobile nav to escape glass container */
             .header__glass:has(.header__nav.is-open) {
                 overflow: visible;
+            }
+
+            /* Disable ambient lighting on mobile (no JS animation anyway) */
+            .header__glass::before {
+                display: none;
             }
         }
 
@@ -277,6 +292,8 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            /* V5.0: Containment for animation isolation */
+            contain: layout style paint;
         }
 
         /* After animation completes, intro becomes a static header */
@@ -388,12 +405,19 @@
         }
 
         /* Ambient light sources — refined, natural feeling */
+        /* V5.0: Improved containment, will-change cleanup after animation */
         .intro__glow {
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
-            will-change: opacity;
+            will-change: opacity, transform;
             transform: translateZ(0);
+            contain: layout style;
+        }
+
+        /* Cleanup will-change after intro becomes static */
+        .intro.intro--static .intro__glow {
+            will-change: auto;
         }
 
         /* Orange/amber — primary warm light, top-right */
@@ -906,6 +930,7 @@
         }
 
         /* === HERO === */
+        /* V5.0: Added containment for performance */
         .hero {
             min-height: 90vh;
             display: flex;
@@ -916,6 +941,7 @@
             padding-top: 5rem;
             padding-bottom: 2rem;
             background: var(--bg);
+            contain: layout style;
             /* Soft fade at top edge */
             -webkit-mask-image: linear-gradient(to bottom,
                 transparent 0%,
@@ -1158,6 +1184,7 @@
         }
 
         /* Fluid spotlights - activated after intro is gone */
+        /* V5.0: Added containment for isolation */
         .hero__spotlight {
             position: absolute;
             border-radius: 50%;
@@ -1166,9 +1193,10 @@
             pointer-events: none;
             z-index: 0;
             /* GPU acceleration for blur and transform performance */
-            will-change: transform, opacity, filter;
+            will-change: transform, opacity;
             transform: translateZ(0);
             backface-visibility: hidden;
+            contain: layout style;
         }
 
         /* Organic positions - swapped from intro but not perfectly mirrored */
@@ -1191,17 +1219,19 @@
         }
 
         /* Mobile: reduce spotlight sizes and blur for performance */
+        /* V5.0: Further blur reduction for smoother animations */
         @media (max-width: 768px) {
             .hero__spotlight {
-                filter: blur(70px);
+                filter: blur(45px);
+                will-change: transform, opacity;
             }
             .hero__spotlight--orange {
-                width: 350px;
-                height: 350px;
-            }
-            .hero__spotlight--blue {
                 width: 320px;
                 height: 320px;
+            }
+            .hero__spotlight--blue {
+                width: 280px;
+                height: 280px;
             }
         }
 
@@ -1352,14 +1382,17 @@
         }
 
         /* === SECTION === */
+        /* V5.0: Added containment for layout isolation */
         .section {
             padding: var(--space-2xl) 0;
+            contain: layout style;
         }
 
         .section--alt {
             background: var(--bg-elevated);
             position: relative;
             overflow: visible;
+            contain: layout style;
         }
 
         .section--alt::before {
@@ -1944,20 +1977,29 @@
             }
         }
 
+        /* V5.0: Improved card hover with subtle scale */
         .exploratory-card {
             padding: var(--space-md);
             background: transparent;
             border: 1px solid var(--border);
             border-radius: var(--radius-sm);
-            transition: all var(--duration-fast) ease;
+            transition: transform var(--duration-fast) var(--ease-out),
+                        border-color var(--duration-fast) ease,
+                        background var(--duration-fast) ease;
             position: relative;
             z-index: 1;
             cursor: pointer;
+            will-change: transform;
         }
 
         .exploratory-card:hover {
             border-color: var(--border-hover);
             background: var(--bg-subtle);
+            transform: translateY(-2px);
+        }
+
+        .exploratory-card:active {
+            transform: translateY(0);
         }
 
         .exploratory-card__header {
@@ -2160,16 +2202,20 @@
             gap: var(--space-md);
         }
 
+        /* V5.0: Refined service card transitions */
         .service {
             padding: var(--space-lg);
             background: var(--bg-subtle);
             border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
-            transition: all var(--duration-medium) var(--ease-out-expo);
+            transition: transform var(--duration-fast) var(--ease-out),
+                        border-color var(--duration-fast) ease,
+                        box-shadow var(--duration-fast) ease;
             display: flex;
             flex-direction: column;
             cursor: pointer;
+            will-change: transform;
         }
 
         .service::before {
@@ -2185,8 +2231,13 @@
         }
 
         .service:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             border-color: var(--border-hover);
+            box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.3);
+        }
+
+        .service:active {
+            transform: translateY(-1px);
         }
 
         .service:hover::before {
@@ -2516,20 +2567,32 @@
             gap: var(--space-sm);
         }
 
+        /* V5.0: Improved Focus Studio card hover */
         .focused-studio__card {
             padding: var(--space-md) var(--space-md) var(--space-sm);
             background: var(--focus-accent-muted);
             border: 1px dashed var(--focus-border);
             display: flex;
             flex-direction: column;
-            transition: border-color var(--duration-fast) ease, border-style var(--duration-fast) ease, background var(--duration-fast) ease;
+            transition: transform var(--duration-fast) var(--ease-out),
+                        border-color var(--duration-fast) ease,
+                        border-style var(--duration-fast) ease,
+                        background var(--duration-fast) ease,
+                        box-shadow var(--duration-fast) ease;
             cursor: pointer;
+            will-change: transform;
         }
 
         .focused-studio__card:hover {
             border-style: solid;
             border-color: var(--focus-accent);
             background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px -6px rgba(139, 92, 246, 0.2);
+        }
+
+        .focused-studio__card:active {
+            transform: translateY(0);
         }
 
         .focused-studio__card-header {
@@ -2627,7 +2690,7 @@
             font-style: italic;
         }
 
-        /* Mobile adjustments for focused studio */
+        /* Mobile adjustments for focused studio - V5.0: Enhanced touch targets and spacing */
         @media (max-width: 768px) {
             .focused-studio__card-header {
                 flex-direction: column;
@@ -2637,6 +2700,80 @@
 
             .focused-studio__card-timeline {
                 order: -1;
+            }
+
+            /* V5.0: Improve touch targets (min 44px) */
+            .focused-studio__card {
+                padding: var(--space-md);
+                min-height: 44px;
+            }
+
+            .focused-studio__card-cta {
+                font-size: 0.8125rem;
+                padding: 0.5rem 0;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+
+            .focused-studio__card-footer {
+                padding-top: var(--space-sm);
+            }
+        }
+
+        /* V5.0: Mobile service cards - improved touch targets and spacing */
+        @media (max-width: 768px) {
+            .service {
+                padding: var(--space-md);
+            }
+
+            .service__title {
+                font-size: 1.25rem;
+            }
+
+            .service__cta,
+            .service__cta--gated {
+                font-size: 0.875rem;
+                padding: 0.5rem 0;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+
+            .service__footer {
+                gap: var(--space-sm);
+            }
+
+            /* Disable hover lift on touch devices for better UX */
+            .service:hover,
+            .focused-studio__card:hover,
+            .exploratory-card:hover {
+                transform: none;
+            }
+
+            .service:active,
+            .focused-studio__card:active,
+            .exploratory-card:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* V5.0: Exploratory cards - mobile touch improvements */
+        @media (max-width: 768px) {
+            .exploratory-card {
+                padding: var(--space-md);
+            }
+
+            .exploratory-card__cta {
+                font-size: 0.875rem;
+                padding: 0.5rem 0;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+
+            .exploratory-card__footer {
+                gap: var(--space-sm);
             }
         }
 
@@ -3280,7 +3417,7 @@
             color: var(--text);
         }
 
-        /* Pricing Modal */
+        /* Pricing Modal - V5.0: Improved entrance animation */
         .pricing-modal {
             position: fixed;
             inset: 0;
@@ -3291,7 +3428,7 @@
             padding: var(--space-md);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
         }
 
         .pricing-modal.is-open {
@@ -3305,6 +3442,12 @@
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .pricing-modal.is-open .pricing-modal__backdrop {
+            opacity: 1;
         }
 
         .pricing-modal__content {
@@ -3315,12 +3458,15 @@
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
             padding: var(--space-lg);
-            transform: translateY(20px);
-            transition: transform 0.3s var(--ease-out-expo);
+            transform: translateY(16px) scale(0.97);
+            opacity: 0;
+            transition: transform 0.3s var(--ease-out-expo),
+                        opacity 0.25s ease;
         }
 
         .pricing-modal.is-open .pricing-modal__content {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
+            opacity: 1;
         }
 
         .pricing-modal__close {
@@ -3476,17 +3622,20 @@
         }
 
         /* ============================================================
-           MOBILE PERFORMANCE OPTIMIZATIONS
+           MOBILE PERFORMANCE OPTIMIZATIONS (V5.0)
            Disable heavy animations and reduce GPU load on mobile
+           - Reduced blur values for smoother rendering
+           - Simplified keyframes avoid filter animation (expensive)
+           - Added containment for better isolation
            ============================================================ */
         @media (max-width: 768px) {
-            /* Disable infinite spotlight float animations - use static position */
+            /* Mobile-optimized spotlight animations - no filter animation */
             body.intro-scrolled .hero__spotlight--orange {
-                animation: spotlightSetupOrange 3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+                animation: spotlightSetupOrangeMobile 2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
             }
 
             body.intro-scrolled .hero__spotlight--blue {
-                animation: spotlightSetupBlue 3s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s forwards;
+                animation: spotlightSetupBlueMobile 2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s forwards;
             }
 
             /* Disable breathing animations on ambient glows */
@@ -3501,28 +3650,24 @@
                 opacity: 0.85;
             }
 
-            /* Reduce blur intensity across the board */
+            /* V5.0: Reduced blur values for better performance */
             .hero__spotlight {
-                filter: blur(50px);
+                filter: blur(30px);
             }
 
             .hero__gradient {
-                filter: blur(60px);
-            }
-
-            /* Disable gradient float animation */
-            .hero__gradient {
+                filter: blur(45px);
                 animation: none;
             }
 
             /* Reduce intro glow blur */
             .intro__glow {
-                filter: blur(40px);
+                filter: blur(30px);
             }
 
             /* Simplify contact spotlight */
             .reveal.is-visible.contact::before {
-                filter: blur(50px);
+                filter: blur(40px);
             }
 
             /* Disable scroll hint bounce - static instead */
@@ -3530,7 +3675,7 @@
                 animation: scrollHintFadeIn 1s ease 1s forwards;
             }
 
-            /* Remove will-change from elements that don't need it */
+            /* Cleanup will-change after animations complete */
             .hero__spotlight,
             .hero__gradient,
             .intro__glow {
@@ -3543,18 +3688,56 @@
             .focused-studio__glow::after {
                 transform: translate3d(-50%, -50%, 0);
             }
+
+            /* Add containment to isolated sections */
+            .hero,
+            .services,
+            .contact {
+                contain: layout style;
+            }
         }
 
-        /* Even more aggressive optimizations for very small screens */
+        /* V5.0: Mobile-optimized keyframes - transform only, no filter animation */
+        @keyframes spotlightSetupOrangeMobile {
+            0% {
+                opacity: 0;
+                transform: translate(40%, -15%) scale(1.2);
+            }
+            50% {
+                opacity: 0.4;
+                transform: translate(5%, 2%) scale(1.05);
+            }
+            100% {
+                opacity: 0.5;
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        @keyframes spotlightSetupBlueMobile {
+            0% {
+                opacity: 0;
+                transform: translate(-35%, 20%) scale(1.15);
+            }
+            50% {
+                opacity: 0.35;
+                transform: translate(-3%, 5%) scale(1.03);
+            }
+            100% {
+                opacity: 0.42;
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        /* Even more aggressive optimizations for very small screens (V5.0) */
         @media (max-width: 480px) {
             /* Further reduce blur for older/slower devices */
             .hero__spotlight {
-                filter: blur(35px);
+                filter: blur(20px);
             }
 
             .core-services__glow::before,
             .focused-studio__glow::before {
-                filter: blur(30px);
+                filter: blur(20px);
             }
 
             /* Hide secondary glow elements entirely */
@@ -3570,7 +3753,16 @@
             /* Reduce spotlight sizes */
             .hero__spotlight--orange,
             .hero__spotlight--blue {
-                width: 250px;
-                height: 250px;
+                width: 220px;
+                height: 220px;
+            }
+
+            /* Faster animations on small screens */
+            body.intro-scrolled .hero__spotlight--orange {
+                animation-duration: 1.5s;
+            }
+            body.intro-scrolled .hero__spotlight--blue {
+                animation-duration: 1.5s;
+                animation-delay: 0.15s;
             }
         }
