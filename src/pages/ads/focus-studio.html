@@ -135,75 +135,42 @@
             color: var(--text);
         }
 
-        /* Hero */
+        /* Hero - Decisive for cold traffic */
         .fs-hero {
-            padding: var(--space-2xl, 4rem) 0 var(--space-lg, 2rem);
+            padding: var(--space-xl, 3rem) 0 var(--space-md, 1.5rem);
             text-align: center;
         }
 
         .fs-hero__title {
             font-family: 'Inter', -apple-system, sans-serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 300;
-            line-height: 1.2;
-            margin-bottom: var(--space-md);
+            font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+            font-weight: 400;
+            line-height: 1.25;
+            margin-bottom: var(--space-sm);
             color: var(--text);
         }
 
+        /* Problem statement - must be visible */
+        .fs-hero__problem {
+            font-size: var(--text-lg);
+            color: var(--text);
+            max-width: 580px;
+            margin: 0 auto var(--space-md);
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
         .fs-hero__subtitle {
-            font-size: var(--text-xl);
+            font-size: var(--text-base);
             color: var(--text-muted);
-            max-width: 650px;
+            max-width: 520px;
             margin: 0 auto;
             line-height: 1.6;
         }
 
-        /* Offerings Grid */
+        /* Offerings */
         .fs-offerings {
             padding: var(--space-lg, 2rem) 0 var(--space-2xl, 4rem);
-        }
-
-        .fs-offerings__brand {
-            text-align: center;
-            margin-bottom: var(--space-xs);
-        }
-
-        .fs-offerings__brand-inner {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.625rem;
-        }
-
-        .fs-offerings__mark {
-            width: 32px;
-            height: 32px;
-            filter: brightness(0) invert(1);
-        }
-
-        .fs-offerings__wordmark {
-            font-family: 'Fraunces', Georgia, serif;
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: var(--text);
-            letter-spacing: 0.02em;
-        }
-
-        .fs-offerings__label {
-            text-align: center;
-            font-size: var(--text-sm);
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: var(--space-md);
-        }
-
-        .fs-offerings__grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--space-md);
-            max-width: 1100px;
-            margin: 0 auto;
         }
 
         .fs-offering {
@@ -222,32 +189,93 @@
             transform: translateY(-2px);
         }
 
-        /* Primary offering emphasis */
+        /* Primary offering - DOMINANT */
         .fs-offering--primary {
-            border-color: rgba(139, 92, 246, 0.4);
-            background: rgba(139, 92, 246, 0.12);
+            grid-column: 1 / -1;
+            max-width: 600px;
+            margin: 0 auto var(--space-lg);
+            border: 2px solid rgba(139, 92, 246, 0.5);
+            background: rgba(139, 92, 246, 0.15);
             position: relative;
+            padding: var(--space-xl);
+        }
+
+        .fs-offering--primary .fs-offering__title {
+            font-size: var(--text-2xl);
+        }
+
+        .fs-offering--primary .fs-offering__description {
+            font-size: var(--text-base);
+        }
+
+        .fs-offering--primary .fs-offering__price {
+            font-size: var(--text-2xl);
         }
 
         .fs-offering--primary::before {
-            content: 'Most businesses start here';
+            content: 'RECOMMENDED';
             position: absolute;
-            top: -0.625rem;
+            top: -0.75rem;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 0.625rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #8B5CF6;
-            background: var(--bg, #0a0a0a);
-            padding: 0.125rem 0.625rem;
+            color: #fff;
+            background: #8B5CF6;
+            padding: 0.25rem 0.875rem;
+            border-radius: 2px;
             white-space: nowrap;
         }
 
         .fs-offering--primary:hover {
-            border-color: rgba(139, 92, 246, 0.6);
-            background: rgba(139, 92, 246, 0.16);
+            border-color: rgba(139, 92, 246, 0.7);
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .fs-offering--primary .fs-offering__cta {
+            display: inline-block;
+            margin-top: var(--space-sm);
+            padding: 0.75rem 1.5rem;
+            background: #8B5CF6;
+            color: #fff;
+            font-size: var(--text-sm);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: background var(--duration-fast) ease;
+        }
+
+        .fs-offering--primary .fs-offering__cta:hover {
+            background: #7C3AED;
+        }
+
+        /* Secondary offerings - subdued */
+        .fs-offerings__secondary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-md);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .fs-offerings__secondary .fs-offering {
+            opacity: 0.85;
+            padding: var(--space-md);
+        }
+
+        .fs-offerings__secondary .fs-offering:hover {
+            opacity: 1;
+        }
+
+        .fs-offerings__secondary-label {
+            text-align: center;
+            font-size: var(--text-xs);
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-sm);
         }
 
         .fs-offering__header {
@@ -592,45 +620,40 @@
         <!-- Hero -->
         <section class="fs-hero">
             <div class="container">
-                <h1 class="fs-hero__title">Focused brand and website work—done fast, done properly.</h1>
+                <h1 class="fs-hero__title">Your website isn't working. Let's fix it.</h1>
+                <p class="fs-hero__problem">It's not broken — it's unclear, outdated, or not doing its job.</p>
                 <p class="fs-hero__subtitle">
-                    Clear, fixed-scope studio offerings designed to improve clarity, credibility, and conversion without long engagements.
+                    Fixed-scope website work. Clear pricing. Done in days, not weeks.
                 </p>
             </div>
         </section>
 
-        <!-- Offerings -->
+        <!-- Primary Offering - Dominant -->
         <section class="fs-offerings">
             <div class="container">
-                <div class="fs-offerings__brand">
-                    <div class="fs-offerings__brand-inner">
-                        <img src="/assets/bertrand-brands-logomark.png" alt="" class="fs-offerings__mark">
-                        <span class="fs-offerings__wordmark">Focus Studio</span>
+                <!-- Quick Website Refresh - THE DEFAULT -->
+                <div class="fs-offering fs-offering--primary">
+                    <div class="fs-offering__header">
+                        <span class="fs-offering__timeline">Done in 1 business day</span>
+                        <h2 class="fs-offering__title">Quick Website Refresh</h2>
+                    </div>
+                    <p class="fs-offering__description">A focused improvement pass on your existing website. We address clarity, mobile usability, and conversion blockers — fast. Most businesses start here.</p>
+                    <div class="fs-offering__footer">
+                        <p class="fs-offering__price">$750 <span>CAD</span></p>
+                        <a href="#request" class="fs-offering__cta">Get Started →</a>
                     </div>
                 </div>
-                <p class="fs-offerings__label">Offerings</p>
-                <p style="text-align: center; color: var(--text-subtle); font-size: var(--text-sm); margin-top: -0.75rem; margin-bottom: var(--space-xs);">Fixed scope. Clear deliverables. Short turnaround.</p>
-                <p style="text-align: center; color: var(--text-muted); font-size: var(--text-base); margin-bottom: var(--space-lg); max-width: 560px; margin-left: auto; margin-right: auto;">Your website isn't broken — it's unclear, outdated, or not doing its job.</p>
-                <div class="fs-offerings__grid">
-                    <!-- Quick Website Refresh (Primary) -->
-                    <div class="fs-offering fs-offering--primary">
-                        <div class="fs-offering__header">
-                            <span class="fs-offering__timeline">1 business day</span>
-                            <h3 class="fs-offering__title">Quick Website Refresh</h3>
-                        </div>
-                        <p class="fs-offering__description">A focused improvement pass on your existing website. We address clarity, mobile usability, and conversion blockers — fast.</p>
-                        <div class="fs-offering__footer">
-                            <p class="fs-offering__price">$750 <span>CAD</span></p>
-                        </div>
-                    </div>
 
+                <!-- Secondary Options -->
+                <p class="fs-offerings__secondary-label">Need something different?</p>
+                <div class="fs-offerings__secondary">
                     <!-- One-Page Redesign -->
                     <div class="fs-offering">
                         <div class="fs-offering__header">
                             <span class="fs-offering__timeline">2–3 business days</span>
                             <h3 class="fs-offering__title">One-Page Redesign</h3>
                         </div>
-                        <p class="fs-offering__description">A clean, modern single-page site that replaces the clutter. Clear messaging, mobile-first, with a proper call-to-action.</p>
+                        <p class="fs-offering__description">A clean, modern single-page site that replaces the clutter.</p>
                         <div class="fs-offering__footer">
                             <p class="fs-offering__price">$1,250 <span>CAD</span></p>
                         </div>
@@ -642,7 +665,7 @@
                             <span class="fs-offering__timeline">5–7 business days</span>
                             <h3 class="fs-offering__title">Brandmarking Package</h3>
                         </div>
-                        <p class="fs-offering__description">A complete, usable brandmark that works everywhere your business appears. Multiple formats, light/dark variants, done right.</p>
+                        <p class="fs-offering__description">A complete, usable brandmark that works everywhere your business appears.</p>
                         <div class="fs-offering__footer">
                             <p class="fs-offering__price">$950 <span>CAD</span></p>
                         </div>
@@ -654,8 +677,8 @@
         <!-- Request Form -->
         <section class="fs-form-section" id="request">
             <div class="container">
-                <h2 class="fs-form-section__title">Request a Focus Studio Slot</h2>
-                <p class="fs-form-section__subtitle">Tell us what you need. We'll follow up within 1 business day to confirm availability and next steps.</p>
+                <h2 class="fs-form-section__title">Get started now</h2>
+                <p class="fs-form-section__subtitle">Send your details. We'll confirm availability and next steps within 1 business day.</p>
 
                 <form class="fs-form" action="https://formspree.io/f/xnjjgoay" method="POST" id="focusStudioForm">
                     <input type="hidden" name="source" value="focus_studio_intake">
@@ -663,8 +686,7 @@
                     <div class="fs-form__group">
                         <label class="fs-form__label" for="offering">Which offering?</label>
                         <select class="fs-form__select" id="offering" name="offering" required>
-                            <option value="">Select an offering</option>
-                            <option value="Quick Website Refresh ($750)">Quick Website Refresh — $750</option>
+                            <option value="Quick Website Refresh ($750)" selected>Quick Website Refresh — $750 (Recommended)</option>
                             <option value="One-Page Redesign ($1,250)">One-Page Redesign — $1,250</option>
                             <option value="Brandmarking Package ($950)">Brandmarking Package — $950</option>
                         </select>
