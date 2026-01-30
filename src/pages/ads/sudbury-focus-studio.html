@@ -257,6 +257,34 @@
             transform: translateY(-2px);
         }
 
+        /* Primary offering emphasis */
+        .sfs-offering--primary {
+            border-color: rgba(139, 92, 246, 0.4);
+            background: rgba(139, 92, 246, 0.12);
+            position: relative;
+        }
+
+        .sfs-offering--primary::before {
+            content: 'Most businesses start here';
+            position: absolute;
+            top: -0.625rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.625rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8B5CF6;
+            background: var(--bg, #0a0a0a);
+            padding: 0.125rem 0.625rem;
+            white-space: nowrap;
+        }
+
+        .sfs-offering--primary:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            background: rgba(139, 92, 246, 0.16);
+        }
+
         .sfs-offering__header {
             margin-bottom: var(--space-sm);
         }
@@ -619,10 +647,11 @@
                     </div>
                 </div>
                 <p class="sfs-offerings__label">Offerings</p>
-                <p style="text-align: center; color: var(--text-subtle); font-size: var(--text-sm); margin-top: -0.75rem; margin-bottom: var(--space-lg);">Fixed scope. Clear deliverables. Short turnaround.</p>
+                <p style="text-align: center; color: var(--text-subtle); font-size: var(--text-sm); margin-top: -0.75rem; margin-bottom: var(--space-xs);">Fixed scope. Clear deliverables. Short turnaround.</p>
+                <p style="text-align: center; color: var(--text-muted); font-size: var(--text-base); margin-bottom: var(--space-lg); max-width: 560px; margin-left: auto; margin-right: auto;">Your website isn't broken — it's unclear, outdated, or not doing its job.</p>
                 <div class="sfs-offerings__grid">
-                    <!-- Quick Website Refresh -->
-                    <div class="sfs-offering">
+                    <!-- Quick Website Refresh (Primary) -->
+                    <div class="sfs-offering sfs-offering--primary">
                         <div class="sfs-offering__header">
                             <span class="sfs-offering__timeline">1 business day</span>
                             <h3 class="sfs-offering__title">Quick Website Refresh</h3>

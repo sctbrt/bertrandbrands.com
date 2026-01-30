@@ -98,6 +98,294 @@
 
         a { color: inherit; text-decoration: none; }
 
+        /* === LAUNCH GATE === */
+        @keyframes launchFadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes launchGlow {
+            0% {
+                filter: brightness(0) invert(1) drop-shadow(0 0 0 transparent);
+            }
+            100% {
+                filter: brightness(0) invert(1) drop-shadow(0 0 25px rgba(255, 255, 255, 0.2));
+            }
+        }
+
+        @keyframes launchBreathe {
+            0%, 100% {
+                filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(255, 255, 255, 0.15));
+            }
+            50% {
+                filter: brightness(0) invert(1) drop-shadow(0 0 35px rgba(255, 255, 255, 0.25));
+            }
+        }
+
+        @keyframes launchTextBreathe {
+            0%, 100% {
+                text-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        @keyframes launchTextReveal {
+            from {
+                opacity: 0;
+                letter-spacing: 0.4em;
+            }
+            to {
+                opacity: 1;
+                letter-spacing: 0.2em;
+            }
+        }
+
+        @keyframes launchPulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes launchSweep {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes launchSpotlight {
+            0% {
+                background-position: 100% 0;
+            }
+            100% {
+                background-position: 0% 0;
+                color: rgba(255, 255, 255, 1);
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        .launch-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .launch-gate__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .launch-gate__brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .launch-gate__logo {
+            width: 80px;
+            height: 80px;
+            filter: brightness(0) invert(1);
+            opacity: 0;
+            animation:
+                launchFadeDown 1.5s var(--ease-out-expo) 0.3s forwards,
+                launchGlow 1.5s ease-out 2s forwards,
+                launchBreathe 4s ease-in-out 3.5s infinite;
+        }
+
+        .launch-gate__wordmark {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 500;
+            letter-spacing: 0.4em;
+            color: transparent;
+            opacity: 0;
+            /* White spotlight gradient (matches intro cinematic) */
+            background: linear-gradient(
+                105deg,
+                rgba(250, 250, 250, 1) 0%,
+                rgba(250, 250, 250, 1) 35%,
+                rgba(200, 200, 200, 1) 45%,
+                rgba(255, 255, 255, 1) 50%,
+                rgba(200, 200, 200, 1) 55%,
+                rgba(250, 250, 250, 1) 65%,
+                rgba(250, 250, 250, 1) 100%
+            );
+            background-size: 300% 100%;
+            background-position: 100% 0;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation:
+                launchTextReveal 1.8s var(--ease-out-expo) 0.8s forwards,
+                launchSpotlight 1.5s ease-out 2.5s forwards,
+                launchTextBreathe 4s ease-in-out 4s infinite;
+        }
+
+        .launch-gate__title {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            letter-spacing: 0.01em;
+            opacity: 0;
+            animation: launchFadeDown 1.2s var(--ease-out-expo) 1.4s forwards;
+        }
+
+        .launch-gate__text {
+            font-family: var(--font-body);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            opacity: 0;
+            animation:
+                launchFadeDown 1.2s var(--ease-out-expo) 1.8s forwards,
+                launchPulse 3s ease-in-out 3.5s infinite;
+        }
+
+        .launch-gate__location {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            opacity: 0;
+            animation: launchFadeDown 1.2s var(--ease-out-expo) 2.2s forwards;
+        }
+
+        /* Ambient lighting glows (matches intro cinematic) */
+        @keyframes launchGlowFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .launch-gate__glow {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .launch-gate__glow--orange {
+            width: 70vmax;
+            height: 70vmax;
+            max-width: 900px;
+            max-height: 900px;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(255, 255, 255, 0.02) 45%,
+                transparent 70%
+            );
+            top: -25%;
+            right: -20%;
+            filter: blur(80px);
+            animation: launchGlowFadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .launch-gate__glow--blue {
+            width: 55vmax;
+            height: 55vmax;
+            max-width: 650px;
+            max-height: 650px;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.06) 0%,
+                rgba(255, 255, 255, 0.015) 50%,
+                transparent 70%
+            );
+            bottom: -30%;
+            left: -15%;
+            filter: blur(100px);
+            animation: launchGlowFadeIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        /* Hide main content when in launch mode */
+        body.launch-mode .cursor-glow,
+        body.launch-mode .intro,
+        body.launch-mode .page {
+            display: none;
+        }
+
+        /* Show everything in preview mode */
+        body.preview-mode .launch-gate {
+            display: none;
+        }
+
+        /* Mobile glow optimizations (reduce blur for performance) */
+        @media (max-width: 767px) {
+            .launch-gate__glow {
+                filter: blur(50px);
+            }
+            .launch-gate__glow--orange {
+                width: 75vw;
+                height: 75vw;
+                top: -15%;
+                right: -20%;
+            }
+            .launch-gate__glow--blue {
+                width: 60vw;
+                height: 60vw;
+                bottom: -20%;
+                left: -15%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .launch-gate__content {
+                gap: 2.5rem;
+            }
+            .launch-gate__brand {
+                gap: 1.25rem;
+            }
+            .launch-gate__logo {
+                width: 112px;
+                height: 112px;
+            }
+            .launch-gate__wordmark {
+                font-size: 2.25rem;
+                font-weight: 600;
+                letter-spacing: 0.25em;
+            }
+            .launch-gate__title {
+                font-size: 1.5rem;
+            }
+            .launch-gate__text {
+                font-size: 1rem;
+                letter-spacing: 0.25em;
+            }
+            .launch-gate__location {
+                font-size: 0.875rem;
+            }
+        }
+
         /* === LAYOUT === */
         .page {
             min-height: 100vh;

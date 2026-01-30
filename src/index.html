@@ -79,6 +79,34 @@
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
+    <!-- Launching Soon Gate -->
+    <div class="launch-gate" id="launchGate">
+        <!-- Ambient lighting (matches intro cinematic) -->
+        <div class="launch-gate__glow launch-gate__glow--orange"></div>
+        <div class="launch-gate__glow launch-gate__glow--blue"></div>
+        <div class="launch-gate__content">
+            <div class="launch-gate__brand">
+                <img src="/assets/bertrand-brands-logomark.png" alt="" class="launch-gate__logo">
+                <span class="launch-gate__wordmark">BERTRAND BRANDS</span>
+            </div>
+            <h1 class="launch-gate__title">Brand & Web Systems Studio</h1>
+            <p class="launch-gate__text">Launching Soon</p>
+            <p class="launch-gate__location">Sudbury, Ontario</p>
+        </div>
+    </div>
+    <script>
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('preview') === 'true') {
+                var gate = document.getElementById('launchGate');
+                if (gate) gate.style.display = 'none';
+                document.body.classList.add('preview-mode');
+            } else {
+                document.body.classList.add('launch-mode');
+            }
+        })();
+    </script>
+
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <!-- Cinematic Intro -->
