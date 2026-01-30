@@ -1352,6 +1352,7 @@
         .section--alt {
             background: var(--bg-elevated);
             position: relative;
+            overflow: visible;
         }
 
         .section--alt::before {
@@ -2216,6 +2217,7 @@
         /* Core Services wrapper with ambient glow */
         .core-services-wrapper {
             position: relative;
+            overflow: visible;
         }
 
         /* Amber ambient glow container */
@@ -2227,7 +2229,7 @@
             bottom: -100px;
             pointer-events: none;
             z-index: 0;
-            overflow: hidden;
+            overflow: visible;
         }
 
         /* Amber ambient wash - spreads across Core Services section */
@@ -2330,6 +2332,7 @@
             position: relative;
             padding: var(--space-lg) 0;
             scroll-margin-top: 5rem; /* Account for fixed header when anchor-linking */
+            overflow: visible;
         }
 
         /* Ambient spotlight container - allows overflow for glow effect */
