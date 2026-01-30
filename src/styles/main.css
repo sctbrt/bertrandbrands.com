@@ -2053,6 +2053,40 @@
             font-size: 0.9375rem;
         }
 
+        /* Mobile: Stack card header vertically for better readability */
+        @media (max-width: 768px) {
+            .exploratory-card__header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            .exploratory-card__meta {
+                order: -1;
+                font-size: 0.6875rem;
+                margin-bottom: 0.125rem;
+            }
+
+            .exploratory-card__title {
+                font-size: 1.125rem;
+                line-height: 1.3;
+            }
+
+            .exploratory-card__description {
+                font-size: 0.8125rem;
+                line-height: 1.55;
+            }
+
+            .exploratory-card__footer {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .exploratory-card__cta {
+                font-size: 0.8125rem;
+            }
+        }
+
         /* === SERVICES === */
         .services-divider {
             border: none;
