@@ -53,19 +53,36 @@ Bertrand Brands operates two distinct service categories:
 **Category A: B Core Services**
 - Strategic, discovery-led engagements
 - Relationship-based work
-- Variable scope based on client needs
-- Includes: Direction Sessions, Audits, Brand Resets, Website Foundations
+- Entry and gateway offerings (not production-heavy)
+- Tone: Calm, collaborative, outcome-driven
+
+**Core Services — Entry Offerings:**
+
+| Service | Price | Format | Deliverable |
+|---------|-------|--------|-------------|
+| Direction Session | $145 CAD | 45-min video call | Written summary + next-step recommendations |
+| Business Clarity Call | $95 CAD | 25-min video call | No written output (verbal guidance only) |
 
 **Category B: B Focus Studio**
 - Fixed-scope, fixed-price offerings
 - Clear timelines, clear outcomes
+- Transactional, deliverable-first
 - Cash-stabilization tier for immediate revenue
-- Includes: Website Fix Sprint ($750), One-Page Website Rebuild ($1,250), Brandmarking Package ($950)
+
+**Focus Studio Offerings:**
+
+| Service | Price | Timeline | Best For |
+|---------|-------|----------|----------|
+| Quick Website Refresh | $750 CAD | 1 business day | Businesses with underperforming sites needing targeted fixes |
+| One-Page Redesign | $1,250 CAD | 2–3 business days | Restaurants, clinics, trades, local service businesses |
+| Brandmarking Package | $950 CAD | 5–7 business days | Businesses needing a credible mark (not full rebrand) |
 
 Key principles:
 - No open-ended scope
 - No vague deliverables
 - No ad-hoc calls outside defined services
+- No hourly/time-based pricing language
+- AI efficiency increases margin, not discount justification
 - Each service has:
   - A dedicated landing page (or shared intake for Focus Studio)
   - A single CTA
@@ -157,7 +174,7 @@ A successful implementation:
 │   ├── pages/
 │   │   ├── ads/            # Landing pages
 │   │   │   ├── direction-session.html
-│   │   │   ├── founders-check.html
+│   │   │   ├── business-clarity-call.html
 │   │   │   ├── focus-studio.html      # B Focus Studio intake
 │   │   │   └── ...
 │   │   └── intake/         # Intake forms
@@ -473,17 +490,24 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 ## 16. Routes Reference
 
 ### Core Service Routes
-- `/direction-session` → Direction Session landing page
-- `/founders-check` → Founder's Direction Check landing page
-- `/website-snapshot-review` → Website Snapshot Review
-- `/brand-clarity-diagnostic` → Brand Clarity Diagnostic
+- `/direction-session` → Direction Session landing page ($145)
+- `/business-clarity-call` → Business Clarity Call landing page ($95)
 
 ### Focus Studio Routes
 - `/focus-studio` → B Focus Studio intake page (serves all three offerings)
 
+**Focus Studio Offerings (all via shared intake):**
+- Quick Website Refresh ($750)
+- One-Page Redesign ($1,250)
+- Brandmarking Package ($950)
+
 ### Intake Routes
 - `/intake/direction-session` → Direction Session intake form
-- `/intake/founders-check` → Founder's Check intake form
+- `/intake/business-clarity-call` → Business Clarity Call intake form
+
+### Legacy Routes (redirects)
+- `/founders-check` → redirects to `/business-clarity-call`
+- `/intake/founders-check` → redirects to `/intake/business-clarity-call`
 
 ---
 
@@ -506,11 +530,48 @@ Both sub-brands use identical logomark + wordmark styling for consistency.
 
 ---
 
-## 18. V5.0.0 Performance Optimizations
+## 18. Pricing & Marketing Strategy
+
+### 18.1 Pricing Philosophy
+
+- Pricing is **outcome- and deliverable-based**, never time-based
+- AI efficiency increases margin and focus, not justification to discount
+- Prices are upper-mid for Sudbury market, acceptable with clear scope and confident presentation
+- **Do not discount publicly**
+
+### 18.2 Local Incentive Strategy (Approved)
+
+For Sudbury-first campaigns, local incentives may be offered via:
+- Google Ads landing pages only
+- CTA pages only (not global site)
+
+**Framing (approved language):**
+- "Local launch"
+- "Community-first access"
+- "Sudbury partnership"
+
+**Never use:**
+- "Discount" language
+- Public pricing reductions
+- Site-wide promotions
+
+**Implementation:**
+- Optional promo code field in intake forms
+- Code visibility restricted to ad-specific landing pages only
+
+### 18.3 Campaign Focus
+
+- Single campaign only (no split testing yet)
+- Campaign focus: Focus Studio offerings
+- Main CTA for ads: Direction Session ($145) or specific Focus Studio service page
+
+---
+
+## 19. V5.0.0 Performance Optimizations
 
 V5.0.0 is a polish pass focused on eliminating janky animations and improving mobile performance.
 
-### 18.1 Animation Performance
+### 19.1 Animation Performance
 
 **Header Ambient Lights**
 - Throttled from 60fps to 30fps for reduced GPU load
@@ -529,7 +590,7 @@ V5.0.0 is a polish pass focused on eliminating janky animations and improving mo
 - Animation duration reduced: 3s → 2s on mobile, 1.5s on small screens
 - Added `contain: layout style` for isolation
 
-### 18.2 Mobile Optimizations
+### 19.2 Mobile Optimizations
 
 **Header**
 - Backdrop blur reduced: 20px → 12px on mobile
@@ -544,7 +605,7 @@ V5.0.0 is a polish pass focused on eliminating janky animations and improving mo
 - All CTAs minimum 44px height
 - Improved tap feedback with scale transform
 
-### 18.3 CSS Containment
+### 19.3 CSS Containment
 
 Added `contain: layout style` to:
 - `.intro` (full containment with paint)
@@ -554,7 +615,7 @@ Added `contain: layout style` to:
 - `.hero__spotlight`
 - `.intro__glow`
 
-### 18.4 Card Interactions
+### 19.4 Card Interactions
 
 **Service Cards**
 - Refined hover transitions (border, transform, shadow)
@@ -573,7 +634,7 @@ Added `contain: layout style` to:
 - Improved entrance animation with scale + fade
 - Backdrop fade-in separate from content animation
 
-### 18.5 Mobile Service Layout
+### 19.5 Mobile Service Layout
 
 - Improved spacing consistency
 - Touch target minimums (44px)
@@ -582,12 +643,13 @@ Added `contain: layout style` to:
 
 ---
 
-## 19. Version History
+## 20. Version History
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 4.2.0 | Jan 2026 | Focus Studio color tokens, mobile typography |
 | 5.0.0 | Jan 2026 | Performance polish pass: 30fps throttling, reduced blur, CSS containment, improved touch targets |
+| 5.1.0 | Jan 2026 | Service architecture update: renamed offerings, added Business Clarity Call, updated pricing tables |
 
 ---
 

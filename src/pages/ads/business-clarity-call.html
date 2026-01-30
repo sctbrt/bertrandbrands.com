@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
-    <link rel="canonical" href="https://bertrandbrands.com/direction-session">
+    <link rel="canonical" href="https://bertrandbrands.com/business-clarity-call">
     <meta name="theme-color" content="#0a0a0a">
-    <title>Brand & Website Direction Session — $145 | Bertrand Brands</title>
-    <meta name="description" content="A 45-minute live session to get clarity on your brand or website. Walk away with a written summary and clear next steps. No pressure to proceed.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Business Clarity Call — $95 | Bertrand Brands</title>
+    <meta name="description" content="A quick 25-minute call to get verbal clarity on your brand or website situation. Low commitment, no deliverable—just a focused conversation.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Brand & Website Direction Session — $145 | Bertrand Brands">
-    <meta property="og:description" content="A 45-minute live session to get clarity on your brand or website. Walk away with a written summary and clear next steps.">
-    <meta property="og:url" content="https://bertrandbrands.com/direction-session">
+    <meta property="og:title" content="Business Clarity Call — $95 | Bertrand Brands">
+    <meta property="og:description" content="A quick 25-minute call to get verbal clarity on your brand or website situation. Low commitment sanity check.">
+    <meta property="og:url" content="https://bertrandbrands.com/business-clarity-call">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
 
@@ -30,8 +31,8 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Brand & Website Direction Session",
-      "description": "A 45-minute live video session to get clarity on your brand or website. Includes written summary and 2-3 next-step options.",
+      "name": "Business Clarity Call",
+      "description": "A 25-minute live video call for quick verbal clarity on your brand or website situation.",
       "provider": {
         "@type": "ProfessionalService",
         "name": "Bertrand Brands",
@@ -49,7 +50,7 @@
       ],
       "offers": {
         "@type": "Offer",
-        "price": "145",
+        "price": "95",
         "priceCurrency": "CAD"
       }
     }
@@ -136,7 +137,7 @@
         .ad-hero__subtitle {
             font-size: var(--text-lg);
             color: var(--text-muted);
-            max-width: 560px;
+            max-width: 520px;
             margin: 0 auto;
             line-height: 1.7;
         }
@@ -180,122 +181,83 @@
             line-height: 1.7;
         }
 
-        /* For/Not For Lists */
-        .ad-fit {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-lg);
-            max-width: 800px;
+        /* Simple Feature List */
+        .ad-features {
+            max-width: 500px;
             margin: 0 auto;
         }
 
-        .ad-fit__column {
-            background: var(--bg-subtle);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg, 12px);
-            padding: var(--space-lg);
-        }
-
-        .ad-fit__heading {
-            font-size: var(--text-sm);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: var(--space-md);
-            color: var(--text-muted);
-        }
-
-        .ad-fit__heading--for {
-            color: var(--accent);
-        }
-
-        .ad-fit__list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .ad-fit__list li {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            line-height: 1.6;
-            padding: 0.5rem 0;
-            padding-left: 1.25rem;
-            position: relative;
-        }
-
-        .ad-fit__list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.85rem;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--text-subtle);
-        }
-
-        .ad-fit__column:first-child .ad-fit__list li::before {
-            background: var(--accent);
-        }
-
-        /* What You Get */
-        .ad-deliverables {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: var(--space-md);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .ad-deliverable {
-            background: var(--bg-subtle);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg, 12px);
-            padding: var(--space-md);
-        }
-
-        .ad-deliverable__title {
-            font-size: var(--text-sm);
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .ad-deliverable__text {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* Process Steps */
-        .ad-process {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .ad-process__step {
+        .ad-features__item {
             display: flex;
             gap: var(--space-md);
             padding: var(--space-md) 0;
             border-bottom: 1px solid var(--border);
         }
 
-        .ad-process__step:last-child {
+        .ad-features__item:last-child {
             border-bottom: none;
         }
 
-        .ad-process__number {
-            font-size: var(--text-sm);
-            font-weight: 500;
+        .ad-features__icon {
             color: var(--accent);
+            font-size: var(--text-lg);
             min-width: 24px;
         }
 
-        .ad-process__text {
+        .ad-features__text {
             font-size: var(--text-sm);
             color: var(--text-muted);
             line-height: 1.6;
+        }
+
+        .ad-features__text strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Comparison Box */
+        .ad-comparison {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg, 12px);
+            padding: var(--space-lg);
+        }
+
+        .ad-comparison__title {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: var(--space-md);
+            text-align: center;
+        }
+
+        .ad-comparison__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .ad-comparison__col {
+            text-align: center;
+        }
+
+        .ad-comparison__label {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-subtle);
+            margin-bottom: var(--space-xs);
+        }
+
+        .ad-comparison__value {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+        }
+
+        .ad-comparison__value--highlight {
+            color: var(--accent);
         }
 
         /* About Section */
@@ -346,37 +308,23 @@
             align-items: center;
             gap: 0.5rem;
             padding: 1rem 2rem;
-            background: rgba(217, 119, 6, 0.85);
-            border: 1px solid rgba(217, 119, 6, 0.3);
-            color: #000;
+            background: transparent;
+            border: 1px solid var(--border-hover);
+            color: var(--text);
             font-weight: 500;
             border-radius: var(--radius-md);
             text-decoration: none;
-            transition: background var(--duration-fast) var(--ease-out);
-            position: relative;
+            transition: all var(--duration-fast) var(--ease-out);
         }
 
         .ad-cta__button:hover {
-            background: rgba(217, 119, 6, 0.95);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
-        .ad-cta__button::before {
-            content: '';
-            position: absolute;
-            inset: -20px -30px;
-            background: radial-gradient(ellipse, rgba(217, 119, 6, 0.2) 0%, transparent 70%);
-            filter: blur(25px);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .ad-cta__button:hover::before {
-            opacity: 1;
-        }
-
-        /* Secondary CTA */
-        .ad-cta__secondary {
+        /* Upgrade Nudge */
+        .ad-cta__upgrade {
             margin-top: var(--space-lg);
             padding-top: var(--space-md);
             border-top: 1px solid var(--border);
@@ -385,21 +333,21 @@
             margin-right: auto;
         }
 
-        .ad-cta__secondary-text {
+        .ad-cta__upgrade-text {
             font-size: var(--text-sm);
             color: var(--text-subtle);
             margin-bottom: var(--space-xs);
         }
 
-        .ad-cta__secondary-link {
+        .ad-cta__upgrade-link {
             font-size: var(--text-sm);
-            color: var(--text-muted);
+            color: var(--accent);
             text-decoration: none;
-            transition: color var(--duration-fast) ease;
+            transition: opacity var(--duration-fast) ease;
         }
 
-        .ad-cta__secondary-link:hover {
-            color: var(--accent);
+        .ad-cta__upgrade-link:hover {
+            opacity: 0.8;
         }
 
         /* Footer */
@@ -425,7 +373,7 @@
             text-decoration: none;
         }
 
-        /* Ambient Spotlights */
+        /* Ambient Spotlights - Muted for secondary page but still alive */
         .ad-spotlight {
             position: fixed;
             border-radius: 50%;
@@ -439,31 +387,31 @@
         }
 
         .ad-spotlight--orange {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(217, 119, 6, 0.25) 0%, rgba(217, 119, 6, 0.08) 45%, transparent 70%);
-            bottom: -120px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, rgba(217, 119, 6, 0.05) 45%, transparent 70%);
+            bottom: -100px;
             left: -100px;
-            animation: spotlightFadeIn 2s ease-out 0.3s forwards, spotlightFloatOrange 18s ease-in-out 2.3s infinite;
+            animation: spotlightFadeIn 2s ease-out 0.3s forwards, spotlightFloatOrange 20s ease-in-out 2.3s infinite;
         }
 
         .ad-spotlight--blue {
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.06) 45%, transparent 70%);
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.14) 0%, rgba(37, 99, 235, 0.04) 45%, transparent 70%);
             top: 60px;
-            right: -100px;
-            animation: spotlightFadeIn 2s ease-out 0.6s forwards, spotlightFloatBlue 22s ease-in-out 2.6s infinite;
+            right: -80px;
+            animation: spotlightFadeIn 2s ease-out 0.6s forwards, spotlightFloatBlue 24s ease-in-out 2.6s infinite;
         }
 
         .ad-spotlight--accent {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(217, 119, 6, 0.12) 0%, rgba(217, 119, 6, 0.03) 50%, transparent 70%);
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, rgba(217, 119, 6, 0.02) 50%, transparent 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            animation: spotlightFadeIn 2.5s ease-out 1s forwards, spotlightPulse 12s ease-in-out 3.5s infinite;
+            animation: spotlightFadeIn 2.5s ease-out 1s forwards, spotlightPulse 14s ease-in-out 3.5s infinite;
         }
 
         @keyframes spotlightFadeIn {
@@ -472,23 +420,23 @@
 
         @keyframes spotlightFloatOrange {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -20px) scale(1.05); }
-            50% { transform: translate(15px, 15px) scale(0.95); }
-            75% { transform: translate(-20px, 10px) scale(1.02); }
+            25% { transform: translate(20px, -15px) scale(1.03); }
+            50% { transform: translate(10px, 10px) scale(0.97); }
+            75% { transform: translate(-15px, 8px) scale(1.01); }
         }
 
         @keyframes spotlightFloatBlue {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-25px, 20px) scale(1.03); }
-            66% { transform: translate(20px, -15px) scale(0.97); }
+            33% { transform: translate(-18px, 15px) scale(1.02); }
+            66% { transform: translate(15px, -12px) scale(0.98); }
         }
 
         @keyframes spotlightPulse {
             0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.6; }
         }
 
-        /* Subtle grid overlay */
+        /* Subtle grid overlay - lighter than primary page */
         .ad-grid {
             position: fixed;
             inset: 0;
@@ -497,11 +445,11 @@
             opacity: 0;
             animation: gridFadeIn 3s ease-out 0.5s forwards;
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
             background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
-            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+            mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black 20%, transparent 70%);
         }
 
         @keyframes gridFadeIn {
@@ -514,7 +462,7 @@
             inset: 0;
             pointer-events: none;
             z-index: 1;
-            background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+            background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.35) 100%);
         }
 
         @media (max-width: 768px) {
@@ -522,23 +470,23 @@
                 filter: blur(70px);
             }
             .ad-spotlight--orange {
-                width: 300px;
-                height: 300px;
-                bottom: -80px;
-                left: -80px;
+                width: 260px;
+                height: 260px;
                 animation: spotlightFadeIn 2s ease-out 0.3s forwards;
             }
             .ad-spotlight--blue {
-                width: 260px;
-                height: 260px;
-                top: 60px;
-                right: -60px;
+                width: 220px;
+                height: 220px;
                 animation: spotlightFadeIn 2s ease-out 0.6s forwards;
             }
             .ad-spotlight--accent {
-                width: 220px;
-                height: 220px;
+                width: 180px;
+                height: 180px;
                 animation: spotlightFadeIn 2.5s ease-out 1s forwards;
+            }
+            .ad-comparison__grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
             }
             .ad-grid {
                 background-size: 40px 40px;
@@ -579,90 +527,64 @@
         <!-- 1. Hero Section -->
         <section class="ad-hero">
             <div class="container">
-                <h1 class="ad-hero__title">Get clear on what your brand or website actually needs</h1>
+                <h1 class="ad-hero__title">Quick sanity check for your brand or website</h1>
                 <p class="ad-hero__subtitle">
-                    A 45-minute live session to talk through what's unclear, what's not working, and what to do next. You'll leave with a written summary and 2–3 concrete options.
+                    A short, focused call to talk through what's on your mind. No deliverable, no commitment—just clarity.
                 </p>
             </div>
         </section>
 
-        <!-- 2. Who This Is For / Not For -->
+        <!-- 2. What This Is -->
         <section class="ad-section ad-section--alt">
             <div class="container">
-                <h2 class="ad-section__title">Is this session for you?</h2>
+                <h2 class="ad-section__title">What you get</h2>
 
-                <div class="ad-fit">
-                    <div class="ad-fit__column">
-                        <p class="ad-fit__heading ad-fit__heading--for">This is for you if</p>
-                        <ul class="ad-fit__list">
-                            <li>You know something needs to change but aren't sure where to start</li>
-                            <li>You've been putting off a brand or website decision</li>
-                            <li>You want an outside perspective before committing to a project</li>
-                            <li>You'd rather talk it through than fill out a long form</li>
-                        </ul>
+                <div class="ad-features">
+                    <div class="ad-features__item">
+                        <span class="ad-features__icon">→</span>
+                        <p class="ad-features__text"><strong>25 minutes of focused conversation</strong> — enough time to get to the core of what's unclear</p>
                     </div>
-                    <div class="ad-fit__column">
-                        <p class="ad-fit__heading">This is not for you if</p>
-                        <ul class="ad-fit__list">
-                            <li>You're looking for free advice</li>
-                            <li>You already know exactly what you need built</li>
-                            <li>You want someone to do the work in the session</li>
-                            <li>You're not ready to make decisions yet</li>
-                        </ul>
+                    <div class="ad-features__item">
+                        <span class="ad-features__icon">→</span>
+                        <p class="ad-features__text"><strong>Verbal clarity</strong> — we'll talk through your situation and identify what matters most</p>
+                    </div>
+                    <div class="ad-features__item">
+                        <span class="ad-features__icon">→</span>
+                        <p class="ad-features__text"><strong>No written deliverable</strong> — this is a conversation, not a report</p>
+                    </div>
+                    <div class="ad-features__item">
+                        <span class="ad-features__icon">→</span>
+                        <p class="ad-features__text"><strong>No pressure to proceed</strong> — use the clarity however you want</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. What You Get -->
+        <!-- 3. Comparison -->
         <section class="ad-section">
             <div class="container">
-                <h2 class="ad-section__title">What you'll receive</h2>
+                <h2 class="ad-section__title">Not sure which to choose?</h2>
 
-                <div class="ad-deliverables">
-                    <div class="ad-deliverable">
-                        <h3 class="ad-deliverable__title">Live Discussion</h3>
-                        <p class="ad-deliverable__text">45 minutes of focused conversation about your brand, website, or both. We'll work through what's unclear and identify the real blockers.</p>
-                    </div>
-                    <div class="ad-deliverable">
-                        <h3 class="ad-deliverable__title">Written Summary</h3>
-                        <p class="ad-deliverable__text">A follow-up document capturing what we discussed, key observations, and the direction we identified together.</p>
-                    </div>
-                    <div class="ad-deliverable">
-                        <h3 class="ad-deliverable__title">2–3 Next-Step Options</h3>
-                        <p class="ad-deliverable__text">Clear paths forward—whether that's working with us, doing it yourself, or doing nothing at all. No pressure either way.</p>
+                <div class="ad-comparison">
+                    <p class="ad-comparison__title">Compare the options</p>
+                    <div class="ad-comparison__grid">
+                        <div class="ad-comparison__col">
+                            <p class="ad-comparison__label">Business Clarity Call</p>
+                            <p class="ad-comparison__value">$95 · 25 min</p>
+                            <p class="ad-comparison__value">Verbal clarity only</p>
+                        </div>
+                        <div class="ad-comparison__col">
+                            <p class="ad-comparison__label">Direction Session</p>
+                            <p class="ad-comparison__value ad-comparison__value--highlight">$145 · 45 min</p>
+                            <p class="ad-comparison__value ad-comparison__value--highlight">Written summary included</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. How It Works -->
+        <!-- 4. About -->
         <section class="ad-section ad-section--alt">
-            <div class="container">
-                <h2 class="ad-section__title">How it works</h2>
-                <p class="ad-section__intro">
-                    Simple process. No back-and-forth. Book, meet, receive your summary.
-                </p>
-
-                <div class="ad-process">
-                    <div class="ad-process__step">
-                        <span class="ad-process__number">01</span>
-                        <p class="ad-process__text">Book a time and answer a few short questions about what's on your mind</p>
-                    </div>
-                    <div class="ad-process__step">
-                        <span class="ad-process__number">02</span>
-                        <p class="ad-process__text">We meet for 45 minutes via video call to talk through your situation</p>
-                    </div>
-                    <div class="ad-process__step">
-                        <span class="ad-process__number">03</span>
-                        <p class="ad-process__text">Within 2 business days, you receive a written summary with your options</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. About Bertrand Brands -->
-        <section class="ad-section">
             <div class="container">
                 <h2 class="ad-section__title">About Bertrand Brands</h2>
 
@@ -670,23 +592,20 @@
                     <p class="ad-about__text">
                         We help business owners get clarity on their brand and web presence. Based in Sudbury, Ontario, working with clients across Northern Ontario and Canada.
                     </p>
-                    <p class="ad-about__text">
-                        Every engagement starts with understanding, not selling. This session exists because most businesses don't need a full project—they need direction first.
-                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- 6. Final CTA -->
+        <!-- 5. Final CTA -->
         <section class="ad-cta">
             <div class="container">
-                <p class="ad-cta__price">$145 <span>CAD</span></p>
-                <p class="ad-cta__note">45 minutes · Live video · Written summary included</p>
-                <a href="/intake/direction-session" class="ad-cta__button">Book Your Direction Session</a>
+                <p class="ad-cta__price">$95 <span>CAD</span></p>
+                <p class="ad-cta__note">25 minutes · Live video · Verbal clarity</p>
+                <a href="/intake/business-clarity-call" class="ad-cta__button">Book a Clarity Call</a>
 
-                <div class="ad-cta__secondary">
-                    <p class="ad-cta__secondary-text">Not sure yet?</p>
-                    <a href="/business-clarity-call" class="ad-cta__secondary-link">Try the Business Clarity Call — $95, 25 minutes →</a>
+                <div class="ad-cta__upgrade">
+                    <p class="ad-cta__upgrade-text">Want a written summary and more time?</p>
+                    <a href="/direction-session" class="ad-cta__upgrade-link">See the Direction Session — $145 →</a>
                 </div>
             </div>
         </section>

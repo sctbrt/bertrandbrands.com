@@ -36,16 +36,16 @@
       "destination": "/pages/ads/direction-session"
     },
     {
-      "source": "/founders-check",
-      "destination": "/pages/ads/founders-check"
+      "source": "/business-clarity-call",
+      "destination": "/pages/ads/business-clarity-call"
     },
     {
       "source": "/intake/direction-session",
       "destination": "/pages/intake/direction-session"
     },
     {
-      "source": "/intake/founders-check",
-      "destination": "/pages/intake/founders-check"
+      "source": "/intake/business-clarity-call",
+      "destination": "/pages/intake/business-clarity-call"
     },
     {
       "source": "/focus-studio",
@@ -105,7 +105,17 @@
     },
     {
       "source": "/founders-direction-check",
-      "destination": "/founders-check",
+      "destination": "/business-clarity-call",
+      "permanent": false
+    },
+    {
+      "source": "/founders-check",
+      "destination": "/business-clarity-call",
+      "permanent": false
+    },
+    {
+      "source": "/intake/founders-check",
+      "destination": "/intake/business-clarity-call",
       "permanent": false
     },
     {
