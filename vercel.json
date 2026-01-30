@@ -46,6 +46,10 @@
     {
       "source": "/intake/founders-check",
       "destination": "/pages/intake/founders-check"
+    },
+    {
+      "source": "/focus-studio",
+      "destination": "/pages/ads/focus-studio.html"
     }
   ],
   "redirects": [
