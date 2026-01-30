@@ -106,7 +106,7 @@
         <header class="header">
             <div class="header__glass">
                 <div class="header__inner">
-                    <a href="/" class="header__logo"><img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon"><img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text"></a>
+                    <a href="/?skip" class="header__logo"><img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon"><img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text"></a>
                     <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
                         <span></span>
                         <span></span>
@@ -115,9 +115,20 @@
                     <nav class="header__nav" id="mainNav">
                         <a href="#about" class="header__link">About</a>
                         <a href="#process" class="header__link">How It Works</a>
-                        <a href="#services" class="header__link">Core Services</a>
-                        <a href="#focus-studio" class="header__link">Focus Studio</a>
-                        <a href="/direction-session" class="header__link header__link--cta">Book a Session</a>
+                        <div class="header__dropdown">
+                            <a href="#services" class="header__link header__link--dropdown">What We Offer<svg class="header__dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                            <div class="header__dropdown-menu">
+                                <a href="/core-services" class="header__dropdown-item">
+                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                                    <span class="header__dropdown-label">Core Services</span>
+                                </a>
+                                <a href="/focus-studio" class="header__dropdown-item header__dropdown-item--violet">
+                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                                    <span class="header__dropdown-label">Focus Studio</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="/direction-session" class="header__link header__link--cta">Plan a Session</a>
                         <a href="#portal" class="header__link header__link--portal">Client Portal</a>
                     </nav>
                 </div>
@@ -204,10 +215,10 @@
 
                 <!-- B Core Services -->
                 <div class="core-services reveal">
-                    <div class="core-services__brand">
+                    <a href="/core-services" class="core-services__brand">
                         <img src="/assets/bertrand-brands-logomark.png" alt="" class="core-services__mark">
                         <span class="core-services__name">Core Services</span>
-                    </div>
+                    </a>
                     <p class="core-services__description">Strategic brand and web systems work. Discovery-led, relationship-based engagements.</p>
                 </div>
 
@@ -325,10 +336,10 @@
                 <div class="focused-studio reveal" id="focus-studio">
                     <div class="focused-studio__glow" aria-hidden="true"></div>
                     <div class="focused-studio__header">
-                        <div class="focused-studio__brand">
+                        <a href="/focus-studio" class="focused-studio__brand">
                             <img src="/assets/bertrand-brands-logomark.png" alt="" class="focused-studio__mark">
                             <span class="focused-studio__name">Focus Studio</span>
-                        </div>
+                        </a>
                         <p class="focused-studio__description">Focused, fixed-scope studio work for immediate clarity and impact. Clear scope, clear timelines, clear outcomes.</p>
                     </div>
 
@@ -638,9 +649,12 @@
                 }
             });
 
-            // Close menu when clicking a link
+            // Close menu when clicking a link (including dropdown items)
             navLinks.forEach(link => {
                 link.addEventListener('click', closeMenu);
+            });
+            document.querySelectorAll('.header__dropdown-item').forEach(item => {
+                item.addEventListener('click', closeMenu);
             });
 
             // Focus trap for mobile menu
@@ -672,6 +686,51 @@
                     }
                 }
             });
+
+            // Gentle pulse on hamburger after 5-6 seconds (mobile only)
+            // Only triggers if menu hasn't been opened yet
+            let hasInteracted = false;
+            let pulseTimer = null;
+            let pulseStarted = false;
+
+            function startPulseTimer() {
+                // Only on mobile (check if toggle is visible)
+                if (window.innerWidth > 768 || pulseStarted) return;
+                pulseStarted = true;
+
+                pulseTimer = setTimeout(() => {
+                    if (!hasInteracted && !nav.classList.contains('is-open')) {
+                        toggle.classList.add('header__toggle--pulse');
+                        // Remove pulse class after animation completes (3 cycles x 1.5s = 4.5s)
+                        setTimeout(() => {
+                            toggle.classList.remove('header__toggle--pulse');
+                        }, 4500);
+                    }
+                }, 5500); // 5.5 seconds delay
+            }
+
+            // Cancel pulse if user interacts
+            function cancelPulse() {
+                hasInteracted = true;
+                if (pulseTimer) clearTimeout(pulseTimer);
+                toggle.classList.remove('header__toggle--pulse');
+            }
+
+            toggle.addEventListener('click', cancelPulse);
+
+            // Start timer after intro completes (watch for intro-scrolled class)
+            if (document.body.classList.contains('intro-scrolled')) {
+                startPulseTimer();
+            } else {
+                // Use MutationObserver to detect when intro completes
+                const observer = new MutationObserver((mutations) => {
+                    if (document.body.classList.contains('intro-scrolled')) {
+                        startPulseTimer();
+                        observer.disconnect();
+                    }
+                });
+                observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+            }
         })();
 
         // Clickable service cards - clicking anywhere on card navigates to its CTA link
@@ -712,14 +771,16 @@
             const logo = document.querySelector('.header__logo');
             const intro = document.querySelector('.intro');
 
-            // Skip intro if already seen this session
+            // Skip intro if already seen this session or ?skip param
             const introSeen = sessionStorage.getItem('bb_intro_seen');
-            if (introSeen) {
+            const skipParam = new URLSearchParams(window.location.search).has('skip');
+            if (introSeen || skipParam) {
                 logo?.classList.add('show-text');
                 header?.classList.add('visible', 'lights-on');
                 document.body.classList.add('intro-complete', 'intro-scrolled');
                 document.querySelector('.hero__title')?.classList.add('hero-animate');
                 intro?.remove();
+                if (skipParam) sessionStorage.setItem('bb_intro_seen', '1');
                 return;
             }
 
