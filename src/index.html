@@ -544,19 +544,37 @@
         (function() {
             const glow = document.getElementById('cursorGlow');
             if (!glow) return;
+            // Disable on mobile/touch devices and reduced motion
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+            if (isMobile) { glow.style.display = 'none'; return; }
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { glow.style.display = 'none'; return; }
             if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) { glow.style.display = 'none'; return; }
 
             let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
-            document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+            let isAnimating = false;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!isAnimating) {
+                    isAnimating = true;
+                    animate();
+                }
+            });
+
             function animate() {
                 glowX += (mouseX - glowX) * 0.08;
                 glowY += (mouseY - glowY) * 0.08;
                 glow.style.left = glowX + 'px';
                 glow.style.top = glowY + 'px';
-                requestAnimationFrame(animate);
+
+                // Stop animating when glow catches up to mouse
+                if (Math.abs(mouseX - glowX) > 0.5 || Math.abs(mouseY - glowY) > 0.5) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isAnimating = false;
+                }
             }
-            animate();
         })();
 
         // Scroll reveal
@@ -844,32 +862,47 @@
                 }
             });
 
-            // Ambient orange light animation
-            let orangePos1 = 15;
-            let orangePos2 = 85;
-            let direction1 = 1;
-            let direction2 = -1;
+            // Ambient orange light animation - disabled on mobile for performance
+            const isMobileDevice = window.matchMedia('(max-width: 768px)').matches;
 
-            function animateLights() {
-                if (!header.classList.contains('lights-on')) {
-                    requestAnimationFrame(animateLights);
-                    return;
+            if (!isMobileDevice && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                let orangePos1 = 15;
+                let orangePos2 = 85;
+                let direction1 = 1;
+                let direction2 = -1;
+                let lightsAnimationId = null;
+
+                function animateLights() {
+                    if (!header.classList.contains('lights-on')) {
+                        lightsAnimationId = requestAnimationFrame(animateLights);
+                        return;
+                    }
+
+                    // Gentle organic movement
+                    orangePos1 += direction1 * 0.03;
+                    orangePos2 += direction2 * 0.025;
+
+                    if (orangePos1 > 35 || orangePos1 < 10) direction1 *= -1;
+                    if (orangePos2 > 90 || orangePos2 < 60) direction2 *= -1;
+
+                    if (headerGlass) {
+                        headerGlass.style.setProperty('--orange-pos-1', orangePos1 + '%');
+                        headerGlass.style.setProperty('--orange-pos-2', orangePos2 + '%');
+                    }
+                    lightsAnimationId = requestAnimationFrame(animateLights);
                 }
+                lightsAnimationId = requestAnimationFrame(animateLights);
 
-                // Gentle organic movement
-                orangePos1 += direction1 * 0.03;
-                orangePos2 += direction2 * 0.025;
-
-                if (orangePos1 > 35 || orangePos1 < 10) direction1 *= -1;
-                if (orangePos2 > 90 || orangePos2 < 60) direction2 *= -1;
-
-                if (headerGlass) {
-                    headerGlass.style.setProperty('--orange-pos-1', orangePos1 + '%');
-                    headerGlass.style.setProperty('--orange-pos-2', orangePos2 + '%');
-                }
-                requestAnimationFrame(animateLights);
+                // Clean up on page visibility change to save battery
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden && lightsAnimationId) {
+                        cancelAnimationFrame(lightsAnimationId);
+                        lightsAnimationId = null;
+                    } else if (!document.hidden && !lightsAnimationId) {
+                        lightsAnimationId = requestAnimationFrame(animateLights);
+                    }
+                });
             }
-            requestAnimationFrame(animateLights);
         })();
 
         // Visitor notification (silent push on page load)

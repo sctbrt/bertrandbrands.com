@@ -3433,3 +3433,103 @@
             color: var(--text-muted);
             line-height: 1.5;
         }
+
+        /* ============================================================
+           MOBILE PERFORMANCE OPTIMIZATIONS
+           Disable heavy animations and reduce GPU load on mobile
+           ============================================================ */
+        @media (max-width: 768px) {
+            /* Disable infinite spotlight float animations - use static position */
+            body.intro-scrolled .hero__spotlight--orange {
+                animation: spotlightSetupOrange 3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            }
+
+            body.intro-scrolled .hero__spotlight--blue {
+                animation: spotlightSetupBlue 3s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s forwards;
+            }
+
+            /* Disable breathing animations on ambient glows */
+            .core-services__glow::before {
+                animation: none !important;
+                opacity: 0.9;
+            }
+
+            .focused-studio__glow::before,
+            .focused-studio__glow::after {
+                animation: none !important;
+                opacity: 0.85;
+            }
+
+            /* Reduce blur intensity across the board */
+            .hero__spotlight {
+                filter: blur(50px);
+            }
+
+            .hero__gradient {
+                filter: blur(60px);
+            }
+
+            /* Disable gradient float animation */
+            .hero__gradient {
+                animation: none;
+            }
+
+            /* Reduce intro glow blur */
+            .intro__glow {
+                filter: blur(40px);
+            }
+
+            /* Simplify contact spotlight */
+            .reveal.is-visible.contact::before {
+                filter: blur(50px);
+            }
+
+            /* Disable scroll hint bounce - static instead */
+            .hero__scroll-hint {
+                animation: scrollHintFadeIn 1s ease 1s forwards;
+            }
+
+            /* Remove will-change from elements that don't need it */
+            .hero__spotlight,
+            .hero__gradient,
+            .intro__glow {
+                will-change: auto;
+            }
+
+            /* Use transform3d for better GPU compositing */
+            .core-services__glow::before,
+            .focused-studio__glow::before,
+            .focused-studio__glow::after {
+                transform: translate3d(-50%, -50%, 0);
+            }
+        }
+
+        /* Even more aggressive optimizations for very small screens */
+        @media (max-width: 480px) {
+            /* Further reduce blur for older/slower devices */
+            .hero__spotlight {
+                filter: blur(35px);
+            }
+
+            .core-services__glow::before,
+            .focused-studio__glow::before {
+                filter: blur(30px);
+            }
+
+            /* Hide secondary glow elements entirely */
+            .focused-studio__glow::after {
+                display: none;
+            }
+
+            /* Simplify hero gradient */
+            .hero__gradient {
+                display: none;
+            }
+
+            /* Reduce spotlight sizes */
+            .hero__spotlight--orange,
+            .hero__spotlight--blue {
+                width: 250px;
+                height: 250px;
+            }
+        }
