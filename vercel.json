@@ -50,6 +50,10 @@
     {
       "source": "/core-services",
       "destination": "/pages/ads/core-services"
+    },
+    {
+      "source": "/payment-confirmed",
+      "destination": "/pages/payment-confirmed"
     }
   ],
   "redirects": [

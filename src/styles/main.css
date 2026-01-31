@@ -10,9 +10,15 @@
             box-sizing: border-box;
         }
 
-        /* Prevent pinch-to-zoom on iOS */
+        /* Prevent pinch-to-zoom and triple-tap zoom on iOS */
         html {
-            touch-action: manipulation;
+            touch-action: pan-x pan-y;
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            html {
+                -webkit-text-size-adjust: 100%;
+            }
         }
 
         /* === TOKENS === */

@@ -69,9 +69,15 @@
     <link rel="stylesheet" href="/styles/main.css">
 
     <style>
-        /* Disable double-tap zoom on iOS/iPadOS */
-        * {
-            touch-action: manipulation;
+        /* Prevent pinch-to-zoom and triple-tap zoom on iOS */
+        html {
+            touch-action: pan-x pan-y;
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            html {
+                -webkit-text-size-adjust: 100%;
+            }
         }
 
         /* Focus Studio Landing Page */
@@ -800,6 +806,11 @@
                 }
             });
         })();
+
+        // Prevent iOS triple-tap and gesture zoom
+        document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
     </script>
 </body>
 </html>
