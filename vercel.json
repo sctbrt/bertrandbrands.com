@@ -28,20 +28,20 @@
       "destination": "/pages/intake/brand-clarity-diagnostic"
     },
     {
-      "source": "/direction-session",
-      "destination": "/pages/ads/direction-session"
+      "source": "/brand-clarity-call",
+      "destination": "/pages/ads/brand-clarity-call"
     },
     {
-      "source": "/business-clarity-call",
-      "destination": "/pages/ads/business-clarity-call"
+      "source": "/website-clarity-call",
+      "destination": "/pages/ads/website-clarity-call"
     },
     {
-      "source": "/intake/direction-session",
-      "destination": "/pages/intake/direction-session"
+      "source": "/intake/brand-clarity-call",
+      "destination": "/pages/intake/brand-clarity-call"
     },
     {
-      "source": "/intake/business-clarity-call",
-      "destination": "/pages/intake/business-clarity-call"
+      "source": "/intake/website-clarity-call",
+      "destination": "/pages/intake/website-clarity-call"
     },
     {
       "source": "/focus-studio",
@@ -84,18 +84,38 @@
     },
     {
       "source": "/intake",
-      "destination": "/direction-session",
+      "destination": "/focus-studio",
       "permanent": false
     },
     {
       "source": "/start",
-      "destination": "/direction-session",
+      "destination": "/focus-studio",
       "permanent": false
     },
     {
       "source": "/start-here",
-      "destination": "/direction-session",
+      "destination": "/focus-studio",
       "permanent": false
+    },
+    {
+      "source": "/direction-session",
+      "destination": "/brand-clarity-call",
+      "permanent": true
+    },
+    {
+      "source": "/business-clarity-call",
+      "destination": "/brand-clarity-call",
+      "permanent": true
+    },
+    {
+      "source": "/intake/direction-session",
+      "destination": "/intake/brand-clarity-call",
+      "permanent": true
+    },
+    {
+      "source": "/intake/business-clarity-call",
+      "destination": "/intake/brand-clarity-call",
+      "permanent": true
     },
     {
       "source": "/portal",
@@ -109,18 +129,18 @@
     },
     {
       "source": "/founders-direction-check",
-      "destination": "/business-clarity-call",
-      "permanent": false
+      "destination": "/brand-clarity-call",
+      "permanent": true
     },
     {
       "source": "/founders-check",
-      "destination": "/business-clarity-call",
-      "permanent": false
+      "destination": "/brand-clarity-call",
+      "permanent": true
     },
     {
       "source": "/intake/founders-check",
-      "destination": "/intake/business-clarity-call",
-      "permanent": false
+      "destination": "/intake/brand-clarity-call",
+      "permanent": true
     },
     {
       "source": "/brand-website-starter-map",

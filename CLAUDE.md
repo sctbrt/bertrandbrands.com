@@ -46,58 +46,82 @@ All decisions must align with BRIGHTS:
 
 If a technical or UX decision introduces confusion, pressure, or ambiguity, it violates BRIGHTS.
 
-### 1.3 Service Architecture (Locked)
+### 1.3 Service Architecture (LOCKED — Feb 2026)
 
-Bertrand Brands operates two distinct service categories:
+Bertrand Brands operates under **THREE strictly hierarchical service tiers**:
 
-**Category A: B Core Services**
-- Strategic, discovery-led engagements
-- Relationship-based work
-- Entry and gateway offerings (not production-heavy)
-- Tone: Calm, collaborative, outcome-driven
+**Mental Model:** Conversation → Execution → Transformation
 
-**Core Services — Entry Offerings:**
+---
 
-| Service | Price | Format | Deliverable |
-|---------|-------|--------|-------------|
-| Direction Session | $145 CAD | 45-min video call | Written summary + next-step recommendations |
-| Business Clarity Call | $95 CAD | 25-min video call | No written output (verbal guidance only) |
+**Tier 1 — B Exploratory Sessions** (Entry/Qualification)
+- Paid clarity conversations
+- Trust-building and qualification
+- 45 minutes, paid upfront
+- NO deliverables (conversation only)
+- Subtle visual placement (not dominant)
 
-**Category B: B Focus Studio**
-- Fixed-scope, fixed-price offerings
-- Clear timelines, clear outcomes
-- Transactional, deliverable-first
-- Cash-stabilization tier for immediate revenue
+| Offering | Duration | Notes |
+|----------|----------|-------|
+| Brand Clarity Call | 45 min | Conversation-only brand clarity |
+| Website Clarity Call | 45 min | Conversation-only website clarity |
 
-**Focus Studio Offerings:**
+---
 
-| Service | Price | Timeline | Best For |
-|---------|-------|----------|----------|
-| Quick Website Refresh | $750 CAD | 1 business day | Businesses with underperforming sites needing targeted fixes |
-| One-Page Redesign | $1,250 CAD | 2–3 business days | Restaurants, clinics, trades, local service businesses |
-| Brandmarking Package | $950 CAD | 5–7 business days | Businesses needing a credible mark (not full rebrand) |
+**Tier 2 — B Focus Studio** (Primary Revenue Engine)
+- Fixed-scope execution
+- Fixed price, clear timelines
+- Paid before deliverable handoff
 
-Key principles:
+| Offering | Price | Timeline |
+|----------|-------|----------|
+| Quick Website Refresh | $750 CAD | 1 business day |
+| One-Page Redesign | $1,250 CAD | 2–3 business days |
+| Brandmarking Package | $950 CAD | 5–7 business days |
+
+---
+
+**Tier 3 — B Core Services** (Transformational)
+- Multi-week, relationship-based work
+- 50% deposit to begin, 50% on delivery
+- Includes ALL of the following (exactly 5):
+
+| Offering | Starting Price |
+|----------|----------------|
+| Comprehensive Website Audit | Private |
+| Strategic Brand Audit | Private |
+| Brand Reset | $3,000+ CAD |
+| Website Foundation | $3,500+ CAD |
+| Full Brand + Website Reset | $6,500+ CAD |
+
+---
+
+**Key Principles:**
 - No open-ended scope
 - No vague deliverables
 - No ad-hoc calls outside defined services
 - No hourly/time-based pricing language
 - AI efficiency increases margin, not discount justification
-- Each service has:
-  - A dedicated landing page (or shared intake for Focus Studio)
-  - A single CTA
-  - A defined intake flow
-  - A fixed price
+- Prices ≤$1,500 are shown publicly; prices ≥$3,000 use private/starting pricing
 
 **Never invent new services, pricing, or scopes.**
 
-### 1.4 Visual Hierarchy (Critical)
+### 1.4 Visual Hierarchy (LOCKED)
 
-B Core Services always takes visual precedence over B Focus Studio:
-- Core Services appears first in services section
-- Focus Studio uses dashed borders (vs solid for Core)
-- Focus Studio section separated by horizontal divider
-- Both use shared B logomark with differentiated wordmarks
+**Homepage Section Order (Top to Bottom):**
+1. **B Focus Studio** — Primary, largest, most prominent
+2. **B Core Services** — Includes both Audits & Reviews and Builds & Resets
+3. **B Exploratory Sessions** — Subtle, contextual ("Not sure where to start?")
+
+**Key Visual Rules:**
+- Focus Studio appears FIRST (commercial priority, not tier priority)
+- Exploratory Sessions is Tier 1 conceptually but visually subtle (side door, not front door)
+- Focus Studio uses solid borders; Exploratory uses dashed borders
+- Both sub-brands use shared B logomark with differentiated wordmarks
+
+**Navigation Order:**
+1. Focus Studio (first in dropdown)
+2. Core Services (second in dropdown)
 
 ### 1.5 AI Positioning (Critical)
 
@@ -489,11 +513,13 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ## 16. Routes Reference
 
-### Core Service Routes
-- `/direction-session` → Direction Session landing page ($145)
-- `/business-clarity-call` → Business Clarity Call landing page ($95)
+### Exploratory Session Routes (Tier 1)
+- `/brand-clarity-call` → Brand Clarity Call landing page
+- `/website-clarity-call` → Website Clarity Call landing page
+- `/intake/brand-clarity-call` → Brand Clarity Call intake form
+- `/intake/website-clarity-call` → Website Clarity Call intake form
 
-### Focus Studio Routes
+### Focus Studio Routes (Tier 2)
 - `/focus-studio` → B Focus Studio intake page (serves all three offerings)
 
 **Focus Studio Offerings (all via shared intake):**
@@ -501,13 +527,16 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - One-Page Redesign ($1,250)
 - Brandmarking Package ($950)
 
-### Intake Routes
-- `/intake/direction-session` → Direction Session intake form
-- `/intake/business-clarity-call` → Business Clarity Call intake form
+### Core Services Routes (Tier 3)
+- `/core-services` → Core Services landing page
 
 ### Legacy Routes (redirects)
-- `/founders-check` → redirects to `/business-clarity-call`
-- `/intake/founders-check` → redirects to `/intake/business-clarity-call`
+- `/direction-session` → redirects to `/brand-clarity-call` (permanent)
+- `/business-clarity-call` → redirects to `/brand-clarity-call` (permanent)
+- `/founders-check` → redirects to `/brand-clarity-call` (permanent)
+- `/intake/direction-session` → redirects to `/intake/brand-clarity-call` (permanent)
+- `/intake/business-clarity-call` → redirects to `/intake/brand-clarity-call` (permanent)
+- `/intake/founders-check` → redirects to `/intake/brand-clarity-call` (permanent)
 
 ---
 

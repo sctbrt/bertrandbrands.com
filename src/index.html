@@ -44,7 +44,7 @@
         { "@type": "Place", "name": "Northern Ontario" },
         { "@type": "Country", "name": "Canada" }
       ],
-      "priceRange": "$95 - $8,500 CAD",
+      "priceRange": "$750 - $6,500+ CAD",
       "founder": {
         "@type": "Person",
         "name": "Scott Bertrand",
@@ -54,16 +54,16 @@
         "@type": "OfferCatalog",
         "name": "Brand & Web Services",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Clarity Call" }, "price": "95", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Direction Session" }, "price": "145", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Comprehensive Website Audit" }, "price": "795", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "price": "995", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "price": "2500", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation" }, "price": "4500", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Website Reset" }, "price": "8500", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Clarity Call" }, "description": "45-minute clarity conversation about your brand" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Clarity Call" }, "description": "45-minute clarity conversation about your website" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Quick Website Refresh" }, "price": "750", "priceCurrency": "CAD" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page Redesign" }, "price": "1250", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmarking Package" }, "price": "950", "priceCurrency": "CAD" }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmarking Package" }, "price": "950", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Comprehensive Website Audit" }, "description": "In-depth website analysis and recommendations" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "description": "In-depth brand analysis and strategic direction" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "price": "3000", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation" }, "price": "3500", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Website Reset" }, "price": "6500", "priceCurrency": "CAD" }
         ]
       }
     }
@@ -146,17 +146,17 @@
                         <div class="header__dropdown">
                             <a href="#services" class="header__link header__link--dropdown">What We Offer<svg class="header__dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
                             <div class="header__dropdown-menu">
-                                <a href="/core-services" class="header__dropdown-item">
-                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
-                                    <span class="header__dropdown-label">Core Services</span>
-                                </a>
                                 <a href="/focus-studio" class="header__dropdown-item header__dropdown-item--violet">
                                     <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
                                     <span class="header__dropdown-label">Focus Studio</span>
                                 </a>
+                                <a href="/core-services" class="header__dropdown-item">
+                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                                    <span class="header__dropdown-label">Core Services</span>
+                                </a>
                             </div>
                         </div>
-                        <a href="/direction-session" class="header__link header__link--cta">Plan a Session</a>
+                        <a href="/focus-studio" class="header__link header__link--cta">Get Started</a>
                         <a href="#portal" class="header__link header__link--portal">Client Portal</a>
                     </nav>
                 </div>
@@ -237,130 +237,9 @@
                     <h2 class="section__title">What we offer</h2>
                 </div>
 
-                <!-- B Core Services Wrapper with Ambient Glow -->
-                <div class="core-services-wrapper">
-                    <div class="core-services__glow" aria-hidden="true"></div>
-
-                <!-- B Core Services -->
-                <div class="core-services reveal">
-                    <a href="/core-services" class="core-services__brand">
-                        <img src="/assets/bertrand-brands-logomark.png" alt="" class="core-services__mark">
-                        <span class="core-services__name">Core Services</span>
-                    </a>
-                    <p class="core-services__description">Strategic brand and web systems work. Discovery-led, relationship-based engagements.</p>
-                </div>
-
-                <!-- Tier 1: Entry — Direction Sessions -->
-                <div class="exploratory reveal">
-                    <p class="exploratory__label">Start Here</p>
-                    <div class="exploratory__grid exploratory__grid--primary">
-                        <!-- Primary CTA: Direction Session -->
-                        <div class="exploratory-card exploratory-card--primary">
-                            <div class="exploratory-card__header">
-                                <h3 class="exploratory-card__title">Brand & Website Direction Session</h3>
-                                <span class="exploratory-card__meta">45 min · Live Video · Written Summary</span>
-                            </div>
-                            <p class="exploratory-card__description">A focused conversation about what's unclear, what's not working, and what to do next. Walk away with a written summary and 2–3 concrete next-step options.</p>
-                            <div class="exploratory-card__footer">
-                                <p class="exploratory-card__price">$145 <span>CAD</span></p>
-                                <a href="/direction-session" class="exploratory-card__cta exploratory-card__cta--primary">Book a Direction Session →</a>
-                            </div>
-                        </div>
-
-                        <!-- Secondary CTA: Business Clarity Call -->
-                        <div class="exploratory-card exploratory-card--secondary">
-                            <div class="exploratory-card__header">
-                                <h3 class="exploratory-card__title">Business Clarity Call</h3>
-                                <span class="exploratory-card__meta">25 min · Live Video · Verbal Guidance</span>
-                            </div>
-                            <p class="exploratory-card__description">A quick sanity check for when you're not sure where to start. No written deliverable—just a focused conversation to get unstuck.</p>
-                            <div class="exploratory-card__footer">
-                                <p class="exploratory-card__price">$95 <span>CAD</span></p>
-                                <a href="/business-clarity-call" class="exploratory-card__cta">Book a Clarity Call →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="services-divider">
-
-                <!-- Pricing Access Banner (shown when access is active) -->
-                <div class="pricing-banner" id="pricingBanner" style="display: none;">
-                    <p class="pricing-banner__text">Pricing access active for <span id="pricingTimeRemaining">~60</span> minutes</p>
-                </div>
-
-                <!-- Tier 2: In-Depth Reviews (Gated) -->
-                <p class="services-tier-label reveal">In-Depth Reviews</p>
-                <div class="services reveal-stagger">
-                    <div class="service service--gated" data-gated="true">
-                        <p class="service__number">01</p>
-                        <h3 class="service__title">Comprehensive Website Audit</h3>
-                        <p class="service__meta">Detailed Report</p>
-                        <p class="service__description">Architecture, messaging, UX, and conversion analysis. A complete picture of what's working and what to fix.</p>
-                        <div class="service__footer">
-                            <p class="service__price service__price--gated" data-price="$795">$795 <span>CAD</span></p>
-                            <a href="#intake" class="service__cta service__cta--visible">Start here →</a>
-                            <button type="button" class="service__cta service__cta--gated" data-pricing-trigger>Email me the pricing →</button>
-                        </div>
-                    </div>
-
-                    <div class="service service--gated" data-gated="true">
-                        <p class="service__number">02</p>
-                        <h3 class="service__title">Strategic Brand Audit</h3>
-                        <p class="service__meta">Detailed Report</p>
-                        <p class="service__description">Brand system, positioning, and strategic options. Clear direction on where your brand should go.</p>
-                        <div class="service__footer">
-                            <p class="service__price service__price--gated" data-price="$995">$995 <span>CAD</span></p>
-                            <a href="#intake" class="service__cta service__cta--visible">Start here →</a>
-                            <button type="button" class="service__cta service__cta--gated" data-pricing-trigger>Email me the pricing →</button>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="services-divider">
-
-                <!-- Tier 3: Execution (Gated) -->
-                <p class="services-tier-label reveal">Brand & Web Builds</p>
-                <div class="services reveal-stagger">
-                    <div class="service service--gated" data-gated="true">
-                        <p class="service__number">03</p>
-                        <h3 class="service__title">Brand Reset</h3>
-                        <p class="service__description">Core brand system, messaging, and guidelines. A foundation that works across every touchpoint.</p>
-                        <div class="service__footer">
-                            <p class="service__price service__price--gated" data-price="$2,500">$2,500 <span>CAD</span></p>
-                            <a href="#intake" class="service__cta service__cta--visible">Start here →</a>
-                            <button type="button" class="service__cta service__cta--gated" data-pricing-trigger>Email me the pricing →</button>
-                        </div>
-                    </div>
-
-                    <div class="service service--gated" data-gated="true">
-                        <p class="service__number">04</p>
-                        <h3 class="service__title">Website Foundation</h3>
-                        <p class="service__description">Strategy-led website build for small to mid-sized businesses. Fast, clear, built to convert.</p>
-                        <div class="service__footer">
-                            <p class="service__price service__price--gated" data-price="$4,500">$4,500 <span>CAD</span></p>
-                            <a href="#intake" class="service__cta service__cta--visible">Start here →</a>
-                            <button type="button" class="service__cta service__cta--gated" data-pricing-trigger>Email me the pricing →</button>
-                        </div>
-                    </div>
-
-                    <div class="service service--gated" data-gated="true">
-                        <p class="service__number">05</p>
-                        <h3 class="service__title">Full Brand + Website Reset</h3>
-                        <p class="service__description">End-to-end transformation. Brand system and website built together from the ground up.</p>
-                        <div class="service__footer">
-                            <p class="service__price service__price--gated" data-price="$8,500">$8,500 <span>CAD</span></p>
-                            <a href="#intake" class="service__cta service__cta--visible">Start here →</a>
-                            <button type="button" class="service__cta service__cta--gated" data-pricing-trigger>Email me the pricing →</button>
-                        </div>
-                    </div>
-                </div>
-
-                </div><!-- /.core-services-wrapper -->
-
-                <!-- B Focus Studio (Secondary Services) -->
-                <hr class="services-divider services-divider--section">
-
+                <!-- ============================================ -->
+                <!-- SECTION 1: B FOCUS STUDIO (PRIMARY)          -->
+                <!-- ============================================ -->
                 <div class="focused-studio reveal" id="focus-studio">
                     <div class="focused-studio__glow" aria-hidden="true"></div>
                     <div class="focused-studio__header">
@@ -436,7 +315,132 @@
                     <p class="focused-studio__boundary">B Focus Studio engagements are intentionally fixed-scope. Full brand systems, naming, strategy, and multi-phase work are scoped separately.</p>
                 </div>
 
+                <hr class="services-divider services-divider--section">
+
+                <!-- ============================================ -->
+                <!-- SECTION 2: B CORE SERVICES (TIER 3)          -->
+                <!-- All 5 offerings: 2 Audits + 3 Builds         -->
+                <!-- ============================================ -->
+                <div class="core-services-wrapper">
+                    <div class="core-services__glow" aria-hidden="true"></div>
+
+                    <!-- B Core Services Header -->
+                    <div class="core-services reveal">
+                        <a href="/core-services" class="core-services__brand">
+                            <img src="/assets/bertrand-brands-logomark.png" alt="" class="core-services__mark">
+                            <span class="core-services__name">Core Services</span>
+                        </a>
+                        <p class="core-services__description">Multi-week, relationship-based brand and website work. 50% deposit to begin, 50% on delivery.</p>
+                    </div>
+
+                    <!-- Pricing Access Banner (shown when access is active) -->
+                    <div class="pricing-banner" id="pricingBanner" style="display: none;">
+                        <p class="pricing-banner__text">Pricing access active for <span id="pricingTimeRemaining">~60</span> minutes</p>
+                    </div>
+
+                    <!-- Sub-group: Audits & Reviews (private pricing) -->
+                    <p class="services-tier-label reveal">Audits & Reviews</p>
+                    <div class="services reveal-stagger">
+                        <div class="service service--review" data-gated="false">
+                            <p class="service__number">01</p>
+                            <h3 class="service__title">Comprehensive Website Audit</h3>
+                            <p class="service__meta">Detailed Report</p>
+                            <p class="service__description">Architecture, messaging, UX, and conversion analysis. A complete picture of what's working and what to fix.</p>
+                            <div class="service__footer">
+                                <p class="service__price service__price--private">Pricing is private</p>
+                                <a href="mailto:hello@bertrandbrands.com?subject=Website%20Audit%20Inquiry" class="service__cta">Email me the pricing →</a>
+                            </div>
+                        </div>
+
+                        <div class="service service--review" data-gated="false">
+                            <p class="service__number">02</p>
+                            <h3 class="service__title">Strategic Brand Audit</h3>
+                            <p class="service__meta">Detailed Report</p>
+                            <p class="service__description">Brand system, positioning, and strategic options. Clear direction on where your brand should go.</p>
+                            <div class="service__footer">
+                                <p class="service__price service__price--private">Pricing is private</p>
+                                <a href="mailto:hello@bertrandbrands.com?subject=Brand%20Audit%20Inquiry" class="service__cta">Email me the pricing →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="services-divider">
+
+                    <!-- Sub-group: Builds & Resets (starting prices shown) -->
+                    <p class="services-tier-label reveal">Builds & Resets</p>
+                    <div class="services reveal-stagger">
+                        <div class="service" data-gated="false">
+                            <p class="service__number">03</p>
+                            <h3 class="service__title">Brand Reset</h3>
+                            <p class="service__description">Core brand system, messaging, and guidelines. A foundation that works across every touchpoint.</p>
+                            <div class="service__footer">
+                                <p class="service__price">$3,000+ <span>CAD</span></p>
+                                <a href="mailto:hello@bertrandbrands.com?subject=Brand%20Reset%20Inquiry" class="service__cta">Get in touch →</a>
+                            </div>
+                        </div>
+
+                        <div class="service" data-gated="false">
+                            <p class="service__number">04</p>
+                            <h3 class="service__title">Website Foundation</h3>
+                            <p class="service__description">Strategy-led website build for small to mid-sized businesses. Fast, clear, built to convert.</p>
+                            <div class="service__footer">
+                                <p class="service__price">$3,500+ <span>CAD</span></p>
+                                <a href="mailto:hello@bertrandbrands.com?subject=Website%20Foundation%20Inquiry" class="service__cta">Get in touch →</a>
+                            </div>
+                        </div>
+
+                        <div class="service" data-gated="false">
+                            <p class="service__number">05</p>
+                            <h3 class="service__title">Full Brand + Website Reset</h3>
+                            <p class="service__description">End-to-end transformation. Brand system and website built together from the ground up.</p>
+                            <div class="service__footer">
+                                <p class="service__price">$6,500+ <span>CAD</span></p>
+                                <a href="mailto:hello@bertrandbrands.com?subject=Full%20Brand%20%2B%20Website%20Reset%20Inquiry" class="service__cta">Get in touch →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /.core-services-wrapper -->
+
+                <hr class="services-divider services-divider--section">
+
+                <!-- ============================================ -->
+                <!-- SECTION 4: B EXPLORATORY SESSIONS (SUBTLE)   -->
+                <!-- ============================================ -->
+                <div class="exploratory-sessions reveal" id="exploratory">
+                    <div class="exploratory-sessions__header">
+                        <p class="exploratory-sessions__label">Not sure where to start?</p>
+                        <p class="exploratory-sessions__description">Begin with a 45-minute clarity call. Paid conversation, no obligations, no deliverables—just focused guidance to help you decide what's next.</p>
+                    </div>
+
+                    <div class="exploratory-sessions__grid">
+                        <!-- Brand Clarity Call -->
+                        <div class="exploratory-sessions__card">
+                            <div class="exploratory-sessions__card-header">
+                                <h3 class="exploratory-sessions__card-title">Brand Clarity Call</h3>
+                                <span class="exploratory-sessions__card-meta">45 min · Live Video</span>
+                            </div>
+                            <p class="exploratory-sessions__card-description">A conversation about your brand—what's working, what's not, and what direction might make sense. No deliverables, just clarity.</p>
+                            <div class="exploratory-sessions__card-footer">
+                                <a href="/brand-clarity-call" class="exploratory-sessions__card-cta">Book a call →</a>
+                            </div>
+                        </div>
+
+                        <!-- Website Clarity Call -->
+                        <div class="exploratory-sessions__card">
+                            <div class="exploratory-sessions__card-header">
+                                <h3 class="exploratory-sessions__card-title">Website Clarity Call</h3>
+                                <span class="exploratory-sessions__card-meta">45 min · Live Video</span>
+                            </div>
+                            <p class="exploratory-sessions__card-description">A conversation about your website—what's confusing, what's missing, and what might need to change. No deliverables, just clarity.</p>
+                            <div class="exploratory-sessions__card-footer">
+                                <a href="/website-clarity-call" class="exploratory-sessions__card-cta">Book a call →</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+            </div>
         </section>
 
         <!-- Selected Work -->

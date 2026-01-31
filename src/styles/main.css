@@ -2647,6 +2647,116 @@
             }
         }
 
+        /* === EXPLORATORY SESSIONS (Subtle, Bottom of Page) === */
+        .exploratory-sessions {
+            margin-top: var(--space-lg);
+            padding: var(--space-lg) 0;
+        }
+
+        .exploratory-sessions__header {
+            text-align: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .exploratory-sessions__label {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .exploratory-sessions__description {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .exploratory-sessions__grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-md);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .exploratory-sessions__card {
+            padding: var(--space-md);
+            background: transparent;
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-sm);
+            transition: border-color var(--duration-fast) ease,
+                        background var(--duration-fast) ease;
+            cursor: pointer;
+        }
+
+        .exploratory-sessions__card:hover {
+            border-color: var(--text-subtle);
+            border-style: solid;
+            background: var(--bg-subtle);
+        }
+
+        .exploratory-sessions__card-header {
+            margin-bottom: 0.75rem;
+        }
+
+        .exploratory-sessions__card-title {
+            font-family: var(--font-display);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .exploratory-sessions__card-meta {
+            font-size: 0.6875rem;
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .exploratory-sessions__card-description {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: var(--space-sm);
+        }
+
+        .exploratory-sessions__card-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .exploratory-sessions__card-cta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            transition: color var(--duration-fast) ease;
+        }
+
+        .exploratory-sessions__card-cta:hover {
+            color: var(--text);
+        }
+
+        @media (max-width: 600px) {
+            .exploratory-sessions__grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
+            }
+
+            .exploratory-sessions__card {
+                padding: var(--space-sm);
+            }
+
+            .exploratory-sessions__card-title {
+                font-size: 1rem;
+            }
+
+            .exploratory-sessions__card-description {
+                font-size: 0.8125rem;
+            }
+        }
+
         /* === SERVICES === */
         .services-divider {
             border: none;
@@ -2803,6 +2913,13 @@
             font-size: 0.875rem;
             font-weight: 400;
             color: var(--text-subtle);
+        }
+
+        .service__price--private {
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--text-subtle);
+            font-style: italic;
         }
 
         .service__cta {
