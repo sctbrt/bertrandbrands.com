@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/focus-studio">
@@ -620,10 +620,10 @@
         <!-- Hero -->
         <section class="fs-hero">
             <div class="container">
-                <h1 class="fs-hero__title">Your website isn't working. Let's fix it.</h1>
-                <p class="fs-hero__problem">It's not broken — it's unclear, outdated, or not doing its job.</p>
+                <h1 class="fs-hero__title">Your website looks outdated — and customers are clicking away.</h1>
+                <p class="fs-hero__problem">If your website hasn't been meaningfully updated in over a year, visitors notice — especially on mobile.</p>
                 <p class="fs-hero__subtitle">
-                    Fixed-scope website work. Clear pricing. Done in days, not weeks.
+                    For Sudbury and Northern Ontario businesses with an existing website that isn't converting.
                 </p>
             </div>
         </section>
@@ -637,7 +637,7 @@
                         <span class="fs-offering__timeline">Done in 1 business day</span>
                         <h2 class="fs-offering__title">Quick Website Refresh</h2>
                     </div>
-                    <p class="fs-offering__description">A focused improvement pass on your existing website. We address clarity, mobile usability, and conversion blockers — fast. Most businesses start here.</p>
+                    <p class="fs-offering__description">You get a focused improvement pass on your existing website: a cleaner homepage, clearer calls-to-action, mobile fixes, and performance improvements — delivered in 1 business day. Most businesses start here.</p>
                     <div class="fs-offering__footer">
                         <p class="fs-offering__price">$750 <span>CAD</span></p>
                         <a href="#request" class="fs-offering__cta">Fix My Website →</a>
@@ -677,8 +677,8 @@
         <!-- Request Form -->
         <section class="fs-form-section" id="request">
             <div class="container">
-                <h2 class="fs-form-section__title">Get started now</h2>
-                <p class="fs-form-section__subtitle">Send your details. We'll confirm availability and next steps within 1 business day.</p>
+                <h2 class="fs-form-section__title">Let's fix it</h2>
+                <p class="fs-form-section__subtitle">Tell us what's wrong. We'll confirm availability within 1 business day.</p>
 
                 <form class="fs-form" action="https://formspree.io/f/xnjjgoay" method="POST" id="focusStudioForm">
                     <input type="hidden" name="source" value="focus_studio_intake">
@@ -708,16 +708,16 @@
                     </div>
 
                     <div class="fs-form__group">
-                        <label class="fs-form__label" for="website">Current website (if applicable)</label>
+                        <label class="fs-form__label" for="website">Your website URL</label>
                         <input class="fs-form__input" type="url" id="website" name="website" placeholder="https://yoursite.com">
                     </div>
 
                     <div class="fs-form__group">
-                        <label class="fs-form__label" for="details">What do you need?</label>
-                        <textarea class="fs-form__textarea" id="details" name="details" required placeholder="Brief description of your project or what's not working with your current site..."></textarea>
+                        <label class="fs-form__label" for="details">What's not working?</label>
+                        <textarea class="fs-form__textarea" id="details" name="details" required placeholder="What's unclear, broken, or outdated on your current site?"></textarea>
                     </div>
 
-                    <button type="submit" class="fs-form__submit" id="submitBtn">Request a Focus Studio Slot →</button>
+                    <button type="submit" class="fs-form__submit" id="submitBtn">Fix My Website →</button>
                     <div class="fs-form__feedback" id="formFeedback"></div>
                 </form>
             </div>
@@ -754,7 +754,7 @@
                 e.preventDefault();
 
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
+                submitBtn.textContent = 'Submitting...';
                 feedback.className = 'fs-form__feedback';
                 feedback.textContent = '';
 
@@ -770,7 +770,7 @@
 
                     if (response.ok) {
                         feedback.className = 'fs-form__feedback fs-form__feedback--success';
-                        feedback.textContent = 'Request received! We\'ll follow up within 1 business day.';
+                        feedback.textContent = 'Got it. We\'ll be in touch within 1 business day.';
                         form.reset();
 
                         // Send Pushover notification
@@ -791,7 +791,7 @@
                     feedback.textContent = 'Something went wrong. Please try again or email hello@bertrandbrands.com';
                 } finally {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Request Slot';
+                    submitBtn.textContent = 'Fix My Website →';
                 }
             });
         })();

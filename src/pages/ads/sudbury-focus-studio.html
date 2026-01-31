@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/sudbury">
@@ -692,8 +692,8 @@
         <!-- Request Form -->
         <section class="sfs-form-section" id="request">
             <div class="container">
-                <h2 class="sfs-form-section__title">Get started now</h2>
-                <p class="sfs-form-section__subtitle">Send your details. We'll confirm availability and next steps within 1 business day.</p>
+                <h2 class="sfs-form-section__title">Let's fix it</h2>
+                <p class="sfs-form-section__subtitle">Tell us what's wrong. We'll confirm availability within 1 business day.</p>
 
                 <form class="sfs-form" action="https://formspree.io/f/xnjjgoay" method="POST" id="sudburyFocusForm">
                     <input type="hidden" name="source" value="sudbury_focus_studio">
@@ -723,16 +723,16 @@
                     </div>
 
                     <div class="sfs-form__group">
-                        <label class="sfs-form__label" for="website">Current website (if applicable)</label>
+                        <label class="sfs-form__label" for="website">Your website URL</label>
                         <input class="sfs-form__input" type="url" id="website" name="website" placeholder="https://yoursite.com">
                     </div>
 
                     <div class="sfs-form__group">
-                        <label class="sfs-form__label" for="details">What do you need?</label>
-                        <textarea class="sfs-form__textarea" id="details" name="details" required placeholder="Brief description of your project or what's not working with your current site..."></textarea>
+                        <label class="sfs-form__label" for="details">What's not working?</label>
+                        <textarea class="sfs-form__textarea" id="details" name="details" required placeholder="What's unclear, broken, or outdated on your current site?"></textarea>
                     </div>
 
-                    <button type="submit" class="sfs-form__submit" id="submitBtn">Request a Focus Studio Slot →</button>
+                    <button type="submit" class="sfs-form__submit" id="submitBtn">Fix My Website →</button>
                     <div class="sfs-form__feedback" id="formFeedback"></div>
                 </form>
             </div>
@@ -765,7 +765,7 @@
                 e.preventDefault();
 
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
+                submitBtn.textContent = 'Submitting...';
                 feedback.className = 'sfs-form__feedback';
                 feedback.textContent = '';
 
@@ -781,7 +781,7 @@
 
                     if (response.ok) {
                         feedback.className = 'sfs-form__feedback sfs-form__feedback--success';
-                        feedback.textContent = 'Request received! We\'ll follow up within 1 business day.';
+                        feedback.textContent = 'Got it. We\'ll be in touch within 1 business day.';
                         form.reset();
 
                         // Send Pushover notification
@@ -802,7 +802,7 @@
                     feedback.textContent = 'Something went wrong. Please try again or email hello@bertrandbrands.com';
                 } finally {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Request Slot';
+                    submitBtn.textContent = 'Fix My Website →';
                 }
             });
         })();
