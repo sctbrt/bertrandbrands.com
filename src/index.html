@@ -97,7 +97,8 @@
     <script>
         (function() {
             var params = new URLSearchParams(window.location.search);
-            if (params.get('preview') === 'true') {
+            // Bypass launch gate for preview mode OR internal navigation (skip)
+            if (params.get('preview') === 'true' || params.has('skip')) {
                 var gate = document.getElementById('launchGate');
                 if (gate) gate.style.display = 'none';
                 document.body.classList.add('preview-mode');
