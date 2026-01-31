@@ -8,11 +8,11 @@
     <link rel="canonical" href="https://bertrandbrands.com/core-services">
     <meta name="theme-color" content="#0a0a0a">
     <title>Core Services — Strategic Brand & Web Systems | Bertrand Brands</title>
-    <meta name="description" content="Strategic brand and web systems work. Discovery-led, relationship-based engagements from direction sessions to full brand and website builds.">
+    <meta name="description" content="Multi-week, relationship-based brand and website work. Audits, brand resets, and website foundations. 50% deposit to begin, 50% on delivery.">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Core Services — Strategic Brand & Web Systems | Bertrand Brands">
-    <meta property="og:description" content="Strategic brand and web systems work. Discovery-led, relationship-based engagements.">
+    <meta property="og:description" content="Multi-week, relationship-based brand and website work. Audits, brand systems, and website builds.">
     <meta property="og:url" content="https://bertrandbrands.com/core-services">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
@@ -31,7 +31,7 @@
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "B Core Services",
-      "description": "Strategic brand and web systems work. Discovery-led, relationship-based engagements.",
+      "description": "Multi-week, relationship-based brand and website work. Audits, brand resets, and website foundations.",
       "provider": {
         "@type": "ProfessionalService",
         "name": "Bertrand Brands",
@@ -51,13 +51,11 @@
         "@type": "OfferCatalog",
         "name": "Core Services Offerings",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Direction Session" }, "price": "145", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Clarity Call" }, "price": "95", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Comprehensive Website Audit" }, "price": "795", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "price": "995", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "price": "2500", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation" }, "price": "4500", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Website Reset" }, "price": "8500", "priceCurrency": "CAD" }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Comprehensive Website Audit" }, "description": "In-depth website analysis and recommendations" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "description": "In-depth brand analysis and strategic direction" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "price": "3000", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation" }, "price": "3500", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Website Reset" }, "price": "6500", "priceCurrency": "CAD" }
         ]
       }
     }
@@ -73,6 +71,17 @@
     <link rel="stylesheet" href="/styles/main.css">
 
     <style>
+        /* Prevent pinch-to-zoom and triple-tap zoom on iOS */
+        html {
+            touch-action: pan-x pan-y;
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            html {
+                -webkit-text-size-adjust: 100%;
+            }
+        }
+
         /* Core Services Landing Page Styles */
         .cs-page {
             min-height: 100vh;
@@ -106,9 +115,7 @@
         }
 
         @keyframes lineReveal {
-            to {
-                width: 100%;
-            }
+            to { width: 100%; }
         }
 
         .cs-header__inner {
@@ -243,14 +250,8 @@
             background: rgba(217, 119, 6, 0.1);
         }
 
-        .cs-offering--primary {
-            background: rgba(217, 119, 6, 0.1);
-            border-color: rgba(217, 119, 6, 0.25);
-        }
-
-        .cs-offering--primary:hover {
-            border-color: rgba(217, 119, 6, 0.5);
-            background: rgba(217, 119, 6, 0.15);
+        .cs-offering--review {
+            border-style: dashed;
         }
 
         .cs-offering__header {
@@ -301,6 +302,13 @@
             color: var(--text-subtle);
         }
 
+        .cs-offering__price--private {
+            font-size: var(--text-sm);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--text-subtle);
+        }
+
         .cs-offering__cta {
             display: inline-block;
             padding: 0.625rem 1.25rem;
@@ -319,17 +327,6 @@
             border-color: var(--accent);
         }
 
-        .cs-offering__cta--primary {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-        }
-
-        .cs-offering__cta--primary:hover {
-            background: var(--accent-hover);
-            border-color: var(--accent-hover);
-        }
-
         /* Divider */
         .cs-divider {
             border: none;
@@ -338,16 +335,58 @@
             margin: var(--space-lg) auto;
         }
 
-        /* Gated Note */
-        .cs-gated-note {
+        /* Exploratory Section */
+        .cs-exploratory {
+            padding: var(--space-xl, 3rem) 0;
             text-align: center;
-            padding: var(--space-md) 0;
         }
 
-        .cs-gated-note__text {
+        .cs-exploratory__label {
             font-size: var(--text-sm);
             color: var(--text-subtle);
-            font-style: italic;
+            margin-bottom: var(--space-xs);
+        }
+
+        .cs-exploratory__text {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto var(--space-md);
+        }
+
+        .cs-exploratory__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: var(--space-md);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cs-exploratory__card {
+            padding: var(--space-md);
+            background: transparent;
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease;
+        }
+
+        .cs-exploratory__card:hover {
+            border-color: var(--text-subtle);
+            border-style: solid;
+            background: var(--bg-subtle);
+        }
+
+        .cs-exploratory__card-title {
+            font-size: var(--text-base);
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .cs-exploratory__card-meta {
+            font-size: var(--text-xs);
+            color: var(--text-subtle);
         }
 
         /* Boundary */
@@ -432,33 +471,17 @@
         }
 
         @keyframes smokeDrift1 {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            25% {
-                transform: translate(30px, -20px) scale(1.05);
-            }
-            50% {
-                transform: translate(15px, -35px) scale(0.95);
-            }
-            75% {
-                transform: translate(-20px, -15px) scale(1.02);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -20px) scale(1.05); }
+            50% { transform: translate(15px, -35px) scale(0.95); }
+            75% { transform: translate(-20px, -15px) scale(1.02); }
         }
 
         @keyframes smokeDrift2 {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            25% {
-                transform: translate(-25px, 15px) scale(0.97);
-            }
-            50% {
-                transform: translate(-10px, 30px) scale(1.04);
-            }
-            75% {
-                transform: translate(20px, 10px) scale(0.98);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-25px, 15px) scale(0.97); }
+            50% { transform: translate(-10px, 30px) scale(1.04); }
+            75% { transform: translate(20px, 10px) scale(0.98); }
         }
 
         .cs-vignette {
@@ -532,9 +555,9 @@
         <!-- Hero -->
         <section class="cs-hero">
             <div class="container">
-                <h1 class="cs-hero__title">Strategic brand and web systems work</h1>
+                <h1 class="cs-hero__title">Multi-week brand and website work</h1>
                 <p class="cs-hero__subtitle">
-                    Discovery-led, relationship-based engagements. From initial direction sessions to full brand and website builds.
+                    Relationship-based engagements with clear outcomes. 50% deposit to begin, 50% on delivery.
                 </p>
             </div>
         </section>
@@ -546,73 +569,35 @@
                 <span class="cs-brand-header__wordmark">Core Services</span>
             </div>
         </div>
-        <p class="cs-brand-header__label">Offerings</p>
-        <p style="text-align: center; color: var(--text-subtle); font-size: var(--text-sm); margin-top: -0.75rem; margin-bottom: var(--space-lg);">Discovery-led. Relationship-based. Strategic.</p>
 
-        <!-- Tier 1: Entry -->
+        <!-- Tier 1: Audits & Reviews (Private Pricing) -->
         <section class="cs-tier">
             <div class="container">
-                <p class="cs-tier__label">Start Here</p>
-                <div class="cs-tier__grid cs-tier__grid--two">
-                    <!-- Direction Session -->
-                    <div class="cs-offering cs-offering--primary">
-                        <div class="cs-offering__header">
-                            <span class="cs-offering__meta">45 min · Live Video</span>
-                            <h2 class="cs-offering__title">Direction Session</h2>
-                        </div>
-                        <p class="cs-offering__description">A focused conversation about what's unclear, what's not working, and what to do next. Walk away with a written summary and 2–3 concrete next-step options.</p>
-                        <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$145 <span>CAD</span></p>
-                            <a href="/direction-session" class="cs-offering__cta cs-offering__cta--primary">Book Now →</a>
-                        </div>
-                    </div>
-
-                    <!-- Business Clarity Call -->
-                    <div class="cs-offering">
-                        <div class="cs-offering__header">
-                            <span class="cs-offering__meta">25 min · Live Video</span>
-                            <h2 class="cs-offering__title">Business Clarity Call</h2>
-                        </div>
-                        <p class="cs-offering__description">A quick sanity check for when you're not sure where to start. No written deliverable—just a focused conversation to get unstuck.</p>
-                        <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$95 <span>CAD</span></p>
-                            <a href="/business-clarity-call" class="cs-offering__cta">Book Now →</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="cs-divider">
-
-        <!-- Tier 2: In-Depth Reviews -->
-        <section class="cs-tier">
-            <div class="container">
-                <p class="cs-tier__label">In-Depth Reviews</p>
+                <p class="cs-tier__label">Audits & Reviews</p>
                 <div class="cs-tier__grid cs-tier__grid--two">
                     <!-- Comprehensive Website Audit -->
-                    <div class="cs-offering">
+                    <div class="cs-offering cs-offering--review">
                         <div class="cs-offering__header">
                             <span class="cs-offering__meta">Detailed Report</span>
                             <h2 class="cs-offering__title">Comprehensive Website Audit</h2>
                         </div>
                         <p class="cs-offering__description">Architecture, messaging, UX, and conversion analysis. A complete picture of what's working and what to fix.</p>
                         <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$795 <span>CAD</span></p>
-                            <a href="/direction-session" class="cs-offering__cta">Start with Direction →</a>
+                            <p class="cs-offering__price cs-offering__price--private">Pricing is private</p>
+                            <a href="mailto:hello@bertrandbrands.com?subject=Website%20Audit%20Inquiry" class="cs-offering__cta">Email for pricing →</a>
                         </div>
                     </div>
 
                     <!-- Strategic Brand Audit -->
-                    <div class="cs-offering">
+                    <div class="cs-offering cs-offering--review">
                         <div class="cs-offering__header">
                             <span class="cs-offering__meta">Detailed Report</span>
                             <h2 class="cs-offering__title">Strategic Brand Audit</h2>
                         </div>
                         <p class="cs-offering__description">Brand system, positioning, and strategic options. Clear direction on where your brand should go.</p>
                         <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$995 <span>CAD</span></p>
-                            <a href="/direction-session" class="cs-offering__cta">Start with Direction →</a>
+                            <p class="cs-offering__price cs-offering__price--private">Pricing is private</p>
+                            <a href="mailto:hello@bertrandbrands.com?subject=Brand%20Audit%20Inquiry" class="cs-offering__cta">Email for pricing →</a>
                         </div>
                     </div>
                 </div>
@@ -621,10 +606,10 @@
 
         <hr class="cs-divider">
 
-        <!-- Tier 3: Brand & Web Builds -->
+        <!-- Tier 2: Brand & Web Builds (Starting Prices) -->
         <section class="cs-tier">
             <div class="container">
-                <p class="cs-tier__label">Brand & Web Builds</p>
+                <p class="cs-tier__label">Builds & Resets</p>
                 <div class="cs-tier__grid">
                     <!-- Brand Reset -->
                     <div class="cs-offering">
@@ -633,8 +618,8 @@
                         </div>
                         <p class="cs-offering__description">Core brand system, messaging, and guidelines. A foundation that works across every touchpoint.</p>
                         <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$2,500 <span>CAD</span></p>
-                            <a href="/direction-session" class="cs-offering__cta">Start with Direction →</a>
+                            <p class="cs-offering__price">$3,000+ <span>CAD</span></p>
+                            <a href="mailto:hello@bertrandbrands.com?subject=Brand%20Reset%20Inquiry" class="cs-offering__cta">Get in touch →</a>
                         </div>
                     </div>
 
@@ -645,8 +630,8 @@
                         </div>
                         <p class="cs-offering__description">Strategy-led website build for small to mid-sized businesses. Fast, clear, built to convert.</p>
                         <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$4,500 <span>CAD</span></p>
-                            <a href="/direction-session" class="cs-offering__cta">Start with Direction →</a>
+                            <p class="cs-offering__price">$3,500+ <span>CAD</span></p>
+                            <a href="mailto:hello@bertrandbrands.com?subject=Website%20Foundation%20Inquiry" class="cs-offering__cta">Get in touch →</a>
                         </div>
                     </div>
 
@@ -657,10 +642,30 @@
                         </div>
                         <p class="cs-offering__description">End-to-end transformation. Brand system and website built together from the ground up.</p>
                         <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$8,500 <span>CAD</span></p>
-                            <a href="/direction-session" class="cs-offering__cta">Start with Direction →</a>
+                            <p class="cs-offering__price">$6,500+ <span>CAD</span></p>
+                            <a href="mailto:hello@bertrandbrands.com?subject=Full%20Brand%20%2B%20Website%20Reset%20Inquiry" class="cs-offering__cta">Get in touch →</a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="cs-divider">
+
+        <!-- Exploratory Sessions -->
+        <section class="cs-exploratory">
+            <div class="container">
+                <p class="cs-exploratory__label">Not sure where to start?</p>
+                <p class="cs-exploratory__text">Begin with a 45-minute clarity call. Paid conversation, no obligations, no deliverables—just focused guidance.</p>
+                <div class="cs-exploratory__grid">
+                    <a href="/brand-clarity-call" class="cs-exploratory__card">
+                        <h3 class="cs-exploratory__card-title">Brand Clarity Call</h3>
+                        <p class="cs-exploratory__card-meta">45 min · Live Video</p>
+                    </a>
+                    <a href="/website-clarity-call" class="cs-exploratory__card">
+                        <h3 class="cs-exploratory__card-title">Website Clarity Call</h3>
+                        <p class="cs-exploratory__card-meta">45 min · Live Video</p>
+                    </a>
                 </div>
             </div>
         </section>
@@ -669,7 +674,7 @@
         <section class="cs-boundary">
             <div class="container">
                 <p class="cs-boundary__text">
-                    Core Services are discovery-led and relationship-based. For fixed-scope, fixed-price work with clear timelines, <a href="/focus-studio" class="cs-boundary__link">explore Focus Studio →</a>
+                    Core Services are multi-week, relationship-based engagements. For fixed-scope, fixed-price work with clear timelines, <a href="/focus-studio" class="cs-boundary__link">explore Focus Studio →</a>
                 </p>
             </div>
         </section>
