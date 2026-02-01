@@ -1357,9 +1357,9 @@
             filter: invert(42%) sepia(67%) saturate(4356%) hue-rotate(243deg) brightness(100%) contrast(94%);
         }
 
-        /* Exploratory item - blue (#3B82F6) accent on hover */
+        /* Exploratory item - spotlight blue (#2563EB) accent on hover */
         .header__dropdown-item--blue:hover .header__dropdown-mark {
-            filter: invert(45%) sepia(98%) saturate(1500%) hue-rotate(200deg) brightness(100%) contrast(96%);
+            filter: invert(32%) sepia(93%) saturate(1700%) hue-rotate(213deg) brightness(97%) contrast(93%);
         }
 
         .header__dropdown-label {
