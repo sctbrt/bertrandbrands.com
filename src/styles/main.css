@@ -1402,7 +1402,7 @@
 
         /* Exploratory item - spotlight blue (#2563EB) accent on hover */
         .header__dropdown-item--blue:hover .header__dropdown-mark {
-            filter: invert(32%) sepia(93%) saturate(1700%) hue-rotate(213deg) brightness(97%) contrast(93%);
+            filter: invert(37%) sepia(93%) saturate(1500%) hue-rotate(206deg) brightness(93%) contrast(101%);
         }
 
         .header__dropdown-label {
