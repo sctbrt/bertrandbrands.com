@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <!-- SEO -->
-    <link rel="canonical" href="https://bertrandbrands.com/intake/website-snapshot-review">
+    <link rel="canonical" href="https://bertrandbrands.com/intake/website-conversion-snapshot">
     <meta name="theme-color" content="#1C1C1E">
     <meta name="robots" content="noindex, nofollow">
-    <title>Website Snapshot Review Intake | Bertrand Brands</title>
-    <meta name="description" content="Complete this form to start your Website Snapshot Review.">
+    <title>Website Conversion Snapshot Intake | Bertrand Brands</title>
+    <meta name="description" content="Complete this form to start your Website Conversion Snapshot.">
 
     <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -344,21 +344,21 @@
 
     <main class="intake-page">
         <div class="intake-content">
-            <h1 class="intake-title">Website Snapshot Review</h1>
+            <h1 class="intake-title">Website Conversion Snapshot</h1>
 
             <!-- Order Summary -->
             <div class="intake-summary">
                 <div class="intake-summary__row">
                     <span class="intake-summary__label">Service</span>
-                    <span class="intake-summary__value">Website Snapshot Review</span>
+                    <span class="intake-summary__value">Website Conversion Snapshot</span>
                 </div>
                 <div class="intake-summary__row">
                     <span class="intake-summary__label">Deliverable</span>
-                    <span class="intake-summary__value">Written PDF Report</span>
+                    <span class="intake-summary__value">PDF with Top 5 Fixes</span>
                 </div>
                 <div class="intake-summary__row">
                     <span class="intake-summary__label">Turnaround</span>
-                    <span class="intake-summary__value">5 Business Days</span>
+                    <span class="intake-summary__value">48 Hours</span>
                 </div>
                 <div class="intake-summary__row">
                     <span class="intake-summary__label">Price</span>
@@ -368,7 +368,8 @@
 
             <!-- Intake Form -->
             <form class="intake-form" id="intakeForm" action="https://formspree.io/f/xnjjgoay" method="POST">
-                <input type="hidden" name="service" value="Website Snapshot Review">
+                <input type="hidden" name="source" value="website_conversion_snapshot">
+                <input type="hidden" name="service" value="Website Conversion Snapshot">
                 <input type="hidden" name="price" value="$195 CAD">
 
                 <div class="intake-form__group">
@@ -393,14 +394,14 @@
                 </div>
 
                 <div class="intake-form__group">
-                    <label class="intake-form__label" for="concerns">Specific Concerns <span>(optional)</span></label>
-                    <textarea id="concerns" name="concerns" class="intake-form__textarea" placeholder="Are there specific pages or areas you'd like us to focus on? Any known issues?"></textarea>
+                    <label class="intake-form__label" for="concerns">What feels broken right now? <span>(optional)</span></label>
+                    <textarea id="concerns" name="concerns" class="intake-form__textarea" placeholder="Are there specific pages or issues you'd like us to focus on?"></textarea>
                 </div>
 
                 <button type="submit" class="intake-form__submit" id="submitBtn">Submit Request</button>
 
                 <p class="intake-form__note">
-                    After submitting, you'll receive an email with payment instructions. Your review begins once payment is received.
+                    After submitting, you'll receive an email with payment instructions. Your snapshot begins once payment is received—delivered within 48 hours.
                 </p>
             </form>
 
@@ -413,7 +414,7 @@
                 </div>
                 <h2 class="intake-success__title">Request Received</h2>
                 <p class="intake-success__text">
-                    Thank you. You'll receive an email shortly with payment details. Once payment is confirmed, your Website Snapshot Review will begin.
+                    Thank you. You'll receive an email shortly with payment details. Once payment is confirmed, your Website Conversion Snapshot will be delivered within 48 hours.
                 </p>
             </div>
         </div>
@@ -458,7 +459,8 @@
                     // Notify backend (silent)
                     const payload = {
                         type: 'intake',
-                        service: 'Website Snapshot Review',
+                        source: 'website_conversion_snapshot',
+                        service: 'Website Conversion Snapshot',
                         price: '$195 CAD',
                         name: formData.get('name'),
                         email: formData.get('email'),

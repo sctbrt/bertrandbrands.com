@@ -12,16 +12,16 @@
       "destination": "/pages/ads/sudbury-focus-studio"
     },
     {
-      "source": "/website-snapshot-review",
-      "destination": "/pages/ads/website-snapshot-review.html"
+      "source": "/website-conversion-snapshot",
+      "destination": "/pages/ads/website-conversion-snapshot.html"
     },
     {
       "source": "/brand-clarity-diagnostic",
       "destination": "/pages/ads/brand-clarity-diagnostic.html"
     },
     {
-      "source": "/intake/website-snapshot-review",
-      "destination": "/pages/intake/website-snapshot-review"
+      "source": "/intake/website-conversion-snapshot",
+      "destination": "/pages/intake/website-conversion-snapshot"
     },
     {
       "source": "/intake/brand-clarity-diagnostic",
@@ -54,6 +54,10 @@
     {
       "source": "/payment-confirmed",
       "destination": "/pages/payment-confirmed"
+    },
+    {
+      "source": "/snapshot-confirmed",
+      "destination": "/pages/snapshot-confirmed"
     }
   ],
   "redirects": [
@@ -155,6 +159,16 @@
     {
       "source": "/sudbury-small-business-website-leads",
       "destination": "/sudbury",
+      "permanent": true
+    },
+    {
+      "source": "/website-snapshot-review",
+      "destination": "/website-conversion-snapshot",
+      "permanent": true
+    },
+    {
+      "source": "/intake/website-snapshot-review",
+      "destination": "/intake/website-conversion-snapshot",
       "permanent": true
     }
   ],

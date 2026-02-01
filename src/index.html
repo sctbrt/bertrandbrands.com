@@ -97,8 +97,11 @@
     <script>
         (function() {
             var params = new URLSearchParams(window.location.search);
-            // Bypass launch gate for preview mode OR internal navigation (skip)
-            if (params.get('preview') === 'true' || params.has('skip')) {
+            // Launch ends at midnight Eastern, Feb 1, 2026
+            var launchEndDate = new Date('2026-02-01T00:00:00-05:00');
+            var isPastLaunch = new Date() >= launchEndDate;
+            // Bypass launch gate for: past launch date, preview mode, or internal navigation (skip)
+            if (isPastLaunch || params.get('preview') === 'true' || params.has('skip')) {
                 var gate = document.getElementById('launchGate');
                 if (gate) gate.style.display = 'none';
                 document.body.classList.add('preview-mode');
@@ -154,6 +157,10 @@
                                 <a href="/core-services" class="header__dropdown-item">
                                     <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
                                     <span class="header__dropdown-label">Core Services</span>
+                                </a>
+                                <a href="/brand-clarity-call" class="header__dropdown-item">
+                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                                    <span class="header__dropdown-label">Exploratory Sessions</span>
                                 </a>
                             </div>
                         </div>
@@ -233,7 +240,7 @@
         <!-- Services -->
         <section class="section section--alt" id="services">
             <div class="container">
-                <div class="section__header reveal">
+                <div class="section__header section__header--services reveal">
                     <p class="section__label">Services</p>
                     <h2 class="section__title">What we offer</h2>
                 </div>
@@ -375,8 +382,8 @@
                             <h3 class="service__title">Brand Reset</h3>
                             <p class="service__description">Core brand system, messaging, and guidelines. A foundation that works across every touchpoint.</p>
                             <div class="service__footer">
-                                <p class="service__price">$3,000+ <span>CAD</span></p>
-                                <a href="mailto:hello@bertrandbrands.com?subject=Brand%20Reset%20Inquiry" class="service__cta">Get in touch →</a>
+                                <p class="service__price service__price--private">Pricing is private</p>
+                                <a href="mailto:hello@bertrandbrands.com?subject=Brand%20Reset%20Inquiry" class="service__cta">Email me the pricing →</a>
                             </div>
                         </div>
 
@@ -385,8 +392,8 @@
                             <h3 class="service__title">Website Foundation</h3>
                             <p class="service__description">Strategy-led website build for small to mid-sized businesses. Fast, clear, built to convert.</p>
                             <div class="service__footer">
-                                <p class="service__price">$3,500+ <span>CAD</span></p>
-                                <a href="mailto:hello@bertrandbrands.com?subject=Website%20Foundation%20Inquiry" class="service__cta">Get in touch →</a>
+                                <p class="service__price service__price--private">Pricing is private</p>
+                                <a href="mailto:hello@bertrandbrands.com?subject=Website%20Foundation%20Inquiry" class="service__cta">Email me the pricing →</a>
                             </div>
                         </div>
 
@@ -395,8 +402,8 @@
                             <h3 class="service__title">Full Brand + Website Reset</h3>
                             <p class="service__description">End-to-end transformation. Brand system and website built together from the ground up.</p>
                             <div class="service__footer">
-                                <p class="service__price">$6,500+ <span>CAD</span></p>
-                                <a href="mailto:hello@bertrandbrands.com?subject=Full%20Brand%20%2B%20Website%20Reset%20Inquiry" class="service__cta">Get in touch →</a>
+                                <p class="service__price service__price--private">Pricing is private</p>
+                                <a href="mailto:hello@bertrandbrands.com?subject=Full%20Brand%20%2B%20Website%20Reset%20Inquiry" class="service__cta">Email me the pricing →</a>
                             </div>
                         </div>
                     </div>
@@ -410,6 +417,10 @@
                 <!-- ============================================ -->
                 <div class="exploratory-sessions reveal" id="exploratory">
                     <div class="exploratory-sessions__header">
+                        <a href="/brand-clarity-call" class="exploratory-sessions__brand">
+                            <img src="/assets/bertrand-brands-logomark.png" alt="" class="exploratory-sessions__mark">
+                            <span class="exploratory-sessions__name">Exploratory Sessions</span>
+                        </a>
                         <p class="exploratory-sessions__label">Not sure where to start?</p>
                         <p class="exploratory-sessions__description">Begin with a 45-minute clarity call. Paid conversation, no obligations, no deliverables—just focused guidance to help you decide what's next.</p>
                     </div>
@@ -972,11 +983,9 @@
                 }
             }, { passive: true });
 
-            // Ambient orange light animation - disabled on mobile for performance
+            // Ambient orange light animation
             // V5.0: Throttled to 30fps for smoother performance
-            const isMobileDevice = window.matchMedia('(max-width: 768px)').matches;
-
-            if (!isMobileDevice && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 let orangePos1 = 15;
                 let orangePos2 = 85;
                 let direction1 = 1;

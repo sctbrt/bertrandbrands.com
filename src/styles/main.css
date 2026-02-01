@@ -67,8 +67,15 @@
 
         /* === BASE === */
         html {
-            font-size: 16px;
+            font-size: 15px;
             scroll-behavior: smooth;
+        }
+
+        /* Restore 16px on larger screens for comfortable reading */
+        @media (min-width: 768px) {
+            html {
+                font-size: 16px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -467,9 +474,9 @@
                 overflow: visible;
             }
 
-            /* Disable ambient lighting on mobile (no JS animation anyway) */
+            /* Mobile: keep ambient lighting visible */
             .header__glass::before {
-                display: none;
+                /* Lights stay visible, animation runs if reduced-motion not set */
             }
         }
 
@@ -1309,7 +1316,7 @@
             gap: 0.625rem;
             padding: 0.5rem 0.875rem;
             border-radius: var(--radius-md);
-            background: color-mix(in srgb, var(--bg) 40%, transparent);
+            background: color-mix(in srgb, var(--bg) 75%, transparent);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border);
@@ -1323,7 +1330,7 @@
         }
 
         .header__dropdown-item:hover {
-            background: color-mix(in srgb, var(--bg) 60%, transparent);
+            background: color-mix(in srgb, var(--bg) 85%, transparent);
             border-color: rgba(255, 255, 255, 0.12);
             transform: translateX(2px);
         }
@@ -1414,7 +1421,7 @@
                 justify-content: center;
                 padding: 0.75rem 1.25rem;
                 margin-bottom: 0;
-                background: rgba(17, 17, 17, 0.6);
+                background: rgba(17, 17, 17, 0.85);
                 border: 1px solid rgba(255, 255, 255, 0.08);
                 border-radius: var(--radius-md);
                 min-height: 44px;
@@ -1425,7 +1432,7 @@
             .header__dropdown-item:hover,
             .header__dropdown-item:active {
                 transform: none !important;
-                background: rgba(17, 17, 17, 0.8);
+                background: rgba(17, 17, 17, 0.92);
                 border-color: rgba(255, 255, 255, 0.12);
             }
 
@@ -1923,6 +1930,11 @@
 
         .section__header {
             margin-bottom: var(--space-xl);
+        }
+
+        /* Services section: tighter gap to Focus Studio */
+        .section__header--services {
+            margin-bottom: var(--space-md);
         }
 
         .section__label {
@@ -2658,6 +2670,35 @@
             margin-bottom: var(--space-md);
         }
 
+        .exploratory-sessions__brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.625rem;
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+            transition: opacity var(--duration-fast) var(--ease-out);
+        }
+
+        .exploratory-sessions__brand:hover {
+            opacity: 0.8;
+        }
+
+        .exploratory-sessions__mark {
+            width: 32px;
+            height: 32px;
+            opacity: 1;
+            filter: brightness(0) invert(1);
+        }
+
+        .exploratory-sessions__name {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            color: var(--text);
+        }
+
         .exploratory-sessions__label {
             font-family: var(--font-display);
             font-size: 1.125rem;
@@ -2900,6 +2941,7 @@
             justify-content: space-between;
             align-items: center;
             margin-top: auto;
+            gap: var(--space-md);
         }
 
         .service__price {
@@ -3138,6 +3180,15 @@
             .focused-studio__glow::after {
                 animation: none;
             }
+
+            /* Disable stagger animations for reduced motion */
+            .focused-studio__header,
+            .focused-studio__grid .focused-studio__card,
+            .focused-studio__boundary {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
         }
 
         /* Mobile optimization for Focus Studio glow */
@@ -3165,6 +3216,15 @@
 
         .focused-studio__header {
             margin-bottom: var(--space-md);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration-medium) var(--ease-out-expo),
+                        transform var(--duration-medium) var(--ease-out-expo);
+        }
+
+        .focused-studio.is-visible .focused-studio__header {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .focused-studio__brand {
@@ -3205,6 +3265,32 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: var(--space-sm);
+        }
+
+        /* Staggered reveal for Focus Studio cards */
+        .focused-studio__grid .focused-studio__card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity var(--duration-medium) var(--ease-out-expo),
+                        transform var(--duration-medium) var(--ease-out-expo);
+        }
+
+        .focused-studio.is-visible .focused-studio__grid .focused-studio__card:nth-child(1) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.1s;
+        }
+
+        .focused-studio.is-visible .focused-studio__grid .focused-studio__card:nth-child(2) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+        }
+
+        .focused-studio.is-visible .focused-studio__grid .focused-studio__card:nth-child(3) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.3s;
         }
 
         /* V5.0: Improved Focus Studio card hover */
@@ -3248,6 +3334,7 @@
             font-size: 1.125rem;
             font-weight: 400;
             letter-spacing: -0.01em;
+            min-height: 2.5em; /* Ensures consistent height for titles that may wrap */
         }
 
         .focused-studio__card-timeline {
@@ -3328,6 +3415,26 @@
             font-size: 0.75rem;
             color: var(--text-subtle);
             font-style: italic;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity var(--duration-medium) var(--ease-out-expo),
+                        transform var(--duration-medium) var(--ease-out-expo);
+            transition-delay: 0.4s;
+        }
+
+        .focused-studio.is-visible .focused-studio__boundary {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Tablet: Single column to avoid orphaned third card */
+        @media (max-width: 900px) and (min-width: 601px) {
+            .focused-studio__grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
 
         /* Mobile adjustments for focused studio - V5.0: Enhanced touch targets and spacing */

@@ -277,6 +277,27 @@
             background: #7C3AED;
         }
 
+        /* Snapshot step-down - subtle, secondary placement */
+        .sfs-snapshot-stepdown {
+            text-align: center;
+            font-size: var(--text-sm);
+            color: var(--text-subtle);
+            margin: var(--space-md) auto var(--space-lg);
+            max-width: 400px;
+        }
+
+        .sfs-snapshot-stepdown a {
+            color: var(--text-muted);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--text-subtle);
+            transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+        }
+
+        .sfs-snapshot-stepdown a:hover {
+            color: var(--text);
+            border-color: var(--text-muted);
+        }
+
         /* Secondary offerings - subdued */
         .sfs-offerings__secondary {
             display: grid;
@@ -663,6 +684,9 @@
                         <a href="#request" class="sfs-offering__cta">Fix My Website →</a>
                     </div>
                 </div>
+
+                <!-- Snapshot Step-Down (Secondary) -->
+                <p class="sfs-snapshot-stepdown">Not ready for a full refresh? <a href="/website-conversion-snapshot">Start with a Website Conversion Snapshot ($195)</a></p>
 
                 <!-- Secondary Options -->
                 <p class="sfs-offerings__secondary-label">Need something different?</p>
