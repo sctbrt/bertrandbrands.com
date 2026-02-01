@@ -1,8 +1,167 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 5.0.0 (Current)
+## Version 5.2.0 (Current)
 
 This document is the **Bertrand Brands-specific** guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
+
+---
+
+## 0. Consolidated Addendum (Authoritative)
+
+**Status:** Positioning, Language, and Implementation Lock
+**Effective:** February 1, 2026
+
+This section establishes hard constraints, style governance, and implementation compass for all Claude interactions with this project.
+
+---
+
+### 0.1 High-Level Context
+
+Bertrand Brands is a **Brand & Web Systems Studio**.
+
+Its purpose is to design and build clear, structured, conversion-focused brand and web systems for small to mid-sized businesses—primarily in Northern Ontario.
+
+**Bertrand Brands is not:**
+- a generalist design agency
+- a marketing or growth agency
+- a performance or ads shop
+- a technology-forward or "AI-first" studio (externally)
+
+**The studio's value is rooted in:**
+- clarity
+- structure
+- restraint
+- speed without chaos
+
+All outputs must reinforce this identity.
+
+---
+
+### 0.2 Absolute Language Rules (Non-Negotiable)
+
+#### Forbidden External Language
+
+Claude must **never** surface the following in public-facing materials, UI text, service descriptions, or client documentation:
+- AI
+- Artificial intelligence
+- Machine learning
+- Agents
+- "AI-powered"
+- "AI-driven"
+- "Smart" (when implying intelligence)
+- Automation when referring to intelligence or decision-making
+
+These concepts may exist internally only and must remain invisible to clients.
+
+#### Approved External Vocabulary
+
+When describing how work is done, Claude should use:
+- Systems
+- Tooling
+- Modern workflows
+- Infrastructure
+- Internal frameworks
+- Optimized processes
+- Streamlined execution
+
+**Example (approved):**
+> "We use modern tooling and internal frameworks to move quickly without compromising quality."
+
+Claude should default to this vocabulary unless explicitly instructed otherwise.
+
+---
+
+### 0.3 The Bertrand Method™ (Required Framing)
+
+All work—copy, structure, documentation, and explanation—must align to the following method:
+
+1. **Clarify** — Define the message, audience, and objective.
+2. **Structure** — Design the system behind the brand and site.
+3. **Build** — Execute with precision and restraint.
+4. **Stabilize** — Test, refine, and harden the system.
+5. **Enable** — Prepare the client for confident ownership.
+
+Claude should reuse this framing wherever logical to reinforce consistency.
+
+---
+
+### 0.4 Tone & Brand Guardrails
+
+All outputs must feel:
+- Calm
+- Precise
+- Thoughtful
+- Modern
+- Architected
+
+**Avoid:**
+- hype
+- sales language
+- trend-driven phrasing
+- over-explaining technology
+- jargon without necessity
+
+If a sentence feels "impressive" rather than clear, it should be simplified.
+
+**The desired client reaction is:**
+> "This feels considered and easy."
+
+---
+
+### 0.5 Implementation Behavior Rules
+
+When generating or modifying:
+- website copy
+- UI text
+- service descriptions
+- technical documentation
+- internal architecture notes
+
+Claude must:
+- Prioritize clarity over cleverness
+- Default to minimalism
+- Reduce words where possible without losing meaning
+- Treat tooling as invisible infrastructure
+- Never expose internal execution mechanics to end users
+- Avoid explaining how something is fast — only that it is reliable and considered
+
+---
+
+### 0.6 Launch Context (Operational Constraint)
+
+- **Public launch date:** February 4, 2026
+- **Initial emphasis:** Focus Studio offerings
+- **Market:** Sudbury + Northern Ontario
+- **Primary KPI:** qualified leads, not traffic
+
+All changes should support:
+- low friction
+- fast comprehension
+- immediate confidence
+
+---
+
+### 0.7 Internal Truth vs External Narrative (Critical)
+
+**Internal truth:**
+Bertrand Brands operates with advanced tooling, parallel workflows, and agent-assisted execution.
+
+**External narrative:**
+Bertrand Brands is human-led, system-driven, calm, and deliberate.
+
+This asymmetry is intentional and must be preserved across all outputs.
+
+---
+
+### 0.8 Final Instruction
+
+When in doubt:
+- remove a sentence
+- simplify the explanation
+- choose restraint over completeness
+- choose structure over flourish
+
+**Bertrand Brands should always feel older, calmer, and more certain than the market around it.**
 
 ---
 
@@ -679,6 +838,7 @@ Added `contain: layout style` to:
 | 4.2.0 | Jan 2026 | Focus Studio color tokens, mobile typography |
 | 5.0.0 | Jan 2026 | Performance polish pass: 30fps throttling, reduced blur, CSS containment, improved touch targets |
 | 5.1.0 | Jan 2026 | Service architecture update: renamed offerings, added Business Clarity Call, updated pricing tables |
+| 5.2.0 | Feb 2026 | Consolidated addendum: authoritative constraints, language rules, Bertrand Method™, internal/external narrative separation |
 
 ---
 
