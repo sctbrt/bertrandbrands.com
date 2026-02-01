@@ -52,6 +52,22 @@
       "destination": "/pages/ads/core-services"
     },
     {
+      "source": "/book",
+      "destination": "/pages/book"
+    },
+    {
+      "source": "/exploratory",
+      "destination": "/pages/exploratory"
+    },
+    {
+      "source": "/intake/exploratory",
+      "destination": "/pages/intake/exploratory"
+    },
+    {
+      "source": "/clarity-session",
+      "destination": "/pages/clarity-session"
+    },
+    {
       "source": "/payment-confirmed",
       "destination": "/pages/payment-confirmed"
     },

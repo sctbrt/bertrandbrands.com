@@ -156,7 +156,7 @@
             transform: translateX(-50%);
             width: 200px;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(217, 119, 6, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, var(--exploratory-accent-muted), transparent);
         }
 
         .ad-section__title {
@@ -203,7 +203,7 @@
         }
 
         .ad-fit__heading--for {
-            color: var(--accent);
+            color: var(--exploratory-accent);
         }
 
         .ad-fit__list {
@@ -233,7 +233,7 @@
         }
 
         .ad-fit__column:first-child .ad-fit__list li::before {
-            background: var(--accent);
+            background: var(--exploratory-accent);
         }
 
         /* What to Expect */
@@ -310,7 +310,7 @@
             font-family: var(--font-display, 'Inter', sans-serif);
             font-size: var(--text-3xl, 1.875rem);
             font-weight: 300;
-            color: var(--accent);
+            color: var(--exploratory-accent);
             margin-bottom: var(--space-md);
         }
 
@@ -325,9 +325,9 @@
             align-items: center;
             gap: 0.5rem;
             padding: 1rem 2rem;
-            background: rgba(217, 119, 6, 0.85);
-            border: 1px solid rgba(217, 119, 6, 0.3);
-            color: #000;
+            background: rgba(37, 99, 235, 0.9);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            color: #fff;
             font-weight: 500;
             border-radius: var(--radius-md);
             text-decoration: none;
@@ -336,14 +336,14 @@
         }
 
         .ad-cta__button:hover {
-            background: rgba(217, 119, 6, 0.95);
+            background: rgba(29, 78, 216, 0.95);
         }
 
         .ad-cta__button::before {
             content: '';
             position: absolute;
             inset: -20px -30px;
-            background: radial-gradient(ellipse, rgba(217, 119, 6, 0.2) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(37, 99, 235, 0.25) 0%, transparent 70%);
             filter: blur(25px);
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -378,7 +378,7 @@
         }
 
         .ad-cta__secondary-link:hover {
-            color: var(--accent);
+            color: var(--exploratory-accent);
         }
 
         /* Footer */
@@ -417,13 +417,13 @@
             backface-visibility: hidden;
         }
 
-        .ad-spotlight--orange {
+        .ad-spotlight--primary {
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(217, 119, 6, 0.25) 0%, rgba(217, 119, 6, 0.08) 45%, transparent 70%);
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0.08) 45%, transparent 70%);
             bottom: -120px;
             left: -100px;
-            animation: spotlightFadeIn 2s ease-out 0.3s forwards, spotlightFloatOrange 18s ease-in-out 2.3s infinite;
+            animation: spotlightFadeIn 2s ease-out 0.3s forwards, spotlightFloatPrimary 18s ease-in-out 2.3s infinite;
         }
 
         .ad-spotlight--blue {
@@ -438,7 +438,7 @@
         .ad-spotlight--accent {
             width: 350px;
             height: 350px;
-            background: radial-gradient(circle, rgba(217, 119, 6, 0.12) 0%, rgba(217, 119, 6, 0.03) 50%, transparent 70%);
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.03) 50%, transparent 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -449,7 +449,7 @@
             to { opacity: 1; }
         }
 
-        @keyframes spotlightFloatOrange {
+        @keyframes spotlightFloatPrimary {
             0%, 100% { transform: translate(0, 0) scale(1); }
             25% { transform: translate(30px, -20px) scale(1.05); }
             50% { transform: translate(15px, 15px) scale(0.95); }
@@ -500,7 +500,7 @@
             .ad-spotlight {
                 filter: blur(70px);
             }
-            .ad-spotlight--orange {
+            .ad-spotlight--primary {
                 width: 300px;
                 height: 300px;
                 bottom: -80px;
@@ -539,7 +539,7 @@
 <body>
     <!-- Ambient Effects -->
     <div class="ad-grid" aria-hidden="true"></div>
-    <div class="ad-spotlight ad-spotlight--orange" aria-hidden="true"></div>
+    <div class="ad-spotlight ad-spotlight--primary" aria-hidden="true"></div>
     <div class="ad-spotlight ad-spotlight--blue" aria-hidden="true"></div>
     <div class="ad-spotlight ad-spotlight--accent" aria-hidden="true"></div>
     <div class="ad-vignette" aria-hidden="true"></div>
@@ -574,7 +574,7 @@
                             </a>
                         </div>
                     </div>
-                    <a href="/focus-studio" class="header__link header__link--cta">Get Started</a>
+                    <a href="/book" class="header__link header__link--cta">Book a Call</a>
                 </nav>
             </div>
         </div>

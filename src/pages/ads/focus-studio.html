@@ -464,6 +464,61 @@
             color: #ef4444;
         }
 
+        .fs-form__calendly {
+            margin-top: var(--space-lg);
+            padding: var(--space-lg);
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .fs-form__calendly-text {
+            font-size: var(--text-base);
+            color: var(--text);
+            margin-bottom: var(--space-sm);
+        }
+
+        .fs-form__calendly-cta {
+            display: inline-block;
+            padding: 0.875rem 1.5rem;
+            background: #8B5CF6;
+            color: #fff;
+            font-size: var(--text-base);
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: background var(--duration-fast) ease;
+        }
+
+        .fs-form__calendly-cta:hover {
+            background: #7C3AED;
+        }
+
+        .fs-form__alt {
+            margin-top: var(--space-lg);
+            text-align: center;
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border);
+        }
+
+        .fs-form__alt-text {
+            font-size: var(--text-sm);
+            color: var(--text-subtle);
+            margin-bottom: var(--space-xs);
+        }
+
+        .fs-form__alt-link {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--duration-fast) ease;
+        }
+
+        .fs-form__alt-link:hover {
+            color: #8B5CF6;
+        }
+
         /* Boundary */
         .fs-boundary {
             padding: var(--space-xl, 3rem) 0;
@@ -637,7 +692,7 @@
                             </a>
                         </div>
                     </div>
-                    <a href="#offerings" class="header__link header__link--cta">View Packages</a>
+                    <a href="/book" class="header__link header__link--cta">Book a Call</a>
                 </nav>
             </div>
         </div>
@@ -711,7 +766,7 @@
         <section class="fs-form-section" id="request">
             <div class="container">
                 <h2 class="fs-form-section__title">Let's fix it</h2>
-                <p class="fs-form-section__subtitle">Tell us what's wrong. We'll confirm availability within 1 business day.</p>
+                <p class="fs-form-section__subtitle">Tell us what's wrong, then schedule a quick kickoff call. We'll confirm scope and send payment details after.</p>
 
                 <form class="fs-form" action="https://formspree.io/f/xnjjgoay" method="POST" id="focusStudioForm">
                     <input type="hidden" name="source" value="focus_studio_intake">
@@ -750,9 +805,18 @@
                         <textarea class="fs-form__textarea" id="details" name="details" required placeholder="What's unclear, broken, or outdated on your current site?"></textarea>
                     </div>
 
-                    <button type="submit" class="fs-form__submit" id="submitBtn">Fix My Website →</button>
+                    <button type="submit" class="fs-form__submit" id="submitBtn">Submit & Schedule Kickoff →</button>
                     <div class="fs-form__feedback" id="formFeedback"></div>
+                    <div class="fs-form__calendly" id="calendlyPrompt" style="display: none;">
+                        <p class="fs-form__calendly-text">Now let's find a time to talk.</p>
+                        <a href="https://calendly.com/bertrandbrands/focus-studio-kickoff" class="fs-form__calendly-cta" target="_blank" rel="noopener">Schedule 30-min Kickoff →</a>
+                    </div>
                 </form>
+
+                <div class="fs-form__alt">
+                    <p class="fs-form__alt-text">Already know what you need?</p>
+                    <a href="/book" class="fs-form__alt-link">Skip to scheduling →</a>
+                </div>
             </div>
         </section>
 
@@ -803,8 +867,9 @@
 
                     if (response.ok) {
                         feedback.className = 'fs-form__feedback fs-form__feedback--success';
-                        feedback.textContent = 'Got it. We\'ll be in touch within 1 business day.';
-                        form.reset();
+                        feedback.textContent = 'Got it! Now schedule your kickoff call below.';
+                        form.style.display = 'none';
+                        document.getElementById('calendlyPrompt').style.display = 'block';
 
                         // Send Pushover notification
                         fetch('/api/notify', {

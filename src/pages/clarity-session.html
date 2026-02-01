@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <!-- SEO -->
-    <link rel="canonical" href="https://bertrandbrands.com/brand-clarity-call">
+    <link rel="canonical" href="https://bertrandbrands.com/clarity-session">
     <meta name="theme-color" content="#0a0a0a">
-    <title>Brand Clarity Call — 45 Minutes | Bertrand Brands</title>
-    <meta name="description" content="A 45-minute paid conversation about your brand. What's working, what's not, and what direction might make sense. No deliverables, just clarity.">
+    <title>Clarity Session — 45 Minutes | Bertrand Brands</title>
+    <meta name="description" content="A 45-minute paid conversation about your brand or website. Walk away with clear direction and a short written recap. $125 CAD.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Brand Clarity Call — 45 Minutes | Bertrand Brands">
-    <meta property="og:description" content="A 45-minute paid conversation about your brand. What's working, what's not, and what direction might make sense.">
-    <meta property="og:url" content="https://bertrandbrands.com/brand-clarity-call">
+    <meta property="og:title" content="Clarity Session — 45 Minutes | Bertrand Brands">
+    <meta property="og:description" content="A 45-minute paid conversation about your brand or website. Walk away with clear direction.">
+    <meta property="og:url" content="https://bertrandbrands.com/clarity-session">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
 
@@ -30,23 +30,18 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Brand Clarity Call",
-      "description": "A 45-minute paid conversation about your brand—what's working, what's not, and what direction might make sense. No deliverables, just clarity.",
+      "name": "Clarity Session",
+      "description": "A 45-minute paid conversation about your brand or website—focused direction with a short written recap.",
+      "offers": {
+        "@type": "Offer",
+        "price": "125",
+        "priceCurrency": "CAD"
+      },
       "provider": {
         "@type": "ProfessionalService",
         "name": "Bertrand Brands",
-        "url": "https://bertrandbrands.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Greater Sudbury",
-          "addressRegion": "Ontario",
-          "addressCountry": "CA"
-        }
-      },
-      "areaServed": [
-        { "@type": "Place", "name": "Northern Ontario" },
-        { "@type": "Country", "name": "Canada" }
-      ]
+        "url": "https://bertrandbrands.com"
+      }
     }
     </script>
 
@@ -60,7 +55,6 @@
     <link rel="stylesheet" href="/styles/main.css">
 
     <style>
-        /* Override main.css header to be visible by default on landing pages */
         .header {
             opacity: 1 !important;
             visibility: visible !important;
@@ -73,55 +67,41 @@
             opacity: 1 !important;
         }
 
-        /* Ad Landing Page Styles */
-        .ad-page {
+        .cs-page {
             min-height: 100vh;
             padding-top: 80px;
             position: relative;
             overflow: hidden;
         }
 
-        /* Hero Section — Setup, hands off quickly */
-        .ad-hero {
-            padding: var(--space-3xl, 6rem) 0 var(--space-lg, 4rem);
+        .cs-hero {
+            padding: var(--space-3xl, 6rem) 0 var(--space-lg, 2rem);
             text-align: center;
         }
 
-        /* Sub-brand styling - matches homepage pattern */
-        .exploratory__brand {
+        .cs-hero__brand {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.625rem;
             margin-bottom: var(--space-sm);
-            text-decoration: none;
         }
 
-        .exploratory__mark {
+        .cs-hero__mark {
             width: 32px;
             height: 32px;
-            opacity: 1;
             filter: brightness(0) invert(1);
         }
 
-        .exploratory__name {
+        .cs-hero__name {
             font-family: 'Fraunces', Georgia, serif;
             font-size: 1.5rem;
             font-weight: 300;
             letter-spacing: 0.02em;
-            color: var(--text);
+            color: #2563EB;
         }
 
-        .ad-hero__label {
-            font-size: 0.6875rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-subtle);
-            margin-bottom: var(--space-sm);
-        }
-
-        .ad-hero__title {
+        .cs-hero__title {
             font-family: 'Inter', -apple-system, sans-serif;
             font-size: clamp(2rem, 5vw, 2.75rem);
             font-weight: 300;
@@ -130,7 +110,7 @@
             color: var(--text);
         }
 
-        .ad-hero__subtitle {
+        .cs-hero__subtitle {
             font-size: var(--text-lg);
             color: var(--text-muted);
             max-width: 560px;
@@ -138,17 +118,16 @@
             line-height: 1.5;
         }
 
-        /* Content Sections — Quiet, reduced presence */
-        .ad-section {
+        .cs-section {
             padding: var(--space-xl, 3rem) 0;
         }
 
-        .ad-section--alt {
+        .cs-section--alt {
             background: var(--bg-alt, #0d0d0d);
             position: relative;
         }
 
-        .ad-section--alt::before {
+        .cs-section--alt::before {
             content: '';
             position: absolute;
             top: 0;
@@ -156,23 +135,10 @@
             transform: translateX(-50%);
             width: 280px;
             height: 1px;
-            background: linear-gradient(90deg, transparent 0%, var(--exploratory-accent-muted) 30%, var(--exploratory-accent-muted) 70%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(37, 99, 235, 0.3) 30%, rgba(37, 99, 235, 0.3) 70%, transparent 100%);
         }
 
-        /* About section — Quietest, pre-emphasis silence */
-        .ad-section--quiet {
-            padding: 2rem 0 3rem;
-        }
-
-        .ad-section--quiet::before {
-            display: none;
-        }
-
-        .ad-section--quiet .ad-section__title {
-            font-size: var(--text-lg);
-        }
-
-        .ad-section__title {
+        .cs-section__title {
             font-family: 'Inter', -apple-system, sans-serif;
             font-size: var(--text-xl);
             font-weight: 400;
@@ -181,7 +147,7 @@
             color: var(--text);
         }
 
-        .ad-section__intro {
+        .cs-section__intro {
             font-size: var(--text-sm);
             color: var(--text-muted);
             text-align: center;
@@ -190,8 +156,7 @@
             line-height: 1.7;
         }
 
-        /* For/Not For Lists — Compressed horizontally */
-        .ad-fit {
+        .cs-fit {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: var(--space-md);
@@ -199,14 +164,14 @@
             margin: 0 auto;
         }
 
-        .ad-fit__column {
+        .cs-fit__column {
             background: var(--bg-subtle);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg, 12px);
             padding: var(--space-lg);
         }
 
-        .ad-fit__heading {
+        .cs-fit__heading {
             font-size: var(--text-sm);
             font-weight: 500;
             text-transform: uppercase;
@@ -215,17 +180,17 @@
             color: var(--text-muted);
         }
 
-        .ad-fit__heading--for {
-            color: var(--exploratory-accent);
+        .cs-fit__heading--for {
+            color: #2563EB;
         }
 
-        .ad-fit__list {
+        .cs-fit__list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        .ad-fit__list li {
+        .cs-fit__list li {
             font-size: var(--text-sm);
             color: var(--text-muted);
             line-height: 1.6;
@@ -234,7 +199,7 @@
             position: relative;
         }
 
-        .ad-fit__list li::before {
+        .cs-fit__list li::before {
             content: '';
             position: absolute;
             left: 0;
@@ -245,100 +210,80 @@
             background: var(--text-subtle);
         }
 
-        .ad-fit__column:first-child .ad-fit__list li::before {
-            background: var(--exploratory-accent);
+        .cs-fit__column:first-child .cs-fit__list li::before {
+            background: #2563EB;
         }
 
-        /* What to Expect */
-        .ad-expect {
+        .cs-expect {
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .ad-expect__item {
+        .cs-expect__item {
             display: flex;
             gap: var(--space-md);
             padding: var(--space-md) 0;
             border-bottom: 1px solid var(--border);
         }
 
-        .ad-expect__item:last-child {
+        .cs-expect__item:last-child {
             border-bottom: none;
         }
 
-        .ad-expect__icon {
+        .cs-expect__icon {
             font-size: var(--text-lg);
             min-width: 28px;
             text-align: center;
         }
 
-        .ad-expect__text {
+        .cs-expect__text {
             font-size: var(--text-sm);
             color: var(--text-muted);
             line-height: 1.6;
         }
 
-        .ad-expect__text strong {
+        .cs-expect__text strong {
             color: var(--text);
             font-weight: 500;
         }
 
-        /* About Section — Quietest, pre-emphasis silence */
-        .ad-about {
-            max-width: 480px;
-            margin: 0 auto;
+        .cs-cta {
             text-align: center;
+            padding: var(--space-3xl, 6rem) 0;
         }
 
-        .ad-about__text {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: var(--space-sm);
-        }
-
-        .ad-about__text:last-child {
-            margin-bottom: 0;
-        }
-
-        /* CTA Section — Emphasis Moment */
-        .ad-cta {
-            text-align: center;
-            padding: 8rem 0 6rem;
-        }
-
-        .ad-cta__label {
+        .cs-cta__label {
             font-size: var(--text-sm);
             color: var(--text-muted);
             margin-bottom: var(--space-xs);
         }
 
-        .ad-cta__note {
+        .cs-cta__note {
             font-size: var(--text-sm);
             color: var(--text-subtle);
             margin-bottom: var(--space-md);
         }
 
-        .ad-cta__price {
+        .cs-cta__price {
             font-family: var(--font-display, 'Inter', sans-serif);
             font-size: var(--text-4xl, 2.25rem);
             font-weight: 400;
-            color: var(--exploratory-accent);
+            color: #2563EB;
             margin-bottom: var(--space-md);
         }
 
-        .ad-cta__price span {
+        .cs-cta__price span {
             font-size: var(--text-base);
             font-weight: 400;
             color: var(--text-muted);
         }
 
-        .ad-cta__button {
+        .cs-cta__button {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 1.25rem 2.5rem;
-            background: rgba(37, 99, 235, 0.9);
+            background: #2563EB;
             border: 1px solid rgba(37, 99, 235, 0.3);
             color: #fff;
             font-weight: 500;
@@ -348,11 +293,11 @@
             position: relative;
         }
 
-        .ad-cta__button:hover {
-            background: rgba(29, 78, 216, 0.95);
+        .cs-cta__button:hover {
+            background: #1D4ED8;
         }
 
-        .ad-cta__button::before {
+        .cs-cta__button::before {
             content: '';
             position: absolute;
             inset: -20px -30px;
@@ -363,62 +308,58 @@
             z-index: -1;
         }
 
-        .ad-cta__button:hover::before {
+        .cs-cta__button:hover::before {
             opacity: 1;
         }
 
-        /* Secondary CTA — Diminished, spatial separation only */
-        .ad-cta__secondary {
-            margin-top: 4rem;
+        .cs-cta__secondary {
+            margin-top: var(--space-xl);
             max-width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .ad-cta__secondary-text {
+        .cs-cta__secondary-text {
             font-size: var(--text-sm);
             color: var(--text-subtle);
             margin-bottom: var(--space-xs);
         }
 
-        .ad-cta__secondary-link {
+        .cs-cta__secondary-link {
             font-size: var(--text-xs);
             color: var(--text-muted);
             text-decoration: none;
             transition: color var(--duration-fast) ease;
         }
 
-        .ad-cta__secondary-link:hover {
-            color: var(--exploratory-accent);
+        .cs-cta__secondary-link:hover {
+            color: #2563EB;
         }
 
-        /* Footer — Resolution, quiet exit */
-        .ad-footer {
+        .cs-footer {
             border-top: 1px solid var(--border);
-            padding: 4rem 1.5rem var(--space-xl, 3rem);
+            padding: var(--space-xl, 3rem) 1.5rem;
             text-align: center;
         }
 
-        .ad-footer__text {
+        .cs-footer__text {
             font-size: var(--text-sm);
             color: var(--text-subtle);
-            opacity: 0.8;
             margin-bottom: 0.5rem;
         }
 
-        .ad-footer__phone {
+        .cs-footer__phone {
             font-size: var(--text-xs);
             color: var(--text-subtle);
-            opacity: 0.8;
         }
 
-        .ad-footer__phone a {
+        .cs-footer__phone a {
             color: inherit;
             text-decoration: none;
         }
 
-        /* Ambient Spotlights — higher contrast to avoid banding */
-        .ad-spotlight {
+        /* Spotlights */
+        .cs-spotlight {
             position: fixed;
             border-radius: 50%;
             pointer-events: none;
@@ -427,7 +368,7 @@
             will-change: transform, opacity;
         }
 
-        .ad-spotlight--primary {
+        .cs-spotlight--primary {
             width: 600px;
             height: 600px;
             background: radial-gradient(circle at center,
@@ -436,37 +377,36 @@
                 transparent 70%);
             bottom: -150px;
             left: -150px;
-            animation: spotlightFadeIn 2s ease-out 0.3s forwards, spotlightFloat 20s ease-in-out 2.3s infinite;
+            animation: csFadeIn 2s ease-out 0.3s forwards, csFloat 20s ease-in-out 2.3s infinite;
         }
 
-        .ad-spotlight--blue {
+        .cs-spotlight--cyan {
             width: 500px;
             height: 500px;
             background: radial-gradient(circle at center,
-                rgba(37, 99, 235, 0.12) 0%,
-                rgba(37, 99, 235, 0.05) 40%,
+                rgba(6, 182, 212, 0.1) 0%,
+                rgba(6, 182, 212, 0.04) 40%,
                 transparent 75%);
             top: -100px;
             right: -150px;
-            animation: spotlightFadeIn 2s ease-out 0.6s forwards, spotlightFloatAlt 24s ease-in-out 2.6s infinite;
+            animation: csFadeIn 2s ease-out 0.6s forwards, csFloatAlt 24s ease-in-out 2.6s infinite;
         }
 
-        @keyframes spotlightFadeIn {
+        @keyframes csFadeIn {
             to { opacity: 1; }
         }
 
-        @keyframes spotlightFloat {
+        @keyframes csFloat {
             0%, 100% { transform: translate(0, 0); }
             50% { transform: translate(30px, -20px); }
         }
 
-        @keyframes spotlightFloatAlt {
+        @keyframes csFloatAlt {
             0%, 100% { transform: translate(0, 0); }
             50% { transform: translate(-25px, 20px); }
         }
 
-        /* Edge vignette — solid stops to avoid banding */
-        .ad-vignette {
+        .cs-vignette {
             position: fixed;
             inset: 0;
             pointer-events: none;
@@ -474,47 +414,23 @@
             box-shadow: inset 0 0 150px 50px rgba(0, 0, 0, 0.5);
         }
 
-        /* Subtle grid overlay */
-        .ad-grid {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-            animation: gridFadeIn 3s ease-out 0.5s forwards;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
-            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
-        }
-
-        @keyframes gridFadeIn {
-            to { opacity: 1; }
-        }
-
         @media (max-width: 768px) {
-            .ad-spotlight--primary {
+            .cs-spotlight--primary {
                 width: 400px;
                 height: 400px;
                 bottom: -100px;
                 left: -100px;
             }
-            .ad-spotlight--blue {
+            .cs-spotlight--cyan {
                 width: 350px;
                 height: 350px;
                 top: -80px;
                 right: -100px;
             }
-            .ad-grid {
-                background-size: 40px 40px;
-            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .ad-spotlight,
-            .ad-grid {
+            .cs-spotlight {
                 animation: none;
                 opacity: 1;
             }
@@ -523,10 +439,9 @@
 </head>
 <body>
     <!-- Ambient Effects -->
-    <div class="ad-spotlight ad-spotlight--primary" aria-hidden="true"></div>
-    <div class="ad-spotlight ad-spotlight--blue" aria-hidden="true"></div>
-    <div class="ad-vignette" aria-hidden="true"></div>
-    <div class="ad-grid" aria-hidden="true"></div>
+    <div class="cs-spotlight cs-spotlight--primary" aria-hidden="true"></div>
+    <div class="cs-spotlight cs-spotlight--cyan" aria-hidden="true"></div>
+    <div class="cs-vignette" aria-hidden="true"></div>
 
     <!-- Header -->
     <header class="header">
@@ -552,7 +467,7 @@
                                 <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
                                 <span class="header__dropdown-label">Core Services</span>
                             </a>
-                            <a href="/brand-clarity-call" class="header__dropdown-item header__dropdown-item--blue">
+                            <a href="/exploratory" class="header__dropdown-item header__dropdown-item--blue">
                                 <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
                                 <span class="header__dropdown-label">B Exploratory</span>
                             </a>
@@ -564,42 +479,42 @@
         </div>
     </header>
 
-    <main class="ad-page">
-        <!-- 1. Hero Section -->
-        <section class="ad-hero">
+    <main class="cs-page">
+        <!-- Hero -->
+        <section class="cs-hero">
             <div class="container">
-                <div class="exploratory__brand">
-                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="exploratory__mark">
-                    <span class="exploratory__name">Exploratory Sessions</span>
+                <div class="cs-hero__brand">
+                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="cs-hero__mark">
+                    <span class="cs-hero__name">Exploratory</span>
                 </div>
-                <h1 class="ad-hero__title">Brand Clarity Call</h1>
-                <p class="ad-hero__subtitle">
-                    A 45-minute paid conversation about your brand—what's working, what's not, and what direction might make sense. No deliverables, no obligations. Just clarity.
+                <h1 class="cs-hero__title">Clarity Session</h1>
+                <p class="cs-hero__subtitle">
+                    A 45-minute paid conversation about your brand or website. Walk away with clear direction and a short written recap.
                 </p>
             </div>
         </section>
 
-        <!-- 2. Who This Is For / Not For -->
-        <section class="ad-section ad-section--alt">
+        <!-- Who This Is For -->
+        <section class="cs-section cs-section--alt">
             <div class="container">
-                <h2 class="ad-section__title">Is this call for you?</h2>
+                <h2 class="cs-section__title">Is this right for you?</h2>
 
-                <div class="ad-fit">
-                    <div class="ad-fit__column">
-                        <p class="ad-fit__heading ad-fit__heading--for">This is for you if</p>
-                        <ul class="ad-fit__list">
-                            <li>You're unsure what your brand needs right now</li>
-                            <li>You want to talk through options before committing</li>
-                            <li>You have questions about positioning, messaging, or visual direction</li>
-                            <li>You want an outside perspective, not a sales pitch</li>
+                <div class="cs-fit">
+                    <div class="cs-fit__column">
+                        <p class="cs-fit__heading cs-fit__heading--for">This is for you if</p>
+                        <ul class="cs-fit__list">
+                            <li>You have specific questions about brand or website direction</li>
+                            <li>You want to talk through options before making a decision</li>
+                            <li>You value outside perspective and honest feedback</li>
+                            <li>You want something written to reference later</li>
                         </ul>
                     </div>
-                    <div class="ad-fit__column">
-                        <p class="ad-fit__heading">This is not for you if</p>
-                        <ul class="ad-fit__list">
+                    <div class="cs-fit__column">
+                        <p class="cs-fit__heading">This is not for you if</p>
+                        <ul class="cs-fit__list">
                             <li>You're looking for free advice</li>
+                            <li>You want a full audit or deliverable</li>
                             <li>You already know exactly what you need</li>
-                            <li>You want deliverables or design work</li>
                             <li>You're not ready to have a focused conversation</li>
                         </ul>
                     </div>
@@ -607,80 +522,61 @@
             </div>
         </section>
 
-        <!-- 3. What to Expect -->
-        <section class="ad-section">
+        <!-- What to Expect -->
+        <section class="cs-section">
             <div class="container">
-                <h2 class="ad-section__title">What to expect</h2>
-                <p class="ad-section__intro">
-                    This is a conversation, not a consultation. You'll leave with clarity—not a proposal.
+                <h2 class="cs-section__title">What to expect</h2>
+                <p class="cs-section__intro">
+                    This is a conversation with direction. You'll leave knowing what to do next.
                 </p>
 
-                <div class="ad-expect">
-                    <div class="ad-expect__item">
-                        <span class="ad-expect__icon">💬</span>
-                        <p class="ad-expect__text"><strong>45 minutes of focused discussion.</strong> We'll talk through where your brand is, what's unclear, and what directions might make sense.</p>
+                <div class="cs-expect">
+                    <div class="cs-expect__item">
+                        <span class="cs-expect__icon">💬</span>
+                        <p class="cs-expect__text"><strong>45 minutes of focused discussion.</strong> We'll talk through what's stuck, what's unclear, and what might make sense.</p>
                     </div>
-                    <div class="ad-expect__item">
-                        <span class="ad-expect__icon">🚫</span>
-                        <p class="ad-expect__text"><strong>No written deliverables.</strong> This is verbal guidance only. If you want documentation, consider our Focus Studio or Core Services.</p>
+                    <div class="cs-expect__item">
+                        <span class="cs-expect__icon">📝</span>
+                        <p class="cs-expect__text"><strong>Written recap included.</strong> After the call, you'll receive a short summary of key decisions and next steps.</p>
                     </div>
-                    <div class="ad-expect__item">
-                        <span class="ad-expect__icon">🤝</span>
-                        <p class="ad-expect__text"><strong>No sales pressure.</strong> You'll get honest direction—whether that means working with us, doing it yourself, or doing nothing at all.</p>
+                    <div class="cs-expect__item">
+                        <span class="cs-expect__icon">🎯</span>
+                        <p class="cs-expect__text"><strong>Brand, website, or both.</strong> We'll cover whatever's most pressing—positioning, messaging, site structure, visual direction.</p>
                     </div>
-                    <div class="ad-expect__item">
-                        <span class="ad-expect__icon">💳</span>
-                        <p class="ad-expect__text"><strong>Paid upfront.</strong> This ensures we both show up ready to have a productive conversation.</p>
+                    <div class="cs-expect__item">
+                        <span class="cs-expect__icon">💳</span>
+                        <p class="cs-expect__text"><strong>Paid upfront.</strong> Payment ensures we both show up ready for a productive conversation.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. About Bertrand Brands — Quietest section, pre-emphasis silence -->
-        <section class="ad-section ad-section--alt ad-section--quiet">
+        <!-- CTA -->
+        <section class="cs-cta">
             <div class="container">
-                <h2 class="ad-section__title">About Bertrand Brands</h2>
+                <p class="cs-cta__label">45 minutes · Video call · Written recap</p>
+                <p class="cs-cta__note">Paid upfront · Brand, website, or both</p>
+                <p class="cs-cta__price">$125 <span>CAD</span></p>
+                <!-- TODO: Replace with actual Stripe Payment Link -->
+                <a href="/intake/clarity-session" class="cs-cta__button">Book a Clarity Session</a>
 
-                <div class="ad-about">
-                    <p class="ad-about__text">
-                        We help business owners get clarity on their brand and web presence. Based in Sudbury, Ontario, working with clients across Northern Ontario and Canada.
-                    </p>
-                    <p class="ad-about__text">
-                        Exploratory Sessions exist because most businesses don't need a full project—they need direction first. This is the side door.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. Final CTA -->
-        <section class="ad-cta">
-            <div class="container">
-                <p class="ad-cta__label">45 minutes · Live video · Conversation only</p>
-                <p class="ad-cta__note">Paid upfront · No deliverables · No obligations</p>
-                <p class="ad-cta__price">$145 <span>CAD</span></p>
-                <a href="/intake/brand-clarity-call" class="ad-cta__button">Book a Brand Clarity Call</a>
-
-                <div class="ad-cta__secondary">
-                    <p class="ad-cta__secondary-text">Looking for website clarity instead?</p>
-                    <a href="/website-clarity-call" class="ad-cta__secondary-link">Book a Website Clarity Call</a>
+                <div class="cs-cta__secondary">
+                    <p class="cs-cta__secondary-text">Not sure yet? Start with the free Guided Intake.</p>
+                    <a href="/intake/exploratory" class="cs-cta__secondary-link">Start Guided Intake →</a>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="ad-footer">
-        <p class="ad-footer__text">&copy; <span class="js-year"></span> Bertrand Brands</p>
-        <p class="ad-footer__phone"><a href="tel:+17054133705">705-413-3705</a></p>
+    <footer class="cs-footer">
+        <p class="cs-footer__text">&copy; <span class="js-year"></span> Bertrand Brands</p>
+        <p class="cs-footer__phone"><a href="tel:+17054133705">705-413-3705</a></p>
     </footer>
-    <script>document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());</script>
+
     <script>
-        // Prevent iOS triple-tap and gesture zoom
-        document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
-        document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
-        document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
-    </script>
-    <script>
+        document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
+
         // Mobile menu toggle
         (function() {
             const toggle = document.querySelector('.header__toggle');
@@ -695,7 +591,6 @@
                 if (header) header.classList.toggle('nav-open', isOpen);
             });
 
-            // Close menu when clicking a link
             nav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     nav.classList.remove('is-open');
@@ -705,9 +600,8 @@
                 });
             });
         })();
-    </script>
-    <script>
-        // Ambient header lighting animation
+
+        // Ambient header lighting
         (function() {
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -715,15 +609,11 @@
             const headerGlass = document.querySelector('.header__glass');
             if (!header || !headerGlass) return;
 
-            // Immediately enable lights (no intro animation on landing pages)
             header.classList.add('lights-on');
 
-            let orangePos1 = 15;
-            let orangePos2 = 85;
-            let direction1 = 1;
-            let direction2 = -1;
+            let pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
             let lastFrame = 0;
-            const FRAME_INTERVAL = 1000 / 30; // 30fps
+            const FRAME_INTERVAL = 1000 / 30;
 
             function animateLights(timestamp) {
                 if (timestamp - lastFrame < FRAME_INTERVAL) {
@@ -732,14 +622,14 @@
                 }
                 lastFrame = timestamp;
 
-                orangePos1 += direction1 * 0.06;
-                orangePos2 += direction2 * 0.05;
+                pos1 += dir1 * 0.06;
+                pos2 += dir2 * 0.05;
 
-                if (orangePos1 > 35 || orangePos1 < 10) direction1 *= -1;
-                if (orangePos2 > 90 || orangePos2 < 60) direction2 *= -1;
+                if (pos1 > 35 || pos1 < 10) dir1 *= -1;
+                if (pos2 > 90 || pos2 < 60) dir2 *= -1;
 
-                headerGlass.style.setProperty('--orange-pos-1', orangePos1 + '%');
-                headerGlass.style.setProperty('--orange-pos-2', orangePos2 + '%');
+                headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
+                headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
                 requestAnimationFrame(animateLights);
             }
             requestAnimationFrame(animateLights);
