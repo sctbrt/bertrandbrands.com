@@ -26,9 +26,7 @@ Claude does not make product, pricing, or strategic decisions independently.
 
 ---
 
-### 1.2 Core Operating Philosophy
-
-**Structure reduces anxiety.**
+### 1.2 Operating Principles
 
 All systems must prioritize:
 - Clarity
@@ -36,7 +34,7 @@ All systems must prioritize:
 - Low cognitive overhead
 - Durability over cleverness
 
-If a technical or UX decision introduces confusion, pressure, ambiguity, or unnecessary complexity, it is incorrect and must be redesigned.
+If a technical or UX decision introduces confusion, pressure, ambiguity, or unnecessary complexity, it must be redesigned.
 
 ---
 
@@ -163,23 +161,20 @@ When unsure, choose the option that is:
 
 If something:
 - Increases cognitive load
-- Creates edge-case anxiety
+- Creates edge-case uncertainty
 - Requires repeated clarification
 
-→ It should be redesigned.
+→ Redesign it.
 
 ---
 
 ### 1.7 Success Criteria
 
 A successful implementation:
-- Feels calm
 - Requires minimal explanation
 - Is easy to maintain
 - Can be reused across brands
 - Supports future delegation
-
-Bertrand Brands scales clarity, not chaos.
 
 ---
 ---
@@ -190,10 +185,10 @@ Bertrand Brands scales clarity, not chaos.
 
 ## 2. Project Overview
 
-**Bertrand Brands** — Premium brand and web systems design studio website. A sophisticated single-page marketing site with serverless backend functionality hosted on Vercel.
+**Bertrand Brands** — Brand and web systems studio. Single-page marketing site with serverless backend on Vercel.
 
 **Domain**: bertrandbrands.com
-**Purpose**: Professional services showcase, lead generation, brand expression
+**Purpose**: Services showcase, lead generation
 
 ---
 
@@ -324,23 +319,21 @@ Permitted:
 --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
 --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-/* Bertrand Brands: Expressive but purposeful */
 ```
 
 ---
 
 ## 7. Key Features
 
-### 7.1 Cinematic Intro Animation
+### 7.1 Intro Animation
 
-- Full-screen animated intro with logo, gradient glows, grid
-- 4-second sequence with scroll-lock during animation
+- Full-screen intro with logo, gradient glows, grid
+- 4-second sequence with scroll-lock
 - Respects `prefers-reduced-motion`
 
 ### 7.2 Fullpage Scroll System
 
-- Smart section snapping with overflow handling
+- Section snapping with overflow handling
 - URL params: `?scroll=fullpage` (default), `?scroll=snap`, `?scroll=free`
 - Keyboard: Arrow keys, Page Up/Down, Space
 
@@ -615,7 +608,7 @@ For Sudbury-first campaigns, local incentives may be offered via:
 
 ## 19. V5.0.0 Performance Optimizations
 
-V5.0.0 is a polish pass focused on eliminating janky animations and improving mobile performance.
+Animation and mobile performance improvements.
 
 ### 19.1 Animation Performance
 
