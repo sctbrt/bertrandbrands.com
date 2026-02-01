@@ -10,148 +10,165 @@ This document is the **Bertrand Brands-specific** guide. For full ecosystem cont
 
 ### 1.1 Role & Boundaries
 
-**Bertrand Brands** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand.
+**Bertrand Brands** is a Sudbury-based brand and web systems studio led by Scott Bertrand.
 
-**Scott handles:**
-- Brand strategy & judgment
-- Design direction & taste
-- Client communication
+**Scott is responsible for:**
+- Strategic judgment and direction
+- Brand taste, design decisions, and final approval
+- Client communication and boundary-setting
 
-**Claude handles:**
-- Coding, refactors, audits
+**Claude is responsible for:**
+- Implementation (code, refactors, audits)
 - Structured documentation
-- System integrity and consistency
+- Maintaining system integrity and internal consistency
+
+Claude does not make product, pricing, or strategic decisions independently.
+
+---
 
 ### 1.2 Core Operating Philosophy
 
-**Structure Reduces Anxiety**
+**Structure reduces anxiety.**
 
 All systems must prioritize:
 - Clarity
 - Predictability
 - Low cognitive overhead
+- Durability over cleverness
 
-Avoid cleverness. Favor legibility and durability.
+If a technical or UX decision introduces confusion, pressure, ambiguity, or unnecessary complexity, it is incorrect and must be redesigned.
 
-**BRIGHTS Values Are Non-Negotiable**
-
-All decisions must align with BRIGHTS:
-- **B**elonging
-- **R**espect
-- **I**ntegrity
-- **G**rowth
-- **H**ealth (mental + physical safety)
-- **T**rust (care, reliability)
-- **S**afety
-
-If a technical or UX decision introduces confusion, pressure, or ambiguity, it violates BRIGHTS.
+---
 
 ### 1.3 Service Architecture (LOCKED — Feb 2026)
 
-Bertrand Brands operates under **THREE strictly hierarchical service tiers**:
+Bertrand Brands operates under **three strictly hierarchical service tiers**.
 
-**Mental Model:** Conversation → Execution → Transformation
-
----
-
-**Tier 1 — B Exploratory Sessions** (Entry/Qualification)
-- Paid clarity conversations
-- Trust-building and qualification
-- 45 minutes, paid upfront
-- NO deliverables (conversation only)
-- Subtle visual placement (not dominant)
-
-| Offering | Duration | Notes |
-|----------|----------|-------|
-| Brand Clarity Call | 45 min | Conversation-only brand clarity |
-| Website Clarity Call | 45 min | Conversation-only website clarity |
+**System Flow:** Qualification → Execution → Transformation
 
 ---
 
-**Tier 2 — B Focus Studio** (Primary Revenue Engine)
-- Fixed-scope execution
-- Fixed price, clear timelines
-- Paid before deliverable handoff
+#### Tier 1 — B Exploratory (Entry / Qualification)
+
+Purpose:
+- Reduce friction
+- Establish direction
+- Qualify fit before execution
+
+Characteristics:
+- Directional, not production-focused
+- No deliverables beyond clarity
+- Subtle visual placement
+
+| Offering | Price | Duration | Notes |
+|--------|-------|----------|------|
+| Guided Intake | Free | Async | For clients unsure where to start |
+| Discovery Call | Free | 15 min | Qualification and fit check |
+| Clarity Call (Brand or Website) | $145 CAD | 45 min | Paid directional session |
+
+---
+
+#### Tier 2 — B Focus Studio (Primary Revenue Engine)
+
+Purpose:
+- Fast, fixed-scope systems work
+- Clear outcomes with minimal back-and-forth
+
+Characteristics:
+- Flat pricing
+- Defined scope
+- Paid before delivery
 
 | Offering | Price | Timeline |
-|----------|-------|----------|
+|--------|-------|----------|
 | Quick Website Refresh | $750 CAD | 1 business day |
 | One-Page Redesign | $1,250 CAD | 2–3 business days |
 | Brandmarking Package | $950 CAD | 5–7 business days |
 
 ---
 
-**Tier 3 — B Core Services** (Transformational)
-- Multi-week, relationship-based work
+#### Tier 3 — B Core Services (Transformational)
+
+Purpose:
+- Deep, relationship-based systems work
+
+Characteristics:
+- Custom scope
+- Multi-week engagements
 - 50% deposit to begin, 50% on delivery
-- Includes ALL of the following (exactly 5):
 
 | Offering | Starting Price |
-|----------|----------------|
-| Comprehensive Website Audit | Private |
-| Strategic Brand Audit | Private |
+|--------|----------------|
 | Brand Reset | $3,000+ CAD |
 | Website Foundation | $3,500+ CAD |
 | Full Brand + Website Reset | $6,500+ CAD |
 
 ---
 
-**Key Principles:**
+**Key Principles (Non-Negotiable):**
 - No open-ended scope
 - No vague deliverables
 - No ad-hoc calls outside defined services
-- No hourly/time-based pricing language
-- AI efficiency increases margin, not discount justification
-- Prices ≤$1,500 are shown publicly; prices ≥$3,000 use private/starting pricing
+- No hourly or time-based pricing language
+- Prices ≤ $1,500 shown publicly
+- Prices ≥ $3,000 positioned as starting / private pricing
+- If a request does not clearly map to a Tier, it must be declined or redirected
+- Never invent new services, scopes, or pricing
 
-**Never invent new services, pricing, or scopes.**
+---
 
 ### 1.4 Visual Hierarchy (LOCKED)
 
-**Homepage Section Order (Top to Bottom):**
-1. **B Focus Studio** — Primary, largest, most prominent
-2. **B Core Services** — Includes both Audits & Reviews and Builds & Resets
-3. **B Exploratory Sessions** — Subtle, contextual ("Not sure where to start?")
+**Homepage Section Order (Top → Bottom):**
+1. **B Focus Studio** — most prominent
+2. **B Core Services**
+3. **B Exploratory Sessions** — subtle, contextual
 
-**Key Visual Rules:**
-- Focus Studio appears FIRST (commercial priority, not tier priority)
-- Exploratory Sessions is Tier 1 conceptually but visually subtle (side door, not front door)
-- Focus Studio uses solid borders; Exploratory uses dashed borders
-- Both sub-brands use shared B logomark with differentiated wordmarks
+Rules:
+- Focus Studio appears first for commercial clarity
+- Exploratory is conceptually Tier 1 but visually secondary
+- Focus Studio cards use solid borders
+- Exploratory cards use dashed borders
+- Shared B logomark with differentiated wordmarks
 
 **Navigation Order:**
-1. Focus Studio (first in dropdown)
-2. Core Services (second in dropdown)
+1. Focus Studio
+2. Core Services
 
-### 1.5 AI Positioning (Critical)
+---
 
-**AI is never positioned as the product.**
+### 1.5 Tooling Visibility Rules (Critical)
+
+Execution methods must remain invisible to clients.
 
 Externally:
-- Language centers on systems, clarity, structure
-- AI is implied, not advertised
+- Language centers on systems, clarity, structure, and outcomes
+- Tooling is never marketed as value
 
 Internally:
-- Claude handles execution
-- ChatGPT assists with strategy, synthesis, and language
-- Human judgment remains the authority
+- Claude executes and maintains systems
+- Human judgment remains authoritative
 
-If a solution makes AI visible to clients, flag it as a risk.
+If a solution makes tooling visible or requires explanation to justify speed or efficiency, flag it as a risk.
+
+---
 
 ### 1.6 Decision Rules
 
-When unsure, default to:
-1. Simpler
-2. Clearer
-3. More documented
-4. Less emotionally demanding for the user
+When unsure, choose the option that is:
+- Simpler
+- Clearer
+- Requires less explanation
+- Easier to maintain
 
 If something:
 - Increases cognitive load
 - Creates edge-case anxiety
-- Requires constant explanation
+- Requires repeated clarification
 
 → It should be redesigned.
+
+---
 
 ### 1.7 Success Criteria
 
@@ -162,7 +179,7 @@ A successful implementation:
 - Can be reused across brands
 - Supports future delegation
 
-**Bertrand Brands is not scaling chaos—it is scaling clarity.**
+Bertrand Brands scales clarity, not chaos.
 
 ---
 
