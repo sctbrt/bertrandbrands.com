@@ -1,4 +1,4 @@
-# INTERNAL_VALUES.md — Bertrand Brands
+# Internal Values — Bertrand Brands
 
 ## Purpose
 
@@ -27,7 +27,7 @@ No unnecessary meetings. No performative work.
 ### Integrity
 Do what was promised.
 Say no when scope is unclear.
-No hidden tradeoffs.
+No hidden trade-offs.
 
 ### Growth
 Improve systems deliberately.
