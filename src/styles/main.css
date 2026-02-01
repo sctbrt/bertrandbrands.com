@@ -1348,13 +1348,18 @@
         }
 
         /* Core Services item - amber (#D97706) accent on hover */
-        .header__dropdown-item:not(.header__dropdown-item--violet):hover .header__dropdown-mark {
+        .header__dropdown-item:not(.header__dropdown-item--violet):not(.header__dropdown-item--blue):hover .header__dropdown-mark {
             filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(18deg) brightness(95%) contrast(95%);
         }
 
         /* Focus Studio item - violet (#8B5CF6) accent on hover */
         .header__dropdown-item--violet:hover .header__dropdown-mark {
             filter: invert(42%) sepia(67%) saturate(4356%) hue-rotate(243deg) brightness(100%) contrast(94%);
+        }
+
+        /* Exploratory item - blue (#3B82F6) accent on hover */
+        .header__dropdown-item--blue:hover .header__dropdown-mark {
+            filter: invert(45%) sepia(98%) saturate(1500%) hue-rotate(200deg) brightness(100%) contrast(96%);
         }
 
         .header__dropdown-label {
