@@ -113,8 +113,8 @@
     <script>
         (function() {
             var params = new URLSearchParams(window.location.search);
-            // Launch ends at midnight Eastern, Feb 1, 2026
-            var launchEndDate = new Date('2026-02-01T00:00:00-05:00');
+            // Launch ends at midnight Eastern, Feb 4, 2026
+            var launchEndDate = new Date('2026-02-04T00:00:00-05:00');
             var isPastLaunch = new Date() >= launchEndDate;
             // Bypass launch gate for: past launch date, preview mode, or internal navigation (skip)
             if (isPastLaunch || params.get('preview') === 'true' || params.has('skip')) {
