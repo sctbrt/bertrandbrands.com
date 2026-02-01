@@ -91,14 +91,32 @@
             </div>
             <h1 class="launch-gate__title">Brand & Web Systems Studio</h1>
             <p class="launch-gate__text">Launching Soon</p>
+            <div class="launch-gate__countdown" id="launchCountdown">
+                <div class="launch-gate__countdown-unit">
+                    <span class="launch-gate__countdown-value" id="countdownDays">00</span>
+                    <span class="launch-gate__countdown-label">Days</span>
+                </div>
+                <div class="launch-gate__countdown-unit">
+                    <span class="launch-gate__countdown-value" id="countdownHours">00</span>
+                    <span class="launch-gate__countdown-label">Hours</span>
+                </div>
+                <div class="launch-gate__countdown-unit">
+                    <span class="launch-gate__countdown-value" id="countdownMinutes">00</span>
+                    <span class="launch-gate__countdown-label">Minutes</span>
+                </div>
+                <div class="launch-gate__countdown-unit">
+                    <span class="launch-gate__countdown-value" id="countdownSeconds">00</span>
+                    <span class="launch-gate__countdown-label">Seconds</span>
+                </div>
+            </div>
             <p class="launch-gate__location">Sudbury, Ontario</p>
         </div>
     </div>
     <script>
         (function() {
             var params = new URLSearchParams(window.location.search);
-            // Launch ends at midnight Eastern, Feb 1, 2026
-            var launchEndDate = new Date('2026-02-01T00:00:00-05:00');
+            // Launch ends at midnight Eastern, Feb 4, 2026
+            var launchEndDate = new Date('2026-02-04T00:00:00-05:00');
             var isPastLaunch = new Date() >= launchEndDate;
             // Bypass launch gate for: past launch date, preview mode, or internal navigation (skip)
             if (isPastLaunch || params.get('preview') === 'true' || params.has('skip')) {
@@ -107,6 +125,35 @@
                 document.body.classList.add('preview-mode');
             } else {
                 document.body.classList.add('launch-mode');
+                // Countdown timer
+                var daysEl = document.getElementById('countdownDays');
+                var hoursEl = document.getElementById('countdownHours');
+                var minutesEl = document.getElementById('countdownMinutes');
+                var secondsEl = document.getElementById('countdownSeconds');
+
+                function updateCountdown() {
+                    var now = new Date();
+                    var diff = launchEndDate - now;
+
+                    if (diff <= 0) {
+                        // Launch time reached - reload to show site
+                        window.location.reload();
+                        return;
+                    }
+
+                    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    daysEl.textContent = days.toString().padStart(2, '0');
+                    hoursEl.textContent = hours.toString().padStart(2, '0');
+                    minutesEl.textContent = minutes.toString().padStart(2, '0');
+                    secondsEl.textContent = seconds.toString().padStart(2, '0');
+                }
+
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
             }
         })();
     </script>
