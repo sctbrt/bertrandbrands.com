@@ -182,6 +182,11 @@ A successful implementation:
 Bertrand Brands scales clarity, not chaos.
 
 ---
+---
+
+## TECHNICAL REFERENCE (Claude execution only)
+
+---
 
 ## 2. Project Overview
 
@@ -231,26 +236,23 @@ Bertrand Brands scales clarity, not chaos.
 
 ---
 
-## 5. V5.0 Design Philosophy
+## 5. Design Rules
 
-### 5.1 Core Aesthetic Principles
+### 5.1 Core Principles
 
-V5.0.0 builds on the refined, minimal, architectural approach with **performance-first optimizations**:
+- Effects should be barely perceptible
+- Design serves content
+- Glass and lighting should reference physical materials
+- Time-aware theming (Canada/Eastern timezone)
 
-- **Restraint over spectacle** — Effects should be barely perceptible
-- **Content-first** — Design serves content, never competes with it
-- **Material realism** — Glass and lighting should feel physical, not digital
-- **Time-aware theming** — Sites respond to time of day (Canada/Eastern)
+### 5.2 Bertrand Brands Expression (vs. scottbertrand.com)
 
-### 5.2 Bertrand Brands Expression
-
-Bertrand Brands is **more expressive** than scottbertrand.com:
-
-- RGB ethereal effects permitted (subtly)
+Permitted:
+- RGB ethereal effects (subtle)
 - Animated gradients on key CTAs
 - Mobile hamburger menu with transitions
 - RGB border animations on secondary CTAs
-- Ethereal text glow on hover states
+- Hover glow on text
 - Three RGB spotlights (mobile hero only)
 
 ---
@@ -411,33 +413,31 @@ PUSHOVER_API_TOKEN    # Push notifications
 
 ---
 
-## 12. Absolute Constraints
+## 12. Constraints
 
 ### Design
 
-- If an effect is noticeable, it is wrong
-- Glass is architectural, not decorative
-- Zero gimmicks, zero spectacle
-- Content always takes priority over chrome
+- Effects must be barely perceptible
+- Glass elements are structural, not decorative
+- Content takes priority over visual chrome
 
 ### Code
 
-- Do NOT add dependencies or frameworks
-- Do NOT restructure existing layouts
-- Keep diffs minimal
+- No new dependencies or frameworks
+- No restructuring existing layouts
+- Minimal diffs
 - Preserve existing formatting
-- No build step required (vanilla HTML/CSS/JS)
+- No build step (vanilla HTML/CSS/JS)
 
 ### Motion
 
-- Restrained but expressive (more than scottbertrand.com)
 - Respect `prefers-reduced-motion`
 
 ### Accessibility
 
-- Maintain WCAG contrast ratios
-- Provide fallbacks for `backdrop-filter`
-- Do not break keyboard navigation
+- WCAG contrast ratios required
+- Provide `backdrop-filter` fallbacks
+- Preserve keyboard navigation
 
 ---
 
@@ -580,10 +580,10 @@ Both sub-brands use identical logomark + wordmark styling for consistency.
 
 ### 18.1 Pricing Philosophy
 
-- Pricing is **outcome- and deliverable-based**, never time-based
-- AI efficiency increases margin and focus, not justification to discount
-- Prices are upper-mid for Sudbury market, acceptable with clear scope and confident presentation
-- **Do not discount publicly**
+- Outcome- and deliverable-based pricing only (no time-based)
+- Efficiency gains increase margin, not justification to discount
+- Upper-mid market pricing for Sudbury; requires clear scope
+- No public discounts
 
 ### 18.2 Local Incentive Strategy (Approved)
 
