@@ -2827,6 +2827,52 @@
             color: var(--text);
         }
 
+        /* Single card layout for Strategic Clarity Session */
+        .exploratory-sessions__single {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .exploratory-sessions__card--single {
+            padding: var(--space-lg);
+            text-align: center;
+        }
+
+        .exploratory-sessions__card--single .exploratory-sessions__card-header {
+            margin-bottom: var(--space-sm);
+        }
+
+        .exploratory-sessions__card--single .exploratory-sessions__card-title {
+            font-size: 1.125rem;
+        }
+
+        .exploratory-sessions__card--single .exploratory-sessions__card-meta {
+            font-size: 0.75rem;
+        }
+
+        .exploratory-sessions__card--single .exploratory-sessions__card-description {
+            font-size: 0.875rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .exploratory-sessions__card--single .exploratory-sessions__card-footer {
+            justify-content: center;
+        }
+
+        .exploratory-sessions__card--single .exploratory-sessions__card-cta {
+            font-size: 0.8125rem;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--text-subtle);
+            border-radius: var(--radius-sm);
+            transition: all var(--duration-fast) ease;
+        }
+
+        .exploratory-sessions__card--single .exploratory-sessions__card-cta:hover {
+            background: var(--bg-subtle);
+            border-color: var(--text);
+        }
+
         @media (max-width: 600px) {
             .exploratory-sessions__grid {
                 grid-template-columns: 1fr;
@@ -3136,6 +3182,17 @@
             font-size: 0.875rem;
             color: var(--text-muted);
             max-width: 500px;
+        }
+
+        .core-services__boundary {
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            font-style: italic;
+            text-align: center;
+            max-width: 500px;
+            margin: var(--space-lg) auto 0;
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border);
         }
 
         /* === FOCUSED STUDIO WORK (Secondary Services) === */

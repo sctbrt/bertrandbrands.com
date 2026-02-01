@@ -28,20 +28,16 @@
       "destination": "/pages/intake/brand-clarity-diagnostic"
     },
     {
-      "source": "/brand-clarity-call",
-      "destination": "/pages/ads/brand-clarity-call"
+      "source": "/clarity-session",
+      "destination": "/pages/ads/clarity-session"
     },
     {
-      "source": "/website-clarity-call",
-      "destination": "/pages/ads/website-clarity-call"
+      "source": "/intake/clarity-session",
+      "destination": "/pages/intake/clarity-session"
     },
     {
-      "source": "/intake/brand-clarity-call",
-      "destination": "/pages/intake/brand-clarity-call"
-    },
-    {
-      "source": "/intake/website-clarity-call",
-      "destination": "/pages/intake/website-clarity-call"
+      "source": "/resets",
+      "destination": "/pages/ads/resets"
     },
     {
       "source": "/focus-studio",
@@ -102,23 +98,48 @@
       "permanent": false
     },
     {
+      "source": "/brand-clarity-call",
+      "destination": "/clarity-session",
+      "permanent": true
+    },
+    {
+      "source": "/website-clarity-call",
+      "destination": "/clarity-session",
+      "permanent": true
+    },
+    {
+      "source": "/intake/brand-clarity-call",
+      "destination": "/intake/clarity-session",
+      "permanent": true
+    },
+    {
+      "source": "/intake/website-clarity-call",
+      "destination": "/intake/clarity-session",
+      "permanent": true
+    },
+    {
       "source": "/direction-session",
-      "destination": "/brand-clarity-call",
+      "destination": "/clarity-session",
       "permanent": true
     },
     {
       "source": "/business-clarity-call",
-      "destination": "/brand-clarity-call",
+      "destination": "/clarity-session",
       "permanent": true
     },
     {
       "source": "/intake/direction-session",
-      "destination": "/intake/brand-clarity-call",
+      "destination": "/intake/clarity-session",
       "permanent": true
     },
     {
       "source": "/intake/business-clarity-call",
-      "destination": "/intake/brand-clarity-call",
+      "destination": "/intake/clarity-session",
+      "permanent": true
+    },
+    {
+      "source": "/core-services",
+      "destination": "/resets",
       "permanent": true
     },
     {
@@ -133,17 +154,17 @@
     },
     {
       "source": "/founders-direction-check",
-      "destination": "/brand-clarity-call",
+      "destination": "/clarity-session",
       "permanent": true
     },
     {
       "source": "/founders-check",
-      "destination": "/brand-clarity-call",
+      "destination": "/clarity-session",
       "permanent": true
     },
     {
       "source": "/intake/founders-check",
-      "destination": "/intake/brand-clarity-call",
+      "destination": "/intake/clarity-session",
       "permanent": true
     },
     {
