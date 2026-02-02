@@ -84,15 +84,16 @@ Bertrand Brands operates under **THREE strictly hierarchical service tiers**:
 **Tier 3 — B Core Services** (Transformational)
 - Multi-week, relationship-based work
 - 50% deposit to begin, 50% on delivery
-- Includes ALL of the following (exactly 5):
+- Discovery-led, private pricing
+- Maximum 5 offerings:
 
-| Offering | Starting Price |
-|----------|----------------|
-| Comprehensive Website Audit | Private |
+| Offering | Pricing |
+|----------|---------|
 | Strategic Brand Audit | Private |
-| Brand Reset | $3,000+ CAD |
-| Website Foundation | $3,500+ CAD |
-| Full Brand + Website Reset | $6,500+ CAD |
+| Brand Reset | Private |
+| Digital Platform Build | Private |
+| Full Brand + Platform Reset | Private |
+| Brand Moments & Micro-Activations | Private |
 
 ---
 
