@@ -142,10 +142,16 @@
             max-width: 540px;
             margin: 0 auto var(--space-12);
             padding: var(--space-8) var(--space-6);
-            background: rgba(139, 92, 246, 0.1);
-            border: 2px solid rgba(139, 92, 246, 0.4);
+            background: rgba(139, 92, 246, 0.15);
+            border: 2px solid rgba(139, 92, 246, 0.5);
             border-radius: var(--radius-lg);
             position: relative;
+            transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease;
+        }
+
+        .fs-offering--primary:hover {
+            border-color: rgba(139, 92, 246, 0.7);
+            background: rgba(139, 92, 246, 0.2);
         }
 
         .fs-offering--primary::before {
@@ -290,18 +296,20 @@
         .fs-offerings__secondary .fs-offering {
             display: block;
             padding: var(--space-4);
-            background: transparent;
-            border: 1px dashed rgba(255, 255, 255, 0.12);
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: var(--radius-md);
-            opacity: 0.75;
-            transition: opacity var(--duration-fast) ease, border-color var(--duration-fast) ease;
+            opacity: 0.85;
+            transition: opacity var(--duration-fast) ease, border-color var(--duration-fast) ease, background var(--duration-fast) ease, transform var(--duration-fast) ease;
             text-decoration: none;
             color: inherit;
         }
 
         .fs-offerings__secondary .fs-offering:hover {
             opacity: 1;
-            border-color: rgba(139, 92, 246, 0.4);
+            border-color: rgba(139, 92, 246, 0.5);
+            background: rgba(139, 92, 246, 0.12);
+            transform: translateY(-2px);
         }
 
         .fs-offerings__secondary .fs-offering__timeline {
