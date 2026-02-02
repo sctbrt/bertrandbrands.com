@@ -258,6 +258,75 @@ Bertrand Brands is **more expressive** than scottbertrand.com:
 - Ethereal text glow on hover states
 - Three RGB spotlights (mobile hero only)
 
+### 5.3 Organic Dynamic Lighting (LOCKED)
+
+Ambient spotlights throughout the site use **organic breathing animations** to create a living, ethereal feel without distraction.
+
+**Core Principles:**
+- Spotlights should feel alive but never demand attention
+- Movement is slow, asymmetric, and naturalistic
+- Multiple spotlights use counter-rhythms (different durations, offset timing)
+- Opacity, scale, and shape change together for depth
+- Shape morphing creates amorphous, fluid light sources
+
+**Animation Pattern:**
+
+```css
+/* Standard organic breathing pattern with shape morphing */
+@keyframes organicBreathe {
+    0%, 100% {
+        opacity: 0.85;
+        transform: translate(0, 0) scale(1);
+        border-radius: 50% 50% 50% 50%;
+    }
+    15% {
+        opacity: 0.95;
+        transform: translate(15px, -20px) scale(1.06);
+        border-radius: 60% 40% 55% 45%;
+    }
+    35% {
+        opacity: 0.75;
+        transform: translate(-10px, 10px) scale(0.94);
+        border-radius: 45% 55% 40% 60%;
+    }
+    50% {
+        opacity: 0.9;
+        transform: translate(20px, 5px) scale(1.02);
+        border-radius: 55% 45% 60% 40%;
+    }
+    70% {
+        opacity: 0.8;
+        transform: translate(-5px, -15px) scale(0.97);
+        border-radius: 40% 60% 45% 55%;
+    }
+    85% {
+        opacity: 0.92;
+        transform: translate(8px, 12px) scale(1.04);
+        border-radius: 58% 42% 48% 52%;
+    }
+}
+```
+
+**Implementation Rules:**
+- Duration: 15–25 seconds per cycle (slow enough to be subliminal)
+- Use 5–7 keyframes for organic feel (avoid symmetric 0/50/100 patterns)
+- Offset secondary spotlights by 0.3–0.5s delay
+- Scale range: 0.94–1.06 (subtle, never jarring)
+- Opacity range: 0.7–0.95 (visible but not attention-grabbing)
+- Translate range: ±20px max (gentle drift, not bounce)
+- Border-radius range: 40%–60% per corner (subtle blob morphing)
+
+**Color Application:**
+- Amber (`rgba(217, 119, 6, x)`) — Primary accent, used in header and contact
+- Violet (`rgba(139, 92, 246, x)`) — Focus Studio tier accent
+- Blue (`rgba(37, 99, 235, x)`) — Exploratory tier accent
+
+**Mobile Optimization:**
+- Reduce blur: 60px → 30-35px
+- Reduce size: ~60% of desktop dimensions
+- Simplify keyframes: Use 2-3 keyframes instead of 5-7
+- Extend duration: +2-4 seconds for smoother GPU performance
+
 ---
 
 ## 6. Design Tokens
@@ -776,6 +845,7 @@ Added `contain: layout style` to:
 | 5.2.0 | Feb 2026 | Locked tiered service architecture: 2/3/5 offering limits, consolidated Exploratory routes, added Brand Moments definition |
 | 5.2.1 | Feb 2026 | Added Section 22: Header Navigation Standard (LOCKED) — canonical reference for all pages |
 | 5.2.2 | Feb 2026 | Implemented universal header component (`/components/header.js`), updated 7 pages to use it, documented exceptions |
+| 5.3.0 | Feb 2026 | Reordered homepage services to Tier 1→2→3; added organic dynamic lighting to Contact section; documented lighting pattern in Section 5.3 |
 
 ---
 
