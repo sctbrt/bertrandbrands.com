@@ -51,11 +51,11 @@
         "@type": "OfferCatalog",
         "name": "Core Services Offerings",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Comprehensive Website Audit" }, "description": "In-depth website analysis and recommendations" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "description": "In-depth brand analysis and strategic direction" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "price": "3000", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation" }, "price": "3500", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Website Reset" }, "price": "6500", "priceCurrency": "CAD" }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "description": "Discovery-led brand analysis and strategic direction" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Platform Build" }, "description": "Multi-page website built as a brand platform" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "description": "Strategic realignment of positioning and system" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Platform Reset" }, "description": "End-to-end brand and digital reset" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Moments & Micro-Activations" }, "description": "Concept-led brand expressions. By request only." }
         ]
       }
     }
@@ -67,7 +67,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/styles/tokens.css">
     <link rel="stylesheet" href="/styles/main.css">
 
     <style>
@@ -544,7 +543,7 @@
                                 <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
                                 <span class="header__dropdown-label">Core Services</span>
                             </a>
-                            <a href="/brand-clarity-call" class="header__dropdown-item header__dropdown-item--blue">
+                            <a href="/exploratory" class="header__dropdown-item header__dropdown-item--blue">
                                 <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
                                 <span class="header__dropdown-label">B Exploratory</span>
                             </a>
@@ -571,87 +570,54 @@
             </div>
         </section>
 
-        <!-- Brand Section Header -->
-        <div class="cs-brand-header">
-            <div class="cs-brand-header__inner">
-                <img src="/assets/bertrand-brands-logomark.png" alt="" class="cs-brand-header__mark">
-                <span class="cs-brand-header__wordmark">Core Services</span>
-            </div>
-        </div>
-
-        <!-- Tier 1: Audits & Reviews (Private Pricing) -->
+        <!-- Core Services Offerings -->
         <section class="cs-tier">
             <div class="container">
-                <p class="cs-tier__label">Audits & Reviews</p>
-                <div class="cs-tier__grid cs-tier__grid--two">
-                    <!-- Comprehensive Website Audit -->
-                    <div class="cs-offering cs-offering--review">
-                        <div class="cs-offering__header">
-                            <span class="cs-offering__meta">Detailed Report</span>
-                            <h2 class="cs-offering__title">Comprehensive Website Audit</h2>
-                        </div>
-                        <p class="cs-offering__description">Architecture, messaging, UX, and conversion analysis. A complete picture of what's working and what to fix.</p>
-                        <div class="cs-offering__footer">
-                            <p class="cs-offering__price cs-offering__price--private">Pricing discussed on call</p>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
-                        </div>
-                    </div>
-
+                <div class="cs-tier__grid">
                     <!-- Strategic Brand Audit -->
                     <div class="cs-offering cs-offering--review">
                         <div class="cs-offering__header">
-                            <span class="cs-offering__meta">Detailed Report</span>
                             <h2 class="cs-offering__title">Strategic Brand Audit</h2>
                         </div>
-                        <p class="cs-offering__description">Brand system, positioning, and strategic options. Clear direction on where your brand should go.</p>
+                        <p class="cs-offering__description">Discovery-led brand analysis. Deep review of positioning, messaging, and visual system with strategic recommendations.</p>
                         <div class="cs-offering__footer">
-                            <p class="cs-offering__price cs-offering__price--private">Pricing discussed on call</p>
+                            <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <hr class="cs-divider">
+                    <!-- Digital Platform Build -->
+                    <div class="cs-offering">
+                        <div class="cs-offering__header">
+                            <h2 class="cs-offering__title">Digital Platform Build</h2>
+                        </div>
+                        <p class="cs-offering__description">Multi-page website built as a brand platform. Strategy-led, built to convert, designed to scale.</p>
+                        <div class="cs-offering__footer">
+                            <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
+                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
+                        </div>
+                    </div>
 
-        <!-- Tier 2: Brand & Web Builds (Starting Prices) -->
-        <section class="cs-tier">
-            <div class="container">
-                <p class="cs-tier__label">Builds & Resets</p>
-                <div class="cs-tier__grid">
                     <!-- Brand Reset -->
                     <div class="cs-offering">
                         <div class="cs-offering__header">
                             <h2 class="cs-offering__title">Brand Reset</h2>
                         </div>
-                        <p class="cs-offering__description">Core brand system, messaging, and guidelines. A foundation that works across every touchpoint.</p>
+                        <p class="cs-offering__description">Strategic realignment of positioning and system. Core brand, messaging, and guidelines rebuilt from the ground up.</p>
                         <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$3,000+ <span>CAD</span></p>
+                            <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
 
-                    <!-- Website Foundation -->
+                    <!-- Full Brand + Platform Reset -->
                     <div class="cs-offering">
                         <div class="cs-offering__header">
-                            <h2 class="cs-offering__title">Website Foundation</h2>
+                            <h2 class="cs-offering__title">Full Brand + Platform Reset</h2>
                         </div>
-                        <p class="cs-offering__description">Strategy-led website build for small to mid-sized businesses. Fast, clear, built to convert.</p>
+                        <p class="cs-offering__description">End-to-end transformation. Brand system and digital platform built together from the ground up.</p>
                         <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$3,500+ <span>CAD</span></p>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
-                        </div>
-                    </div>
-
-                    <!-- Full Brand + Website Reset -->
-                    <div class="cs-offering">
-                        <div class="cs-offering__header">
-                            <h2 class="cs-offering__title">Full Brand + Website Reset</h2>
-                        </div>
-                        <p class="cs-offering__description">End-to-end transformation. Brand system and website built together from the ground up.</p>
-                        <div class="cs-offering__footer">
-                            <p class="cs-offering__price">$6,500+ <span>CAD</span></p>
+                            <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
@@ -665,15 +631,15 @@
         <section class="cs-exploratory">
             <div class="container">
                 <p class="cs-exploratory__label">Not sure where to start?</p>
-                <p class="cs-exploratory__text">Begin with a 45-minute clarity call. Paid conversation, no obligations, no deliverables—just focused guidance.</p>
+                <p class="cs-exploratory__text">Begin with a free Direction Call or a paid Clarity Session. No obligations—just focused guidance.</p>
                 <div class="cs-exploratory__grid">
-                    <a href="/brand-clarity-call" class="cs-exploratory__card">
-                        <h3 class="cs-exploratory__card-title">Brand Clarity Call</h3>
-                        <p class="cs-exploratory__card-meta">45 min · Live Video</p>
+                    <a href="/exploratory" class="cs-exploratory__card">
+                        <h3 class="cs-exploratory__card-title">Introductory Direction Call</h3>
+                        <p class="cs-exploratory__card-meta">~20 min · Free</p>
                     </a>
-                    <a href="/website-clarity-call" class="cs-exploratory__card">
-                        <h3 class="cs-exploratory__card-title">Website Clarity Call</h3>
-                        <p class="cs-exploratory__card-meta">45 min · Live Video</p>
+                    <a href="/exploratory" class="cs-exploratory__card">
+                        <h3 class="cs-exploratory__card-title">Clarity Session</h3>
+                        <p class="cs-exploratory__card-meta">~45 min · $145 CAD</p>
                     </a>
                 </div>
             </div>

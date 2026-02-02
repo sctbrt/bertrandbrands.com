@@ -1,9 +1,10 @@
 # Google Workspace Recovery Guardrails
 
 **Domain:** bertrandbrands.com
-**Case #:** 67465151
+**Case #:** 67429105 (previously 67429105)
 **Recovery Email:** bertrandbrands@outlook.com
 **Created:** 2026-01-31
+**Updated:** 2026-02-01
 
 ---
 
@@ -11,8 +12,10 @@
 
 - [x] Old Workspace org deleted (domain stuck in "contested" state)
 - [x] DNS cleaned up (removed old verification CNAME 67438343)
-- [x] New verification CNAME added (67465151 → google.com)
-- [x] DNS propagation confirmed via Google Dig tool
+- [x] DNS cleaned up (removed old TXT google-gws-recovery-domain-verification=67438343)
+- [x] New verification CNAME added (67429105 → google.com)
+- [x] DNS propagation confirmed
+- [x] Reply sent to Google Support confirming DNS updated
 - [ ] Google verification complete
 - [ ] Access to hello@bertrandbrands.com restored
 
@@ -24,13 +27,13 @@
 
 | Type | Name | Content | Proxy | Notes |
 |------|------|---------|-------|-------|
-| **CNAME** | **67465151** | **google.com** | DNS only | **VERIFICATION - DO NOT DELETE** |
+| **CNAME** | **67429105** | **google.com** | DNS only | **VERIFICATION - DO NOT DELETE** |
 | MX | @ | aspmx.l.google.com | DNS only | Priority 1 |
 | MX | @ | alt1.aspmx.l.google.com | DNS only | Priority 5 |
 | MX | @ | alt2.aspmx.l.google.com | DNS only | Priority 5 |
 | MX | @ | alt3.aspmx.l.google.com | DNS only | Priority 10 |
 | MX | @ | alt4.aspmx.l.google.com | DNS only | Priority 10 |
-| TXT | @ | google-gws-recovery-... | DNS only | Recovery record |
+| ~~TXT~~ | ~~@~~ | ~~google-gws-recovery-...~~ | ~~DNS only~~ | **DELETED** - was conflicting |
 | TXT | @ | v=spf1 include:_spf.google.com ~all | DNS only | SPF for Google |
 | TXT | @ | google-site-verification=... | DNS only | Site verification |
 | TXT | google._domainkey | v=DKIM1; k=rsa; p=... | DNS only | DKIM for Google |
@@ -59,7 +62,7 @@
    - Any other mail server
 
 2. **New verification CNAMEs you didn't add**
-   - Any numeric CNAME other than 67465151
+   - Any numeric CNAME other than 67429105
    - Any CNAME claiming to be for "domain verification"
 
 3. **Domain "reclaimed" message**
@@ -67,7 +70,7 @@
    - If you can't access admin.google.com for the domain
 
 4. **Verification record deleted**
-   - CNAME 67465151 missing from Cloudflare
+   - CNAME 67429105 missing from Cloudflare
    - Any of the MX records removed
 
 ---
@@ -75,7 +78,7 @@
 ## Verification Checklist (Run Every 15-30 min)
 
 ### Quick Check via Google Dig Tool
-URL: https://toolbox.googleapps.com/apps/dig/#CNAME/67465151.bertrandbrands.com
+URL: https://toolbox.googleapps.com/apps/dig/#CNAME/67429105.bertrandbrands.com
 
 **Expected Result:**
 ```
@@ -85,7 +88,7 @@ TARGET: google.com.
 ```
 
 ### Recovery Page Check
-URL: https://toolbox.googleapps.com/apps/recovery/ownership?email=bertrandbrands%40outlook.com&domain=bertrandbrands.com&case=67465151&flow=contested
+URL: https://toolbox.googleapps.com/apps/recovery/ownership?email=bertrandbrands%40outlook.com&domain=bertrandbrands.com&case=67429105&flow=contested
 
 1. Click "CHECK AGAIN"
 2. If still on Step 3 → Wait and try again later
@@ -101,7 +104,7 @@ URL: https://toolbox.googleapps.com/apps/recovery/ownership?email=bertrandbrands
 
 2. **Check Cloudflare DNS immediately**
    - Verify MX records still point to Google
-   - Verify CNAME 67465151 still exists
+   - Verify CNAME 67429105 still exists
    - Look for any NEW records you didn't add
 
 3. **Check for competing verification**
@@ -110,7 +113,7 @@ URL: https://toolbox.googleapps.com/apps/recovery/ownership?email=bertrandbrands
 
 4. **Contact Google Support**
    - Google Workspace Support: https://support.google.com/a/contact
-   - Reference Case #67465151
+   - Reference Case #67429105
    - Explain this is 5th attempt at recovery
 
 ### Root Cause Possibilities
@@ -123,8 +126,8 @@ URL: https://toolbox.googleapps.com/apps/recovery/ownership?email=bertrandbrands
 
 ## Important Links
 
-- **Recovery Page:** https://toolbox.googleapps.com/apps/recovery/ownership?email=bertrandbrands%40outlook.com&domain=bertrandbrands.com&case=67465151&flow=contested
-- **DNS Dig Tool:** https://toolbox.googleapps.com/apps/dig/#CNAME/67465151.bertrandbrands.com
+- **Recovery Page:** https://toolbox.googleapps.com/apps/recovery/ownership?email=bertrandbrands%40outlook.com&domain=bertrandbrands.com&case=67429105&flow=contested
+- **DNS Dig Tool:** https://toolbox.googleapps.com/apps/dig/#CNAME/67429105.bertrandbrands.com
 - **Cloudflare DNS:** https://dash.cloudflare.com/a2b3daf9f6d887fc131d0658e4f9f486/bertrandbrands.com/dns/records
 - **Google Admin:** https://admin.google.com
 - **Google Support:** https://support.google.com/a/contact
@@ -139,6 +142,10 @@ URL: https://toolbox.googleapps.com/apps/recovery/ownership?email=bertrandbrands
 | 2026-01-31 | Added CNAME 67465151 | DNS propagated |
 | 2026-01-31 | Deleted old CNAME 67438343 | Cleaned up |
 | 2026-01-31 | Verified DNS via Google Dig | Confirmed working |
+| 2026-02-01 | New case opened by Google | Case #67429105 |
+| 2026-02-01 | Updated CNAME to 67429105 | DNS propagated |
+| 2026-02-01 | Deleted conflicting TXT record | 67438343 removed |
+| 2026-02-01 | Replied to Google confirming DNS | Email sent |
 | | Verification complete | Pending... |
 | | Access restored | Pending... |
 

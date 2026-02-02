@@ -27,23 +27,7 @@
       "source": "/intake/brand-clarity-diagnostic",
       "destination": "/pages/intake/brand-clarity-diagnostic"
     },
-    {
-      "source": "/brand-clarity-call",
-      "destination": "/pages/ads/brand-clarity-call"
-    },
-    {
-      "source": "/website-clarity-call",
-      "destination": "/pages/ads/website-clarity-call"
-    },
-    {
-      "source": "/intake/brand-clarity-call",
-      "destination": "/pages/intake/brand-clarity-call"
-    },
-    {
-      "source": "/intake/website-clarity-call",
-      "destination": "/pages/intake/website-clarity-call"
-    },
-    {
+        {
       "source": "/focus-studio",
       "destination": "/pages/ads/focus-studio"
     },
@@ -119,22 +103,42 @@
     },
     {
       "source": "/direction-session",
-      "destination": "/brand-clarity-call",
+      "destination": "/exploratory",
       "permanent": true
     },
     {
       "source": "/business-clarity-call",
-      "destination": "/brand-clarity-call",
+      "destination": "/exploratory",
+      "permanent": true
+    },
+    {
+      "source": "/brand-clarity-call",
+      "destination": "/exploratory",
+      "permanent": true
+    },
+    {
+      "source": "/website-clarity-call",
+      "destination": "/exploratory",
       "permanent": true
     },
     {
       "source": "/intake/direction-session",
-      "destination": "/intake/brand-clarity-call",
+      "destination": "/intake/exploratory",
       "permanent": true
     },
     {
       "source": "/intake/business-clarity-call",
-      "destination": "/intake/brand-clarity-call",
+      "destination": "/intake/exploratory",
+      "permanent": true
+    },
+    {
+      "source": "/intake/brand-clarity-call",
+      "destination": "/intake/exploratory",
+      "permanent": true
+    },
+    {
+      "source": "/intake/website-clarity-call",
+      "destination": "/intake/exploratory",
       "permanent": true
     },
     {
@@ -149,17 +153,17 @@
     },
     {
       "source": "/founders-direction-check",
-      "destination": "/brand-clarity-call",
+      "destination": "/exploratory",
       "permanent": true
     },
     {
       "source": "/founders-check",
-      "destination": "/brand-clarity-call",
+      "destination": "/exploratory",
       "permanent": true
     },
     {
       "source": "/intake/founders-check",
-      "destination": "/intake/brand-clarity-call",
+      "destination": "/intake/exploratory",
       "permanent": true
     },
     {

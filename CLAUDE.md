@@ -48,30 +48,38 @@ If a technical or UX decision introduces confusion, pressure, or ambiguity, it v
 
 ### 1.3 Service Architecture (LOCKED — Feb 2026)
 
-Bertrand Brands operates under **THREE strictly hierarchical service tiers**:
+Bertrand Brands operates under **THREE strictly hierarchical service tiers**.
 
 **Mental Model:** Conversation → Execution → Transformation
 
+**Hard Constraints:**
+- Tier 1: Exploratory → **2 offerings only**
+- Tier 2: Focus Studio → **3 offerings only**
+- Tier 3: Core Services → **Maximum 5 offerings**
+
+Claude must not add services, rename tiers, or exceed these limits.
+
 ---
 
-**Tier 1 — B Exploratory Sessions** (Entry/Qualification)
-- Paid clarity conversations
-- Trust-building and qualification
-- 45 minutes, paid upfront
-- NO deliverables (conversation only)
-- Subtle visual placement (not dominant)
+**Tier 1 — B Exploratory** (Entry Layer)
 
-| Offering | Duration | Notes |
-|----------|----------|-------|
-| Brand Clarity Call | 45 min | Conversation-only brand clarity |
-| Website Clarity Call | 45 min | Conversation-only website clarity |
+Purpose: Low-friction entry, qualification, and clarity. Not asset delivery.
+
+| Offering | Price | Duration | Notes |
+|----------|-------|----------|-------|
+| Introductory Direction Call | Free | ~20 min | Live video. No prep, no deliverables. Fit and high-level direction only. |
+| Brand or Website Clarity Session | $145 CAD | ~45 min | Live video. Working session (diagnosis + next steps). Unlocks Focus Studio or Core Services. |
+
+**Rules:**
+- One free option, one paid option only
+- No additional Tier 1 services allowed
+- Tier 1 never includes execution work
 
 ---
 
 **Tier 2 — B Focus Studio** (Primary Revenue Engine)
-- Fixed-scope execution
-- Fixed price, clear timelines
-- Paid before deliverable handoff
+
+Purpose: Fast, fixed-scope studio work with clear timelines and pricing.
 
 | Offering | Price | Timeline |
 |----------|-------|----------|
@@ -79,20 +87,34 @@ Bertrand Brands operates under **THREE strictly hierarchical service tiers**:
 | One-Page Redesign | $1,250 CAD | 2–3 business days |
 | Brandmarking Package | $950 CAD | 5–7 business days |
 
+**Rules:**
+- Fixed scope only
+- Public pricing required
+- No discovery-heavy or multi-week work
+- No Brand Resets
+- No Brand Moments / events
+
+Focus Studio is the primary revenue engine and Google Ads entry point.
+
 ---
 
-**Tier 3 — B Core Services** (Transformational)
-- Multi-week, relationship-based work
-- 50% deposit to begin, 50% on delivery
-- Includes ALL of the following (exactly 5):
+**Tier 3 — B Core Services** (Strategic Work)
 
-| Offering | Starting Price |
-|----------|----------------|
-| Comprehensive Website Audit | Private |
-| Strategic Brand Audit | Private |
-| Brand Reset | $3,000+ CAD |
-| Website Foundation | $3,500+ CAD |
-| Full Brand + Website Reset | $6,500+ CAD |
+Purpose: Discovery-led, multi-week engagements for brands requiring structural clarity.
+
+| Offering | Pricing | Notes |
+|----------|---------|-------|
+| Strategic Brand Audit | Private | Discovery-led |
+| Digital Platform Build | Private | Multi-page website built as a brand platform |
+| Brand Reset | Private | Strategic realignment of positioning and system |
+| Full Brand + Platform Reset | Private | End-to-end brand and digital reset |
+| Brand Moments & Micro-Activations | Private | By request only. See Section 21. |
+
+**Rules:**
+- 50% deposit to begin
+- No public pricing
+- Always discovery-led
+- Never sold as an entry service
 
 ---
 
@@ -102,7 +124,7 @@ Bertrand Brands operates under **THREE strictly hierarchical service tiers**:
 - No ad-hoc calls outside defined services
 - No hourly/time-based pricing language
 - AI efficiency increases margin, not discount justification
-- Prices ≤$1,500 are shown publicly; prices ≥$3,000 use private/starting pricing
+- Prices ≤$1,500 are shown publicly; prices ≥$3,000 use private pricing
 
 **Never invent new services, pricing, or scopes.**
 
@@ -513,14 +535,19 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ## 16. Routes Reference
 
-### Exploratory Session Routes (Tier 1)
-- `/brand-clarity-call` → Brand Clarity Call landing page
-- `/website-clarity-call` → Website Clarity Call landing page
-- `/intake/brand-clarity-call` → Brand Clarity Call intake form
-- `/intake/website-clarity-call` → Website Clarity Call intake form
+### Exploratory Routes (Tier 1)
+
+**Active Routes:**
+- `/exploratory` → Exploratory landing page (serves both offerings)
+- `/intake/exploratory` → Exploratory intake form
+
+**Tier 1 Offerings (all via shared intake):**
+- Introductory Direction Call (Free, ~20 min)
+- Brand or Website Clarity Session ($145, ~45 min)
 
 ### Focus Studio Routes (Tier 2)
-- `/focus-studio` → B Focus Studio intake page (serves all three offerings)
+- `/focus-studio` → B Focus Studio landing page
+- `/intake/focus-studio` → B Focus Studio intake form
 
 **Focus Studio Offerings (all via shared intake):**
 - Quick Website Refresh ($750)
@@ -530,13 +557,24 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 ### Core Services Routes (Tier 3)
 - `/core-services` → Core Services landing page
 
+**Core Services Offerings (max 5):**
+- Strategic Brand Audit
+- Digital Platform Build
+- Brand Reset
+- Full Brand + Platform Reset
+- Brand Moments & Micro-Activations (by request only)
+
 ### Legacy Routes (redirects)
-- `/direction-session` → redirects to `/brand-clarity-call` (permanent)
-- `/business-clarity-call` → redirects to `/brand-clarity-call` (permanent)
-- `/founders-check` → redirects to `/brand-clarity-call` (permanent)
-- `/intake/direction-session` → redirects to `/intake/brand-clarity-call` (permanent)
-- `/intake/business-clarity-call` → redirects to `/intake/brand-clarity-call` (permanent)
-- `/intake/founders-check` → redirects to `/intake/brand-clarity-call` (permanent)
+- `/direction-session` → redirects to `/exploratory` (permanent)
+- `/business-clarity-call` → redirects to `/exploratory` (permanent)
+- `/founders-check` → redirects to `/exploratory` (permanent)
+- `/brand-clarity-call` → redirects to `/exploratory` (permanent)
+- `/website-clarity-call` → redirects to `/exploratory` (permanent)
+- `/intake/direction-session` → redirects to `/intake/exploratory` (permanent)
+- `/intake/business-clarity-call` → redirects to `/intake/exploratory` (permanent)
+- `/intake/founders-check` → redirects to `/intake/exploratory` (permanent)
+- `/intake/brand-clarity-call` → redirects to `/intake/exploratory` (permanent)
+- `/intake/website-clarity-call` → redirects to `/intake/exploratory` (permanent)
 
 ---
 
@@ -679,6 +717,75 @@ Added `contain: layout style` to:
 | 4.2.0 | Jan 2026 | Focus Studio color tokens, mobile typography |
 | 5.0.0 | Jan 2026 | Performance polish pass: 30fps throttling, reduced blur, CSS containment, improved touch targets |
 | 5.1.0 | Jan 2026 | Service architecture update: renamed offerings, added Business Clarity Call, updated pricing tables |
+| 5.2.0 | Feb 2026 | Locked tiered service architecture: 2/3/5 offering limits, consolidated Exploratory routes, added Brand Moments definition |
+
+---
+
+## 21. Brand Moments & Micro-Activations (Canonical Definition)
+
+Brand Moments & Micro-Activations are concept-led brand expressions in the physical world.
+
+### 21.1 Philosophy
+
+They prioritize:
+- **Meaning over scale**
+- **Coherence over spectacle**
+- **Proof over promotion**
+
+Scale is irrelevant. Intent is everything.
+
+### 21.2 What Qualifies
+
+- Launch moments
+- Pop-up concepts or installations
+- Brand-led gatherings
+- Spatial expressions of brand identity
+
+### 21.3 What Bertrand Brands Provides
+
+- Concept and narrative design
+- Experience structure and intent
+- Visual and spatial coherence
+- Atmosphere, flow, and meaning
+
+### 21.4 What Is Excluded by Default
+
+- Event logistics
+- Staffing
+- Permits
+- Rentals
+- Full production execution
+
+These may be handled collaboratively or via partners, but are not core obligations.
+
+### 21.5 Integration Rule (Critical)
+
+Brand Moments & Micro-Activations are **never the entry point**.
+
+They may only be introduced through:
+- A Brand Reset
+- A Digital Platform Build
+- A Brandmarking system expansion
+
+If a request is "just an event," it is out of scope.
+
+### 21.6 Internal Guardrail
+
+A Brand Moment must satisfy at least one of the following:
+- Marks a transition
+- Tests a brand idea
+- Expresses a brand system
+- Creates proof
+
+If none apply, Bertrand Brands does not pursue the engagement.
+
+### 21.7 Language & Tone Rules
+
+- Declarative, not promotional
+- No hype or trend language
+- No scale-based claims
+- Emphasis on systems, intent, and coherence
+- Avoid "agency" framing; use "studio" framing
 
 ---
 

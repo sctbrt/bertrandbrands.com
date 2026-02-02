@@ -65,7 +65,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/styles/tokens.css">
     <link rel="stylesheet" href="/styles/main.css">
 
     <style>
@@ -145,7 +144,7 @@
             font-weight: 600;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #8B5CF6;
+            color: var(--focus-accent);
             padding: 0.25rem 0.5rem;
             border: 1px solid rgba(139, 92, 246, 0.3);
             border-radius: var(--radius-sm);
@@ -153,7 +152,7 @@
 
         /* Hero - Decisive for cold traffic */
         .sfs-hero {
-            padding: var(--space-lg, 2rem) 0 var(--space-sm, 0.75rem);
+            padding: var(--space-2xl, 4rem) 0 var(--space-lg, 2rem);
             text-align: center;
         }
 
@@ -163,7 +162,7 @@
             font-weight: 600;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #8B5CF6;
+            color: var(--focus-accent);
             margin-bottom: var(--space-xs);
         }
 
@@ -249,7 +248,7 @@
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: #fff;
-            background: #8B5CF6;
+            background: var(--focus-accent);
             padding: 0.25rem 0.875rem;
             border-radius: 2px;
             white-space: nowrap;
@@ -264,7 +263,7 @@
             display: inline-block;
             margin-top: var(--space-sm);
             padding: 0.75rem 1.5rem;
-            background: #8B5CF6;
+            background: var(--focus-accent);
             color: #fff;
             font-size: var(--text-sm);
             font-weight: 600;
@@ -274,7 +273,7 @@
         }
 
         .sfs-offering--primary .sfs-offering__cta:hover {
-            background: #7C3AED;
+            background: var(--focus-accent-hover);
         }
 
         /* Snapshot step-down - subtle, secondary placement */
@@ -364,7 +363,7 @@
             font-family: 'Inter', -apple-system, sans-serif;
             font-size: var(--text-xl);
             font-weight: 500;
-            color: #8B5CF6;
+            color: var(--focus-accent);
         }
 
         .sfs-offering__price span {
@@ -443,7 +442,7 @@
         .sfs-form__select:focus,
         .sfs-form__textarea:focus {
             outline: none;
-            border-color: #8B5CF6;
+            border-color: var(--focus-accent);
         }
 
         .sfs-form__input::placeholder,
@@ -534,7 +533,7 @@
         }
 
         .sfs-footer__links a:hover {
-            color: #8B5CF6;
+            color: var(--focus-accent);
         }
 
         .sfs-footer__phone {
