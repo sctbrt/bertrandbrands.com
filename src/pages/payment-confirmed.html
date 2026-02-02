@@ -52,26 +52,103 @@
       text-align: center;
     }
 
-    .container {
-      max-width: 480px;
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 0.75rem clamp(1rem, 4vw, 2rem);
+      z-index: 100;
     }
 
-    .icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 2rem;
-      border-radius: 50%;
-      background: rgba(217, 119, 6, 0.1);
-      border: 1px solid rgba(217, 119, 6, 0.3);
+    .header__glass {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      background: color-mix(in srgb, var(--bg) 60%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+      --orange-pos-1: 15%;
+      --orange-pos-2: 85%;
+    }
+
+    .header__glass::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse 280px 90px at var(--orange-pos-1) 60%, rgba(217, 119, 6, 0.15), transparent 70%),
+        radial-gradient(ellipse 220px 80px at var(--orange-pos-2) 40%, rgba(217, 119, 6, 0.10), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      border-radius: inherit;
+    }
+
+    /* Focus Studio tier background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at var(--bg-glow-1-x, 20%) var(--bg-glow-1-y, 30%), rgba(139, 92, 246, 0.08), transparent 70%),
+        radial-gradient(ellipse 500px 350px at var(--bg-glow-2-x, 80%) var(--bg-glow-2-y, 70%), rgba(139, 92, 246, 0.05), transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .header__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header__logo {
       display: flex;
       align-items: center;
-      justify-content: center;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
     }
 
-    .icon svg {
-      width: 32px;
-      height: 32px;
-      color: var(--accent);
+    .header__logo:hover {
+      opacity: 0.7;
+    }
+
+    .header__logo-icon {
+      width: 24px;
+      height: auto;
+      margin-right: 0.75rem;
+      filter: brightness(0) invert(1);
+    }
+
+    .header__logo-text {
+      height: 14px;
+      width: auto;
+      filter: brightness(1.5);
+    }
+
+    .header__tier {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: rgba(139, 92, 246, 0.9);
+      letter-spacing: 0.02em;
+    }
+
+    .container {
+      max-width: 480px;
+      padding-top: 5rem;
     }
 
     h1 {
@@ -148,6 +225,13 @@
       color: var(--text);
     }
 
+    .headline-wordmark {
+      height: 28px;
+      width: auto;
+      margin-bottom: 1.5rem;
+      filter: brightness(1.5);
+    }
+
     @media (max-width: 480px) {
       h1 {
         font-size: 1.75rem;
@@ -156,14 +240,21 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="icon">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-      </svg>
+  <header class="header">
+    <div class="header__glass">
+      <div class="header__inner">
+        <a href="https://bertrandbrands.com" class="header__logo">
+          <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon">
+          <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text">
+        </a>
+        <span class="header__tier">Focus Studio</span>
+      </div>
     </div>
+  </header>
 
-    <h1>Thank you for choosing Bertrand Brands</h1>
+  <div class="container">
+    <h1>Thank you for choosing</h1>
+    <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="headline-wordmark">
     <p>We're looking forward to working with you.</p>
 
     <div class="next-steps">
@@ -181,6 +272,65 @@
     document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
     document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
     document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
+
+    // Ambient header lighting animation
+    (function() {
+      const headerGlass = document.querySelector('.header__glass');
+      if (!headerGlass) return;
+
+      // Check for reduced motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      let pos1 = 15;
+      let pos2 = 85;
+      let dir1 = 1;
+      let dir2 = -1;
+
+      function animateLights() {
+        pos1 += 0.03 * dir1;
+        pos2 += 0.025 * dir2;
+
+        if (pos1 > 25 || pos1 < 10) dir1 *= -1;
+        if (pos2 > 90 || pos2 < 60) dir2 *= -1;
+
+        headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
+        headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
+        requestAnimationFrame(animateLights);
+      }
+      requestAnimationFrame(animateLights);
+    })();
+
+    // Background glow drift animation
+    (function() {
+      // Check for reduced motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      let glow1X = 20, glow1Y = 30;
+      let glow2X = 80, glow2Y = 70;
+      let dir1X = 1, dir1Y = 1;
+      let dir2X = -1, dir2Y = -1;
+
+      function animateBgGlow() {
+        // Slower, more organic movement
+        glow1X += 0.015 * dir1X;
+        glow1Y += 0.012 * dir1Y;
+        glow2X += 0.018 * dir2X;
+        glow2Y += 0.014 * dir2Y;
+
+        // Bounce within bounds
+        if (glow1X > 35 || glow1X < 10) dir1X *= -1;
+        if (glow1Y > 45 || glow1Y < 20) dir1Y *= -1;
+        if (glow2X > 90 || glow2X < 65) dir2X *= -1;
+        if (glow2Y > 80 || glow2Y < 55) dir2Y *= -1;
+
+        document.body.style.setProperty('--bg-glow-1-x', glow1X + '%');
+        document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
+        document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
+        document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
+        requestAnimationFrame(animateBgGlow);
+      }
+      requestAnimationFrame(animateBgGlow);
+    })();
   </script>
 </body>
 </html>

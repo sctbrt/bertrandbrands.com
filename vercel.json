@@ -58,6 +58,10 @@
     {
       "source": "/snapshot-confirmed",
       "destination": "/pages/snapshot-confirmed"
+    },
+    {
+      "source": "/booking-confirmed",
+      "destination": "/pages/booking-confirmed"
     }
   ],
   "redirects": [
@@ -190,6 +194,11 @@
       "source": "/intake/website-snapshot-review",
       "destination": "/intake/website-conversion-snapshot",
       "permanent": true
+    },
+    {
+      "source": "/scottbertrand",
+      "destination": "https://scottbertrand.com",
+      "permanent": false
     }
   ],
   "headers": [

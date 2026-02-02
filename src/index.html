@@ -74,6 +74,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400&display=swap" rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="/styles/tokens.css">
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
@@ -111,10 +112,11 @@
     <script>
         (function() {
             var params = new URLSearchParams(window.location.search);
+
             // Launch ends at midnight Eastern, Feb 4, 2026
             var launchEndDate = new Date('2026-02-04T00:00:00-05:00');
             var isPastLaunch = new Date() >= launchEndDate;
-            // Bypass launch gate for: past launch date, preview mode, or internal navigation (skip)
+            // Bypass launch gate for: past launch date, preview mode, or skip
             if (isPastLaunch || params.get('preview') === 'true' || params.has('skip')) {
                 var gate = document.getElementById('launchGate');
                 if (gate) gate.style.display = 'none';
@@ -150,7 +152,7 @@
         <div class="intro__glow intro__glow--blue"></div>
         <div class="intro__fade"></div>
         <div class="intro__grid"></div>
-        <img src="/assets/bertrand-brands-logomark.png" alt="Bertrand Brands" class="intro__logo">
+        <img src="/assets/bertrand-brands-logomark.png" alt="" class="intro__logo">
         <div class="intro__brand">
             <span class="intro__brand-main">Bertrand</span>
             <span class="intro__brand-main">Brands</span>
@@ -178,23 +180,7 @@
                     <nav class="header__nav" id="mainNav">
                         <a href="#about" class="header__link">About</a>
                         <a href="#process" class="header__link">How It Works</a>
-                        <div class="header__dropdown">
-                            <a href="#services" class="header__link header__link--dropdown">What We Offer<svg class="header__dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-                            <div class="header__dropdown-menu">
-                                <a href="/focus-studio" class="header__dropdown-item header__dropdown-item--violet">
-                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
-                                    <span class="header__dropdown-label">Focus Studio</span>
-                                </a>
-                                <a href="/core-services" class="header__dropdown-item">
-                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
-                                    <span class="header__dropdown-label">Core Services</span>
-                                </a>
-                                <a href="/exploratory" class="header__dropdown-item header__dropdown-item--blue">
-                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
-                                    <span class="header__dropdown-label">B Exploratory</span>
-                                </a>
-                            </div>
-                        </div>
+                        <a href="#services" class="header__link">Services</a>
                         <a href="/book" class="header__link header__link--cta">Book a Call</a>
                         <a href="#portal" class="header__link header__link--portal">Client Portal</a>
                     </nav>
@@ -239,9 +225,17 @@
                 </div>
 
                 <div class="about reveal">
-                    <p class="about__text">Bertrand Brands is a design studio for businesses who know their brand or website needs work—but aren't sure where to start.</p>
-                    <p class="about__text">We create clarity. Through structured audits, brand systems, and conversion-focused websites, we help you understand what's working, what isn't, and what to do next.</p>
-                    <p class="about__text">Based in Greater Sudbury, serving Northern Ontario and clients across Canada.</p>
+                    <div class="about__content">
+                        <p class="about__text">Bertrand Brands is a design studio for businesses who know their brand or website needs work—but aren't sure where to start.</p>
+                        <p class="about__text">We create clarity. Through structured audits, brand systems, and conversion-focused websites, we help you understand what's working, what isn't, and what to do next.</p>
+                        <p class="about__text">Based in Greater Sudbury, serving Northern Ontario and clients across Canada.</p>
+                    </div>
+                    <div class="about__cta">
+                        <a href="/scottbertrand" class="about__cta-link">
+                            <span class="about__cta-label">Meet the founder</span>
+                            <span class="about__cta-name">About Scott →</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -251,7 +245,7 @@
             <div class="container">
                 <div class="section__header section__header--process reveal">
                     <p class="section__label">How It Works</p>
-                    <h2 class="section__title section__title--clear-phrase"><span class="text-fade">A </span><span class="text-spotlight text-spotlight--clear">clear</span><span class="text-fade"> path forward</span></h2>
+                    <h2 class="section__title section__title--clear-phrase"><span class="text-fade">A&nbsp;</span><span class="text-spotlight text-spotlight--clear">clear</span><span class="text-fade">&nbsp;path forward</span></h2>
                 </div>
 
                 <div class="process reveal">
@@ -480,11 +474,17 @@
             <div class="container">
                 <div class="section__header reveal">
                     <p class="section__label">Selected Work</p>
-                    <h2 class="section__title">Internal Build</h2>
+                    <h2 class="section__title">scottbertrand.com</h2>
                 </div>
 
                 <div class="work reveal">
                     <div class="work__item work__item--scottbertrand">
+                        <div class="work__spotlights" aria-hidden="true">
+                            <span class="work__spotlight work__spotlight--red"></span>
+                            <span class="work__spotlight work__spotlight--yellow"></span>
+                            <span class="work__spotlight work__spotlight--green"></span>
+                            <span class="work__spotlight work__spotlight--blue"></span>
+                        </div>
                         <p class="work__label">Brand & Website System</p>
                         <h3 class="work__title">ScottBertrand.com</h3>
                         <p class="work__description">A purpose-built brand and website system designed to demonstrate how clarity, structure, and restraint can work together in a modern digital presence. The project prioritizes clear entry points and decision flow, strong typographic hierarchy, and subtle interaction used with intent.</p>
@@ -713,12 +713,9 @@
                 }
             });
 
-            // Close menu when clicking a link (including dropdown items)
+            // Close menu when clicking a link
             navLinks.forEach(link => {
                 link.addEventListener('click', closeMenu);
-            });
-            document.querySelectorAll('.header__dropdown-item').forEach(item => {
-                item.addEventListener('click', closeMenu);
             });
 
             // Focus trap for mobile menu
@@ -829,16 +826,40 @@
         })();
 
         // Cinematic intro animation - plays on first visit only
+        // Variants: ?intro=a (Sequential), ?intro=b (Grid), ?intro=c (Depth), ?intro=d (Minimal)
         (function() {
             const header = document.querySelector('.header');
             const headerGlass = document.querySelector('.header__glass');
             const logo = document.querySelector('.header__logo');
             const intro = document.querySelector('.intro');
 
+            // Set intro variant from URL param (default: a)
+            const params = new URLSearchParams(window.location.search);
+            const introVariant = params.get('intro') || 'a';
+            if (intro && ['a', 'b', 'c', 'd'].includes(introVariant)) {
+                intro.setAttribute('data-intro-variant', introVariant);
+                document.body.setAttribute('data-intro-variant', introVariant);
+            }
+
+            // Variant D: Set time-aware period (Canada/Eastern timezone)
+            if (introVariant === 'd') {
+                const now = new Date();
+                // Convert to Eastern time
+                const eastern = new Date(now.toLocaleString('en-US', { timeZone: 'America/Toronto' }));
+                const hour = eastern.getHours();
+                let period = 'night';
+                if (hour >= 6 && hour < 12) period = 'morning';
+                else if (hour >= 12 && hour < 18) period = 'afternoon';
+                else if (hour >= 18 && hour < 21) period = 'evening';
+                document.body.setAttribute('data-time-period', period);
+            }
+
             // Skip intro if already seen this session or ?skip param
+            // Exception: ?intro= param forces intro to play for testing variants
             const introSeen = sessionStorage.getItem('bb_intro_seen');
-            const skipParam = new URLSearchParams(window.location.search).has('skip');
-            if (introSeen || skipParam) {
+            const skipParam = params.has('skip');
+            const forceIntro = params.has('intro'); // Testing variants bypasses session check
+            if ((introSeen || skipParam) && !forceIntro) {
                 logo?.classList.add('show-text');
                 header?.classList.add('visible', 'lights-on');
                 document.body.classList.add('intro-complete', 'intro-scrolled');

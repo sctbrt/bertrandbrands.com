@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Payment Confirmed | Website Conversion Snapshot | Bertrand Brands</title>
+  <title>Booking Confirmed | Bertrand Brands</title>
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Bertrand Brands" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -90,7 +95,7 @@
       border-radius: inherit;
     }
 
-    /* Focus Studio tier background glow */
+    /* Exploratory tier background glow */
     body::before {
       content: '';
       position: fixed;
@@ -99,8 +104,8 @@
       right: 0;
       bottom: 0;
       background:
-        radial-gradient(ellipse 600px 400px at var(--bg-glow-1-x, 20%) var(--bg-glow-1-y, 30%), rgba(139, 92, 246, 0.08), transparent 70%),
-        radial-gradient(ellipse 500px 350px at var(--bg-glow-2-x, 80%) var(--bg-glow-2-y, 70%), rgba(139, 92, 246, 0.05), transparent 70%);
+        radial-gradient(ellipse 600px 400px at var(--bg-glow-1-x, 20%) var(--bg-glow-1-y, 30%), rgba(37, 99, 235, 0.08), transparent 70%),
+        radial-gradient(ellipse 500px 350px at var(--bg-glow-2-x, 80%) var(--bg-glow-2-y, 70%), rgba(37, 99, 235, 0.05), transparent 70%);
       pointer-events: none;
       z-index: -1;
     }
@@ -141,7 +146,7 @@
       font-family: var(--font-body);
       font-size: 0.8125rem;
       font-weight: 500;
-      color: rgba(139, 92, 246, 0.9);
+      color: rgba(37, 99, 235, 0.9);
       letter-spacing: 0.02em;
     }
 
@@ -211,11 +216,6 @@
       margin-bottom: 0;
     }
 
-    .highlight {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
     .back-link {
       display: inline-block;
       margin-top: 2rem;
@@ -236,10 +236,66 @@
       filter: brightness(1.5);
     }
 
+    .booking-details {
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .booking-details__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .booking-details__row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .booking-details__row:first-child {
+      padding-top: 0;
+    }
+
+    .booking-details__label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .booking-details__value {
+      font-size: 0.9375rem;
+      color: var(--text);
+      font-weight: 500;
+      text-align: right;
+    }
+
     @media (max-width: 480px) {
       h1 {
         font-size: 1.75rem;
       }
+
+      .booking-details__row {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .booking-details__value {
+        text-align: left;
+      }
+    }
+
+    .email-note {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      margin-bottom: 0;
     }
   </style>
 </head>
@@ -251,22 +307,26 @@
           <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon">
           <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text">
         </a>
-        <span class="header__tier">Focus Studio</span>
+        <span class="header__tier">Exploratory</span>
       </div>
     </div>
   </header>
 
   <div class="container">
-    <h1>Thank you for choosing</h1>
+    <h1 id="headline">You're booked</h1>
     <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="headline-wordmark">
-    <p>Your Website Conversion Snapshot is now in progress.</p>
+    <p id="subheadline">Looking forward to speaking with you.</p>
+
+    <div id="booking-details" class="booking-details" style="display: none;"></div>
+
+    <p id="email-confirmation" class="email-note" style="display: none;">Confirmation sent to your email</p>
 
     <div class="next-steps">
       <h2>What happens next</h2>
       <ul>
-        <li>You'll receive a confirmation email shortly</li>
-        <li>Your PDF with prioritized fixes will be delivered within <span class="highlight">48 hours</span></li>
-        <li>Check your inbox (and spam folder) for delivery</li>
+        <li>You'll receive a calendar invite with the video call link</li>
+        <li>Check your inbox (and spam folder) to confirm</li>
+        <li>Come with any questions or context you'd like to discuss</li>
       </ul>
     </div>
 
@@ -277,6 +337,66 @@
     document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
     document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
     document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
+
+    // Parse Calendly URL parameters and personalize page
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+
+      // Get Calendly parameters
+      const firstName = params.get('invitee_first_name');
+      const fullName = params.get('invitee_full_name');
+      const eventName = params.get('event_type_name');
+      const startTime = params.get('event_start_time');
+
+      // Personalize headline with name
+      if (firstName || fullName) {
+        const name = firstName || fullName.split(' ')[0];
+        document.getElementById('headline').textContent = `You're booked, ${name}`;
+      }
+
+      // Build booking details if we have data
+      const detailsEl = document.getElementById('booking-details');
+      let hasDetails = false;
+      let detailsHTML = '';
+
+      if (eventName) {
+        hasDetails = true;
+        // Clean up event name (Calendly URL-encodes spaces as %20)
+        const cleanEventName = decodeURIComponent(eventName);
+        detailsHTML += `
+          <div class="booking-details__row">
+            <span class="booking-details__label">Session</span>
+            <span class="booking-details__value">${cleanEventName}</span>
+          </div>`;
+      }
+
+      if (startTime) {
+        hasDetails = true;
+        // Parse ISO 8601 date and format nicely
+        const date = new Date(startTime);
+        const options = {
+          weekday: 'long',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          timeZoneName: 'short'
+        };
+        const formatted = date.toLocaleDateString('en-US', options);
+        detailsHTML += `
+          <div class="booking-details__row">
+            <span class="booking-details__label">When</span>
+            <span class="booking-details__value">${formatted}</span>
+          </div>`;
+      }
+
+      if (hasDetails) {
+        detailsEl.innerHTML = detailsHTML;
+        detailsEl.style.display = 'block';
+        // Show email confirmation note
+        document.getElementById('email-confirmation').style.display = 'block';
+      }
+    })();
 
     // Ambient header lighting animation
     (function() {

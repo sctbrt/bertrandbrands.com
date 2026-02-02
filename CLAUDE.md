@@ -597,7 +597,63 @@ Both sub-brands use identical logomark + wordmark styling for consistency.
 
 ---
 
-## 18. Pricing & Marketing Strategy
+## 18. Tier Container Styling (V5.2)
+
+All three service tiers use consistent container and card styling with tier-specific colors.
+
+### 18.1 Tier Color Tokens
+
+| Tier | Primary Color | CSS Variable |
+|------|---------------|--------------|
+| Focus Studio | Violet | `#8B5CF6` / `rgba(139, 92, 246, x)` |
+| Core Services | Amber | `#D97706` / `rgba(217, 119, 6, x)` |
+| Exploratory | Blue | `#2563EB` / `rgba(37, 99, 235, x)` |
+
+### 18.2 Container Styling
+
+All tier containers share:
+- **Background**: `rgba([color], 0.03)` — very subtle tint
+- **Border**: `1px solid rgba([color], 0.15)`
+- **Border radius**: `16px`
+- **Padding**: `var(--space-lg)`
+
+### 18.3 Card Styling
+
+All tier cards share:
+- **Background**: `rgba([color], 0.05)` — slightly more visible
+- **Border**: `1px dashed rgba([color], 0.2)` — dashed by default
+- **Border radius**: `12px`
+- **Hover border**: `1px solid rgba([color], 0.5)` — solid on hover
+- **Hover lift**: `translateY(-2px)` or `translateY(-3px)`
+- **Hover shadow**: `0 6px 20px -6px rgba([color], 0.2)`
+
+### 18.4 Edge Glow Effect
+
+All cards have a hover edge glow using `::before`:
+
+```css
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, [tier-color], transparent);
+    opacity: 0;
+    transition: opacity var(--duration-fast) ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+```
+
+Cards must have `position: relative` and `overflow: hidden` for the edge glow to work.
+
+---
+
+## 19. Pricing & Marketing Strategy
 
 ### 18.1 Pricing Philosophy
 
@@ -634,7 +690,7 @@ For Sudbury-first campaigns, local incentives may be offered via:
 
 ---
 
-## 19. V5.0.0 Performance Optimizations
+## 20. V5.0.0 Performance Optimizations
 
 V5.0.0 is a polish pass focused on eliminating janky animations and improving mobile performance.
 
@@ -710,7 +766,7 @@ Added `contain: layout style` to:
 
 ---
 
-## 20. Version History
+## 21. Version History
 
 | Version | Date | Changes |
 |---------|------|---------|
@@ -718,14 +774,203 @@ Added `contain: layout style` to:
 | 5.0.0 | Jan 2026 | Performance polish pass: 30fps throttling, reduced blur, CSS containment, improved touch targets |
 | 5.1.0 | Jan 2026 | Service architecture update: renamed offerings, added Business Clarity Call, updated pricing tables |
 | 5.2.0 | Feb 2026 | Locked tiered service architecture: 2/3/5 offering limits, consolidated Exploratory routes, added Brand Moments definition |
+| 5.2.1 | Feb 2026 | Added Section 22: Header Navigation Standard (LOCKED) — canonical reference for all pages |
+| 5.2.2 | Feb 2026 | Implemented universal header component (`/components/header.js`), updated 7 pages to use it, documented exceptions |
 
 ---
 
-## 21. Brand Moments & Micro-Activations (Canonical Definition)
+## 22. Header Navigation Standard (LOCKED)
+
+The homepage header (`src/index.html`) is the canonical reference for all pages. All landing pages and sub-pages must match this structure.
+
+### 22.1 HTML Structure
+
+```html
+<header class="header">
+    <div class="header__glass">
+        <div class="header__inner">
+            <a href="/?skip" class="header__logo">
+                <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon">
+                <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text">
+            </a>
+            <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="header__nav" id="mainNav">
+                <a href="/?skip#about" class="header__link">About</a>
+                <a href="/?skip#process" class="header__link">How It Works</a>
+                <a href="/?skip#services" class="header__link">Services</a>
+                <a href="/book" class="header__link header__link--cta">Book a Call</a>
+                <span class="header__divider" aria-hidden="true"></span>
+                <a href="https://clients.bertrandbrands.com" class="header__link header__link--portal">Client Portal</a>
+            </nav>
+        </div>
+    </div>
+</header>
+```
+
+### 22.2 Nav Link Order (LOCKED)
+
+| Order | Element | Href | Class |
+|-------|---------|------|-------|
+| 1 | About | `/?skip#about` | `header__link` |
+| 2 | How It Works | `/?skip#process` | `header__link` |
+| 3 | Services | `/?skip#services` | `header__link` |
+| 4 | Book a Call | `/book` | `header__link header__link--cta` |
+| 5 | Divider | — | `header__divider` (span) |
+| 6 | Client Portal | `https://clients.bertrandbrands.com` | `header__link header__link--portal` |
+
+**Rules:**
+- Homepage uses anchor links (`#about`, `#process`, `#services`)
+- Sub-pages use `/?skip#section` to bypass intro animation
+- "Book a Call" always uses `header__link--cta` modifier (amber styling)
+- "Client Portal" always uses `header__link--portal` modifier (subtle styling)
+
+### 22.3 Logo Configuration
+
+- **Logomark**: `/assets/bertrand-brands-logomark.png` — always present
+- **Wordmark**: `/assets/bertrand-brands-wordmark-light-2026.png` — always present
+- **Link**: `/?skip` — returns to homepage, bypassing intro
+- **Alt text**: Logomark has empty alt (decorative), wordmark has "Bertrand Brands"
+
+### 22.4 Mobile Menu Toggle
+
+Three-span hamburger button with accessibility attributes:
+- `aria-label="Toggle menu"`
+- `aria-expanded="false"` (toggles to `"true"` when open)
+- `aria-controls="mainNav"`
+
+### 22.5 Landing Page Overrides
+
+Landing pages (e.g., `focus-studio.html`) require CSS override to show header immediately:
+
+```css
+/* Override main.css header to be visible by default on landing pages */
+.header {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+}
+
+.header__logo-icon,
+.header__logo-text {
+    opacity: 1 !important;
+}
+```
+
+### 22.6 Ambient Lighting (Optional)
+
+Landing pages may include the header ambient lighting animation:
+
+```javascript
+// Ambient header lighting animation
+(function() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const header = document.querySelector('.header');
+    const headerGlass = document.querySelector('.header__glass');
+    if (!header || !headerGlass) return;
+
+    // Immediately enable lights (no intro animation on landing pages)
+    header.classList.add('lights-on');
+
+    let pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
+    let lastFrame = 0;
+    const FRAME_INTERVAL = 1000 / 30; // 30fps
+
+    function animateLights(timestamp) {
+        if (timestamp - lastFrame < FRAME_INTERVAL) {
+            requestAnimationFrame(animateLights);
+            return;
+        }
+        lastFrame = timestamp;
+        pos1 += dir1 * 0.06;
+        pos2 += dir2 * 0.05;
+        if (pos1 > 35 || pos1 < 10) dir1 *= -1;
+        if (pos2 > 90 || pos2 < 60) dir2 *= -1;
+        headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
+        headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
+        requestAnimationFrame(animateLights);
+    }
+    requestAnimationFrame(animateLights);
+})();
+```
+
+### 22.7 Mobile Menu JavaScript
+
+Required on all pages with mobile menu:
+
+```javascript
+(function() {
+    const toggle = document.querySelector('.header__toggle');
+    const nav = document.querySelector('.header__nav');
+    const header = document.querySelector('.header');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', function() {
+        const isOpen = nav.classList.toggle('is-open');
+        toggle.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen);
+        if (header) header.classList.toggle('nav-open', isOpen);
+    });
+
+    nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('is-open');
+            toggle.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+            if (header) header.classList.remove('nav-open');
+        });
+    });
+})();
+```
+
+### 22.8 Universal Header Component
+
+A JavaScript-based universal header is available at `/components/header.js`. It auto-injects the standard header with mobile menu and ambient lighting.
+
+**Usage:**
+```html
+<!-- Universal Header -->
+<script src="/components/header.js"></script>
+```
+
+**Pages using universal header:**
+- `/src/pages/ads/focus-studio.html`
+- `/src/pages/exploratory.html`
+- `/src/pages/book.html`
+- `/src/pages/ads/core-services.html`
+- `/src/pages/clarity-session.html`
+- `/src/pages/ads/brand-clarity-call.html`
+- `/src/pages/ads/website-clarity-call.html`
+
+### 22.9 Pages with Intentional Custom Headers
+
+Some pages have custom header designs for specific UX or conversion purposes:
+
+| Page | Header Type | Reason |
+|------|-------------|--------|
+| `sudbury-focus-studio.html` | Minimal (logo only) | Google Ads landing page — focus on conversion |
+| `website-conversion-snapshot.html` | Minimal (centered logo) | Google Ads landing page |
+| `brand-clarity-diagnostic.html` | Minimal (centered logo) | Google Ads landing page |
+| `website-audit.html` | Custom V3 theme | Legacy page with different design system |
+| All `/intake/*.html` pages | Intake header (back + logo) | Form pages need back navigation |
+| `payment-confirmed.html` | Tier badge header | Confirmation page with service tier context |
+| `snapshot-confirmed.html` | Tier badge header | Confirmation page with service tier context |
+| `booking-confirmed.html` | Tier badge header | Confirmation page with service tier context |
+
+**Do not update these pages to use the universal header without explicit instruction.**
+
+---
+
+## 23. Brand Moments & Micro-Activations (Canonical Definition)
 
 Brand Moments & Micro-Activations are concept-led brand expressions in the physical world.
 
-### 21.1 Philosophy
+### 23.1 Philosophy
 
 They prioritize:
 - **Meaning over scale**
@@ -734,21 +979,21 @@ They prioritize:
 
 Scale is irrelevant. Intent is everything.
 
-### 21.2 What Qualifies
+### 23.2 What Qualifies
 
 - Launch moments
 - Pop-up concepts or installations
 - Brand-led gatherings
 - Spatial expressions of brand identity
 
-### 21.3 What Bertrand Brands Provides
+### 23.3 What Bertrand Brands Provides
 
 - Concept and narrative design
 - Experience structure and intent
 - Visual and spatial coherence
 - Atmosphere, flow, and meaning
 
-### 21.4 What Is Excluded by Default
+### 23.4 What Is Excluded by Default
 
 - Event logistics
 - Staffing
@@ -758,7 +1003,7 @@ Scale is irrelevant. Intent is everything.
 
 These may be handled collaboratively or via partners, but are not core obligations.
 
-### 21.5 Integration Rule (Critical)
+### 23.5 Integration Rule (Critical)
 
 Brand Moments & Micro-Activations are **never the entry point**.
 
@@ -769,7 +1014,7 @@ They may only be introduced through:
 
 If a request is "just an event," it is out of scope.
 
-### 21.6 Internal Guardrail
+### 23.6 Internal Guardrail
 
 A Brand Moment must satisfy at least one of the following:
 - Marks a transition
@@ -779,7 +1024,7 @@ A Brand Moment must satisfy at least one of the following:
 
 If none apply, Bertrand Brands does not pursue the engagement.
 
-### 21.7 Language & Tone Rules
+### 23.7 Language & Tone Rules
 
 - Declarative, not promotional
 - No hype or trend language
