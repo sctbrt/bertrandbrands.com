@@ -2721,7 +2721,41 @@
             position: relative;
         }
 
-        /* Blue spotlight accents for B Exploratory */
+        /* Blue spotlight accents for B Exploratory - animated drift */
+        @keyframes exploratoryDrift1 {
+            0%, 100% {
+                transform: translateY(-30%) translateX(0);
+                opacity: 0.12;
+            }
+            25% {
+                transform: translateY(-35%) translateX(3%);
+                opacity: 0.14;
+            }
+            50% {
+                transform: translateY(-28%) translateX(-2%);
+                opacity: 0.10;
+            }
+            75% {
+                transform: translateY(-32%) translateX(1%);
+                opacity: 0.13;
+            }
+        }
+
+        @keyframes exploratoryDrift2 {
+            0%, 100% {
+                transform: translateY(30%) translateX(0);
+                opacity: 0.12;
+            }
+            33% {
+                transform: translateY(25%) translateX(-3%);
+                opacity: 0.14;
+            }
+            66% {
+                transform: translateY(33%) translateX(2%);
+                opacity: 0.10;
+            }
+        }
+
         .exploratory-sessions::before,
         .exploratory-sessions::after {
             content: '';
@@ -2740,6 +2774,7 @@
             top: 0;
             left: 5%;
             transform: translateY(-30%);
+            animation: exploratoryDrift1 20s ease-in-out infinite;
         }
 
         .exploratory-sessions::after {
@@ -2749,6 +2784,15 @@
             bottom: 0;
             right: 5%;
             transform: translateY(30%);
+            animation: exploratoryDrift2 25s ease-in-out infinite;
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .exploratory-sessions::before,
+            .exploratory-sessions::after {
+                animation: none;
+            }
         }
 
         /* Ensure content stays above spotlights */
@@ -2890,11 +2934,12 @@
                 font-size: 0.8125rem;
             }
 
-            /* Reduce spotlight intensity on mobile for performance */
+            /* Reduce spotlight intensity and slow animation on mobile for performance */
             .exploratory-sessions::before,
             .exploratory-sessions::after {
                 filter: blur(80px);
                 opacity: 0.08;
+                animation-duration: 30s; /* Slower on mobile */
             }
 
             .exploratory-sessions::before {
