@@ -81,11 +81,20 @@ Purpose: Low-friction entry, qualification, and clarity. Not asset delivery.
 
 Purpose: Fast, fixed-scope studio work with clear timelines and pricing.
 
-| Offering | Price | Timeline |
-|----------|-------|----------|
-| Quick Website Refresh | $750 CAD | 1 business day |
-| One-Page Redesign | $1,250 CAD | 2–3 business days |
-| Brandmarking Package | $950 CAD | 5–7 business days |
+| Offering | Price | Timeline | Notes |
+|----------|-------|----------|-------|
+| Starter Site | $750 CAD | 1 business day | Template-assisted, fast-launch website. Built for speed and simplicity. |
+| One-Page Redesign | $1,250 CAD | 2–3 business days | Fully custom, code-based. No templates, no builders. |
+| Brandmark & Visual Identity | $950 CAD | 5–7 business days | Primary brandmark + supporting marks + visual direction. |
+
+**Offering Distinctions (Critical):**
+- **Starter Site** = speed & simplicity (template-assisted, managed builder)
+- **One-Page Redesign** = custom & crafted (code-based, no templates)
+- These are parallel options, not upgrades of each other
+
+**Platform Rule:**
+- Do NOT name or foreground the website builder platform (e.g., Wix) in client-facing copy
+- Position as "Starter" or "Launch" solution, not "builder site"
 
 **Rules:**
 - Fixed scope only
@@ -619,9 +628,9 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - `/intake/focus-studio` → B Focus Studio intake form
 
 **Focus Studio Offerings (all via shared intake):**
-- Quick Website Refresh ($750)
+- Starter Site ($750)
 - One-Page Redesign ($1,250)
-- Brandmarking Package ($950)
+- Brandmark & Visual Identity ($950)
 
 ### Core Services Routes (Tier 3)
 - `/core-services` → Core Services landing page
@@ -846,6 +855,7 @@ Added `contain: layout style` to:
 | 5.2.1 | Feb 2026 | Added Section 22: Header Navigation Standard (LOCKED) — canonical reference for all pages |
 | 5.2.2 | Feb 2026 | Implemented universal header component (`/components/header.js`), updated 7 pages to use it, documented exceptions |
 | 5.3.0 | Feb 2026 | Reordered homepage services to Tier 1→2→3; added organic dynamic lighting to Contact section; documented lighting pattern in Section 5.3 |
+| 5.4.0 | Feb 2026 | Focus Studio offering restructure: Quick Website Refresh → Starter Site; Brandmarking Package → Brandmark & Visual Identity; added explicit distinction between template-assisted vs. custom code offerings |
 
 ---
 

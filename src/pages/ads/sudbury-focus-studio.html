@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://bertrandbrands.com/sudbury">
     <meta name="theme-color" content="#0a0a0a">
     <title>B Focus Studio — Fast Website & Brand Fixes for Sudbury Businesses</title>
-    <meta name="description" content="Focused brand and website work—done fast, done properly. Quick Website Refresh, One-Page Redesign, and Brandmarking for Sudbury and Northern Ontario businesses.">
+    <meta name="description" content="Focused brand and website work—done fast, done properly. Starter Site, One-Page Redesign, and Brandmark & Visual Identity for Sudbury and Northern Ontario businesses.">
 
     <!-- Open Graph -->
     <meta property="og:title" content="B Focus Studio — Fast Website & Brand Fixes for Sudbury Businesses">
@@ -51,9 +51,9 @@
         "@type": "OfferCatalog",
         "name": "Focus Studio Offerings",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Quick Website Refresh" }, "price": "750", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site" }, "price": "750", "priceCurrency": "CAD" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page Redesign" }, "price": "1250", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmarking Package" }, "price": "950", "priceCurrency": "CAD" }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmark & Visual Identity" }, "price": "950", "priceCurrency": "CAD" }
         ]
       }
     }
@@ -265,6 +265,27 @@
             font-style: italic;
             text-align: center;
             margin-top: var(--space-3);
+        }
+
+        /* Already have a website callout */
+        .fs-offerings__existing-site {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: var(--space-6);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--border);
+        }
+
+        .fs-offerings__existing-site a {
+            color: var(--focus-accent);
+            text-decoration: none;
+            transition: color var(--duration-fast) var(--ease-out);
+        }
+
+        .fs-offerings__existing-site a:hover {
+            color: var(--text);
         }
 
         /* Secondary Offerings */
@@ -645,20 +666,23 @@
             <div class="container">
                 <div class="fs-offering--primary">
                     <span class="fs-offering__timeline">Delivered in 1 business day</span>
-                    <h2 class="fs-offering__title">Quick Website Refresh</h2>
-                    <p class="fs-offering__description">A focused improvement pass on your existing website.</p>
+                    <h2 class="fs-offering__title">Starter Site</h2>
+                    <p class="fs-offering__description">A fast-launch website built for speed and simplicity.</p>
                     <ul class="fs-offering__list">
-                        <li>Fix clarity, messaging, and page flow</li>
-                        <li>Improve mobile usability and layout</li>
-                        <li>Strengthen calls-to-action and conversion paths</li>
-                        <li>Light visual polish within your existing design</li>
+                        <li>Clean, structured, mobile-friendly layout</li>
+                        <li>Clear messaging and contact flow</li>
+                        <li>Fast turnaround with managed hosting</li>
+                        <li>Easy to update and maintain</li>
                     </ul>
                     <div class="fs-offering__footer">
                         <p class="fs-offering__price">$750 <span>CAD</span></p>
-                        <a href="#get-started" class="fs-offering__cta">Fix My Website →</a>
+                        <a href="#get-started" class="fs-offering__cta">Get Started →</a>
                     </div>
                     <p class="fs-offering__note">Most businesses start here.</p>
                 </div>
+
+                <!-- Already have a website callout -->
+                <p class="fs-offerings__existing-site">Already have a website? <a href="/?skip#services">See our other service offerings →</a></p>
 
                 <!-- Secondary Options -->
                 <p class="fs-offerings__secondary-label">Need something different?</p>
@@ -666,15 +690,15 @@
                     <a href="/focus-studio#one-page-redesign" class="fs-offering">
                         <span class="fs-offering__timeline">2–3 business days</span>
                         <h3 class="fs-offering__title">One-Page Redesign</h3>
-                        <p class="fs-offering__description">A clean, modern single-page site that replaces the clutter.</p>
+                        <p class="fs-offering__description">A fully custom, code-based one-page website. No templates, no builders.</p>
                         <div class="fs-offering__footer">
                             <p class="fs-offering__price">$1,250 <span>CAD</span></p>
                         </div>
                     </a>
                     <a href="/focus-studio#brandmarking" class="fs-offering">
                         <span class="fs-offering__timeline">5–7 business days</span>
-                        <h3 class="fs-offering__title">Brandmarking Package</h3>
-                        <p class="fs-offering__description">A complete, usable brandmark that works everywhere your business appears.</p>
+                        <h3 class="fs-offering__title">Brandmark & Visual Identity</h3>
+                        <p class="fs-offering__description">A complete brandmark with supporting visual direction that works everywhere.</p>
                         <div class="fs-offering__footer">
                             <p class="fs-offering__price">$950 <span>CAD</span></p>
                         </div>
@@ -695,9 +719,9 @@
                     <div class="fs-form__group">
                         <label class="fs-form__label" for="offering">Which offering?</label>
                         <select class="fs-form__select" id="offering" name="offering" required>
-                            <option value="Quick Website Refresh ($750)" selected>Quick Website Refresh — $750 (Recommended)</option>
-                            <option value="One-Page Redesign ($1,250)">One-Page Redesign — $1,250</option>
-                            <option value="Brandmarking Package ($950)">Brandmarking Package — $950</option>
+                            <option value="Starter Site ($750)" selected>Starter Site — $750 (Recommended)</option>
+                            <option value="One-Page Redesign ($1,250)">One-Page Redesign — $1,250 (Custom code)</option>
+                            <option value="Brandmark & Visual Identity ($950)">Brandmark & Visual Identity — $950</option>
                         </select>
                     </div>
 
