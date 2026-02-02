@@ -2719,7 +2719,6 @@
             margin-top: var(--space-lg);
             padding: var(--space-lg) 0;
             position: relative;
-            overflow: hidden;
         }
 
         /* Blue spotlight accents for B Exploratory */
@@ -2729,24 +2728,34 @@
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
-            filter: blur(100px);
-            opacity: 0.15;
+            filter: blur(120px);
+            opacity: 0.12;
+            z-index: 0;
         }
 
         .exploratory-sessions::before {
-            width: 350px;
-            height: 350px;
+            width: 400px;
+            height: 400px;
             background: #2563EB;
-            top: -120px;
-            left: -80px;
+            top: 0;
+            left: 5%;
+            transform: translateY(-30%);
         }
 
         .exploratory-sessions::after {
-            width: 300px;
-            height: 300px;
+            width: 350px;
+            height: 350px;
             background: #2563EB;
-            bottom: -100px;
-            right: -60px;
+            bottom: 0;
+            right: 5%;
+            transform: translateY(30%);
+        }
+
+        /* Ensure content stays above spotlights */
+        .exploratory-sessions__header,
+        .exploratory-sessions__grid {
+            position: relative;
+            z-index: 1;
         }
 
         .exploratory-sessions__header {
@@ -2884,18 +2893,20 @@
             /* Reduce spotlight intensity on mobile for performance */
             .exploratory-sessions::before,
             .exploratory-sessions::after {
-                filter: blur(60px);
-                opacity: 0.06;
+                filter: blur(80px);
+                opacity: 0.08;
             }
 
             .exploratory-sessions::before {
-                width: 200px;
-                height: 200px;
+                width: 250px;
+                height: 250px;
+                left: 0;
             }
 
             .exploratory-sessions::after {
-                width: 180px;
-                height: 180px;
+                width: 220px;
+                height: 220px;
+                right: 0;
             }
         }
 
