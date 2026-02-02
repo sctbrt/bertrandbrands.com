@@ -2718,6 +2718,35 @@
         .exploratory-sessions {
             margin-top: var(--space-lg);
             padding: var(--space-lg) 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Blue spotlight accents for B Exploratory */
+        .exploratory-sessions::before,
+        .exploratory-sessions::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(100px);
+            opacity: 0.15;
+        }
+
+        .exploratory-sessions::before {
+            width: 350px;
+            height: 350px;
+            background: #2563EB;
+            top: -120px;
+            left: -80px;
+        }
+
+        .exploratory-sessions::after {
+            width: 300px;
+            height: 300px;
+            background: #2563EB;
+            bottom: -100px;
+            right: -60px;
         }
 
         .exploratory-sessions__header {
@@ -2850,6 +2879,23 @@
 
             .exploratory-sessions__card-description {
                 font-size: 0.8125rem;
+            }
+
+            /* Reduce spotlight intensity on mobile for performance */
+            .exploratory-sessions::before,
+            .exploratory-sessions::after {
+                filter: blur(60px);
+                opacity: 0.06;
+            }
+
+            .exploratory-sessions::before {
+                width: 200px;
+                height: 200px;
+            }
+
+            .exploratory-sessions::after {
+                width: 180px;
+                height: 180px;
             }
         }
 
