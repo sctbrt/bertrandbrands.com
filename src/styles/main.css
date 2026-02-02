@@ -3380,36 +3380,38 @@
             position: relative;
             padding: var(--space-lg);
             scroll-margin-top: 5rem;
-            overflow: hidden;
+            overflow: visible;
             background: rgba(139, 92, 246, 0.03);
             border: 1px solid rgba(139, 92, 246, 0.15);
             border-radius: 16px;
         }
 
-        /* Violet ambient glow - contained within the section */
+        /* Ambient spotlight container - allows overflow for glow effect */
         .focused-studio__glow {
             position: absolute;
-            inset: 0;
+            top: -100px;
+            left: -200px;
+            right: -200px;
+            bottom: -100px;
             pointer-events: none;
             z-index: 0;
-            overflow: hidden;
         }
 
-        /* Violet ambient wash - centered glow effect */
+        /* Violet ambient wash - spreads across entire section */
         .focused-studio__glow::before {
             content: '';
             position: absolute;
-            width: 150%;
-            height: 150%;
+            width: 120%;
+            height: 100%;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0.2) 25%, rgba(139, 92, 246, 0.1) 45%, rgba(139, 92, 246, 0.04) 65%, transparent 85%);
-            filter: blur(40px);
+            background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 30%, rgba(139, 92, 246, 0.08) 50%, rgba(139, 92, 246, 0.03) 70%, transparent 100%);
+            filter: blur(60px);
             animation: violetAmbientBreathe 15s ease-in-out infinite;
         }
 
-        /* Amber accent - subtle, from the right edge (hidden by violet-only modifier) */
+        /* Amber accent - subtle, from the right edge */
         .focused-studio__glow::after {
             content: '';
             position: absolute;
