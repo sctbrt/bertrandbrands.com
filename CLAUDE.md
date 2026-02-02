@@ -104,7 +104,7 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 
 | Offering | Pricing | Notes |
 |----------|---------|-------|
-| Strategic Brand Audit | Private | Discovery-led |
+| Strategic Brand Review | Private | Discovery-led |
 | Digital Platform Build | Private | Multi-page website built as a brand platform |
 | Brand Reset | Private | Strategic realignment of positioning and system |
 | Full Brand + Platform Reset | Private | End-to-end brand and digital reset |
@@ -132,7 +132,7 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 
 **Homepage Section Order (Top to Bottom):**
 1. **B Focus Studio** — Primary, largest, most prominent
-2. **B Core Services** — Includes both Audits & Reviews and Builds & Resets
+2. **B Core Services** — Includes both Reviews and Builds & Resets
 3. **B Exploratory Sessions** — Subtle, contextual ("Not sure where to start?")
 
 **Key Visual Rules:**
@@ -558,7 +558,7 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - `/core-services` → Core Services landing page
 
 **Core Services Offerings (max 5):**
-- Strategic Brand Audit
+- Strategic Brand Review
 - Digital Platform Build
 - Brand Reset
 - Full Brand + Platform Reset
