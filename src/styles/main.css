@@ -3450,6 +3450,11 @@
             }
         }
 
+        /* Violet-only modifier: hide the amber accent */
+        .focused-studio__glow--violet-only::after {
+            display: none;
+        }
+
         /* Ensure content stays above spotlights */
         .focused-studio__header,
         .focused-studio__grid,
