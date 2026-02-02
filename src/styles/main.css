@@ -3864,16 +3864,32 @@
             position: relative;
         }
 
-        /* Warm orange spotlight behind "Let's talk" */
+        /* Primary warm amber spotlight */
         .contact::before {
             content: '';
             position: absolute;
             width: 500px;
             height: 400px;
             top: 0;
-            left: 50%;
+            left: 45%;
             transform: translateX(-50%) translateY(-20%);
-            background: radial-gradient(ellipse, var(--accent-glow) 0%, rgba(217, 119, 6, 0.15) 40%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(217, 119, 6, 0.25) 0%, rgba(217, 119, 6, 0.1) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        /* Secondary cooler accent spotlight for depth */
+        .contact::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 350px;
+            top: 10%;
+            left: 55%;
+            transform: translateX(-50%) translateY(-10%);
+            background: radial-gradient(ellipse, rgba(180, 83, 9, 0.2) 0%, rgba(180, 83, 9, 0.08) 45%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             opacity: 0;
@@ -3881,21 +3897,63 @@
         }
 
         .reveal.is-visible.contact::before {
-            animation: contactSpotlight 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: contactSpotlightPrimary 2s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                       contactDriftPrimary 8s ease-in-out 2s infinite;
         }
 
-        @keyframes contactSpotlight {
+        .reveal.is-visible.contact::after {
+            animation: contactSpotlightSecondary 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                       contactDriftSecondary 10s ease-in-out 2.5s infinite;
+        }
+
+        @keyframes contactSpotlightPrimary {
             0% {
                 opacity: 0;
                 transform: translateX(-50%) translateY(-30%) scale(0.6);
             }
-            40% {
-                opacity: 0.6;
+            100% {
+                opacity: 0.5;
                 transform: translateX(-50%) translateY(-15%) scale(1);
             }
+        }
+
+        @keyframes contactSpotlightSecondary {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20%) scale(0.5);
+            }
             100% {
-                opacity: 0.35;
-                transform: translateX(-50%) translateY(-10%) scale(1.1);
+                opacity: 0.4;
+                transform: translateX(-50%) translateY(-5%) scale(1);
+            }
+        }
+
+        /* Gentle organic drift for primary spotlight */
+        @keyframes contactDriftPrimary {
+            0%, 100% {
+                transform: translateX(-50%) translateY(-15%) scale(1);
+            }
+            25% {
+                transform: translateX(-52%) translateY(-18%) scale(1.02);
+            }
+            50% {
+                transform: translateX(-48%) translateY(-12%) scale(0.98);
+            }
+            75% {
+                transform: translateX(-51%) translateY(-16%) scale(1.01);
+            }
+        }
+
+        /* Counter-drift for secondary spotlight */
+        @keyframes contactDriftSecondary {
+            0%, 100% {
+                transform: translateX(-50%) translateY(-5%) scale(1);
+            }
+            33% {
+                transform: translateX(-48%) translateY(-8%) scale(1.03);
+            }
+            66% {
+                transform: translateX(-52%) translateY(-3%) scale(0.97);
             }
         }
 
@@ -4710,9 +4768,15 @@
                 filter: blur(30px);
             }
 
-            /* Simplify contact spotlight */
+            /* Simplify contact spotlights on mobile - no drift animations */
             .reveal.is-visible.contact::before {
                 filter: blur(40px);
+                animation: contactSpotlightPrimary 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+
+            .reveal.is-visible.contact::after {
+                filter: blur(35px);
+                animation: contactSpotlightSecondary 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             }
 
             /* Disable scroll hint bounce - static instead */
