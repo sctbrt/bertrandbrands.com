@@ -3126,6 +3126,19 @@
             gap: var(--space-md);
         }
 
+        /* Core Services: balanced 2x2 grid */
+        .services--core {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 700px) {
+            .services--core {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* V5.0: Refined service card transitions */
         .service {
             padding: var(--space-lg);
