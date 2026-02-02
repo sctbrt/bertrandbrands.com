@@ -231,10 +231,10 @@
                         <p class="about__text">Based in Greater Sudbury, serving Northern Ontario and clients across Canada.</p>
                     </div>
                     <div class="about__cta">
-                        <a href="/scottbertrand" class="about__cta-link">
+                        <button type="button" class="about__cta-link" data-founder-trigger>
                             <span class="about__cta-label">Meet the founder</span>
                             <span class="about__cta-name">About Scott →</span>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -593,6 +593,23 @@
                 <h3>Check your email</h3>
                 <p>We've sent a link to view pricing. It expires in 15 minutes.</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Founder Lightbox -->
+    <div class="founder-lightbox" id="founderLightbox" role="dialog" aria-modal="true" aria-labelledby="founderLightboxTitle">
+        <div class="founder-lightbox__backdrop" data-founder-close></div>
+        <div class="founder-lightbox__content">
+            <button type="button" class="founder-lightbox__close" data-founder-close aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h2 class="founder-lightbox__title" id="founderLightboxTitle">Scott Bertrand</h2>
+            <p class="founder-lightbox__text">I'm Scott Bertrand — a brand and web systems builder in Northern Ontario. I design calm, premium digital experiences and build the structure behind them so they stay clear, consistent, and easy to run.</p>
+            <p class="founder-lightbox__text">I lead Bertrand Brands, helping founders refine identity, rebuild websites, and install durable systems that hold up in the real world.</p>
+            <a href="https://scottbertrand.com/about" class="founder-lightbox__cta" target="_blank" rel="noopener">Learn more about Scott →</a>
         </div>
     </div>
 
@@ -1238,6 +1255,39 @@
         (function() {
             const yearEl = document.getElementById('currentYear');
             if (yearEl) yearEl.textContent = new Date().getFullYear();
+        })();
+
+        // Founder Lightbox
+        (function() {
+            const lightbox = document.getElementById('founderLightbox');
+            if (!lightbox) return;
+
+            const openLightbox = () => {
+                lightbox.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeLightbox = () => {
+                lightbox.classList.remove('is-open');
+                document.body.style.overflow = '';
+            };
+
+            // Open triggers
+            document.querySelectorAll('[data-founder-trigger]').forEach(el => {
+                el.addEventListener('click', openLightbox);
+            });
+
+            // Close triggers
+            document.querySelectorAll('[data-founder-close]').forEach(el => {
+                el.addEventListener('click', closeLightbox);
+            });
+
+            // Close on Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
+                    closeLightbox();
+                }
+            });
         })();
 
         // Contact form with AJAX submission, notifications, and feedback
