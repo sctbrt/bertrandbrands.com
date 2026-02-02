@@ -3411,19 +3411,9 @@
             animation: violetAmbientBreathe 15s ease-in-out infinite;
         }
 
-        /* Amber accent - subtle, from the right edge */
+        /* Amber accent - DISABLED (violet-only) */
         .focused-studio__glow::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(217, 119, 6, 0.25) 0%, rgba(217, 119, 6, 0.1) 40%, transparent 70%);
-            filter: blur(70px);
-            top: 30%;
-            right: -5%;
-            transform: translateY(-50%);
-            animation: amberAccentBreathe 18s ease-in-out infinite;
+            display: none;
         }
 
         /* Violet: gentle ambient breathing */
@@ -3448,11 +3438,6 @@
                 transform: translateY(-45%) scale(1.08);
                 opacity: 1;
             }
-        }
-
-        /* Violet-only modifier: hide the amber accent */
-        .focused-studio__glow--violet-only::after {
-            display: none;
         }
 
         /* Ensure content stays above spotlights */
