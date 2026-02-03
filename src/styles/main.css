@@ -2221,6 +2221,13 @@
             position: relative;
         }
 
+        .section__scope {
+            font-size: 0.875rem;
+            color: var(--text-subtle);
+            margin-top: 0.5rem;
+            letter-spacing: 0.01em;
+        }
+
         /* Sweeping beam of light - starts from left, crosses through section */
         .section--process::before {
             content: '';
@@ -2893,14 +2900,12 @@
         }
 
         .exploratory-sessions__header {
-            text-align: center;
             margin-bottom: var(--space-md);
         }
 
         .exploratory-sessions__brand {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.625rem;
             margin-bottom: var(--space-xs);
             text-decoration: none;
@@ -2938,7 +2943,6 @@
             font-size: 0.875rem;
             color: var(--text-muted);
             max-width: 540px;
-            margin: 0 auto;
             line-height: 1.6;
         }
 
@@ -2946,8 +2950,6 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: var(--space-md);
-            max-width: 700px;
-            margin: 0 auto;
         }
 
         .exploratory-sessions__card {
@@ -2992,6 +2994,36 @@
 
         .exploratory-sessions__card:hover::before {
             opacity: 1;
+        }
+
+        /* Watermark icons for Exploratory cards */
+        .exploratory-sessions__card::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 100px;
+            height: 100px;
+            opacity: 0.06;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none;
+            transition: opacity var(--duration-fast) var(--ease-out);
+        }
+
+        .exploratory-sessions__card:hover::after {
+            opacity: 0.1;
+        }
+
+        /* Compass icon - Direction Call */
+        .exploratory-sessions__card[data-icon="compass"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolygon points='16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'/%3E%3C/svg%3E");
+        }
+
+        /* Lightbulb icon - Clarity Session */
+        .exploratory-sessions__card[data-icon="lightbulb"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3Cpath d='M12 2a7 7 0 0 0-4 12.9V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.1A7 7 0 0 0 12 2z'/%3E%3C/svg%3E");
         }
 
         .exploratory-sessions__card-header {
@@ -3142,8 +3174,6 @@
         /* Core Services: balanced 2x2 grid */
         .services--core {
             grid-template-columns: repeat(2, 1fr);
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         @media (max-width: 700px) {
@@ -3195,6 +3225,46 @@
 
         .service:hover::before {
             opacity: 1;
+        }
+
+        /* Watermark icons for Core Services cards */
+        .service::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 120px;
+            height: 120px;
+            opacity: 0.05;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none;
+            transition: opacity var(--duration-fast) var(--ease-out);
+        }
+
+        .service:hover::after {
+            opacity: 0.08;
+        }
+
+        /* Search/magnifying glass icon - Strategic Brand Review */
+        .service[data-icon="search"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+        }
+
+        /* Layers icon - Digital Platform Build */
+        .service[data-icon="layers"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 2 7 12 12 22 7 12 2'/%3E%3Cpolyline points='2 17 12 22 22 17'/%3E%3Cpolyline points='2 12 12 17 22 12'/%3E%3C/svg%3E");
+        }
+
+        /* Refresh/cycle icon - Brand Reset */
+        .service[data-icon="refresh"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'/%3E%3Cpath d='M21 3v5h-5'/%3E%3Cpath d='M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16'/%3E%3Cpath d='M8 16H3v5'/%3E%3C/svg%3E");
+        }
+
+        /* Grid icon - Full Brand + Platform Reset */
+        .service[data-icon="grid"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3C/svg%3E");
         }
 
         .service__number {
@@ -3626,12 +3696,47 @@
             opacity: 1;
         }
 
+        /* Watermark icons for Focus Studio cards */
+        .focused-studio__card::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 100px;
+            height: 100px;
+            opacity: 0.06;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none;
+            transition: opacity var(--duration-fast) var(--ease-out);
+        }
+
+        .focused-studio__card:hover::after {
+            opacity: 0.1;
+        }
+
+        /* Rocket icon - Starter Site */
+        .focused-studio__card[data-icon="rocket"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z'/%3E%3Cpath d='M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z'/%3E%3Cpath d='M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'/%3E%3Cpath d='M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5'/%3E%3C/svg%3E");
+        }
+
+        /* Code brackets icon - One-Page Redesign */
+        .focused-studio__card[data-icon="code"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='16 18 22 12 16 6'/%3E%3Cpolyline points='8 6 2 12 8 18'/%3E%3C/svg%3E");
+        }
+
+        /* Pen tool icon - Brandmark & Visual Identity */
+        .focused-studio__card[data-icon="pen"]::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19l7-7 3 3-7 7-3-3z'/%3E%3Cpath d='M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'/%3E%3Cpath d='M2 2l7.586 7.586'/%3E%3Ccircle cx='11' cy='11' r='2'/%3E%3C/svg%3E");
+        }
+
         .focused-studio__card-header {
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
+            flex-direction: column;
+            align-items: flex-start;
             margin-bottom: var(--space-xs);
-            gap: var(--space-sm);
+            gap: 0.25rem;
         }
 
         .focused-studio__card-title {
@@ -3639,13 +3744,13 @@
             font-size: 1.125rem;
             font-weight: 400;
             letter-spacing: -0.01em;
-            min-height: 2.5em; /* Ensures consistent height for titles that may wrap */
         }
 
         .focused-studio__card-timeline {
             font-size: 0.6875rem;
             color: var(--text-subtle);
             white-space: nowrap;
+            order: -1;
         }
 
         .focused-studio__card-description {
@@ -3744,16 +3849,6 @@
 
         /* Mobile adjustments for focused studio - V5.0: Enhanced touch targets and spacing */
         @media (max-width: 768px) {
-            .focused-studio__card-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.25rem;
-            }
-
-            .focused-studio__card-timeline {
-                order: -1;
-            }
-
             /* V5.0: Improve touch targets (min 44px) */
             .focused-studio__card {
                 padding: var(--space-md);

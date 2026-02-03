@@ -22,7 +22,32 @@ This document is the **Bertrand Brands-specific** guide. For full ecosystem cont
 - Structured documentation
 - System integrity and consistency
 
-### 1.2 Core Operating Philosophy
+### 1.2 Deployment Protocol (CRITICAL)
+
+**Vercel has a 100 deploy/day limit. Do not waste deploys.**
+
+**Rules:**
+1. **NEVER deploy after a single change**
+2. **Batch changes** — deploy only when:
+   - At least 5 minor changes accumulated, OR
+   - At least 3 major changes accumulated, OR
+   - Scott explicitly requests a deploy
+3. **Always use local preview first** — run `vercel dev` to verify changes before any deploy
+4. **Track pending changes** — maintain awareness of what's ready to deploy
+5. **Ask before deploying** — "Ready to deploy these X changes?" unless Scott initiated
+
+**What counts as a change:**
+- Minor: text edits, color tweaks, spacing adjustments, typo fixes
+- Major: new sections, structural changes, new pages, feature additions
+
+**Workflow:**
+1. Make change
+2. Test locally (`vercel dev`)
+3. Confirm with Scott
+4. Repeat until threshold met
+5. Deploy once with meaningful commit message
+
+### 1.3 Core Operating Philosophy
 
 **Structure Reduces Anxiety**
 

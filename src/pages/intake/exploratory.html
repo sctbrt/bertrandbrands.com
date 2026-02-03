@@ -260,6 +260,93 @@
             line-height: 1.5;
         }
 
+        /* Validation States */
+        .intake-form__input:invalid:not(:placeholder-shown),
+        .intake-form__textarea:invalid:not(:placeholder-shown),
+        .intake-form__select:invalid:not([data-pristine]) {
+            border-color: #EF4444;
+        }
+
+        .intake-form__input:valid:not(:placeholder-shown),
+        .intake-form__textarea:valid:not(:placeholder-shown) {
+            border-color: #10B981;
+        }
+
+        .intake-form__error {
+            font-size: var(--text-xs);
+            color: #EF4444;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .intake-form__group.has-error .intake-form__error {
+            display: block;
+        }
+
+        .intake-form__group.has-error .intake-form__input,
+        .intake-form__group.has-error .intake-form__textarea {
+            border-color: #EF4444;
+        }
+
+        /* Toast Notifications */
+        .intake-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            z-index: 9999;
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            max-width: calc(100% - 48px);
+            text-align: center;
+        }
+
+        .intake-toast.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .intake-toast--error {
+            background: #7F1D1D;
+            color: #FCA5A5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .intake-toast--success {
+            background: #14532D;
+            color: #86EFAC;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Loading Spinner */
+        .intake-nav__btn--loading {
+            position: relative;
+            color: transparent !important;
+        }
+
+        .intake-nav__btn--loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Radio/Checkbox Options */
         .intake-options {
             display: flex;
@@ -777,23 +864,105 @@
             }
         }
 
+        // Toast notification system
+        function showToast(message, type = 'error') {
+            // Remove existing toast
+            const existingToast = document.querySelector('.intake-toast');
+            if (existingToast) existingToast.remove();
+
+            const toast = document.createElement('div');
+            toast.className = `intake-toast intake-toast--${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            // Trigger animation
+            requestAnimationFrame(() => {
+                toast.classList.add('visible');
+            });
+
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('visible');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        function validateField(field) {
+            const group = field.closest('.intake-form__group');
+            if (!group) return true;
+
+            let isValid = true;
+            let errorMsg = '';
+
+            if (field.required && !field.value.trim()) {
+                isValid = false;
+                errorMsg = 'This field is required';
+            } else if (field.type === 'email' && field.value && !field.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                isValid = false;
+                errorMsg = 'Please enter a valid email address';
+            } else if (field.type === 'tel' && field.value && !field.value.match(/^[\d\s\-\(\)\+]+$/)) {
+                isValid = false;
+                errorMsg = 'Please enter a valid phone number';
+            } else if (field.type === 'url' && field.value && !field.value.match(/^https?:\/\/.+/)) {
+                isValid = false;
+                errorMsg = 'Please enter a valid URL (include https://)';
+            }
+
+            // Update visual state
+            group.classList.toggle('has-error', !isValid);
+            let errorEl = group.querySelector('.intake-form__error');
+            if (!isValid) {
+                if (!errorEl) {
+                    errorEl = document.createElement('p');
+                    errorEl.className = 'intake-form__error';
+                    group.appendChild(errorEl);
+                }
+                errorEl.textContent = errorMsg;
+            }
+
+            return isValid;
+        }
+
         function validateCurrentStep() {
             const currentStepEl = document.querySelector(`.intake-step[data-step="${currentStep}"]`);
             const requiredFields = currentStepEl.querySelectorAll('[required]');
             let valid = true;
+            let firstInvalid = null;
 
             requiredFields.forEach(field => {
                 if (field.type === 'radio') {
                     const radioGroup = currentStepEl.querySelectorAll(`input[name="${field.name}"]`);
                     const checked = Array.from(radioGroup).some(r => r.checked);
-                    if (!checked) valid = false;
-                } else if (!field.value.trim()) {
-                    valid = false;
+                    if (!checked) {
+                        valid = false;
+                        if (!firstInvalid) firstInvalid = field;
+                    }
+                } else {
+                    const fieldValid = validateField(field);
+                    if (!fieldValid) {
+                        valid = false;
+                        if (!firstInvalid) firstInvalid = field;
+                    }
                 }
             });
 
+            if (!valid && firstInvalid) {
+                showToast('Please fill in all required fields', 'error');
+            }
+
             return valid;
         }
+
+        // Add blur validation to all inputs
+        form.querySelectorAll('.intake-form__input, .intake-form__textarea').forEach(field => {
+            field.addEventListener('blur', () => validateField(field));
+            field.addEventListener('input', () => {
+                const group = field.closest('.intake-form__group');
+                if (group && group.classList.contains('has-error')) {
+                    validateField(field);
+                }
+            });
+        });
 
         nextBtn.addEventListener('click', () => {
             if (validateCurrentStep()) {
@@ -801,10 +970,10 @@
                 updateUI();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                // Highlight first empty required field
+                // Focus first invalid field
                 const currentStepEl = document.querySelector(`.intake-step[data-step="${currentStep}"]`);
-                const firstEmpty = currentStepEl.querySelector('[required]:invalid, [required]:not(:checked)');
-                if (firstEmpty) firstEmpty.focus();
+                const firstInvalid = currentStepEl.querySelector('.has-error input, .has-error textarea, [required]:invalid');
+                if (firstInvalid) firstInvalid.focus();
             }
         });
 
@@ -821,7 +990,7 @@
             if (!validateCurrentStep()) return;
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
+            submitBtn.classList.add('intake-nav__btn--loading');
 
             const formData = new FormData(form);
 
@@ -865,8 +1034,8 @@
                 }
             } catch (error) {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit';
-                alert('Something went wrong. Please try again.');
+                submitBtn.classList.remove('intake-nav__btn--loading');
+                showToast('Something went wrong. Please try again.', 'error');
             }
         });
 

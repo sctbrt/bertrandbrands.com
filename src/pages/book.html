@@ -118,7 +118,6 @@
         .book-tier__header {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
             margin-bottom: var(--space-xs);
         }
@@ -137,39 +136,28 @@
             color: var(--text);
         }
 
-        /* Tier-specific colors */
-        .book-tier--exploratory .book-tier__name {
-            color: #2563EB;
-        }
-
-        .book-tier--focus .book-tier__name {
-            color: #8B5CF6;
-        }
-
-        .book-tier--core .book-tier__name {
-            color: var(--accent);
-        }
-
         .book-tier__description {
-            text-align: center;
             font-size: var(--text-sm);
             color: var(--text-muted);
             margin-bottom: var(--space-md);
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 540px;
         }
 
         .book-tier__grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: var(--space-md);
-            max-width: 700px;
-            margin: 0 auto;
         }
 
         .book-tier__grid--single {
+            grid-template-columns: 1fr;
             max-width: 400px;
+        }
+
+        @media (max-width: 600px) {
+            .book-tier__grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Call Cards */
@@ -506,7 +494,7 @@
             <div class="container">
                 <div class="book-tier__header">
                     <img src="/assets/bertrand-brands-logomark.png" alt="" class="book-tier__mark">
-                    <span class="book-tier__name">B Exploratory</span>
+                    <span class="book-tier__name">Exploratory</span>
                 </div>
                 <p class="book-tier__description">Not sure what you need? Start here. We'll help you find the right next step.</p>
                 <div class="book-tier__grid">
