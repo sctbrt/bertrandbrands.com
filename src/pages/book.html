@@ -119,14 +119,78 @@
             font-style: italic;
         }
 
-        /* Intake Section */
+        /* Intake Section - Matches homepage pattern */
         .intake-section {
             padding: var(--space-lg, 2rem) 0 var(--space-xl, 3rem);
+        }
+
+        /* Intake Wrapper - Matches homepage exploratory-sessions container */
+        .intake-wrapper {
+            padding: var(--space-lg);
+            position: relative;
+            background: rgba(37, 99, 235, 0.03);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* Blue spotlight accents - animated drift */
+        @keyframes intakeDrift1 {
+            0%, 100% { transform: translateY(-30%) translateX(0); opacity: 0.12; }
+            25% { transform: translateY(-35%) translateX(3%); opacity: 0.14; }
+            50% { transform: translateY(-28%) translateX(-2%); opacity: 0.10; }
+            75% { transform: translateY(-32%) translateX(1%); opacity: 0.13; }
+        }
+
+        @keyframes intakeDrift2 {
+            0%, 100% { transform: translateY(30%) translateX(0); opacity: 0.12; }
+            33% { transform: translateY(25%) translateX(-3%); opacity: 0.14; }
+            66% { transform: translateY(33%) translateX(2%); opacity: 0.10; }
+        }
+
+        .intake-wrapper::before,
+        .intake-wrapper::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(120px);
+            opacity: 0.12;
+            z-index: 0;
+        }
+
+        .intake-wrapper::before {
+            width: 400px;
+            height: 400px;
+            background: #2563EB;
+            top: 0;
+            left: 5%;
+            transform: translateY(-30%);
+            animation: intakeDrift1 20s ease-in-out infinite;
+        }
+
+        .intake-wrapper::after {
+            width: 350px;
+            height: 350px;
+            background: #2563EB;
+            bottom: 0;
+            right: 5%;
+            transform: translateY(30%);
+            animation: intakeDrift2 25s ease-in-out infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intake-wrapper::before,
+            .intake-wrapper::after {
+                animation: none;
+            }
         }
 
         .intake-section__header {
             text-align: center;
             margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 1;
         }
 
         .intake-section__label {
@@ -149,35 +213,56 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: var(--space-md);
-            max-width: 960px;
-            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .intake-grid {
                 grid-template-columns: 1fr;
                 max-width: 400px;
+                margin: 0 auto;
             }
         }
 
-        /* Intake Cards */
+        @media (max-width: 768px) {
+            .intake-wrapper {
+                padding: var(--space-md);
+            }
+            .intake-wrapper::before,
+            .intake-wrapper::after {
+                filter: blur(80px);
+                opacity: 0.08;
+            }
+            .intake-wrapper::before {
+                width: 250px;
+                height: 250px;
+            }
+            .intake-wrapper::after {
+                width: 220px;
+                height: 220px;
+            }
+        }
+
+        /* Intake Cards - Matches homepage exploratory-sessions__card */
         .intake-card {
-            background: rgba(37, 99, 235, 0.04);
-            border: 1px dashed rgba(37, 99, 235, 0.2);
-            border-radius: var(--radius-lg, 12px);
+            background: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 12px;
             padding: var(--space-lg);
             display: flex;
             flex-direction: column;
-            transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease, transform var(--duration-fast) ease;
+            transition: transform var(--duration-fast) ease, border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
             position: relative;
             overflow: hidden;
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
         }
 
         .intake-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             border-color: rgba(37, 99, 235, 0.4);
-            border-style: solid;
-            background: rgba(37, 99, 235, 0.08);
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+                        0 8px 24px -8px rgba(37, 99, 235, 0.2);
         }
 
         .intake-card::before {
@@ -196,10 +281,13 @@
             opacity: 1;
         }
 
+        .intake-card:active {
+            transform: translateY(-1px);
+        }
+
         .intake-card--recommended {
-            border-style: solid;
-            border-color: rgba(37, 99, 235, 0.35);
-            background: rgba(37, 99, 235, 0.06);
+            border-color: rgba(37, 99, 235, 0.25);
+            background: rgba(37, 99, 235, 0.08);
         }
 
         .intake-card__badge {
@@ -550,91 +638,7 @@
             text-decoration: none;
         }
 
-        /* Ambient Effects - Subtle multi-color */
-        .book-spotlight {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-            will-change: transform, opacity;
-            transform: translateZ(0);
-        }
-
-        .book-spotlight--blue {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 70%);
-            top: 100px;
-            left: -100px;
-            animation: spotlightFadeIn 2s ease-out 0.3s forwards, bookDrift1 30s ease-in-out 2s infinite;
-        }
-
-        .book-spotlight--violet {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.03) 50%, transparent 70%);
-            top: 40%;
-            right: -80px;
-            animation: spotlightFadeIn 2s ease-out 0.5s forwards, bookDrift2 25s ease-in-out 2.5s infinite;
-        }
-
-        .book-spotlight--amber {
-            width: 380px;
-            height: 380px;
-            background: radial-gradient(circle, rgba(217, 119, 6, 0.12) 0%, rgba(217, 119, 6, 0.03) 50%, transparent 70%);
-            bottom: 50px;
-            left: 20%;
-            animation: spotlightFadeIn 2s ease-out 0.7s forwards, bookDrift3 28s ease-in-out 3s infinite;
-        }
-
-        @keyframes spotlightFadeIn {
-            to { opacity: 1; }
-        }
-
-        @keyframes bookDrift1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(20px, 30px) scale(1.03); }
-            66% { transform: translate(-15px, 15px) scale(0.97); }
-        }
-
-        @keyframes bookDrift2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(-25px, -20px) scale(0.98); }
-            66% { transform: translate(15px, -30px) scale(1.02); }
-        }
-
-        @keyframes bookDrift3 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -15px) scale(1.02); }
-            66% { transform: translate(-20px, 20px) scale(0.98); }
-        }
-
-        .book-vignette {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
-        }
-
         @media (max-width: 768px) {
-            .book-spotlight {
-                filter: blur(60px);
-            }
-            .book-spotlight--blue {
-                width: 250px;
-                height: 250px;
-            }
-            .book-spotlight--violet {
-                width: 220px;
-                height: 220px;
-            }
-            .book-spotlight--amber {
-                width: 240px;
-                height: 240px;
-            }
             .routed-card__footer {
                 flex-direction: column;
                 gap: var(--space-sm);
@@ -646,22 +650,9 @@
                 justify-content: center;
             }
         }
-
-        @media (prefers-reduced-motion: reduce) {
-            .book-spotlight {
-                animation: none !important;
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Ambient Effects -->
-    <div class="book-spotlight book-spotlight--blue" aria-hidden="true"></div>
-    <div class="book-spotlight book-spotlight--violet" aria-hidden="true"></div>
-    <div class="book-spotlight book-spotlight--amber" aria-hidden="true"></div>
-    <div class="book-vignette" aria-hidden="true"></div>
-
     <!-- Universal Header -->
     <script src="/components/header.js"></script>
 
@@ -678,12 +669,13 @@
         <!-- Intake Options -->
         <section class="intake-section">
             <div class="container">
-                <div class="intake-section__header">
-                    <p class="intake-section__label">Choose how to start</p>
-                    <h2 class="intake-section__title">Three ways to begin</h2>
-                </div>
+                <div class="intake-wrapper">
+                    <div class="intake-section__header">
+                        <p class="intake-section__label">Choose how to start</p>
+                        <h2 class="intake-section__title">Three ways to begin</h2>
+                    </div>
 
-                <div class="intake-grid">
+                    <div class="intake-grid">
                     <!-- Guided Intake (Recommended) -->
                     <div class="intake-card intake-card--recommended">
                         <span class="intake-card__badge">Recommended</span>
@@ -731,6 +723,7 @@
                             <p class="intake-card__price intake-card__price--free">Free</p>
                             <a href="tel:+17054133705" class="intake-card__cta">Call Now →</a>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
