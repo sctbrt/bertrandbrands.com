@@ -2411,6 +2411,19 @@
             overflow: hidden;
         }
 
+        /* Desktop: scale process section to fill viewport */
+        @media (min-width: 769px) {
+            .section--process {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+            }
+
+            .section--process > .container {
+                width: 100%;
+            }
+        }
+
         .section__header--process {
             position: relative;
             padding-bottom: var(--space-md);
@@ -2423,6 +2436,13 @@
             margin-bottom: 0;
             letter-spacing: 0.01em;
             font-weight: 400;
+        }
+
+        @media (min-width: 769px) {
+            .section__scope {
+                font-size: 1.0625rem;
+                margin-top: 1rem;
+            }
         }
 
         /* Sweeping beam of light - starts from left, crosses through section */
@@ -2622,6 +2642,48 @@
             background: linear-gradient(90deg, rgba(217, 119, 6, 0.3), rgba(217, 119, 6, 0.15));
         }
 
+        /* Desktop: larger icons and wider spacing to fill viewport */
+        @media (min-width: 769px) {
+            .process-journey {
+                margin-top: var(--space-lg);
+                padding: var(--space-md) 0;
+            }
+
+            .process-journey__step {
+                width: 72px;
+                height: 72px;
+            }
+
+            .process-journey__icon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .process-journey__connector {
+                width: 48px;
+            }
+
+            .process-journey__note {
+                margin-top: var(--space-xl);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .process-journey__step {
+                width: 80px;
+                height: 80px;
+            }
+
+            .process-journey__icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .process-journey__connector {
+                width: 64px;
+            }
+        }
+
         /* Labels hidden on desktop, shown on mobile */
         .process-journey__label {
             display: none;
@@ -2632,16 +2694,16 @@
             .process-journey__step::after {
                 content: attr(data-tooltip);
                 position: absolute;
-                top: calc(100% + 12px);
+                top: calc(100% + 14px);
                 left: 0;
                 transform: translateX(0);
-                padding: 8px 12px;
+                padding: 10px 14px;
                 background: rgba(10, 10, 10, 0.98);
                 border: 1px solid rgba(217, 119, 6, 0.25);
                 border-radius: 8px;
                 font-family: var(--font-body);
-                font-size: 0.75rem;
-                line-height: 1.4;
+                font-size: 0.8125rem;
+                line-height: 1.45;
                 color: var(--text);
                 white-space: nowrap;
                 opacity: 0;
@@ -2662,8 +2724,8 @@
             .process-journey__step::before {
                 content: '';
                 position: absolute;
-                top: calc(100% + 1px);
-                left: 20px;
+                top: calc(100% + 3px);
+                left: 24px;
                 transform: translateX(-50%);
                 border: 6px solid transparent;
                 border-bottom-color: rgba(217, 119, 6, 0.25);
