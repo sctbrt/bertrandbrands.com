@@ -68,20 +68,6 @@
             75% { opacity: 0.9; transform: translate(10px, 5px) scale(1.02); }
         }
 
-        @media (max-width: 768px) {
-            .service-page__spotlight { filter: blur(40px); }
-            .service-page__spotlight--1 { width: 250px; height: 250px; }
-            .service-page__spotlight--2 { width: 200px; height: 200px; }
-            .service-page .container { padding: 0 1rem; }
-            .service-hero { padding: var(--space-md) 0 var(--space-sm); }
-            .service-content { padding: var(--space-sm) 0; }
-            .service-card { padding: 1.25rem; max-width: 100%; }
-            .service-card__section { margin-bottom: var(--space-sm); }
-            .service-cta { padding: var(--space-sm) 0 var(--space-md); }
-            .service-cta__card { padding: 1.25rem; max-width: 100%; }
-            .service-subbrand { margin-bottom: var(--space-sm); }
-        }
-
         .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: var(--space-lg); text-decoration: none; transition: opacity var(--duration-fast) ease; }
         .service-subbrand:hover { opacity: 0.8; }
         .service-subbrand__mark { width: 32px; height: 32px; filter: brightness(0) invert(1); }
@@ -123,6 +109,21 @@
         .service-footer__phone { font-size: var(--text-sm); margin-top: 0.5rem; }
         .service-footer__phone a { color: var(--text-muted); text-decoration: none; }
         .service-footer__phone a:hover { color: var(--text); }
+
+        /* Mobile overrides — must be AFTER all desktop rules */
+        @media (max-width: 768px) {
+            .service-page__spotlight { filter: blur(40px); }
+            .service-page__spotlight--1 { width: 250px; height: 250px; }
+            .service-page__spotlight--2 { width: 200px; height: 200px; }
+            .service-page .container { padding: 0 1rem; }
+            .service-hero { padding: var(--space-md) 0 var(--space-sm); }
+            .service-content { padding: var(--space-sm) 0; }
+            .service-card { padding: 1.25rem; max-width: 100%; }
+            .service-card__section { margin-bottom: var(--space-sm); }
+            .service-cta { padding: var(--space-sm) 0 var(--space-md); }
+            .service-cta__card { padding: 1.25rem; max-width: 100%; }
+            .service-subbrand { margin-bottom: var(--space-sm); }
+        }
     </style>
 </head>
 <body>
