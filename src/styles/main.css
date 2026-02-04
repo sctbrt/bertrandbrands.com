@@ -210,6 +210,8 @@
         }
 
         .launch-gate__content {
+            position: relative;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -378,6 +380,134 @@
             animation: launchGlowFadeIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
         }
 
+        /* --- Sparkle particles (looping cinematic effect) --- */
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1);
+            }
+            80% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0.3);
+            }
+        }
+
+        @keyframes sparkleDrift {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0);
+            }
+            12% {
+                opacity: 0.9;
+                transform: translate(4px, -10px) scale(1);
+            }
+            75% {
+                opacity: 0.4;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-8px, -100px) scale(0.2);
+            }
+        }
+
+        @keyframes sparkleFlicker {
+            0%, 100% { opacity: 0; }
+            15% { opacity: 0.8; }
+            50% { opacity: 1; }
+            85% { opacity: 0.5; }
+        }
+
+        .launch-gate__sparkles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .launch-gate__sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 70%);
+            box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.15);
+            opacity: 0;
+        }
+
+        /* Stagger 8 sparkle particles with varied positions, sizes, timing */
+        .launch-gate__sparkle:nth-child(1) {
+            left: 18%;
+            top: 65%;
+            width: 2px;
+            height: 2px;
+            animation: sparkleFloat 4.5s ease-in-out 3s infinite;
+        }
+        .launch-gate__sparkle:nth-child(2) {
+            left: 72%;
+            top: 55%;
+            width: 3px;
+            height: 3px;
+            animation: sparkleDrift 5.2s ease-in-out 3.6s infinite;
+        }
+        .launch-gate__sparkle:nth-child(3) {
+            left: 35%;
+            top: 70%;
+            width: 2px;
+            height: 2px;
+            animation: sparkleFloat 6s ease-in-out 4.2s infinite;
+        }
+        .launch-gate__sparkle:nth-child(4) {
+            left: 82%;
+            top: 45%;
+            width: 4px;
+            height: 4px;
+            box-shadow: 0 0 6px 2px rgba(217, 119, 6, 0.12);
+            animation: sparkleDrift 5.8s ease-in-out 2.8s infinite;
+        }
+        .launch-gate__sparkle:nth-child(5) {
+            left: 50%;
+            top: 75%;
+            width: 2px;
+            height: 2px;
+            animation: sparkleFloat 4.8s ease-in-out 5s infinite;
+        }
+        .launch-gate__sparkle:nth-child(6) {
+            left: 25%;
+            top: 40%;
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 5px 1px rgba(139, 92, 246, 0.1);
+            animation: sparkleDrift 6.5s ease-in-out 3.2s infinite;
+        }
+        .launch-gate__sparkle:nth-child(7) {
+            left: 60%;
+            top: 60%;
+            width: 2px;
+            height: 2px;
+            animation: sparkleFloat 5.5s ease-in-out 4.8s infinite;
+        }
+        .launch-gate__sparkle:nth-child(8) {
+            left: 45%;
+            top: 50%;
+            width: 3px;
+            height: 3px;
+            animation: sparkleDrift 7s ease-in-out 2.5s infinite;
+        }
+
+        /* Separator sparkle flicker (between countdown units) */
+        .launch-gate__countdown-separator {
+            animation: sparkleFlicker 3s ease-in-out 2.5s infinite;
+        }
+
         /* Hide main content when in launch mode */
         body.launch-mode .cursor-glow,
         body.launch-mode .intro,
@@ -390,7 +520,7 @@
             display: none;
         }
 
-        /* Mobile glow optimizations (reduce blur for performance) */
+        /* Mobile glow + sparkle optimizations */
         @media (max-width: 767px) {
             .launch-gate__glow {
                 filter: blur(50px);
@@ -406,6 +536,16 @@
                 height: 60vw;
                 bottom: -20%;
                 left: -15%;
+            }
+            /* Hide half the sparkles on mobile for GPU performance */
+            .launch-gate__sparkle:nth-child(3),
+            .launch-gate__sparkle:nth-child(5),
+            .launch-gate__sparkle:nth-child(7),
+            .launch-gate__sparkle:nth-child(8) {
+                display: none;
+            }
+            .launch-gate__sparkle {
+                box-shadow: none;
             }
         }
 
