@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Thank You | Bertrand Brands</title>
+  <title>Payment Confirmed | Bertrand Brands</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Calendly -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -147,8 +150,9 @@
     }
 
     .container {
-      max-width: 480px;
+      max-width: 700px;
       padding-top: 5rem;
+      width: 100%;
     }
 
     h1 {
@@ -232,9 +236,65 @@
       filter: brightness(1.5);
     }
 
+    /* Calendly Section */
+    .booking {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .booking__label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .booking__title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .booking__calendly {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 650px;
+    }
+
+    .service-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      color: rgba(139, 92, 246, 0.9);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-badge--exploratory {
+      background: rgba(37, 99, 235, 0.1);
+      border-color: rgba(37, 99, 235, 0.25);
+      color: rgba(37, 99, 235, 0.9);
+    }
+
     @media (max-width: 480px) {
       h1 {
         font-size: 1.75rem;
+      }
+
+      .booking__calendly {
+        min-height: 700px;
       }
     }
   </style>
@@ -253,16 +313,14 @@
   </header>
 
   <div class="container">
-    <h1>Thank you for choosing</h1>
-    <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="headline-wordmark">
-    <p>We're looking forward to working with you.</p>
+    <span class="service-badge" id="serviceBadge">Paid</span>
+    <h1>Payment confirmed</h1>
+    <p id="confirmText">Now let's schedule your kickoff call.</p>
 
-    <div class="next-steps">
-      <h2>What happens next</h2>
-      <ul>
-        <li>You'll receive a confirmation email shortly</li>
-        <li>Scott will reach out within 1 business day to get started</li>
-      </ul>
+    <div class="booking">
+      <p class="booking__label">Next Step</p>
+      <h2 class="booking__title">Pick a time that works</h2>
+      <div class="booking__calendly" id="calendlyEmbed"></div>
     </div>
 
     <a href="https://bertrandbrands.com" class="back-link">← Back to Bertrand Brands</a>
@@ -273,63 +331,77 @@
     document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
     document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
 
+    // Service configuration
+    const services = {
+      'clarity-session': {
+        badge: 'Clarity Session — $145',
+        tier: 'Exploratory',
+        tierClass: 'service-badge--exploratory',
+        text: 'Now let\'s schedule your clarity session.',
+        calendly: 'https://calendly.com/bertrandbrands/clarity-session'
+      },
+      'starter-site': {
+        badge: 'Starter Site — $750',
+        tier: 'Focus Studio',
+        tierClass: '',
+        text: 'Now let\'s schedule your kickoff call.',
+        calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+      },
+      'brandmark': {
+        badge: 'Brandmark & Visual Identity — $950',
+        tier: 'Focus Studio',
+        tierClass: '',
+        text: 'Now let\'s schedule your kickoff call.',
+        calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+      }
+    };
+
+    // Get service from URL
+    const params = new URLSearchParams(window.location.search);
+    const serviceKey = params.get('service') || 'starter-site';
+    const service = services[serviceKey] || services['starter-site'];
+
+    // Update page content
+    const badge = document.getElementById('serviceBadge');
+    badge.textContent = service.badge;
+    if (service.tierClass) badge.classList.add(service.tierClass);
+
+    document.getElementById('confirmText').textContent = service.text;
+    document.querySelector('.header__tier').textContent = service.tier;
+
+    // Initialize Calendly when ready
+    function initCalendly() {
+      if (typeof Calendly !== 'undefined') {
+        Calendly.initInlineWidget({
+          url: service.calendly + '?hide_gdpr_banner=1&background_color=0a0a0a&text_color=fafafa&primary_color=d97706',
+          parentElement: document.getElementById('calendlyEmbed'),
+          prefill: {},
+          utm: {}
+        });
+      } else {
+        setTimeout(initCalendly, 100);
+      }
+    }
+    initCalendly();
+
     // Ambient header lighting animation
     (function() {
       const headerGlass = document.querySelector('.header__glass');
       if (!headerGlass) return;
-
-      // Check for reduced motion preference
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-      let pos1 = 15;
-      let pos2 = 85;
-      let dir1 = 1;
-      let dir2 = -1;
+      let pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
 
       function animateLights() {
         pos1 += 0.03 * dir1;
         pos2 += 0.025 * dir2;
-
         if (pos1 > 25 || pos1 < 10) dir1 *= -1;
         if (pos2 > 90 || pos2 < 60) dir2 *= -1;
-
         headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
         headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
         requestAnimationFrame(animateLights);
       }
       requestAnimationFrame(animateLights);
-    })();
-
-    // Background glow drift animation
-    (function() {
-      // Check for reduced motion preference
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-      let glow1X = 20, glow1Y = 30;
-      let glow2X = 80, glow2Y = 70;
-      let dir1X = 1, dir1Y = 1;
-      let dir2X = -1, dir2Y = -1;
-
-      function animateBgGlow() {
-        // Slower, more organic movement
-        glow1X += 0.015 * dir1X;
-        glow1Y += 0.012 * dir1Y;
-        glow2X += 0.018 * dir2X;
-        glow2Y += 0.014 * dir2Y;
-
-        // Bounce within bounds
-        if (glow1X > 35 || glow1X < 10) dir1X *= -1;
-        if (glow1Y > 45 || glow1Y < 20) dir1Y *= -1;
-        if (glow2X > 90 || glow2X < 65) dir2X *= -1;
-        if (glow2Y > 80 || glow2Y < 55) dir2Y *= -1;
-
-        document.body.style.setProperty('--bg-glow-1-x', glow1X + '%');
-        document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
-        document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
-        document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
-        requestAnimationFrame(animateBgGlow);
-      }
-      requestAnimationFrame(animateBgGlow);
     })();
   </script>
 </body>

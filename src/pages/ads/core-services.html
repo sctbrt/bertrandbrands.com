@@ -554,7 +554,8 @@
                         <p class="cs-offering__description">Discovery-led brand analysis. Deep review of positioning, messaging, and visual system with strategic recommendations.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
+                            <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
+                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta cs-cta-discovery" style="display: none;" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
 
@@ -566,7 +567,8 @@
                         <p class="cs-offering__description">Multi-page website built as a brand platform. Strategy-led, built to convert, designed to scale.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
+                            <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
+                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta cs-cta-discovery" style="display: none;" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
 
@@ -578,7 +580,8 @@
                         <p class="cs-offering__description">Strategic realignment of positioning and system. Core brand, messaging, and guidelines rebuilt from the ground up.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
+                            <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
+                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta cs-cta-discovery" style="display: none;" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
 
@@ -590,7 +593,8 @@
                         <p class="cs-offering__description">End-to-end transformation. Brand system and digital platform built together from the ground up.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta" target="_blank" rel="noopener">Book Discovery →</a>
+                            <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
+                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta cs-cta-discovery" style="display: none;" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
                 </div>
@@ -641,6 +645,22 @@
         document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
         document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
 
+        // Check for intake completion and show appropriate CTAs
+        (function() {
+            // Check if intake completed cookie or returning client cookie exists
+            function hasIntakeAccess() {
+                return document.cookie.split(';').some(c =>
+                    c.trim().startsWith('bb_intake_completed=') ||
+                    c.trim().startsWith('bb_returning_client=')
+                );
+            }
+
+            // Show discovery CTAs if intake completed
+            if (hasIntakeAccess()) {
+                document.querySelectorAll('.cs-cta-intake').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.cs-cta-discovery').forEach(el => el.style.display = 'inline-block');
+            }
+        })();
     </script>
 </body>
 </html>

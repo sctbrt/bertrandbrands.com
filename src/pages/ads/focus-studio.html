@@ -523,6 +523,28 @@
             color: var(--focus-accent);
         }
 
+        /* Intake Prompt Styling */
+        .fs-intake-prompt,
+        .fs-booking-prompt {
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .fs-intake-cta {
+            margin: var(--space-lg) 0;
+        }
+
+        .fs-intake-cta .fs-form__submit {
+            padding: 1rem 2.5rem;
+        }
+
+        .fs-intake-note {
+            font-size: var(--text-sm);
+            color: var(--text-subtle);
+            font-style: italic;
+        }
+
         /* Boundary */
         .fs-boundary {
             padding: var(--space-xl, 3rem) 0;
@@ -733,60 +755,35 @@
             </div>
         </section>
 
-        <!-- Request Form -->
+        <!-- Start Here Section -->
         <section class="fs-form-section" id="request">
             <div class="container">
-                <h2 class="fs-form-section__title">Let's fix it</h2>
-                <p class="fs-form-section__subtitle">Tell us what's wrong, then schedule a quick kickoff call. We'll confirm scope and send payment details after.</p>
+                <!-- Default: Intake CTA (shown when no intake completed) -->
+                <div class="fs-intake-prompt" id="intakePrompt">
+                    <h2 class="fs-form-section__title">Ready to get started?</h2>
+                    <p class="fs-form-section__subtitle">All Focus Studio work begins with a quick intake. We'll review your situation and confirm this is the right fit before scheduling.</p>
 
-                <form class="fs-form" action="https://formspree.io/f/xnjjgoay" method="POST" id="focusStudioForm">
-                    <input type="hidden" name="source" value="focus_studio_intake">
-
-                    <div class="fs-form__group">
-                        <label class="fs-form__label" for="offering">Which offering?</label>
-                        <select class="fs-form__select" id="offering" name="offering" required>
-                            <option value="Starter Site ($750)" selected>Starter Site — $750 (Recommended)</option>
-                            <option value="One-Page Redesign ($1,250)">One-Page Redesign — $1,250 (Custom code)</option>
-                            <option value="Brandmark & Visual Identity ($950)">Brandmark & Visual Identity — $950</option>
-                        </select>
+                    <div class="fs-intake-cta">
+                        <a href="/book" class="fs-form__submit" style="display: inline-block; text-decoration: none; text-align: center;">Start Intake →</a>
                     </div>
 
-                    <div class="fs-form__group">
-                        <label class="fs-form__label" for="name">Your name</label>
-                        <input class="fs-form__input" type="text" id="name" name="name" required placeholder="Full name">
-                    </div>
+                    <p class="fs-intake-note">Takes 5 minutes. No commitment required.</p>
+                </div>
 
-                    <div class="fs-form__group">
-                        <label class="fs-form__label" for="business">Business name</label>
-                        <input class="fs-form__input" type="text" id="business" name="business" placeholder="Your business name">
-                    </div>
+                <!-- Conditional: Kickoff booking (shown after intake completed) -->
+                <div class="fs-booking-prompt" id="bookingPrompt" style="display: none;">
+                    <h2 class="fs-form-section__title">Schedule Your Kickoff</h2>
+                    <p class="fs-form-section__subtitle">Based on your intake, you're ready to book a Focus Studio Kickoff. We'll confirm scope and send payment details after.</p>
 
-                    <div class="fs-form__group">
-                        <label class="fs-form__label" for="email">Email</label>
-                        <input class="fs-form__input" type="email" id="email" name="email" required placeholder="you@example.com">
+                    <div class="fs-form__calendly" style="display: block; margin-top: var(--space-md);">
+                        <p class="fs-form__calendly-text">30 minutes · Free · Live Video</p>
+                        <a href="https://calendly.com/bertrandbrands/focus-studio-kickoff" class="fs-form__calendly-cta" target="_blank" rel="noopener">Schedule Kickoff →</a>
                     </div>
-
-                    <div class="fs-form__group">
-                        <label class="fs-form__label" for="website">Your website URL</label>
-                        <input class="fs-form__input" type="url" id="website" name="website" placeholder="https://yoursite.com">
-                    </div>
-
-                    <div class="fs-form__group">
-                        <label class="fs-form__label" for="details">What's not working?</label>
-                        <textarea class="fs-form__textarea" id="details" name="details" required placeholder="What's unclear, broken, or outdated on your current site?"></textarea>
-                    </div>
-
-                    <button type="submit" class="fs-form__submit" id="submitBtn">Submit & Schedule Kickoff →</button>
-                    <div class="fs-form__feedback" id="formFeedback"></div>
-                    <div class="fs-form__calendly" id="calendlyPrompt" style="display: none;">
-                        <p class="fs-form__calendly-text">Now let's find a time to talk.</p>
-                        <a href="https://calendly.com/bertrandbrands/focus-studio-kickoff" class="fs-form__calendly-cta" target="_blank" rel="noopener">Schedule 30-min Kickoff →</a>
-                    </div>
-                </form>
+                </div>
 
                 <div class="fs-form__alt">
-                    <p class="fs-form__alt-text">Already know what you need?</p>
-                    <a href="/book" class="fs-form__alt-link">Skip to scheduling →</a>
+                    <p class="fs-form__alt-text">Have questions first?</p>
+                    <a href="/clarity-session" class="fs-form__alt-link">Book a Clarity Session ($145) →</a>
                 </div>
             </div>
         </section>
@@ -810,59 +807,24 @@
     <script>
         document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
 
-        // Form submission with AJAX
+        // Check for intake completion and show appropriate section
         (function() {
-            const form = document.getElementById('focusStudioForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const feedback = document.getElementById('formFeedback');
+            const intakePrompt = document.getElementById('intakePrompt');
+            const bookingPrompt = document.getElementById('bookingPrompt');
 
-            if (!form) return;
+            // Check if intake completed cookie or returning client cookie exists
+            function hasIntakeAccess() {
+                return document.cookie.split(';').some(c =>
+                    c.trim().startsWith('bb_intake_completed=') ||
+                    c.trim().startsWith('bb_returning_client=')
+                );
+            }
 
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Submitting...';
-                feedback.className = 'fs-form__feedback';
-                feedback.textContent = '';
-
-                try {
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify(Object.fromEntries(new FormData(form)))
-                    });
-
-                    if (response.ok) {
-                        feedback.className = 'fs-form__feedback fs-form__feedback--success';
-                        feedback.textContent = 'Got it! Now schedule your kickoff call below.';
-                        form.style.display = 'none';
-                        document.getElementById('calendlyPrompt').style.display = 'block';
-
-                        // Send Pushover notification
-                        fetch('/api/notify', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                type: 'form',
-                                source: 'focus_studio_intake',
-                                ...Object.fromEntries(new FormData(form))
-                            })
-                        }).catch(() => {});
-                    } else {
-                        throw new Error('Submission failed');
-                    }
-                } catch (error) {
-                    feedback.className = 'fs-form__feedback fs-form__feedback--error';
-                    feedback.textContent = 'Something went wrong. Please try again or email hello@bertrandbrands.com';
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Fix My Website →';
-                }
-            });
+            // Show booking section if intake completed
+            if (hasIntakeAccess() && intakePrompt && bookingPrompt) {
+                intakePrompt.style.display = 'none';
+                bookingPrompt.style.display = 'block';
+            }
         })();
 
         // Pre-select offering when clicking secondary card CTAs

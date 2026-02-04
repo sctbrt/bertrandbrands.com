@@ -28,7 +28,7 @@
                 <a href="/?skip#about" class="header__link">About</a>
                 <a href="/?skip#process" class="header__link">How It Works</a>
                 <a href="/?skip#services" class="header__link">Services</a>
-                <a href="/book" class="header__link header__link--cta">Book a Call</a>
+                <a href="/book" class="header__link header__link--cta">Start Here</a>
                 <span class="header__divider" aria-hidden="true"></span>
                 <a href="https://clients.bertrandbrands.com" class="header__link header__link--portal">Client Portal</a>
             </nav>
