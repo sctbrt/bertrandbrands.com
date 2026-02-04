@@ -5413,6 +5413,15 @@
             color: var(--text);
         }
 
+        /* Founder Lightbox — Mobile */
+        @media (max-width: 768px) {
+            .founder-lightbox { padding: var(--space-sm); }
+            .founder-lightbox__content { padding: 2rem 1.75rem; }
+            .founder-lightbox__title { font-size: 1.5rem; margin-bottom: 1.25rem; }
+            .founder-lightbox__text { font-size: 0.9375rem; line-height: 1.6; }
+            .founder-lightbox__text:last-of-type { margin-bottom: 1.5rem; }
+        }
+
         /* ============================================================
            MOBILE PERFORMANCE OPTIMIZATIONS (V5.0)
            Disable heavy animations and reduce GPU load on mobile
