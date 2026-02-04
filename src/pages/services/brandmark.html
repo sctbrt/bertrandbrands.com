@@ -67,12 +67,12 @@
             75% { opacity: 0.9; transform: translate(10px, 5px) scale(1.02); }
         }
 
-        .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: var(--space-lg); text-decoration: none; transition: opacity var(--duration-fast) ease; }
+        .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: var(--space-md); text-decoration: none; transition: opacity var(--duration-fast) ease; }
         .service-subbrand:hover { opacity: 0.8; }
         .service-subbrand__mark { width: 32px; height: 32px; filter: brightness(0) invert(1); }
         .service-subbrand__name { font-family: 'Fraunces', Georgia, serif; font-size: 1.25rem; font-weight: 300; letter-spacing: 0.02em; color: var(--text); }
 
-        .service-hero { padding: var(--space-2xl) 0 var(--space-xl); text-align: center; position: relative; z-index: 1; }
+        .service-hero { padding: var(--space-lg) 0 var(--space-md); text-align: center; position: relative; z-index: 1; }
         .service-hero__headline { font-family: 'Inter', -apple-system, sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 400; line-height: 1.25; color: var(--text); max-width: 700px; margin: 0 auto var(--space-md); }
         .service-hero__description { font-size: var(--text-lg); color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
@@ -108,6 +108,13 @@
         .service-footer__phone { font-size: var(--text-sm); margin-top: 0.5rem; }
         .service-footer__phone a { color: var(--text-muted); text-decoration: none; }
         .service-footer__phone a:hover { color: var(--text); }
+
+        /* Hero illustration */
+        .service-hero { position: relative; }
+        .service-hero__illustration { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(280px, 50vw, 500px); height: auto; pointer-events: none; z-index: 0; opacity: 1; }
+        .service-hero__headline, .service-hero__description { position: relative; z-index: 1; }
+        @media (max-width: 900px) { .service-hero__illustration { width: clamp(220px, 60vw, 350px); opacity: 0.85; } }
+        @media (max-width: 480px) { .service-hero__illustration { width: clamp(180px, 70vw, 260px); opacity: 0.7; } }
 
         /* Mobile overrides — must be AFTER all desktop rules */
         @media (max-width: 768px) {
@@ -146,6 +153,15 @@
             </a>
 
             <section class="service-hero">
+                <!-- Mark construction illustration -->
+                <svg class="service-hero__illustration" viewBox="0 0 500 400" fill="none" aria-hidden="true">
+                    <circle cx="250" cy="200" r="120" stroke="rgba(139, 92, 246, 0.25)" stroke-width="1.5"/>
+                    <circle cx="210" cy="200" r="80" stroke="rgba(139, 92, 246, 0.18)" stroke-width="1"/>
+                    <circle cx="290" cy="200" r="80" stroke="rgba(139, 92, 246, 0.18)" stroke-width="1"/>
+                    <rect x="182" y="132" width="136" height="136" rx="2" stroke="rgba(139, 92, 246, 0.12)" stroke-width="1"/>
+                    <line x1="250" y1="80" x2="250" y2="320" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
+                    <line x1="130" y1="200" x2="370" y2="200" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
+                </svg>
                 <h1 class="service-hero__headline">A clear visual identity that brings everything into alignment.</h1>
                 <p class="service-hero__description">This service establishes or refines your brandmark and core visual system so your business presents itself consistently and intentionally across digital touchpoints.</p>
             </section>
@@ -226,5 +242,7 @@
             }
         })();
     </script>
+    <!-- Phone Alert (temporary — remove when phone is restored) -->
+    <script src="/components/phone-alert.js"></script>
 </body>
 </html>
