@@ -90,6 +90,10 @@
     {
       "source": "/full-brand-platform-reset",
       "destination": "/pages/services/full-brand-platform-reset"
+    },
+    {
+      "source": "/scottbertrand",
+      "destination": "/pages/scottbertrand"
     }
   ],
   "redirects": [
@@ -222,11 +226,6 @@
       "source": "/intake/website-snapshot-review",
       "destination": "/intake/website-conversion-snapshot",
       "permanent": true
-    },
-    {
-      "source": "/scottbertrand",
-      "destination": "https://scottbertrand.com",
-      "permanent": false
     }
   ],
   "headers": [
