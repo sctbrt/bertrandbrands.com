@@ -5777,3 +5777,25 @@
             }
         }
 
+/* ==========================================================================
+   PHONE LINK — Desktop vs Mobile
+   Desktop: show plain text number. Mobile: show clickable tel: link.
+   ========================================================================== */
+
+.phone-link__mobile {
+    display: none;
+}
+
+.phone-link__desktop {
+    display: inline;
+}
+
+@media (max-width: 768px) {
+    .phone-link__mobile {
+        display: inline;
+    }
+    .phone-link__desktop {
+        display: none;
+    }
+}
+
