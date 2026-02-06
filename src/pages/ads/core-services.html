@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/core-services">
@@ -16,6 +16,10 @@
     <meta property="og:url" content="https://bertrandbrands.com/core-services">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
+    <meta property="og:image" content="https://bertrandbrands.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Bertrand Brands">
 
     <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -126,7 +130,7 @@
 
         .core-services__name {
             font-family: 'Fraunces', Georgia, serif;
-            font-size: 1.5rem;
+            font-size: var(--text-2xl);
             font-weight: 300;
             letter-spacing: 0.02em;
             color: var(--text);
@@ -175,7 +179,7 @@
 
         .cs-brand-header__wordmark {
             font-family: 'Fraunces', Georgia, serif;
-            font-size: 1.5rem;
+            font-size: var(--text-2xl);
             font-weight: 300;
             color: var(--text);
             letter-spacing: 0.02em;
@@ -557,7 +561,6 @@
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta cs-cta-discovery" style="display: none;" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
 
@@ -570,7 +573,6 @@
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta cs-cta-discovery" style="display: none;" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
 
@@ -583,7 +585,6 @@
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta cs-cta-discovery" style="display: none;" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
 
@@ -596,7 +597,6 @@
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="cs-offering__cta cs-cta-discovery" style="display: none;" target="_blank" rel="noopener">Book Discovery →</a>
                         </div>
                     </div>
                 </div>
@@ -647,22 +647,6 @@
         document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
         document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
 
-        // Check for intake completion and show appropriate CTAs
-        (function() {
-            // Check if intake completed cookie or returning client cookie exists
-            function hasIntakeAccess() {
-                return document.cookie.split(';').some(c =>
-                    c.trim().startsWith('bb_intake_completed=') ||
-                    c.trim().startsWith('bb_returning_client=')
-                );
-            }
-
-            // Show discovery CTAs if intake completed
-            if (hasIntakeAccess()) {
-                document.querySelectorAll('.cs-cta-intake').forEach(el => el.style.display = 'none');
-                document.querySelectorAll('.cs-cta-discovery').forEach(el => el.style.display = 'inline-block');
-            }
-        })();
     </script>
 </body>
 </html>

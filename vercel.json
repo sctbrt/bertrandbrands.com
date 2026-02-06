@@ -8,6 +8,14 @@
       "destination": "/api/pricing/access"
     },
     {
+      "source": "/booking/access",
+      "destination": "/api/booking/access"
+    },
+    {
+      "source": "/booking/schedule",
+      "destination": "/pages/booking/schedule"
+    },
+    {
       "source": "/sudbury",
       "destination": "/pages/ads/sudbury-focus-studio"
     },
@@ -27,7 +35,7 @@
       "source": "/intake/brand-clarity-diagnostic",
       "destination": "/pages/intake/brand-clarity-diagnostic"
     },
-        {
+    {
       "source": "/focus-studio",
       "destination": "/pages/ads/focus-studio"
     },

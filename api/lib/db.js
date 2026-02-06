@@ -47,6 +47,43 @@ export async function initializeDatabase() {
       ON pricing_sessions(expires_at)
     `;
 
+    // Create booking_access_tokens table
+    await sql`
+      CREATE TABLE IF NOT EXISTS booking_access_tokens (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        client_id TEXT NOT NULL,
+        booking_type TEXT NOT NULL,
+        token_hash TEXT NOT NULL UNIQUE,
+        expires_at TIMESTAMPTZ NOT NULL,
+        used_at TIMESTAMPTZ,
+        created_by TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+
+    // Create booking_sessions table
+    await sql`
+      CREATE TABLE IF NOT EXISTS booking_sessions (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        client_id TEXT NOT NULL,
+        booking_type TEXT NOT NULL,
+        client_email TEXT NOT NULL,
+        expires_at TIMESTAMPTZ NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+
+    // Create indexes for booking tables
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_booking_tokens_hash
+      ON booking_access_tokens(token_hash)
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_booking_sessions_expires
+      ON booking_sessions(expires_at)
+    `;
+
     return { success: true };
   } catch (error) {
     console.error('Database initialization error:', error);
@@ -169,6 +206,89 @@ export async function countRecentRequests({ email, ip }) {
   };
 }
 
+// ============================================
+// BOOKING ACCESS FUNCTIONS
+// ============================================
+
+/**
+ * Create a booking access token
+ */
+export async function createBookingToken({ clientId, bookingType, tokenHash, expiresAt, createdBy }) {
+  const result = await sql`
+    INSERT INTO booking_access_tokens (client_id, booking_type, token_hash, expires_at, created_by)
+    VALUES (${clientId}, ${bookingType}, ${tokenHash}, ${expiresAt}, ${createdBy})
+    RETURNING id
+  `;
+  return result.rows[0];
+}
+
+/**
+ * Consume a booking access token (atomic operation)
+ * Returns the token if successfully marked, null if already used or invalid
+ */
+export async function consumeBookingToken(tokenHash) {
+  const result = await sql`
+    UPDATE booking_access_tokens
+    SET used_at = NOW()
+    WHERE token_hash = ${tokenHash}
+      AND used_at IS NULL
+      AND expires_at > NOW()
+    RETURNING id, client_id, booking_type
+  `;
+  return result.rows[0] || null;
+}
+
+/**
+ * Create a booking session
+ */
+export async function createBookingSession({ clientId, bookingType, clientEmail, expiresAt }) {
+  const result = await sql`
+    INSERT INTO booking_sessions (client_id, booking_type, client_email, expires_at)
+    VALUES (${clientId}, ${bookingType}, ${clientEmail}, ${expiresAt})
+    RETURNING id
+  `;
+  return result.rows[0];
+}
+
+/**
+ * Validate a booking session by ID
+ * Returns session if valid, null if not found or expired
+ */
+export async function validateBookingSession(sessionId) {
+  if (!sessionId) return null;
+
+  try {
+    const result = await sql`
+      SELECT id, client_id, booking_type, client_email, expires_at
+      FROM booking_sessions
+      WHERE id = ${sessionId}::uuid
+        AND expires_at > NOW()
+    `;
+    return result.rows[0] || null;
+  } catch (error) {
+    console.error('Booking session validation error:', error);
+    return null;
+  }
+}
+
+/**
+ * Delete a booking session
+ */
+export async function deleteBookingSession(sessionId) {
+  if (!sessionId) return false;
+
+  try {
+    await sql`
+      DELETE FROM booking_sessions
+      WHERE id = ${sessionId}::uuid
+    `;
+    return true;
+  } catch (error) {
+    console.error('Booking session deletion error:', error);
+    return false;
+  }
+}
+
 /**
  * Clean up expired records (optional maintenance)
  */
@@ -183,6 +303,18 @@ export async function cleanupExpiredRecords() {
     // Delete expired sessions older than 24 hours
     await sql`
       DELETE FROM pricing_sessions
+      WHERE expires_at < NOW() - INTERVAL '24 hours'
+    `;
+
+    // Delete expired booking tokens older than 24 hours
+    await sql`
+      DELETE FROM booking_access_tokens
+      WHERE expires_at < NOW() - INTERVAL '24 hours'
+    `;
+
+    // Delete expired booking sessions older than 24 hours
+    await sql`
+      DELETE FROM booking_sessions
       WHERE expires_at < NOW() - INTERVAL '24 hours'
     `;
 

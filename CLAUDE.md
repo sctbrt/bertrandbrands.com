@@ -356,10 +356,12 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 - Blue (`rgba(37, 99, 235, x)`) — Exploratory tier accent
 
 **Mobile Optimization:**
+- Header ambient lighting stays **enabled** on mobile (per design decision)
 - Reduce blur: 60px → 30-35px
 - Reduce size: ~60% of desktop dimensions
 - Simplify keyframes: Use 2-3 keyframes instead of 5-7
 - Extend duration: +2-4 seconds for smoother GPU performance
+- Disable `backdrop-filter` on modal/lightbox backdrops for GPU performance
 
 ---
 
@@ -372,8 +374,8 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 --bg: #0a0a0a;
 --bg-elevated: #111111;
 --text: #fafafa;
---text-muted: #888888;
---text-subtle: #555555;
+--text-muted: #a3a3a3;
+--text-subtle: #737373;
 --accent: #D97706;           /* Amber 600 */
 --accent-hover: #B45309;     /* Amber 700 */
 --border: rgba(255, 255, 255, 0.08);
@@ -881,6 +883,8 @@ Added `contain: layout style` to:
 | 5.2.2 | Feb 2026 | Implemented universal header component (`/components/header.js`), updated 7 pages to use it, documented exceptions |
 | 5.3.0 | Feb 2026 | Reordered homepage services to Tier 1→2→3; added organic dynamic lighting to Contact section; documented lighting pattern in Section 5.3 |
 | 5.4.0 | Feb 2026 | Focus Studio offering restructure: Quick Website Refresh → Starter Site; Brandmarking Package → Brandmark & Visual Identity; added explicit distinction between template-assisted vs. custom code offerings |
+| 5.5.0 | Feb 2026 | Comprehensive audit execution (P0-P4): OG image tags on 20 pages, honeypot fields on all forms, Formspree _subject fields, font-weight token standardization, phone validation, legacy page deprecation markers, Calendly PII documentation |
+| 5.5.1 | Feb 2026 | P5 polish pass: removed unused --font-mono token, consolidated duplicate scroll-behavior, added phone button title attr, fixed vercel.json formatting, sanitized PII in snapshot booking logs, documented canonical email regex, marked launch gate for removal, added audit log retention strategy, clarified header nav documentation |
 
 ---
 
@@ -928,8 +932,9 @@ The homepage header (`src/index.html`) is the canonical reference for all pages.
 | 6 | Client Portal | `https://clients.bertrandbrands.com` | `header__link header__link--portal` |
 
 **Rules:**
-- Homepage uses anchor links (`#about`, `#process`, `#services`)
-- Sub-pages use `/?skip#section` to bypass intro animation
+- The table above shows the **sub-page / universal header** format (`/?skip#section`)
+- Homepage (`index.html`) uses bare anchor links (`#about`, `#process`, `#services`) since it's already the SPA
+- Sub-pages and the universal header component use `/?skip#section` to bypass the intro animation
 - "Book a Call" always uses `header__link--cta` modifier (amber styling)
 - "Client Portal" always uses `header__link--portal` modifier (subtle styling)
 
@@ -1136,6 +1141,42 @@ If none apply, Bertrand Brands does not pursue the engagement.
 - No scale-based claims
 - Emphasis on systems, intent, and coherence
 - Avoid "agency" framing; use "studio" framing
+
+---
+
+## 24. Calendly Integration & PII Handling
+
+### 24.1 Where Calendly Is Used
+
+| Page | Method | PII Passed |
+|------|--------|------------|
+| `payment-confirmed.html` | Inline widget embed | None (widget handles collection) |
+| `booking/schedule.html` | Inline widget embed | Client email (prefill from session) |
+| `intake/brand-clarity-call.html` | URL link with query params | Name, email (URL params) |
+| `intake/website-clarity-call.html` | URL link with query params | Name, email (URL params) |
+
+### 24.2 PII Risk: URL Parameter Prefill
+
+The legacy intake pages (`brand-clarity-call`, `website-clarity-call`) pass user name and email as Calendly URL parameters:
+
+```
+calendly.com/bertrandbrands/call?name=John&email=john@example.com
+```
+
+This exposes PII in:
+- Browser address bar
+- Browser history
+- Server access logs
+- Referrer headers if Calendly redirects
+
+**Mitigation**: These pages are deprecated (redirect to `/exploratory`). The active booking flow (`booking/schedule.html`) uses the inline widget with `prefill` object instead of URL params, which is the safer approach.
+
+### 24.3 Calendly Data Handling
+
+- Calendly collects: name, email, scheduling preferences
+- Data stored on Calendly's infrastructure (SOC 2 certified)
+- Bertrand Brands receives booking confirmations via Calendly webhooks/email
+- No Calendly data is stored in our database — bookings are tracked through Stripe payment events
 
 ---
 

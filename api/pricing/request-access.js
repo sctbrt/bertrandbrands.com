@@ -13,9 +13,26 @@ import {
 const MAGIC_LINK_TTL_MINUTES = parseInt(process.env.PRICING_MAGIC_LINK_TTL_MINUTES || '15', 10);
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.com';
 const RATE_LIMIT_EMAIL_PER_HOUR = 3;
+const RATE_LIMIT_IP_PER_HOUR = 10;
 
-// Email validation regex
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// In-memory IP rate limiter (per warm instance — protects against burst abuse)
+// LIMITATION: Resets when function cold-starts. For persistent cross-instance rate limiting,
+// migrate to Vercel KV or Upstash Redis. Email-based rate limiting (via DB) is persistent.
+const ipRequestLog = new Map();
+
+function checkIpRateLimit(ip) {
+  const now = Date.now();
+  const oneHourAgo = now - 60 * 60 * 1000;
+  const timestamps = (ipRequestLog.get(ip) || []).filter(t => t > oneHourAgo);
+  ipRequestLog.set(ip, timestamps);
+  if (timestamps.length >= RATE_LIMIT_IP_PER_HOUR) return true;
+  timestamps.push(now);
+  return false;
+}
+
+// Email validation regex (RFC 5321 compliant)
+// CANONICAL: If updating this pattern, also update api/snapshot/book.js
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
 /**
  * Generate secure random token and its hash
@@ -85,6 +102,16 @@ Bertrand Brands · Sudbury, Ontario
 }
 
 export default async function handler(req, res) {
+  // CORS — restrict to own domain
+  const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.com';
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
   // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -108,18 +135,24 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
-  // Get client IP for logging (not for strict rate limiting to avoid false positives)
+  // Get client IP
   const clientIp = req.headers['x-forwarded-for']?.split(',')[0] ||
                    req.headers['x-real-ip'] ||
                    'unknown';
 
+  // IP-based rate limiting (in-memory, per warm instance)
+  if (clientIp !== 'unknown' && checkIpRateLimit(clientIp)) {
+    console.log(`IP rate limit exceeded: ${clientIp}`);
+    return res.status(200).json({ ok: true });
+  }
+
   try {
-    // Rate limiting check (by email)
+    // Rate limiting check (by email, via database)
     const { emailCount } = await countRecentRequests({ email: normalizedEmail, ip: clientIp });
 
     if (emailCount >= RATE_LIMIT_EMAIL_PER_HOUR) {
       // Still return success to prevent enumeration
-      console.log(`Rate limit exceeded for email: ${normalizedEmail}`);
+      console.log(`Email rate limit exceeded: ${normalizedEmail}`);
       return res.status(200).json({ ok: true });
     }
 

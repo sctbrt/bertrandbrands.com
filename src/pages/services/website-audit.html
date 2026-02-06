@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/services/website-audit">
@@ -16,6 +16,10 @@
     <meta property="og:url" content="https://bertrandbrands.com/services/website-audit">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
+    <meta property="og:image" content="https://bertrandbrands.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Bertrand Brands">
 
     <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -59,6 +63,12 @@
             --duration-slow: 1.2s;
             --duration-medium: 0.6s;
             --duration-fast: 0.3s;
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-2xl: 1.5rem;
+            --text-4xl: 2.25rem;
         }
 
         html { font-size: 16px; scroll-behavior: smooth; }
@@ -110,7 +120,7 @@
 
         .header__logo {
             font-family: var(--font-display);
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             font-weight: 500;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -131,7 +141,7 @@
         }
 
         .header__link {
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             color: var(--text-muted);
             transition: color var(--duration-fast) ease;
         }
@@ -147,7 +157,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             color: var(--text-muted);
             margin-bottom: var(--space-lg);
         }
@@ -179,7 +189,7 @@
         }
 
         .service-hero__tag {
-            font-size: 0.75rem;
+            font-size: var(--text-xs);
             font-weight: 500;
             letter-spacing: 0.15em;
             text-transform: uppercase;
@@ -207,7 +217,7 @@
         }
 
         .service-hero__description {
-            font-size: 1.125rem;
+            font-size: var(--text-lg);
             color: var(--text-muted);
             line-height: 1.8;
             margin-bottom: var(--space-lg);
@@ -224,14 +234,14 @@
 
         .price-card__price {
             font-family: var(--font-display);
-            font-size: 2.5rem;
+            font-size: var(--text-4xl);
             font-weight: 400;
             color: var(--accent);
             margin-bottom: var(--space-xs);
         }
 
         .price-card__price span {
-            font-size: 1rem;
+            font-size: var(--text-base);
             color: var(--text-subtle);
         }
 
@@ -244,7 +254,7 @@
         .price-card__detail {
             display: flex;
             justify-content: space-between;
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             padding: var(--space-xs) 0;
         }
 
@@ -257,7 +267,7 @@
             padding: 1rem;
             background: var(--text);
             color: var(--bg);
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             font-weight: 500;
             text-align: center;
             border: none;
@@ -278,7 +288,7 @@
 
         .section__title {
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: var(--text-2xl);
             font-weight: 400;
             letter-spacing: -0.02em;
             margin-bottom: var(--space-md);
@@ -299,13 +309,13 @@
 
         .include-item__title {
             font-family: var(--font-display);
-            font-size: 1rem;
+            font-size: var(--text-base);
             font-weight: 500;
             margin-bottom: var(--space-xs);
         }
 
         .include-item__description {
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             color: var(--text-muted);
             line-height: 1.6;
         }
@@ -324,7 +334,7 @@
 
         .process-step__number {
             font-family: var(--font-display);
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             font-weight: 500;
             color: var(--accent);
             min-width: 2rem;
@@ -332,13 +342,13 @@
 
         .process-step__content h3 {
             font-family: var(--font-display);
-            font-size: 1rem;
+            font-size: var(--text-base);
             font-weight: 500;
             margin-bottom: var(--space-xs);
         }
 
         .process-step__content p {
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             color: var(--text-muted);
         }
 
@@ -352,7 +362,7 @@
             align-items: flex-start;
             gap: var(--space-sm);
             padding: var(--space-sm) 0;
-            font-size: 1rem;
+            font-size: var(--text-base);
             color: var(--text-muted);
         }
 
@@ -377,7 +387,7 @@
         }
 
         .cta-section__text {
-            font-size: 1.125rem;
+            font-size: var(--text-lg);
             color: var(--text-muted);
             margin-bottom: var(--space-lg);
             max-width: 500px;
@@ -393,7 +403,7 @@
             background: transparent;
             border: 1px solid var(--text-subtle);
             color: var(--text);
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             font-weight: 500;
             letter-spacing: 0.05em;
             text-transform: uppercase;
@@ -421,9 +431,9 @@
             gap: var(--space-md);
         }
 
-        .footer__copyright { font-size: 0.875rem; color: var(--text-subtle); }
+        .footer__copyright { font-size: var(--text-sm); color: var(--text-subtle); }
 
-        .footer__parent { font-size: 0.875rem; color: var(--text-subtle); }
+        .footer__parent { font-size: var(--text-sm); color: var(--text-subtle); }
 
         .footer__parent a {
             color: var(--text-muted);

@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
     <meta name="theme-color" content="#0a0a0a">
@@ -56,6 +56,9 @@
             --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --radius-md: 8px;
             --radius-lg: 12px;
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -104,7 +107,7 @@
         }
 
         .sitemap__subtitle {
-            font-size: 0.9375rem;
+            font-size: var(--text-base);
             color: var(--text-muted);
         }
 
@@ -137,7 +140,7 @@
         }
 
         .domain__name {
-            font-size: 1rem;
+            font-size: var(--text-base);
             font-weight: 600;
             color: var(--text);
         }
@@ -152,7 +155,7 @@
         }
 
         .domain__badge {
-            font-size: 0.6875rem;
+            font-size: var(--text-xs);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -182,7 +185,7 @@
         }
 
         .domain__section-title {
-            font-size: 0.75rem;
+            font-size: var(--text-xs);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -203,7 +206,7 @@
             padding: 0.5rem 0.75rem;
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: var(--text-sm);
             border-radius: 6px;
             transition: all 0.15s ease;
         }
@@ -216,7 +219,7 @@
         .page-list__item a::before {
             content: '→';
             color: var(--text-subtle);
-            font-size: 0.75rem;
+            font-size: var(--text-xs);
         }
 
         .page-list__item a:hover::before {
@@ -229,7 +232,7 @@
             padding-top: 2rem;
             border-top: 1px solid var(--border);
             text-align: center;
-            font-size: 0.8125rem;
+            font-size: var(--text-sm);
             color: var(--text-subtle);
         }
 

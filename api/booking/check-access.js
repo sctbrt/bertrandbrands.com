@@ -1,14 +1,27 @@
-// GET /api/pricing/check-access
-// Validates pricing session from cookie
-// Returns access status for frontend to show/hide pricing
+// GET /api/booking/check-access
+// Validates booking session from cookie
+// Returns access status + Calendly URL for frontend
 
 import {
   initializeDatabase,
-  validatePricingSession,
-  deletePricingSession
+  validateBookingSession,
+  deleteBookingSession
 } from '../lib/db.js';
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
+
+// Calendly URL map — the ONLY place these URLs exist
+// Set active: true when Calendly events are ready for use
+const CALENDLY_MAP = {
+  focus_studio_kickoff: {
+    url: 'https://calendly.com/bertrandbrands/focus-studio-kickoff',
+    active: true
+  },
+  core_services_discovery: {
+    url: 'https://calendly.com/bertrandbrands/core-services-discovery',
+    active: true
+  }
+};
 
 /**
  * Parse cookies from header
@@ -30,7 +43,7 @@ function parseCookies(cookieHeader) {
  */
 function buildClearCookie() {
   const parts = [
-    `bb_pricing_session=`,
+    `bb_booking_session=`,
     `Path=/`,
     `Max-Age=0`,
     `HttpOnly`,
@@ -39,7 +52,6 @@ function buildClearCookie() {
 
   if (IS_PRODUCTION) {
     parts.push('Secure');
-    // Clear on parent domain to match how it was set
     parts.push('Domain=.bertrandbrands.com');
   }
 
@@ -57,7 +69,7 @@ export default async function handler(req, res) {
 
   // Parse session ID from cookie
   const cookies = parseCookies(req.headers.cookie);
-  const sessionId = cookies.bb_pricing_session;
+  const sessionId = cookies.bb_booking_session;
 
   // Validate session ID format (must be valid UUID)
   const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -77,7 +89,7 @@ export default async function handler(req, res) {
 
   try {
     // Validate session
-    const session = await validatePricingSession(sessionId);
+    const session = await validateBookingSession(sessionId);
 
     if (!session) {
       // Session expired or invalid - clear cookie
@@ -89,18 +101,25 @@ export default async function handler(req, res) {
       });
     }
 
+    // Look up Calendly config for this booking type
+    const calendly = CALENDLY_MAP[session.booking_type] || null;
+
     // Calculate remaining time
     const expiresAt = new Date(session.expires_at);
     const remainingMinutes = Math.max(0, Math.floor((expiresAt.getTime() - Date.now()) / 60000));
 
     return res.status(200).json({
       hasAccess: true,
+      bookingType: session.booking_type,
+      calendlyUrl: calendly?.url || null,
+      calendlyActive: calendly?.active || false,
+      clientEmail: session.client_email,
       expiresAt: expiresAt.toISOString(),
       remainingMinutes
     });
 
   } catch (error) {
-    console.error('Check access error:', error);
+    console.error('Booking check access error:', error);
     return res.status(200).json({
       hasAccess: false,
       expiresAt: null

@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/book">
@@ -16,6 +16,10 @@
     <meta property="og:url" content="https://bertrandbrands.com/book">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
+    <meta property="og:image" content="https://bertrandbrands.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Bertrand Brands">
 
     <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -383,191 +387,6 @@
             border-color: #1D4ED8;
         }
 
-        /* Routed Booking Section (conditional) */
-        .routed-section {
-            padding: var(--space-xl, 3rem) 0;
-            border-top: 1px solid var(--border);
-            display: none; /* Hidden by default, shown via JS if intake completed */
-        }
-
-        .routed-section.is-visible {
-            display: block;
-        }
-
-        .routed-section__header {
-            text-align: center;
-            margin-bottom: var(--space-lg);
-        }
-
-        .routed-section__label {
-            font-size: var(--text-xs);
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #10B981;
-            margin-bottom: var(--space-xs);
-        }
-
-        .routed-section__title {
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: var(--text-xl);
-            font-weight: 300;
-            color: var(--text);
-        }
-
-        .routed-section__subtitle {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            max-width: 500px;
-            margin: var(--space-xs) auto 0;
-        }
-
-        .routed-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-md);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 600px) {
-            .routed-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-            }
-        }
-
-        /* Routed Call Cards */
-        .routed-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg, 12px);
-            padding: var(--space-lg);
-            display: flex;
-            flex-direction: column;
-            transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease, transform var(--duration-fast) ease;
-        }
-
-        .routed-card:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Focus Studio card - violet */
-        .routed-card--focus {
-            background: rgba(139, 92, 246, 0.06);
-            border-color: rgba(139, 92, 246, 0.2);
-        }
-
-        .routed-card--focus:hover {
-            border-color: rgba(139, 92, 246, 0.4);
-            background: rgba(139, 92, 246, 0.1);
-        }
-
-        .routed-card--focus .routed-card__tier {
-            color: #8B5CF6;
-        }
-
-        .routed-card--focus .routed-card__cta {
-            background: transparent;
-            border-color: rgba(139, 92, 246, 0.4);
-            color: #8B5CF6;
-        }
-
-        .routed-card--focus .routed-card__cta:hover {
-            background: rgba(139, 92, 246, 0.15);
-            border-color: #8B5CF6;
-        }
-
-        /* Core Services card - amber */
-        .routed-card--core {
-            background: rgba(217, 119, 6, 0.06);
-            border-color: rgba(217, 119, 6, 0.2);
-        }
-
-        .routed-card--core:hover {
-            border-color: rgba(217, 119, 6, 0.4);
-            background: rgba(217, 119, 6, 0.1);
-        }
-
-        .routed-card--core .routed-card__tier {
-            color: var(--accent);
-        }
-
-        .routed-card--core .routed-card__cta {
-            background: transparent;
-            border-color: rgba(217, 119, 6, 0.4);
-            color: var(--accent);
-        }
-
-        .routed-card--core .routed-card__cta:hover {
-            background: rgba(217, 119, 6, 0.15);
-            border-color: var(--accent);
-        }
-
-        .routed-card__tier {
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            font-family: 'Fraunces', Georgia, serif;
-            font-size: 0.875rem;
-            font-weight: 300;
-            margin-bottom: var(--space-xs);
-        }
-
-        .routed-card__tier-mark {
-            width: 18px;
-            height: 18px;
-            filter: brightness(0) invert(1);
-        }
-
-        .routed-card__title {
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: var(--text-lg);
-            font-weight: 400;
-            color: var(--text);
-            margin-bottom: var(--space-xs);
-        }
-
-        .routed-card__meta {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            margin-bottom: var(--space-sm);
-        }
-
-        .routed-card__description {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: var(--space-md);
-            flex-grow: 1;
-        }
-
-        .routed-card__footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: var(--space-sm);
-            border-top: 1px solid var(--border);
-        }
-
-        .routed-card__price {
-            font-size: var(--text-sm);
-            font-style: italic;
-            color: var(--text-subtle);
-        }
-
-        .routed-card__cta {
-            display: inline-block;
-            padding: 0.625rem 1.25rem;
-            color: #fff;
-            font-size: var(--text-sm);
-            font-weight: 500;
-            text-decoration: none;
-            border: 1px solid transparent;
-            border-radius: var(--radius-md);
-            transition: all var(--duration-fast) var(--ease-out);
-        }
-
         /* Help Section */
         .book-help {
             padding: var(--space-xl, 3rem) 0;
@@ -592,7 +411,7 @@
             color: var(--accent);
         }
 
-        /* Returning Client Link */
+        /* Returning Client Note */
         .returning-client {
             text-align: center;
             padding: var(--space-lg) 0;
@@ -602,17 +421,7 @@
         .returning-client__text {
             font-size: var(--text-sm);
             color: var(--text-subtle);
-        }
-
-        .returning-client__link {
-            color: var(--text-muted);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-            transition: color var(--duration-fast) ease;
-        }
-
-        .returning-client__link:hover {
-            color: var(--accent);
+            font-style: italic;
         }
 
         /* Footer */
@@ -639,13 +448,7 @@
         }
 
         @media (max-width: 768px) {
-            .routed-card__footer {
-                flex-direction: column;
-                gap: var(--space-sm);
-                align-items: stretch;
-            }
-            .intake-card__cta,
-            .routed-card__cta {
+            .intake-card__cta {
                 text-align: center;
                 justify-content: center;
             }
@@ -730,49 +533,6 @@
             </div>
         </section>
 
-        <!-- Routed Booking Section (visible only after intake) -->
-        <section class="routed-section" id="routedSection">
-            <div class="container">
-                <div class="routed-section__header">
-                    <p class="routed-section__label">✓ Intake Complete</p>
-                    <h2 class="routed-section__title">Schedule Your Next Step</h2>
-                    <p class="routed-section__subtitle">Based on your intake, you're ready to book a kickoff or discovery call.</p>
-                </div>
-
-                <div class="routed-grid">
-                    <!-- Focus Studio Kickoff -->
-                    <div class="routed-card routed-card--focus">
-                        <div class="routed-card__tier">
-                            <img src="/assets/bertrand-brands-logomark.png" alt="" class="routed-card__tier-mark">
-                            <span>Focus Studio</span>
-                        </div>
-                        <h3 class="routed-card__title">Focus Studio Kickoff</h3>
-                        <p class="routed-card__meta">30 min · Live Video</p>
-                        <p class="routed-card__description">For Starter Site, One-Page Redesign, or Brandmark & Visual Identity. We align on scope before you pay.</p>
-                        <div class="routed-card__footer">
-                            <p class="routed-card__price">Free · Payment after</p>
-                            <a href="https://calendly.com/bertrandbrands/focus-studio-kickoff" class="routed-card__cta" target="_blank" rel="noopener">Schedule →</a>
-                        </div>
-                    </div>
-
-                    <!-- Core Services Discovery -->
-                    <div class="routed-card routed-card--core">
-                        <div class="routed-card__tier">
-                            <img src="/assets/bertrand-brands-logomark.png" alt="" class="routed-card__tier-mark">
-                            <span>Core Services</span>
-                        </div>
-                        <h3 class="routed-card__title">Core Services Discovery</h3>
-                        <p class="routed-card__meta">60 min · Live Video</p>
-                        <p class="routed-card__description">For Brand Reset, Digital Platform Build, or Full Brand + Platform Reset. We determine fit and scope.</p>
-                        <div class="routed-card__footer">
-                            <p class="routed-card__price">Free · 50% deposit after</p>
-                            <a href="https://calendly.com/bertrandbrands/core-services-discovery" class="routed-card__cta" target="_blank" rel="noopener">Schedule →</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Help Section -->
         <section class="book-help">
             <div class="container">
@@ -781,12 +541,10 @@
             </div>
         </section>
 
-        <!-- Returning Client Link -->
+        <!-- Returning Client Note -->
         <section class="returning-client">
             <div class="container">
-                <p class="returning-client__text">
-                    <a href="#" class="returning-client__link" id="returningClientLink">Returning client? Access your booking options →</a>
-                </p>
+                <p class="returning-client__text">Already been routed? Check your email for your booking link.</p>
             </div>
         </section>
     </main>
@@ -805,45 +563,6 @@
         document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
         document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
 
-        // Check for intake completion cookie
-        (function() {
-            const routedSection = document.getElementById('routedSection');
-            const returningLink = document.getElementById('returningClientLink');
-
-            // Check if bb_intake_completed cookie exists
-            function hasIntakeCompleted() {
-                return document.cookie.split(';').some(c => c.trim().startsWith('bb_intake_completed='));
-            }
-
-            // Show routed section if intake completed
-            if (hasIntakeCompleted() && routedSection) {
-                routedSection.classList.add('is-visible');
-            }
-
-            // Handle returning client link click
-            if (returningLink) {
-                returningLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    // Set a temporary returning client cookie (4 hours)
-                    const expires = new Date(Date.now() + 4 * 60 * 60 * 1000).toUTCString();
-                    document.cookie = `bb_returning_client=true; expires=${expires}; path=/; domain=.bertrandbrands.com; secure; samesite=lax`;
-
-                    // Show the routed section
-                    if (routedSection) {
-                        routedSection.classList.add('is-visible');
-                        routedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
-            }
-
-            // Also show if returning client cookie exists
-            if (document.cookie.split(';').some(c => c.trim().startsWith('bb_returning_client='))) {
-                if (routedSection) {
-                    routedSection.classList.add('is-visible');
-                }
-            }
-        })();
     </script>
 </body>
 </html>

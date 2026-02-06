@@ -1,15 +1,15 @@
-// GET /api/pricing/access
-// Verifies magic link token, creates session, sets cookie, redirects
+// GET /api/booking/access
+// Verifies booking access token, creates session, sets cookie, redirects
 
 import crypto from 'crypto';
 import {
   initializeDatabase,
-  consumeMagicLink,
-  createPricingSession
+  consumeBookingToken,
+  createBookingSession
 } from '../lib/db.js';
 
 // Config
-const SESSION_TTL_MINUTES = parseInt(process.env.PRICING_SESSION_TTL_MINUTES || '60', 10);
+const SESSION_TTL_MINUTES = parseInt(process.env.BOOKING_SESSION_TTL_MINUTES || '240', 10); // 4 hours
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.com';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
 
@@ -25,7 +25,7 @@ function hashToken(rawToken) {
  */
 function buildCookie(sessionId, maxAgeSeconds) {
   const parts = [
-    `bb_pricing_session=${sessionId}`,
+    `bb_booking_session=${sessionId}`,
     `Path=/`,
     `Max-Age=${maxAgeSeconds}`,
     `HttpOnly`,
@@ -34,7 +34,6 @@ function buildCookie(sessionId, maxAgeSeconds) {
 
   if (IS_PRODUCTION) {
     parts.push('Secure');
-    // Set on parent domain so cookie works across subdomains
     parts.push('Domain=.bertrandbrands.com');
   }
 
@@ -117,7 +116,7 @@ function errorPageHtml(title, message) {
   <div class="container">
     <h1>${title}</h1>
     <p>${message}</p>
-    <a href="/#services">Back to Services</a>
+    <a href="/book">Back to Booking</a>
   </div>
 </body>
 </html>
@@ -140,29 +139,39 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     return res.status(400).send(errorPageHtml(
       'Invalid Link',
-      'This link appears to be malformed. Please request a new pricing access link.'
+      'This link appears to be malformed. Please request a new booking access link from your contact at Bertrand Brands.'
     ));
   }
 
   try {
     const tokenHash = hashToken(token);
 
-    // Attempt to consume the magic link (atomic operation)
-    const magicLink = await consumeMagicLink(tokenHash);
+    // Attempt to consume the booking token (atomic operation)
+    const bookingToken = await consumeBookingToken(tokenHash);
 
-    if (!magicLink) {
+    if (!bookingToken) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       return res.status(400).send(errorPageHtml(
         'Link Expired or Already Used',
-        'This link has either expired or has already been used. Pricing links can only be used once and expire after 15 minutes.'
+        'This booking link has either expired or has already been used. Please contact Bertrand Brands for a new link.'
       ));
     }
 
-    // Create new pricing session
+    // Look up client email from the token's client_id
+    // We need to query it since the token table doesn't store email
+    const { sql } = await import('@vercel/postgres');
+    const clientResult = await sql`
+      SELECT contact_email FROM clients WHERE id = ${bookingToken.client_id}
+    `;
+    const clientEmail = clientResult.rows[0]?.contact_email || '';
+
+    // Create new booking session
     const sessionExpiresAt = new Date(Date.now() + SESSION_TTL_MINUTES * 60 * 1000);
 
-    const session = await createPricingSession({
-      email: magicLink.email,
+    const session = await createBookingSession({
+      clientId: bookingToken.client_id,
+      bookingType: bookingToken.booking_type,
+      clientEmail,
       expiresAt: sessionExpiresAt.toISOString()
     });
 
@@ -170,16 +179,16 @@ export default async function handler(req, res) {
     const maxAgeSeconds = SESSION_TTL_MINUTES * 60;
     res.setHeader('Set-Cookie', buildCookie(session.id, maxAgeSeconds));
 
-    // Redirect to services section
-    res.setHeader('Location', `${APP_URL}/#services`);
+    // Redirect to booking schedule page
+    res.setHeader('Location', `${APP_URL}/booking/schedule`);
     return res.status(302).end();
 
   } catch (error) {
-    console.error('Access verification error:', error);
+    console.error('Booking access verification error:', error);
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     return res.status(500).send(errorPageHtml(
       'Something Went Wrong',
-      'We encountered an error processing your request. Please try requesting a new pricing access link.'
+      'We encountered an error processing your request. Please try again or contact Bertrand Brands for assistance.'
     ));
   }
 }

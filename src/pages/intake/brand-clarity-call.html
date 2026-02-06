@@ -1,8 +1,10 @@
+<!-- DEPRECATED: This intake is no longer served. /intake/brand-clarity-call redirects to /intake/exploratory.
+     Kept for reference. Safe to delete when confirmed by Scott. -->
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/intake/brand-clarity-call">
@@ -57,7 +59,7 @@
         }
 
         .intake-header__back {
-            font-size: 0.8125rem;
+            font-size: var(--text-sm);
             color: var(--text-muted);
             text-decoration: none;
             display: flex;
@@ -92,7 +94,7 @@
 
         .intake-header__logo-text {
             font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.8125rem;
+            font-size: var(--text-sm);
             font-weight: 500;
             letter-spacing: 0.05em;
             text-transform: uppercase;
@@ -126,7 +128,7 @@
 
         .intake-brand__name {
             font-family: 'Fraunces', Georgia, serif;
-            font-size: 1.125rem;
+            font-size: var(--text-lg);
             font-weight: 300;
             letter-spacing: 0.02em;
             color: var(--text);
@@ -443,9 +445,12 @@
 
             <!-- Intake Form -->
             <form class="intake-form" id="intakeForm" action="https://formspree.io/f/xnjjgoay" method="POST">
+                <input type="hidden" name="source" value="brand-clarity-call-intake">
                 <input type="hidden" name="service" value="Brand Clarity Call">
                 <input type="hidden" name="tier" value="EXPLORATORY">
                 <input type="hidden" name="entry_type" value="BRAND_CLARITY_CALL">
+                <input type="hidden" name="_subject" value="New Intake — Brand Clarity Call">
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
                 <div class="intake-form__group">
                     <label class="intake-form__label" for="name">Name</label>

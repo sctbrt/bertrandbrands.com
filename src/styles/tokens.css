@@ -16,8 +16,8 @@
 
   /* Text */
   --text: #fafafa;
-  --text-muted: #888888;
-  --text-subtle: #555555;
+  --text-muted: #a3a3a3;
+  --text-subtle: #737373;
 
   /* Accent — Amber (Primary Brand) */
   --accent: #D97706;
@@ -57,10 +57,9 @@
      TYPOGRAPHY
      ========================================================== */
 
-  /* Font Families — Inverted: Sans for headings, Serif for body */
-  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Fraunces', Georgia, serif;
-  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  /* Font Families */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* Type Scale */
   --text-xs: 0.75rem;      /* 12px */
@@ -100,6 +99,15 @@
   /* ==========================================================
      SPACING
      ========================================================== */
+  /* Semantic spacing aliases (used throughout main.css) */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+  --space-2xl: 12rem;
+
+  /* Granular spacing scale */
   --space-px: 1px;
   --space-0: 0;
   --space-1: 0.25rem;   /* 4px */
@@ -122,11 +130,12 @@
      MOTION
      ========================================================== */
 
-  /* Durations */
+  /* Durations — Granular scale */
   --duration-instant: 50ms;
-  --duration-fast: 150ms;
+  --duration-fast: 0.3s;
   --duration-normal: 300ms;
-  --duration-slow: 500ms;
+  --duration-medium: 0.6s;
+  --duration-slow: 1.2s;
   --duration-slower: 700ms;
   --duration-slowest: 1000ms;
 
@@ -234,6 +243,7 @@
     --duration-instant: 0ms;
     --duration-fast: 0ms;
     --duration-normal: 0ms;
+    --duration-medium: 0ms;
     --duration-slow: 0ms;
     --duration-slower: 0ms;
     --duration-slowest: 0ms;

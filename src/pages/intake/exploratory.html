@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/intake/exploratory">
@@ -57,7 +57,7 @@
         }
 
         .intake-header__back {
-            font-size: 0.8125rem;
+            font-size: var(--text-sm);
             color: var(--text-muted);
             text-decoration: none;
             display: flex;
@@ -92,7 +92,7 @@
 
         .intake-header__logo-text {
             font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.8125rem;
+            font-size: var(--text-sm);
             font-weight: 500;
             letter-spacing: 0.05em;
             text-transform: uppercase;
@@ -125,7 +125,7 @@
 
         .intake-brand__name {
             font-family: 'Fraunces', Georgia, serif;
-            font-size: 1.125rem;
+            font-size: var(--text-lg);
             font-weight: 300;
             letter-spacing: 0.02em;
             color: #2563EB;
@@ -649,6 +649,8 @@
                 <input type="hidden" name="source" value="exploratory-guided-intake">
                 <input type="hidden" name="tier" value="EXPLORATORY">
                 <input type="hidden" name="entry_type" value="GUIDED_INTAKE">
+                <input type="hidden" name="_subject" value="New Intake — Exploratory">
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
                 <!-- Step 1: Contact Info -->
                 <div class="intake-step active" data-step="1">
@@ -666,7 +668,7 @@
 
                     <div class="intake-form__group">
                         <label class="intake-form__label" for="phone">Phone number <span>(optional)</span></label>
-                        <input type="tel" id="phone" name="phone" class="intake-form__input" placeholder="705-555-1234">
+                        <input type="tel" id="phone" name="phone" class="intake-form__input" placeholder="705-555-1234" pattern="[\d\s\-\+\(\)\.]{7,20}" title="Enter a valid phone number (digits, spaces, dashes, parentheses)">
                     </div>
                 </div>
 

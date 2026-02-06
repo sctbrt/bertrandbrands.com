@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/intake/brand-clarity-diagnostic">
@@ -73,7 +73,7 @@
 
         .intake-header__logo-text {
             font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.8125rem;
+            font-size: var(--text-sm);
             font-weight: 500;
             letter-spacing: 0.05em;
             text-transform: uppercase;
@@ -367,8 +367,11 @@
 
             <!-- Intake Form -->
             <form class="intake-form" id="intakeForm" action="https://formspree.io/f/xnjjgoay" method="POST">
+                <input type="hidden" name="source" value="brand-clarity-diagnostic-intake">
                 <input type="hidden" name="service" value="Brand Clarity Diagnostic">
                 <input type="hidden" name="price" value="$295 CAD">
+                <input type="hidden" name="_subject" value="New Intake — Brand Clarity Diagnostic ($295)">
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
                 <div class="intake-form__group">
                     <label class="intake-form__label" for="name">Name</label>

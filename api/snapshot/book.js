@@ -2,8 +2,9 @@
 // Endpoint: /api/snapshot/book
 
 export default async function handler(req, res) {
-  // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // CORS headers — restrict to own domain
+  const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.com';
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -17,15 +18,32 @@ export default async function handler(req, res) {
 
   const { name, email, website, concern, source, offer, rate } = req.body || {};
 
-  // Validate required fields
-  if (!name || !email || !website) {
+  // Validate required fields exist and are strings
+  if (!name || typeof name !== 'string' || !email || typeof email !== 'string' || !website || typeof website !== 'string') {
     return res.status(400).json({ error: 'Missing required fields: name, email, website' });
   }
 
-  // Validate email format
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Validate email format (RFC 5321 compliant — canonical pattern in api/pricing/request-access.js)
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
   if (!emailRegex.test(email)) {
     return res.status(400).json({ error: 'Invalid email format' });
+  }
+
+  // Validate input lengths
+  if (name.length > 200 || email.length > 254 || website.length > 500) {
+    return res.status(400).json({ error: 'Input exceeds maximum length' });
+  }
+  if (concern && (typeof concern !== 'string' || concern.length > 2000)) {
+    return res.status(400).json({ error: 'Concern exceeds maximum length' });
+  }
+  if (source && (typeof source !== 'string' || source.length > 200)) {
+    return res.status(400).json({ error: 'Invalid source parameter' });
+  }
+  if (offer && (typeof offer !== 'string' || offer.length > 200)) {
+    return res.status(400).json({ error: 'Invalid offer parameter' });
+  }
+  if (rate && (typeof rate !== 'string' || rate.length > 100)) {
+    return res.status(400).json({ error: 'Invalid rate parameter' });
   }
 
   // Pushover credentials
@@ -67,13 +85,10 @@ export default async function handler(req, res) {
       console.error('Pushover notification failed');
     }
 
-    // Log booking for analytics (can be expanded to database later)
+    // Log booking for analytics (sanitized — no PII in server logs)
     console.log('Snapshot booking:', {
       timestamp: new Date().toISOString(),
-      name,
-      email,
-      website,
-      concern: concern || null,
+      email: email.substring(0, 3) + '***',
       source: source || 'direct',
       offer: offer || 'website-snapshot-review',
       rate: rate || 'standard',
