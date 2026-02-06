@@ -29,25 +29,17 @@ export default async function handler(req, res) {
 
     if (type === 'visitor') {
       // Visitor notification (silent, low priority)
-      const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
-                 req.headers['x-real-ip'] ||
-                 req.connection?.remoteAddress ||
-                 'unknown';
 
-      // Get location from IP (using ipapi.co — free tier supports HTTPS, 1000 req/day)
+      // Use Vercel's built-in geo headers (free, instant, no rate limits)
+      const city = req.headers['x-vercel-ip-city'] ? decodeURIComponent(req.headers['x-vercel-ip-city']) : '';
+      const region = req.headers['x-vercel-ip-country-region'] || '';
+      const country = req.headers['x-vercel-ip-country'] || '';
+
       let location = '';
-      if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
-        try {
-          const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
-          if (geoRes.ok) {
-            const geo = await geoRes.json();
-            if (geo.city && !geo.error) {
-              location = `${geo.city}${geo.region_code ? `, ${geo.region_code}` : ''}${geo.country_name ? `, ${geo.country_name}` : ''}`;
-            }
-          }
-        } catch (geoErr) {
-          // Silently fail - location is optional
-        }
+      if (city) {
+        location = city;
+        if (region) location += `, ${region}`;
+        if (country) location += `, ${country}`;
       }
 
       notificationMessage = `📍 ${page || 'Homepage'}`;
