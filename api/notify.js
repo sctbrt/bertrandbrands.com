@@ -34,15 +34,15 @@ export default async function handler(req, res) {
                  req.connection?.remoteAddress ||
                  'unknown';
 
-      // Get location from IP (using free ip-api.com service)
+      // Get location from IP (using ipapi.co — free tier supports HTTPS, 1000 req/day)
       let location = '';
       if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
         try {
-          const geoRes = await fetch(`https://ip-api.com/json/${ip}?fields=city,regionCode,country`);
+          const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
           if (geoRes.ok) {
             const geo = await geoRes.json();
-            if (geo.city) {
-              location = `${geo.city}${geo.regionCode ? `, ${geo.regionCode}` : ''}${geo.country ? `, ${geo.country}` : ''}`;
+            if (geo.city && !geo.error) {
+              location = `${geo.city}${geo.region_code ? `, ${geo.region_code}` : ''}${geo.country_name ? `, ${geo.country_name}` : ''}`;
             }
           }
         } catch (geoErr) {
