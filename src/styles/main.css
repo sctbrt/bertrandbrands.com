@@ -1008,7 +1008,7 @@
         }
 
         .intro__brand {
-            font-family: var(--font-display);
+            font-family: var(--font-body);
             font-size: clamp(2.5rem, 10vw, 5.5rem);
             font-weight: var(--font-light);
             letter-spacing: 0.15em;
@@ -1075,7 +1075,7 @@
         }
 
         .intro__brand-sub {
-            font-family: var(--font-display);
+            font-family: 'Outfit', var(--font-body);
             font-size: 0.28em;
             font-weight: var(--font-normal);
             letter-spacing: 0.15em;

@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 5.0.0 (Current)
+## Version 5.6.0 (Current)
 
 This document is the **Bertrand Brands-specific** guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -71,7 +71,7 @@ All decisions must align with BRIGHTS:
 
 If a technical or UX decision introduces confusion, pressure, or ambiguity, it violates BRIGHTS.
 
-### 1.3 Service Architecture (LOCKED — Feb 2026)
+### 1.4 Service Architecture (LOCKED — Feb 2026)
 
 Bertrand Brands operates under **THREE strictly hierarchical service tiers**.
 
@@ -162,7 +162,7 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 
 **Never invent new services, pricing, or scopes.**
 
-### 1.4 Visual Hierarchy (LOCKED)
+### 1.5 Visual Hierarchy (LOCKED)
 
 **Homepage Section Order (Top to Bottom):**
 1. **B Focus Studio** — Primary, largest, most prominent
@@ -179,7 +179,7 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 1. Focus Studio (first in dropdown)
 2. Core Services (second in dropdown)
 
-### 1.5 AI Positioning (Critical)
+### 1.6 AI Positioning (Critical)
 
 **AI is never positioned as the product.**
 
@@ -194,7 +194,7 @@ Internally:
 
 If a solution makes AI visible to clients, flag it as a risk.
 
-### 1.6 Decision Rules
+### 1.7 Decision Rules
 
 When unsure, default to:
 1. Simpler
@@ -209,7 +209,7 @@ If something:
 
 → It should be redesigned.
 
-### 1.7 Success Criteria
+### 1.8 Success Criteria
 
 A successful implementation:
 - Feels calm
@@ -239,33 +239,79 @@ A successful implementation:
 - **Email**: Resend API
 - **Notifications**: Pushover API
 - **Forms**: Formspree
-- **Analytics**: Google Analytics, Google Tag Manager
+- **Analytics**: Google Analytics, Google Tag Manager (CSP-permitted, not yet implemented)
 
 ---
 
 ## 4. Project Structure
 
 ```
-├── src/                    # Static site source
-│   ├── index.html          # Main SPA (entry point)
+├── src/                           # Static site source
+│   ├── index.html                 # Main SPA (entry point)
+│   ├── 404.html                   # Error page
+│   ├── thanks.html                # Formspree redirect (legacy)
+│   ├── sitemapX.html              # Ecosystem sitemap
 │   ├── styles/
-│   │   ├── tokens.css      # Design system variables
-│   │   └── main.css        # Main stylesheet
+│   │   ├── tokens.css             # Design system variables
+│   │   └── main.css               # Main stylesheet (~5,700 lines)
+│   ├── scripts/
+│   │   ├── main.js                # Main site functionality
+│   │   └── dot-grid-about.js      # About section dot grid animation
+│   ├── components/
+│   │   ├── header.js              # Universal header injector
+│   │   ├── header.html            # Header component template
+│   │   └── visitor-notify.js      # Visitor notification script
 │   ├── pages/
-│   │   ├── ads/            # Landing pages
-│   │   │   ├── direction-session.html
-│   │   │   ├── business-clarity-call.html
-│   │   │   ├── focus-studio.html      # B Focus Studio intake
-│   │   │   └── ...
-│   │   └── intake/         # Intake forms
-│   └── assets/             # Logos & images
-├── api/                    # Vercel serverless functions
-│   ├── notify.js           # Visitor notifications → Pushover
-│   ├── pricing/            # Magic link pricing gate system
-│   └── lib/db.js           # Database utilities
-├── public/                 # Static assets
-├── vercel.json             # Deployment config & rewrites
-└── package.json            # Dependencies
+│   │   ├── ads/                   # Google Ads landing pages
+│   │   │   ├── focus-studio.html
+│   │   │   ├── core-services.html
+│   │   │   ├── sudbury-focus-studio.html
+│   │   │   ├── website-conversion-snapshot.html
+│   │   │   └── brand-clarity-diagnostic.html
+│   │   ├── services/              # Service detail pages
+│   │   │   ├── starter-site.html
+│   │   │   ├── one-page-redesign.html
+│   │   │   ├── brandmark.html
+│   │   │   ├── strategic-brand-review.html
+│   │   │   ├── digital-platform-build.html
+│   │   │   ├── brand-reset.html
+│   │   │   ├── full-brand-platform-reset.html
+│   │   │   └── website-audit.html          # Legacy (V3 theme)
+│   │   ├── intake/                # Intake form pages
+│   │   │   ├── exploratory.html
+│   │   │   ├── brand-clarity-diagnostic.html
+│   │   │   └── website-conversion-snapshot.html
+│   │   ├── booking/
+│   │   │   └── schedule.html      # Calendly booking widget
+│   │   ├── book.html              # Booking page
+│   │   ├── exploratory.html       # Exploratory tier landing
+│   │   ├── clarity-session.html   # Clarity session page
+│   │   ├── scottbertrand.html     # Personal cross-promotion
+│   │   ├── payment-confirmed.html
+│   │   ├── booking-confirmed.html
+│   │   └── snapshot-confirmed.html
+│   └── assets/                    # Logos & images
+├── api/                           # Vercel serverless functions
+│   ├── notify.js                  # Visitor notifications → Pushover
+│   ├── pricing/                   # Magic link pricing gate
+│   │   ├── request-access.js      # Send magic link email
+│   │   ├── access.js              # Consume token, create session
+│   │   ├── check-access.js        # Validate session cookie
+│   │   └── logout.js              # Clear session
+│   ├── booking/                   # Magic link booking gate
+│   │   ├── access.js              # Consume token, create session
+│   │   ├── check-access.js        # Validate session cookie
+│   │   └── logout.js              # Clear session
+│   ├── snapshot/
+│   │   └── book.js                # Snapshot booking endpoint
+│   └── lib/
+│       └── db.js                  # Database utilities
+├── scripts/
+│   └── init-db.js                 # Database table initialization
+├── public/                        # Static assets (favicons, OG image, manifest)
+├── vercel.json                    # Deployment config, rewrites, redirects, headers
+├── package.json                   # Dependencies (@vercel/postgres, resend)
+└── CLAUDE.md                      # This file
 ```
 
 ---
@@ -456,7 +502,7 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 
 - Gated tiers require email opt-in
 - Flow: Email → Resend sends token → 15-min validity → 4-hour session
-- Database: `pricing_magic_links` and `pricing_sessions` tables (in system-build)
+- Database: `pricing_magic_links` and `pricing_sessions` tables (created by `scripts/init-db.js`)
 - Security: Token hashing, rate limiting (3/hr per email)
 - Cookie: `bb_pricing_session` set on `.bertrandbrands.com` domain
 
@@ -507,6 +553,7 @@ POSTGRES_URL          # Vercel Postgres connection
 RESEND_API_KEY        # Email delivery
 PUSHOVER_USER_KEY     # Push notifications
 PUSHOVER_API_TOKEN    # Push notifications
+APP_URL               # CORS origin (defaults to https://bertrandbrands.com)
 ```
 
 ---
@@ -564,7 +611,7 @@ See main CLAUDE.md sections 14–16 for locked specs:
 - **Section 15**: Admin / CRM Dashboard v1
 - **Section 16**: Payment Integration v1 (Stripe Payment Links)
 
-**Launch target**: Feb 3, 2026
+**Launched**: Feb 3, 2026
 
 ---
 
@@ -627,7 +674,7 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ### Modifying the pricing gate
 
-1. Backend logic now in `system-build/src/app/api/pricing/`
+1. Backend logic in `api/pricing/` (this repo's serverless functions)
 2. Frontend triggers via `[data-pricing-trigger]` attributes
 3. Session validation via cookie check
 
@@ -669,17 +716,57 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - Full Brand + Platform Reset
 - Brand Moments & Micro-Activations (by request only)
 
+### Service Detail Pages
+- `/starter-site` → Focus Studio: Starter Site detail
+- `/one-page-redesign` → Focus Studio: One-Page Redesign detail
+- `/brandmark` → Focus Studio: Brandmark & Visual Identity detail
+- `/strategic-brand-review` → Core Services detail
+- `/digital-platform-build` → Core Services detail
+- `/brand-reset` → Core Services detail
+- `/full-brand-platform-reset` → Core Services detail
+
+### Google Ads Landing Pages
+- `/sudbury` → Sudbury-specific Focus Studio landing (local campaign)
+- `/website-conversion-snapshot` → Website Snapshot Diagnostic landing
+- `/brand-clarity-diagnostic` → Brand Clarity Diagnostic landing
+- `/intake/website-conversion-snapshot` → Snapshot intake form
+- `/intake/brand-clarity-diagnostic` → Diagnostic intake form
+
+### Booking & Confirmation Routes
+- `/book` → Main booking page
+- `/booking/schedule` → Calendly inline widget
+- `/clarity-session` → Clarity session page
+- `/payment-confirmed` → Post-payment confirmation
+- `/booking-confirmed` → Post-booking confirmation
+- `/snapshot-confirmed` → Post-snapshot confirmation
+
+### Utility Routes
+- `/scottbertrand` → Scott Bertrand cross-promotion page
+
+### Campaign Aliases (redirects)
+- `/sudbury-brand-website-clarity` → `/sudbury` (permanent)
+- `/sudbury-small-business-website-leads` → `/sudbury` (permanent)
+- `/website-snapshot-review` → `/website-conversion-snapshot` (permanent)
+- `/intake/website-snapshot-review` → `/intake/website-conversion-snapshot` (permanent)
+
 ### Legacy Routes (redirects)
-- `/direction-session` → redirects to `/exploratory` (permanent)
-- `/business-clarity-call` → redirects to `/exploratory` (permanent)
-- `/founders-check` → redirects to `/exploratory` (permanent)
-- `/brand-clarity-call` → redirects to `/exploratory` (permanent)
-- `/website-clarity-call` → redirects to `/exploratory` (permanent)
-- `/intake/direction-session` → redirects to `/intake/exploratory` (permanent)
-- `/intake/business-clarity-call` → redirects to `/intake/exploratory` (permanent)
-- `/intake/founders-check` → redirects to `/intake/exploratory` (permanent)
-- `/intake/brand-clarity-call` → redirects to `/intake/exploratory` (permanent)
-- `/intake/website-clarity-call` → redirects to `/intake/exploratory` (permanent)
+- `/direction-session` → `/exploratory` (permanent)
+- `/business-clarity-call` → `/exploratory` (permanent)
+- `/founders-check` → `/exploratory` (permanent)
+- `/founders-direction-check` → `/exploratory` (permanent)
+- `/brand-clarity-call` → `/exploratory` (permanent)
+- `/website-clarity-call` → `/exploratory` (permanent)
+- `/intake/direction-session` → `/intake/exploratory` (permanent)
+- `/intake/business-clarity-call` → `/intake/exploratory` (permanent)
+- `/intake/founders-check` → `/intake/exploratory` (permanent)
+- `/intake/brand-clarity-call` → `/intake/exploratory` (permanent)
+- `/intake/website-clarity-call` → `/intake/exploratory` (permanent)
+
+### Convenience Redirects
+- `/about`, `/services`, `/process` → Homepage anchors (`/#about`, etc.)
+- `/intake`, `/start`, `/start-here` → `/focus-studio`
+- `/portal`, `/client-portal`, `/login` → `/#portal`
+- `/brand-website-starter-map` → `/#services` (temporary)
 
 ---
 
@@ -760,14 +847,14 @@ Cards must have `position: relative` and `overflow: hidden` for the edge glow to
 
 ## 19. Pricing & Marketing Strategy
 
-### 18.1 Pricing Philosophy
+### 19.1 Pricing Philosophy
 
 - Pricing is **outcome- and deliverable-based**, never time-based
 - AI efficiency increases margin and focus, not justification to discount
 - Prices are upper-mid for Sudbury market, acceptable with clear scope and confident presentation
 - **Do not discount publicly**
 
-### 18.2 Local Incentive Strategy (Approved)
+### 19.2 Local Incentive Strategy (Approved)
 
 For Sudbury-first campaigns, local incentives may be offered via:
 - Google Ads landing pages only
@@ -787,7 +874,7 @@ For Sudbury-first campaigns, local incentives may be offered via:
 - Optional promo code field in intake forms
 - Code visibility restricted to ad-specific landing pages only
 
-### 18.3 Campaign Focus
+### 19.3 Campaign Focus
 
 - Single campaign only (no split testing yet)
 - Campaign focus: Focus Studio offerings
@@ -799,7 +886,7 @@ For Sudbury-first campaigns, local incentives may be offered via:
 
 V5.0.0 is a polish pass focused on eliminating janky animations and improving mobile performance.
 
-### 19.1 Animation Performance
+### 20.1 Animation Performance
 
 **Header Ambient Lights**
 - Throttled from 60fps to 30fps for reduced GPU load
@@ -818,7 +905,7 @@ V5.0.0 is a polish pass focused on eliminating janky animations and improving mo
 - Animation duration reduced: 3s → 2s on mobile, 1.5s on small screens
 - Added `contain: layout style` for isolation
 
-### 19.2 Mobile Optimizations
+### 20.2 Mobile Optimizations
 
 **Header**
 - Backdrop blur reduced: 20px → 12px on mobile
@@ -833,7 +920,7 @@ V5.0.0 is a polish pass focused on eliminating janky animations and improving mo
 - All CTAs minimum 44px height
 - Improved tap feedback with scale transform
 
-### 19.3 CSS Containment
+### 20.3 CSS Containment
 
 Added `contain: layout style` to:
 - `.intro` (full containment with paint)
@@ -843,7 +930,7 @@ Added `contain: layout style` to:
 - `.hero__spotlight`
 - `.intro__glow`
 
-### 19.4 Card Interactions
+### 20.4 Card Interactions
 
 **Service Cards**
 - Refined hover transitions (border, transform, shadow)
@@ -862,7 +949,7 @@ Added `contain: layout style` to:
 - Improved entrance animation with scale + fade
 - Backdrop fade-in separate from content animation
 
-### 19.5 Mobile Service Layout
+### 20.5 Mobile Service Layout
 
 - Improved spacing consistency
 - Touch target minimums (44px)
@@ -885,6 +972,7 @@ Added `contain: layout style` to:
 | 5.4.0 | Feb 2026 | Focus Studio offering restructure: Quick Website Refresh → Starter Site; Brandmarking Package → Brandmark & Visual Identity; added explicit distinction between template-assisted vs. custom code offerings |
 | 5.5.0 | Feb 2026 | Comprehensive audit execution (P0-P4): OG image tags on 20 pages, honeypot fields on all forms, Formspree _subject fields, font-weight token standardization, phone validation, legacy page deprecation markers, Calendly PII documentation |
 | 5.5.1 | Feb 2026 | P5 polish pass: removed unused --font-mono token, consolidated duplicate scroll-behavior, added phone button title attr, fixed vercel.json formatting, sanitized PII in snapshot booking logs, documented canonical email regex, marked launch gate for removal, added audit log retention strategy, clarified header nav documentation |
+| 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0+P1): fixed version header, resolved duplicate section 1.3 numbering, corrected Section 19/20 sub-numbering, marked GA/GTM as not-yet-implemented, fixed pricing gate backend location, updated launch target to launched; replaced stale project structure tree, expanded Section 16 routes with service detail pages/Google Ads/booking/campaign aliases/convenience redirects, removed orphaned pages from Section 22.8, added APP_URL to env vars |
 
 ---
 
@@ -1054,8 +1142,6 @@ A JavaScript-based universal header is available at `/components/header.js`. It 
 - `/src/pages/book.html`
 - `/src/pages/ads/core-services.html`
 - `/src/pages/clarity-session.html`
-- `/src/pages/ads/brand-clarity-call.html`
-- `/src/pages/ads/website-clarity-call.html`
 
 ### 22.9 Pages with Intentional Custom Headers
 
