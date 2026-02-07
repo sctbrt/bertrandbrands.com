@@ -1,0 +1,11 @@
+# Bertrand Brands — bertrandbrands.com
+# Brand, web, and systems studio based in Greater Sudbury, Ontario, Canada
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://bertrandbrands.com/sitemap.xml
+
+# LLM-friendly summary
+# See https://bertrandbrands.com/llms.txt for structured business information

@@ -64,419 +64,8 @@
 
         a { color: inherit; text-decoration: none; }
 
-        /* === LAUNCH GATE === */
-        @keyframes launchFadeDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes launchGlow {
-            0% {
-                filter: brightness(0) invert(1) drop-shadow(0 0 0 transparent);
-            }
-            100% {
-                filter: brightness(0) invert(1) drop-shadow(0 0 25px rgba(255, 255, 255, 0.2));
-            }
-        }
-
-        /* DEPRECATED: Launch gate styles — safe to remove when launch gate HTML is removed */
-        .launch-gate {
-            position: fixed;
-            inset: 0;
-            z-index: 9999; /* Above everything — launch gate is top-most layer */
-            background: var(--bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .launch-gate__content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            padding: 2rem;
-        }
-
-        .launch-gate__brand {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .launch-gate__logo {
-            width: 80px;
-            height: 80px;
-            filter: brightness(0) invert(1);
-            opacity: 0;
-            animation:
-                launchFadeDown 1.5s var(--ease-out-expo) 0.3s forwards,
-                launchGlow 1.5s ease-out 2s forwards,
-                launchBreathe 4s ease-in-out 3.5s infinite;
-        }
-
-        .launch-gate__wordmark {
-            font-family: var(--font-display);
-            font-size: var(--text-2xl);
-            font-weight: var(--font-medium);
-            letter-spacing: 0.4em;
-            color: transparent;
-            opacity: 0;
-            /* White spotlight gradient (matches intro cinematic) */
-            background: linear-gradient(
-                105deg,
-                rgba(250, 250, 250, 1) 0%,
-                rgba(250, 250, 250, 1) 35%,
-                rgba(200, 200, 200, 1) 45%,
-                rgba(255, 255, 255, 1) 50%,
-                rgba(200, 200, 200, 1) 55%,
-                rgba(250, 250, 250, 1) 65%,
-                rgba(250, 250, 250, 1) 100%
-            );
-            background-size: 300% 100%;
-            background-position: 100% 0;
-            background-clip: text;
-            -webkit-background-clip: text;
-            animation:
-                launchTextReveal 1.8s var(--ease-out-expo) 0.8s forwards,
-                launchSpotlight 1.5s ease-out 2.5s forwards,
-                launchTextBreathe 4s ease-in-out 4s infinite;
-        }
-
-        .launch-gate__title {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: var(--text-base);
-            font-weight: var(--font-light);
-            color: var(--text-muted);
-            letter-spacing: 0.01em;
-            opacity: 0;
-            animation: launchFadeDown 1.2s var(--ease-out-expo) 1.4s forwards;
-        }
-
-        .launch-gate__text {
-            font-family: var(--font-body);
-            font-size: var(--text-sm);
-            font-weight: var(--font-medium);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            opacity: 0;
-            animation: launchFadeDown 1.2s var(--ease-out-expo) 1.8s forwards;
-        }
-
-        .launch-gate__countdown {
-            display: flex;
-            gap: 1.5rem;
-            opacity: 0;
-            animation: launchFadeDown 1.2s var(--ease-out-expo) 2s forwards;
-        }
-
-        .launch-gate__countdown-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-            min-width: 3.5rem;
-        }
-
-        .launch-gate__countdown-value {
-            font-family: var(--font-display);
-            font-size: var(--text-4xl);
-            font-weight: var(--font-light);
-            color: var(--text);
-            font-variant-numeric: tabular-nums;
-            letter-spacing: 0.02em;
-        }
-
-        .launch-gate__countdown-label {
-            font-family: var(--font-body);
-            font-size: var(--text-xs);
-            font-weight: var(--font-medium);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-subtle);
-        }
-
-        .launch-gate__location {
-            font-family: var(--font-body);
-            font-size: var(--text-xs);
-            color: var(--text-subtle);
-            opacity: 0;
-            animation: launchFadeDown 1.2s var(--ease-out-expo) 2.2s forwards;
-        }
-
-        /* Ambient lighting glows (matches intro cinematic) */
-        @keyframes launchGlowFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .launch-gate__glow {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0;
-        }
-
-        .launch-gate__glow--orange {
-            width: 70vmax;
-            height: 70vmax;
-            max-width: 900px;
-            max-height: 900px;
-            background: radial-gradient(
-                circle at center,
-                rgba(255, 255, 255, 0.08) 0%,
-                rgba(255, 255, 255, 0.02) 45%,
-                transparent 70%
-            );
-            top: -25%;
-            right: -20%;
-            filter: blur(80px);
-            animation: launchGlowFadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
-        }
-
-        .launch-gate__glow--blue {
-            width: 55vmax;
-            height: 55vmax;
-            max-width: 650px;
-            max-height: 650px;
-            background: radial-gradient(
-                circle at center,
-                rgba(255, 255, 255, 0.06) 0%,
-                rgba(255, 255, 255, 0.015) 50%,
-                transparent 70%
-            );
-            bottom: -30%;
-            left: -15%;
-            filter: blur(100px);
-            animation: launchGlowFadeIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
-        }
-
-        /* --- Sparkle particles (looping cinematic effect) --- */
-
-        @keyframes sparkleFloat {
-            0% {
-                opacity: 0;
-                transform: translateY(0) scale(0);
-            }
-            10% {
-                opacity: 1;
-                transform: translateY(-8px) scale(1);
-            }
-            80% {
-                opacity: 0.6;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-120px) scale(0.3);
-            }
-        }
-
-        @keyframes sparkleDrift {
-            0% {
-                opacity: 0;
-                transform: translate(0, 0) scale(0);
-            }
-            12% {
-                opacity: 0.9;
-                transform: translate(4px, -10px) scale(1);
-            }
-            75% {
-                opacity: 0.4;
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-8px, -100px) scale(0.2);
-            }
-        }
-
-        @keyframes sparkleFlicker {
-            0%, 100% { opacity: 0; }
-            15% { opacity: 0.8; }
-            50% { opacity: 1; }
-            85% { opacity: 0.5; }
-        }
-
-        .launch-gate__sparkles {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .launch-gate__sparkle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 70%);
-            box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.15);
-            opacity: 0;
-        }
-
-        /* Stagger 8 sparkle particles with varied positions, sizes, timing */
-        .launch-gate__sparkle:nth-child(1) {
-            left: 18%;
-            top: 65%;
-            width: 2px;
-            height: 2px;
-            animation: sparkleFloat 4.5s ease-in-out 3s infinite;
-        }
-        .launch-gate__sparkle:nth-child(2) {
-            left: 72%;
-            top: 55%;
-            width: 3px;
-            height: 3px;
-            animation: sparkleDrift 5.2s ease-in-out 3.6s infinite;
-        }
-        .launch-gate__sparkle:nth-child(3) {
-            left: 35%;
-            top: 70%;
-            width: 2px;
-            height: 2px;
-            animation: sparkleFloat 6s ease-in-out 4.2s infinite;
-        }
-        .launch-gate__sparkle:nth-child(4) {
-            left: 82%;
-            top: 45%;
-            width: 4px;
-            height: 4px;
-            box-shadow: 0 0 6px 2px rgba(217, 119, 6, 0.12);
-            animation: sparkleDrift 5.8s ease-in-out 2.8s infinite;
-        }
-        .launch-gate__sparkle:nth-child(5) {
-            left: 50%;
-            top: 75%;
-            width: 2px;
-            height: 2px;
-            animation: sparkleFloat 4.8s ease-in-out 5s infinite;
-        }
-        .launch-gate__sparkle:nth-child(6) {
-            left: 25%;
-            top: 40%;
-            width: 3px;
-            height: 3px;
-            box-shadow: 0 0 5px 1px rgba(139, 92, 246, 0.1);
-            animation: sparkleDrift 6.5s ease-in-out 3.2s infinite;
-        }
-        .launch-gate__sparkle:nth-child(7) {
-            left: 60%;
-            top: 60%;
-            width: 2px;
-            height: 2px;
-            animation: sparkleFloat 5.5s ease-in-out 4.8s infinite;
-        }
-        .launch-gate__sparkle:nth-child(8) {
-            left: 45%;
-            top: 50%;
-            width: 3px;
-            height: 3px;
-            animation: sparkleDrift 7s ease-in-out 2.5s infinite;
-        }
-
-        /* Separator sparkle flicker (between countdown units) */
-        .launch-gate__countdown-separator {
-            animation: sparkleFlicker 3s ease-in-out 2.5s infinite;
-        }
-
-        /* Hide main content when in launch mode */
-        body.launch-mode .cursor-glow,
-        body.launch-mode .intro,
-        body.launch-mode .page {
-            display: none;
-        }
-
-        /* Show everything in preview mode */
-        body.preview-mode .launch-gate {
-            display: none;
-        }
-
-        /* Mobile glow + sparkle optimizations */
-        @media (max-width: 768px) {
-            .launch-gate__glow {
-                filter: blur(50px);
-            }
-            .launch-gate__glow--orange {
-                width: 75vw;
-                height: 75vw;
-                top: -15%;
-                right: -20%;
-            }
-            .launch-gate__glow--blue {
-                width: 60vw;
-                height: 60vw;
-                bottom: -20%;
-                left: -15%;
-            }
-            /* Hide half the sparkles on mobile for GPU performance */
-            .launch-gate__sparkle:nth-child(3),
-            .launch-gate__sparkle:nth-child(5),
-            .launch-gate__sparkle:nth-child(7),
-            .launch-gate__sparkle:nth-child(8) {
-                display: none;
-            }
-            .launch-gate__sparkle {
-                box-shadow: none;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .launch-gate__content {
-                gap: 2.5rem;
-            }
-            .launch-gate__brand {
-                gap: 1.25rem;
-            }
-            .launch-gate__logo {
-                width: 112px;
-                height: 112px;
-            }
-            .launch-gate__wordmark {
-                font-size: var(--text-4xl);
-                font-weight: var(--font-semibold);
-                letter-spacing: 0.25em;
-            }
-            .launch-gate__title {
-                font-size: var(--text-2xl);
-            }
-            .launch-gate__text {
-                font-size: var(--text-base);
-                letter-spacing: 0.25em;
-            }
-            .launch-gate__countdown {
-                gap: 2.5rem;
-            }
-            .launch-gate__countdown-unit {
-                min-width: 5rem;
-            }
-            .launch-gate__countdown-value {
-                font-size: var(--text-5xl);
-            }
-            .launch-gate__countdown-label {
-                font-size: var(--text-xs);
-            }
-            .launch-gate__location {
-                font-size: var(--text-sm);
-            }
-        }
+        /* === UTILITIES === */
+        .form-honeypot { display: none; }
 
         /* === LAYOUT === */
         .page {
@@ -1672,6 +1261,38 @@
 
         @keyframes fadeIn { to { opacity: 1; } }
 
+        .hero__subtitle-glow {
+            color: var(--text-muted);
+        }
+
+        .intro-complete .hero__subtitle-glow {
+            animation: subtitleGlow 3s ease-out 1.2s forwards;
+        }
+
+        @keyframes subtitleGlow {
+            0% {
+                color: var(--text-muted);
+                text-shadow: none;
+            }
+            25% {
+                color: #fff;
+                text-shadow:
+                    0 0 20px rgba(255, 255, 255, 0.5),
+                    0 0 40px rgba(255, 255, 255, 0.25);
+            }
+            55% {
+                color: #fff;
+                text-shadow:
+                    0 0 12px rgba(255, 255, 255, 0.3),
+                    0 0 25px rgba(255, 255, 255, 0.12);
+            }
+            100% {
+                color: #e0e0e0;
+                text-shadow:
+                    0 0 6px rgba(255, 255, 255, 0.12);
+            }
+        }
+
         .hero__cta {
             display: inline-flex;
             align-items: center;
@@ -1741,6 +1362,10 @@
             opacity: 0.6;
         }
 
+        /* Desktop: "Scroll to explore", Mobile: "Swipe to explore" */
+        .hint-mobile { display: none; }
+        .hint-desktop { display: inline; }
+
         .hero__scroll-hint-icon {
             width: 20px;
             height: 20px;
@@ -1779,6 +1404,8 @@
             .hero__scroll-hint-text {
                 font-size: var(--text-xs);
             }
+            .hint-mobile { display: inline; }
+            .hint-desktop { display: none; }
         }
 
         /* Hero background */
@@ -3087,49 +2714,6 @@
 
         .exploratory-card__cta:hover {
             color: var(--text);
-        }
-
-        /* Primary card styling - visually dominant */
-        .exploratory-card--primary {
-            background: var(--bg-subtle);
-            border-color: var(--accent-muted);
-        }
-
-        .exploratory-card--primary:hover {
-            border-color: var(--accent);
-        }
-
-        .exploratory-card__cta--primary {
-            color: var(--accent);
-            font-weight: var(--font-medium);
-        }
-
-        .exploratory-card__cta--primary:hover {
-            color: var(--accent-hover);
-        }
-
-        /* Secondary card styling - de-emphasized */
-        .exploratory-card--secondary {
-            background: transparent;
-            border-style: dashed;
-            opacity: 0.85;
-        }
-
-        .exploratory-card--secondary:hover {
-            opacity: 1;
-            border-style: solid;
-        }
-
-        .exploratory-card--secondary .exploratory-card__title {
-            font-size: var(--text-base);
-        }
-
-        .exploratory-card--secondary .exploratory-card__description {
-            font-size: var(--text-xs);
-        }
-
-        .exploratory-card--secondary .exploratory-card__price {
-            font-size: var(--text-base);
         }
 
         /* Mobile: Stack card header vertically for better readability */
@@ -4535,7 +4119,7 @@
 
         /* Contact Form */
         .contact-form {
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
             text-align: left;
             position: relative;
@@ -4565,6 +4149,11 @@
             font-family: var(--font-body);
             font-size: var(--text-base);
             transition: border-color var(--duration-fast) var(--ease-out);
+        }
+
+        .contact-form__textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
         .contact-form__input:focus,
@@ -4608,11 +4197,6 @@
         .contact-form__select option {
             background: var(--bg);
             color: var(--text);
-        }
-
-        .contact-form__textarea {
-            min-height: 120px;
-            resize: vertical;
         }
 
         .contact-form__submit {
@@ -4774,7 +4358,7 @@
         /* === CLIENT PORTAL === */
         .portal {
             text-align: center;
-            padding: var(--space-xl) 0;
+            padding: var(--space-lg) 0;
         }
 
         .portal__content {
@@ -4865,10 +4449,21 @@
 
         /* === FOOTER === */
         .footer {
-            padding: var(--space-lg) 0;
+            padding: var(--space-lg) 0 var(--space-md);
             border-top: 1px solid var(--border);
             margin-top: auto;
             background: var(--bg);
+        }
+
+        .footer__logomark {
+            text-align: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .footer__logomark-img {
+            width: 32px;
+            height: auto;
+            opacity: 0.3;
         }
 
         .footer__inner {
@@ -5594,6 +5189,49 @@
                 backdrop-filter: none;
                 -webkit-backdrop-filter: none;
             }
+
+            /* V5.5: Text glow mobile overrides — single-layer shadows, same mood */
+
+            /* Hero "Brand & Web" glow: single-layer, still fades back */
+            .hero__title.hero-animate .hero__title-glow {
+                animation: heroTextGlowMobile 3s ease-out forwards;
+            }
+
+            /* "Based in Sudbury" glow: single-layer */
+            .intro-complete .hero__subtitle-glow {
+                animation: subtitleGlowMobile 3s ease-out 1.2s forwards;
+            }
+
+            /* About section spotlight sweep: single-layer, shorter */
+            .reveal.is-visible .text-spotlight {
+                animation: textSpotlightSweepMobile 1.4s ease-out 0.3s forwards;
+            }
+
+            /* About "focused" text glow: single-layer, simplified iris */
+            .reveal.is-visible .text-spotlight--focused {
+                animation: focusedGlowMobile 2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+            }
+
+            /* Process "clear" text glow: single-layer orange */
+            .reveal.is-visible .text-spotlight--clear {
+                animation: clearTextGlowMobile 2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+            }
+
+            /* "Systems" flicker: fire once (already once), simplify to fade-in */
+            .hero__title.hero-animate .accent {
+                animation: fluorescentFlickerMobile 0.6s ease-out 1s forwards;
+            }
+
+            /* Process beam: fade-in instead of sweep on mobile */
+            .section--process.reveal-triggered::before {
+                animation: beamFadeInMobile 1.5s ease-out 0.6s forwards;
+            }
+
+            /* Exploratory drift: disable infinite breathing on mobile */
+            .exploratory-sessions::before,
+            .exploratory-sessions::after {
+                animation: none;
+            }
         }
 
         /* V5.0: Mobile-optimized keyframes - transform only, no filter animation */
@@ -5624,6 +5262,112 @@
             100% {
                 opacity: 0.42;
                 transform: translate(0, 0) scale(1);
+            }
+        }
+
+        /* V5.5: Mobile text glow keyframes — single-layer shadows for GPU efficiency */
+
+        @keyframes heroTextGlowMobile {
+            0% {
+                text-shadow: none;
+                color: var(--text);
+            }
+            30% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+                color: #fff;
+            }
+            70% {
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+                color: #fff;
+            }
+            100% {
+                text-shadow: none;
+                color: var(--text);
+            }
+        }
+
+        @keyframes subtitleGlowMobile {
+            0% {
+                color: var(--text-muted);
+                text-shadow: none;
+            }
+            30% {
+                color: #fff;
+                text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+            }
+            100% {
+                color: #e0e0e0;
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        @keyframes textSpotlightSweepMobile {
+            0% {
+                color: var(--text);
+                text-shadow: none;
+            }
+            35% {
+                color: #fff;
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            }
+            100% {
+                color: var(--text);
+                text-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        @keyframes focusedGlowMobile {
+            0% {
+                color: var(--text);
+                text-shadow: none;
+            }
+            30% {
+                color: #fff;
+                text-shadow: 0 0 30px rgba(217, 119, 6, 0.4);
+            }
+            70% {
+                color: #fff;
+                text-shadow: 0 0 10px rgba(217, 119, 6, 0.7);
+            }
+            100% {
+                color: #fff;
+                text-shadow: 0 0 8px rgba(217, 119, 6, 0.5);
+            }
+        }
+
+        @keyframes clearTextGlowMobile {
+            0% {
+                color: var(--text);
+                text-shadow: none;
+            }
+            35% {
+                color: #fff;
+                text-shadow: 0 0 20px rgba(217, 119, 6, 0.6);
+            }
+            100% {
+                color: #fff;
+                text-shadow: 0 0 10px rgba(217, 119, 6, 0.4);
+            }
+        }
+
+        @keyframes fluorescentFlickerMobile {
+            0% { opacity: 0; }
+            40% { opacity: 0.7; }
+            60% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes beamFadeInMobile {
+            0% {
+                opacity: 0;
+                transform: translateX(0) scaleY(1);
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(0) scaleY(1);
             }
         }
 

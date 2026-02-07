@@ -21,11 +21,11 @@
     },
     {
       "source": "/website-conversion-snapshot",
-      "destination": "/pages/ads/website-conversion-snapshot.html"
+      "destination": "/pages/ads/website-conversion-snapshot"
     },
     {
       "source": "/brand-clarity-diagnostic",
-      "destination": "/pages/ads/brand-clarity-diagnostic.html"
+      "destination": "/pages/ads/brand-clarity-diagnostic"
     },
     {
       "source": "/intake/website-conversion-snapshot",
@@ -237,6 +237,15 @@
     }
   ],
   "headers": [
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [

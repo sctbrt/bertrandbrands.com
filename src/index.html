@@ -7,12 +7,12 @@
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/">
     <meta name="theme-color" content="#0a0a0a">
-    <title>Bertrand Brands — Brand & Web Systems</title>
-    <meta name="description" content="Clear, structured brand and web work for businesses that value clarity. Reviews, brand systems, and website foundations. Based in Sudbury, available across Canada.">
+    <title>Bertrand Brands — Brand & Web Studio in Sudbury, Ontario</title>
+    <meta name="description" content="Brand and web systems studio based in Greater Sudbury, Ontario. Starter sites, custom redesigns, brandmarks, and strategic brand work. Clear scope, fixed pricing, fast turnaround. Serving Sudbury, Northern Ontario, and across Canada.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Bertrand Brands — Brand & Web Systems">
-    <meta property="og:description" content="Clear, structured brand and web work for businesses that value clarity. Based in Sudbury, available across Canada.">
+    <meta property="og:title" content="Bertrand Brands — Brand & Web Studio in Sudbury, Ontario">
+    <meta property="og:description" content="Brand and web systems studio based in Greater Sudbury, Ontario. Clear scope, fixed pricing, fast turnaround. Serving Northern Ontario and across Canada.">
     <meta property="og:url" content="https://bertrandbrands.com/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
@@ -35,20 +35,30 @@
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "name": "Bertrand Brands",
-      "description": "Clear, structured brand and web work for businesses that value clarity. Reviews, brand systems, and website foundations.",
+      "description": "Clear, structured brand and web work for businesses that value clarity. Reviews, brand systems, and website foundations. Based in Greater Sudbury, Ontario.",
       "url": "https://bertrandbrands.com",
       "email": "hello@bertrandbrands.com",
+      "telephone": "+17054133705",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Greater Sudbury",
         "addressRegion": "Ontario",
         "addressCountry": "CA"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 46.4917,
+        "longitude": -80.9930
+      },
       "areaServed": [
-        { "@type": "Place", "name": "Northern Ontario" },
+        { "@type": "City", "name": "Greater Sudbury", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ontario" } },
+        { "@type": "AdministrativeArea", "name": "Northern Ontario" },
         { "@type": "Country", "name": "Canada" }
       ],
       "priceRange": "$750 - $6,500+ CAD",
+      "sameAs": [
+        "https://linkedin.com/in/sudburyon"
+      ],
       "founder": {
         "@type": "Person",
         "name": "Scott Bertrand",
@@ -82,84 +92,6 @@
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-    <!-- DEPRECATED: Launch gate — launch date (Feb 4, 2026) has passed. Gate auto-hides via JS.
-         Safe to remove this block (HTML + script below) and associated .launch-gate CSS when confirmed. -->
-    <div class="launch-gate" id="launchGate">
-        <!-- Ambient lighting (matches intro cinematic) -->
-        <div class="launch-gate__glow launch-gate__glow--orange"></div>
-        <div class="launch-gate__glow launch-gate__glow--blue"></div>
-        <!-- Cinematic sparkle particles (looping) -->
-        <div class="launch-gate__sparkles">
-            <div class="launch-gate__sparkle"></div>
-            <div class="launch-gate__sparkle"></div>
-            <div class="launch-gate__sparkle"></div>
-            <div class="launch-gate__sparkle"></div>
-            <div class="launch-gate__sparkle"></div>
-            <div class="launch-gate__sparkle"></div>
-            <div class="launch-gate__sparkle"></div>
-            <div class="launch-gate__sparkle"></div>
-        </div>
-        <div class="launch-gate__content">
-            <div class="launch-gate__brand">
-                <img src="/assets/bertrand-brands-logomark.png" alt="" class="launch-gate__logo">
-                <span class="launch-gate__wordmark">BERTRAND BRANDS</span>
-            </div>
-            <h1 class="launch-gate__title">Brand & Web Systems Studio</h1>
-            <p class="launch-gate__text">Launching in</p>
-            <div class="launch-gate__countdown" id="launchCountdown">
-                <div class="launch-gate__countdown-unit">
-                    <span class="launch-gate__countdown-value" id="countdownHours">00</span>
-                    <span class="launch-gate__countdown-label">hours</span>
-                </div>
-                <span class="launch-gate__countdown-separator">:</span>
-                <div class="launch-gate__countdown-unit">
-                    <span class="launch-gate__countdown-value" id="countdownMinutes">00</span>
-                    <span class="launch-gate__countdown-label">minutes</span>
-                </div>
-                <span class="launch-gate__countdown-separator">:</span>
-                <div class="launch-gate__countdown-unit">
-                    <span class="launch-gate__countdown-value" id="countdownSeconds">00</span>
-                    <span class="launch-gate__countdown-label">seconds</span>
-                </div>
-            </div>
-            <p class="launch-gate__location">Sudbury, Ontario</p>
-        </div>
-    </div>
-    <script>
-        (function() {
-            var params = new URLSearchParams(window.location.search);
-
-            // Launch ends at midnight Eastern, Feb 4, 2026
-            var launchEndDate = new Date('2026-02-04T00:00:00-05:00');
-            var isPastLaunch = new Date() >= launchEndDate;
-            // Bypass launch gate for: past launch date, preview mode, or skip
-            if (isPastLaunch || params.get('preview') === 'true' || params.has('skip')) {
-                var gate = document.getElementById('launchGate');
-                if (gate) gate.style.display = 'none';
-                document.body.classList.add('preview-mode');
-            } else {
-                document.body.classList.add('launch-mode');
-                // Countdown timer
-                function updateCountdown() {
-                    var now = new Date();
-                    var diff = launchEndDate - now;
-                    if (diff <= 0) {
-                        window.location.reload();
-                        return;
-                    }
-                    var hours = Math.floor(diff / (1000 * 60 * 60));
-                    var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                    document.getElementById('countdownHours').textContent = hours.toString().padStart(2, '0');
-                    document.getElementById('countdownMinutes').textContent = minutes.toString().padStart(2, '0');
-                    document.getElementById('countdownSeconds').textContent = seconds.toString().padStart(2, '0');
-                }
-                updateCountdown();
-                setInterval(updateCountdown, 1000);
-            }
-        })();
-    </script>
-
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <!-- Cinematic Intro -->
@@ -221,12 +153,12 @@
                 </h1>
                 <p class="hero__subtitle">
                     Clear, structured work for businesses that value clarity over noise.
-                    Based in Sudbury, available across Canada.
+                    <span class="hero__subtitle-glow">Based in Sudbury</span>, available across Canada.
                 </p>
                 <a href="/book" class="hero__cta">Book a Call</a>
             </div>
             <div class="hero__scroll-hint">
-                <span class="hero__scroll-hint-text">Swipe to explore</span>
+                <span class="hero__scroll-hint-text"><span class="hint-desktop">Scroll to explore</span><span class="hint-mobile">Swipe to explore</span></span>
                 <svg class="hero__scroll-hint-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M12 5v14M5 12l7 7 7-7"/>
                 </svg>
@@ -557,7 +489,7 @@
 
                     <form class="contact-form" action="https://formspree.io/f/xnjjgoay" method="POST">
                         <input type="hidden" name="source" value="homepage_contact">
-                        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+                        <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off">
                         <input type="hidden" name="_subject" value="New Contact — Homepage">
 
                         <div class="contact-form__group">
@@ -600,6 +532,9 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="container">
+                <div class="footer__logomark">
+                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="footer__logomark-img">
+                </div>
                 <div class="footer__inner">
                     <div class="footer__left">
                         <p class="footer__copyright">© <span id="currentYear"></span> Bertrand Brands</p>
