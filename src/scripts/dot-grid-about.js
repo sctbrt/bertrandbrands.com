@@ -203,11 +203,4 @@
         }
     });
 
-    if (isMobile) {
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {}, 150);
-        }, { passive: true });
-    }
 })();

@@ -305,7 +305,10 @@ A successful implementation:
 │   ├── snapshot/
 │   │   └── book.js                # Snapshot booking endpoint
 │   └── lib/
-│       └── db.js                  # Database utilities
+│       ├── db.js                  # Database utilities
+│       ├── crypto.js              # Token hashing (SHA-256)
+│       ├── cookies.js             # Secure cookie builder
+│       └── html.js                # HTML escaping + error page template
 ├── scripts/
 │   └── init-db.js                 # Database table initialization
 ├── public/                        # Static assets (favicons, OG image, manifest)
@@ -564,7 +567,11 @@ APP_URL               # CORS origin (defaults to https://bertrandbrands.com)
 - HSTS, X-Frame-Options, X-XSS-Protection enabled
 - HttpOnly, Secure, SameSite cookies
 - Parameterized SQL queries (no injection)
-- Rate limiting on sensitive endpoints
+- Rate limiting on sensitive endpoints (3/hr per email, in-memory IP limiting)
+- CORS restricted to `APP_URL` origin (not wildcard)
+- Token hashing: SHA256 on all magic link tokens before DB storage
+
+**CSP Note:** The current policy uses `'unsafe-inline'` for both `script-src` and `style-src`. This is required by the inline `<script>` and `<style>` blocks used across landing pages. Removing `'unsafe-inline'` would require externalizing all inline scripts and styles. The policy also lacks `object-src 'none'` — should be added for defense in depth.
 
 ---
 
@@ -972,7 +979,7 @@ Added `contain: layout style` to:
 | 5.4.0 | Feb 2026 | Focus Studio offering restructure: Quick Website Refresh → Starter Site; Brandmarking Package → Brandmark & Visual Identity; added explicit distinction between template-assisted vs. custom code offerings |
 | 5.5.0 | Feb 2026 | Comprehensive audit execution (P0-P4): OG image tags on 20 pages, honeypot fields on all forms, Formspree _subject fields, font-weight token standardization, phone validation, legacy page deprecation markers, Calendly PII documentation |
 | 5.5.1 | Feb 2026 | P5 polish pass: removed unused --font-mono token, consolidated duplicate scroll-behavior, added phone button title attr, fixed vercel.json formatting, sanitized PII in snapshot booking logs, documented canonical email regex, marked launch gate for removal, added audit log retention strategy, clarified header nav documentation |
-| 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0+P1): fixed version header, resolved duplicate section 1.3 numbering, corrected Section 19/20 sub-numbering, marked GA/GTM as not-yet-implemented, fixed pricing gate backend location, updated launch target to launched; replaced stale project structure tree, expanded Section 16 routes with service detail pages/Google Ads/booking/campaign aliases/convenience redirects, removed orphaned pages from Section 22.8, added APP_URL to env vars |
+| 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0–P4): fixed version header, duplicate numbering, sub-numbering, GA/GTM status, pricing gate location, launch date; replaced project structure tree, expanded Section 16 routes (26 new), removed orphaned pages from Section 22.8, added APP_URL; added Section 25 API Endpoints Reference, expanded Section 11 security with CSP note; fixed exploratory blue token (#3B82F6→#2563EB in tokens.css + main.css), removed unused z-index tokens, kept glass tokens for future use; P4 code cleanup: removed empty scroll handler from dot-grid-about.js, deleted orphaned brand-clarity-call.html and website-clarity-call.html, extracted shared API utilities to api/lib/ (crypto.js, cookies.js, html.js) |
 
 ---
 
@@ -1263,6 +1270,116 @@ This exposes PII in:
 - Data stored on Calendly's infrastructure (SOC 2 certified)
 - Bertrand Brands receives booking confirmations via Calendly webhooks/email
 - No Calendly data is stored in our database — bookings are tracked through Stripe payment events
+
+---
+
+## 25. API Endpoints Reference
+
+All serverless functions live in `api/` and run on Vercel Functions (Node.js). Database utilities in `api/lib/db.js`.
+
+### 25.1 Pricing Gate (`api/pricing/`)
+
+Magic link system for gating premium pricing visibility.
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/pricing/request-access` | POST | Validates email, generates token, sends magic link via Resend |
+| `/api/pricing/access?token=...` | GET | Consumes token, creates session, sets `bb_pricing_session` cookie |
+| `/api/pricing/check-access` | GET | Validates session cookie, returns `{ hasAccess: true/false }` |
+| `/api/pricing/logout` | POST | Clears session cookie |
+
+**Security:**
+- Email rate limit: 3 requests/hr per email (DB-backed, persistent)
+- IP rate limit: In-memory per warm instance (resets on cold start)
+- Token: `crypto.randomBytes(32)` → SHA256 hash stored in DB
+- Token validity: 15 minutes
+- Session duration: 4 hours
+- Cookie flags: HttpOnly, Secure (production), SameSite=Lax
+- CORS: Restricted to `APP_URL` origin
+- Validation errors return `200 OK` to prevent email enumeration
+
+### 25.2 Booking Gate (`api/booking/`)
+
+Magic link system for gated booking access (client-specific). Parallels pricing gate architecture.
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/booking/access?token=...` | GET | Consumes token, creates session, sets `bb_booking_session` cookie |
+| `/api/booking/check-access` | GET | Validates session cookie, returns `{ hasAccess: true, clientEmail }` |
+| `/api/booking/logout` | POST | Clears session cookie |
+
+**Note:** There is no `request-access` endpoint in this repo. Booking tokens are generated externally (via system-build admin dashboard or manual process). The `access.js` endpoint queries a `clients` table to resolve client email from the token's `client_id`.
+
+**Dependency:** Requires `clients` table in Vercel Postgres (not created by `scripts/init-db.js` — managed by system-build).
+
+### 25.3 Snapshot Booking (`api/snapshot/`)
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/snapshot/book` | POST | Processes snapshot booking form submission |
+
+**Request body:**
+```json
+{
+  "name": "string (required, max 200)",
+  "email": "string (required, max 254)",
+  "website": "string (required, max 500)",
+  "concern": "string (optional, max 2000)",
+  "source": "string (optional, max 200)",
+  "offer": "string (optional, max 200)",
+  "rate": "string (optional, max 200)"
+}
+```
+
+**Behavior:**
+1. Validates all fields (type, length, email format)
+2. Sends Pushover notification with masked email
+3. Forwards to Formspree for email delivery
+4. Returns `{ ok: true }` on success
+
+**CORS:** Restricted to `APP_URL` origin.
+
+### 25.4 Visitor Notifications (`api/notify.js`)
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/notify` | POST | Sends visitor page-view notification via Pushover |
+
+**Request body:**
+```json
+{
+  "type": "visitor",
+  "page": "/current-path",
+  "referrer": "https://source.com"
+}
+```
+
+**Behavior:**
+- Uses Vercel geo headers for location (no external geo API)
+- Sends formatted Pushover notification with page, city, region, country
+- Fails silently (no error exposed to client)
+- Called by `src/components/visitor-notify.js` on page load
+
+### 25.5 Database Utilities (`api/lib/db.js`)
+
+Shared module used by pricing and booking endpoints:
+- `initializeDatabase()` — Creates `pricing_magic_links` and `pricing_sessions` tables if not exists
+- `createMagicLink({ email, tokenHash, expiresAt })` — Inserts hashed token
+- `consumeMagicLink(tokenHash)` — Finds and deletes valid (unexpired) token
+- `createSession({ sessionId, email, expiresAt })` — Creates authenticated session
+- `getSession(sessionId)` — Validates session exists and not expired
+- `cleanupExpiredSessions()` — Removes stale sessions
+- `countRecentRequests({ email })` — Rate limit check (1-hour window)
+
+### 25.6 Shared API Utilities (`api/lib/`)
+
+Common utilities extracted from the pricing and booking access endpoints:
+
+| Module | Exports | Used By |
+|--------|---------|---------|
+| `crypto.js` | `hashToken(rawToken)` — SHA-256 hash | pricing/access, booking/access |
+| `cookies.js` | `buildCookie(name, value, maxAgeSeconds)` — Secure cookie builder (HttpOnly, SameSite=Lax, Secure in production, `.bertrandbrands.com` domain) | pricing/access, booking/access |
+| `html.js` | `escapeHtml(str)`, `errorPageHtml(title, message, options?)` — HTML escaping + styled error page template with configurable back link | pricing/access, booking/access |
 
 ---
 

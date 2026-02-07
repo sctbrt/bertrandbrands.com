@@ -30,8 +30,8 @@
   --focus-border: rgba(139, 92, 246, 0.25);
 
   /* Exploratory — Blue */
-  --exploratory-accent: #3B82F6;
-  --exploratory-accent-muted: rgba(59, 130, 246, 0.15);
+  --exploratory-accent: #2563EB;
+  --exploratory-accent-muted: rgba(37, 99, 235, 0.15);
 
   /* Borders */
   --border: rgba(255, 255, 255, 0.08);
@@ -131,10 +131,8 @@
   /* Shadows defined inline where needed */
 
   /* ==========================================================
-     Z-INDEX SCALE
+     Z-INDEX — managed inline per stacking context (not tokenized)
      ========================================================== */
-  --z-header: 1000;
-  --z-intro: 1050;
 
   /* ==========================================================
      LAYOUT

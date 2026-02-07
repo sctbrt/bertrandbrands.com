@@ -1,128 +1,18 @@
 // GET /api/pricing/access
 // Verifies magic link token, creates session, sets cookie, redirects
 
-import crypto from 'crypto';
 import {
   initializeDatabase,
   consumeMagicLink,
   createPricingSession
 } from '../lib/db.js';
+import { hashToken } from '../lib/crypto.js';
+import { buildCookie } from '../lib/cookies.js';
+import { errorPageHtml } from '../lib/html.js';
 
 // Config
 const SESSION_TTL_MINUTES = parseInt(process.env.PRICING_SESSION_TTL_MINUTES || '60', 10);
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.com';
-const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
-
-/**
- * Hash the raw token to match against stored hash
- */
-function hashToken(rawToken) {
-  return crypto.createHash('sha256').update(rawToken).digest('hex');
-}
-
-/**
- * Build cookie string with security flags
- */
-function buildCookie(sessionId, maxAgeSeconds) {
-  const parts = [
-    `bb_pricing_session=${sessionId}`,
-    `Path=/`,
-    `Max-Age=${maxAgeSeconds}`,
-    `HttpOnly`,
-    `SameSite=Lax`
-  ];
-
-  if (IS_PRODUCTION) {
-    parts.push('Secure');
-    // Set on parent domain so cookie works across subdomains
-    parts.push('Domain=.bertrandbrands.com');
-  }
-
-  return parts.join('; ');
-}
-
-/**
- * Escape HTML entities for safe interpolation
- */
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-/**
- * Generate error page HTML
- */
-function errorPageHtml(title, message) {
-  title = escapeHtml(title);
-  message = escapeHtml(message);
-  return `
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title} — Bertrand Brands</title>
-  <meta name="robots" content="noindex">
-  <link rel="icon" type="image/png" href="/assets/favicon.png">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0a;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .container {
-      max-width: 420px;
-      text-align: center;
-    }
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-bottom: 16px;
-      color: #ffffff;
-    }
-    p {
-      font-size: 0.95rem;
-      color: #999999;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-    a {
-      display: inline-block;
-      background: transparent;
-      border: 1px solid #333333;
-      color: #ffffff;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    a:hover {
-      border-color: #555555;
-      background: rgba(255, 255, 255, 0.05);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>${title}</h1>
-    <p>${message}</p>
-    <a href="/#services">Back to Services</a>
-  </div>
-</body>
-</html>
-  `.trim();
-}
 
 export default async function handler(req, res) {
   // Only allow GET
@@ -168,7 +58,7 @@ export default async function handler(req, res) {
 
     // Set session cookie
     const maxAgeSeconds = SESSION_TTL_MINUTES * 60;
-    res.setHeader('Set-Cookie', buildCookie(session.id, maxAgeSeconds));
+    res.setHeader('Set-Cookie', buildCookie('bb_pricing_session', session.id, maxAgeSeconds));
 
     // Redirect to services section
     res.setHeader('Location', `${APP_URL}/#services`);
