@@ -5,10 +5,10 @@ import {
   initializeDatabase,
   consumeBookingToken,
   createBookingSession
-} from '../lib/db.js';
-import { hashToken } from '../lib/crypto.js';
-import { buildCookie } from '../lib/cookies.js';
-import { errorPageHtml } from '../lib/html.js';
+} from '../_lib/db.js';
+import { hashToken } from '../_lib/crypto.js';
+import { buildCookie } from '../_lib/cookies.js';
+import { errorPageHtml } from '../_lib/html.js';
 
 // Config
 const SESSION_TTL_MINUTES = parseInt(process.env.BOOKING_SESSION_TTL_MINUTES || '240', 10); // 4 hours

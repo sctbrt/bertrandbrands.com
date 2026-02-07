@@ -304,7 +304,7 @@ A successful implementation:
 │   │   └── logout.js              # Clear session
 │   ├── snapshot/
 │   │   └── book.js                # Snapshot booking endpoint
-│   └── lib/
+│   └── _lib/                      # Shared helpers (underscore prefix excludes from function count)
 │       ├── db.js                  # Database utilities
 │       ├── crypto.js              # Token hashing (SHA-256)
 │       ├── cookies.js             # Secure cookie builder
@@ -1275,7 +1275,7 @@ This exposes PII in:
 
 ## 25. API Endpoints Reference
 
-All serverless functions live in `api/` and run on Vercel Functions (Node.js). Database utilities in `api/lib/db.js`.
+All serverless functions live in `api/` and run on Vercel Functions (Node.js). Database utilities in `api/_lib/db.js`.
 
 ### 25.1 Pricing Gate (`api/pricing/`)
 
@@ -1360,7 +1360,7 @@ Magic link system for gated booking access (client-specific). Parallels pricing 
 - Fails silently (no error exposed to client)
 - Called by `src/components/visitor-notify.js` on page load
 
-### 25.5 Database Utilities (`api/lib/db.js`)
+### 25.5 Database Utilities (`api/_lib/db.js`)
 
 Shared module used by pricing and booking endpoints:
 - `initializeDatabase()` — Creates `pricing_magic_links` and `pricing_sessions` tables if not exists
@@ -1371,7 +1371,7 @@ Shared module used by pricing and booking endpoints:
 - `cleanupExpiredSessions()` — Removes stale sessions
 - `countRecentRequests({ email })` — Rate limit check (1-hour window)
 
-### 25.6 Shared API Utilities (`api/lib/`)
+### 25.6 Shared API Utilities (`api/_lib/`)
 
 Common utilities extracted from the pricing and booking access endpoints:
 

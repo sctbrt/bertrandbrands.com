@@ -4,7 +4,7 @@
 import {
   initializeDatabase,
   deleteBookingSession
-} from '../lib/db.js';
+} from '../_lib/db.js';
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
 

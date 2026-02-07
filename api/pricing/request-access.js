@@ -7,7 +7,7 @@ import {
   initializeDatabase,
   createMagicLink,
   countRecentRequests
-} from '../lib/db.js';
+} from '../_lib/db.js';
 
 // Config
 const MAGIC_LINK_TTL_MINUTES = parseInt(process.env.PRICING_MAGIC_LINK_TTL_MINUTES || '15', 10);
