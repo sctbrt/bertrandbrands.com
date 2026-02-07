@@ -1575,7 +1575,7 @@
         }
 
         .hero__title {
-            font-family: var(--font-display);
+            font-family: var(--font-body);
             font-size: clamp(2.5rem, 9vw, 6rem);
             font-weight: var(--font-light);
             line-height: 0.95;
