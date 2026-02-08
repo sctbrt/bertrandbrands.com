@@ -2894,6 +2894,10 @@
             gap: var(--space-md);
         }
 
+        .exploratory-sessions__grid--three {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
         .exploratory-sessions__card {
             padding: var(--space-lg);
             background: rgba(37, 99, 235, 0.05);
@@ -3006,6 +3010,12 @@
 
         .exploratory-sessions__card-cta:hover {
             color: #2563EB;
+        }
+
+        @media (max-width: 900px) {
+            .exploratory-sessions__grid--three {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 600px) {

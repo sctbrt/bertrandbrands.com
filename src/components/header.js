@@ -27,7 +27,26 @@
             <nav class="header__nav" id="mainNav">
                 <a href="/?skip#about" class="header__link">About</a>
                 <a href="/?skip#process" class="header__link">How It Works</a>
-                <a href="/?skip#services" class="header__link">Services</a>
+                <div class="header__dropdown">
+                    <a href="/?skip#services" class="header__link header__link--dropdown">
+                        Services
+                        <svg class="header__dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </a>
+                    <div class="header__dropdown-menu">
+                        <a href="/focus-studio" class="header__dropdown-item header__dropdown-item--violet">
+                            <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                            <span class="header__dropdown-label">Focus Studio</span>
+                        </a>
+                        <a href="/core-services" class="header__dropdown-item">
+                            <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                            <span class="header__dropdown-label">Core Systems</span>
+                        </a>
+                        <a href="/exploratory" class="header__dropdown-item header__dropdown-item--blue">
+                            <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                            <span class="header__dropdown-label">Exploratory</span>
+                        </a>
+                    </div>
+                </div>
                 <a href="/book" class="header__link header__link--cta">Book a Call</a>
                 <span class="header__divider" aria-hidden="true"></span>
                 <a href="https://clients.bertrandbrands.com" class="header__link header__link--portal">Client Portal</a>

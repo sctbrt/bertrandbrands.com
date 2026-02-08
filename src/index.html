@@ -68,15 +68,15 @@
         "@type": "OfferCatalog",
         "name": "Brand & Web Services",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Introductory Direction Call" }, "description": "Free 20-minute fit and direction call" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand or Website Clarity Session" }, "description": "45-minute working session with diagnosis and next steps", "price": "145", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site" }, "price": "750", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page Redesign" }, "price": "1250", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Guided Intake" }, "description": "AI/Form-based intake for routing and clarity" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Clarity Session" }, "description": "Brand, web, or systems working session with diagnosis and direction", "price": "145", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technical Feasibility Check" }, "description": "Verbal assessment of technical viability" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site (System-Ready)" }, "price": "750", "priceCurrency": "CAD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page System Redesign" }, "price": "1250", "priceCurrency": "CAD" },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmark & Visual Identity" }, "price": "950", "priceCurrency": "CAD" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Review" }, "description": "Discovery-led brand analysis and strategic direction" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Platform Build" }, "description": "Multi-page website built as a brand platform" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "description": "Strategic realignment of positioning and system" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Platform Reset" }, "description": "End-to-end brand and digital reset" }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand System Reset" }, "description": "Strategy, identity system, design language, and implementation roadmap" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Platform Build" }, "description": "Full-stack application with authentication, dashboards, portals, and scalable architecture" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Integrated Brand + Platform" }, "description": "Brand-informed technical design meets system-aware brand execution" }
         ]
       }
     }
@@ -128,7 +128,26 @@
                     <nav class="header__nav" id="mainNav">
                         <a href="#about" class="header__link">About</a>
                         <a href="#process" class="header__link">How It Works</a>
-                        <a href="#services" class="header__link">Services</a>
+                        <div class="header__dropdown">
+                            <a href="#services" class="header__link header__link--dropdown">
+                                Services
+                                <svg class="header__dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                            </a>
+                            <div class="header__dropdown-menu">
+                                <a href="#focus-studio" class="header__dropdown-item header__dropdown-item--violet">
+                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                                    <span class="header__dropdown-label">Focus Studio</span>
+                                </a>
+                                <a href="#core-systems" class="header__dropdown-item">
+                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                                    <span class="header__dropdown-label">Core Systems</span>
+                                </a>
+                                <a href="#exploratory" class="header__dropdown-item header__dropdown-item--blue">
+                                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__dropdown-mark">
+                                    <span class="header__dropdown-label">Exploratory</span>
+                                </a>
+                            </div>
+                        </div>
                         <a href="/book" class="header__link header__link--cta">Book a Call</a>
                         <a href="https://clients.bertrandbrands.com" class="header__link header__link--portal">Client Portal</a>
                     </nav>
@@ -264,19 +283,19 @@
                             <span class="exploratory-sessions__name">Exploratory</span>
                         </a>
                         <p class="exploratory-sessions__label">Not sure where to start?</p>
-                        <p class="exploratory-sessions__description">Begin with a free Direction Call or a paid Clarity Session. No obligations—just focused guidance to help you decide what's next.</p>
+                        <p class="exploratory-sessions__description">Intake, clarity, and routing. No code, no audits, no implementation—just focused guidance to help you decide what's next.</p>
                     </div>
 
-                    <div class="exploratory-sessions__grid">
-                        <!-- Introductory Direction Call -->
+                    <div class="exploratory-sessions__grid exploratory-sessions__grid--three">
+                        <!-- Guided Intake -->
                         <div class="exploratory-sessions__card" data-icon="compass">
                             <div class="exploratory-sessions__card-header">
-                                <h3 class="exploratory-sessions__card-title">Introductory Direction Call</h3>
-                                <span class="exploratory-sessions__card-meta">~20 min · Free</span>
+                                <h3 class="exploratory-sessions__card-title">Guided Intake</h3>
+                                <span class="exploratory-sessions__card-meta">AI / Form · Free</span>
                             </div>
-                            <p class="exploratory-sessions__card-description">A quick conversation to determine fit. No prep, no deliverables. We'll tell you honestly if we can help—and point you toward the right next step.</p>
+                            <p class="exploratory-sessions__card-description">Answer a few questions about your business. We review and follow up with a clear recommendation—whether that's a Clarity Session, a specific service, or a different path entirely.</p>
                             <div class="exploratory-sessions__card-footer">
-                                <a href="/exploratory" class="exploratory-sessions__card-cta">Book a call →</a>
+                                <a href="/exploratory" class="exploratory-sessions__card-cta">Start intake →</a>
                             </div>
                         </div>
 
@@ -284,11 +303,23 @@
                         <div class="exploratory-sessions__card" data-icon="lightbulb">
                             <div class="exploratory-sessions__card-header">
                                 <h3 class="exploratory-sessions__card-title">Clarity Session</h3>
-                                <span class="exploratory-sessions__card-meta">~45 min · $145 CAD</span>
+                                <span class="exploratory-sessions__card-meta">Brand / Web / Systems · $145 CAD</span>
                             </div>
-                            <p class="exploratory-sessions__card-description">A working session focused on your brand or website. Walk away with diagnosis, direction, and a short written recap. Unlocks Focus Studio or Core Services.</p>
+                            <p class="exploratory-sessions__card-description">A focused working session on your brand, website, or systems. Walk away with diagnosis, direction, and a short written recap.</p>
                             <div class="exploratory-sessions__card-footer">
                                 <a href="/exploratory" class="exploratory-sessions__card-cta">Book a session →</a>
+                            </div>
+                        </div>
+
+                        <!-- Technical Feasibility Check -->
+                        <div class="exploratory-sessions__card" data-icon="check">
+                            <div class="exploratory-sessions__card-header">
+                                <h3 class="exploratory-sessions__card-title">Technical Feasibility Check</h3>
+                                <span class="exploratory-sessions__card-meta">Verbal only · Free</span>
+                            </div>
+                            <p class="exploratory-sessions__card-description">A quick verbal assessment of whether your technical idea is viable. No deliverables—just an honest read on feasibility, complexity, and next steps.</p>
+                            <div class="exploratory-sessions__card-footer">
+                                <a href="/exploratory" class="exploratory-sessions__card-cta">Request a check →</a>
                             </div>
                         </div>
                     </div>
@@ -311,38 +342,36 @@
                     </div>
 
                     <div class="focused-studio__grid">
-                        <!-- Starter Site -->
+                        <!-- Starter Site (System-Ready) -->
                         <div class="focused-studio__card" data-icon="rocket">
                             <div class="focused-studio__card-header">
                                 <h3 class="focused-studio__card-title">Starter Site</h3>
-                                <span class="focused-studio__card-timeline">1 business day</span>
+                                <span class="focused-studio__card-timeline">System-Ready</span>
                             </div>
-                            <p class="focused-studio__card-description">A fast-launch website built for speed and simplicity. Clean, functional, and live quickly — ideal for businesses that need a professional presence without complexity.</p>
+                            <p class="focused-studio__card-description">A brand-aligned digital foundation built for clarity and longevity. Modern technical architecture, deployment-ready from day one.</p>
                             <ul class="focused-studio__card-includes">
-                                <li>Structured, mobile-friendly layout</li>
-                                <li>Clear messaging and contact flow</li>
-                                <li>Fast turnaround with managed hosting</li>
-                                <li>Easy to update and maintain</li>
+                                <li>Brand-aligned visual system</li>
+                                <li>Modern technical foundation</li>
+                                <li>Deployment-ready build</li>
                             </ul>
-                            <p class="focused-studio__card-best-for">Best for early-stage businesses that need something clean and live quickly.</p>
+                            <p class="focused-studio__card-best-for">Best for businesses that need a system-ready digital presence without complexity.</p>
                             <div class="focused-studio__card-footer">
                                 <p class="focused-studio__card-price">$750 <span>CAD</span></p>
                                 <a href="/starter-site" class="focused-studio__card-cta">Learn More →</a>
                             </div>
                         </div>
 
-                        <!-- One-Page Redesign -->
+                        <!-- One-Page System Redesign -->
                         <div class="focused-studio__card" data-icon="code">
                             <div class="focused-studio__card-header">
-                                <h3 class="focused-studio__card-title">One-Page Redesign</h3>
+                                <h3 class="focused-studio__card-title">One-Page System Redesign</h3>
                                 <span class="focused-studio__card-timeline">2–3 business days</span>
                             </div>
-                            <p class="focused-studio__card-description">A fully custom, code-based one-page website. Designed and built from scratch — no templates, no builders. Focused on narrative flow, layout precision, and polish.</p>
+                            <p class="focused-studio__card-description">A UX-led interface with performance-first implementation. Custom code, clean deployment pipeline — no templates, no builders.</p>
                             <ul class="focused-studio__card-includes">
-                                <li>Custom code — no templates or builders</li>
-                                <li>One scroll-based, mobile-first page</li>
-                                <li>Clear message and structure</li>
-                                <li>Contact or booking call-to-action</li>
+                                <li>UX-led interface</li>
+                                <li>Performance-first implementation</li>
+                                <li>Clean deployment pipeline</li>
                             </ul>
                             <p class="focused-studio__card-best-for">Best for founders, consultants, and service businesses that want something crafted.</p>
                             <div class="focused-studio__card-footer">
@@ -357,14 +386,13 @@
                                 <h3 class="focused-studio__card-title">Brandmark & Visual Identity</h3>
                                 <span class="focused-studio__card-timeline">5–7 business days</span>
                             </div>
-                            <p class="focused-studio__card-description">A complete, usable brandmark with supporting visual direction. Designed to work wherever your brand appears — core brandmarking, not a full brand system.</p>
+                            <p class="focused-studio__card-description">A complete logo system with core visual assets and usage guidelines. Designed to work wherever your brand appears.</p>
                             <ul class="focused-studio__card-includes">
-                                <li>Primary brandmark + supporting variations</li>
-                                <li>Horizontal, stacked, and icon versions</li>
-                                <li>Web + print files (SVG, PNG, PDF, EPS)</li>
-                                <li>Core visual direction + usage guidance</li>
+                                <li>Logo system</li>
+                                <li>Core visual assets</li>
+                                <li>Usage guidelines</li>
                             </ul>
-                            <p class="focused-studio__card-best-for">Best for businesses that need a credible, flexible mark without a full rebrand.</p>
+                            <p class="focused-studio__card-best-for">Best for businesses that need a credible, flexible mark without a full brand system.</p>
                             <div class="focused-studio__card-footer">
                                 <p class="focused-studio__card-price">$950 <span>CAD</span></p>
                                 <a href="/brandmark" class="focused-studio__card-cta">Learn More →</a>
@@ -372,25 +400,25 @@
                         </div>
                     </div>
 
-                    <p class="focused-studio__boundary">B Focus Studio engagements are intentionally fixed-scope. Full brand systems, naming, strategy, and multi-phase work are scoped separately.</p>
+                    <p class="focused-studio__boundary">B Focus Studio engagements are contained, system-ready execution. No integrations, no dashboards, no APIs, no bespoke functionality.</p>
                 </div>
 
                 <hr class="services-divider services-divider--section">
 
                 <!-- ============================================ -->
-                <!-- SECTION 3: B CORE SERVICES (TIER 3)          -->
-                <!-- Strategic work — discovery-led, multi-week   -->
+                <!-- SECTION 3: B CORE SYSTEMS (TIER 3)           -->
+                <!-- Custom brand and digital systems             -->
                 <!-- ============================================ -->
                 <div class="core-services-wrapper">
                     <div class="core-services__glow" aria-hidden="true"></div>
 
-                    <!-- B Core Services Header -->
+                    <!-- B Core Systems Header -->
                     <div class="core-services reveal">
                         <a href="/core-services" class="core-services__brand">
                             <img src="/assets/bertrand-brands-logomark.png" alt="" class="core-services__mark">
-                            <span class="core-services__name">Core Services</span>
+                            <span class="core-services__name">Core Systems</span>
                         </a>
-                        <p class="core-services__description">Multi-week, relationship-based brand and website work. 50% deposit to begin, 50% on delivery.</p>
+                        <p class="core-services__description">Custom brand and digital systems. Strategy, identity, architecture, and implementation. 50% deposit to begin, 50% on delivery.</p>
                     </div>
 
                     <!-- Pricing Access Banner (shown when access is active) -->
@@ -398,43 +426,32 @@
                         <p class="pricing-banner__text">Pricing access active for <span id="pricingTimeRemaining">~60</span> minutes</p>
                     </div>
 
-                    <!-- All Core Services in unified 2x2 grid -->
+                    <!-- Core Systems in 3-column grid -->
                     <div class="services services--core reveal-stagger">
-                        <div class="service" data-gated="false" data-icon="search">
-                            <p class="service__number">01</p>
-                            <h3 class="service__title">Strategic Brand Review</h3>
-                            <p class="service__meta">Discovery-led</p>
-                            <p class="service__description">Deep review of positioning, messaging, and visual system with strategic recommendations.</p>
-                            <div class="service__footer">
-                                <p class="service__price service__price--private">Private pricing</p>
-                                <a href="/strategic-brand-review" class="service__cta">Learn More →</a>
-                            </div>
-                        </div>
-
-                        <div class="service" data-gated="false" data-icon="layers">
-                            <p class="service__number">02</p>
-                            <h3 class="service__title">Digital Platform Build</h3>
-                            <p class="service__description">Multi-page website built as a brand platform. Strategy-led, built to convert, designed to scale.</p>
-                            <div class="service__footer">
-                                <p class="service__price service__price--private">Private pricing</p>
-                                <a href="/digital-platform-build" class="service__cta">Learn More →</a>
-                            </div>
-                        </div>
-
                         <div class="service" data-gated="false" data-icon="refresh">
-                            <p class="service__number">03</p>
-                            <h3 class="service__title">Brand Reset</h3>
-                            <p class="service__description">Strategic realignment of positioning and system. Core brand, messaging, and guidelines rebuilt from the ground up.</p>
+                            <p class="service__number">01</p>
+                            <h3 class="service__title">Brand System Reset</h3>
+                            <p class="service__description">Strategy, identity system, design language, and implementation roadmap. A complete realignment of your brand from the ground up.</p>
                             <div class="service__footer">
                                 <p class="service__price service__price--private">Private pricing</p>
                                 <a href="/brand-reset" class="service__cta">Learn More →</a>
                             </div>
                         </div>
 
+                        <div class="service" data-gated="false" data-icon="layers">
+                            <p class="service__number">02</p>
+                            <h3 class="service__title">Digital Platform Build</h3>
+                            <p class="service__description">Full-stack application with authentication, dashboards, portals, and scalable architecture. Designed as a system, not a page.</p>
+                            <div class="service__footer">
+                                <p class="service__price service__price--private">Private pricing</p>
+                                <a href="/digital-platform-build" class="service__cta">Learn More →</a>
+                            </div>
+                        </div>
+
                         <div class="service" data-gated="false" data-icon="grid">
-                            <p class="service__number">04</p>
-                            <h3 class="service__title">Full Brand + Platform Reset</h3>
-                            <p class="service__description">End-to-end transformation. Brand system and digital platform built together from the ground up.</p>
+                            <p class="service__number">03</p>
+                            <h3 class="service__title">Integrated Brand + Platform</h3>
+                            <p class="service__description">Brand-informed technical design meets system-aware brand execution. Unified delivery of brand and digital systems together.</p>
                             <div class="service__footer">
                                 <p class="service__price service__price--private">Private pricing</p>
                                 <a href="/full-brand-platform-reset" class="service__cta">Learn More →</a>
