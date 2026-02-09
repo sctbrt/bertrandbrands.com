@@ -3,7 +3,7 @@
 
 export default async function handler(req, res) {
   // CORS headers — restrict to own domain
-  const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.com';
+  const allowedOrigin = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
   res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');

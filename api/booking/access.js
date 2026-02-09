@@ -12,7 +12,7 @@ import { errorPageHtml } from '../_lib/html.js';
 
 // Config
 const SESSION_TTL_MINUTES = parseInt(process.env.BOOKING_SESSION_TTL_MINUTES || '240', 10); // 4 hours
-const APP_URL = process.env.APP_URL || 'https://bertrandbrands.com';
+const APP_URL = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
 
 export default async function handler(req, res) {
   // Only allow GET

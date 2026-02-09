@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO -->
-    <link rel="canonical" href="https://bertrandbrands.com/intake/exploratory">
+    <link rel="canonical" href="https://brands.bertrandgroup.ca/intake/exploratory">
     <meta name="theme-color" content="#0a0a0a">
     <meta name="robots" content="noindex, nofollow">
     <title>Guided Intake | Bertrand Brands</title>
@@ -1012,7 +1012,7 @@
                     // Set intake completion cookie (24 hours)
                     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
                     const emailHash = btoa(formData.get('email')).substring(0, 16);
-                    document.cookie = `bb_intake_completed=${emailHash}; expires=${expires}; path=/; domain=.bertrandbrands.com; secure; samesite=lax`;
+                    document.cookie = `bb_intake_completed=${emailHash}; expires=${expires}; path=/; domain=.bertrandgroup.ca; secure; samesite=lax`;
 
                     // Notify backend (silent)
                     fetch('/api/notify', {

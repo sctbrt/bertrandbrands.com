@@ -2,89 +2,89 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://bertrandbrands.com/</loc>
+    <loc>https://brands.bertrandgroup.ca/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Tier 2: Focus Studio (primary revenue) -->
   <url>
-    <loc>https://bertrandbrands.com/focus-studio</loc>
+    <loc>https://brands.bertrandgroup.ca/focus-studio</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/starter-site</loc>
+    <loc>https://brands.bertrandgroup.ca/starter-site</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/one-page-redesign</loc>
+    <loc>https://brands.bertrandgroup.ca/one-page-redesign</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/brandmark</loc>
+    <loc>https://brands.bertrandgroup.ca/brandmark</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Tier 3: Core Systems -->
   <url>
-    <loc>https://bertrandbrands.com/core-services</loc>
+    <loc>https://brands.bertrandgroup.ca/core-services</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/core-systems</loc>
+    <loc>https://brands.bertrandgroup.ca/core-systems</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/digital-platform-build</loc>
+    <loc>https://brands.bertrandgroup.ca/digital-platform-build</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/brand-system-reset</loc>
+    <loc>https://brands.bertrandgroup.ca/brand-system-reset</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/integrated-brand-platform</loc>
+    <loc>https://brands.bertrandgroup.ca/integrated-brand-platform</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Tier 1: Exploratory -->
   <url>
-    <loc>https://bertrandbrands.com/exploratory</loc>
+    <loc>https://brands.bertrandgroup.ca/exploratory</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Local landing page -->
   <url>
-    <loc>https://bertrandbrands.com/sudbury</loc>
+    <loc>https://brands.bertrandgroup.ca/sudbury</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Booking -->
   <url>
-    <loc>https://bertrandbrands.com/book</loc>
+    <loc>https://brands.bertrandgroup.ca/book</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <!-- Diagnostic landing pages -->
   <url>
-    <loc>https://bertrandbrands.com/website-conversion-snapshot</loc>
+    <loc>https://brands.bertrandgroup.ca/website-conversion-snapshot</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/brand-clarity-diagnostic</loc>
+    <loc>https://brands.bertrandgroup.ca/brand-clarity-diagnostic</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

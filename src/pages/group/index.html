@@ -56,7 +56,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500&family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&display=swap" rel="stylesheet">
 
     <!-- Shared Tokens -->
     <link rel="stylesheet" href="/styles/tokens.css">
@@ -140,19 +140,12 @@
         .bg-header__logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        .bg-header__mark {
-            width: 32px;
-            height: 32px;
-            opacity: 0.9;
         }
 
         .bg-header__name {
             font-family: 'Sora', sans-serif;
             font-size: var(--text-sm);
-            font-weight: var(--font-medium);
+            font-weight: var(--font-semibold);
             text-transform: uppercase;
             letter-spacing: 0.2em;
             color: var(--text);
@@ -186,18 +179,10 @@
             max-width: 600px;
         }
 
-        .bg-hero__mark {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto var(--space-lg);
-            opacity: 0.85;
-            filter: brightness(1.1) sepia(0.15) saturate(1.2);
-        }
-
         .bg-hero__title {
             font-family: 'Sora', sans-serif;
             font-size: clamp(1.5rem, 4vw, 2.25rem);
-            font-weight: var(--font-medium);
+            font-weight: var(--font-semibold);
             text-transform: uppercase;
             letter-spacing: 0.22em;
             line-height: var(--leading-tight);
@@ -287,10 +272,39 @@
             box-shadow: none;
         }
 
+        .bg-portfolio__lockup {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: var(--space-sm);
+        }
+
+        .bg-portfolio__logomark {
+            width: 24px;
+            height: 24px;
+            opacity: 0.9;
+            flex-shrink: 0;
+        }
+
+        .bg-portfolio__divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+
         .bg-portfolio__wordmark {
             height: 24px;
+            max-width: 100%;
             width: auto;
+            object-fit: contain;
+            object-position: left;
             opacity: 0.9;
+            margin-bottom: var(--space-sm);
+        }
+
+        .bg-portfolio__lockup .bg-portfolio__wordmark {
+            margin-bottom: 0;
         }
 
         .bg-portfolio__role {
@@ -417,12 +431,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .bg-hero__mark {
-                width: 64px;
-                height: 64px;
-                margin-bottom: var(--space-md);
-            }
-
             .bg-section {
                 padding: var(--space-xl) 0;
             }
@@ -473,7 +481,6 @@
     <header class="bg-header">
         <div class="bg-header__inner">
             <a href="/" class="bg-header__logo">
-                <img src="/assets/bertrand-brands-logomark.png" alt="" class="bg-header__mark">
                 <span class="bg-header__name">Bertrand Group</span>
             </a>
             <a href="https://bertrandbrands.com/?skip" class="bg-header__link">Studio &rarr;</a>
@@ -483,7 +490,6 @@
     <!-- Hero -->
     <section class="bg-hero">
         <div class="bg-hero__content">
-            <img src="/assets/bertrand-brands-logomark.png" alt="" class="bg-hero__mark">
             <h1 class="bg-hero__title">Bertrand Group</h1>
             <p class="bg-hero__descriptor">Brands, systems, and ventures. Sudbury, Canada.</p>
             <hr class="bg-hero__rule">
@@ -508,7 +514,11 @@
 
                 <!-- Bertrand Brands -->
                 <a href="https://bertrandbrands.com/?skip" class="bg-portfolio__tile">
-                    <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="bg-portfolio__wordmark">
+                    <div class="bg-portfolio__lockup">
+                        <img src="/assets/bertrand-brands-logomark.png" alt="" class="bg-portfolio__logomark">
+                        <span class="bg-portfolio__divider" aria-hidden="true"></span>
+                        <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="bg-portfolio__wordmark">
+                    </div>
                     <p class="bg-portfolio__role">Brand &amp; Web Systems Studio</p>
                     <p class="bg-portfolio__desc">Design, web, and systems work for businesses that need structure.</p>
                     <span class="bg-portfolio__link">bertrandbrands.com &rarr;</span>

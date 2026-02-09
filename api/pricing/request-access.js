@@ -11,7 +11,7 @@ import {
 
 // Config
 const MAGIC_LINK_TTL_MINUTES = parseInt(process.env.PRICING_MAGIC_LINK_TTL_MINUTES || '15', 10);
-const APP_URL = process.env.APP_URL || 'https://bertrandbrands.com';
+const APP_URL = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
 const RATE_LIMIT_EMAIL_PER_HOUR = 3;
 const RATE_LIMIT_IP_PER_HOUR = 10;
 
@@ -103,7 +103,7 @@ Bertrand Brands · Sudbury, Ontario
 
 export default async function handler(req, res) {
   // CORS — restrict to own domain
-  const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.com';
+  const allowedOrigin = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
   res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');

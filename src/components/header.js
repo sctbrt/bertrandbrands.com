@@ -30,7 +30,7 @@
                 <a href="/?skip#services" class="header__link">Services</a>
                 <a href="/book" class="header__link header__link--cta">Book a Call</a>
                 <span class="header__divider" aria-hidden="true"></span>
-                <a href="https://clients.bertrandbrands.com" class="header__link header__link--portal">Client Portal</a>
+                <a href="https://clients.bertrandgroup.ca" class="header__link header__link--portal">Client Portal</a>
             </nav>
         </div>
     </div>
