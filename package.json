@@ -13,6 +13,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@vercel/functions": "^3.4.1",
     "@vercel/postgres": "^0.10.0",
     "resend": "^4.0.0"
   }

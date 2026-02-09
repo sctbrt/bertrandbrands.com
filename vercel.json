@@ -4,13 +4,6 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
-      "has": [
-        { "type": "host", "value": "group.bertrandbrands.com" }
-      ],
-      "destination": "/pages/group/index.html"
-    },
-    {
       "source": "/pricing/access",
       "destination": "/api/pricing/access"
     },
