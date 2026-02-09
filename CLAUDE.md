@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 5.6.0 (Current)
+## Version 6.0.0 (Current)
 
 This document is the **Bertrand Brands-specific** guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -10,12 +10,17 @@ This document is the **Bertrand Brands-specific** guide. For full ecosystem cont
 
 ### 1.1 Role & Boundaries
 
-**Bertrand Brands** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand.
+**Bertrand Brands** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand and Devin Major.
 
 **Scott handles:**
-- Brand strategy & judgment
-- Design direction & taste
-- Client communication
+- Brand strategy, UX direction, and design taste
+- Client communication, scoping, and operations
+- Final judgment on all brand decisions
+
+**Devin Major (human, full-stack developer/architect):**
+- Architecture, performance, and data/security
+- Technical feasibility assessments
+- Full-stack implementation and infrastructure
 
 **Claude handles:**
 - Coding, refactors, audits
@@ -71,16 +76,16 @@ All decisions must align with BRIGHTS:
 
 If a technical or UX decision introduces confusion, pressure, or ambiguity, it violates BRIGHTS.
 
-### 1.4 Service Architecture (LOCKED — Feb 2026)
+### 1.4 Service Architecture
 
 Bertrand Brands operates under **THREE strictly hierarchical service tiers**.
 
 **Mental Model:** Conversation → Execution → Transformation
 
 **Hard Constraints:**
-- Tier 1: Exploratory → **2 offerings only**
+- Tier 1: Exploratory → **3 offerings only**
 - Tier 2: Focus Studio → **3 offerings only**
-- Tier 3: Core Services → **Maximum 5 offerings**
+- Tier 3: Core Systems → **3 offerings only**
 
 Claude must not add services, rename tiers, or exceed these limits.
 
@@ -90,14 +95,16 @@ Claude must not add services, rename tiers, or exceed these limits.
 
 Purpose: Low-friction entry, qualification, and clarity. Not asset delivery.
 
-| Offering | Price | Duration | Notes |
-|----------|-------|----------|-------|
-| Introductory Direction Call | Free | ~20 min | Live video. No prep, no deliverables. Fit and high-level direction only. |
-| Brand or Website Clarity Session | $145 CAD | ~45 min | Live video. Working session (diagnosis + next steps). Unlocks Focus Studio or Core Services. |
+| Offering | Price | Format | Notes |
+|----------|-------|--------|-------|
+| Guided Intake | Free | Form-based, 5–10 min | Asynchronous. No deliverables. No recommendations. Determines fit and routing. |
+| Clarity Session (Brand / Web / Systems) | $145 CAD | ~45 min, live video | Working session (diagnosis + direction + written recap). Standalone entry point. |
+| Technical Feasibility Check | Free | Verbal, by request | For projects with technical unknowns. No deliverables. No recommendations. Yes/no/maybe on feasibility. |
 
 **Rules:**
-- One free option, one paid option only
-- No additional Tier 1 services allowed
+- Two free options, one paid option
+- Guided Intake and Technical Feasibility Check: no recommendations, no deliverables
+- Clarity Session: includes recommendations and written recap
 - Tier 1 never includes execution work
 
 ---
@@ -109,43 +116,39 @@ Purpose: Fast, fixed-scope studio work with clear timelines and pricing.
 | Offering | Price | Timeline | Notes |
 |----------|-------|----------|-------|
 | Starter Site | $750 CAD | 1 business day | Template-assisted, fast-launch website. Built for speed and simplicity. |
-| One-Page Redesign | $1,250 CAD | 2–3 business days | Fully custom, code-based. No templates, no builders. |
+| One-Page System Redesign | $1,250 CAD | 2–3 business days | Fully custom, code-based. No templates, no builders. |
 | Brandmark & Visual Identity | $950 CAD | 5–7 business days | Primary brandmark + supporting marks + visual direction. |
 
 **Offering Distinctions (Critical):**
 - **Starter Site** = speed & simplicity (template-assisted, managed builder)
-- **One-Page Redesign** = custom & crafted (code-based, no templates)
+- **One-Page System Redesign** = custom & crafted (code-based, no templates)
 - These are parallel options, not upgrades of each other
 
 **Platform Rule:**
 - Do NOT name or foreground the website builder platform (e.g., Wix) in client-facing copy
 - Position as "Starter" or "Launch" solution, not "builder site"
 
-**Rules:**
-- Fixed scope only
-- Public pricing required
-- No discovery-heavy or multi-week work
-- No Brand Resets
-- No Brand Moments / events
+**Scope Boundary:**
+- No integrations, dashboards, or bespoke functionality
+- No multi-page sites or applications
+- No brand strategy or multi-week discovery
 
 Focus Studio is the primary revenue engine and Google Ads entry point.
 
 ---
 
-**Tier 3 — B Core Services** (Strategic Work)
+**Tier 3 — B Core Systems** (Strategic Work)
 
 Purpose: Discovery-led, multi-week engagements for brands requiring structural clarity.
 
 | Offering | Pricing | Notes |
 |----------|---------|-------|
-| Strategic Brand Review | Private | Discovery-led |
-| Digital Platform Build | Private | Multi-page website built as a brand platform |
-| Brand Reset | Private | Strategic realignment of positioning and system |
-| Full Brand + Platform Reset | Private | End-to-end brand and digital reset |
-| Brand Moments & Micro-Activations | Private | By request only. See Section 21. |
+| Brand System Reset | Private | Strategic realignment of positioning, messaging, and visual system. Absorbs all audit/review work. |
+| Digital Platform Build | Private | Multi-page website or application built as a brand platform. Includes auth, dashboards, portals. |
+| Integrated Brand + Platform | Private | End-to-end brand and digital platform built together from the ground up. |
 
 **Rules:**
-- 50% deposit to begin
+- 50% deposit to begin, 50% on delivery
 - No public pricing
 - Always discovery-led
 - Never sold as an entry service
@@ -162,22 +165,24 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 
 **Never invent new services, pricing, or scopes.**
 
-### 1.5 Visual Hierarchy (LOCKED)
+### 1.5 Visual Hierarchy
 
 **Homepage Section Order (Top to Bottom):**
-1. **B Focus Studio** — Primary, largest, most prominent
-2. **B Core Services** — Includes both Reviews and Builds & Resets
-3. **B Exploratory Sessions** — Subtle, contextual ("Not sure where to start?")
+1. **B Exploratory** — "Not sure where to start?" (3 cards)
+2. **B Focus Studio** — Primary, largest, most prominent (3 cards)
+3. **B Core Systems** — Strategic tier with pricing gate (3 cards)
 
 **Key Visual Rules:**
-- Focus Studio appears FIRST (commercial priority, not tier priority)
-- Exploratory Sessions is Tier 1 conceptually but visually subtle (side door, not front door)
-- Focus Studio uses solid borders; Exploratory uses dashed borders
-- Both sub-brands use shared B logomark with differentiated wordmarks
+- Focus Studio is the primary revenue engine and Google Ads entry point
+- Exploratory is Tier 1 and appears first on homepage (top of services)
+- Core Systems uses amber accent and solid borders
+- Focus Studio uses violet accent and dashed borders
+- Exploratory uses blue accent and dashed borders
+- All sub-brands use shared B logomark with differentiated wordmarks
 
 **Navigation Order:**
 1. Focus Studio (first in dropdown)
-2. Core Services (second in dropdown)
+2. Core Systems (second in dropdown)
 
 ### 1.6 AI Positioning (Critical)
 
@@ -272,10 +277,9 @@ A successful implementation:
 │   │   │   ├── starter-site.html
 │   │   │   ├── one-page-redesign.html
 │   │   │   ├── brandmark.html
-│   │   │   ├── strategic-brand-review.html
 │   │   │   ├── digital-platform-build.html
-│   │   │   ├── brand-reset.html
-│   │   │   ├── full-brand-platform-reset.html
+│   │   │   ├── brand-system-reset.html
+│   │   │   ├── integrated-brand-platform.html
 │   │   │   └── website-audit.html          # Legacy (V3 theme)
 │   │   ├── intake/                # Intake form pages
 │   │   │   ├── exploratory.html
@@ -697,12 +701,13 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 ### Exploratory Routes (Tier 1)
 
 **Active Routes:**
-- `/exploratory` → Exploratory landing page (serves both offerings)
+- `/exploratory` → Exploratory landing page (serves all 3 offerings)
 - `/intake/exploratory` → Exploratory intake form
 
 **Tier 1 Offerings (all via shared intake):**
-- Introductory Direction Call (Free, ~20 min)
-- Brand or Website Clarity Session ($145, ~45 min)
+- Guided Intake (Free, form-based)
+- Clarity Session — Brand / Web / Systems ($145, ~45 min)
+- Technical Feasibility Check (Free, verbal, by request)
 
 ### Focus Studio Routes (Tier 2)
 - `/focus-studio` → B Focus Studio landing page
@@ -710,27 +715,30 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 **Focus Studio Offerings (all via shared intake):**
 - Starter Site ($750)
-- One-Page Redesign ($1,250)
+- One-Page System Redesign ($1,250)
 - Brandmark & Visual Identity ($950)
 
-### Core Services Routes (Tier 3)
-- `/core-services` → Core Services landing page
+### Core Systems Routes (Tier 3)
+- `/core-systems` → Core Systems landing page
+- `/core-services` → Same page (alias for existing campaigns)
 
-**Core Services Offerings (max 5):**
-- Strategic Brand Review
+**Core Systems Offerings (3):**
+- Brand System Reset
 - Digital Platform Build
-- Brand Reset
-- Full Brand + Platform Reset
-- Brand Moments & Micro-Activations (by request only)
+- Integrated Brand + Platform
 
 ### Service Detail Pages
 - `/starter-site` → Focus Studio: Starter Site detail
-- `/one-page-redesign` → Focus Studio: One-Page Redesign detail
+- `/one-page-redesign` → Focus Studio: One-Page System Redesign detail
 - `/brandmark` → Focus Studio: Brandmark & Visual Identity detail
-- `/strategic-brand-review` → Core Services detail
-- `/digital-platform-build` → Core Services detail
-- `/brand-reset` → Core Services detail
-- `/full-brand-platform-reset` → Core Services detail
+- `/digital-platform-build` → Core Systems detail
+- `/brand-system-reset` → Core Systems detail
+- `/integrated-brand-platform` → Core Systems detail
+
+### Tier 3 Redirects (permanent)
+- `/strategic-brand-review` → `/brand-system-reset`
+- `/brand-reset` → `/brand-system-reset`
+- `/full-brand-platform-reset` → `/integrated-brand-platform`
 
 ### Google Ads Landing Pages
 - `/sudbury` → Sudbury-specific Focus Studio landing (local campaign)
@@ -779,9 +787,9 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ## 17. Sub-Brand Visual System
 
-### B Core Services
+### B Core Systems
 - Shared B logomark (40px, white)
-- "Core Services" wordmark in Fraunces (1.875rem, 300 weight)
+- "Core Systems" wordmark in Fraunces (1.875rem, 300 weight)
 - Positioned below "What we offer" heading
 - Solid borders on service cards
 
@@ -805,7 +813,7 @@ All three service tiers use consistent container and card styling with tier-spec
 | Tier | Primary Color | CSS Variable |
 |------|---------------|--------------|
 | Focus Studio | Violet | `#8B5CF6` / `rgba(139, 92, 246, x)` |
-| Core Services | Amber | `#D97706` / `rgba(217, 119, 6, x)` |
+| Core Systems | Amber | `#D97706` / `rgba(217, 119, 6, x)` |
 | Exploratory | Blue | `#2563EB` / `rgba(37, 99, 235, x)` |
 
 ### 18.2 Container Styling
@@ -885,7 +893,7 @@ For Sudbury-first campaigns, local incentives may be offered via:
 
 - Single campaign only (no split testing yet)
 - Campaign focus: Focus Studio offerings
-- Main CTA for ads: Direction Session ($145) or specific Focus Studio service page
+- Main CTA for ads: Clarity Session ($145) or specific Focus Studio service page
 
 ---
 
@@ -980,6 +988,7 @@ Added `contain: layout style` to:
 | 5.5.0 | Feb 2026 | Comprehensive audit execution (P0-P4): OG image tags on 20 pages, honeypot fields on all forms, Formspree _subject fields, font-weight token standardization, phone validation, legacy page deprecation markers, Calendly PII documentation |
 | 5.5.1 | Feb 2026 | P5 polish pass: removed unused --font-mono token, consolidated duplicate scroll-behavior, added phone button title attr, fixed vercel.json formatting, sanitized PII in snapshot booking logs, documented canonical email regex, marked launch gate for removal, added audit log retention strategy, clarified header nav documentation |
 | 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0–P4): fixed version header, duplicate numbering, sub-numbering, GA/GTM status, pricing gate location, launch date; replaced project structure tree, expanded Section 16 routes (26 new), removed orphaned pages from Section 22.8, added APP_URL; added Section 25 API Endpoints Reference, expanded Section 11 security with CSP note; fixed exploratory blue token (#3B82F6→#2563EB in tokens.css + main.css), removed unused z-index tokens, kept glass tokens for future use; P4 code cleanup: removed empty scroll handler from dot-grid-about.js, deleted orphaned brand-clarity-call.html and website-clarity-call.html, extracted shared API utilities to api/lib/ (crypto.js, cookies.js, html.js) |
+| 6.0.0 | Feb 2026 | Service architecture v6: Added Devin (human full-stack dev) to Section 1.1. Unlocked Sections 1.4/1.5. Tier 1 Exploratory: 2→3 offerings (Guided Intake, Clarity Session w/ Systems domain, Technical Feasibility Check). Tier 2: One-Page Redesign→One-Page System Redesign, added scope boundary. Tier 3: renamed Core Services→Core Systems, reduced 5→3 offerings (Brand System Reset absorbs Strategic Brand Review, Integrated Brand+Platform replaces Full Brand+Platform Reset, dropped Brand Moments). Renamed files: brand-reset→brand-system-reset, full-brand-platform-reset→integrated-brand-platform. Deleted strategic-brand-review.html. New routes: /core-systems, /brand-system-reset, /integrated-brand-platform. CSS: all .core-services→.core-systems. Section 23: Brand Moments→Language Standards. Updated all ads pages, SEO files, booking labels, llms.txt. |
 
 ---
 
@@ -1169,65 +1178,36 @@ Some pages have custom header designs for specific UX or conversion purposes:
 
 ---
 
-## 23. Brand Moments & Micro-Activations (Canonical Definition)
+## 23. Language Standards
 
-Brand Moments & Micro-Activations are concept-led brand expressions in the physical world.
+### 23.1 Copy Language (Marketing & Client-Facing)
 
-### 23.1 Philosophy
+**Avoid in copy:**
+- "website design" → use "web systems" or "digital systems"
+- "redesign" → use "system redesign" or "reset"
+- "build" (as a noun) → use "platform" or "system"
+- "development services" → use "systems work"
+- "agency" → use "studio"
+- "discount" / "sale" / "promo"
+- Hype or trend language
+- Scale-based claims
 
-They prioritize:
-- **Meaning over scale**
-- **Coherence over spectacle**
-- **Proof over promotion**
+**Use in copy:**
+- "systems" — core framing word
+- "clarity" — value proposition
+- "structure" — methodology
+- "studio" — identity framing
+- "platform" — for digital work
+- "reset" — for strategic realignment
 
-Scale is irrelevant. Intent is everything.
+### 23.2 Offering Names (Exceptions)
 
-### 23.2 What Qualifies
+Offering names are proper nouns and are exempt from copy language rules:
+- "One-Page System Redesign" — uses "redesign" intentionally
+- "Digital Platform Build" — uses "build" intentionally
+- "Brand System Reset" — uses "reset" intentionally
 
-- Launch moments
-- Pop-up concepts or installations
-- Brand-led gatherings
-- Spatial expressions of brand identity
-
-### 23.3 What Bertrand Brands Provides
-
-- Concept and narrative design
-- Experience structure and intent
-- Visual and spatial coherence
-- Atmosphere, flow, and meaning
-
-### 23.4 What Is Excluded by Default
-
-- Event logistics
-- Staffing
-- Permits
-- Rentals
-- Full production execution
-
-These may be handled collaboratively or via partners, but are not core obligations.
-
-### 23.5 Integration Rule (Critical)
-
-Brand Moments & Micro-Activations are **never the entry point**.
-
-They may only be introduced through:
-- A Brand Reset
-- A Digital Platform Build
-- A Brandmarking system expansion
-
-If a request is "just an event," it is out of scope.
-
-### 23.6 Internal Guardrail
-
-A Brand Moment must satisfy at least one of the following:
-- Marks a transition
-- Tests a brand idea
-- Expresses a brand system
-- Creates proof
-
-If none apply, Bertrand Brands does not pursue the engagement.
-
-### 23.7 Language & Tone Rules
+### 23.3 Tone Rules
 
 - Declarative, not promotional
 - No hype or trend language

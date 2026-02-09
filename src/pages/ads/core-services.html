@@ -7,12 +7,12 @@
     <!-- SEO -->
     <link rel="canonical" href="https://bertrandbrands.com/core-services">
     <meta name="theme-color" content="#0a0a0a">
-    <title>Core Services — Strategic Brand & Web Systems | Bertrand Brands</title>
-    <meta name="description" content="Multi-week, relationship-based brand and website work. Audits, brand resets, and website foundations. 50% deposit to begin, 50% on delivery.">
+    <title>Core Systems — Strategic Brand & Web Systems | Bertrand Brands</title>
+    <meta name="description" content="Multi-week, relationship-based brand and web systems work. Brand resets, platform builds, and integrated brand + platform engagements. 50% deposit to begin, 50% on delivery.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Core Services — Strategic Brand & Web Systems | Bertrand Brands">
-    <meta property="og:description" content="Multi-week, relationship-based brand and website work. Audits, brand systems, and website builds.">
+    <meta property="og:title" content="Core Systems — Strategic Brand & Web Systems | Bertrand Brands">
+    <meta property="og:description" content="Multi-week, relationship-based brand and web systems work. Brand resets, platform builds, and integrated engagements.">
     <meta property="og:url" content="https://bertrandbrands.com/core-services">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_CA">
@@ -34,8 +34,8 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "B Core Services",
-      "description": "Multi-week, relationship-based brand and website work. Audits, brand resets, and website foundations.",
+      "name": "B Core Systems",
+      "description": "Multi-week, relationship-based brand and web systems work. Brand resets, platform builds, and integrated brand + platform engagements.",
       "provider": {
         "@type": "ProfessionalService",
         "name": "Bertrand Brands",
@@ -53,13 +53,11 @@
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Core Services Offerings",
+        "name": "Core Systems Offerings",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Brand Audit" }, "description": "Discovery-led brand analysis and strategic direction" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Platform Build" }, "description": "Multi-page website built as a brand platform" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Reset" }, "description": "Strategic realignment of positioning and system" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Brand + Platform Reset" }, "description": "End-to-end brand and digital reset" },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Moments & Micro-Activations" }, "description": "Concept-led brand expressions. By request only." }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand System Reset" }, "description": "Strategic realignment of positioning, messaging, and visual system" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Platform Build" }, "description": "Multi-page website or application built as a brand platform" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Integrated Brand + Platform" }, "description": "End-to-end brand and digital platform built together" }
         ]
       }
     }
@@ -99,7 +97,7 @@
             opacity: 1 !important;
         }
 
-        /* Core Services Landing Page Styles */
+        /* Core Systems Landing Page Styles */
         .cs-page {
             min-height: 100vh;
             padding-top: 80px;
@@ -108,7 +106,7 @@
         }
 
         /* Sub-brand styling - matches homepage pattern */
-        .core-services__brand {
+        .core-systems__brand {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -118,18 +116,18 @@
             transition: opacity var(--duration-fast, 150ms) ease;
         }
 
-        .core-services__brand:hover {
+        .core-systems__brand:hover {
             opacity: 0.8;
         }
 
-        .core-services__mark {
+        .core-systems__mark {
             width: 32px;
             height: 32px;
             opacity: 1;
             filter: brightness(0) invert(1);
         }
 
-        .core-services__name {
+        .core-systems__name {
             font-family: 'Fraunces', Georgia, serif;
             font-size: var(--text-2xl);
             font-weight: 300;
@@ -538,11 +536,11 @@
         <!-- Hero -->
         <section class="cs-hero">
             <div class="container">
-                <a href="/?skip" class="core-services__brand">
-                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="core-services__mark">
-                    <span class="core-services__name">Core Services</span>
+                <a href="/?skip" class="core-systems__brand">
+                    <img src="/assets/bertrand-brands-logomark.png" alt="" class="core-systems__mark">
+                    <span class="core-systems__name">Core Systems</span>
                 </a>
-                <h1 class="cs-hero__title">Multi-week brand and website work</h1>
+                <h1 class="cs-hero__title">Multi-week brand and web systems work</h1>
                 <p class="cs-hero__subtitle">
                     Relationship-based engagements with clear outcomes. 50% deposit to begin, 50% on delivery.
                 </p>
@@ -553,46 +551,34 @@
         <section class="cs-tier">
             <div class="container">
                 <div class="cs-tier__grid">
-                    <!-- Strategic Brand Audit -->
-                    <div class="cs-offering cs-offering--review">
-                        <div class="cs-offering__header">
-                            <h2 class="cs-offering__title">Strategic Brand Audit</h2>
-                        </div>
-                        <p class="cs-offering__description">Discovery-led brand analysis. Deep review of positioning, messaging, and visual system with strategic recommendations.</p>
-                        <div class="cs-offering__footer">
-                            <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
-                            <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
-                        </div>
-                    </div>
-
                     <!-- Digital Platform Build -->
                     <div class="cs-offering">
                         <div class="cs-offering__header">
                             <h2 class="cs-offering__title">Digital Platform Build</h2>
                         </div>
-                        <p class="cs-offering__description">Multi-page website built as a brand platform. Strategy-led, built to convert, designed to scale.</p>
+                        <p class="cs-offering__description">Multi-page website or application built as a brand platform. Includes architecture, auth, dashboards, and full-stack implementation.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
                         </div>
                     </div>
 
-                    <!-- Brand Reset -->
+                    <!-- Brand System Reset -->
                     <div class="cs-offering">
                         <div class="cs-offering__header">
-                            <h2 class="cs-offering__title">Brand Reset</h2>
+                            <h2 class="cs-offering__title">Brand System Reset</h2>
                         </div>
-                        <p class="cs-offering__description">Strategic realignment of positioning and system. Core brand, messaging, and guidelines rebuilt from the ground up.</p>
+                        <p class="cs-offering__description">Strategic realignment of your brand system — positioning, messaging, visual identity, and strategic roadmap. Absorbs all audit and review work.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
                             <a href="/book" class="cs-offering__cta cs-cta-intake">Start Intake →</a>
                         </div>
                     </div>
 
-                    <!-- Full Brand + Platform Reset -->
+                    <!-- Integrated Brand + Platform -->
                     <div class="cs-offering">
                         <div class="cs-offering__header">
-                            <h2 class="cs-offering__title">Full Brand + Platform Reset</h2>
+                            <h2 class="cs-offering__title">Integrated Brand + Platform</h2>
                         </div>
                         <p class="cs-offering__description">End-to-end transformation. Brand system and digital platform built together from the ground up.</p>
                         <div class="cs-offering__footer">
@@ -610,11 +596,11 @@
         <section class="cs-exploratory">
             <div class="container">
                 <p class="cs-exploratory__label">Not sure where to start?</p>
-                <p class="cs-exploratory__text">Begin with a free Direction Call or a paid Clarity Session. No obligations—just focused guidance.</p>
+                <p class="cs-exploratory__text">Begin with a free Guided Intake or a paid Clarity Session. No obligations—just focused guidance.</p>
                 <div class="cs-exploratory__grid">
                     <a href="/exploratory" class="cs-exploratory__card">
-                        <h3 class="cs-exploratory__card-title">Introductory Direction Call</h3>
-                        <p class="cs-exploratory__card-meta">~20 min · Free</p>
+                        <h3 class="cs-exploratory__card-title">Guided Intake</h3>
+                        <p class="cs-exploratory__card-meta">Form-based · Free</p>
                     </a>
                     <a href="/exploratory" class="cs-exploratory__card">
                         <h3 class="cs-exploratory__card-title">Clarity Session</h3>
@@ -628,7 +614,7 @@
         <section class="cs-boundary">
             <div class="container">
                 <p class="cs-boundary__text">
-                    Core Services are multi-week, relationship-based engagements. For fixed-scope, fixed-price work with clear timelines, <a href="/focus-studio" class="cs-boundary__link">explore Focus Studio →</a>
+                    Core Systems engagements are multi-week, relationship-based. For fixed-scope, fixed-price work with clear timelines, <a href="/focus-studio" class="cs-boundary__link">explore Focus Studio →</a>
                 </p>
             </div>
         </section>

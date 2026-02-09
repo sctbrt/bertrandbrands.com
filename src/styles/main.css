@@ -2890,7 +2890,7 @@
 
         .exploratory-sessions__grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: var(--space-md);
         }
 
@@ -3113,9 +3113,9 @@
             gap: var(--space-md);
         }
 
-        /* Core Services: balanced 2x2 grid */
+        /* Core Systems: balanced 3-card grid */
         .services--core {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
         }
 
         @media (max-width: 700px) {
@@ -3189,10 +3189,7 @@
             opacity: 0.08;
         }
 
-        /* Search/magnifying glass icon - Strategic Brand Review */
-        .service[data-icon="search"]::after {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
-        }
+
 
         /* Layers icon - Digital Platform Build */
         .service[data-icon="layers"]::after {
@@ -3280,7 +3277,7 @@
         /* === CORE SERVICES (Primary Services) === */
 
         /* Core Services wrapper with ambient glow */
-        .core-services-wrapper {
+        .core-systems-wrapper {
             position: relative;
             overflow: visible;
             padding: var(--space-lg);
@@ -3290,7 +3287,7 @@
         }
 
         /* Amber ambient glow container */
-        .core-services__glow {
+        .core-systems__glow {
             position: absolute;
             top: -100px;
             left: -200px;
@@ -3302,7 +3299,7 @@
         }
 
         /* Amber ambient wash - spreads across Core Services section */
-        .core-services__glow::before {
+        .core-systems__glow::before {
             content: '';
             position: absolute;
             width: 120%;
@@ -3328,28 +3325,28 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .core-services__glow::before {
+            .core-systems__glow::before {
                 animation: none;
             }
         }
 
         /* Mobile optimization for Core Services glow */
         @media (max-width: 768px) {
-            .core-services__glow {
+            .core-systems__glow {
                 left: -100px;
                 right: -100px;
                 top: -50px;
                 bottom: -50px;
             }
 
-            .core-services__glow::before {
+            .core-systems__glow::before {
                 filter: blur(40px);
                 background: radial-gradient(ellipse 90% 70% at 50% 50%, rgba(217, 119, 6, 0.15) 0%, rgba(217, 119, 6, 0.08) 40%, rgba(217, 119, 6, 0.03) 60%, transparent 80%);
             }
         }
 
         /* Ensure Core Services content stays above glow */
-        .core-services,
+        .core-systems,
         .exploratory,
         .services,
         .services-tier-label,
@@ -3359,11 +3356,11 @@
             z-index: 1;
         }
 
-        .core-services {
+        .core-systems {
             margin-bottom: var(--space-lg);
         }
 
-        .core-services__brand {
+        .core-systems__brand {
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -3372,18 +3369,18 @@
             transition: opacity var(--duration-fast) var(--ease-out);
         }
 
-        .core-services__brand:hover {
+        .core-systems__brand:hover {
             opacity: 0.8;
         }
 
-        .core-services__mark {
+        .core-systems__mark {
             width: 40px;
             height: 40px;
             opacity: 1;
             filter: brightness(0) invert(1);
         }
 
-        .core-services__name {
+        .core-systems__name {
             font-family: 'Fraunces', Georgia, serif;
             font-size: var(--text-3xl);
             font-weight: var(--font-light);
@@ -3391,7 +3388,7 @@
             color: var(--text);
         }
 
-        .core-services__description {
+        .core-systems__description {
             font-size: var(--text-sm);
             color: var(--text-muted);
             max-width: 500px;
@@ -5022,7 +5019,9 @@
         .founder-lightbox__content {
             position: relative;
             width: 100%;
-            max-width: 520px;
+            max-width: 560px;
+            max-height: 85vh;
+            overflow-y: auto;
             background: var(--bg-elevated);
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
@@ -5059,7 +5058,7 @@
             font-size: var(--text-2xl);
             font-weight: var(--font-normal);
             letter-spacing: -0.02em;
-            margin-bottom: var(--space-md);
+            margin-bottom: 0.375rem;
         }
 
         .founder-lightbox__text {
@@ -5070,6 +5069,28 @@
         }
 
         .founder-lightbox__text:last-of-type {
+            margin-bottom: var(--space-lg);
+        }
+
+        .founder-lightbox__role {
+            font-size: var(--text-sm);
+            color: var(--text-subtle);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-md);
+        }
+
+        .founder-lightbox__divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: var(--space-md) 0;
+        }
+
+        .founder-lightbox__studio-line {
+            font-size: var(--text-sm);
+            color: var(--text-subtle);
+            line-height: 1.6;
+            font-style: italic;
             margin-bottom: var(--space-lg);
         }
 
@@ -5090,10 +5111,12 @@
         /* Founder Lightbox — Mobile */
         @media (max-width: 768px) {
             .founder-lightbox { padding: var(--space-sm); }
-            .founder-lightbox__content { padding: 2rem 1.75rem; }
-            .founder-lightbox__title { font-size: var(--text-2xl); margin-bottom: 1.25rem; }
+            .founder-lightbox__content { padding: 2rem 1.75rem; max-height: 80vh; }
+            .founder-lightbox__title { font-size: var(--text-2xl); margin-bottom: 0.5rem; }
+            .founder-lightbox__role { font-size: var(--text-xs); margin-bottom: 1rem; }
             .founder-lightbox__text { font-size: var(--text-base); line-height: 1.6; }
             .founder-lightbox__text:last-of-type { margin-bottom: 1.5rem; }
+            .founder-lightbox__studio-line { font-size: var(--text-xs); }
         }
 
         /* ============================================================
@@ -5114,7 +5137,7 @@
             }
 
             /* Disable breathing animations on ambient glows */
-            .core-services__glow::before {
+            .core-systems__glow::before {
                 animation: none !important;
                 opacity: 0.9;
             }
@@ -5164,7 +5187,7 @@
             }
 
             /* Use transform3d for better GPU compositing */
-            .core-services__glow::before,
+            .core-systems__glow::before,
             .focused-studio__glow::before,
             .focused-studio__glow::after {
                 transform: translate3d(-50%, -50%, 0);
@@ -5378,7 +5401,7 @@
                 filter: blur(20px);
             }
 
-            .core-services__glow::before,
+            .core-systems__glow::before,
             .focused-studio__glow::before {
                 filter: blur(20px);
             }

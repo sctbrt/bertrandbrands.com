@@ -84,20 +84,20 @@
       "destination": "/pages/services/brandmark"
     },
     {
-      "source": "/strategic-brand-review",
-      "destination": "/pages/services/strategic-brand-review"
+      "source": "/brand-system-reset",
+      "destination": "/pages/services/brand-system-reset"
     },
     {
       "source": "/digital-platform-build",
       "destination": "/pages/services/digital-platform-build"
     },
     {
-      "source": "/brand-reset",
-      "destination": "/pages/services/brand-reset"
+      "source": "/integrated-brand-platform",
+      "destination": "/pages/services/integrated-brand-platform"
     },
     {
-      "source": "/full-brand-platform-reset",
-      "destination": "/pages/services/full-brand-platform-reset"
+      "source": "/core-systems",
+      "destination": "/pages/ads/core-services"
     },
     {
       "source": "/scottbertrand",
@@ -233,6 +233,21 @@
     {
       "source": "/intake/website-snapshot-review",
       "destination": "/intake/website-conversion-snapshot",
+      "permanent": true
+    },
+    {
+      "source": "/strategic-brand-review",
+      "destination": "/brand-system-reset",
+      "permanent": true
+    },
+    {
+      "source": "/brand-reset",
+      "destination": "/brand-system-reset",
+      "permanent": true
+    },
+    {
+      "source": "/full-brand-platform-reset",
+      "destination": "/integrated-brand-platform",
       "permanent": true
     }
   ],

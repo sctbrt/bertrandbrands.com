@@ -29,16 +29,16 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Tier 3: Core Services -->
+  <!-- Tier 3: Core Systems -->
   <url>
     <loc>https://bertrandbrands.com/core-services</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/strategic-brand-review</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://bertrandbrands.com/core-systems</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.com/digital-platform-build</loc>
@@ -46,12 +46,12 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/brand-reset</loc>
+    <loc>https://bertrandbrands.com/brand-system-reset</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bertrandbrands.com/full-brand-platform-reset</loc>
+    <loc>https://bertrandbrands.com/integrated-brand-platform</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
