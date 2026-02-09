@@ -8,7 +8,7 @@ export default function middleware(request) {
     const hostname = request.headers.get('host') || '';
 
     if (hostname.startsWith('group.')) {
-        return rewrite(new URL('/pages/group/index.html', request.url));
+        return rewrite(new URL('/pages/group/index', request.url));
     }
 
     return next();
