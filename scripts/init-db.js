@@ -3,7 +3,7 @@
 // Run with: npm run db:init
 // Requires POSTGRES_URL environment variable
 
-import { initializeDatabase, cleanupExpiredRecords } from '../api/lib/db.js';
+import { initializeDatabase, cleanupExpiredRecords } from '../api/_lib/db.js';
 
 async function main() {
   console.log('Initializing database tables...');

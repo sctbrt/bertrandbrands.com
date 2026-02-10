@@ -47,6 +47,22 @@ export async function initializeDatabase() {
       ON pricing_sessions(expires_at)
     `;
 
+    // Create clients table (referenced by booking access flow)
+    await sql`
+      CREATE TABLE IF NOT EXISTS clients (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        contact_email TEXT NOT NULL,
+        company TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+
+    await sql`
+      CREATE INDEX IF NOT EXISTS idx_clients_email
+      ON clients(contact_email)
+    `;
+
     // Create booking_access_tokens table
     await sql`
       CREATE TABLE IF NOT EXISTS booking_access_tokens (
