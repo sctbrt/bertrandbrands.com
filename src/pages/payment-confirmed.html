@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment Confirmed | Bertrand Brands</title>
   <meta name="robots" content="noindex, nofollow">
+
+  <!-- Google Ads Conversion Tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17925090292"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17925090292');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
@@ -378,6 +388,11 @@
 
     document.getElementById('confirmText').textContent = service.text;
     document.querySelector('.header__tier').textContent = service.tier;
+
+    // Google Ads: Lead — Clarity Booked (GA4 event, payment-confirmed)
+    if (serviceKey === 'clarity-session' && typeof gtag === 'function') {
+      gtag('event', 'ads_conversion_Book_appointment_1');
+    }
 
     // Initialize Calendly when ready
     function initCalendly() {

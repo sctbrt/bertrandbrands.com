@@ -29,6 +29,15 @@
     <meta name="apple-mobile-web-app-title" content="Bertrand Brands" />
     <link rel="manifest" href="/site.webmanifest" />
 
+    <!-- Google Ads Conversion Tracking -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17925090292"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17925090292');
+    </script>
+
     <!-- Schema.org: Service -->
     <script type="application/ld+json">
     {
@@ -893,6 +902,19 @@
     <script>
         document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
 
+        // Google Ads: Lead — Phone Call (tel: click)
+        document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-17925090292/ueyZCPOf6_UbEPTXrONC',
+                        'value': 1.0,
+                        'currency': 'CAD'
+                    });
+                }
+            });
+        });
+
         // Form submission
         (function() {
             const form = document.getElementById('sudburyForm');
@@ -934,6 +956,15 @@
                                 ...Object.fromEntries(new FormData(form))
                             })
                         }).catch(() => {});
+
+                        // Google Ads: Lead — Intake Submitted (server-confirmed)
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'conversion', {
+                                'send_to': 'AW-17925090292/3B0-CJDv6vUbEPTXrONC',
+                                'value': 1.0,
+                                'currency': 'CAD'
+                            });
+                        }
                     } else {
                         throw new Error('Submission failed');
                     }
