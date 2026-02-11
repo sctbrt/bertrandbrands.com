@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Confirmed | Bertrand Brands</title>
+  <title>Payment Confirmed — BG | Brands & Web Systems</title>
   <meta name="robots" content="noindex, nofollow">
 
   <!-- Google Ads Conversion Tracking -->
@@ -114,7 +114,7 @@
       border-radius: inherit;
     }
 
-    /* Focus Studio tier background glow */
+    /* Build tier background glow */
     body::before {
       content: '';
       position: fixed;
@@ -155,10 +155,14 @@
       filter: brightness(0) invert(1);
     }
 
-    .header__logo-text {
-      height: 14px;
-      width: auto;
-      filter: brightness(1.5);
+    .header__wordmark {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      white-space: nowrap;
     }
 
     .header__tier {
@@ -324,10 +328,10 @@
     <div class="header__glass">
       <div class="header__inner">
         <a href="https://brands.bertrandgroup.ca" class="header__logo">
-          <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon">
-          <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text">
+          <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon">
+          <span class="header__wordmark">Brands &amp; Web Systems</span>
         </a>
-        <span class="header__tier">Focus Studio</span>
+        <span class="header__tier">Build</span>
       </div>
     </div>
   </header>
@@ -343,7 +347,7 @@
       <div class="booking__calendly" id="calendlyEmbed"></div>
     </div>
 
-    <a href="https://brands.bertrandgroup.ca" class="back-link">← Back to Bertrand Brands</a>
+    <a href="https://brands.bertrandgroup.ca" class="back-link">← Back to Bertrand Group</a>
   </div>
   <script>
     // Prevent iOS triple-tap and gesture zoom
@@ -355,21 +359,28 @@
     const services = {
       'clarity-session': {
         badge: 'Clarity Session — $145',
-        tier: 'Exploratory',
+        tier: 'Conversation',
         tierClass: 'service-badge--exploratory',
         text: 'Now let\'s schedule your clarity session.',
         calendly: 'https://calendly.com/bertrandbrands/clarity-session'
       },
       'starter-site': {
         badge: 'Starter Site — $750',
-        tier: 'Focus Studio',
+        tier: 'Build',
         tierClass: '',
         text: 'Now let\'s schedule your kickoff call.',
         calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
       },
       'brandmark': {
         badge: 'Brandmark & Visual Identity — $950',
-        tier: 'Focus Studio',
+        tier: 'Build',
+        tierClass: '',
+        text: 'Now let\'s schedule your kickoff call.',
+        calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+      },
+      'one-page-redesign': {
+        badge: 'One-Page System Redesign — $1,250',
+        tier: 'Build',
         tierClass: '',
         text: 'Now let\'s schedule your kickoff call.',
         calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
@@ -416,10 +427,17 @@
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
       let pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
+      let lastFrame = 0;
+      const FRAME_INTERVAL = 1000 / 30;
 
-      function animateLights() {
-        pos1 += 0.03 * dir1;
-        pos2 += 0.025 * dir2;
+      function animateLights(timestamp) {
+        if (timestamp - lastFrame < FRAME_INTERVAL) {
+          requestAnimationFrame(animateLights);
+          return;
+        }
+        lastFrame = timestamp;
+        pos1 += 0.06 * dir1;
+        pos2 += 0.05 * dir2;
         if (pos1 > 25 || pos1 < 10) dir1 *= -1;
         if (pos2 > 90 || pos2 < 60) dir2 *= -1;
         headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');

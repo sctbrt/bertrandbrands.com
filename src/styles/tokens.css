@@ -1,5 +1,5 @@
 /* ============================================================
-   BERTRAND BRANDS — Design System Tokens
+   BERTRAND GROUP — Design System Tokens
    V5.0.0 — Performance-First Architecture
    ============================================================ */
 
@@ -24,12 +24,12 @@
   --accent-glow: rgba(217, 119, 6, 0.4);
   --accent-muted: rgba(217, 119, 6, 0.15);
 
-  /* Focus Studio — Violet */
+  /* Build — Violet */
   --focus-accent: #8B5CF6;
   --focus-accent-hover: #7C3AED;
   --focus-border: rgba(139, 92, 246, 0.25);
 
-  /* Exploratory — Blue */
+  /* Conversation — Blue */
   --exploratory-accent: #2563EB;
   --exploratory-accent-muted: rgba(37, 99, 235, 0.15);
 

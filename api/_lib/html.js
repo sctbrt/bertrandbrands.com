@@ -29,7 +29,7 @@ export function errorPageHtml(title, message, { backHref = '/#services', backLab
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title} — Bertrand Brands</title>
+  <title>${title} — Bertrand Group</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="/assets/favicon.png">
   <style>

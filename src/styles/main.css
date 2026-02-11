@@ -1,5 +1,5 @@
         /* ============================================================
-           BERTRAND BRANDS — Brand & Web Systems
+           BERTRAND GROUP — Brands & Web Systems
            V1 Visual Language: Bold, Dark, Minimal, Motion-forward
            ============================================================ */
 
@@ -147,6 +147,24 @@
             .header__glass::before {
                 /* Lights stay visible, animation runs if reduced-motion not set */
             }
+
+            /* Mobile: always show collapsed wordmark */
+            .header__wordmark {
+                font-size: 0.6rem;
+            }
+
+            .header__wordmark .header__wordmark-full {
+                opacity: 0;
+                transform: translateX(-8px);
+                pointer-events: none;
+                position: absolute;
+            }
+
+            .header__wordmark .header__wordmark-short {
+                opacity: 1;
+                transform: translateX(0);
+                position: relative;
+            }
         }
 
         /* Ambient orange lighting */
@@ -215,18 +233,75 @@
             opacity: 1;
         }
 
-        .header__logo-text {
-            height: 14px;
-            width: auto;
-            max-width: 150px;
+        /* Text-based wordmark (replaces image) */
+        .header__wordmark {
+            display: inline-flex;
+            align-items: baseline;
+            position: relative;
             opacity: 0;
             transition: opacity 0.5s ease;
-            filter: brightness(1.5);
-            object-fit: contain;
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
         }
 
-        .header__logo.show-text .header__logo-text {
+        .header__logo.show-text .header__wordmark {
             opacity: 1;
+        }
+
+        .header__wordmark-full,
+        .header__wordmark-short {
+            display: inline-flex;
+            align-items: baseline;
+            transition: opacity var(--duration-normal) var(--ease-out),
+                        transform var(--duration-normal) var(--ease-out);
+        }
+
+        .header__wordmark-full {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .header__wordmark-short {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transform: translateX(-8px);
+        }
+
+        .header__wordmark-brand {
+            font-weight: 600;
+        }
+
+        .header__wordmark-sub {
+            font-weight: 400;
+        }
+
+        /* Collapsed state (after initial delay) */
+        .header__wordmark.is-collapsed .header__wordmark-full {
+            opacity: 0;
+            transform: translateX(-8px);
+            pointer-events: none;
+        }
+
+        .header__wordmark.is-collapsed .header__wordmark-short {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Hover expand (only when collapsed) */
+        .header__logo:hover .header__wordmark.is-collapsed .header__wordmark-full {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .header__logo:hover .header__wordmark.is-collapsed .header__wordmark-short {
+            opacity: 0;
+            transform: translateX(-8px);
         }
 
         /* === CINEMATIC INTRO === */
@@ -746,8 +821,14 @@
             .intro {
                 display: none;
             }
-            .header__logo-text {
+            .header__wordmark {
                 opacity: 1;
+            }
+            .header__wordmark .header__wordmark-full,
+            .header__wordmark .header__wordmark-short,
+            .header__wordmark.is-collapsed .header__wordmark-full,
+            .header__wordmark.is-collapsed .header__wordmark-short {
+                transition: none;
             }
             /* Hide decorative animated elements */
             .hero__spotlight,
@@ -1017,12 +1098,12 @@
             filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(18deg) brightness(95%) contrast(95%);
         }
 
-        /* Focus Studio item - violet (#8B5CF6) accent on hover */
+        /* Build item - violet (#8B5CF6) accent on hover */
         .header__dropdown-item--violet:hover .header__dropdown-mark {
             filter: invert(42%) sepia(67%) saturate(4356%) hue-rotate(243deg) brightness(100%) contrast(94%);
         }
 
-        /* Exploratory item - spotlight blue (#2563EB) accent on hover */
+        /* Conversation item - spotlight blue (#2563EB) accent on hover */
         .header__dropdown-item--blue:hover .header__dropdown-mark {
             filter: invert(33%) sepia(100%) saturate(1500%) hue-rotate(197deg) brightness(95%) contrast(100%);
         }
@@ -1701,7 +1782,7 @@
             margin-bottom: var(--space-xl);
         }
 
-        /* Services section: tighter gap to Focus Studio */
+        /* Services section: tighter gap to Build */
         .section__header--services {
             margin-bottom: var(--space-md);
         }
@@ -2760,7 +2841,7 @@
             border-radius: 16px;
         }
 
-        /* Blue spotlight accents for B Exploratory - animated drift */
+        /* Blue spotlight accents for B Conversation - animated drift */
         @keyframes exploratoryDrift1 {
             0%, 100% {
                 transform: translateY(-30%) translateX(0);
@@ -2938,7 +3019,7 @@
             opacity: 1;
         }
 
-        /* Watermark icons for Exploratory cards */
+        /* Watermark icons for Conversation cards */
         .exploratory-sessions__card::after {
             content: '';
             position: absolute;
@@ -3113,7 +3194,7 @@
             gap: var(--space-md);
         }
 
-        /* Core Systems: balanced 3-card grid */
+        /* Transformation: balanced 3-card grid */
         .services--core {
             grid-template-columns: repeat(3, 1fr);
         }
@@ -3476,7 +3557,7 @@
             }
         }
 
-        /* Mobile optimization for Focus Studio glow */
+        /* Mobile optimization for Build glow */
         @media (max-width: 768px) {
             .focused-studio__glow {
                 left: -100px;
@@ -3552,7 +3633,7 @@
             gap: var(--space-sm);
         }
 
-        /* Staggered reveal for Focus Studio cards */
+        /* Staggered reveal for Build cards */
         .focused-studio__grid .focused-studio__card {
             opacity: 0;
             transform: translateY(30px);
@@ -3578,7 +3659,7 @@
             transition-delay: 0.3s;
         }
 
-        /* V5.0: Improved Focus Studio card hover */
+        /* V5.0: Improved Build card hover */
         .focused-studio__card {
             padding: var(--space-lg);
             background: rgba(139, 92, 246, 0.05);
@@ -3623,7 +3704,7 @@
             opacity: 1;
         }
 
-        /* Watermark icons for Focus Studio cards */
+        /* Watermark icons for Build cards */
         .focused-studio__card::after {
             content: '';
             position: absolute;
@@ -3832,7 +3913,7 @@
             }
         }
 
-        /* V5.0: Exploratory cards - mobile touch improvements */
+        /* V5.0: Conversation cards - mobile touch improvements */
         @media (max-width: 768px) {
             .exploratory-card {
                 padding: var(--space-md);
@@ -3986,7 +4067,7 @@
             }
         }
 
-        /* Violet spotlight (Focus Studio accent) - organic breathing */
+        /* Violet spotlight (Build accent) - organic breathing */
         .contact__spotlight--violet {
             position: absolute;
             width: 450px;
@@ -4001,7 +4082,7 @@
             filter: blur(60px);
         }
 
-        /* Blue spotlight (Exploratory accent) - organic breathing */
+        /* Blue spotlight (Conversation accent) - organic breathing */
         .contact__spotlight--blue {
             position: absolute;
             width: 400px;
@@ -5250,7 +5331,7 @@
                 animation: beamFadeInMobile 1.5s ease-out 0.6s forwards;
             }
 
-            /* Exploratory drift: disable infinite breathing on mobile */
+            /* Conversation drift: disable infinite breathing on mobile */
             .exploratory-sessions::before,
             .exploratory-sessions::after {
                 animation: none;

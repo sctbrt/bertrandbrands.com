@@ -1,8 +1,8 @@
-# CLAUDE.md - Bertrand Brands
+# CLAUDE.md - Bertrand Group | Brands & Web Systems
 
-## Version 6.0.0 (Current)
+## Version 7.0.0 (Current)
 
-This document is the **Bertrand Brands-specific** guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
+This document is the **Bertrand Group | Brands & Web Systems** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
 ---
 
@@ -10,7 +10,7 @@ This document is the **Bertrand Brands-specific** guide. For full ecosystem cont
 
 ### 1.1 Role & Boundaries
 
-**Bertrand Brands** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand and Devin Major.
+**Bertrand Group | Brands & Web Systems** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand and Devin Major.
 
 **Scott handles:**
 - Brand strategy, UX direction, and design taste
@@ -78,7 +78,7 @@ If a technical or UX decision introduces confusion, pressure, or ambiguity, it v
 
 ### 1.4 Service Architecture
 
-Bertrand Brands operates under **THREE strictly hierarchical service tiers**.
+Bertrand Group operates under **THREE strictly hierarchical service tiers**.
 
 **Mental Model:** Conversation → Execution → Transformation
 
@@ -223,15 +223,15 @@ A successful implementation:
 - Can be reused across brands
 - Supports future delegation
 
-**Bertrand Brands is not scaling chaos—it is scaling clarity.**
+**Bertrand Group is not scaling chaos—it is scaling clarity.**
 
 ---
 
 ## 2. Project Overview
 
-**Bertrand Brands** — Premium brand and web systems design studio website. A sophisticated single-page marketing site with serverless backend functionality hosted on Vercel.
+**Bertrand Group | Brands & Web Systems** — Premium brand and web systems design studio website. A sophisticated single-page marketing site with serverless backend functionality hosted on Vercel.
 
-**Domain**: bertrandbrands.com
+**Domain**: brands.bertrandgroup.ca
 **Purpose**: Professional services showcase, lead generation, brand expression
 
 ---
@@ -334,9 +334,9 @@ V5.0.0 builds on the refined, minimal, architectural approach with **performance
 - **Material realism** — Glass and lighting should feel physical, not digital
 - **Time-aware theming** — Sites respond to time of day (Canada/Eastern)
 
-### 5.2 Bertrand Brands Expression
+### 5.2 Brand Expression
 
-Bertrand Brands is **more expressive** than scottbertrand.com:
+This site is **more expressive** than scottbertrand.com:
 
 - RGB ethereal effects permitted (subtly)
 - Animated gradients on key CTAs
@@ -486,7 +486,7 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-/* Bertrand Brands: Expressive but purposeful */
+/* Expressive but purposeful */
 ```
 
 ---
@@ -511,7 +511,7 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 - Flow: Email → Resend sends token → 15-min validity → 4-hour session
 - Database: `pricing_magic_links` and `pricing_sessions` tables (created by `scripts/init-db.js`)
 - Security: Token hashing, rate limiting (3/hr per email)
-- Cookie: `bb_pricing_session` set on `.bertrandbrands.com` domain
+- Cookie: `bb_pricing_session` set on `.bertrandgroup.ca` domain
 
 ### 7.4 Visitor Tracking
 
@@ -560,7 +560,7 @@ POSTGRES_URL          # Vercel Postgres connection
 RESEND_API_KEY        # Email delivery
 PUSHOVER_USER_KEY     # Push notifications
 PUSHOVER_API_TOKEN    # Push notifications
-APP_URL               # CORS origin (defaults to https://bertrandbrands.com)
+APP_URL               # CORS origin (defaults to https://brands.bertrandgroup.ca)
 ```
 
 ---
@@ -613,8 +613,8 @@ APP_URL               # CORS origin (defaults to https://bertrandbrands.com)
 
 The **Internal System** at `/Users/scottbertrand/Sites/scottbertrand.com/system-build/` powers:
 
-- **dashboard.bertrandbrands.com** — Admin CRM dashboard
-- **clients.bertrandbrands.com** — Client portal ("Delivery Room")
+- **dashboard.bertrandgroup.ca** — Admin CRM dashboard
+- **clients.bertrandgroup.ca** — Client portal ("Delivery Room")
 
 See main CLAUDE.md sections 14–16 for locked specs:
 
@@ -628,13 +628,13 @@ See main CLAUDE.md sections 14–16 for locked specs:
 
 ## 14. CRM Dashboard Design (V1.1)
 
-The admin dashboard at `dashboard.bertrandbrands.com` follows these design patterns:
+The admin dashboard at `dashboard.bertrandgroup.ca` follows these design patterns:
 
 ### 14.1 Header Breadcrumb
 
 Dynamic breadcrumb showing current section:
 ```
-BERTRAND BRANDS | Customer Relationship Management | {Section}
+BERTRAND GROUP | Customer Relationship Management | {Section}
 ```
 - Brand name is clickable, returns to Overview
 - Section updates dynamically based on current route
@@ -989,6 +989,7 @@ Added `contain: layout style` to:
 | 5.5.1 | Feb 2026 | P5 polish pass: removed unused --font-mono token, consolidated duplicate scroll-behavior, added phone button title attr, fixed vercel.json formatting, sanitized PII in snapshot booking logs, documented canonical email regex, marked launch gate for removal, added audit log retention strategy, clarified header nav documentation |
 | 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0–P4): fixed version header, duplicate numbering, sub-numbering, GA/GTM status, pricing gate location, launch date; replaced project structure tree, expanded Section 16 routes (26 new), removed orphaned pages from Section 22.8, added APP_URL; added Section 25 API Endpoints Reference, expanded Section 11 security with CSP note; fixed exploratory blue token (#3B82F6→#2563EB in tokens.css + main.css), removed unused z-index tokens, kept glass tokens for future use; P4 code cleanup: removed empty scroll handler from dot-grid-about.js, deleted orphaned brand-clarity-call.html and website-clarity-call.html, extracted shared API utilities to api/lib/ (crypto.js, cookies.js, html.js) |
 | 6.0.0 | Feb 2026 | Service architecture v6: Added Devin (human full-stack dev) to Section 1.1. Unlocked Sections 1.4/1.5. Tier 1 Exploratory: 2→3 offerings (Guided Intake, Clarity Session w/ Systems domain, Technical Feasibility Check). Tier 2: One-Page Redesign→One-Page System Redesign, added scope boundary. Tier 3: renamed Core Services→Core Systems, reduced 5→3 offerings (Brand System Reset absorbs Strategic Brand Review, Integrated Brand+Platform replaces Full Brand+Platform Reset, dropped Brand Moments). Renamed files: brand-reset→brand-system-reset, full-brand-platform-reset→integrated-brand-platform. Deleted strategic-brand-review.html. New routes: /core-systems, /brand-system-reset, /integrated-brand-platform. CSS: all .core-services→.core-systems. Section 23: Brand Moments→Language Standards. Updated all ads pages, SEO files, booking labels, llms.txt. |
+| 7.0.0 | Feb 2026 | Full rebrand: Bertrand Brands → Bertrand Group | Brands & Web Systems. Domain: brands.bertrandgroup.ca. Email: hello@bertrandgroup.ca. Text-based animated header wordmark (Inter semibold/regular, collapse after 2s, expand on hover). New logomark asset (bg-brands-logomark.png). Updated all ~45 files: titles, OG tags, Schema.org, email templates, error pages, notification titles, announcement banner, config files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
 
 ---
 
@@ -1003,8 +1004,11 @@ The homepage header (`src/index.html`) is the canonical reference for all pages.
     <div class="header__glass">
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
-                <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon">
-                <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text">
+                <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon">
+                <span class="header__wordmark" aria-label="Bertrand Group | Brands &amp; Web Systems">
+                    <span class="header__wordmark-full"><span class="header__wordmark-brand">Bertrand Group</span> <span class="header__wordmark-sub">| Brands &amp; Web Systems</span></span>
+                    <span class="header__wordmark-short"><span class="header__wordmark-sub">Brands &amp; Web Systems</span></span>
+                </span>
             </a>
             <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
                 <span></span>
@@ -1017,7 +1021,7 @@ The homepage header (`src/index.html`) is the canonical reference for all pages.
                 <a href="/?skip#services" class="header__link">Services</a>
                 <a href="/book" class="header__link header__link--cta">Book a Call</a>
                 <span class="header__divider" aria-hidden="true"></span>
-                <a href="https://clients.bertrandbrands.com" class="header__link header__link--portal">Client Portal</a>
+                <a href="https://clients.bertrandgroup.ca" class="header__link header__link--portal">Client Portal</a>
             </nav>
         </div>
     </div>
@@ -1033,7 +1037,7 @@ The homepage header (`src/index.html`) is the canonical reference for all pages.
 | 3 | Services | `/?skip#services` | `header__link` |
 | 4 | Book a Call | `/book` | `header__link header__link--cta` |
 | 5 | Divider | — | `header__divider` (span) |
-| 6 | Client Portal | `https://clients.bertrandbrands.com` | `header__link header__link--portal` |
+| 6 | Client Portal | `https://clients.bertrandgroup.ca` | `header__link header__link--portal` |
 
 **Rules:**
 - The table above shows the **sub-page / universal header** format (`/?skip#section`)
@@ -1044,10 +1048,10 @@ The homepage header (`src/index.html`) is the canonical reference for all pages.
 
 ### 22.3 Logo Configuration
 
-- **Logomark**: `/assets/bertrand-brands-logomark.png` — always present
-- **Wordmark**: `/assets/bertrand-brands-wordmark-light-2026.png` — always present
+- **Logomark**: `/assets/bg-brands-logomark.png` — always present
+- **Wordmark**: Text-based animated span (Inter font, semibold for "BERTRAND GROUP", regular for "| Brands & Web Systems"). Collapses to "Brands & Web Systems" after 2s, expands on hover.
 - **Link**: `/?skip` — returns to homepage, bypassing intro
-- **Alt text**: Logomark has empty alt (decorative), wordmark has "Bertrand Brands"
+- **Alt text**: Logomark has empty alt (decorative), wordmark has aria-label "Bertrand Group | Brands & Web Systems"
 
 ### 22.4 Mobile Menu Toggle
 
@@ -1069,8 +1073,11 @@ Landing pages (e.g., `focus-studio.html`) require CSS override to show header im
     transform: translateY(0) !important;
 }
 
-.header__logo-icon,
-.header__logo-text {
+.header__logo-icon {
+    opacity: 1 !important;
+}
+
+.header__wordmark {
     opacity: 1 !important;
 }
 ```
@@ -1158,6 +1165,13 @@ A JavaScript-based universal header is available at `/components/header.js`. It 
 - `/src/pages/book.html`
 - `/src/pages/ads/core-services.html`
 - `/src/pages/clarity-session.html`
+
+**Wordmark behavior:**
+- On load: Shows full "Bertrand Group | Brands & Web Systems"
+- After 2s: Collapses to "Brands & Web Systems" via `.is-collapsed` class
+- On hover: Expands back to full name
+- Mobile (≤768px): Always shows collapsed form
+- Respects `prefers-reduced-motion`
 
 ### 22.9 Pages with Intentional Custom Headers
 
@@ -1248,7 +1262,7 @@ This exposes PII in:
 
 - Calendly collects: name, email, scheduling preferences
 - Data stored on Calendly's infrastructure (SOC 2 certified)
-- Bertrand Brands receives booking confirmations via Calendly webhooks/email
+- Bertrand Group receives booking confirmations via Calendly webhooks/email
 - No Calendly data is stored in our database — bookings are tracked through Stripe payment events
 
 ---
@@ -1358,7 +1372,7 @@ Common utilities extracted from the pricing and booking access endpoints:
 | Module | Exports | Used By |
 |--------|---------|---------|
 | `crypto.js` | `hashToken(rawToken)` — SHA-256 hash | pricing/access, booking/access |
-| `cookies.js` | `buildCookie(name, value, maxAgeSeconds)` — Secure cookie builder (HttpOnly, SameSite=Lax, Secure in production, `.bertrandbrands.com` domain) | pricing/access, booking/access |
+| `cookies.js` | `buildCookie(name, value, maxAgeSeconds)` — Secure cookie builder (HttpOnly, SameSite=Lax, Secure in production, `.bertrandgroup.ca` domain) | pricing/access, booking/access |
 | `html.js` | `escapeHtml(str)`, `errorPageHtml(title, message, options?)` — HTML escaping + styled error page template with configurable back link | pricing/access, booking/access |
 
 ---

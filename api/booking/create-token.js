@@ -16,8 +16,8 @@ const APP_URL = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
 
 // Booking type labels for emails
 const BOOKING_TYPE_LABELS = {
-  focus_studio_kickoff: 'Focus Studio Kickoff',
-  core_services_discovery: 'Core Systems Discovery'
+  focus_studio_kickoff: 'Build Kickoff',
+  core_services_discovery: 'Transformation Discovery'
 };
 
 /**
@@ -84,7 +84,7 @@ function buildEmailHtml({ firstName, bookingLink, bookingTypeLabel, expiresHours
     </p>
   </div>
   <p style="margin: 24px 0 0 0; font-size: 12px; color: #999999; text-align: center;">
-    Bertrand Brands &middot; Sudbury, Ontario
+    Bertrand Group | Brands &amp; Web Systems &middot; Sudbury, Ontario
   </p>
 </body>
 </html>
@@ -107,7 +107,7 @@ Schedule Your Call: ${bookingLink}
 This link expires in ${expiresHours} hours and can only be used once. If it expires, just let us know and we'll send a new one.
 
 --
-Bertrand Brands · Sudbury, Ontario
+Bertrand Group | Brands & Web Systems · Sudbury, Ontario
   `.trim();
 }
 
@@ -187,7 +187,7 @@ export default async function handler(req, res) {
     const firstName = clientName.trim().split(' ')[0];
 
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Brands <hello@bertrandbrands.com>',
+      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandgroup.ca>',
       to: normalizedEmail,
       subject: `Your ${bookingTypeLabel} booking link`,
       html: buildEmailHtml({

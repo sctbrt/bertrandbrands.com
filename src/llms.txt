@@ -1,8 +1,8 @@
-# Bertrand Brands
+# Bertrand Group | Brands & Web Systems
 > Brand, web, and systems studio based in Greater Sudbury, Ontario, Canada.
 
 ## About
-Bertrand Brands is a brand, web, and systems studio led by Scott Bertrand and Devin Major (full-stack developer/architect). Based in Greater Sudbury, Ontario, the studio serves businesses across Northern Ontario and Canada. The studio specializes in clear, structured brand and web systems work — helping businesses that value clarity over complexity.
+Bertrand Group | Brands & Web Systems is a brand, web, and systems studio led by Scott Bertrand and Devin Major (full-stack developer/architect). Based in Greater Sudbury, Ontario, the studio serves businesses across Northern Ontario and Canada. The studio specializes in clear, structured brand and web systems work — helping businesses that value clarity over complexity.
 
 ## Location
 - City: Greater Sudbury
@@ -10,28 +10,28 @@ Bertrand Brands is a brand, web, and systems studio led by Scott Bertrand and De
 - Country: Canada
 - Service area: Northern Ontario and all of Canada
 - Phone: 705-413-3705
-- Email: hello@bertrandbrands.com
+- Email: hello@bertrandgroup.ca
 - Website: https://brands.bertrandgroup.ca
 - LinkedIn: https://linkedin.com/in/sudburyon
 
 ## Services
 
-### Exploratory (Entry layer for new clients)
+### Conversation (Entry layer for new clients)
 - **Guided Intake** — Free, form-based (5–10 min). Asynchronous intake to assess fit and determine next steps.
 - **Clarity Session (Brand / Web / Systems)** — $145 CAD, ~45 minutes. Live video working session with diagnosis, direction, and written recap.
 - **Technical Feasibility Check** — Free, verbal, by request. Focused assessment for projects with technical unknowns.
 
-### Focus Studio (Fixed-scope work with clear timelines and public pricing)
+### Build (Fixed-scope work with clear timelines and public pricing)
 - **Starter Site** — $750 CAD, delivered in 1 business day. A fast-launch website built for speed and simplicity.
 - **One-Page System Redesign** — $1,250 CAD, delivered in 2–3 business days. A fully custom, code-based single-page website. No templates, no builders.
 - **Brandmark & Visual Identity** — $950 CAD, delivered in 5–7 business days. Primary brandmark with supporting marks and visual direction.
 
-### Core Systems (Strategic, discovery-led engagements)
+### Transformation (Strategic, discovery-led engagements)
 - Brand System Reset — Strategic realignment of positioning, messaging, and visual system.
 - Digital Platform Build — Multi-page website or application built as a brand platform.
 - Integrated Brand + Platform — End-to-end brand and digital platform built together.
 
-Core Systems use private pricing and require a discovery process to begin.
+Transformation engagements use private pricing and require a discovery process to begin.
 
 ## Team
 - **Scott Bertrand** — Brand strategy, design direction, client communication, and operations.
@@ -46,8 +46,8 @@ Scott Bertrand — brand strategist and systems designer based in Greater Sudbur
 - Fixed scope and clear pricing on studio work (no hourly billing)
 - Based in Sudbury, Ontario — local expertise with Canada-wide availability
 - Systems-first approach to brand and web work
-- Fast turnaround: most Focus Studio work delivered in 1–7 business days
+- Fast turnaround: most Build work delivered in 1–7 business days
 - No templates on custom work (One-Page System Redesign is fully code-based)
 
 ## How to Get Started
-Visit https://brands.bertrandgroup.ca/focus-studio for fixed-scope work, or https://brands.bertrandgroup.ca/exploratory for a free or paid introductory session.
+Visit https://brands.bertrandgroup.ca/focus-studio for fixed-scope Build work, or https://brands.bertrandgroup.ca/exploratory for a free or paid Conversation session.

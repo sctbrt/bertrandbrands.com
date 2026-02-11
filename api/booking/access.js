@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     return res.status(400).send(errorPageHtml(
       'Invalid Link',
-      'This link appears to be malformed. Please request a new booking access link from your contact at Bertrand Brands.',
+      'This link appears to be malformed. Please request a new booking access link from your contact at Bertrand Group.',
       { backHref: '/book', backLabel: 'Back to Booking' }
     ));
   }
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       return res.status(400).send(errorPageHtml(
         'Link Expired or Already Used',
-        'This booking link has either expired or has already been used. Please contact Bertrand Brands for a new link.',
+        'This booking link has either expired or has already been used. Please contact Bertrand Group for a new link.',
         { backHref: '/book', backLabel: 'Back to Booking' }
       ));
     }
@@ -81,7 +81,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     return res.status(500).send(errorPageHtml(
       'Something Went Wrong',
-      'We encountered an error processing your request. Please try again or contact Bertrand Brands for assistance.',
+      'We encountered an error processing your request. Please try again or contact Bertrand Group for assistance.',
       { backHref: '/book', backLabel: 'Back to Booking' }
     ));
   }

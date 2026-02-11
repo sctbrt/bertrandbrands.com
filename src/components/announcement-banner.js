@@ -2,7 +2,7 @@
 // Stored in localStorage to persist across sessions
 
 (function () {
-  const STORAGE_KEY = 'bb_announcement_dismissed_v1';
+  const STORAGE_KEY = 'bb_announcement_dismissed_v2';
 
   // Don't show if already dismissed
   if (localStorage.getItem(STORAGE_KEY)) return;
@@ -100,9 +100,8 @@
   banner.innerHTML = `
     <div class="announcement-banner__inner">
       <p class="announcement-banner__text">
-        <strong>Bertrand Brands</strong> is now part of
-        <a href="https://bertrandgroup.ca" class="announcement-banner__link">Bertrand Group</a>
-        — same team, broader vision.
+        Welcome to <strong>Bertrand Group | Brands &amp; Web Systems</strong>
+        — same team, new identity.
       </p>
       <button class="announcement-banner__close" aria-label="Dismiss announcement">&times;</button>
     </div>

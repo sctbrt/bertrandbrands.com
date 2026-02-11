@@ -7,7 +7,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Tier 2: Focus Studio (primary revenue) -->
+  <!-- Tier 2: Build (primary revenue) -->
   <url>
     <loc>https://brands.bertrandgroup.ca/focus-studio</loc>
     <changefreq>weekly</changefreq>
@@ -29,7 +29,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Tier 3: Core Systems -->
+  <!-- Tier 3: Transformation -->
   <url>
     <loc>https://brands.bertrandgroup.ca/core-services</loc>
     <changefreq>weekly</changefreq>
@@ -56,7 +56,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Tier 1: Exploratory -->
+  <!-- Tier 1: Conversation -->
   <url>
     <loc>https://brands.bertrandgroup.ca/exploratory</loc>
     <changefreq>monthly</changefreq>

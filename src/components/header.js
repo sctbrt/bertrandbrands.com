@@ -1,6 +1,6 @@
 /**
  * Universal Header Component
- * Injects the standard Bertrand Brands header into any page.
+ * Injects the standard Bertrand Group | Brands & Web Systems header into any page.
  *
  * Usage: Add to your page before </body>:
  *   <script src="/components/header.js"></script>
@@ -16,8 +16,11 @@
     <div class="header__glass">
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
-                <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon">
-                <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text">
+                <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon">
+                <span class="header__wordmark" aria-label="Bertrand Group | Brands & Web Systems">
+                    <span class="header__wordmark-full"><span class="header__wordmark-brand">Bertrand Group</span> <span class="header__wordmark-sub">| Brands & Web Systems</span></span>
+                    <span class="header__wordmark-short"><span class="header__wordmark-sub">Brands & Web Systems</span></span>
+                </span>
             </a>
             <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
                 <span></span>
@@ -52,6 +55,7 @@
         // Initialize header functionality
         initMobileMenu();
         initAmbientLighting();
+        initWordmarkCollapse();
     }
 
     // Mobile menu toggle
@@ -91,6 +95,19 @@
                 toggle.focus();
             }
         });
+    }
+
+    // Wordmark collapse animation (full → abbreviated after delay)
+    function initWordmarkCollapse() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (window.matchMedia('(max-width: 768px)').matches) return;
+
+        const wordmark = document.querySelector('.header__wordmark');
+        if (!wordmark) return;
+
+        setTimeout(function() {
+            wordmark.classList.add('is-collapsed');
+        }, 2000);
     }
 
     // Ambient header lighting animation (30fps throttled)

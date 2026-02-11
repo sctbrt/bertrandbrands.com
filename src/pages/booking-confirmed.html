@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking Confirmed | Bertrand Brands</title>
+  <title>Booking Confirmed — BG | Brands & Web Systems</title>
   <meta name="robots" content="noindex, nofollow">
 
   <!-- Google Ads Conversion Tracking -->
@@ -19,7 +19,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <meta name="apple-mobile-web-app-title" content="Bertrand Brands" />
+  <meta name="apple-mobile-web-app-title" content="BG Brands" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
@@ -115,7 +115,7 @@
       border-radius: inherit;
     }
 
-    /* Exploratory tier background glow */
+    /* Conversation tier background glow */
     body::before {
       content: '';
       position: fixed;
@@ -156,10 +156,14 @@
       filter: brightness(0) invert(1);
     }
 
-    .header__logo-text {
-      height: 14px;
-      width: auto;
-      filter: brightness(1.5);
+    .header__wordmark {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      white-space: nowrap;
     }
 
     .header__tier {
@@ -326,17 +330,17 @@
     <div class="header__glass">
       <div class="header__inner">
         <a href="https://brands.bertrandgroup.ca" class="header__logo">
-          <img src="/assets/bertrand-brands-logomark.png" alt="" class="header__logo-icon">
-          <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="header__logo-text">
+          <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon">
+          <span class="header__wordmark">Brands &amp; Web Systems</span>
         </a>
-        <span class="header__tier">Exploratory</span>
+        <span class="header__tier">Conversation</span>
       </div>
     </div>
   </header>
 
   <div class="container">
     <h1 id="headline">You're booked</h1>
-    <img src="/assets/bertrand-brands-wordmark-light-2026.png" alt="Bertrand Brands" class="headline-wordmark">
+    <span class="headline-wordmark" style="display: inline-block; font-family: var(--font-body); font-size: 0.8rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Bertrand Group | Brands &amp; Web Systems</span>
     <p id="subheadline">Looking forward to speaking with you.</p>
 
     <div id="booking-details" class="booking-details" style="display: none;"></div>
@@ -352,7 +356,7 @@
       </ul>
     </div>
 
-    <a href="https://brands.bertrandgroup.ca" class="back-link">&larr; Back to Bertrand Brands</a>
+    <a href="https://brands.bertrandgroup.ca" class="back-link">&larr; Back to Bertrand Group</a>
   </div>
   <script>
     // Prevent iOS triple-tap and gesture zoom
@@ -432,10 +436,17 @@
       let pos2 = 85;
       let dir1 = 1;
       let dir2 = -1;
+      let lastFrame = 0;
+      const FRAME_INTERVAL = 1000 / 30;
 
-      function animateLights() {
-        pos1 += 0.03 * dir1;
-        pos2 += 0.025 * dir2;
+      function animateLights(timestamp) {
+        if (timestamp - lastFrame < FRAME_INTERVAL) {
+          requestAnimationFrame(animateLights);
+          return;
+        }
+        lastFrame = timestamp;
+        pos1 += 0.06 * dir1;
+        pos2 += 0.05 * dir2;
 
         if (pos1 > 25 || pos1 < 10) dir1 *= -1;
         if (pos2 > 90 || pos2 < 60) dir2 *= -1;
