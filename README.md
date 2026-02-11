@@ -1,2 +1,2 @@
-# bertrandbrands.com
-Bertrand Brands &amp; Web Systems
+# brands.bertrandgroup.ca
+Bertrand Group | Brands & Web Systems

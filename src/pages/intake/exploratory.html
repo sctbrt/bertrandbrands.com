@@ -29,6 +29,11 @@
     <link rel="stylesheet" href="/styles/main.css">
 
     <style>
+        /* Prevent pinch-to-zoom and triple-tap zoom on iOS */
+        html {
+            touch-action: pan-x pan-y;
+        }
+
         .intake-page {
             min-height: 100vh;
             padding-top: 80px;
@@ -1048,6 +1053,11 @@
         });
 
         updateUI();
+
+        // Prevent iOS triple-tap and gesture zoom
+        document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
     </script>
 
 <!-- Announcement Banner -->

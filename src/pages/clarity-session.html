@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://brands.bertrandgroup.ca/clarity-session">
     <meta name="theme-color" content="#0a0a0a">
     <title>Clarity Session — 45 Minutes | BG | Brands & Web Systems</title>
-    <meta name="description" content="A 45-minute paid conversation about your brand or website. Walk away with clear direction and a short written recap. $125 CAD.">
+    <meta name="description" content="A 45-minute paid conversation about your brand or website. Walk away with clear direction and a short written recap. $145 CAD.">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Clarity Session — 45 Minutes | BG | Brands & Web Systems">
@@ -38,7 +38,7 @@
       "description": "A 45-minute paid conversation about your brand or website—focused direction with a short written recap.",
       "offers": {
         "@type": "Offer",
-        "price": "125",
+        "price": "145",
         "priceCurrency": "CAD"
       },
       "provider": {
@@ -59,6 +59,11 @@
     <link rel="stylesheet" href="/styles/main.css">
 
     <style>
+        /* Prevent pinch-to-zoom and triple-tap zoom on iOS */
+        html {
+            touch-action: pan-x pan-y;
+        }
+
         .header {
             opacity: 1 !important;
             visibility: visible !important;
@@ -549,6 +554,11 @@
 
     <script>
         document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
+
+        // Prevent iOS triple-tap and gesture zoom
+        document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
     </script>
 
 <!-- Announcement Banner -->

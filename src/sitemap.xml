@@ -31,11 +31,6 @@
 
   <!-- Tier 3: Transformation -->
   <url>
-    <loc>https://brands.bertrandgroup.ca/core-services</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://brands.bertrandgroup.ca/core-systems</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -62,6 +57,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://brands.bertrandgroup.ca/clarity-session</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
   <!-- Local landing page -->
   <url>
@@ -75,6 +75,13 @@
     <loc>https://brands.bertrandgroup.ca/book</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://brands.bertrandgroup.ca/scottbertrand</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 
   <!-- Diagnostic landing pages -->

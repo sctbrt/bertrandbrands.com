@@ -418,6 +418,13 @@
     })();
     </script>
 
+    <script>
+        // Prevent iOS triple-tap and gesture zoom
+        document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
+    </script>
+
 <!-- Announcement Banner -->
 <script src="/components/announcement-banner.js"></script>
 <!-- Universal Visitor Notification -->

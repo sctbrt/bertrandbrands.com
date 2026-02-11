@@ -43,7 +43,7 @@ The database tables are created automatically on first API request.
 ### Verify Domain (Important)
 
 1. Go to Domains → Add Domain
-2. Add `bertrandbrands.com`
+2. Add `bertrandgroup.ca`
 3. Add the DNS records Resend provides
 4. Wait for verification (usually < 1 hour)
 
@@ -51,7 +51,7 @@ The database tables are created automatically on first API request.
 
 ```
 RESEND_API_KEY = re_xxxxxxxxxx
-RESEND_FROM_EMAIL = Bertrand Brands <hello@bertrandbrands.com>
+RESEND_FROM_EMAIL = Bertrand Group | Brands & Web Systems <hello@bertrandgroup.ca>
 ```
 
 ---
