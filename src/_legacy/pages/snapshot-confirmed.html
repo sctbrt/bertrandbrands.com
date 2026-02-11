@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Payment Confirmed | Website Conversion Snapshot — BG | Brands & Web Systems</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/fonts.css">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      touch-action: pan-x pan-y;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+    }
+
+    :root {
+      --bg: #0a0a0a;
+      --text: #fafafa;
+      --text-muted: #a3a3a3;
+      --accent: #D97706;
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Type Scale */
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 0.75rem clamp(1rem, 4vw, 2rem);
+      z-index: 100;
+    }
+
+    .header__glass {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      background: color-mix(in srgb, var(--bg) 60%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+      --orange-pos-1: 15%;
+      --orange-pos-2: 85%;
+    }
+
+    .header__glass::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse 280px 90px at var(--orange-pos-1) 60%, rgba(217, 119, 6, 0.15), transparent 70%),
+        radial-gradient(ellipse 220px 80px at var(--orange-pos-2) 40%, rgba(217, 119, 6, 0.10), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      border-radius: inherit;
+    }
+
+    /* Build tier background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at var(--bg-glow-1-x, 20%) var(--bg-glow-1-y, 30%), rgba(139, 92, 246, 0.08), transparent 70%),
+        radial-gradient(ellipse 500px 350px at var(--bg-glow-2-x, 80%) var(--bg-glow-2-y, 70%), rgba(139, 92, 246, 0.05), transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .header__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header__logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .header__logo:hover {
+      opacity: 0.7;
+    }
+
+    .header__logo-icon {
+      width: 24px;
+      height: auto;
+      margin-right: 0.75rem;
+      filter: brightness(0) invert(1);
+    }
+
+    .header__wordmark {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .header__tier {
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: rgba(139, 92, 246, 0.9);
+      letter-spacing: 0.02em;
+    }
+
+    .container {
+      max-width: 480px;
+      padding-top: 5rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-4xl);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .next-steps {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      text-align: left;
+    }
+
+    .next-steps h2 {
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .next-steps ul {
+      list-style: none;
+    }
+
+    .next-steps li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+      font-size: var(--text-base);
+      line-height: 1.5;
+    }
+
+    .next-steps li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .next-steps li:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text);
+    }
+
+    .headline-wordmark {
+      height: 28px;
+      width: auto;
+      margin-bottom: 1.5rem;
+      filter: brightness(1.5);
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: var(--text-2xl);
+      }
+    }
+
+    .skip-link {
+      position: fixed;
+      top: -100%;
+      left: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--text);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: 6px;
+      z-index: 10001;
+      text-decoration: none;
+      transition: top 0.15s ease;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="header">
+    <div class="header__glass">
+      <div class="header__inner">
+        <a href="https://brands.bertrandgroup.ca" class="header__logo">
+          <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon" width="40" height="40" fetchpriority="high">
+          <span class="header__wordmark">Brands &amp; Web Systems</span>
+        </a>
+        <span class="header__tier">Build</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container" id="main-content">
+    <h1>Thank you for choosing</h1>
+    <span class="headline-wordmark" style="display: inline-block; font-family: var(--font-body); font-size: 0.8rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Bertrand Group | Brands &amp; Web Systems</span>
+    <p>Your Website Conversion Snapshot is now in progress.</p>
+
+    <div class="next-steps">
+      <h2>What happens next</h2>
+      <ul>
+        <li>You'll receive a confirmation email shortly</li>
+        <li>Your PDF with prioritized fixes will be delivered within <span class="highlight">48 hours</span></li>
+        <li>Check your inbox (and spam folder) for delivery</li>
+      </ul>
+    </div>
+
+    <a href="https://brands.bertrandgroup.ca" class="back-link">&larr; Back to Bertrand Group</a>
+  </div>
+  <script>
+    // Prevent iOS triple-tap and gesture zoom
+    document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
+
+    // Ambient header lighting animation
+    (function() {
+      const headerGlass = document.querySelector('.header__glass');
+      if (!headerGlass) return;
+
+      // Check for reduced motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      let pos1 = 15;
+      let pos2 = 85;
+      let dir1 = 1;
+      let dir2 = -1;
+      let lastFrame = 0;
+      const FRAME_INTERVAL = 1000 / 30;
+
+      function animateLights(timestamp) {
+        if (timestamp - lastFrame < FRAME_INTERVAL) {
+          requestAnimationFrame(animateLights);
+          return;
+        }
+        lastFrame = timestamp;
+        pos1 += 0.06 * dir1;
+        pos2 += 0.05 * dir2;
+
+        if (pos1 > 25 || pos1 < 10) dir1 *= -1;
+        if (pos2 > 90 || pos2 < 60) dir2 *= -1;
+
+        headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
+        headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
+        requestAnimationFrame(animateLights);
+      }
+      requestAnimationFrame(animateLights);
+    })();
+
+    // Background glow drift animation
+    (function() {
+      // Check for reduced motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      let glow1X = 20, glow1Y = 30;
+      let glow2X = 80, glow2Y = 70;
+      let dir1X = 1, dir1Y = 1;
+      let dir2X = -1, dir2Y = -1;
+
+      function animateBgGlow() {
+        // Slower, more organic movement
+        glow1X += 0.015 * dir1X;
+        glow1Y += 0.012 * dir1Y;
+        glow2X += 0.018 * dir2X;
+        glow2Y += 0.014 * dir2Y;
+
+        // Bounce within bounds
+        if (glow1X > 35 || glow1X < 10) dir1X *= -1;
+        if (glow1Y > 45 || glow1Y < 20) dir1Y *= -1;
+        if (glow2X > 90 || glow2X < 65) dir2X *= -1;
+        if (glow2Y > 80 || glow2Y < 55) dir2Y *= -1;
+
+        document.body.style.setProperty('--bg-glow-1-x', glow1X + '%');
+        document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
+        document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
+        document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
+        requestAnimationFrame(animateBgGlow);
+      }
+      requestAnimationFrame(animateBgGlow);
+    })();
+  </script>
+
+<!-- Announcement Banner -->
+<script src="/components/announcement-banner.js"></script>
+<!-- Universal Visitor Notification -->
+<script src="/components/visitor-notify.js"></script>
+</body>
+</html>

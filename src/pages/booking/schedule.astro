@@ -1,0 +1,417 @@
+---
+/**
+ * Booking Schedule — Calendly booking widget page.
+ * Gated by booking session cookie (magic link access).
+ * Migrated from src/_legacy/pages/booking/schedule.html
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeaderUniversal from '../../components/HeaderUniversal.astro';
+import AnnouncementBanner from '../../components/AnnouncementBanner.astro';
+import VisitorNotify from '../../components/VisitorNotify.astro';
+import GesturePrevention from '../../components/GesturePrevention.astro';
+---
+
+<BaseLayout
+  title="Schedule Your Call — BG | Brands & Web Systems"
+  robots="noindex, nofollow"
+>
+  <Fragment slot="head">
+    <style is:inline>
+        /* Prevent pinch-to-zoom */
+        html {
+            touch-action: pan-x pan-y;
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            html {
+                -webkit-text-size-adjust: 100%;
+            }
+        }
+
+        /* Override main.css header to be visible by default */
+        .header {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+            transform: translateY(0) !important;
+        }
+
+        .header__logo-icon,
+        .header__wordmark {
+            opacity: 1 !important;
+        }
+
+        /* Page layout */
+        .booking-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 100px;
+        }
+
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem clamp(1rem, 4vw, 2rem);
+            width: 100%;
+            flex: 1;
+        }
+
+        /* State: Loading */
+        .booking-loading {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .booking-loading__spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #D97706;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .booking-loading__text {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+        }
+
+        /* State: No Access */
+        .booking-denied {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .booking-denied__title {
+            font-family: var(--font-display);
+            font-size: var(--text-2xl);
+            font-weight: 300;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .booking-denied__text {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .booking-denied__link {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .booking-denied__link:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* State: Coming Soon */
+        .booking-soon {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .booking-soon__title {
+            font-family: var(--font-display);
+            font-size: var(--text-2xl);
+            font-weight: 300;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .booking-soon__text {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .booking-soon__phone {
+            font-family: var(--font-body);
+            font-size: var(--text-base);
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-soon__phone a {
+            color: #D97706;
+            text-decoration: none;
+        }
+
+        /* State: Calendly Active */
+        .booking-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .booking-header__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .booking-header__badge--focus {
+            background: rgba(139, 92, 246, 0.12);
+            color: rgba(139, 92, 246, 0.9);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .booking-header__badge--core {
+            background: rgba(217, 119, 6, 0.12);
+            color: rgba(217, 119, 6, 0.9);
+            border: 1px solid rgba(217, 119, 6, 0.2);
+        }
+
+        .booking-header__title {
+            font-family: var(--font-display);
+            font-size: var(--text-2xl);
+            font-weight: 300;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-header__subtitle {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+        }
+
+        .booking-header__timer {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            opacity: 0.7;
+        }
+
+        /* Calendly embed container */
+        .booking-calendly {
+            min-height: 680px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .booking-calendly iframe {
+            border-radius: 12px;
+        }
+
+        /* Logout action */
+        .booking-footer {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .booking-footer__logout {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .booking-footer__logout:hover {
+            opacity: 1;
+        }
+
+        /* Hidden state */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+  </Fragment>
+
+  <HeaderUniversal />
+  <AnnouncementBanner />
+
+  <div class="booking-page" id="main-content">
+      <div class="booking-container">
+          <!-- Loading State -->
+          <div id="bookingLoading" class="booking-loading">
+              <div class="booking-loading__spinner"></div>
+              <p class="booking-loading__text">Verifying access...</p>
+          </div>
+
+          <!-- No Access State -->
+          <div id="bookingDenied" class="booking-denied hidden">
+              <h1 class="booking-denied__title">Access Required</h1>
+              <p class="booking-denied__text">
+                  This scheduling page is available to routed clients only. If you've received a booking link, please use that link to access this page.
+              </p>
+              <a href="/book" class="booking-denied__link">Back to Booking</a>
+          </div>
+
+          <!-- Coming Soon State -->
+          <div id="bookingSoon" class="booking-soon hidden">
+              <h1 class="booking-soon__title">Scheduling Coming Soon</h1>
+              <p class="booking-soon__text">
+                  Online scheduling for this call type is being set up. In the meantime, please reach out directly to schedule.
+              </p>
+              <p class="booking-soon__phone">
+                  <a href="tel:+17058698444">705-869-8444</a>
+              </p>
+          </div>
+
+          <!-- Active Calendly State -->
+          <div id="bookingActive" class="hidden">
+              <div class="booking-header">
+                  <div id="bookingBadge" class="booking-header__badge"></div>
+                  <h1 class="booking-header__title">Schedule Your Call</h1>
+                  <p class="booking-header__subtitle">Select a time that works for you.</p>
+                  <p id="bookingTimer" class="booking-header__timer"></p>
+              </div>
+
+              <div id="calendlyEmbed" class="booking-calendly"></div>
+
+              <div class="booking-footer">
+                  <button id="bookingLogout" class="booking-footer__logout">End session</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <VisitorNotify />
+
+  <script is:inline>
+  (function() {
+      var BOOKING_LABELS = {
+          focus_studio_kickoff: { label: 'Build Kickoff', badge: 'focus', color: '#8B5CF6' },
+          core_services_discovery: { label: 'Transformation Discovery', badge: 'core', color: '#D97706' }
+      };
+
+      async function checkAccess() {
+          try {
+              var res = await fetch('/api/booking/check-access');
+              var data = await res.json();
+              return data;
+          } catch (err) {
+              console.error('Booking access check failed:', err);
+              return { hasAccess: false };
+          }
+      }
+
+      function showState(stateId) {
+          ['bookingLoading', 'bookingDenied', 'bookingSoon', 'bookingActive'].forEach(function(id) {
+              var el = document.getElementById(id);
+              if (el) el.classList.toggle('hidden', id !== stateId);
+          });
+      }
+
+      function loadCalendly(url, email, primaryColor) {
+          // Load Calendly CSS
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://assets.calendly.com/assets/external/widget.css';
+          document.head.appendChild(link);
+
+          // Load Calendly JS
+          var script = document.createElement('script');
+          script.src = 'https://assets.calendly.com/assets/external/widget.js';
+          script.async = true;
+          script.onload = function() {
+              if (typeof Calendly !== 'undefined') {
+                  Calendly.initInlineWidget({
+                      url: url + '?hide_gdpr_banner=1&background_color=0a0a0a&text_color=fafafa&primary_color=' + primaryColor.replace('#', ''),
+                      parentElement: document.getElementById('calendlyEmbed'),
+                      prefill: {
+                          email: email || ''
+                      }
+                  });
+              }
+          };
+          document.head.appendChild(script);
+      }
+
+      async function init() {
+          var data = await checkAccess();
+
+          if (!data.hasAccess) {
+              showState('bookingDenied');
+              return;
+          }
+
+          // Has access but Calendly not active yet
+          if (!data.calendlyActive || !data.calendlyUrl) {
+              showState('bookingSoon');
+              return;
+          }
+
+          // Show active booking state
+          var config = BOOKING_LABELS[data.bookingType] || { label: 'Call', badge: 'focus', color: '#D97706' };
+
+          // Set badge
+          var badge = document.getElementById('bookingBadge');
+          if (badge) {
+              badge.textContent = config.label;
+              badge.className = 'booking-header__badge booking-header__badge--' + config.badge;
+          }
+
+          // Set timer
+          var timer = document.getElementById('bookingTimer');
+          if (timer && data.remainingMinutes) {
+              var hours = Math.floor(data.remainingMinutes / 60);
+              var mins = data.remainingMinutes % 60;
+              timer.textContent = 'Session expires in ' + (hours > 0 ? hours + 'h ' : '') + mins + 'm';
+          }
+
+          showState('bookingActive');
+
+          // Load Calendly
+          loadCalendly(data.calendlyUrl, data.clientEmail, config.color);
+
+          // Logout handler
+          var logoutBtn = document.getElementById('bookingLogout');
+          if (logoutBtn) {
+              logoutBtn.addEventListener('click', async function() {
+                  try {
+                      await fetch('/api/booking/logout', { method: 'POST' });
+                  } catch (e) {
+                      // ignore
+                  }
+                  window.location.href = '/book';
+              });
+          }
+      }
+
+      init();
+  })();
+  </script>
+
+  <GesturePrevention />
+</BaseLayout>

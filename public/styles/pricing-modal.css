@@ -1,0 +1,205 @@
+/* Pricing Modal — Homepage only. Extracted from main.css (Phase 5) */
+
+/* Pricing Modal - V5.0: Improved entrance animation */
+.pricing-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.pricing-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pricing-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.pricing-modal.is-open .pricing-modal__backdrop {
+    opacity: 1;
+}
+
+.pricing-modal__content {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    transform: translateY(16px) scale(0.97);
+    opacity: 0;
+    transition: transform 0.3s var(--ease-out-expo),
+                opacity 0.25s ease;
+}
+
+.pricing-modal.is-open .pricing-modal__content {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.pricing-modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-subtle);
+    cursor: pointer;
+    padding: 0.75rem;
+    transition: color 0.2s ease;
+}
+
+.pricing-modal__close:hover {
+    color: var(--text);
+}
+
+.pricing-modal__title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-normal);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+}
+
+.pricing-modal__description {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+}
+
+.pricing-modal__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.pricing-modal__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.pricing-modal__label {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-bottom: 0.375rem;
+}
+
+.pricing-modal__optional {
+    color: var(--text-subtle);
+    font-weight: var(--font-normal);
+}
+
+.pricing-modal__input {
+    padding: 0.75rem 1rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: inherit;
+    font-size: var(--text-base);
+    transition: border-color 0.2s ease;
+}
+
+.pricing-modal__input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.pricing-modal__input::placeholder {
+    color: var(--text-subtle);
+}
+
+.pricing-modal__error {
+    font-size: var(--text-sm);
+    color: #ef4444;
+    margin-top: 0.375rem;
+    display: none;
+}
+
+.pricing-modal__submit {
+    margin-top: var(--space-xs);
+    padding: 0.875rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--text-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pricing-modal__submit:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.pricing-modal__submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.pricing-modal__submit--loading {
+    position: relative;
+    color: transparent;
+}
+
+.pricing-modal__submit--loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border: 2px solid var(--text-subtle);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: submitSpinner 0.8s linear infinite;
+}
+
+.pricing-modal__success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-md) 0;
+}
+
+.pricing-modal__success svg {
+    color: #22c55e;
+    margin-bottom: var(--space-sm);
+}
+
+.pricing-modal__success h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--font-normal);
+    margin-bottom: 0.5rem;
+}
+
+.pricing-modal__success p {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    line-height: 1.5;
+}

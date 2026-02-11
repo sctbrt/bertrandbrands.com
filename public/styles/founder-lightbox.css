@@ -1,0 +1,137 @@
+/* Founder Lightbox — Homepage only. Extracted from main.css (Phase 5) */
+
+/* Founder Lightbox */
+.founder-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.founder-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.founder-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.founder-lightbox.is-open .founder-lightbox__backdrop {
+    opacity: 1;
+}
+
+.founder-lightbox__content {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-xl);
+    transform: translateY(16px) scale(0.97);
+    opacity: 0;
+    transition: transform 0.3s var(--ease-out-expo),
+                opacity 0.25s ease;
+}
+
+.founder-lightbox.is-open .founder-lightbox__content {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.founder-lightbox__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-subtle);
+    cursor: pointer;
+    padding: 0.75rem;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.founder-lightbox__close:hover {
+    color: var(--text);
+}
+
+.founder-lightbox__title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-normal);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.375rem;
+}
+
+.founder-lightbox__text {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: var(--space-sm);
+}
+
+.founder-lightbox__text:last-of-type {
+    margin-bottom: var(--space-lg);
+}
+
+.founder-lightbox__role {
+    font-size: var(--text-sm);
+    color: var(--text-subtle);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+}
+
+.founder-lightbox__divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: var(--space-md) 0;
+}
+
+.founder-lightbox__studio-line {
+    font-size: var(--text-sm);
+    color: var(--text-subtle);
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: var(--space-lg);
+}
+
+.founder-lightbox__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-base);
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.founder-lightbox__cta:hover {
+    color: var(--text);
+}
+
+/* Founder Lightbox — Mobile */
+@media (max-width: 768px) {
+    .founder-lightbox { padding: var(--space-sm); }
+    .founder-lightbox__content { padding: 2rem 1.75rem; max-height: 80vh; }
+    .founder-lightbox__title { font-size: var(--text-2xl); margin-bottom: 0.5rem; }
+    .founder-lightbox__role { font-size: var(--text-xs); margin-bottom: 1rem; }
+    .founder-lightbox__text { font-size: var(--text-base); line-height: 1.6; }
+    .founder-lightbox__text:last-of-type { margin-bottom: 1.5rem; }
+    .founder-lightbox__studio-line { font-size: var(--text-xs); }
+}

@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Group | Brands & Web Systems
 
-## Version 7.0.0 (Current)
+## Version 8.0.0 (Current)
 
 This document is the **Bertrand Group | Brands & Web Systems** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -229,7 +229,7 @@ A successful implementation:
 
 ## 2. Project Overview
 
-**Bertrand Group | Brands & Web Systems** — Premium brand and web systems design studio website. A sophisticated single-page marketing site with serverless backend functionality hosted on Vercel.
+**Bertrand Group | Brands & Web Systems** — Premium brand and web systems design studio website. An Astro 5 static site with serverless backend functionality hosted on Vercel.
 
 **Domain**: brands.bertrandgroup.ca
 **Purpose**: Professional services showcase, lead generation, brand expression
@@ -238,7 +238,8 @@ A successful implementation:
 
 ## 3. Tech Stack
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+)
+- **Framework**: Astro 5 (`output: 'static'`, `@astrojs/vercel` adapter)
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript (ES6+) — no UI framework (React/Vue/Svelte)
 - **Hosting**: Vercel (static site + serverless functions)
 - **Database**: Vercel Postgres
 - **Email**: Resend API
@@ -251,51 +252,67 @@ A successful implementation:
 ## 4. Project Structure
 
 ```
-├── src/                           # Static site source
-│   ├── index.html                 # Main SPA (entry point)
-│   ├── 404.html                   # Error page
-│   ├── thanks.html                # Formspree redirect (legacy)
-│   ├── sitemapX.html              # Ecosystem sitemap
+├── src/                           # Astro source
+│   ├── env.d.ts                   # Astro environment types
+│   ├── layouts/
+│   │   └── BaseLayout.astro       # Shared HTML shell (<head>, fonts, CSS, OG, Schema.org)
+│   ├── components/
+│   │   ├── HeaderCanonical.astro  # Homepage header (HTML only, scripts in index.astro)
+│   │   ├── HeaderUniversal.astro  # Sub-page header (nav + mobile menu + ambient lighting)
+│   │   ├── HeaderIntake.astro     # Intake form header (back button + logo)
+│   │   ├── HeaderTierBadge.astro  # Confirmation page header (tier badge)
+│   │   ├── HeaderMinimal.astro    # Ad landing page header (logo only)
+│   │   ├── FooterMain.astro       # Full footer (homepage, hub pages)
+│   │   ├── FooterMinimal.astro    # Simple footer (service, intake, confirmation)
+│   │   ├── SkipLink.astro         # Accessibility skip link
+│   │   ├── VisitorNotify.astro    # Silent Pushover notification script
+│   │   ├── AnnouncementBanner.astro # Dismissible announcement banner
+│   │   └── GesturePrevention.astro # iOS gesture prevention (shared across all pages)
+│   ├── pages/
+│   │   ├── index.astro            # Homepage (1,300+ lines, most complex)
+│   │   ├── 404.astro              # Error page
+│   │   ├── thanks.astro           # Formspree redirect
+│   │   ├── sitemapX.astro         # Ecosystem sitemap
+│   │   ├── book.astro             # Booking page
+│   │   ├── exploratory.astro      # Exploratory tier landing
+│   │   ├── clarity-session.astro  # Clarity session page
+│   │   ├── scottbertrand.astro    # Personal cross-promotion
+│   │   ├── focus-studio.astro     # Focus Studio landing (Google Ads)
+│   │   ├── core-services.astro    # Core Services landing (Google Ads)
+│   │   ├── sudbury.astro          # Sudbury local campaign landing
+│   │   ├── website-conversion-snapshot.astro  # Snapshot diagnostic landing
+│   │   ├── brand-clarity-diagnostic.astro     # Brand diagnostic landing
+│   │   ├── starter-site.astro           # Service detail: Starter Site
+│   │   ├── one-page-redesign.astro      # Service detail: One-Page Redesign
+│   │   ├── brandmark.astro              # Service detail: Brandmark
+│   │   ├── brand-system-reset.astro     # Service detail: Brand System Reset
+│   │   ├── digital-platform-build.astro # Service detail: Digital Platform Build
+│   │   ├── integrated-brand-platform.astro # Service detail: Integrated Brand+Platform
+│   │   ├── payment-confirmed.astro      # Post-payment confirmation
+│   │   ├── booking-confirmed.astro      # Post-booking confirmation
+│   │   ├── snapshot-confirmed.astro     # Post-snapshot confirmation
+│   │   ├── intake/
+│   │   │   ├── exploratory.astro              # Exploratory intake form
+│   │   │   ├── brand-clarity-diagnostic.astro # Brand diagnostic intake
+│   │   │   └── website-conversion-snapshot.astro # Snapshot intake
+│   │   ├── booking/
+│   │   │   └── schedule.astro     # Calendly booking widget
+│   │   └── group/
+│   │       └── index.astro        # Group hub page
+│   └── _legacy/                   # Archived pre-Astro HTML files (not built)
+├── public/                        # Static assets (served as-is at /)
 │   ├── styles/
 │   │   ├── tokens.css             # Design system variables
-│   │   └── main.css               # Main stylesheet (~5,700 lines)
+│   │   ├── main.css               # Main stylesheet (~5,100 lines)
+│   │   ├── fonts.css              # @font-face declarations
+│   │   ├── pricing-modal.css      # Pricing modal (homepage only)
+│   │   └── founder-lightbox.css   # Founder lightbox (homepage only)
 │   ├── scripts/
-│   │   ├── main.js                # Main site functionality
 │   │   └── dot-grid-about.js      # About section dot grid animation
-│   ├── components/
-│   │   ├── header.js              # Universal header injector
-│   │   ├── header.html            # Header component template
-│   │   └── visitor-notify.js      # Visitor notification script
-│   ├── pages/
-│   │   ├── ads/                   # Google Ads landing pages
-│   │   │   ├── focus-studio.html
-│   │   │   ├── core-services.html
-│   │   │   ├── sudbury-focus-studio.html
-│   │   │   ├── website-conversion-snapshot.html
-│   │   │   └── brand-clarity-diagnostic.html
-│   │   ├── services/              # Service detail pages
-│   │   │   ├── starter-site.html
-│   │   │   ├── one-page-redesign.html
-│   │   │   ├── brandmark.html
-│   │   │   ├── digital-platform-build.html
-│   │   │   ├── brand-system-reset.html
-│   │   │   ├── integrated-brand-platform.html
-│   │   │   └── website-audit.html          # Legacy (V3 theme)
-│   │   ├── intake/                # Intake form pages
-│   │   │   ├── exploratory.html
-│   │   │   ├── brand-clarity-diagnostic.html
-│   │   │   └── website-conversion-snapshot.html
-│   │   ├── booking/
-│   │   │   └── schedule.html      # Calendly booking widget
-│   │   ├── book.html              # Booking page
-│   │   ├── exploratory.html       # Exploratory tier landing
-│   │   ├── clarity-session.html   # Clarity session page
-│   │   ├── scottbertrand.html     # Personal cross-promotion
-│   │   ├── payment-confirmed.html
-│   │   ├── booking-confirmed.html
-│   │   └── snapshot-confirmed.html
-│   └── assets/                    # Logos & images
-├── api/                           # Vercel serverless functions
+│   ├── fonts/                     # Inter, Fraunces, Manrope, Sora (woff2)
+│   ├── assets/                    # Logos, images (bg-brands-logomark.png, etc.)
+│   └── ...                        # Favicons, OG image, manifest, robots.txt, llms.txt
+├── api/                           # Vercel serverless functions (NOT processed by Astro)
 │   ├── notify.js                  # Visitor notifications → Pushover
 │   ├── pricing/                   # Magic link pricing gate
 │   │   ├── request-access.js      # Send magic link email
@@ -308,16 +325,17 @@ A successful implementation:
 │   │   └── logout.js              # Clear session
 │   ├── snapshot/
 │   │   └── book.js                # Snapshot booking endpoint
-│   └── _lib/                      # Shared helpers (underscore prefix excludes from function count)
+│   └── _lib/                      # Shared helpers
 │       ├── db.js                  # Database utilities
 │       ├── crypto.js              # Token hashing (SHA-256)
 │       ├── cookies.js             # Secure cookie builder
 │       └── html.js                # HTML escaping + error page template
 ├── scripts/
 │   └── init-db.js                 # Database table initialization
-├── public/                        # Static assets (favicons, OG image, manifest)
-├── vercel.json                    # Deployment config, rewrites, redirects, headers
-├── package.json                   # Dependencies (@vercel/postgres, resend)
+├── astro.config.ts                # Astro config (Vercel adapter, redirects, routing)
+├── tsconfig.json                  # TypeScript config
+├── vercel.json                    # API rewrites + security headers only
+├── package.json                   # Dependencies (astro, @astrojs/vercel, @vercel/postgres, resend)
 └── CLAUDE.md                      # This file
 ```
 
@@ -522,9 +540,19 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 
 ## 8. Code Patterns
 
+### Astro
+
+- **`BaseLayout.astro`** — shared HTML shell; all pages pass props (title, description, canonical, etc.)
+- **`<Fragment slot="head">`** — inject page-specific `<head>` content (e.g., homepage CSS)
+- **`<script is:inline>`** — for scripts that need immediate DOM access (not deferred/bundled)
+- **Astro components** — header variants, footer, skip link, visitor notify, gesture prevention
+- **File-based routing** — `src/pages/` structure maps directly to URLs
+- **Redirects** — managed in `astro.config.ts` (not vercel.json)
+- **Static output** — `output: 'static'`, `build.format: 'file'`, `trailingSlash: 'never'`
+
 ### JavaScript
 
-- **IIFE pattern** for feature encapsulation
+- **IIFE pattern** for feature encapsulation (inside `<script is:inline>` blocks)
 - **Intersection Observer** for scroll animations
 - **Event delegation** via data attributes (`[data-pricing-trigger]`)
 - **Async/await** for all API calls
@@ -532,16 +560,27 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 
 ### CSS
 
-- **CSS Custom Properties** for theming
+- **CSS Custom Properties** for theming (in `public/styles/tokens.css`)
 - **Mobile-first** media queries
 - **BEM-ish naming** for components
+- **Static CSS files** in `public/styles/` — linked via `<link>` tags, not Astro imports
+- **Homepage-only CSS** — `pricing-modal.css` and `founder-lightbox.css` loaded via head slot
 
 ---
 
 ## 9. Development Commands
 
 ```bash
-# Local development with Vercel CLI
+# Local development (Astro dev server)
+npm run dev
+
+# Build static site
+npm run build
+
+# Preview built site locally
+npm run preview
+
+# Local development with Vercel CLI (includes serverless functions)
 vercel dev
 
 # Deploy to preview
@@ -550,6 +589,8 @@ vercel
 # Deploy to production
 vercel --prod
 ```
+
+**Note:** `npm run dev` starts the Astro dev server (fastest for frontend work). Use `vercel dev` when testing serverless API functions locally.
 
 ---
 
@@ -575,7 +616,7 @@ APP_URL               # CORS origin (defaults to https://brands.bertrandgroup.ca
 - CORS restricted to `APP_URL` origin (not wildcard)
 - Token hashing: SHA256 on all magic link tokens before DB storage
 
-**CSP Note:** The current policy uses `'unsafe-inline'` for both `script-src` and `style-src`. This is required by the inline `<script>` and `<style>` blocks used across landing pages. Removing `'unsafe-inline'` would require externalizing all inline scripts and styles. The policy also lacks `object-src 'none'` — should be added for defense in depth.
+**CSP Note:** The current policy uses `'unsafe-inline'` for both `script-src` and `style-src`. This is required by the `<script is:inline>` blocks used across Astro pages. Removing `'unsafe-inline'` would require converting all inline scripts to Astro-bundled `<script>` tags (which get content hashes). The policy includes `object-src 'none'` for defense in depth.
 
 ---
 
@@ -590,11 +631,11 @@ APP_URL               # CORS origin (defaults to https://brands.bertrandgroup.ca
 
 ### Code
 
-- Do NOT add dependencies or frameworks
-- Do NOT restructure existing layouts
+- Do NOT add UI framework integrations (React, Vue, Svelte) — vanilla JS only
+- Do NOT restructure existing layouts without explicit instruction
 - Keep diffs minimal
 - Preserve existing formatting
-- No build step required (vanilla HTML/CSS/JS)
+- Build via Astro 5 (`npm run build`) — output is static HTML/CSS/JS
 
 ### Motion
 
@@ -678,10 +719,18 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ## 15. Common Tasks
 
+### Adding a new page
+
+1. Create `.astro` file in `src/pages/` (file path = URL path)
+2. Import `BaseLayout` and appropriate header/footer components
+3. No rewrite rules needed — Astro file-based routing handles it
+4. Add redirects in `astro.config.ts` if old URLs need to point to the new page
+
 ### Adding a new landing page
 
-1. Create HTML in `src/pages/ads/` or `src/pages/services/`
-2. Add rewrite rule in `vercel.json` if needed
+1. Create `.astro` file in `src/pages/` (e.g., `src/pages/campaign-name.astro`)
+2. Use `BaseLayout` + `HeaderMinimal` or `HeaderUniversal` depending on conversion goals
+3. Include `GesturePrevention` and `VisitorNotify` components
 
 ### Modifying the pricing gate
 
@@ -691,8 +740,15 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ### Updating styles
 
-1. Design tokens in `src/styles/tokens.css`
-2. Component styles in `src/styles/main.css`
+1. Design tokens in `public/styles/tokens.css`
+2. Component styles in `public/styles/main.css`
+3. Homepage-only styles in `public/styles/pricing-modal.css` and `public/styles/founder-lightbox.css`
+
+### Adding a redirect
+
+1. Add to `redirects` object in `astro.config.ts`
+2. Use `status: 301` for permanent, `status: 302` for temporary
+3. Run `npm run build` to verify it appears in `.vercel/output/config.json`
 
 ---
 
@@ -990,12 +1046,13 @@ Added `contain: layout style` to:
 | 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0–P4): fixed version header, duplicate numbering, sub-numbering, GA/GTM status, pricing gate location, launch date; replaced project structure tree, expanded Section 16 routes (26 new), removed orphaned pages from Section 22.8, added APP_URL; added Section 25 API Endpoints Reference, expanded Section 11 security with CSP note; fixed exploratory blue token (#3B82F6→#2563EB in tokens.css + main.css), removed unused z-index tokens, kept glass tokens for future use; P4 code cleanup: removed empty scroll handler from dot-grid-about.js, deleted orphaned brand-clarity-call.html and website-clarity-call.html, extracted shared API utilities to api/lib/ (crypto.js, cookies.js, html.js) |
 | 6.0.0 | Feb 2026 | Service architecture v6: Added Devin (human full-stack dev) to Section 1.1. Unlocked Sections 1.4/1.5. Tier 1 Exploratory: 2→3 offerings (Guided Intake, Clarity Session w/ Systems domain, Technical Feasibility Check). Tier 2: One-Page Redesign→One-Page System Redesign, added scope boundary. Tier 3: renamed Core Services→Core Systems, reduced 5→3 offerings (Brand System Reset absorbs Strategic Brand Review, Integrated Brand+Platform replaces Full Brand+Platform Reset, dropped Brand Moments). Renamed files: brand-reset→brand-system-reset, full-brand-platform-reset→integrated-brand-platform. Deleted strategic-brand-review.html. New routes: /core-systems, /brand-system-reset, /integrated-brand-platform. CSS: all .core-services→.core-systems. Section 23: Brand Moments→Language Standards. Updated all ads pages, SEO files, booking labels, llms.txt. |
 | 7.0.0 | Feb 2026 | Full rebrand: Bertrand Brands → Bertrand Group | Brands & Web Systems. Domain: brands.bertrandgroup.ca. Email: hello@bertrandgroup.ca. Text-based animated header wordmark (Inter semibold/regular, collapse after 2s, expand on hover). New logomark asset (bg-brands-logomark.png). Updated all ~45 files: titles, OG tags, Schema.org, email templates, error pages, notification titles, announcement banner, config files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
+| 8.0.0 | Feb 2026 | Astro 5 migration: Migrated all 27 pages from vanilla HTML to `.astro` files with `BaseLayout` + 5 header variants + 6 shared components. File-based routing eliminates all page rewrites. Redirects moved from `vercel.json` to `astro.config.ts` (28 entries). CSS/fonts/scripts relocated from `src/` to `public/` for Astro static serving. Extracted `GesturePrevention.astro` (replaced 21 inline occurrences). Extracted `pricing-modal.css` and `founder-lightbox.css` from main.css (homepage-only loading). Fixed HeaderCanonical double-binding bug. Removed legacy JS injectors (`header.js`, `visitor-notify.js`, `announcement-banner.js`). `vercel.json` reduced to API rewrites + security headers only. Legacy HTML archived in `src/_legacy/`. |
 
 ---
 
 ## 22. Header Navigation Standard (LOCKED)
 
-The homepage header (`src/index.html`) is the canonical reference for all pages. All landing pages and sub-pages must match this structure.
+The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the canonical reference for all pages. All landing pages and sub-pages must match this structure.
 
 ### 22.1 HTML Structure
 
@@ -1041,8 +1098,8 @@ The homepage header (`src/index.html`) is the canonical reference for all pages.
 
 **Rules:**
 - The table above shows the **sub-page / universal header** format (`/?skip#section`)
-- Homepage (`index.html`) uses bare anchor links (`#about`, `#process`, `#services`) since it's already the SPA
-- Sub-pages and the universal header component use `/?skip#section` to bypass the intro animation
+- Homepage (`index.astro` via `HeaderCanonical.astro`) uses bare anchor links (`#about`, `#process`, `#services`) since it's the SPA
+- Sub-pages use `HeaderUniversal.astro` with `/?skip#section` links to bypass the intro animation
 - "Book a Call" always uses `header__link--cta` modifier (amber styling)
 - "Client Portal" always uses `header__link--portal` modifier (subtle styling)
 
@@ -1149,24 +1206,29 @@ Required on all pages with mobile menu:
 })();
 ```
 
-### 22.8 Universal Header Component
+### 22.8 Header Astro Components
 
-A JavaScript-based universal header is available at `/components/header.js`. It auto-injects the standard header with mobile menu and ambient lighting.
+Headers are now Astro components that render static HTML at build time (no runtime injection). Each variant includes its own scripts as `<script is:inline>` blocks.
+
+**Available components:**
+
+| Component | Used By | Includes |
+|-----------|---------|----------|
+| `HeaderCanonical.astro` | Homepage only | HTML only (scripts provided by index.astro) |
+| `HeaderUniversal.astro` | Sub-pages (7 pages) | Mobile menu + ambient lighting + wordmark collapse |
+| `HeaderIntake.astro` | Intake forms (3 pages) | Back button + logo |
+| `HeaderTierBadge.astro` | Confirmation pages (3 pages) | Service tier badge |
+| `HeaderMinimal.astro` | Ad landing pages (3 pages) | Logo only |
 
 **Usage:**
-```html
-<!-- Universal Header -->
-<script src="/components/header.js"></script>
+```astro
+---
+import HeaderUniversal from '../components/HeaderUniversal.astro';
+---
+<HeaderUniversal />
 ```
 
-**Pages using universal header:**
-- `/src/pages/ads/focus-studio.html`
-- `/src/pages/exploratory.html`
-- `/src/pages/book.html`
-- `/src/pages/ads/core-services.html`
-- `/src/pages/clarity-session.html`
-
-**Wordmark behavior:**
+**Wordmark behavior** (HeaderUniversal + HeaderCanonical):
 - On load: Shows full "Bertrand Group | Brands & Web Systems"
 - After 2s: Collapses to "Brands & Web Systems" via `.is-collapsed` class
 - On hover: Expands back to full name
@@ -1177,18 +1239,17 @@ A JavaScript-based universal header is available at `/components/header.js`. It 
 
 Some pages have custom header designs for specific UX or conversion purposes:
 
-| Page | Header Type | Reason |
-|------|-------------|--------|
-| `sudbury-focus-studio.html` | Minimal (logo only) | Google Ads landing page — focus on conversion |
-| `website-conversion-snapshot.html` | Minimal (centered logo) | Google Ads landing page |
-| `brand-clarity-diagnostic.html` | Minimal (centered logo) | Google Ads landing page |
-| `website-audit.html` | Custom V3 theme | Legacy page with different design system |
-| All `/intake/*.html` pages | Intake header (back + logo) | Form pages need back navigation |
-| `payment-confirmed.html` | Tier badge header | Confirmation page with service tier context |
-| `snapshot-confirmed.html` | Tier badge header | Confirmation page with service tier context |
-| `booking-confirmed.html` | Tier badge header | Confirmation page with service tier context |
+| Page | Header Component | Reason |
+|------|-----------------|--------|
+| `sudbury.astro` | `HeaderMinimal` | Google Ads landing page — focus on conversion |
+| `website-conversion-snapshot.astro` | `HeaderMinimal` | Google Ads landing page |
+| `brand-clarity-diagnostic.astro` | `HeaderMinimal` | Google Ads landing page |
+| All `intake/*.astro` pages | `HeaderIntake` | Form pages need back navigation |
+| `payment-confirmed.astro` | `HeaderTierBadge` | Confirmation page with service tier context |
+| `snapshot-confirmed.astro` | `HeaderTierBadge` | Confirmation page with service tier context |
+| `booking-confirmed.astro` | `HeaderTierBadge` | Confirmation page with service tier context |
 
-**Do not update these pages to use the universal header without explicit instruction.**
+**Do not change these pages to use HeaderUniversal without explicit instruction.**
 
 ---
 

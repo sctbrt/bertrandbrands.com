@@ -1,0 +1,129 @@
+---
+/**
+ * Thanks — Formspree redirect confirmation page.
+ * Self-contained page with inline styles. Does not use main.css.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkipLink from '../components/SkipLink.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import AnnouncementBanner from '../components/AnnouncementBanner.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+---
+
+<BaseLayout
+    title="Thanks for reaching out — BG | Brands & Web Systems"
+    robots="noindex"
+    includeMainCss={false}
+>
+    <Fragment slot="head">
+        <style is:inline>
+            *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+            html { touch-action: pan-x pan-y; }
+            @supports (-webkit-touch-callout: none) { html { -webkit-text-size-adjust: 100%; } }
+
+            :root {
+                --bg: #0a0a0a; --bg-elevated: #111111; --text: #fafafa; --text-muted: #a3a3a3;
+                --text-subtle: #737373; --accent: #D97706; --accent-hover: #B45309;
+                --border: rgba(255, 255, 255, 0.08);
+                --font-display: 'Fraunces', Georgia, serif;
+                --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                --radius-md: 8px; --text-sm: 0.875rem; --text-base: 1rem;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            }
+
+            body {
+                font-family: var(--font-body); background: var(--bg); color: var(--text);
+                line-height: 1.6; -webkit-font-smoothing: antialiased;
+                min-height: 100vh; display: flex; flex-direction: column;
+                align-items: center; justify-content: center; padding: 2rem;
+            }
+
+            .thanks-page { text-align: center; max-width: 480px; }
+            .thanks-page__brand { margin-bottom: 2rem; }
+            .thanks-page__logomark {
+                width: 64px; height: auto; margin-bottom: 1rem;
+                filter: brightness(0) saturate(100%) invert(48%) sepia(89%) saturate(1000%) hue-rotate(4deg) brightness(88%);
+            }
+            .thanks-page__title {
+                font-family: 'Fraunces', Georgia, serif; font-size: clamp(1.5rem, 4vw, 2rem);
+                font-weight: 400; margin-bottom: 1rem; color: var(--text);
+            }
+            .thanks-page__message { font-size: var(--text-base); color: var(--text-muted); margin-bottom: 2rem; line-height: 1.7; }
+            .thanks-page__actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+            .thanks-page__link {
+                display: inline-flex; align-items: center; gap: 0.5rem;
+                padding: 0.875rem 1.5rem; font-size: var(--text-base); font-weight: 500;
+                border-radius: var(--radius-md); text-decoration: none; transition: all 0.2s ease;
+            }
+            .thanks-page__link--primary { background: var(--accent); color: white; }
+            .thanks-page__link--primary:hover { background: var(--accent-hover); }
+
+            @keyframes rgb-border-rotate { 0% { --rgb-angle: 0deg; } 100% { --rgb-angle: 360deg; } }
+            @property --rgb-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+            .thanks-page__link--secondary {
+                background: var(--bg); color: var(--text-muted);
+                border: 1px solid transparent; position: relative; z-index: 0;
+                background-clip: padding-box;
+            }
+            .thanks-page__link--secondary::before {
+                content: ''; position: absolute; inset: -2px; border-radius: var(--radius-md);
+                background: conic-gradient(from var(--rgb-angle), #ff6666 0deg, #66ff66 120deg, #6699ff 240deg, #ff6666 360deg);
+                z-index: -1; animation: rgb-border-rotate 4s linear infinite; filter: blur(4px); opacity: 0.4;
+            }
+            .thanks-page__link--secondary::after {
+                content: ''; position: absolute; inset: 0; background: var(--bg);
+                border-radius: var(--radius-md); z-index: -1;
+            }
+            .thanks-page__link--secondary:hover { color: var(--text); }
+            .thanks-page__link--secondary:hover::before { filter: blur(6px); opacity: 0.7; inset: -3px; }
+
+            .thanks-page__footer { margin-top: 4rem; font-size: var(--text-sm); color: var(--text-subtle); }
+            .thanks-page__footer a { color: var(--text-muted); text-decoration: none; transition: all 0.3s ease; }
+            .thanks-page__footer a:hover {
+                color: var(--text);
+                text-shadow: 0 0 2px rgba(255,255,255,0.3), 0 0 10px rgba(255,60,60,0.7), 0 0 20px rgba(255,60,60,0.4), 0 0 10px rgba(60,255,60,0.7), 0 0 25px rgba(60,255,60,0.4), 0 0 10px rgba(60,100,255,0.7), 0 0 30px rgba(60,100,255,0.4);
+            }
+            :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+            .skip-link {
+                position: fixed; top: -100%; left: 1rem; padding: 0.75rem 1rem;
+                background: var(--text); color: var(--bg); font-family: var(--font-body);
+                font-size: 0.875rem; font-weight: 500; border-radius: 6px;
+                z-index: 10001; text-decoration: none; transition: top 0.15s ease;
+            }
+            .skip-link:focus { top: 1rem; }
+        </style>
+    </Fragment>
+
+    <SkipLink />
+
+    <main class="thanks-page" id="main-content">
+        <div class="thanks-page__brand">
+            <img src="/assets/bg-brands-logomark.png" alt="" class="thanks-page__logomark" width="40" height="40" fetchpriority="high">
+            <br>
+            <span style="font-family: var(--font-body); font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);">Brands &amp; Web Systems</span>
+        </div>
+        <h1 class="thanks-page__title">Thanks for reaching out</h1>
+        <p class="thanks-page__message">
+            Your message has been received. I'll review it and get back to you within 1-2 business days.
+        </p>
+        <div class="thanks-page__actions">
+            <a href="/" class="thanks-page__link thanks-page__link--primary">
+                Back to homepage
+            </a>
+            <a href="https://scottbertrand.com" class="thanks-page__link thanks-page__link--secondary">
+                Visit scottbertrand.com
+            </a>
+        </div>
+        <p class="thanks-page__footer">
+            <a href="https://bertrandgroup.ca">A Bertrand Group venture</a>
+        </p>
+    </main>
+
+    <GesturePrevention />
+    <AnnouncementBanner />
+    <VisitorNotify />
+</BaseLayout>

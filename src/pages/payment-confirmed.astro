@@ -1,0 +1,438 @@
+---
+/**
+ * Payment Confirmed — Post-payment confirmation with Calendly embed.
+ * Self-contained page with inline styles. Does not use main.css.
+ * Build tier (violet glow), service config lookup, Calendly inline widget.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkipLink from '../components/SkipLink.astro';
+import HeaderTierBadge from '../components/HeaderTierBadge.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import AnnouncementBanner from '../components/AnnouncementBanner.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+---
+
+<BaseLayout
+    title="Payment Confirmed — BG | Brands & Web Systems"
+    robots="noindex, nofollow"
+    includeMainCss={false}
+    gtagId="AW-17925090292"
+>
+    <Fragment slot="head">
+        {/* Calendly */}
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+        <script is:inline src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        <style is:inline>
+            *, *::before, *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                touch-action: pan-x pan-y;
+            }
+
+            @supports (-webkit-touch-callout: none) {
+                html {
+                    -webkit-text-size-adjust: 100%;
+                }
+            }
+
+            :root {
+                --bg: #0a0a0a;
+                --text: #fafafa;
+                --text-muted: #a3a3a3;
+                --accent: #D97706;
+                --font-display: 'Fraunces', Georgia, serif;
+                --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                --text-xs: 0.75rem;
+                --text-sm: 0.875rem;
+                --text-base: 1rem;
+                --text-lg: 1.125rem;
+                --text-xl: 1.25rem;
+                --text-2xl: 1.5rem;
+                --text-3xl: 1.875rem;
+                --text-4xl: 2.25rem;
+            }
+
+            html, body {
+                height: 100%;
+            }
+
+            body {
+                font-family: var(--font-body);
+                background: var(--bg);
+                color: var(--text);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                padding: 2rem;
+                text-align: center;
+            }
+
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                padding: 0.75rem clamp(1rem, 4vw, 2rem);
+                z-index: 100;
+            }
+
+            .header__glass {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0.75rem 1.5rem;
+                background: color-mix(in srgb, var(--bg) 60%, transparent);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                position: relative;
+                overflow: hidden;
+                --orange-pos-1: 15%;
+                --orange-pos-2: 85%;
+            }
+
+            .header__glass::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background:
+                    radial-gradient(ellipse 280px 90px at var(--orange-pos-1) 60%, rgba(217, 119, 6, 0.15), transparent 70%),
+                    radial-gradient(ellipse 220px 80px at var(--orange-pos-2) 40%, rgba(217, 119, 6, 0.10), transparent 70%);
+                pointer-events: none;
+                z-index: 0;
+                border-radius: inherit;
+            }
+
+            /* Build tier background glow */
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background:
+                    radial-gradient(ellipse 600px 400px at var(--bg-glow-1-x, 20%) var(--bg-glow-1-y, 30%), rgba(139, 92, 246, 0.08), transparent 70%),
+                    radial-gradient(ellipse 500px 350px at var(--bg-glow-2-x, 80%) var(--bg-glow-2-y, 70%), rgba(139, 92, 246, 0.05), transparent 70%);
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            .header__inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+                z-index: 1;
+            }
+
+            .header__logo {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                transition: opacity 0.2s ease;
+            }
+
+            .header__logo:hover {
+                opacity: 0.7;
+            }
+
+            .header__logo-icon {
+                width: 24px;
+                height: auto;
+                margin-right: 0.75rem;
+                filter: brightness(0) invert(1);
+            }
+
+            .header__wordmark {
+                font-family: var(--font-body);
+                font-size: 0.7rem;
+                font-weight: 400;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--text);
+                white-space: nowrap;
+            }
+
+            .header__tier {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                font-weight: 500;
+                letter-spacing: 0.02em;
+            }
+
+            .container {
+                max-width: 700px;
+                padding-top: 5rem;
+                width: 100%;
+            }
+
+            h1 {
+                font-family: var(--font-display);
+                font-size: var(--text-4xl);
+                font-weight: 300;
+                margin-bottom: 1rem;
+                letter-spacing: -0.02em;
+            }
+
+            p {
+                color: var(--text-muted);
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+            }
+
+            .next-steps {
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px;
+                padding: 1.5rem;
+                margin-top: 2rem;
+                text-align: left;
+            }
+
+            .next-steps h2 {
+                font-family: var(--font-body);
+                font-size: var(--text-xs);
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--text-muted);
+                margin-bottom: 1rem;
+            }
+
+            .next-steps ul {
+                list-style: none;
+            }
+
+            .next-steps li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: var(--text-muted);
+                font-size: var(--text-base);
+                line-height: 1.5;
+            }
+
+            .next-steps li::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0.5rem;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+
+            .next-steps li:last-child {
+                margin-bottom: 0;
+            }
+
+            .back-link {
+                display: inline-block;
+                margin-top: 2rem;
+                color: var(--text-muted);
+                text-decoration: none;
+                font-size: var(--text-sm);
+                transition: color 0.2s ease;
+            }
+
+            .back-link:hover {
+                color: var(--text);
+            }
+
+            /* Calendly Section */
+            .booking {
+                margin-top: 2rem;
+                text-align: center;
+            }
+
+            .booking__label {
+                font-size: var(--text-xs);
+                font-weight: 500;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 0.5rem;
+            }
+
+            .booking__title {
+                font-family: var(--font-display);
+                font-size: var(--text-xl);
+                font-weight: 300;
+                margin-bottom: 1rem;
+                color: var(--text);
+            }
+
+            .booking__calendly {
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px;
+                overflow: hidden;
+                min-height: 650px;
+            }
+
+            .service-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+                background: rgba(139, 92, 246, 0.1);
+                border: 1px solid rgba(139, 92, 246, 0.25);
+                border-radius: 100px;
+                font-size: var(--text-xs);
+                font-weight: 500;
+                letter-spacing: 0.03em;
+                color: rgba(139, 92, 246, 0.9);
+                margin-bottom: 1.5rem;
+            }
+
+            .service-badge--exploratory {
+                background: rgba(37, 99, 235, 0.1);
+                border-color: rgba(37, 99, 235, 0.25);
+                color: rgba(37, 99, 235, 0.9);
+            }
+
+            @media (max-width: 480px) {
+                h1 {
+                    font-size: var(--text-2xl);
+                }
+
+                .booking__calendly {
+                    min-height: 700px;
+                }
+            }
+        </style>
+    </Fragment>
+
+    <SkipLink />
+    <HeaderTierBadge tierLabel="Build" tierColor="rgba(139, 92, 246, 0.9)" />
+
+    <div class="container" id="main-content">
+        <span class="service-badge" id="serviceBadge">Paid</span>
+        <h1>Payment confirmed</h1>
+        <p id="confirmText">Now let's schedule your kickoff call.</p>
+
+        <div class="booking">
+            <p class="booking__label">Next Step</p>
+            <h2 class="booking__title">Pick a time that works</h2>
+            <div class="booking__calendly" id="calendlyEmbed"></div>
+        </div>
+
+        <a href="https://brands.bertrandgroup.ca" class="back-link">&larr; Back to Bertrand Group</a>
+    </div>
+
+    <script is:inline>
+        // Service configuration
+        var services = {
+            'clarity-session': {
+                badge: 'Clarity Session \u2014 $145',
+                tier: 'Conversation',
+                tierClass: 'service-badge--exploratory',
+                text: "Now let\u2019s schedule your clarity session.",
+                calendly: 'https://calendly.com/bertrandbrands/clarity-session'
+            },
+            'starter-site': {
+                badge: 'Starter Site \u2014 $750',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            'brandmark': {
+                badge: 'Brandmark & Visual Identity \u2014 $950',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            'one-page-redesign': {
+                badge: 'One-Page System Redesign \u2014 $1,250',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            }
+        };
+
+        // Get service from URL
+        var params = new URLSearchParams(window.location.search);
+        var serviceKey = params.get('service') || 'starter-site';
+        var service = services[serviceKey] || services['starter-site'];
+
+        // Update page content
+        var badge = document.getElementById('serviceBadge');
+        badge.textContent = service.badge;
+        if (service.tierClass) badge.classList.add(service.tierClass);
+
+        document.getElementById('confirmText').textContent = service.text;
+        document.querySelector('.header__tier').textContent = service.tier;
+
+        // Update tier color for clarity-session (Conversation = blue)
+        if (serviceKey === 'clarity-session') {
+            document.querySelector('.header__tier').style.color = 'rgba(37, 99, 235, 0.9)';
+        }
+
+        // Google Ads: Lead — Clarity Booked (GA4 event, payment-confirmed)
+        if (serviceKey === 'clarity-session' && typeof gtag === 'function') {
+            gtag('event', 'ads_conversion_Book_appointment_1');
+        }
+
+        // Initialize Calendly when ready
+        function initCalendly() {
+            if (typeof Calendly !== 'undefined') {
+                Calendly.initInlineWidget({
+                    url: service.calendly + '?hide_gdpr_banner=1&background_color=0a0a0a&text_color=fafafa&primary_color=d97706',
+                    parentElement: document.getElementById('calendlyEmbed'),
+                    prefill: {},
+                    utm: {}
+                });
+            } else {
+                setTimeout(initCalendly, 100);
+            }
+        }
+        initCalendly();
+
+        // Background glow drift animation
+        (function() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var glow1X = 20, glow1Y = 30;
+            var glow2X = 80, glow2Y = 70;
+            var dir1X = 1, dir1Y = 1;
+            var dir2X = -1, dir2Y = -1;
+
+            function animateBgGlow() {
+                glow1X += 0.015 * dir1X;
+                glow1Y += 0.012 * dir1Y;
+                glow2X += 0.018 * dir2X;
+                glow2Y += 0.014 * dir2Y;
+
+                if (glow1X > 35 || glow1X < 10) dir1X *= -1;
+                if (glow1Y > 45 || glow1Y < 20) dir1Y *= -1;
+                if (glow2X > 90 || glow2X < 65) dir2X *= -1;
+                if (glow2Y > 80 || glow2Y < 55) dir2Y *= -1;
+
+                document.body.style.setProperty('--bg-glow-1-x', glow1X + '%');
+                document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
+                document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
+                document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
+                requestAnimationFrame(animateBgGlow);
+            }
+            requestAnimationFrame(animateBgGlow);
+        })();
+    </script>
+
+    <GesturePrevention />
+    <AnnouncementBanner />
+    <VisitorNotify />
+</BaseLayout>

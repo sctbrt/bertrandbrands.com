@@ -1,0 +1,72 @@
+---
+/**
+ * ServiceDetailLayout — Layout for the 6 service detail pages.
+ * Extends BaseLayout. Includes HeaderUniversal, SkipLink, VisitorNotify,
+ * AnnouncementBanner, and header visibility override CSS.
+ *
+ * Props: same as BaseLayout, plus:
+ *   spotlightColor — CSS color for ambient spotlights (default: violet)
+ */
+import BaseLayout from './BaseLayout.astro';
+import SkipLink from '../components/SkipLink.astro';
+import HeaderUniversal from '../components/HeaderUniversal.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import AnnouncementBanner from '../components/AnnouncementBanner.astro';
+
+interface Props {
+    title: string;
+    description?: string;
+    canonical?: string;
+    ogTitle?: string;
+    ogDescription?: string;
+    ogImage?: string;
+    robots?: string;
+    schemaJson?: Record<string, unknown>;
+    gtagId?: string;
+    spotlightColor?: string;
+}
+
+const {
+    title,
+    description,
+    canonical,
+    ogTitle,
+    ogDescription,
+    ogImage,
+    robots,
+    schemaJson,
+    gtagId,
+    spotlightColor = 'rgba(139, 92, 246, 0.15)',
+} = Astro.props;
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    canonical={canonical}
+    ogTitle={ogTitle}
+    ogDescription={ogDescription}
+    ogImage={ogImage}
+    robots={robots}
+    schemaJson={schemaJson}
+    gtagId={gtagId}
+>
+    <Fragment slot="head">
+        <style is:inline>
+            /* Header visible by default on sub-pages */
+            .header { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateY(0) !important; }
+            .header__logo-icon, .header__wordmark { opacity: 1 !important; }
+
+            /* Prevent pinch-to-zoom */
+            html { touch-action: pan-x pan-y; }
+            @supports (-webkit-touch-callout: none) { html { -webkit-text-size-adjust: 100%; } }
+        </style>
+        <slot name="head" />
+    </Fragment>
+
+    <SkipLink />
+    <HeaderUniversal />
+    <slot />
+    <VisitorNotify />
+    <AnnouncementBanner />
+</BaseLayout>

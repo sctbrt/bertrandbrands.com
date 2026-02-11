@@ -1,0 +1,66 @@
+---
+/**
+ * HeaderTierBadge — Confirmation page header with tier label.
+ * Glass-morphism header with logo + tier badge. No navigation.
+ * Props:
+ *   tierLabel — the service tier displayed (default: Conversation)
+ *   tierColor — CSS color for tier text (default: rgba(37, 99, 235, 0.9) — blue)
+ *   logoHref — where logo links to (default: https://brands.bertrandgroup.ca)
+ */
+interface Props {
+    tierLabel?: string;
+    tierColor?: string;
+    logoHref?: string;
+}
+
+const {
+    tierLabel = 'Conversation',
+    tierColor = 'rgba(37, 99, 235, 0.9)',
+    logoHref = 'https://brands.bertrandgroup.ca',
+} = Astro.props;
+---
+
+<header class="header">
+    <div class="header__glass">
+        <div class="header__inner">
+            <a href={logoHref} class="header__logo">
+                <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon" width="40" height="40" fetchpriority="high">
+                <span class="header__wordmark">Brands &amp; Web Systems</span>
+            </a>
+            <span class="header__tier" style={`color: ${tierColor}`}>{tierLabel}</span>
+        </div>
+    </div>
+</header>
+
+<script is:inline>
+/* Ambient lighting for tier badge header (30fps) */
+(function() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const header = document.querySelector('.header');
+    const headerGlass = document.querySelector('.header__glass');
+    if (!header || !headerGlass) return;
+
+    header.classList.add('lights-on');
+
+    let pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
+    let lastFrame = 0;
+    const FRAME_INTERVAL = 1000 / 30;
+
+    function animateLights(timestamp) {
+        if (timestamp - lastFrame < FRAME_INTERVAL) {
+            requestAnimationFrame(animateLights);
+            return;
+        }
+        lastFrame = timestamp;
+        pos1 += dir1 * 0.06;
+        pos2 += dir2 * 0.05;
+        if (pos1 > 35 || pos1 < 10) dir1 *= -1;
+        if (pos2 > 90 || pos2 < 60) dir2 *= -1;
+        headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
+        headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
+        requestAnimationFrame(animateLights);
+    }
+    requestAnimationFrame(animateLights);
+})();
+</script>

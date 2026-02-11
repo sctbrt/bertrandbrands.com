@@ -1,0 +1,21 @@
+---
+/**
+ * VisitorNotify — Silent Pushover notification on page load.
+ * Sends page path + referrer to /api/notify. No visible side effects.
+ */
+---
+
+<script is:inline>
+(function() {
+  if (typeof navigator !== 'undefined' && navigator.webdriver) return;
+  fetch('/api/notify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type: 'visitor',
+      page: window.location.pathname,
+      referrer: document.referrer || ''
+    })
+  }).catch(function() {});
+})();
+</script>

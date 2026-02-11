@@ -1,0 +1,436 @@
+---
+/**
+ * Booking Confirmed — Post-booking confirmation with Calendly URL personalization.
+ * Self-contained page with inline styles. Does not use main.css.
+ * Conversation tier (blue glow), Calendly URL params for name/session/time.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkipLink from '../components/SkipLink.astro';
+import HeaderTierBadge from '../components/HeaderTierBadge.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import AnnouncementBanner from '../components/AnnouncementBanner.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+---
+
+<BaseLayout
+    title="Booking Confirmed — BG | Brands & Web Systems"
+    robots="noindex, nofollow"
+    includeMainCss={false}
+    gtagId="AW-17925090292"
+>
+    <Fragment slot="head">
+        <style is:inline>
+            *, *::before, *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                touch-action: pan-x pan-y;
+            }
+
+            @supports (-webkit-touch-callout: none) {
+                html {
+                    -webkit-text-size-adjust: 100%;
+                }
+            }
+
+            :root {
+                --bg: #0a0a0a;
+                --text: #fafafa;
+                --text-muted: #a3a3a3;
+                --accent: #D97706;
+                --font-display: 'Fraunces', Georgia, serif;
+                --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                --text-xs: 0.75rem;
+                --text-sm: 0.875rem;
+                --text-base: 1rem;
+                --text-lg: 1.125rem;
+                --text-xl: 1.25rem;
+                --text-2xl: 1.5rem;
+                --text-3xl: 1.875rem;
+                --text-4xl: 2.25rem;
+            }
+
+            html, body {
+                height: 100%;
+            }
+
+            body {
+                font-family: var(--font-body);
+                background: var(--bg);
+                color: var(--text);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                padding: 2rem;
+                text-align: center;
+            }
+
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                padding: 0.75rem clamp(1rem, 4vw, 2rem);
+                z-index: 100;
+            }
+
+            .header__glass {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0.75rem 1.5rem;
+                background: color-mix(in srgb, var(--bg) 60%, transparent);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                position: relative;
+                overflow: hidden;
+                --orange-pos-1: 15%;
+                --orange-pos-2: 85%;
+            }
+
+            .header__glass::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background:
+                    radial-gradient(ellipse 280px 90px at var(--orange-pos-1) 60%, rgba(217, 119, 6, 0.15), transparent 70%),
+                    radial-gradient(ellipse 220px 80px at var(--orange-pos-2) 40%, rgba(217, 119, 6, 0.10), transparent 70%);
+                pointer-events: none;
+                z-index: 0;
+                border-radius: inherit;
+            }
+
+            /* Conversation tier background glow */
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background:
+                    radial-gradient(ellipse 600px 400px at var(--bg-glow-1-x, 20%) var(--bg-glow-1-y, 30%), rgba(37, 99, 235, 0.08), transparent 70%),
+                    radial-gradient(ellipse 500px 350px at var(--bg-glow-2-x, 80%) var(--bg-glow-2-y, 70%), rgba(37, 99, 235, 0.05), transparent 70%);
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            .header__inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+                z-index: 1;
+            }
+
+            .header__logo {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                transition: opacity 0.2s ease;
+            }
+
+            .header__logo:hover {
+                opacity: 0.7;
+            }
+
+            .header__logo-icon {
+                width: 24px;
+                height: auto;
+                margin-right: 0.75rem;
+                filter: brightness(0) invert(1);
+            }
+
+            .header__wordmark {
+                font-family: var(--font-body);
+                font-size: 0.7rem;
+                font-weight: 400;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--text);
+                white-space: nowrap;
+            }
+
+            .header__tier {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                font-weight: 500;
+                letter-spacing: 0.02em;
+            }
+
+            .container {
+                max-width: 480px;
+                padding-top: 5rem;
+            }
+
+            h1 {
+                font-family: var(--font-display);
+                font-size: var(--text-4xl);
+                font-weight: 300;
+                margin-bottom: 1rem;
+                letter-spacing: -0.02em;
+            }
+
+            p {
+                color: var(--text-muted);
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+            }
+
+            .next-steps {
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px;
+                padding: 1.5rem;
+                margin-top: 2rem;
+                text-align: left;
+            }
+
+            .next-steps h2 {
+                font-family: var(--font-body);
+                font-size: var(--text-xs);
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--text-muted);
+                margin-bottom: 1rem;
+            }
+
+            .next-steps ul {
+                list-style: none;
+            }
+
+            .next-steps li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: var(--text-muted);
+                font-size: var(--text-base);
+                line-height: 1.5;
+            }
+
+            .next-steps li::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0.5rem;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+
+            .next-steps li:last-child {
+                margin-bottom: 0;
+            }
+
+            .back-link {
+                display: inline-block;
+                margin-top: 2rem;
+                color: var(--text-muted);
+                text-decoration: none;
+                font-size: var(--text-sm);
+                transition: color 0.2s ease;
+            }
+
+            .back-link:hover {
+                color: var(--text);
+            }
+
+            .headline-wordmark {
+                display: inline-block;
+                font-family: var(--font-body);
+                font-size: 0.8rem;
+                font-weight: 400;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin-bottom: 1.5rem;
+            }
+
+            .booking-details {
+                background: rgba(37, 99, 235, 0.08);
+                border: 1px solid rgba(37, 99, 235, 0.2);
+                border-radius: 12px;
+                padding: 1.25rem 1.5rem;
+                margin-top: 1.5rem;
+                text-align: left;
+            }
+
+            .booking-details__row {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            }
+
+            .booking-details__row:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+
+            .booking-details__row:first-child {
+                padding-top: 0;
+            }
+
+            .booking-details__label {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .booking-details__value {
+                font-size: var(--text-base);
+                color: var(--text);
+                font-weight: 500;
+                text-align: right;
+            }
+
+            .email-note {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                margin-top: 1rem;
+                margin-bottom: 0;
+            }
+
+            @media (max-width: 480px) {
+                h1 {
+                    font-size: var(--text-2xl);
+                }
+
+                .booking-details__row {
+                    flex-direction: column;
+                    gap: 0.25rem;
+                }
+
+                .booking-details__value {
+                    text-align: left;
+                }
+            }
+        </style>
+    </Fragment>
+
+    <SkipLink />
+    <HeaderTierBadge tierLabel="Conversation" tierColor="rgba(37, 99, 235, 0.9)" />
+
+    <div class="container" id="main-content">
+        <h1 id="headline">You're booked</h1>
+        <span class="headline-wordmark">Bertrand Group | Brands &amp; Web Systems</span>
+        <p id="subheadline">Looking forward to speaking with you.</p>
+
+        <div id="booking-details" class="booking-details" style="display: none;"></div>
+
+        <p id="email-confirmation" class="email-note" style="display: none;">Confirmation sent to your email</p>
+
+        <div class="next-steps">
+            <h2>What happens next</h2>
+            <ul>
+                <li>You'll receive a calendar invite with the video call link</li>
+                <li>Check your inbox (and spam folder) to confirm</li>
+                <li>Come with any questions or context you'd like to discuss</li>
+            </ul>
+        </div>
+
+        <a href="https://brands.bertrandgroup.ca" class="back-link">&larr; Back to Bertrand Group</a>
+    </div>
+
+    <script is:inline>
+        // Parse Calendly URL parameters and personalize page
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+
+            var firstName = params.get('invitee_first_name');
+            var fullName = params.get('invitee_full_name');
+            var eventName = params.get('event_type_name');
+            var startTime = params.get('event_start_time');
+
+            // Personalize headline with name
+            if (firstName || fullName) {
+                var name = firstName || fullName.split(' ')[0];
+                document.getElementById('headline').textContent = "You\u2019re booked, " + name;
+            }
+
+            // Build booking details if we have data
+            var detailsEl = document.getElementById('booking-details');
+            var hasDetails = false;
+            var detailsHTML = '';
+
+            if (eventName) {
+                hasDetails = true;
+                var cleanEventName = decodeURIComponent(eventName);
+                detailsHTML += '<div class="booking-details__row">' +
+                    '<span class="booking-details__label">Session</span>' +
+                    '<span class="booking-details__value">' + cleanEventName + '</span>' +
+                    '</div>';
+            }
+
+            if (startTime) {
+                hasDetails = true;
+                var date = new Date(startTime);
+                var options = {
+                    weekday: 'long',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    timeZoneName: 'short'
+                };
+                var formatted = date.toLocaleDateString('en-US', options);
+                detailsHTML += '<div class="booking-details__row">' +
+                    '<span class="booking-details__label">When</span>' +
+                    '<span class="booking-details__value">' + formatted + '</span>' +
+                    '</div>';
+            }
+
+            if (hasDetails) {
+                detailsEl.innerHTML = detailsHTML;
+                detailsEl.style.display = 'block';
+                document.getElementById('email-confirmation').style.display = 'block';
+            }
+        })();
+
+        // Background glow drift animation
+        (function() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var glow1X = 20, glow1Y = 30;
+            var glow2X = 80, glow2Y = 70;
+            var dir1X = 1, dir1Y = 1;
+            var dir2X = -1, dir2Y = -1;
+
+            function animateBgGlow() {
+                glow1X += 0.015 * dir1X;
+                glow1Y += 0.012 * dir1Y;
+                glow2X += 0.018 * dir2X;
+                glow2Y += 0.014 * dir2Y;
+
+                if (glow1X > 35 || glow1X < 10) dir1X *= -1;
+                if (glow1Y > 45 || glow1Y < 20) dir1Y *= -1;
+                if (glow2X > 90 || glow2X < 65) dir2X *= -1;
+                if (glow2Y > 80 || glow2Y < 55) dir2Y *= -1;
+
+                document.body.style.setProperty('--bg-glow-1-x', glow1X + '%');
+                document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
+                document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
+                document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
+                requestAnimationFrame(animateBgGlow);
+            }
+            requestAnimationFrame(animateBgGlow);
+        })();
+    </script>
+
+    <GesturePrevention />
+    <AnnouncementBanner />
+    <VisitorNotify />
+</BaseLayout>

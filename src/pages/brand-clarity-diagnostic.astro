@@ -1,0 +1,538 @@
+---
+/**
+ * Brand Clarity Diagnostic — Ad landing page.
+ * Centered logo header (no navigation). Amber accents.
+ * noindex, nofollow — Google Ads landing page.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderMinimal from '../components/HeaderMinimal.astro';
+import SkipLink from '../components/SkipLink.astro';
+import AnnouncementBanner from '../components/AnnouncementBanner.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<BaseLayout
+    title="Brand Clarity Diagnostic — $295 | BG | Brands & Web Systems"
+    description="A positioning and messaging assessment with clear direction. Know where you stand and what needs to shift."
+    canonical="https://brands.bertrandgroup.ca/brand-clarity-diagnostic"
+    ogTitle="Brand Clarity Diagnostic — $295 | BG | Brands & Web Systems"
+    ogDescription="A positioning and messaging assessment with clear direction. Know where you stand and what needs to shift."
+    robots="noindex, nofollow"
+    schemaJson={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Brand Clarity Diagnostic",
+        "description": "A positioning and messaging assessment with clear direction.",
+        "provider": {
+            "@type": "ProfessionalService",
+            "name": "Bertrand Group | Brands & Web Systems",
+            "url": "https://brands.bertrandgroup.ca"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "295",
+            "priceCurrency": "CAD"
+        }
+    }}
+>
+    <Fragment slot="head">
+        <style is:inline>
+            html { touch-action: pan-x pan-y; }
+
+            .ad-page {
+                min-height: 100vh;
+                padding-top: 80px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .ad-hero {
+                padding: var(--space-3xl) 0 var(--space-2xl);
+                text-align: center;
+            }
+
+            .ad-hero__title {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: clamp(2rem, 5vw, 2.75rem);
+                font-weight: 300;
+                line-height: 1.2;
+                margin-bottom: var(--space-md);
+                color: var(--text);
+            }
+
+            .ad-hero__subtitle {
+                font-size: var(--text-lg);
+                color: var(--text-muted);
+                max-width: 560px;
+                margin: 0 auto;
+                line-height: 1.7;
+            }
+
+            .ad-section {
+                padding: var(--space-2xl) 0;
+            }
+
+            .ad-section--alt {
+                background: var(--bg-alt, #0d0d0d);
+                position: relative;
+            }
+
+            .ad-section--alt::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 200px;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(217, 119, 6, 0.4), transparent);
+            }
+
+            .ad-section__title {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: var(--text-2xl);
+                font-weight: 400;
+                margin-bottom: var(--space-lg);
+                text-align: center;
+                color: var(--text);
+            }
+
+            .ad-section__intro {
+                font-size: var(--text-base);
+                color: var(--text-muted);
+                text-align: center;
+                max-width: 600px;
+                margin: 0 auto var(--space-xl);
+                line-height: 1.7;
+            }
+
+            .ad-fit {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: var(--space-lg);
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .ad-fit__column {
+                background: var(--bg-subtle);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: var(--space-lg);
+            }
+
+            .ad-fit__heading {
+                font-size: var(--text-sm);
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: var(--space-md);
+                color: var(--text-muted);
+            }
+
+            .ad-fit__heading--for {
+                color: var(--accent);
+            }
+
+            .ad-fit__list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .ad-fit__list li {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.6;
+                padding: 0.5rem 0;
+                padding-left: 1.25rem;
+                position: relative;
+            }
+
+            .ad-fit__list li::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0.85rem;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background: var(--text-subtle);
+            }
+
+            .ad-fit__column:first-child .ad-fit__list li::before {
+                background: var(--accent);
+            }
+
+            .ad-process {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .ad-process__step {
+                display: flex;
+                gap: var(--space-md);
+                padding: var(--space-md) 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .ad-process__step:last-child {
+                border-bottom: none;
+            }
+
+            .ad-process__number {
+                font-size: var(--text-sm);
+                font-weight: 500;
+                color: var(--accent);
+                min-width: 24px;
+            }
+
+            .ad-process__text {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.6;
+            }
+
+            .ad-deliverables {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: var(--space-md);
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .ad-deliverable {
+                background: var(--bg-subtle);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: var(--space-md);
+            }
+
+            .ad-deliverable__title {
+                font-size: var(--text-sm);
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 0.5rem;
+            }
+
+            .ad-deliverable__text {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.6;
+            }
+
+            .ad-rationale {
+                max-width: 560px;
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            .ad-rationale__text {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.7;
+            }
+
+            .ad-about {
+                max-width: 600px;
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            .ad-about__text {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.7;
+                margin-bottom: var(--space-sm);
+            }
+
+            .ad-about__text:last-child {
+                margin-bottom: 0;
+            }
+
+            .ad-cta {
+                text-align: center;
+                padding: var(--space-3xl) 0;
+            }
+
+            .ad-cta__price {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: var(--text-3xl);
+                font-weight: 300;
+                color: var(--text);
+                margin-bottom: var(--space-xs);
+            }
+
+            .ad-cta__price span {
+                font-size: var(--text-lg);
+                color: var(--text-muted);
+            }
+
+            .ad-cta__note {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                margin-bottom: var(--space-lg);
+            }
+
+            .ad-cta__button {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 1rem 2rem;
+                background: rgba(217, 119, 6, 0.85);
+                border: 1px solid rgba(217, 119, 6, 0.3);
+                color: #000;
+                font-weight: 500;
+                border-radius: var(--radius-md);
+                text-decoration: none;
+                transition: background var(--duration-fast) var(--ease-out);
+                position: relative;
+            }
+
+            .ad-cta__button:hover {
+                background: rgba(217, 119, 6, 0.95);
+            }
+
+            .ad-cta__button::before {
+                content: '';
+                position: absolute;
+                inset: -20px -30px;
+                background: radial-gradient(ellipse, rgba(217, 119, 6, 0.2) 0%, transparent 70%);
+                filter: blur(25px);
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                z-index: -1;
+            }
+
+            .ad-cta__button:hover::before {
+                opacity: 1;
+            }
+
+            .ad-footer {
+                border-top: 1px solid var(--border);
+                padding: var(--space-xl) var(--gutter, 1.5rem);
+                text-align: center;
+            }
+
+            .ad-footer__text {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                margin-bottom: 0.5rem;
+            }
+
+            .ad-footer__phone {
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+            }
+
+            .ad-footer__phone a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .ad-spotlight {
+                position: fixed;
+                border-radius: 50%;
+                filter: blur(120px);
+                pointer-events: none;
+                z-index: 0;
+                opacity: 0;
+                will-change: transform, opacity;
+            }
+
+            .ad-spotlight--orange {
+                width: 400px;
+                height: 400px;
+                background: radial-gradient(circle, rgba(217, 119, 6, 0.2) 0%, rgba(217, 119, 6, 0.06) 50%, transparent 70%);
+                bottom: -100px;
+                left: -100px;
+                animation: spotlightFadeIn 1.5s ease-out 0.3s forwards;
+            }
+
+            .ad-spotlight--blue {
+                width: 350px;
+                height: 350px;
+                background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 70%);
+                top: 80px;
+                right: -80px;
+                animation: spotlightFadeIn 1.5s ease-out 0.5s forwards;
+            }
+
+            @keyframes spotlightFadeIn {
+                to { opacity: 1; }
+            }
+
+            @media (max-width: 768px) {
+                .ad-spotlight {
+                    filter: blur(80px);
+                }
+                .ad-spotlight--orange {
+                    width: 280px;
+                    height: 280px;
+                    bottom: -80px;
+                    left: -80px;
+                }
+                .ad-spotlight--blue {
+                    width: 240px;
+                    height: 240px;
+                    top: 60px;
+                    right: -60px;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .ad-spotlight {
+                    animation: none;
+                    opacity: 1;
+                }
+            }
+        </style>
+    </Fragment>
+
+    <SkipLink />
+
+    <!-- Ambient Spotlights -->
+    <div class="ad-spotlight ad-spotlight--orange" aria-hidden="true"></div>
+    <div class="ad-spotlight ad-spotlight--blue" aria-hidden="true"></div>
+
+    <HeaderMinimal variant="ad" />
+
+    <main class="ad-page" id="main-content">
+        <!-- 1. Hero Section -->
+        <section class="ad-hero">
+            <div class="container">
+                <h1 class="ad-hero__title">Your brand might be sending the wrong message</h1>
+                <p class="ad-hero__subtitle">
+                    You've built something real, but explaining it clearly feels harder than it should be. Get an honest assessment of where your brand stands and what needs to shift.
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Who This Is For / Not For -->
+        <section class="ad-section ad-section--alt">
+            <div class="container">
+                <h2 class="ad-section__title">Is this diagnostic for you?</h2>
+
+                <div class="ad-fit">
+                    <div class="ad-fit__column">
+                        <p class="ad-fit__heading ad-fit__heading--for">This is for you if</p>
+                        <ul class="ad-fit__list">
+                            <li>You struggle to explain what makes you different</li>
+                            <li>Your messaging feels scattered or inconsistent</li>
+                            <li>You're unsure if your brand reflects your actual value</li>
+                            <li>You want clarity before investing in marketing or a rebrand</li>
+                        </ul>
+                    </div>
+                    <div class="ad-fit__column">
+                        <p class="ad-fit__heading">This is not for you if</p>
+                        <ul class="ad-fit__list">
+                            <li>You're just starting out and haven't served clients yet</li>
+                            <li>You're looking for a logo or visual identity work</li>
+                            <li>You want someone to write your copy for you</li>
+                            <li>You're not open to changing your approach</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. What Happens -->
+        <section class="ad-section">
+            <div class="container">
+                <h2 class="ad-section__title">How it works</h2>
+                <p class="ad-section__intro">
+                    No calls. No workshops. Complete a detailed questionnaire, and receive a written diagnostic within 7 business days.
+                </p>
+
+                <div class="ad-process">
+                    <div class="ad-process__step">
+                        <span class="ad-process__number">01</span>
+                        <p class="ad-process__text">Complete a detailed intake questionnaire about your business, audience, and current positioning</p>
+                    </div>
+                    <div class="ad-process__step">
+                        <span class="ad-process__number">02</span>
+                        <p class="ad-process__text">Your responses are analyzed against positioning principles and market context</p>
+                    </div>
+                    <div class="ad-process__step">
+                        <span class="ad-process__number">03</span>
+                        <p class="ad-process__text">You receive a written diagnostic with findings, gaps, and directional recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. What You Receive -->
+        <section class="ad-section ad-section--alt">
+            <div class="container">
+                <h2 class="ad-section__title">What you'll receive</h2>
+
+                <div class="ad-deliverables">
+                    <div class="ad-deliverable">
+                        <h3 class="ad-deliverable__title">Positioning Assessment</h3>
+                        <p class="ad-deliverable__text">An evaluation of how your brand currently positions itself in the market and where the gaps exist.</p>
+                    </div>
+                    <div class="ad-deliverable">
+                        <h3 class="ad-deliverable__title">Messaging Analysis</h3>
+                        <p class="ad-deliverable__text">A review of your current language and whether it aligns with your actual value and audience.</p>
+                    </div>
+                    <div class="ad-deliverable">
+                        <h3 class="ad-deliverable__title">Directional Guidance</h3>
+                        <p class="ad-deliverable__text">Clear recommendations on what to clarify, adjust, or reconsider—with reasoning, not just opinions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Why This Is Paid -->
+        <section class="ad-section">
+            <div class="container">
+                <h2 class="ad-section__title">Why this isn't free</h2>
+
+                <div class="ad-rationale">
+                    <p class="ad-rationale__text">
+                        Brand assessments require careful analysis, not quick takes. This diagnostic is designed to surface what others won't tell you. The fee ensures the work is thorough and the conclusions are yours to act on—with no obligation to continue.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. About Bertrand Group -->
+        <section class="ad-section ad-section--alt">
+            <div class="container">
+                <h2 class="ad-section__title">About Bertrand Group</h2>
+
+                <div class="ad-about">
+                    <p class="ad-about__text">
+                        Bertrand Group helps business owners get clarity on their brand and web presence. Based in Sudbury, Ontario, working with clients across Canada.
+                    </p>
+                    <p class="ad-about__text">
+                        Every engagement starts with understanding, not selling. This diagnostic exists because most brand confusion doesn't need a rebrand—it needs clarity.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Final CTA -->
+        <section class="ad-cta">
+            <div class="container">
+                <p class="ad-cta__price">$295 <span>CAD</span></p>
+                <p class="ad-cta__note">Delivered within 7 business days</p>
+                <a href="/intake/brand-clarity-diagnostic" class="ad-cta__button">Start the Brand Clarity Diagnostic</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="ad-footer">
+        <p class="ad-footer__text">&copy; {currentYear} Bertrand Group</p>
+        <p class="ad-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
+    </footer>
+
+    <GesturePrevention />
+
+    <AnnouncementBanner />
+    <VisitorNotify />
+</BaseLayout>

@@ -4,17 +4,19 @@
   "description": "Bertrand Group | Brands & Web Systems — studio site",
   "type": "module",
   "scripts": {
-    "dev": "npx serve . -l 8005",
-    "build": "echo 'Static site - no build required'",
-    "start": "npx serve . -l 8005",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
     "db:init": "node scripts/init-db.js"
   },
   "author": "Scott Bertrand",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@astrojs/vercel": "^9.0.4",
     "@vercel/functions": "^3.4.1",
     "@vercel/postgres": "^0.10.0",
+    "astro": "^5.17.1",
     "resend": "^4.0.0"
   }
 }

@@ -1,0 +1,708 @@
+---
+/**
+ * B Build (Focus Studio) — Ad landing page.
+ * HeaderUniversal with !important visibility overrides. Violet accents.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderUniversal from '../components/HeaderUniversal.astro';
+import SkipLink from '../components/SkipLink.astro';
+import AnnouncementBanner from '../components/AnnouncementBanner.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<BaseLayout
+    title="B Build — Fixed-Scope Web & Brand Work | BG | Brands & Web Systems"
+    description="Focused brand and website work—done fast, done properly. Starter Site, One-Page Redesign, and Brandmark & Visual Identity packages with clear timelines and fixed prices."
+    canonical="https://brands.bertrandgroup.ca/focus-studio"
+    ogTitle="B Build — Fixed-Scope Web & Brand Work | BG | Brands & Web Systems"
+    ogDescription="Focused brand and website work—done fast, done properly. Clear scope, clear timelines, clear outcomes."
+    schemaJson={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "B Build",
+        "description": "Fixed-scope web and brand work for small businesses. Clear scope, clear timelines, clear outcomes.",
+        "provider": {
+            "@type": "ProfessionalService",
+            "name": "Bertrand Group | Brands & Web Systems",
+            "url": "https://brands.bertrandgroup.ca",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Greater Sudbury",
+                "addressRegion": "Ontario",
+                "addressCountry": "CA"
+            }
+        },
+        "areaServed": [
+            { "@type": "Place", "name": "Northern Ontario" },
+            { "@type": "Country", "name": "Canada" }
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Build Offerings",
+            "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site" }, "price": "750", "priceCurrency": "CAD" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page System Redesign" }, "price": "1250", "priceCurrency": "CAD" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmark & Visual Identity" }, "price": "950", "priceCurrency": "CAD" }
+            ]
+        }
+    }}
+>
+    <Fragment slot="head">
+        <style is:inline>
+            html { touch-action: pan-x pan-y; }
+            @supports (-webkit-touch-callout: none) { html { -webkit-text-size-adjust: 100%; } }
+
+            /* Override main.css header to be visible by default on landing pages */
+            .header {
+                opacity: 1 !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+                transform: translateY(0) !important;
+            }
+
+            .header__logo-icon,
+            .header__wordmark {
+                opacity: 1 !important;
+            }
+
+            .fs-page {
+                min-height: 100vh;
+                padding-top: 80px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .focus-studio__brand {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.625rem;
+                margin-bottom: var(--space-sm);
+                text-decoration: none;
+                transition: opacity var(--duration-fast, 150ms) ease;
+            }
+
+            .focus-studio__brand:hover {
+                opacity: 0.8;
+            }
+
+            .focus-studio__mark {
+                width: 32px;
+                height: 32px;
+                opacity: 1;
+                filter: brightness(0) invert(1);
+            }
+
+            .focus-studio__name {
+                font-family: 'Fraunces', Georgia, serif;
+                font-size: var(--text-2xl);
+                font-weight: 300;
+                letter-spacing: 0.02em;
+                color: var(--text);
+            }
+
+            .fs-hero {
+                padding: var(--space-2xl, 4rem) 0 var(--space-lg, 2rem);
+                text-align: center;
+            }
+
+            .fs-hero__title {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+                font-weight: 400;
+                line-height: 1.25;
+                margin-bottom: var(--space-sm);
+                color: var(--text);
+            }
+
+            .fs-hero__problem {
+                font-size: var(--text-lg);
+                color: var(--text);
+                max-width: 580px;
+                margin: 0 auto var(--space-md);
+                line-height: 1.5;
+                font-weight: 400;
+            }
+
+            .fs-hero__subtitle {
+                font-size: var(--text-base);
+                color: var(--text-muted);
+                max-width: 520px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+            .fs-offerings {
+                padding: var(--space-md, 1.5rem) 0 var(--space-2xl, 4rem);
+            }
+
+            .fs-offering {
+                background: rgba(139, 92, 246, 0.08);
+                border: 1px solid rgba(139, 92, 246, 0.2);
+                border-radius: var(--radius-lg, 12px);
+                padding: var(--space-lg);
+                display: flex;
+                flex-direction: column;
+                transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease, transform var(--duration-fast) ease;
+            }
+
+            .fs-offering:hover {
+                border-color: rgba(139, 92, 246, 0.5);
+                background: rgba(139, 92, 246, 0.12);
+                transform: translateY(-2px);
+            }
+
+            .fs-offering--primary {
+                grid-column: 1 / -1;
+                max-width: 600px;
+                margin: 0 auto var(--space-lg);
+                border: 2px solid rgba(139, 92, 246, 0.5);
+                background: rgba(139, 92, 246, 0.15);
+                position: relative;
+                padding: var(--space-xl);
+            }
+
+            .fs-offering--primary .fs-offering__title {
+                font-size: var(--text-2xl);
+            }
+
+            .fs-offering--primary .fs-offering__description {
+                font-size: var(--text-base);
+            }
+
+            .fs-offering--primary .fs-offering__price {
+                font-size: var(--text-2xl);
+            }
+
+            .fs-offering--primary::before {
+                content: 'RECOMMENDED';
+                position: absolute;
+                top: -0.75rem;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: var(--text-xs);
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #fff;
+                background: var(--focus-accent);
+                padding: 0.25rem 0.875rem;
+                border-radius: 2px;
+                white-space: nowrap;
+            }
+
+            .fs-offering--primary:hover {
+                border-color: rgba(139, 92, 246, 0.7);
+                background: rgba(139, 92, 246, 0.2);
+            }
+
+            .fs-offering--primary .fs-offering__cta {
+                display: inline-block;
+                margin-top: var(--space-sm);
+                padding: 0.75rem 1.5rem;
+                background: var(--focus-accent);
+                color: #fff;
+                font-size: var(--text-sm);
+                font-weight: 600;
+                text-decoration: none;
+                border-radius: var(--radius-md);
+                transition: background var(--duration-fast) ease;
+            }
+
+            .fs-offering--primary .fs-offering__cta:hover {
+                background: var(--focus-accent-hover);
+            }
+
+            .fs-offerings__secondary {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: var(--space-md);
+                max-width: 700px;
+                margin: 0 auto;
+            }
+
+            .fs-offerings__secondary .fs-offering {
+                opacity: 0.85;
+                padding: var(--space-md);
+            }
+
+            .fs-offerings__secondary .fs-offering:hover {
+                opacity: 1;
+            }
+
+            .fs-offerings__secondary .fs-offering__cta {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color var(--duration-fast) ease;
+            }
+
+            .fs-offerings__secondary .fs-offering__cta:hover {
+                color: var(--focus-accent);
+            }
+
+            .fs-offerings__secondary-label {
+                text-align: center;
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                margin-bottom: var(--space-sm);
+            }
+
+            .fs-offering__header {
+                margin-bottom: var(--space-sm);
+            }
+
+            .fs-offering__timeline {
+                display: block;
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+                margin-bottom: 0.375rem;
+            }
+
+            .fs-offering__title {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: var(--text-xl);
+                font-weight: 400;
+                color: var(--text);
+                line-height: 1.3;
+            }
+
+            .fs-offering__description {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.6;
+                margin-bottom: var(--space-sm);
+                flex-grow: 1;
+            }
+
+            .fs-offering__footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-top: var(--space-sm);
+                border-top: 1px solid rgba(139, 92, 246, 0.2);
+            }
+
+            .fs-offering__price {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: var(--text-xl);
+                font-weight: 500;
+                color: var(--focus-accent);
+            }
+
+            .fs-offering__price span {
+                font-size: var(--text-sm);
+                font-weight: 400;
+                color: var(--text-subtle);
+            }
+
+            .fs-form-section {
+                padding: var(--space-xl, 3rem) 0 var(--space-2xl, 4rem);
+                background: var(--bg-alt, #0d0d0d);
+                position: relative;
+            }
+
+            .fs-form-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 200px;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), transparent);
+            }
+
+            .fs-form-section__title {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: var(--text-2xl);
+                font-weight: 400;
+                margin-bottom: var(--space-sm);
+                text-align: center;
+                color: var(--text);
+            }
+
+            .fs-form-section__subtitle {
+                font-size: var(--text-base);
+                color: var(--text-muted);
+                text-align: center;
+                max-width: 500px;
+                margin: 0 auto var(--space-xl, 3rem);
+            }
+
+            .fs-intake-prompt,
+            .fs-booking-prompt {
+                text-align: center;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .fs-intake-cta {
+                margin: var(--space-lg) 0;
+            }
+
+            .fs-form__submit {
+                width: 100%;
+                padding: 1rem 2rem;
+                background: rgba(139, 92, 246, 0.85);
+                border: 1px solid rgba(139, 92, 246, 0.3);
+                color: #fff;
+                font-size: var(--text-base);
+                font-weight: 500;
+                font-family: inherit;
+                border-radius: var(--radius-md);
+                cursor: pointer;
+                transition: background var(--duration-fast) var(--ease-out);
+            }
+
+            .fs-form__submit:hover {
+                background: rgba(124, 58, 237, 0.95);
+            }
+
+            .fs-intake-note {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                font-style: italic;
+            }
+
+            .fs-form__calendly {
+                margin-top: var(--space-lg);
+                padding: var(--space-lg);
+                background: rgba(139, 92, 246, 0.1);
+                border: 1px solid rgba(139, 92, 246, 0.3);
+                border-radius: var(--radius-md);
+                text-align: center;
+            }
+
+            .fs-form__calendly-text {
+                font-size: var(--text-base);
+                color: var(--text);
+                margin-bottom: var(--space-sm);
+            }
+
+            .fs-form__alt {
+                margin-top: var(--space-lg);
+                text-align: center;
+                padding-top: var(--space-md);
+                border-top: 1px solid var(--border);
+            }
+
+            .fs-form__alt-text {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                margin-bottom: var(--space-xs);
+            }
+
+            .fs-form__alt-link {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color var(--duration-fast) ease;
+            }
+
+            .fs-form__alt-link:hover {
+                color: var(--focus-accent);
+            }
+
+            .fs-boundary {
+                padding: var(--space-xl, 3rem) 0;
+                text-align: center;
+            }
+
+            .fs-boundary__text {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                font-style: italic;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .fs-boundary__link {
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color var(--duration-fast) ease;
+            }
+
+            .fs-boundary__link:hover {
+                color: var(--focus-accent);
+            }
+
+            .fs-footer {
+                border-top: 1px solid var(--border);
+                padding: var(--space-xl, 3rem) 1.5rem;
+                text-align: center;
+            }
+
+            .fs-footer__text {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                margin-bottom: 0.5rem;
+            }
+
+            .fs-footer__phone {
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+            }
+
+            .fs-footer__phone a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .fs-spotlight {
+                position: fixed;
+                border-radius: 50%;
+                filter: blur(100px);
+                pointer-events: none;
+                z-index: 0;
+                opacity: 0;
+                will-change: transform, opacity;
+                transform: translateZ(0);
+            }
+
+            .fs-spotlight--violet {
+                width: 500px;
+                height: 500px;
+                background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.08) 45%, transparent 70%);
+                bottom: -120px;
+                left: -100px;
+                animation: spotlightFadeIn 2s ease-out 0.3s forwards, smokeDrift1 25s ease-in-out 2s infinite;
+            }
+
+            .fs-spotlight--blue {
+                width: 450px;
+                height: 450px;
+                background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.06) 45%, transparent 70%);
+                top: 60px;
+                right: -100px;
+                animation: spotlightFadeIn 2s ease-out 0.6s forwards, smokeDrift2 30s ease-in-out 2.5s infinite;
+            }
+
+            @keyframes spotlightFadeIn {
+                to { opacity: 1; }
+            }
+
+            @keyframes smokeDrift1 {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                25% { transform: translate(30px, -20px) scale(1.05); }
+                50% { transform: translate(15px, -35px) scale(0.95); }
+                75% { transform: translate(-20px, -15px) scale(1.02); }
+            }
+
+            @keyframes smokeDrift2 {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                25% { transform: translate(-25px, 15px) scale(0.97); }
+                50% { transform: translate(-10px, 30px) scale(1.04); }
+                75% { transform: translate(20px, 10px) scale(0.98); }
+            }
+
+            .fs-vignette {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 1;
+                background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+            }
+
+            @media (max-width: 768px) {
+                .fs-spotlight {
+                    filter: blur(40px);
+                }
+                .fs-spotlight--violet {
+                    width: 300px;
+                    height: 300px;
+                    animation: spotlightFadeIn 2s ease-out 0.3s forwards, smokeDriftMobile 20s ease-in-out 2s infinite;
+                }
+                .fs-spotlight--blue {
+                    width: 260px;
+                    height: 260px;
+                    animation: spotlightFadeIn 2s ease-out 0.6s forwards, smokeDriftMobile 25s ease-in-out 2.5s infinite;
+                }
+                @keyframes smokeDriftMobile {
+                    0%, 100% { transform: translate(0, 0); }
+                    50% { transform: translate(15px, -10px); }
+                }
+                .fs-offering__title {
+                    font-size: var(--text-lg);
+                }
+                .fs-hero { padding: var(--space-lg, 2rem) 0 var(--space-md, 1.5rem); }
+                .fs-offerings { padding: var(--space-md, 1.5rem) 0 var(--space-lg, 2rem); }
+                .fs-offering--primary { padding: var(--space-md, 1.5rem); max-width: 100%; }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .fs-spotlight {
+                    animation: none !important;
+                    opacity: 1;
+                }
+            }
+        </style>
+    </Fragment>
+
+    <SkipLink />
+
+    <!-- Ambient Effects -->
+    <div class="fs-spotlight fs-spotlight--violet" aria-hidden="true"></div>
+    <div class="fs-spotlight fs-spotlight--blue" aria-hidden="true"></div>
+    <div class="fs-vignette" aria-hidden="true"></div>
+
+    <HeaderUniversal />
+
+    <main class="fs-page" id="main-content">
+        <!-- Hero -->
+        <section class="fs-hero">
+            <div class="container">
+                <a href="/?skip" class="focus-studio__brand">
+                    <img src="/assets/bg-brands-logomark.png" alt="" class="focus-studio__mark" width="40" height="40">
+                    <span class="focus-studio__name">Build</span>
+                </a>
+                <h1 class="fs-hero__title">Customers are clicking away.</h1>
+                <p class="fs-hero__problem">If your website hasn't been updated in over a year, visitors see it immediately. Especially on mobile.</p>
+                <p class="fs-hero__subtitle">
+                    For Sudbury and Northern Ontario businesses with an existing website that isn't converting.
+                </p>
+            </div>
+        </section>
+
+        <!-- Primary Offering - Dominant -->
+        <section class="fs-offerings">
+            <div class="container">
+                <!-- Starter Site - THE DEFAULT -->
+                <div class="fs-offering fs-offering--primary" id="starter">
+                    <div class="fs-offering__header">
+                        <span class="fs-offering__timeline">Done in 1 business day</span>
+                        <h2 class="fs-offering__title">Starter Site</h2>
+                    </div>
+                    <p class="fs-offering__description">A fast-launch website built for speed and simplicity. Clean, functional, and live quickly — ideal for businesses that need a professional web presence without complexity. Most businesses start here.</p>
+                    <div class="fs-offering__footer">
+                        <p class="fs-offering__price">$750 <span>CAD</span></p>
+                        <a href="#request" class="fs-offering__cta">Get Started →</a>
+                    </div>
+                </div>
+
+                <!-- Secondary Options -->
+                <p class="fs-offerings__secondary-label">Need something different?</p>
+                <div class="fs-offerings__secondary">
+                    <!-- One-Page Redesign -->
+                    <div class="fs-offering" id="redesign">
+                        <div class="fs-offering__header">
+                            <span class="fs-offering__timeline">2–3 business days</span>
+                            <h3 class="fs-offering__title">One-Page System Redesign</h3>
+                        </div>
+                        <p class="fs-offering__description">A fully custom, code-based one-page website. No templates, no builders.</p>
+                        <div class="fs-offering__footer">
+                            <p class="fs-offering__price">$1,250 <span>CAD</span></p>
+                            <a href="#request" class="fs-offering__cta">Select →</a>
+                        </div>
+                    </div>
+
+                    <!-- Brandmark & Visual Identity -->
+                    <div class="fs-offering" id="brandmark">
+                        <div class="fs-offering__header">
+                            <span class="fs-offering__timeline">5–7 business days</span>
+                            <h3 class="fs-offering__title">Brandmark & Visual Identity</h3>
+                        </div>
+                        <p class="fs-offering__description">A complete brandmark with supporting visual direction that works everywhere.</p>
+                        <div class="fs-offering__footer">
+                            <p class="fs-offering__price">$950 <span>CAD</span></p>
+                            <a href="#request" class="fs-offering__cta">Select →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Start Here Section -->
+        <section class="fs-form-section" id="request">
+            <div class="container">
+                <!-- Default: Intake CTA -->
+                <div class="fs-intake-prompt" id="intakePrompt">
+                    <h2 class="fs-form-section__title">Ready to get started?</h2>
+                    <p class="fs-form-section__subtitle">All Build work begins with a quick intake. We'll review your situation and confirm this is the right fit before scheduling.</p>
+
+                    <div class="fs-intake-cta">
+                        <a href="/book" class="fs-form__submit" style="display: inline-block; text-decoration: none; text-align: center;">Start Intake →</a>
+                    </div>
+
+                    <p class="fs-intake-note">Takes 5 minutes. No commitment required.</p>
+                </div>
+
+                <!-- Conditional: Kickoff booking -->
+                <div class="fs-booking-prompt" id="bookingPrompt" style="display: none;">
+                    <h2 class="fs-form-section__title">Schedule Your Kickoff</h2>
+                    <p class="fs-form-section__subtitle">Based on your intake, you're ready to book a Build Kickoff. We'll confirm scope and send payment details after.</p>
+
+                    <div class="fs-form__calendly" style="display: block; margin-top: var(--space-md);">
+                        <p class="fs-form__calendly-text">30 minutes · Free · Live Video</p>
+                        <p class="fs-form__calendly-text" style="margin-top: 0.5rem; opacity: 0.7;">Check your email for your booking link to schedule.</p>
+                    </div>
+                </div>
+
+                <div class="fs-form__alt">
+                    <p class="fs-form__alt-text">Have questions first?</p>
+                    <a href="/clarity-session" class="fs-form__alt-link">Book a Clarity Session ($145) →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Boundary -->
+        <section class="fs-boundary">
+            <div class="container">
+                <p class="fs-boundary__text">
+                    Build engagements are intentionally fixed-scope. For full brand systems, naming, strategy, or multi-phase work, <a href="/#services" class="fs-boundary__link">explore our Transformation →</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fs-footer">
+        <p class="fs-footer__text">&copy; {currentYear} Bertrand Group</p>
+        <p class="fs-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
+    </footer>
+
+    <script is:inline>
+        // Check for intake completion and show appropriate section
+        (function() {
+            var intakePrompt = document.getElementById('intakePrompt');
+            var bookingPrompt = document.getElementById('bookingPrompt');
+
+            function hasIntakeAccess() {
+                return document.cookie.split(';').some(function(c) {
+                    return c.trim().startsWith('bb_intake_completed=') || c.trim().startsWith('bb_returning_client=');
+                });
+            }
+
+            if (hasIntakeAccess() && intakePrompt && bookingPrompt) {
+                intakePrompt.style.display = 'none';
+                bookingPrompt.style.display = 'block';
+            }
+        })();
+
+        // Pre-select offering when clicking secondary card CTAs
+        document.querySelectorAll('.fs-offerings__secondary .fs-offering__cta').forEach(function(cta) {
+            cta.addEventListener('click', function(e) {
+                var title = this.closest('.fs-offering').querySelector('.fs-offering__title').textContent;
+                var select = document.getElementById('offering');
+                if (select) {
+                    for (var i = 0; i < select.options.length; i++) {
+                        if (select.options[i].text.includes(title)) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
+
+    <GesturePrevention />
+    <AnnouncementBanner />
+    <VisitorNotify />
+</BaseLayout>

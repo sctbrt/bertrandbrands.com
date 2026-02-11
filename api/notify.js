@@ -30,16 +30,25 @@ export default async function handler(req, res) {
     if (type === 'visitor') {
       // Visitor notification (silent, low priority)
 
-      // Use Vercel's built-in geo headers (free, instant, no rate limits)
-      const city = req.headers['x-vercel-ip-city'] ? decodeURIComponent(req.headers['x-vercel-ip-city']) : '';
-      const region = req.headers['x-vercel-ip-country-region'] || '';
-      const country = req.headers['x-vercel-ip-country'] || '';
+      // Get visitor IP from Vercel headers
+      const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
+                 req.headers['x-real-ip'] ||
+                 'unknown';
 
+      // Use ip-api.com for reliable geolocation (more complete than Vercel geo headers)
       let location = '';
-      if (city) {
-        location = city;
-        if (region) location += `, ${region}`;
-        if (country) location += `, ${country}`;
+      if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
+        try {
+          const geoRes = await fetch(`https://ip-api.com/json/${ip}?fields=city,regionCode,country`);
+          if (geoRes.ok) {
+            const geo = await geoRes.json();
+            if (geo.city) {
+              location = `${geo.city}${geo.regionCode ? `, ${geo.regionCode}` : ''}${geo.country ? `, ${geo.country}` : ''}`;
+            }
+          }
+        } catch (geoErr) {
+          // Silently fail - location is optional
+        }
       }
 
       notificationMessage = `📍 ${page || 'Homepage'}`;

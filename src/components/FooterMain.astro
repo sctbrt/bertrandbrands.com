@@ -1,0 +1,26 @@
+---
+/**
+ * FooterMain — Full footer used on homepage and hub pages.
+ * Includes logomark, copyright, email, phone, and "Selected Work" link.
+ */
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer__logomark">
+            <img src="/assets/bg-brands-logomark.png" alt="" class="footer__logomark-img" width="40" height="40" loading="lazy">
+        </div>
+        <div class="footer__inner">
+            <div class="footer__left">
+                <p class="footer__copyright">&copy; {year} Bertrand Group</p>
+                <p class="footer__parent"><a href="#work">Selected Work</a></p>
+            </div>
+            <div class="footer__contact">
+                <a href="mailto:hello@bertrandgroup.ca" class="footer__link">hello@bertrandgroup.ca</a>
+                <a href="tel:+17054133705" class="footer__link footer__link--phone phone-link__mobile">(705) 413-3705</a>
+                <span class="footer__link footer__link--phone phone-link__desktop">705-413-3705</span>
+            </div>
+        </div>
+    </div>
+</footer>

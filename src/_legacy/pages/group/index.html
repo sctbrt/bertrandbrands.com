@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="canonical" href="https://bertrandgroup.ca/">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <title>Bertrand Group</title>
+    <meta name="description" content="Bertrand Group is a family of brands and platforms built in Northern Ontario. Design studios, digital platforms, and hospitality.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Bertrand Group">
+    <meta property="og:description" content="Brands, systems, and ventures. Sudbury, Canada.">
+    <meta property="og:url" content="https://bertrandgroup.ca/">
+    <meta property="og:image" content="https://bertrandgroup.ca/og-image.png">
+    <meta property="og:locale" content="en_CA">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Bertrand Group",
+        "url": "https://bertrandgroup.ca",
+        "description": "A family of brands and platforms built in Northern Ontario.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Greater Sudbury",
+            "addressRegion": "Ontario",
+            "addressCountry": "CA"
+        },
+        "subOrganization": [
+            {
+                "@type": "Organization",
+                "name": "Bertrand Group | Brands & Web Systems",
+                "url": "https://brands.bertrandgroup.ca",
+                "description": "Brand & Web Systems Studio"
+            }
+        ],
+        "founder": {
+            "@type": "Person",
+            "name": "Scott Bertrand",
+            "url": "https://scottbertrand.com"
+        }
+    }
+    </script>
+
+    <!-- Fonts (self-hosted, no third-party waterfall) -->
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/styles/fonts.css">
+
+    <!-- Shared Tokens -->
+    <link rel="stylesheet" href="/styles/tokens.css">
+
+    <style>
+        /* Prevent pinch-to-zoom and triple-tap zoom on iOS */
+        html {
+            touch-action: pan-x pan-y;
+        }
+
+        /* ========================================
+           Bertrand Group — Corporate Identity
+           Namespace: bg-
+           ======================================== */
+
+        /* --- Reset & Base --- */
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* --- Container --- */
+
+        .bg-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 5vw, 3rem);
+        }
+
+        /* --- Header --- */
+
+        .bg-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bg-header__inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 5vw, 3rem);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .bg-header__logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .bg-header__name {
+            font-family: 'Sora', sans-serif;
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text);
+        }
+
+        .bg-header__link {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--font-normal);
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            transition: color var(--duration-fast) ease;
+        }
+
+        .bg-header__link:hover {
+            color: var(--text);
+        }
+
+        /* --- Hero --- */
+
+        .bg-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-2xl) var(--space-md);
+        }
+
+        .bg-hero__content {
+            max-width: 600px;
+        }
+
+        .bg-hero__title {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            font-weight: var(--font-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            line-height: var(--leading-tight);
+            margin-bottom: var(--space-sm);
+        }
+
+        .bg-hero__descriptor {
+            font-family: var(--font-body);
+            font-size: var(--text-base);
+            font-weight: var(--font-light);
+            color: var(--text-subtle);
+            letter-spacing: 0.03em;
+        }
+
+        .bg-hero__rule {
+            width: 60px;
+            height: 1px;
+            background: var(--border);
+            border: none;
+            margin: var(--space-lg) auto 0;
+        }
+
+        /* --- Sections --- */
+
+        .bg-section {
+            padding: var(--space-2xl) 0;
+        }
+
+        .bg-section__label {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-lg);
+        }
+
+        /* --- About --- */
+
+        .bg-about__text {
+            font-family: var(--font-body);
+            font-size: var(--text-lg);
+            font-weight: var(--font-light);
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 640px;
+        }
+
+        /* --- Portfolio --- */
+
+        .bg-portfolio__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .bg-portfolio__tile {
+            position: relative;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            transition: border-color var(--duration-fast) ease,
+                        transform var(--duration-fast) ease,
+                        box-shadow var(--duration-fast) ease;
+        }
+
+        .bg-portfolio__tile:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.4);
+        }
+
+        .bg-portfolio__tile--placeholder {
+            border-style: dashed;
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .bg-portfolio__tile--placeholder:hover {
+            border-color: var(--border);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .bg-portfolio__lockup {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: var(--space-sm);
+        }
+
+        .bg-portfolio__logomark {
+            width: 24px;
+            height: 24px;
+            opacity: 0.9;
+            flex-shrink: 0;
+        }
+
+        .bg-portfolio__divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+
+        .bg-portfolio__wordmark {
+            height: 24px;
+            max-width: 100%;
+            width: auto;
+            object-fit: contain;
+            object-position: left;
+            opacity: 0.9;
+            margin-bottom: var(--space-sm);
+        }
+
+        .bg-portfolio__lockup .bg-portfolio__wordmark {
+            margin-bottom: 0;
+        }
+
+        .bg-portfolio__role {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--font-normal);
+            color: var(--text-muted);
+        }
+
+        .bg-portfolio__desc {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--font-light);
+            color: var(--text-subtle);
+            line-height: 1.6;
+        }
+
+        .bg-portfolio__link {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: var(--font-normal);
+            color: var(--text-subtle);
+            letter-spacing: 0.02em;
+            margin-top: auto;
+            padding-top: var(--space-xs);
+            transition: color var(--duration-fast) ease;
+        }
+
+        .bg-portfolio__tile:hover .bg-portfolio__link {
+            color: var(--text-muted);
+        }
+
+        .bg-portfolio__placeholder-name {
+            font-family: var(--font-display);
+            font-size: var(--text-lg);
+            font-weight: var(--font-light);
+            color: var(--text-subtle);
+        }
+
+        .bg-portfolio__placeholder-status {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: var(--font-normal);
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* --- Team --- */
+
+        .bg-team__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .bg-team__card {
+            padding: var(--space-md) 0;
+        }
+
+        .bg-team__name {
+            font-family: 'Sora', sans-serif;
+            font-size: var(--text-xl);
+            font-weight: var(--font-normal);
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-1);
+        }
+
+        .bg-team__role {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--font-normal);
+            color: var(--accent);
+            margin-bottom: var(--space-xs);
+        }
+
+        .bg-team__bio {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--font-light);
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* --- Footer --- */
+
+        .bg-footer {
+            border-top: 1px solid var(--border);
+            padding: var(--space-lg) 0;
+            margin-top: var(--space-xl);
+        }
+
+        .bg-footer__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bg-footer__text {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: var(--font-light);
+            color: var(--text-subtle);
+        }
+
+        /* --- Fade Animation --- */
+
+        .bg-fade {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        }
+
+        .bg-fade.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive --- */
+
+        @media (max-width: 768px) {
+            .bg-portfolio__grid,
+            .bg-team__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bg-section {
+                padding: var(--space-xl) 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bg-header__inner {
+                height: 56px;
+            }
+
+            .bg-header__name {
+                font-size: var(--text-base);
+            }
+
+            .bg-hero {
+                min-height: 85vh;
+            }
+
+            .bg-about__text {
+                font-size: var(--text-base);
+            }
+
+            .bg-footer__inner {
+                flex-direction: column;
+                gap: var(--space-xs);
+                text-align: center;
+            }
+        }
+
+        /* --- Reduced Motion --- */
+
+        @media (prefers-reduced-motion: reduce) {
+            .bg-fade {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .bg-portfolio__tile {
+                transition: none;
+            }
+        }
+
+        .skip-link {
+            position: fixed;
+            top: -100%;
+            left: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--text);
+            color: var(--bg);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 6px;
+            z-index: 10001;
+            text-decoration: none;
+            transition: top 0.15s ease;
+        }
+
+        .skip-link:focus {
+            top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="bg-header">
+        <div class="bg-header__inner">
+            <a href="/" class="bg-header__logo">
+                <span class="bg-header__name">Bertrand Group</span>
+            </a>
+            <a href="https://brands.bertrandgroup.ca/?skip" class="bg-header__link">Studio &rarr;</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="bg-hero" id="main-content">
+        <div class="bg-hero__content">
+            <h1 class="bg-hero__title">Bertrand Group</h1>
+            <p class="bg-hero__descriptor">Brands, systems, and ventures. Sudbury, Canada.</p>
+            <hr class="bg-hero__rule">
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="bg-section bg-fade">
+        <div class="bg-container">
+            <p class="bg-section__label">About</p>
+            <p class="bg-about__text">
+                Bertrand Group is a family of brands and platforms built in Northern Ontario. We create and operate businesses focused on clarity, structure, and lasting value &mdash; from design studios to digital platforms to hospitality.
+            </p>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="bg-section bg-fade">
+        <div class="bg-container">
+            <p class="bg-section__label">Portfolio</p>
+            <div class="bg-portfolio__grid">
+
+                <!-- Bertrand Group | Brands & Web Systems -->
+                <a href="https://brands.bertrandgroup.ca/?skip" class="bg-portfolio__tile">
+                    <div class="bg-portfolio__lockup">
+                        <img src="/assets/bg-brands-logomark.png" alt="" class="bg-portfolio__logomark" width="40" height="40" loading="lazy">
+                        <span class="bg-portfolio__divider" aria-hidden="true"></span>
+                        <span class="bg-portfolio__wordmark" style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: inherit;">Brands &amp; Web Systems</span>
+                    </div>
+                    <p class="bg-portfolio__role">Brand &amp; Web Systems Studio</p>
+                    <p class="bg-portfolio__desc">Design, web, and systems work for businesses that need structure.</p>
+                    <span class="bg-portfolio__link">brands.bertrandgroup.ca &rarr;</span>
+                </a>
+
+                <!-- Scott Bertrand -->
+                <a href="https://scottbertrand.com" class="bg-portfolio__tile">
+                    <img src="/assets/scott-bertrand-logo-wordmark-light.png" alt="Scott Bertrand" class="bg-portfolio__wordmark" width="543" height="50" loading="lazy">
+                    <p class="bg-portfolio__role">Principal</p>
+                    <p class="bg-portfolio__desc">Strategy, direction, and leadership across all Group ventures.</p>
+                    <span class="bg-portfolio__link">scottbertrand.com &rarr;</span>
+                </a>
+
+                <!-- Hospitality (Placeholder) -->
+                <div class="bg-portfolio__tile bg-portfolio__tile--placeholder">
+                    <span class="bg-portfolio__placeholder-name">Hospitality</span>
+                    <p class="bg-portfolio__placeholder-status">Coming 2026</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="bg-section bg-fade">
+        <div class="bg-container">
+            <p class="bg-section__label">Team</p>
+            <div class="bg-team__grid">
+
+                <div class="bg-team__card">
+                    <h3 class="bg-team__name">Scott Bertrand</h3>
+                    <p class="bg-team__role">Founder &amp; Principal</p>
+                    <p class="bg-team__bio">Brand strategy, UX direction, and operations across all Group ventures. Based in Greater Sudbury, Ontario.</p>
+                </div>
+
+                <div class="bg-team__card">
+                    <h3 class="bg-team__name">Devin Major</h3>
+                    <p class="bg-team__role">Developer &amp; Architect</p>
+                    <p class="bg-team__bio">Full-stack development, infrastructure, and technical architecture.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-footer">
+        <div class="bg-container">
+            <div class="bg-footer__inner">
+                <p class="bg-footer__text">&copy; <span class="js-year">2026</span> Bertrand Group</p>
+                <p class="bg-footer__text">Sudbury, Canada</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Visitor Tracking -->
+    <script src="/components/visitor-notify.js"></script>
+
+    <!-- Page Scripts -->
+    <script>
+        (function() {
+            // Dynamic year
+            var yearEl = document.querySelector('.js-year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Scroll fade-in
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelectorAll('.bg-fade').forEach(function(el) {
+                    el.classList.add('revealed');
+                });
+                return;
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.bg-fade').forEach(function(el) {
+                observer.observe(el);
+            });
+        })();
+
+        // Prevent iOS triple-tap and gesture zoom
+        document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
+    </script>
+
+</body>
+</html>

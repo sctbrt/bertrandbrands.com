@@ -1,0 +1,56 @@
+---
+/**
+ * FooterMinimal — Simple footer used on sub-pages and ad landing pages.
+ * Copyright + phone number. Optional navigation links.
+ *
+ * Props:
+ *   className — CSS class prefix (default: footer-minimal)
+ *   links — optional array of { href, label } for nav links
+ *   showLocation — show location/trust messaging (default: false)
+ *   locationText — location text (default: Based in Greater Sudbury, Ontario...)
+ *   privacyText — privacy notice text (default: Your information is only used to respond...)
+ */
+interface Props {
+    className?: string;
+    links?: Array<{ href: string; label: string }>;
+    showLocation?: boolean;
+    locationText?: string;
+    privacyText?: string;
+}
+
+const {
+    className = 'footer-minimal',
+    links,
+    showLocation = false,
+    locationText = 'Based in Greater Sudbury, Ontario.<br>Serving Northern Ontario &amp; Canada.',
+    privacyText = 'Your information is only used to respond to your request.',
+} = Astro.props;
+
+const year = new Date().getFullYear();
+---
+
+<footer class={className}>
+    {showLocation && (
+        <div class={`${className}__trust`}>
+            <p class={`${className}__location`} set:html={locationText} />
+            <p class={`${className}__privacy`}>{privacyText}</p>
+        </div>
+    )}
+    <div class={`${className}__bottom`}>
+        <p class={`${className}__text`}>&copy; {year} Bertrand Group</p>
+        {links && links.length > 0 && (
+            <p class={`${className}__links`}>
+                {links.map((link, i) => (
+                    <>
+                        {i > 0 && <Fragment set:html=" &middot; " />}
+                        <a href={link.href}>{link.label}</a>
+                    </>
+                ))}
+            </p>
+        )}
+        <p class={`${className}__phone`}>
+            <a href="tel:+17054133705" class="phone-link__mobile" title="Call Bertrand Group">705-413-3705</a>
+            <span class="phone-link__desktop">705-413-3705</span>
+        </p>
+    </div>
+</footer>

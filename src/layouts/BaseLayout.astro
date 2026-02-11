@@ -1,0 +1,102 @@
+---
+/**
+ * BaseLayout — shared HTML shell for all pages.
+ * Absorbs the ~30 lines of <head> boilerplate duplicated across 29 pages.
+ */
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  robots?: string;
+  schemaJson?: Record<string, unknown>;
+  bodyClass?: string;
+  includeMainCss?: boolean;
+  gtagId?: string;
+}
+
+const {
+  title,
+  description = '',
+  canonical,
+  ogTitle,
+  ogDescription,
+  ogImage = 'https://brands.bertrandgroup.ca/og-image.png',
+  robots,
+  schemaJson,
+  bodyClass = '',
+  includeMainCss = true,
+  gtagId,
+} = Astro.props;
+
+const effectiveOgTitle = ogTitle || title;
+const effectiveOgDescription = ogDescription || description;
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <title>{title}</title>
+  {description && <meta name="description" content={description} />}
+  {canonical && <link rel="canonical" href={canonical} />}
+  {robots && <meta name="robots" content={robots} />}
+
+  {/* Open Graph */}
+  <meta property="og:title" content={effectiveOgTitle} />
+  {effectiveOgDescription && <meta property="og:description" content={effectiveOgDescription} />}
+  {canonical && <meta property="og:url" content={canonical} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_CA" />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Bertrand Group | Brands & Web Systems" />
+
+  {/* Favicon & Touch Icons */}
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="BG Brands" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  {/* Schema.org */}
+  {schemaJson && (
+    <script type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+  )}
+
+  {/* Google Ads conversion tracking */}
+  {gtagId && (
+    <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`} async></script>
+  )}
+  {gtagId && (
+    <script is:inline define:vars={{ gtagId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', gtagId);
+    </script>
+  )}
+
+  {/* Fonts */}
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/fonts.css">
+
+  {/* Styles */}
+  {includeMainCss && <link rel="stylesheet" href="/styles/tokens.css" />}
+  {includeMainCss && <link rel="stylesheet" href="/styles/main.css" />}
+
+  {/* Page-specific head content */}
+  <slot name="head" />
+</head>
+<body class={bodyClass}>
+  <slot />
+</body>
+</html>

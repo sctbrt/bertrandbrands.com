@@ -1,0 +1,54 @@
+---
+/**
+ * IntakeLayout — Layout for the 5 intake form pages.
+ * Extends BaseLayout. Includes HeaderIntake, SkipLink, VisitorNotify.
+ * No announcement banner on intake forms.
+ *
+ * Props: same as BaseLayout, plus:
+ *   backHref — where the header back button navigates
+ *   backLabel — text for back button
+ */
+import BaseLayout from './BaseLayout.astro';
+import SkipLink from '../components/SkipLink.astro';
+import HeaderIntake from '../components/HeaderIntake.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+
+interface Props {
+    title: string;
+    description?: string;
+    canonical?: string;
+    robots?: string;
+    backHref?: string;
+    backLabel?: string;
+}
+
+const {
+    title,
+    description,
+    canonical,
+    robots,
+    backHref = '/exploratory',
+    backLabel = 'Back',
+} = Astro.props;
+---
+
+<BaseLayout
+    title={title}
+    description={description}
+    canonical={canonical}
+    robots={robots}
+>
+    <Fragment slot="head">
+        <style is:inline>
+            /* Prevent pinch-to-zoom */
+            html { touch-action: pan-x pan-y; }
+            @supports (-webkit-touch-callout: none) { html { -webkit-text-size-adjust: 100%; } }
+        </style>
+        <slot name="head" />
+    </Fragment>
+
+    <SkipLink />
+    <HeaderIntake backHref={backHref} backLabel={backLabel} />
+    <slot />
+    <VisitorNotify />
+</BaseLayout>
