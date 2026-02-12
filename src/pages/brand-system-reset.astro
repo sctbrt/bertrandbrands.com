@@ -8,10 +8,10 @@ const currentYear = new Date().getFullYear();
 ---
 
 <ServiceDetailLayout
-    title="Brand System Reset — B Transformation | BG | Brands & Web Systems"
+    title="Brand System Reset — B Transformation | BG | Brand & Web Systems"
     description="A strategic reset of your brand system — diagnosis, realignment, and implementation roadmap. Combines brand audit with identity refinement."
     canonical="https://brands.bertrandgroup.ca/brand-system-reset"
-    ogTitle="Brand System Reset — B Transformation | BG | Brands & Web Systems"
+    ogTitle="Brand System Reset — B Transformation | BG | Brand & Web Systems"
     ogDescription="A strategic reset of your brand system — diagnosis, realignment, and implementation roadmap."
     schemaJson={{
         "@context": "https://schema.org",
@@ -20,7 +20,7 @@ const currentYear = new Date().getFullYear();
         "description": "A strategic reset of your brand system — diagnosis, realignment, and implementation roadmap.",
         "provider": {
             "@type": "ProfessionalService",
-            "name": "Bertrand Group | Brands & Web Systems",
+            "name": "Bertrand Group | Brand & Web Systems",
             "url": "https://brands.bertrandgroup.ca"
         }
     }}
@@ -84,10 +84,9 @@ const currentYear = new Date().getFullYear();
             .service-footer__phone a:hover { color: var(--text); }
 
             .service-hero { position: relative; }
-            .service-hero__illustration { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(280px, 50vw, 500px); height: auto; pointer-events: none; z-index: 0; opacity: 1; }
-            .service-hero__headline, .service-hero__description { position: relative; z-index: 1; }
-            @media (max-width: 900px) { .service-hero__illustration { width: clamp(220px, 60vw, 350px); opacity: 0.85; } }
-            @media (max-width: 480px) { .service-hero__illustration { width: clamp(180px, 70vw, 260px); opacity: 0.7; } }
+            .service-hero__illustration { display: block; margin: 0 auto 0.75rem; width: clamp(200px, 35vw, 320px); height: auto; pointer-events: none; opacity: 1; }
+            @media (max-width: 900px) { .service-hero__illustration { width: clamp(180px, 45vw, 280px); opacity: 0.85; } }
+            @media (max-width: 480px) { .service-hero__illustration { width: clamp(150px, 55vw, 220px); opacity: 0.7; } }
 
             @media (max-width: 768px) {
                 .service-page__spotlight { filter: blur(40px); }
@@ -123,13 +122,38 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <section class="service-hero">
-                <svg class="service-hero__illustration" viewBox="0 0 500 400" fill="none" aria-hidden="true">
-                    <rect x="175" y="125" width="150" height="150" rx="2" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
-                    <rect x="175" y="125" width="150" height="150" rx="2" stroke="rgba(217, 119, 6, 0.18)" stroke-width="1" transform="rotate(15, 250, 200)"/>
-                    <path d="M 340 140 A 110 110 0 0 1 360 200" stroke="rgba(217, 119, 6, 0.15)" stroke-width="1" stroke-dasharray="4 4"/>
-                    <line x1="250" y1="100" x2="250" y2="300" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
-                    <line x1="150" y1="200" x2="350" y2="200" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
-                    <circle cx="250" cy="200" r="3" stroke="rgba(217, 119, 6, 0.18)" stroke-width="1"/>
+                <svg class="service-hero__illustration" viewBox="115 70 270 250" fill="none" aria-hidden="true">
+                    <!-- Original system (misaligned) -->
+                    <rect x="175" y="125" width="150" height="150" rx="2" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1" stroke-dasharray="4 4"/>
+                    <rect x="175" y="125" width="150" height="150" rx="2" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" transform="rotate(15, 250, 200)"/>
+                    <rect x="175" y="125" width="150" height="150" rx="2" stroke="rgba(217, 119, 6, 0.06)" stroke-width="1" transform="rotate(8, 250, 200)"/>
+                    <!-- Realigned system (target) -->
+                    <rect x="175" y="125" width="150" height="150" rx="2" stroke="rgba(217, 119, 6, 0.28)" stroke-width="1.5"/>
+                    <!-- Realignment fill -->
+                    <rect x="185" y="135" width="130" height="130" rx="1" fill="rgba(217, 119, 6, 0.03)"/>
+                    <!-- Rotation arcs -->
+                    <path d="M 340 130 A 120 120 0 0 1 370 200" stroke="rgba(217, 119, 6, 0.18)" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+                    <path d="M 160 270 A 120 120 0 0 1 130 200" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+                    <!-- Axis lines -->
+                    <line x1="250" y1="80" x2="250" y2="320" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
+                    <line x1="120" y1="200" x2="380" y2="200" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
+                    <!-- Diagonal axis -->
+                    <line x1="155" y1="105" x2="345" y2="295" stroke="rgba(217, 119, 6, 0.05)" stroke-width="1" stroke-dasharray="2 8"/>
+                    <!-- Pivot center -->
+                    <circle cx="250" cy="200" r="5" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
+                    <circle cx="250" cy="200" r="2" fill="rgba(217, 119, 6, 0.30)"/>
+                    <!-- Corner alignment markers -->
+                    <circle cx="175" cy="125" r="2.5" fill="rgba(217, 119, 6, 0.15)"/>
+                    <circle cx="325" cy="125" r="2.5" fill="rgba(217, 119, 6, 0.15)"/>
+                    <circle cx="175" cy="275" r="2.5" fill="rgba(217, 119, 6, 0.15)"/>
+                    <circle cx="325" cy="275" r="2.5" fill="rgba(217, 119, 6, 0.15)"/>
+                    <!-- Measurement ticks -->
+                    <line x1="170" y1="125" x2="165" y2="120" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1"/>
+                    <line x1="330" y1="125" x2="335" y2="120" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1"/>
+                    <line x1="170" y1="275" x2="165" y2="280" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1"/>
+                    <line x1="330" y1="275" x2="335" y2="280" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1"/>
+                    <!-- Outer construction circle -->
+                    <circle cx="250" cy="200" r="115" stroke="rgba(217, 119, 6, 0.06)" stroke-width="1" stroke-dasharray="3 8"/>
                 </svg>
                 <h1 class="service-hero__headline">A strategic reset of your brand system — diagnosis, realignment, and roadmap.</h1>
                 <p class="service-hero__description">The Brand System Reset combines strategic review with identity refinement. We diagnose what's working, realign what's drifted, and deliver an implementation roadmap — all without starting from zero.</p>

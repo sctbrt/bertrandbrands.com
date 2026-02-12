@@ -51,7 +51,7 @@ The database tables are created automatically on first API request.
 
 ```
 RESEND_API_KEY = re_xxxxxxxxxx
-RESEND_FROM_EMAIL = Bertrand Group | Brands & Web Systems <hello@bertrandgroup.ca>
+RESEND_FROM_EMAIL = Bertrand Group | Brand & Web Systems <hello@bertrandgroup.ca>
 ```
 
 ---

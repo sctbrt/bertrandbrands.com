@@ -1,8 +1,8 @@
-# Bertrand Group | Brands & Web Systems
+# Bertrand Group | Brand & Web Systems
 > Brand, web, and systems studio based in Greater Sudbury, Ontario, Canada.
 
 ## About
-Bertrand Group | Brands & Web Systems is a brand, web, and systems studio led by Scott Bertrand and Devin Major (full-stack developer/architect). Based in Greater Sudbury, Ontario, the studio serves businesses across Northern Ontario and Canada. The studio specializes in clear, structured brand and web systems work — helping businesses that value clarity over complexity.
+Bertrand Group | Brand & Web Systems is a brand, web, and systems studio led by Scott Bertrand and Devin Major (full-stack developer/architect). Based in Greater Sudbury, Ontario, the studio serves businesses across Northern Ontario and Canada. The studio specializes in clear, structured brand and web systems work — helping businesses that value clarity over complexity.
 
 ## Location
 - City: Greater Sudbury

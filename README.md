@@ -1,2 +1,2 @@
 # brands.bertrandgroup.ca
-Bertrand Group | Brands & Web Systems
+Bertrand Group | Brand & Web Systems

@@ -1,5 +1,5 @@
         /* ============================================================
-           BERTRAND GROUP — Brands & Web Systems
+           BERTRAND GROUP — Brand & Web Systems
            V1 Visual Language: Bold, Dark, Minimal, Motion-forward
            ============================================================ */
 
@@ -293,15 +293,17 @@
             transform: translateX(0);
         }
 
-        /* Hover expand (only when collapsed) */
-        .header__logo:hover .header__wordmark.is-collapsed .header__wordmark-full {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        /* Hover expand (only when collapsed, desktop only) */
+        @media (hover: hover) and (min-width: 769px) {
+            .header__logo:hover .header__wordmark.is-collapsed .header__wordmark-full {
+                opacity: 1;
+                transform: translateX(0);
+            }
 
-        .header__logo:hover .header__wordmark.is-collapsed .header__wordmark-short {
-            opacity: 0;
-            transform: translateX(-8px);
+            .header__logo:hover .header__wordmark.is-collapsed .header__wordmark-short {
+                opacity: 0;
+                transform: translateX(-8px);
+            }
         }
 
         /* === CINEMATIC INTRO === */

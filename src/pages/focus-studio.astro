@@ -14,10 +14,10 @@ const currentYear = new Date().getFullYear();
 ---
 
 <BaseLayout
-    title="B Build — Fixed-Scope Web & Brand Work | BG | Brands & Web Systems"
+    title="B Build — Fixed-Scope Web & Brand Work | BG | Brand & Web Systems"
     description="Focused brand and website work—done fast, done properly. Starter Site, One-Page Redesign, and Brandmark & Visual Identity packages with clear timelines and fixed prices."
     canonical="https://brands.bertrandgroup.ca/focus-studio"
-    ogTitle="B Build — Fixed-Scope Web & Brand Work | BG | Brands & Web Systems"
+    ogTitle="B Build — Fixed-Scope Web & Brand Work | BG | Brand & Web Systems"
     ogDescription="Focused brand and website work—done fast, done properly. Clear scope, clear timelines, clear outcomes."
     schemaJson={{
         "@context": "https://schema.org",
@@ -26,7 +26,7 @@ const currentYear = new Date().getFullYear();
         "description": "Fixed-scope web and brand work for small businesses. Clear scope, clear timelines, clear outcomes.",
         "provider": {
             "@type": "ProfessionalService",
-            "name": "Bertrand Group | Brands & Web Systems",
+            "name": "Bertrand Group | Brand & Web Systems",
             "url": "https://brands.bertrandgroup.ca",
             "address": {
                 "@type": "PostalAddress",
@@ -241,6 +241,15 @@ const currentYear = new Date().getFullYear();
             }
 
             .fs-offerings__secondary .fs-offering__cta:hover {
+                color: var(--focus-accent);
+            }
+
+            .fs-offering__detail {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                transition: color var(--duration-fast) ease;
+            }
+            .fs-offering:hover .fs-offering__detail {
                 color: var(--focus-accent);
             }
 
@@ -573,7 +582,7 @@ const currentYear = new Date().getFullYear();
         <section class="fs-offerings">
             <div class="container">
                 <!-- Starter Site - THE DEFAULT -->
-                <div class="fs-offering fs-offering--primary" id="starter">
+                <a href="/starter-site" class="fs-offering fs-offering--primary" id="starter" style="text-decoration: none; color: inherit; display: block;">
                     <div class="fs-offering__header">
                         <span class="fs-offering__timeline">Done in 1 business day</span>
                         <h2 class="fs-offering__title">Starter Site</h2>
@@ -581,15 +590,15 @@ const currentYear = new Date().getFullYear();
                     <p class="fs-offering__description">A fast-launch website built for speed and simplicity. Clean, functional, and live quickly — ideal for businesses that need a professional web presence without complexity. Most businesses start here.</p>
                     <div class="fs-offering__footer">
                         <p class="fs-offering__price">$750 <span>CAD</span></p>
-                        <a href="#request" class="fs-offering__cta">Get Started →</a>
+                        <span class="fs-offering__detail">Learn more →</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Secondary Options -->
                 <p class="fs-offerings__secondary-label">Need something different?</p>
                 <div class="fs-offerings__secondary">
                     <!-- One-Page Redesign -->
-                    <div class="fs-offering" id="redesign">
+                    <a href="/one-page-redesign" class="fs-offering" id="redesign" style="text-decoration: none; color: inherit; display: block;">
                         <div class="fs-offering__header">
                             <span class="fs-offering__timeline">2–3 business days</span>
                             <h3 class="fs-offering__title">One-Page System Redesign</h3>
@@ -597,12 +606,12 @@ const currentYear = new Date().getFullYear();
                         <p class="fs-offering__description">A fully custom, code-based one-page website. No templates, no builders.</p>
                         <div class="fs-offering__footer">
                             <p class="fs-offering__price">$1,250 <span>CAD</span></p>
-                            <a href="#request" class="fs-offering__cta">Select →</a>
+                            <span class="fs-offering__detail">Learn more →</span>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Brandmark & Visual Identity -->
-                    <div class="fs-offering" id="brandmark">
+                    <a href="/brandmark" class="fs-offering" id="brandmark" style="text-decoration: none; color: inherit; display: block;">
                         <div class="fs-offering__header">
                             <span class="fs-offering__timeline">5–7 business days</span>
                             <h3 class="fs-offering__title">Brandmark & Visual Identity</h3>
@@ -610,9 +619,9 @@ const currentYear = new Date().getFullYear();
                         <p class="fs-offering__description">A complete brandmark with supporting visual direction that works everywhere.</p>
                         <div class="fs-offering__footer">
                             <p class="fs-offering__price">$950 <span>CAD</span></p>
-                            <a href="#request" class="fs-offering__cta">Select →</a>
+                            <span class="fs-offering__detail">Learn more →</span>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>

@@ -1,7 +1,7 @@
 {
   "name": "brands-bertrandgroup-ca",
   "version": "1.0.0",
-  "description": "Bertrand Group | Brands & Web Systems — studio site",
+  "description": "Bertrand Group | Brand & Web Systems — studio site",
   "type": "module",
   "scripts": {
     "dev": "astro dev",

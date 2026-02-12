@@ -14,10 +14,10 @@ const currentYear = new Date().getFullYear();
 ---
 
 <BaseLayout
-    title="Transformation — Strategic Brand & Web Systems | BG | Brands & Web Systems"
+    title="Transformation — Strategic Brand & Web Systems | BG | Brand & Web Systems"
     description="Multi-week, relationship-based brand and web systems work. Brand resets, platform builds, and integrated brand + platform engagements. 50% deposit to begin, 50% on delivery."
     canonical="https://brands.bertrandgroup.ca/core-systems"
-    ogTitle="Transformation — Strategic Brand & Web Systems | BG | Brands & Web Systems"
+    ogTitle="Transformation — Strategic Brand & Web Systems | BG | Brand & Web Systems"
     ogDescription="Multi-week, relationship-based brand and web systems work. Brand resets, platform builds, and integrated engagements."
     schemaJson={{
         "@context": "https://schema.org",
@@ -26,7 +26,7 @@ const currentYear = new Date().getFullYear();
         "description": "Multi-week, relationship-based brand and web systems work. Brand resets, platform builds, and integrated brand + platform engagements.",
         "provider": {
             "@type": "ProfessionalService",
-            "name": "Bertrand Group | Brands & Web Systems",
+            "name": "Bertrand Group | Brand & Web Systems",
             "url": "https://brands.bertrandgroup.ca",
             "address": {
                 "@type": "PostalAddress",
@@ -204,6 +204,15 @@ const currentYear = new Date().getFullYear();
             .cs-offering__cta:hover {
                 background: rgba(217, 119, 6, 0.15);
                 border-color: var(--accent);
+            }
+
+            .cs-offering__detail {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                transition: color var(--duration-fast) ease;
+            }
+            .cs-offering:hover .cs-offering__detail {
+                color: var(--accent);
             }
 
             .cs-divider {
@@ -437,40 +446,40 @@ const currentYear = new Date().getFullYear();
             <div class="container">
                 <div class="cs-tier__grid">
                     <!-- Digital Platform Build -->
-                    <div class="cs-offering">
+                    <a href="/digital-platform-build" class="cs-offering" style="text-decoration: none; color: inherit; display: block;">
                         <div class="cs-offering__header">
                             <h2 class="cs-offering__title">Digital Platform Build</h2>
                         </div>
                         <p class="cs-offering__description">Multi-page website or application built as a brand platform. Includes architecture, auth, dashboards, and full-stack implementation.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
-                            <a href="/book" class="cs-offering__cta">Start Intake &rarr;</a>
+                            <span class="cs-offering__detail">Learn more &rarr;</span>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Brand System Reset -->
-                    <div class="cs-offering">
+                    <a href="/brand-system-reset" class="cs-offering" style="text-decoration: none; color: inherit; display: block;">
                         <div class="cs-offering__header">
                             <h2 class="cs-offering__title">Brand System Reset</h2>
                         </div>
                         <p class="cs-offering__description">Strategic realignment of your brand system &mdash; positioning, messaging, visual identity, and strategic roadmap. Absorbs all audit and review work.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
-                            <a href="/book" class="cs-offering__cta">Start Intake &rarr;</a>
+                            <span class="cs-offering__detail">Learn more &rarr;</span>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Integrated Brand + Platform -->
-                    <div class="cs-offering">
+                    <a href="/integrated-brand-platform" class="cs-offering" style="text-decoration: none; color: inherit; display: block;">
                         <div class="cs-offering__header">
                             <h2 class="cs-offering__title">Integrated Brand + Platform</h2>
                         </div>
                         <p class="cs-offering__description">End-to-end transformation. Brand system and digital platform built together from the ground up.</p>
                         <div class="cs-offering__footer">
                             <p class="cs-offering__price cs-offering__price--private">Private pricing</p>
-                            <a href="/book" class="cs-offering__cta">Start Intake &rarr;</a>
+                            <span class="cs-offering__detail">Learn more &rarr;</span>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>

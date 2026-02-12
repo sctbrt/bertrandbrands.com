@@ -8,10 +8,10 @@ const currentYear = new Date().getFullYear();
 ---
 
 <ServiceDetailLayout
-    title="One-Page System Redesign — B Build | BG | Brands & Web Systems"
+    title="One-Page System Redesign — B Build | BG | Brand & Web Systems"
     description="A precise system redesign of the page that matters most. Concentrated refinement of a single high-value page when clarity, hierarchy, or confidence is missing."
     canonical="https://brands.bertrandgroup.ca/one-page-redesign"
-    ogTitle="One-Page System Redesign — B Build | BG | Brands & Web Systems"
+    ogTitle="One-Page System Redesign — B Build | BG | Brand & Web Systems"
     ogDescription="A precise system redesign of the page that matters most."
     schemaJson={{
         "@context": "https://schema.org",
@@ -20,7 +20,7 @@ const currentYear = new Date().getFullYear();
         "description": "A precise system redesign of the page that matters most.",
         "provider": {
             "@type": "ProfessionalService",
-            "name": "Bertrand Group | Brands & Web Systems",
+            "name": "Bertrand Group | Brand & Web Systems",
             "url": "https://brands.bertrandgroup.ca"
         }
     }}
@@ -84,10 +84,9 @@ const currentYear = new Date().getFullYear();
             .service-footer__phone a:hover { color: var(--text); }
 
             .service-hero { position: relative; }
-            .service-hero__illustration { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(280px, 50vw, 500px); height: auto; pointer-events: none; z-index: 0; opacity: 1; }
-            .service-hero__headline, .service-hero__description { position: relative; z-index: 1; }
-            @media (max-width: 900px) { .service-hero__illustration { width: clamp(220px, 60vw, 350px); opacity: 0.85; } }
-            @media (max-width: 480px) { .service-hero__illustration { width: clamp(180px, 70vw, 260px); opacity: 0.7; } }
+            .service-hero__illustration { display: block; margin: 0 auto 0.75rem; width: clamp(200px, 35vw, 320px); height: auto; pointer-events: none; opacity: 1; }
+            @media (max-width: 900px) { .service-hero__illustration { width: clamp(180px, 45vw, 280px); opacity: 0.85; } }
+            @media (max-width: 480px) { .service-hero__illustration { width: clamp(150px, 55vw, 220px); opacity: 0.7; } }
 
             @media (max-width: 768px) {
                 .service-page__spotlight { filter: blur(40px); }
@@ -123,13 +122,38 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <section class="service-hero">
-                <svg class="service-hero__illustration" viewBox="0 0 500 400" fill="none" aria-hidden="true">
+                <svg class="service-hero__illustration" viewBox="65 48 345 305" fill="none" aria-hidden="true">
+                    <!-- Page boundary -->
                     <rect x="100" y="60" width="300" height="280" rx="2" stroke="rgba(139, 92, 246, 0.25)" stroke-width="1.5"/>
-                    <line x1="100" y1="172" x2="400" y2="172" stroke="rgba(139, 92, 246, 0.18)" stroke-width="1"/>
-                    <line x1="100" y1="235" x2="400" y2="235" stroke="rgba(139, 92, 246, 0.12)" stroke-width="1"/>
-                    <line x1="285" y1="60" x2="285" y2="340" stroke="rgba(139, 92, 246, 0.18)" stroke-width="1"/>
+                    <!-- Section dividers -->
+                    <line x1="100" y1="132" x2="400" y2="132" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
+                    <line x1="100" y1="192" x2="400" y2="192" stroke="rgba(139, 92, 246, 0.18)" stroke-width="1"/>
+                    <line x1="100" y1="252" x2="400" y2="252" stroke="rgba(139, 92, 246, 0.12)" stroke-width="1"/>
+                    <line x1="100" y1="305" x2="400" y2="305" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1" stroke-dasharray="3 5"/>
+                    <!-- Column guides -->
                     <line x1="185" y1="60" x2="185" y2="340" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
-                    <rect x="115" y="75" width="155" height="82" rx="1" stroke="rgba(139, 92, 246, 0.12)" stroke-width="1"/>
+                    <line x1="250" y1="60" x2="250" y2="340" stroke="rgba(139, 92, 246, 0.06)" stroke-width="1" stroke-dasharray="2 8"/>
+                    <line x1="315" y1="60" x2="315" y2="340" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
+                    <!-- Hero zone -->
+                    <rect x="115" y="72" width="270" height="48" rx="1" fill="rgba(139, 92, 246, 0.04)" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
+                    <!-- Content blocks -->
+                    <rect x="115" y="142" width="155" height="38" rx="1" fill="rgba(139, 92, 246, 0.03)" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1"/>
+                    <rect x="285" y="142" width="100" height="38" rx="1" fill="rgba(139, 92, 246, 0.03)" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1"/>
+                    <rect x="115" y="202" width="270" height="38" rx="1" fill="rgba(139, 92, 246, 0.02)" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1"/>
+                    <!-- Text placeholder lines -->
+                    <line x1="125" y1="86" x2="260" y2="86" stroke="rgba(139, 92, 246, 0.12)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="125" y1="96" x2="200" y2="96" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="125" y1="155" x2="220" y2="155" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="125" y1="165" x2="190" y2="165" stroke="rgba(139, 92, 246, 0.06)" stroke-width="1" stroke-linecap="round"/>
+                    <!-- Corner markers -->
+                    <circle cx="100" cy="60" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                    <circle cx="400" cy="60" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                    <circle cx="100" cy="340" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                    <circle cx="400" cy="340" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                    <!-- Outer construction lines -->
+                    <line x1="80" y1="132" x2="95" y2="132" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
+                    <line x1="80" y1="192" x2="95" y2="192" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
+                    <line x1="80" y1="252" x2="95" y2="252" stroke="rgba(139, 92, 246, 0.12)" stroke-width="1"/>
                 </svg>
                 <h1 class="service-hero__headline">A precise system redesign of the page that matters most.</h1>
                 <p class="service-hero__description">The One-Page System Redesign is a concentrated refinement of a single high-value page — usually a homepage or landing page — when the structure exists but clarity, hierarchy, or confidence is missing.</p>

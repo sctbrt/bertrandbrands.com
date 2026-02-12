@@ -74,7 +74,7 @@ function buildEmailHtml({ firstName, magicLink, expiresMinutes }) {
     </p>
   </div>
   <p style="margin: 24px 0 0 0; font-size: 12px; color: #999999; text-align: center;">
-    Bertrand Group | Brands &amp; Web Systems · Sudbury, Ontario
+    Bertrand Group | Brand &amp; Web Systems · Sudbury, Ontario
   </p>
 </body>
 </html>
@@ -97,7 +97,7 @@ View Pricing: ${magicLink}
 This link expires in ${expiresMinutes} minutes and can only be used once.
 
 --
-Bertrand Group | Brands & Web Systems · Sudbury, Ontario
+Bertrand Group | Brand & Web Systems · Sudbury, Ontario
   `.trim();
 }
 
@@ -174,7 +174,7 @@ export default async function handler(req, res) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandgroup.ca>',
+      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandbrands.com>',
       to: normalizedEmail,
       subject: 'Your pricing access link',
       html: buildEmailHtml({

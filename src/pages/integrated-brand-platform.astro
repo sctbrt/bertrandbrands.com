@@ -8,10 +8,10 @@ const currentYear = new Date().getFullYear();
 ---
 
 <ServiceDetailLayout
-    title="Integrated Brand + Platform — B Transformation | BG | Brands & Web Systems"
+    title="Integrated Brand + Platform — B Transformation | BG | Brand & Web Systems"
     description="Brand-informed technical design meets system-aware brand execution. Strategy, identity, and platform delivered as a unified system."
     canonical="https://brands.bertrandgroup.ca/integrated-brand-platform"
-    ogTitle="Integrated Brand + Platform — B Transformation | BG | Brands & Web Systems"
+    ogTitle="Integrated Brand + Platform — B Transformation | BG | Brand & Web Systems"
     ogDescription="Brand-informed technical design meets system-aware brand execution."
     schemaJson={{
         "@context": "https://schema.org",
@@ -20,7 +20,7 @@ const currentYear = new Date().getFullYear();
         "description": "Brand-informed technical design meets system-aware brand execution.",
         "provider": {
             "@type": "ProfessionalService",
-            "name": "Bertrand Group | Brands & Web Systems",
+            "name": "Bertrand Group | Brand & Web Systems",
             "url": "https://brands.bertrandgroup.ca"
         }
     }}
@@ -84,10 +84,9 @@ const currentYear = new Date().getFullYear();
             .service-footer__phone a:hover { color: var(--text); }
 
             .service-hero { position: relative; }
-            .service-hero__illustration { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(280px, 50vw, 500px); height: auto; pointer-events: none; z-index: 0; opacity: 1; }
-            .service-hero__headline, .service-hero__description { position: relative; z-index: 1; }
-            @media (max-width: 900px) { .service-hero__illustration { width: clamp(220px, 60vw, 350px); opacity: 0.85; } }
-            @media (max-width: 480px) { .service-hero__illustration { width: clamp(180px, 70vw, 260px); opacity: 0.7; } }
+            .service-hero__illustration { display: block; margin: 0 auto 0.75rem; width: clamp(200px, 35vw, 320px); height: auto; pointer-events: none; opacity: 1; }
+            @media (max-width: 900px) { .service-hero__illustration { width: clamp(180px, 45vw, 280px); opacity: 0.85; } }
+            @media (max-width: 480px) { .service-hero__illustration { width: clamp(150px, 55vw, 220px); opacity: 0.7; } }
 
             @media (max-width: 768px) {
                 .service-page__spotlight { filter: blur(40px); }
@@ -123,15 +122,38 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <section class="service-hero">
-                <svg class="service-hero__illustration" viewBox="0 0 500 400" fill="none" aria-hidden="true">
-                    <circle cx="140" cy="260" r="8" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
-                    <circle cx="250" cy="140" r="8" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
-                    <circle cx="360" cy="260" r="8" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
-                    <line x1="148" y1="254" x2="242" y2="148" stroke="rgba(217, 119, 6, 0.20)" stroke-width="1.5"/>
-                    <line x1="258" y1="148" x2="352" y2="254" stroke="rgba(217, 119, 6, 0.20)" stroke-width="1.5"/>
-                    <line x1="152" y1="260" x2="348" y2="260" stroke="rgba(217, 119, 6, 0.18)" stroke-width="1"/>
-                    <line x1="140" y1="260" x2="360" y2="140" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
-                    <rect x="120" y="120" width="260" height="160" rx="4" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="6 4"/>
+                <svg class="service-hero__illustration" viewBox="85 90 330 195" fill="none" aria-hidden="true">
+                    <!-- System containment -->
+                    <rect x="100" y="100" width="300" height="200" rx="4" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="6 4"/>
+                    <!-- Triangle fill (unified system) -->
+                    <polygon points="250,135 145,265 355,265" fill="rgba(217, 119, 6, 0.03)" stroke="rgba(217, 119, 6, 0.08)" stroke-width="1"/>
+                    <!-- Primary connections -->
+                    <line x1="148" y1="254" x2="242" y2="148" stroke="rgba(217, 119, 6, 0.22)" stroke-width="1.5"/>
+                    <line x1="258" y1="148" x2="352" y2="254" stroke="rgba(217, 119, 6, 0.22)" stroke-width="1.5"/>
+                    <line x1="152" y1="260" x2="348" y2="260" stroke="rgba(217, 119, 6, 0.20)" stroke-width="1"/>
+                    <!-- Cross connections -->
+                    <line x1="140" y1="260" x2="360" y2="140" stroke="rgba(217, 119, 6, 0.08)" stroke-width="1" stroke-dasharray="4 6"/>
+                    <line x1="360" y1="260" x2="140" y2="140" stroke="rgba(217, 119, 6, 0.06)" stroke-width="1" stroke-dasharray="3 8"/>
+                    <!-- Center convergence -->
+                    <line x1="250" y1="140" x2="250" y2="260" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="3 5"/>
+                    <circle cx="250" cy="210" r="5" stroke="rgba(217, 119, 6, 0.18)" stroke-width="1"/>
+                    <circle cx="250" cy="210" r="2" fill="rgba(217, 119, 6, 0.25)"/>
+                    <!-- Primary nodes -->
+                    <circle cx="140" cy="260" r="12" stroke="rgba(217, 119, 6, 0.15)" stroke-width="1"/>
+                    <circle cx="140" cy="260" r="6" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
+                    <circle cx="140" cy="260" r="2.5" fill="rgba(217, 119, 6, 0.30)"/>
+                    <circle cx="250" cy="140" r="12" stroke="rgba(217, 119, 6, 0.15)" stroke-width="1"/>
+                    <circle cx="250" cy="140" r="6" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
+                    <circle cx="250" cy="140" r="2.5" fill="rgba(217, 119, 6, 0.30)"/>
+                    <circle cx="360" cy="260" r="12" stroke="rgba(217, 119, 6, 0.15)" stroke-width="1"/>
+                    <circle cx="360" cy="260" r="6" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
+                    <circle cx="360" cy="260" r="2.5" fill="rgba(217, 119, 6, 0.30)"/>
+                    <!-- Secondary nodes (midpoints) -->
+                    <circle cx="195" cy="197" r="2.5" fill="rgba(217, 119, 6, 0.15)"/>
+                    <circle cx="305" cy="197" r="2.5" fill="rgba(217, 119, 6, 0.15)"/>
+                    <circle cx="250" cy="260" r="2.5" fill="rgba(217, 119, 6, 0.15)"/>
+                    <!-- Outer orbit -->
+                    <circle cx="250" cy="210" r="95" stroke="rgba(217, 119, 6, 0.05)" stroke-width="1" stroke-dasharray="2 8"/>
                 </svg>
                 <h1 class="service-hero__headline">Brand-informed technical design. System-aware brand execution.</h1>
                 <p class="service-hero__description">The most comprehensive engagement — combining brand strategy, visual identity, and a fully built digital platform into a single, unified system. Deliberate, structured, and designed for long-term stability.</p>
