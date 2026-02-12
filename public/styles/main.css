@@ -148,22 +148,14 @@
                 /* Lights stay visible, animation runs if reduced-motion not set */
             }
 
-            /* Mobile: always show collapsed wordmark */
+            /* Mobile: smaller wordmark font, show only "Bertrand Group" until JS collapses it */
             .header__wordmark {
                 font-size: 0.6rem;
             }
 
-            .header__wordmark .header__wordmark-full {
-                opacity: 0;
-                transform: translateX(-8px);
-                pointer-events: none;
-                position: absolute;
-            }
-
-            .header__wordmark .header__wordmark-short {
-                opacity: 1;
-                transform: translateX(0);
-                position: relative;
+            /* Mobile: hide "| Brand & Web Systems" from full wordmark — shows only "Bertrand Group" */
+            .header__wordmark-full .header__wordmark-sub {
+                display: none;
             }
         }
 
@@ -304,6 +296,75 @@
                 opacity: 0;
                 transform: translateX(-8px);
             }
+        }
+
+        /* === INTAKE HEADER === */
+        .intake-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-sm) 1.5rem;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intake-header__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .intake-header__back {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            transition: color 0.2s ease;
+            min-width: 80px;
+        }
+
+        .intake-header__back:hover {
+            color: var(--text);
+        }
+
+        .intake-header__back svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .intake-header__logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .intake-header__logo-icon {
+            width: 24px;
+            height: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .intake-header__logo-text {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: var(--text-sm);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+
+        .intake-header__spacer {
+            min-width: 80px;
         }
 
         /* === CINEMATIC INTRO === */

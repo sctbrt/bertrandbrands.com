@@ -100,14 +100,13 @@
         }
     }
 
-    /* Wordmark collapse (desktop only, respects reduced-motion) */
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-        !window.matchMedia('(max-width: 768px)').matches) {
+    /* Wordmark collapse (all screens, respects reduced-motion) */
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const wordmark = document.querySelector('.header__wordmark');
         if (wordmark) {
             setTimeout(function() {
                 wordmark.classList.add('is-collapsed');
-            }, 2000);
+            }, 30000);
         }
     }
 })();

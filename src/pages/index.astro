@@ -768,12 +768,11 @@ const schemaJson = {
           var logo = document.querySelector('.header__logo');
           var intro = document.querySelector('.intro');
 
-          // Wordmark collapse
+          // Wordmark collapse (30s on all screens)
           function collapseWordmark() {
               if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-              if (window.matchMedia('(max-width: 768px)').matches) return;
               var wm = document.querySelector('.header__wordmark');
-              if (wm) setTimeout(function() { wm.classList.add('is-collapsed'); }, 2000);
+              if (wm) setTimeout(function() { wm.classList.add('is-collapsed'); }, 30000);
           }
 
           // Set intro variant from URL param

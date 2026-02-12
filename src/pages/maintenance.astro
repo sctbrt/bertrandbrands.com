@@ -1,0 +1,104 @@
+---
+/**
+ * Maintenance — Temporary gate page.
+ * Shown when the site is in maintenance mode (controlled by middleware.js).
+ * Simple, branded, no navigation or forms.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+    title="Bertrand Group | Brand & Web Systems"
+    description="We're making improvements. Back shortly."
+    robots="noindex, nofollow"
+    includeMainCss={false}
+    bodyClass="maintenance-body"
+>
+    <main class="maintenance">
+        <div class="maintenance__inner">
+            <img
+                src="/assets/bg-brands-logomark.png"
+                alt=""
+                class="maintenance__logo"
+                width="64"
+                height="64"
+            />
+            <h1 class="maintenance__brand">
+                <span class="maintenance__brand-name">Bertrand Group</span>
+                <span class="maintenance__brand-sub">| Brand &amp; Web Systems</span>
+            </h1>
+            <p class="maintenance__message">We're making improvements. Back shortly.</p>
+            <a href="mailto:hello@bertrandgroup.ca" class="maintenance__contact">
+                hello@bertrandgroup.ca
+            </a>
+        </div>
+    </main>
+
+    <style is:inline>
+        .maintenance-body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0a;
+            color: #fafafa;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .maintenance {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .maintenance__inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .maintenance__logo {
+            width: 48px;
+            height: 48px;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .maintenance__brand {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #a3a3a3;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .maintenance__brand-name {
+            font-weight: 600;
+            color: #fafafa;
+        }
+
+        .maintenance__message {
+            font-size: 1rem;
+            color: #737373;
+            margin: 0.5rem 0 0;
+            line-height: 1.5;
+        }
+
+        .maintenance__contact {
+            font-size: 0.875rem;
+            color: #D97706;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            margin-top: 0.25rem;
+        }
+
+        .maintenance__contact:hover {
+            color: #fafafa;
+        }
+    </style>
+</BaseLayout>
