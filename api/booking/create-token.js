@@ -187,7 +187,7 @@ export default async function handler(req, res) {
     const firstName = clientName.trim().split(' ')[0];
 
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandbrands.com>',
+      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandgroup.ca>',
       to: normalizedEmail,
       subject: `Your ${bookingTypeLabel} booking link`,
       html: buildEmailHtml({
