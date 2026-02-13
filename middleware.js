@@ -24,15 +24,5 @@ export default function middleware(request) {
         return Response.redirect('https://bertrandgroup.ca', 301);
     }
 
-    // Maintenance gate — redirect all pages to /maintenance
-    // Bypass: append ?bypass=true to view the full site
-    const url = new URL(request.url);
-    const isMaintenance = url.pathname !== '/maintenance';
-    const hasBypass = url.searchParams.get('bypass') === 'true';
-
-    if (isMaintenance && !hasBypass) {
-        return Response.redirect(new URL('/maintenance', request.url).toString(), 302);
-    }
-
     return next();
 }

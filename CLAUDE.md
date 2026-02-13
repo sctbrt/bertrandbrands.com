@@ -80,18 +80,18 @@ If a technical or UX decision introduces confusion, pressure, or ambiguity, it v
 
 Bertrand Group operates under **THREE strictly hierarchical service tiers**.
 
-**Mental Model:** Conversation → Execution → Transformation
+**Mental Model:** Conversation → Build → Transformation
 
 **Hard Constraints:**
-- Tier 1: Exploratory → **3 offerings only**
-- Tier 2: Focus Studio → **3 offerings only**
-- Tier 3: Core Systems → **3 offerings only**
+- Tier 1: B Conversation (Exploratory) → **3 offerings only**
+- Tier 2: B Build (Focus Studio) → **3 offerings only**
+- Tier 3: B Transformation (Core Systems) → **3 offerings only**
 
 Claude must not add services, rename tiers, or exceed these limits.
 
 ---
 
-**Tier 1 — B Exploratory** (Entry Layer)
+**Tier 1 — B Conversation** (Entry Layer)
 
 Purpose: Low-friction entry, qualification, and clarity. Not asset delivery.
 
@@ -109,7 +109,7 @@ Purpose: Low-friction entry, qualification, and clarity. Not asset delivery.
 
 ---
 
-**Tier 2 — B Focus Studio** (Primary Revenue Engine)
+**Tier 2 — B Build** (Primary Revenue Engine)
 
 Purpose: Fast, fixed-scope studio work with clear timelines and pricing.
 
@@ -133,11 +133,11 @@ Purpose: Fast, fixed-scope studio work with clear timelines and pricing.
 - No multi-page sites or applications
 - No brand strategy or multi-week discovery
 
-Focus Studio is the primary revenue engine and Google Ads entry point.
+B Build is the primary revenue engine and Google Ads entry point.
 
 ---
 
-**Tier 3 — B Core Systems** (Strategic Work)
+**Tier 3 — B Transformation** (Strategic Work)
 
 Purpose: Discovery-led, multi-week engagements for brands requiring structural clarity.
 
@@ -168,21 +168,21 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 ### 1.5 Visual Hierarchy
 
 **Homepage Section Order (Top to Bottom):**
-1. **B Exploratory** — "Not sure where to start?" (3 cards)
-2. **B Focus Studio** — Primary, largest, most prominent (3 cards)
-3. **B Core Systems** — Strategic tier with pricing gate (3 cards)
+1. **B Conversation** — "Not sure where to start?" (3 cards)
+2. **B Build** — Primary, largest, most prominent (3 cards)
+3. **B Transformation** — Strategic tier with pricing gate (3 cards)
 
 **Key Visual Rules:**
-- Focus Studio is the primary revenue engine and Google Ads entry point
-- Exploratory is Tier 1 and appears first on homepage (top of services)
-- Core Systems uses amber accent and solid borders
-- Focus Studio uses violet accent and dashed borders
-- Exploratory uses blue accent and dashed borders
+- B Build is the primary revenue engine and Google Ads entry point
+- B Conversation is Tier 1 and appears first on homepage (top of services)
+- B Transformation uses amber accent and solid borders
+- B Build uses violet accent and dashed borders
+- B Conversation uses blue accent and dashed borders
 - All sub-brands use shared B logomark with differentiated wordmarks
 
 **Navigation Order:**
-1. Focus Studio (first in dropdown)
-2. Core Systems (second in dropdown)
+1. Build (first in dropdown)
+2. Transformation (second in dropdown)
 
 ### 1.6 AI Positioning (Critical)
 
@@ -274,11 +274,11 @@ A successful implementation:
 │   │   ├── thanks.astro           # Formspree redirect
 │   │   ├── sitemapX.astro         # Ecosystem sitemap
 │   │   ├── book.astro             # Booking page
-│   │   ├── exploratory.astro      # Exploratory tier landing
+│   │   ├── exploratory.astro      # B Conversation tier landing
 │   │   ├── clarity-session.astro  # Clarity session page
 │   │   ├── scottbertrand.astro    # Personal cross-promotion
-│   │   ├── focus-studio.astro     # Focus Studio landing (Google Ads)
-│   │   ├── core-services.astro    # Core Services landing (Google Ads)
+│   │   ├── focus-studio.astro     # B Build landing (Google Ads)
+│   │   ├── core-services.astro    # B Transformation landing (Google Ads)
 │   │   ├── sudbury.astro          # Sudbury local campaign landing
 │   │   ├── website-conversion-snapshot.astro  # Snapshot diagnostic landing
 │   │   ├── brand-clarity-diagnostic.astro     # Brand diagnostic landing
@@ -292,7 +292,7 @@ A successful implementation:
 │   │   ├── booking-confirmed.astro      # Post-booking confirmation
 │   │   ├── snapshot-confirmed.astro     # Post-snapshot confirmation
 │   │   ├── intake/
-│   │   │   ├── exploratory.astro              # Exploratory intake form
+│   │   │   ├── exploratory.astro              # B Conversation intake form
 │   │   │   ├── brand-clarity-diagnostic.astro # Brand diagnostic intake
 │   │   │   └── website-conversion-snapshot.astro # Snapshot intake
 │   │   ├── booking/
@@ -423,8 +423,8 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 
 **Color Application:**
 - Amber (`rgba(217, 119, 6, x)`) — Primary accent, used in header and contact
-- Violet (`rgba(139, 92, 246, x)`) — Focus Studio tier accent
-- Blue (`rgba(37, 99, 235, x)`) — Exploratory tier accent
+- Violet (`rgba(139, 92, 246, x)`) — B Build tier accent
+- Blue (`rgba(37, 99, 235, x)`) — B Conversation tier accent
 
 **Mobile Optimization:**
 - Header ambient lighting stays **enabled** on mobile (per design decision)
@@ -754,42 +754,41 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ## 16. Routes Reference
 
-### Exploratory Routes (Tier 1)
+### Conversation Routes (Tier 1)
 
 **Active Routes:**
-- `/exploratory` → Exploratory landing page (serves all 3 offerings)
-- `/intake/exploratory` → Exploratory intake form
+- `/exploratory` → B Conversation landing page (serves all 3 offerings)
+- `/intake/exploratory` → B Conversation intake form
 
-**Tier 1 Offerings (all via shared intake):**
+**Conversation Offerings (all via shared intake):**
 - Guided Intake (Free, form-based)
 - Clarity Session — Brand / Web / Systems ($145, ~45 min)
 - Technical Feasibility Check (Free, verbal, by request)
 
-### Focus Studio Routes (Tier 2)
-- `/focus-studio` → B Focus Studio landing page
-- `/intake/focus-studio` → B Focus Studio intake form
+### Build Routes (Tier 2)
+- `/focus-studio` → B Build landing page
 
-**Focus Studio Offerings (all via shared intake):**
+**Build Offerings:**
 - Starter Site ($750)
 - One-Page System Redesign ($1,250)
 - Brandmark & Visual Identity ($950)
 
-### Core Systems Routes (Tier 3)
-- `/core-systems` → Core Systems landing page
+### Transformation Routes (Tier 3)
+- `/core-systems` → B Transformation landing page
 - `/core-services` → Same page (alias for existing campaigns)
 
-**Core Systems Offerings (3):**
+**Transformation Offerings (3):**
 - Brand System Reset
 - Digital Platform Build
 - Integrated Brand + Platform
 
 ### Service Detail Pages
-- `/starter-site` → Focus Studio: Starter Site detail
-- `/one-page-redesign` → Focus Studio: One-Page System Redesign detail
-- `/brandmark` → Focus Studio: Brandmark & Visual Identity detail
-- `/digital-platform-build` → Core Systems detail
-- `/brand-system-reset` → Core Systems detail
-- `/integrated-brand-platform` → Core Systems detail
+- `/starter-site` → B Build: Starter Site detail
+- `/one-page-redesign` → B Build: One-Page System Redesign detail
+- `/brandmark` → B Build: Brandmark & Visual Identity detail
+- `/digital-platform-build` → B Transformation detail
+- `/brand-system-reset` → B Transformation detail
+- `/integrated-brand-platform` → B Transformation detail
 
 ### Tier 3 Redirects (permanent)
 - `/strategic-brand-review` → `/brand-system-reset`
@@ -797,7 +796,7 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - `/full-brand-platform-reset` → `/integrated-brand-platform`
 
 ### Google Ads Landing Pages
-- `/sudbury` → Sudbury-specific Focus Studio landing (local campaign)
+- `/sudbury` → Sudbury-specific B Build landing (local campaign)
 - `/website-conversion-snapshot` → Website Snapshot Diagnostic landing
 - `/brand-clarity-diagnostic` → Brand Clarity Diagnostic landing
 - `/intake/website-conversion-snapshot` → Snapshot intake form
@@ -843,20 +842,26 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ## 17. Sub-Brand Visual System
 
-### B Core Systems
+### B Transformation (Core Systems)
 - Shared B logomark (40px, white)
-- "Core Systems" wordmark in Fraunces (1.875rem, 300 weight)
+- "Transformation" wordmark in Fraunces (1.875rem, 300 weight)
 - Positioned below "What we offer" heading
 - Solid borders on service cards
 
-### B Focus Studio
+### B Build (Focus Studio)
 - Shared B logomark (40px, white)
-- "Focus Studio" wordmark in Fraunces (1.875rem, 300 weight)
-- Positioned within Focus Studio section header
+- "Build" wordmark in Fraunces (1.875rem, 300 weight)
+- Positioned within Build section header
 - Dashed borders on service cards
 - Includes boundary statement at bottom
 
-Both sub-brands use identical logomark + wordmark styling for consistency.
+### B Conversation (Exploratory)
+- Shared B logomark (40px, white)
+- "Conversation" wordmark in Fraunces (1.875rem, 300 weight)
+- Positioned within Conversation section header
+- Dashed borders on service cards
+
+All three sub-brands use identical logomark + wordmark styling for consistency.
 
 ---
 
@@ -868,9 +873,9 @@ All three service tiers use consistent container and card styling with tier-spec
 
 | Tier | Primary Color | CSS Variable |
 |------|---------------|--------------|
-| Focus Studio | Violet | `#8B5CF6` / `rgba(139, 92, 246, x)` |
-| Core Systems | Amber | `#D97706` / `rgba(217, 119, 6, x)` |
-| Exploratory | Blue | `#2563EB` / `rgba(37, 99, 235, x)` |
+| B Build | Violet | `#8B5CF6` / `rgba(139, 92, 246, x)` |
+| B Transformation | Amber | `#D97706` / `rgba(217, 119, 6, x)` |
+| B Conversation | Blue | `#2563EB` / `rgba(37, 99, 235, x)` |
 
 ### 18.2 Container Styling
 
@@ -948,8 +953,8 @@ For Sudbury-first campaigns, local incentives may be offered via:
 ### 19.3 Campaign Focus
 
 - Single campaign only (no split testing yet)
-- Campaign focus: Focus Studio offerings
-- Main CTA for ads: Clarity Session ($145) or specific Focus Studio service page
+- Campaign focus: B Build offerings
+- Main CTA for ads: Clarity Session ($145) or specific B Build service page
 
 ---
 
@@ -1008,11 +1013,11 @@ Added `contain: layout style` to:
 - Subtle lift on hover (3px)
 - Active state feedback
 
-**Focus Studio Cards**
+**Build Cards**
 - Added hover lift (2px)
 - Violet-tinted shadow on hover
 
-**Exploratory Cards**
+**Conversation Cards**
 - Added hover lift (2px)
 - Active state scale feedback
 
