@@ -15,7 +15,6 @@ interface Props {
   schemaJson?: Record<string, unknown>;
   bodyClass?: string;
   includeMainCss?: boolean;
-  gtagId?: string;
 }
 
 const {
@@ -29,7 +28,6 @@ const {
   schemaJson,
   bodyClass = '',
   includeMainCss = true,
-  gtagId,
 } = Astro.props;
 
 const effectiveOgTitle = ogTitle || title;
@@ -72,18 +70,35 @@ const effectiveOgDescription = ogDescription || description;
     <script type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
   )}
 
-  {/* Google Ads conversion tracking */}
-  {gtagId && (
-    <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`} async></script>
-  )}
-  {gtagId && (
-    <script is:inline define:vars={{ gtagId }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', gtagId);
-    </script>
-  )}
+  {/* Google Ads conversion tracking — global on all pages */}
+  <script is:inline src="https://www.googletagmanager.com/gtag/js?id=AW-17925090292" async></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17925090292');
+  </script>
+
+  {/* Global tel: and mailto: click tracking */}
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href]');
+        if (!link) return;
+        var href = link.getAttribute('href') || '';
+        if (href.startsWith('tel:')) {
+          gtag('event', 'conversion', {
+            send_to: 'AW-17925090292/ueyZCPOf6_UbEPTXrONC'
+          });
+        }
+        if (href.startsWith('mailto:')) {
+          gtag('event', 'conversion', {
+            send_to: 'AW-17925090292/ueyZCPOf6_UbEPTXrONC'
+          });
+        }
+      });
+    });
+  </script>
 
   {/* Fonts */}
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>

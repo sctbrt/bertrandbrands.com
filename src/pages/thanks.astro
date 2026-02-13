@@ -123,6 +123,17 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         </p>
     </main>
 
+    {/* Fire Google Ads form-submit conversion on page load */}
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof gtag === 'function') {
+          gtag('event', 'conversion', {
+            send_to: 'AW-17925090292/3B0-CJDv6vUbEPTXrONC'
+          });
+        }
+      });
+    </script>
+
     <GesturePrevention />
     <AnnouncementBanner />
     <VisitorNotify />

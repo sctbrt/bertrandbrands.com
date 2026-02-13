@@ -23,7 +23,6 @@ const currentYear = new Date().getFullYear();
     canonical="https://brands.bertrandgroup.ca/sudbury"
     ogTitle="Sudbury Web Design & Branding — Starter Sites from $750 | BG | Brand & Web Systems"
     ogDescription="Website and brand work for Sudbury, Ontario businesses. Fixed pricing, fast turnaround. Based in Greater Sudbury."
-    gtagId="AW-17925090292"
     schemaJson={{
         "@context": "https://schema.org",
         "@type": "Service",
@@ -1073,18 +1072,7 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <script is:inline>
-        // Google Ads: Lead — Phone Call (tel: click)
-        document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
-            link.addEventListener('click', function() {
-                if (typeof gtag === 'function') {
-                    gtag('event', 'conversion', {
-                        'send_to': 'AW-17925090292/ueyZCPOf6_UbEPTXrONC',
-                        'value': 1.0,
-                        'currency': 'CAD'
-                    });
-                }
-            });
-        });
+        // Phone click tracking now handled globally by BaseLayout
 
         // Two-step form logic
         (function() {
