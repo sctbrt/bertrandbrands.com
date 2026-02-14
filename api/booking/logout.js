@@ -26,7 +26,7 @@ function parseCookies(cookieHeader) {
 /**
  * Build cookie string to clear the session
  */
-function buildClearCookie() {
+function buildClearCookie(hostname) {
   const parts = [
     `bb_booking_session=`,
     `Path=/`,
@@ -37,7 +37,11 @@ function buildClearCookie() {
 
   if (IS_PRODUCTION) {
     parts.push('Secure');
-    parts.push('Domain=.bertrandgroup.ca');
+    if (hostname && hostname.endsWith('bertrandbrands.ca')) {
+      parts.push('Domain=.bertrandbrands.ca');
+    } else {
+      parts.push('Domain=.bertrandgroup.ca');
+    }
   }
 
   return parts.join('; ');
@@ -57,7 +61,7 @@ export default async function handler(req, res) {
   const sessionId = cookies.bb_booking_session;
 
   // Clear cookie regardless
-  res.setHeader('Set-Cookie', buildClearCookie());
+  res.setHeader('Set-Cookie', buildClearCookie(req.headers.host));
 
   // Delete session from database if exists
   if (sessionId) {

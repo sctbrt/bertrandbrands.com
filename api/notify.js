@@ -56,7 +56,7 @@ export default async function handler(req, res) {
       if (location) notificationMessage += `\n📌 ${location}`;
 
       notificationTitle = 'Visitor on BG Brands';
-      notificationUrl = `https://brands.bertrandgroup.ca${page || '/'}`;
+      notificationUrl = `https://bertrandbrands.ca${page || '/'}`;
       notificationUrlTitle = 'View Page';
       priority = -1; // Low priority (silent, no sound)
       sound = null;
@@ -68,7 +68,7 @@ export default async function handler(req, res) {
       if (message) notificationMessage += `\n\n${message.substring(0, 200)}${message.length > 200 ? '...' : ''}`;
 
       notificationTitle = 'BG Brands Inquiry';
-      notificationUrl = 'https://brands.bertrandgroup.ca/#contact';
+      notificationUrl = 'https://bertrandbrands.ca/#contact';
       notificationUrlTitle = 'View Contact Form';
       priority = 0; // Normal priority
       sound = 'pushover';

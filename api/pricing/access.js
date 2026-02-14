@@ -12,7 +12,7 @@ import { errorPageHtml } from '../_lib/html.js';
 
 // Config
 const SESSION_TTL_MINUTES = parseInt(process.env.PRICING_SESSION_TTL_MINUTES || '60', 10);
-const APP_URL = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
+const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 
 export default async function handler(req, res) {
   // Only allow GET
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
 
     // Set session cookie
     const maxAgeSeconds = SESSION_TTL_MINUTES * 60;
-    res.setHeader('Set-Cookie', buildCookie('bb_pricing_session', session.id, maxAgeSeconds));
+    res.setHeader('Set-Cookie', buildCookie('bb_pricing_session', session.id, maxAgeSeconds, { hostname: req.headers.host }));
 
     // Redirect to services section
     res.setHeader('Location', `${APP_URL}/#services`);

@@ -20,7 +20,7 @@ const schema = {
   "provider": {
     "@type": "ProfessionalService",
     "name": "Bertrand Group | Brand & Web Systems",
-    "url": "https://brands.bertrandgroup.ca",
+    "url": "https://bertrandbrands.ca",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Greater Sudbury",
@@ -34,7 +34,7 @@ const schema = {
 <BaseLayout
   title="B Conversation — Start Here | BG | Brand & Web Systems"
   description="Not sure what you need? Start here. Guided intake, discovery calls, and clarity sessions to help you find the right next step for your brand or website."
-  canonical="https://brands.bertrandgroup.ca/exploratory"
+  canonical="https://bertrandbrands.ca/exploratory"
   ogTitle="B Conversation — Start Here | BG | Brand & Web Systems"
   ogDescription="Not sure what you need? Start here. Guided intake, discovery calls, and clarity sessions."
   schemaJson={schema}
@@ -69,7 +69,7 @@ const schema = {
 
         /* Hero */
         .exp-hero {
-            padding: var(--space-2xl, 4rem) 0 var(--space-lg, 2rem);
+            padding: var(--space-lg, 2rem) 0 var(--space-lg, 2rem);
             text-align: center;
         }
 
@@ -94,8 +94,8 @@ const schema = {
         }
 
         .exp-hero__name {
-            font-family: 'Fraunces', Georgia, serif;
-            font-size: 1.75rem;
+            font-family: halyard-display, sans-serif;
+            font-size: var(--text-3xl);
             font-weight: 300;
             letter-spacing: 0.02em;
             color: var(--text);
@@ -494,12 +494,47 @@ const schema = {
             text-decoration: none;
         }
 
-        /* Hero illustration */
-        .exp-hero { position: relative; overflow: visible; }
-        .exp-hero__illustration { position: absolute; bottom: -160px; left: 50%; transform: translateX(-50%); width: clamp(340px, 55vw, 580px); height: auto; pointer-events: none; z-index: 0; opacity: 1; }
-        .exp-hero__title, .exp-hero__subtitle, .exp-hero__brand { position: relative; z-index: 1; }
-        @media (max-width: 900px) { .exp-hero__illustration { width: clamp(220px, 60vw, 350px); opacity: 0.85; bottom: -100px; } }
-        @media (max-width: 480px) { .exp-hero__illustration { width: clamp(180px, 70vw, 260px); opacity: 0.7; bottom: -60px; } }
+        /* Hero illustration + glow */
+        .exp-hero__illustration-wrap {
+            position: relative;
+            display: block;
+            margin: 0 auto 0.75rem;
+            width: clamp(200px, 35vw, 320px);
+        }
+        .exp-hero__illustration-wrap::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 70%; height: 70%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.4) 0%, rgba(37, 99, 235, 0) 70%);
+            filter: blur(30px);
+            opacity: 0;
+            animation: expGlowPulse 2.8s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .exp-hero__illustration {
+            position: relative; z-index: 1;
+            display: block; width: 100%; height: auto; pointer-events: none;
+            opacity: 0;
+            animation: expIllustrationFadeIn 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+        }
+        @keyframes expGlowPulse {
+            0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            35%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+        }
+        @keyframes expIllustrationFadeIn {
+            0%   { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @media (max-width: 900px) { .exp-hero__illustration-wrap { width: clamp(180px, 45vw, 280px); } }
+        @media (max-width: 480px) { .exp-hero__illustration-wrap { width: clamp(150px, 55vw, 220px); } }
+        @media (prefers-reduced-motion: reduce) {
+            .exp-hero__illustration-wrap::before { animation: none; opacity: 0.5; }
+            .exp-hero__illustration { animation: none; opacity: 1; }
+        }
 
         /* Ambient Effects */
         .exp-spotlight {
@@ -599,7 +634,12 @@ const schema = {
       <!-- Hero -->
       <section class="exp-hero">
           <div class="container">
+              <a href="/?skip" class="exp-hero__brand">
+                  <img src="/assets/bg-brands-logomark.png" alt="" class="exp-hero__mark" width="40" height="40">
+                  <span class="exp-hero__name">Conversation</span>
+              </a>
               <!-- Compass / direction illustration -->
+              <div class="exp-hero__illustration-wrap">
               <svg class="exp-hero__illustration" viewBox="0 0 500 400" fill="none" aria-hidden="true">
                   <circle cx="250" cy="200" r="130" stroke="rgba(37, 99, 235, 0.25)" stroke-width="1.5"/>
                   <circle cx="250" cy="200" r="90" stroke="rgba(37, 99, 235, 0.12)" stroke-width="1"/>
@@ -619,10 +659,7 @@ const schema = {
                   <!-- Center point -->
                   <circle cx="250" cy="200" r="4" stroke="rgba(37, 99, 235, 0.20)" stroke-width="1.5"/>
               </svg>
-              <a href="/?skip" class="exp-hero__brand">
-                  <img src="/assets/bg-brands-logomark.png" alt="" class="exp-hero__mark" width="40" height="40">
-                  <span class="exp-hero__name">Conversation</span>
-              </a>
+              </div>
               <h1 class="exp-hero__title">Not sure what you need?</h1>
               <p class="exp-hero__subtitle">
                   Start here. We'll help you figure out the right next step—whether that's working with us, doing it yourself, or doing nothing at all.

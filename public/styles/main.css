@@ -148,14 +148,9 @@
                 /* Lights stay visible, animation runs if reduced-motion not set */
             }
 
-            /* Mobile: smaller wordmark font, show only "Bertrand Group" until JS collapses it */
+            /* Mobile: smaller wordmark font */
             .header__wordmark {
                 font-size: 0.6rem;
-            }
-
-            /* Mobile: hide "| Brand & Web Systems" from full wordmark — shows only "Bertrand Group" */
-            .header__wordmark-full .header__wordmark-sub {
-                display: none;
             }
         }
 
@@ -225,14 +220,15 @@
             opacity: 1;
         }
 
-        /* Text-based wordmark (replaces image) */
+        /* Text-based wordmark (animated: BERTRAND BRANDS ←→ BERTRAND BRAND & WEB SYSTEMS) */
         .header__wordmark {
             display: inline-flex;
             align-items: baseline;
             position: relative;
             opacity: 0;
             transition: opacity 0.5s ease;
-            font-family: var(--font-body);
+            font-family: halyard-display, sans-serif;
+            font-weight: 300;
             font-size: 0.7rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
@@ -243,59 +239,6 @@
 
         .header__logo.show-text .header__wordmark {
             opacity: 1;
-        }
-
-        .header__wordmark-full,
-        .header__wordmark-short {
-            display: inline-flex;
-            align-items: baseline;
-            transition: opacity var(--duration-normal) var(--ease-out),
-                        transform var(--duration-normal) var(--ease-out);
-        }
-
-        .header__wordmark-full {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .header__wordmark-short {
-            position: absolute;
-            left: 0;
-            opacity: 0;
-            transform: translateX(-8px);
-        }
-
-        .header__wordmark-brand {
-            font-weight: 600;
-        }
-
-        .header__wordmark-sub {
-            font-weight: 400;
-        }
-
-        /* Collapsed state (after initial delay) */
-        .header__wordmark.is-collapsed .header__wordmark-full {
-            opacity: 0;
-            transform: translateX(-8px);
-            pointer-events: none;
-        }
-
-        .header__wordmark.is-collapsed .header__wordmark-short {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Hover expand (only when collapsed, desktop only) */
-        @media (hover: hover) and (min-width: 769px) {
-            .header__logo:hover .header__wordmark.is-collapsed .header__wordmark-full {
-                opacity: 1;
-                transform: translateX(0);
-            }
-
-            .header__logo:hover .header__wordmark.is-collapsed .header__wordmark-short {
-                opacity: 0;
-                transform: translateX(-8px);
-            }
         }
 
         /* === INTAKE HEADER === */
@@ -886,12 +829,6 @@
             }
             .header__wordmark {
                 opacity: 1;
-            }
-            .header__wordmark .header__wordmark-full,
-            .header__wordmark .header__wordmark-short,
-            .header__wordmark.is-collapsed .header__wordmark-full,
-            .header__wordmark.is-collapsed .header__wordmark-short {
-                transition: none;
             }
             /* Hide decorative animated elements */
             .hero__spotlight,
@@ -2131,18 +2068,18 @@
                 transform: translateX(-110%) scaleY(0.92);
             }
             8% {
-                opacity: 0.7;
+                opacity: 0.3;
             }
             25% {
-                opacity: 1;
+                opacity: 0.4;
                 transform: translateX(-40%) scaleY(1);
             }
             55% {
-                opacity: 0.9;
+                opacity: 0.35;
                 transform: translateX(30%) scaleY(1.04);
             }
             80% {
-                opacity: 0.4;
+                opacity: 0.15;
                 transform: translateX(80%) scaleY(0.97);
             }
             100% {
@@ -2251,8 +2188,68 @@
             align-items: center;
             justify-content: flex-start;
             gap: 0;
-            margin-top: var(--space-md);
+            margin-top: var(--space-lg);
             padding: var(--space-sm) 0;
+        }
+
+        /* Staggered glow sweep across journey icons */
+        @keyframes iconGlow {
+            0%, 100% {
+                border-color: rgba(217, 119, 6, 0.15);
+                box-shadow: 0 0 0 rgba(217, 119, 6, 0);
+            }
+            50% {
+                border-color: rgba(217, 119, 6, 0.6);
+                box-shadow: 0 0 20px rgba(217, 119, 6, 0.25), inset 0 0 12px rgba(217, 119, 6, 0.08);
+            }
+        }
+
+        .reveal-triggered .process-journey__step:nth-child(1) {
+            animation: iconGlow 1s ease-in-out 1.2s forwards;
+        }
+        .reveal-triggered .process-journey__step:nth-child(3) {
+            animation: iconGlow 1s ease-in-out 1.5s forwards;
+        }
+        .reveal-triggered .process-journey__step:nth-child(5) {
+            animation: iconGlow 1s ease-in-out 1.8s forwards;
+        }
+        .reveal-triggered .process-journey__step:nth-child(7) {
+            animation: iconGlow 1s ease-in-out 2.1s forwards;
+        }
+        .reveal-triggered .process-journey__step:nth-child(9) {
+            animation: iconGlow 1s ease-in-out 2.4s forwards;
+        }
+
+        /* Connectors glow too, staggered between icons */
+        @keyframes connectorGlow {
+            0%, 100% {
+                background: linear-gradient(90deg, rgba(217, 119, 6, 0.3), rgba(217, 119, 6, 0.15));
+                box-shadow: none;
+            }
+            50% {
+                background: linear-gradient(90deg, rgba(217, 119, 6, 0.5), rgba(217, 119, 6, 0.5));
+                box-shadow: 0 0 8px rgba(217, 119, 6, 0.2);
+            }
+        }
+
+        .reveal-triggered .process-journey__connector:nth-child(2) {
+            animation: connectorGlow 0.8s ease-in-out 1.35s forwards;
+        }
+        .reveal-triggered .process-journey__connector:nth-child(4) {
+            animation: connectorGlow 0.8s ease-in-out 1.65s forwards;
+        }
+        .reveal-triggered .process-journey__connector:nth-child(6) {
+            animation: connectorGlow 0.8s ease-in-out 1.95s forwards;
+        }
+        .reveal-triggered .process-journey__connector:nth-child(8) {
+            animation: connectorGlow 0.8s ease-in-out 2.25s forwards;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-triggered .process-journey__step,
+            .reveal-triggered .process-journey__connector {
+                animation: none !important;
+            }
         }
 
         .process-journey__step {
@@ -2302,7 +2299,7 @@
             background: linear-gradient(90deg, rgba(217, 119, 6, 0.3), rgba(217, 119, 6, 0.15));
         }
 
-        /* Desktop: larger icons and wider spacing to fill viewport */
+        /* Desktop: larger icons and flex connectors to fill full width */
         @media (min-width: 769px) {
             .process-journey {
                 margin-top: var(--space-lg);
@@ -2312,6 +2309,7 @@
             .process-journey__step {
                 width: 72px;
                 height: 72px;
+                flex-shrink: 0;
             }
 
             .process-journey__icon {
@@ -2320,7 +2318,9 @@
             }
 
             .process-journey__connector {
-                width: 48px;
+                width: auto;
+                flex: 1;
+                min-width: 32px;
             }
 
             .process-journey__note {
@@ -2337,10 +2337,6 @@
             .process-journey__icon {
                 width: 34px;
                 height: 34px;
-            }
-
-            .process-journey__connector {
-                width: 64px;
             }
         }
 
@@ -2399,6 +2395,17 @@
             .process-journey__step:hover::before {
                 opacity: 1;
                 visibility: visible;
+            }
+
+            /* Last icon tooltip: anchor from right to prevent viewport overflow */
+            .process-journey__step:nth-child(9)::after {
+                left: auto;
+                right: 0;
+            }
+            .process-journey__step:nth-child(9)::before {
+                left: auto;
+                right: 12px;
+                transform: translateX(50%);
             }
         }
 
@@ -2482,7 +2489,7 @@
             margin-top: var(--space-lg);
             font-size: var(--text-sm);
             color: var(--text-muted);
-            max-width: 520px;
+            max-width: 640px;
             line-height: 1.6;
         }
 
@@ -2904,7 +2911,7 @@
         }
 
         .exploratory-sessions__name {
-            font-family: 'Fraunces', Georgia, serif;
+            font-family: halyard-display, sans-serif;
             font-size: var(--text-2xl);
             font-weight: var(--font-light);
             letter-spacing: 0.02em;
@@ -3422,7 +3429,7 @@
         }
 
         .core-systems__name {
-            font-family: 'Fraunces', Georgia, serif;
+            font-family: halyard-display, sans-serif;
             font-size: var(--text-3xl);
             font-weight: var(--font-light);
             letter-spacing: 0.02em;
@@ -3574,7 +3581,7 @@
         }
 
         .focused-studio__name {
-            font-family: 'Fraunces', Georgia, serif;
+            font-family: halyard-display, sans-serif;
             font-size: var(--text-3xl);
             font-weight: var(--font-normal);
             letter-spacing: 0.02em;

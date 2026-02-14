@@ -16,7 +16,7 @@ const currentYear = new Date().getFullYear();
 <BaseLayout
     title="B Build — Fixed-Scope Web & Brand Work | BG | Brand & Web Systems"
     description="Focused brand and website work—done fast, done properly. Starter Site, One-Page Redesign, and Brandmark & Visual Identity packages with clear timelines and fixed prices."
-    canonical="https://brands.bertrandgroup.ca/focus-studio"
+    canonical="https://bertrandbrands.ca/focus-studio"
     ogTitle="B Build — Fixed-Scope Web & Brand Work | BG | Brand & Web Systems"
     ogDescription="Focused brand and website work—done fast, done properly. Clear scope, clear timelines, clear outcomes."
     schemaJson={{
@@ -27,7 +27,7 @@ const currentYear = new Date().getFullYear();
         "provider": {
             "@type": "ProfessionalService",
             "name": "Bertrand Group | Brand & Web Systems",
-            "url": "https://brands.bertrandgroup.ca",
+            "url": "https://bertrandbrands.ca",
             "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "Greater Sudbury",
@@ -97,16 +97,58 @@ const currentYear = new Date().getFullYear();
             }
 
             .focus-studio__name {
-                font-family: 'Fraunces', Georgia, serif;
-                font-size: var(--text-2xl);
+                font-family: halyard-display, sans-serif;
+                font-size: var(--text-3xl);
                 font-weight: 300;
                 letter-spacing: 0.02em;
                 color: var(--text);
             }
 
             .fs-hero {
-                padding: var(--space-2xl, 4rem) 0 var(--space-lg, 2rem);
+                padding: var(--space-lg, 2rem) 0 var(--space-lg, 2rem);
                 text-align: center;
+            }
+
+            /* Hero illustration + glow */
+            .fs-hero__illustration-wrap {
+                position: relative;
+                display: block;
+                margin: 0 auto 0.75rem;
+                width: clamp(200px, 35vw, 320px);
+            }
+            .fs-hero__illustration-wrap::before {
+                content: '';
+                position: absolute;
+                top: 50%; left: 50%;
+                width: 70%; height: 70%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(139, 92, 246, 0) 70%);
+                filter: blur(30px);
+                opacity: 0;
+                animation: fsGlowPulse 2.8s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+                pointer-events: none;
+                z-index: 0;
+            }
+            .fs-hero__illustration {
+                position: relative; z-index: 1;
+                display: block; width: 100%; height: auto; pointer-events: none;
+                opacity: 0;
+                animation: fsIllustrationFadeIn 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+            }
+            @keyframes fsGlowPulse {
+                0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                35%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+                100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            }
+            @keyframes fsIllustrationFadeIn {
+                0%   { opacity: 0; }
+                100% { opacity: 1; }
+            }
+            @media (max-width: 900px) { .fs-hero__illustration-wrap { width: clamp(180px, 45vw, 280px); } }
+            @media (max-width: 480px) { .fs-hero__illustration-wrap { width: clamp(150px, 55vw, 220px); } }
+            @media (prefers-reduced-motion: reduce) {
+                .fs-hero__illustration-wrap::before { animation: none; opacity: 0.5; }
+                .fs-hero__illustration { animation: none; opacity: 1; }
             }
 
             .fs-hero__title {
@@ -570,6 +612,26 @@ const currentYear = new Date().getFullYear();
                     <img src="/assets/bg-brands-logomark.png" alt="" class="focus-studio__mark" width="40" height="40">
                     <span class="focus-studio__name">Build</span>
                 </a>
+                <!-- Wireframe / layout illustration -->
+                <div class="fs-hero__illustration-wrap">
+                <svg class="fs-hero__illustration" viewBox="65 48 345 305" fill="none" aria-hidden="true">
+                    <rect x="100" y="60" width="300" height="280" rx="2" stroke="rgba(139, 92, 246, 0.25)" stroke-width="1.5"/>
+                    <line x1="100" y1="132" x2="400" y2="132" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
+                    <line x1="100" y1="192" x2="400" y2="192" stroke="rgba(139, 92, 246, 0.18)" stroke-width="1"/>
+                    <line x1="100" y1="252" x2="400" y2="252" stroke="rgba(139, 92, 246, 0.12)" stroke-width="1"/>
+                    <line x1="250" y1="60" x2="250" y2="340" stroke="rgba(139, 92, 246, 0.06)" stroke-width="1" stroke-dasharray="2 8"/>
+                    <rect x="115" y="72" width="270" height="48" rx="1" fill="rgba(139, 92, 246, 0.04)" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
+                    <rect x="115" y="142" width="155" height="38" rx="1" fill="rgba(139, 92, 246, 0.03)" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1"/>
+                    <rect x="285" y="142" width="100" height="38" rx="1" fill="rgba(139, 92, 246, 0.03)" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1"/>
+                    <rect x="115" y="202" width="270" height="38" rx="1" fill="rgba(139, 92, 246, 0.02)" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1"/>
+                    <line x1="125" y1="86" x2="260" y2="86" stroke="rgba(139, 92, 246, 0.12)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="125" y1="96" x2="200" y2="96" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="100" cy="60" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                    <circle cx="400" cy="60" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                    <circle cx="100" cy="340" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                    <circle cx="400" cy="340" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                </svg>
+                </div>
                 <h1 class="fs-hero__title">Customers are clicking away.</h1>
                 <p class="fs-hero__problem">If your website hasn't been updated in over a year, visitors see it immediately. Especially on mobile.</p>
                 <p class="fs-hero__subtitle">

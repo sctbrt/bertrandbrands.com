@@ -11,7 +11,7 @@ import {
 
 // Config
 const MAGIC_LINK_TTL_MINUTES = parseInt(process.env.PRICING_MAGIC_LINK_TTL_MINUTES || '15', 10);
-const APP_URL = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
+const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 const RATE_LIMIT_EMAIL_PER_HOUR = 3;
 const RATE_LIMIT_IP_PER_HOUR = 10;
 
@@ -103,7 +103,7 @@ Bertrand Group | Brand & Web Systems · Sudbury, Ontario
 
 export default async function handler(req, res) {
   // CORS — restrict to own domain
-  const allowedOrigin = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
+  const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.ca';
   res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -174,7 +174,7 @@ export default async function handler(req, res) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandbrands.com>',
+      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandgroup.ca>',
       to: normalizedEmail,
       subject: 'Your pricing access link',
       html: buildEmailHtml({

@@ -12,7 +12,7 @@ import { errorPageHtml } from '../_lib/html.js';
 
 // Config
 const SESSION_TTL_MINUTES = parseInt(process.env.BOOKING_SESSION_TTL_MINUTES || '240', 10); // 4 hours
-const APP_URL = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
+const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 
 export default async function handler(req, res) {
   // Only allow GET
@@ -70,7 +70,7 @@ export default async function handler(req, res) {
 
     // Set session cookie
     const maxAgeSeconds = SESSION_TTL_MINUTES * 60;
-    res.setHeader('Set-Cookie', buildCookie('bb_booking_session', session.id, maxAgeSeconds));
+    res.setHeader('Set-Cookie', buildCookie('bb_booking_session', session.id, maxAgeSeconds, { hostname: req.headers.host }));
 
     // Redirect to booking schedule page
     res.setHeader('Location', `${APP_URL}/booking/schedule`);

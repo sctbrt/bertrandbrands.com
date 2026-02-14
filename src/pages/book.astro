@@ -20,7 +20,7 @@ const schema = {
   "provider": {
     "@type": "ProfessionalService",
     "name": "Bertrand Group | Brand & Web Systems",
-    "url": "https://brands.bertrandgroup.ca",
+    "url": "https://bertrandbrands.ca",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Greater Sudbury",
@@ -34,7 +34,7 @@ const schema = {
 <BaseLayout
   title="Start Here — BG | Brand & Web Systems"
   description="Begin your journey with Bertrand Group. All work starts with an intake to ensure fit and clarity."
-  canonical="https://brands.bertrandgroup.ca/book"
+  canonical="https://bertrandbrands.ca/book"
   ogTitle="Start Here — BG | Brand & Web Systems"
   ogDescription="Begin your journey with Bertrand Group. All work starts with an intake to ensure fit and clarity."
   schemaJson={schema}
@@ -369,6 +369,24 @@ const schema = {
             border-color: #1D4ED8;
         }
 
+        .intake-card__phone {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+        }
+
+        /* Phone card: Call Now button = mobile only, text = desktop only */
+        .intake-card__cta.phone-link__mobile {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .intake-card__cta.phone-link__mobile {
+                display: inline-flex;
+            }
+            .intake-card__phone.phone-link__desktop {
+                display: none;
+            }
+        }
+
         /* Help Section */
         .book-help {
             padding: var(--space-xl, 3rem) 0;
@@ -508,7 +526,7 @@ const schema = {
                       <div class="intake-card__footer">
                           <p class="intake-card__price intake-card__price--free">Free</p>
                           <a href="tel:+17054133705" class="intake-card__cta phone-link__mobile">Call Now →</a>
-                          <span class="intake-card__cta intake-card__cta--static phone-link__desktop">Please call 705-413-3705</span>
+                          <span class="intake-card__phone phone-link__desktop">Please call 705-413-3705</span>
                       </div>
                   </div>
                   </div>

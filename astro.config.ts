@@ -4,7 +4,7 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   output: 'static',
   adapter: vercel(),
-  site: 'https://brands.bertrandgroup.ca',
+  site: 'https://bertrandbrands.ca',
   trailingSlash: 'never',
   build: {
     format: 'file',

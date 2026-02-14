@@ -231,7 +231,7 @@ A successful implementation:
 
 **Bertrand Group | Brands & Web Systems** — Premium brand and web systems design studio website. An Astro 5 static site with serverless backend functionality hosted on Vercel.
 
-**Domain**: brands.bertrandgroup.ca
+**Domain**: bertrandbrands.ca
 **Purpose**: Professional services showcase, lead generation, brand expression
 
 ---
@@ -601,7 +601,7 @@ POSTGRES_URL          # Vercel Postgres connection
 RESEND_API_KEY        # Email delivery
 PUSHOVER_USER_KEY     # Push notifications
 PUSHOVER_API_TOKEN    # Push notifications
-APP_URL               # CORS origin (defaults to https://brands.bertrandgroup.ca)
+APP_URL               # CORS origin (defaults to https://bertrandbrands.ca)
 ```
 
 ---
@@ -1050,7 +1050,7 @@ Added `contain: layout style` to:
 | 5.5.1 | Feb 2026 | P5 polish pass: removed unused --font-mono token, consolidated duplicate scroll-behavior, added phone button title attr, fixed vercel.json formatting, sanitized PII in snapshot booking logs, documented canonical email regex, marked launch gate for removal, added audit log retention strategy, clarified header nav documentation |
 | 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0–P4): fixed version header, duplicate numbering, sub-numbering, GA/GTM status, pricing gate location, launch date; replaced project structure tree, expanded Section 16 routes (26 new), removed orphaned pages from Section 22.8, added APP_URL; added Section 25 API Endpoints Reference, expanded Section 11 security with CSP note; fixed exploratory blue token (#3B82F6→#2563EB in tokens.css + main.css), removed unused z-index tokens, kept glass tokens for future use; P4 code cleanup: removed empty scroll handler from dot-grid-about.js, deleted orphaned brand-clarity-call.html and website-clarity-call.html, extracted shared API utilities to api/lib/ (crypto.js, cookies.js, html.js) |
 | 6.0.0 | Feb 2026 | Service architecture v6: Added Devin (human full-stack dev) to Section 1.1. Unlocked Sections 1.4/1.5. Tier 1 Exploratory: 2→3 offerings (Guided Intake, Clarity Session w/ Systems domain, Technical Feasibility Check). Tier 2: One-Page Redesign→One-Page System Redesign, added scope boundary. Tier 3: renamed Core Services→Core Systems, reduced 5→3 offerings (Brand System Reset absorbs Strategic Brand Review, Integrated Brand+Platform replaces Full Brand+Platform Reset, dropped Brand Moments). Renamed files: brand-reset→brand-system-reset, full-brand-platform-reset→integrated-brand-platform. Deleted strategic-brand-review.html. New routes: /core-systems, /brand-system-reset, /integrated-brand-platform. CSS: all .core-services→.core-systems. Section 23: Brand Moments→Language Standards. Updated all ads pages, SEO files, booking labels, llms.txt. |
-| 7.0.0 | Feb 2026 | Full rebrand: Bertrand Brands → Bertrand Group | Brands & Web Systems. Domain: brands.bertrandgroup.ca. Email: hello@bertrandgroup.ca. Text-based animated header wordmark (Inter semibold/regular, collapse after 2s, expand on hover). New logomark asset (bg-brands-logomark.png). Updated all ~45 files: titles, OG tags, Schema.org, email templates, error pages, notification titles, announcement banner, config files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
+| 7.0.0 | Feb 2026 | Full rebrand: Bertrand Brands → Bertrand Group | Brands & Web Systems. Domain: bertrandbrands.ca. Email: hello@bertrandgroup.ca. Text-based animated header wordmark (Inter semibold/regular, collapse after 2s, expand on hover). New logomark asset (bg-brands-logomark.png). Updated all ~45 files: titles, OG tags, Schema.org, email templates, error pages, notification titles, announcement banner, config files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
 | 8.0.0 | Feb 2026 | Astro 5 migration: Migrated all 27 pages from vanilla HTML to `.astro` files with `BaseLayout` + 5 header variants + 6 shared components. File-based routing eliminates all page rewrites. Redirects moved from `vercel.json` to `astro.config.ts` (28 entries). CSS/fonts/scripts relocated from `src/` to `public/` for Astro static serving. Extracted `GesturePrevention.astro` (replaced 21 inline occurrences). Extracted `pricing-modal.css` and `founder-lightbox.css` from main.css (homepage-only loading). Fixed HeaderCanonical double-binding bug. Removed legacy JS injectors (`header.js`, `visitor-notify.js`, `announcement-banner.js`). `vercel.json` reduced to API rewrites + security headers only. Legacy HTML archived in `src/_legacy/`. |
 
 ---

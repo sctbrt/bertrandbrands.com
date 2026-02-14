@@ -10,7 +10,7 @@ const currentYear = new Date().getFullYear();
 <ServiceDetailLayout
     title="Brand System Reset — B Transformation | BG | Brand & Web Systems"
     description="A strategic reset of your brand system — diagnosis, realignment, and implementation roadmap. Combines brand audit with identity refinement."
-    canonical="https://brands.bertrandgroup.ca/brand-system-reset"
+    canonical="https://bertrandbrands.ca/brand-system-reset"
     ogTitle="Brand System Reset — B Transformation | BG | Brand & Web Systems"
     ogDescription="A strategic reset of your brand system — diagnosis, realignment, and implementation roadmap."
     schemaJson={{
@@ -21,7 +21,7 @@ const currentYear = new Date().getFullYear();
         "provider": {
             "@type": "ProfessionalService",
             "name": "Bertrand Group | Brand & Web Systems",
-            "url": "https://brands.bertrandgroup.ca"
+            "url": "https://bertrandbrands.ca"
         }
     }}
     spotlightColor="rgba(217, 119, 6, 0.12)"
@@ -41,12 +41,12 @@ const currentYear = new Date().getFullYear();
                 75% { opacity: 0.9; transform: translate(10px, 5px) scale(1.02); }
             }
 
-            .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: var(--space-md); text-decoration: none; transition: opacity var(--duration-fast) ease; }
+            .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: 0; text-decoration: none; transition: opacity var(--duration-fast) ease; }
             .service-subbrand:hover { opacity: 0.8; }
             .service-subbrand__mark { width: 32px; height: 32px; filter: brightness(0) invert(1); }
-            .service-subbrand__name { font-family: 'Fraunces', Georgia, serif; font-size: var(--text-xl); font-weight: 300; letter-spacing: 0.02em; color: var(--text); }
+            .service-subbrand__name { font-family: halyard-display, sans-serif; font-size: var(--text-3xl); font-weight: 300; letter-spacing: 0.02em; color: var(--text); }
 
-            .service-hero { padding: var(--space-lg) 0 var(--space-md); text-align: center; position: relative; z-index: 1; }
+            .service-hero { padding: var(--space-sm) 0 var(--space-md); text-align: center; position: relative; z-index: 1; }
             .service-hero__headline { font-family: 'Inter', -apple-system, sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 400; line-height: 1.25; color: var(--text); max-width: 700px; margin: 0 auto var(--space-md); }
             .service-hero__description { font-size: var(--text-lg); color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
@@ -84,9 +84,32 @@ const currentYear = new Date().getFullYear();
             .service-footer__phone a:hover { color: var(--text); }
 
             .service-hero { position: relative; }
-            .service-hero__illustration { display: block; margin: 0 auto 0.75rem; width: clamp(200px, 35vw, 320px); height: auto; pointer-events: none; opacity: 1; }
-            @media (max-width: 900px) { .service-hero__illustration { width: clamp(180px, 45vw, 280px); opacity: 0.85; } }
-            @media (max-width: 480px) { .service-hero__illustration { width: clamp(150px, 55vw, 220px); opacity: 0.7; } }
+            .service-hero__illustration-wrap {
+                position: relative; display: block; margin: 0 auto 0.25rem; width: clamp(200px, 35vw, 320px);
+            }
+            .service-hero__illustration-wrap::before {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 70%; height: 70%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(217, 119, 6, 0.4) 0%, rgba(217, 119, 6, 0) 70%);
+                filter: blur(30px); opacity: 0; pointer-events: none; z-index: 0;
+                animation: svcGlowPulse 2.8s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+            }
+            .service-hero__illustration {
+                position: relative; z-index: 1; display: block; width: 100%; height: auto; pointer-events: none;
+                opacity: 0; animation: svcFadeIn 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+            }
+            @keyframes svcGlowPulse {
+                0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                35%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+                100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            }
+            @keyframes svcFadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+            @media (max-width: 900px) { .service-hero__illustration-wrap { width: clamp(180px, 45vw, 280px); } }
+            @media (max-width: 480px) { .service-hero__illustration-wrap { width: clamp(150px, 55vw, 220px); } }
+            @media (prefers-reduced-motion: reduce) {
+                .service-hero__illustration-wrap::before { animation: none; opacity: 0.5; }
+                .service-hero__illustration { animation: none; opacity: 1; }
+            }
 
             @media (max-width: 768px) {
                 .service-page__spotlight { filter: blur(40px); }
@@ -122,6 +145,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <section class="service-hero">
+                <div class="service-hero__illustration-wrap">
                 <svg class="service-hero__illustration" viewBox="115 70 270 250" fill="none" aria-hidden="true">
                     <!-- Original system (misaligned) -->
                     <rect x="175" y="125" width="150" height="150" rx="2" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1" stroke-dasharray="4 4"/>
@@ -155,6 +179,7 @@ const currentYear = new Date().getFullYear();
                     <!-- Outer construction circle -->
                     <circle cx="250" cy="200" r="115" stroke="rgba(217, 119, 6, 0.06)" stroke-width="1" stroke-dasharray="3 8"/>
                 </svg>
+                </div>
                 <h1 class="service-hero__headline">A strategic reset of your brand system — diagnosis, realignment, and roadmap.</h1>
                 <p class="service-hero__description">The Brand System Reset combines strategic review with identity refinement. We diagnose what's working, realign what's drifted, and deliver an implementation roadmap — all without starting from zero.</p>
             </section>

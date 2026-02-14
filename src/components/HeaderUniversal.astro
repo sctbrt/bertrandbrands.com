@@ -2,7 +2,8 @@
 /**
  * HeaderUniversal — Standard header for sub-pages.
  * Uses /?skip#section links to navigate to homepage sections.
- * Includes mobile menu, ambient lighting (lights-on immediately), and wordmark collapse.
+ * Includes mobile menu, ambient lighting (lights-on immediately),
+ * and animated wordmark: BERTRAND BRANDS → BERTRAND BRAND & WEB SYSTEMS.
  * Pages using this header need the landing-page header visibility override CSS.
  */
 ---
@@ -12,9 +13,8 @@
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
                 <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon" width="40" height="40" fetchpriority="high">
-                <span class="header__wordmark" aria-label="Bertrand Group | Brand &amp; Web Systems">
-                    <span class="header__wordmark-full"><span class="header__wordmark-brand">Bertrand Group</span> <span class="header__wordmark-sub">| Brand &amp; Web Systems</span></span>
-                    <span class="header__wordmark-short"><span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
+                <span class="header__wordmark" aria-label="Bertrand Brand &amp; Web Systems">
+                    <span class="header__wordmark-text" aria-hidden="true">BERTRAND BRANDS</span>
                 </span>
             </a>
             <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
@@ -34,25 +34,58 @@
     </div>
 </header>
 
+<style is:inline>
+    .header__wordmark-text {
+        display: inline-block;
+        white-space: nowrap;
+    }
+    .header__wordmark-text .wm-char {
+        display: inline-block;
+        transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1),
+                    opacity 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    .header__wordmark-text .wm-space {
+        display: inline-block;
+        width: 0.3em;
+        transition: width 0.4s cubic-bezier(0.33, 1, 0.68, 1),
+                    opacity 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    .header__wordmark-text.wm-collapsing .wm-char,
+    .header__wordmark-text.wm-collapsing .wm-space {
+        transform: translateX(-8px);
+        opacity: 0;
+    }
+    .header__wordmark-text.wm-collapsed {
+        visibility: hidden;
+        position: absolute;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .header__wordmark-text .wm-char,
+        .header__wordmark-text .wm-space {
+            transition: none !important;
+        }
+    }
+</style>
+
 <script is:inline>
-/* Mobile menu + ambient lighting + wordmark collapse (sub-pages) */
+/* Mobile menu + ambient lighting + animated wordmark (sub-pages) */
 (function() {
     /* Mobile menu */
-    const toggle = document.querySelector('.header__toggle');
-    const nav = document.querySelector('.header__nav');
-    const header = document.querySelector('.header');
+    var toggle = document.querySelector('.header__toggle');
+    var nav = document.querySelector('.header__nav');
+    var header = document.querySelector('.header');
     if (!toggle || !nav) return;
 
     toggle.addEventListener('click', function() {
-        const isOpen = nav.classList.toggle('is-open');
+        var isOpen = nav.classList.toggle('is-open');
         toggle.classList.toggle('is-open', isOpen);
         toggle.setAttribute('aria-expanded', isOpen);
         if (header) header.classList.toggle('nav-open', isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    nav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
+    nav.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
             nav.classList.remove('is-open');
             toggle.classList.remove('is-open');
             toggle.setAttribute('aria-expanded', 'false');
@@ -73,14 +106,15 @@
     });
 
     /* Ambient lighting (30fps throttled) */
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const headerGlass = document.querySelector('.header__glass');
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+        var headerGlass = document.querySelector('.header__glass');
         if (header && headerGlass) {
             header.classList.add('lights-on');
 
-            let pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
-            let lastFrame = 0;
-            const FRAME_INTERVAL = 1000 / 30;
+            var pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
+            var lastFrame = 0;
+            var FRAME_INTERVAL = 1000 / 30;
 
             function animateLights(timestamp) {
                 if (timestamp - lastFrame < FRAME_INTERVAL) {
@@ -100,14 +134,135 @@
         }
     }
 
-    /* Wordmark collapse (all screens, respects reduced-motion) */
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const wordmark = document.querySelector('.header__wordmark');
-        if (wordmark) {
-            setTimeout(function() {
-                wordmark.classList.add('is-collapsed');
-            }, 30000);
+    /* ============================================================
+       Animated Wordmark
+       BERTRAND BRANDS ←→ BERTRAND BRAND & WEB SYSTEMS
+       ============================================================ */
+    var SHORT = 'BERTRAND BRANDS';
+    var FULL  = 'BERTRAND BRAND & WEB SYSTEMS';
+    var wmText = document.querySelector('.header__wordmark-text');
+    var wmWrap = document.querySelector('.header__wordmark');
+    if (!wmText || !wmWrap) return;
+
+    var isExpanded = false;    /* true = showing FULL text */
+    var isAnimating = false;
+    var collapseTimer = null;
+    var expandTimer = null;
+
+    /* Wrap each character in a span for per-letter animation */
+    function renderText(str) {
+        var html = '';
+        for (var i = 0; i < str.length; i++) {
+            if (str[i] === ' ') {
+                html += '<span class="wm-space"> </span>';
+            } else {
+                html += '<span class="wm-char">' + str[i] + '</span>';
+            }
         }
+        wmText.innerHTML = html;
+    }
+
+    /* Stagger delay per character for collapse/expand */
+    function staggerChars(direction, callback) {
+        var chars = wmText.querySelectorAll('.wm-char, .wm-space');
+        var count = chars.length;
+        var staggerMs = 20;
+        var totalDuration = (count * staggerMs) + 400; /* transition + stagger */
+
+        if (direction === 'collapse') {
+            /* Collapse left: last char first → first char last */
+            for (var i = count - 1; i >= 0; i--) {
+                (function(el, delay) {
+                    setTimeout(function() {
+                        el.style.transform = 'translateX(-8px)';
+                        el.style.opacity = '0';
+                    }, delay);
+                })(chars[i], (count - 1 - i) * staggerMs);
+            }
+        } else {
+            /* Expand right: first char first → last char last */
+            for (var j = 0; j < count; j++) {
+                (function(el, delay) {
+                    /* Start offscreen left */
+                    el.style.transform = 'translateX(-8px)';
+                    el.style.opacity = '0';
+                    el.offsetHeight; /* force reflow */
+                    setTimeout(function() {
+                        el.style.transform = 'translateX(0)';
+                        el.style.opacity = '1';
+                    }, delay);
+                })(chars[j], j * staggerMs);
+            }
+        }
+
+        setTimeout(callback, totalDuration);
+    }
+
+    /* Transition from current text to new text */
+    function transitionTo(newText, newState, onDone) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        /* Phase 1: collapse current text */
+        staggerChars('collapse', function() {
+            /* Phase 2: swap text while invisible */
+            renderText(newText);
+            isExpanded = newState;
+            wmWrap.setAttribute('aria-label', newState ? 'Bertrand Brand & Web Systems' : 'Bertrand Brands');
+
+            /* Phase 3: expand new text */
+            staggerChars('expand', function() {
+                isAnimating = false;
+                if (onDone) onDone();
+            });
+        });
+    }
+
+    /* Reduced motion: just swap text instantly */
+    if (reducedMotion) {
+        renderText(SHORT);
+        /* Make chars visible immediately */
+        var chars = wmText.querySelectorAll('.wm-char, .wm-space');
+        chars.forEach(function(c) { c.style.opacity = '1'; c.style.transform = 'none'; });
+        wmWrap.style.opacity = '1';
+        return;
+    }
+
+    /* Initial render */
+    renderText(SHORT);
+    /* Make initial chars visible */
+    var initChars = wmText.querySelectorAll('.wm-char, .wm-space');
+    initChars.forEach(function(c) { c.style.opacity = '1'; c.style.transform = 'none'; });
+    wmWrap.style.opacity = '1';
+
+    /* Auto-expand after 5 seconds */
+    expandTimer = setTimeout(function() {
+        transitionTo(FULL, true, function() {
+            /* Auto-collapse back after 10 seconds */
+            collapseTimer = setTimeout(function() {
+                transitionTo(SHORT, false);
+            }, 10000);
+        });
+    }, 5000);
+
+    /* Hover: expand when collapsed (desktop only) */
+    var logoLink = document.querySelector('.header__logo');
+    if (logoLink && window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+        logoLink.addEventListener('mouseenter', function() {
+            if (!isExpanded && !isAnimating) {
+                clearTimeout(expandTimer);
+                clearTimeout(collapseTimer);
+                transitionTo(FULL, true);
+            }
+        });
+        logoLink.addEventListener('mouseleave', function() {
+            if (isExpanded && !isAnimating) {
+                clearTimeout(collapseTimer);
+                collapseTimer = setTimeout(function() {
+                    transitionTo(SHORT, false);
+                }, 2000);
+            }
+        });
     }
 })();
 </script>

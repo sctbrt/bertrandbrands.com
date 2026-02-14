@@ -12,7 +12,7 @@ import { sql } from '@vercel/postgres';
 
 // Config
 const BOOKING_TOKEN_TTL_HOURS = 72; // Token valid for 3 days
-const APP_URL = process.env.APP_URL || 'https://brands.bertrandgroup.ca';
+const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 
 // Booking type labels for emails
 const BOOKING_TYPE_LABELS = {
@@ -187,7 +187,7 @@ export default async function handler(req, res) {
     const firstName = clientName.trim().split(' ')[0];
 
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandbrands.com>',
+      from: process.env.RESEND_FROM_EMAIL || 'Bertrand Group <hello@bertrandgroup.ca>',
       to: normalizedEmail,
       subject: `Your ${bookingTypeLabel} booking link`,
       html: buildEmailHtml({
