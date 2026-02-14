@@ -151,23 +151,23 @@ function divisionEntryPage() {
 export default function middleware(request) {
     const hostname = request.headers.get('host') || '';
 
-    // brands.bertrandgroup.ca → division entry page (root) or redirect (deep links)
+    // brands.bertrandgroup.ca → division entry page (root) or pass-through (deep links)
+    // NOTE: Deep links currently pass through while bertrandbrands.ca DNS propagates.
+    //       Once .ca is live, change pass-through to 301 redirect:
+    //       url.hostname = 'bertrandbrands.ca'; return Response.redirect(url.toString(), 301);
     if (hostname === 'brands.bertrandgroup.ca' || hostname === 'www.brands.bertrandgroup.ca') {
         const url = new URL(request.url);
         if (url.pathname === '/' || url.pathname === '') {
             return divisionEntryPage();
         }
-        url.hostname = 'bertrandbrands.ca';
-        url.port = '';
-        return Response.redirect(url.toString(), 301);
+        return next();
     }
 
-    // Legacy domains → new canonical
-    if (
-        hostname === 'bertrandbrands.com' ||
-        hostname === 'www.bertrandbrands.com' ||
-        hostname === 'www.bertrandbrands.ca'
-    ) {
+    // Legacy .com domains → pass-through (serve site content directly)
+    // NOTE: Once bertrandbrands.ca DNS is live, change to 301 redirect:
+    //       url.hostname = 'bertrandbrands.ca'; return Response.redirect(url.toString(), 301);
+    // Keep www.bertrandbrands.ca redirect since it's the same domain family
+    if (hostname === 'www.bertrandbrands.ca') {
         const url = new URL(request.url);
         url.hostname = 'bertrandbrands.ca';
         url.port = '';
