@@ -15,14 +15,48 @@ function divisionEntryPage() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bertrand Brands — Brand &amp; Web Systems | A Division of Bertrand Group</title>
-    <meta name="description" content="Bertrand Brands is the brand, web, and systems design division of Bertrand Group. Visit bertrandbrands.ca for services, pricing, and booking.">
+    <meta name="description" content="Bertrand Brands is the brand, web, and systems design division of Bertrand Group. Brand strategy, web systems, and digital platforms for businesses that value clarity. Based in Sudbury, Ontario.">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://brands.bertrandgroup.ca">
-    <meta property="og:title" content="Bertrand Brands — Brand & Web Systems">
-    <meta property="og:description" content="Brand, web, and systems design division of Bertrand Group.">
+    <meta property="og:title" content="Bertrand Brands — Brand & Web Systems | A Division of Bertrand Group">
+    <meta property="og:description" content="Brand, web, and systems design division of Bertrand Group. Based in Sudbury, Ontario.">
     <meta property="og:url" content="https://brands.bertrandgroup.ca">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_CA">
+    <meta property="og:site_name" content="Bertrand Group">
     <meta property="og:image" content="https://bertrandbrands.ca/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Bertrand Brands — Brand & Web Systems">
     <meta http-equiv="refresh" content="5;url=https://bertrandbrands.ca">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Bertrand Brands",
+        "alternateName": "Bertrand Group | Brand & Web Systems",
+        "description": "Brand, web, and systems design division of Bertrand Group. Based in Greater Sudbury, Ontario.",
+        "url": "https://bertrandbrands.ca",
+        "logo": "https://bertrandbrands.ca/assets/bg-brands-logomark.png",
+        "email": "hello@bertrandgroup.ca",
+        "telephone": "+17054133705",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Greater Sudbury",
+            "addressRegion": "Ontario",
+            "addressCountry": "CA"
+        },
+        "parentOrganization": {
+            "@type": "Organization",
+            "name": "Bertrand Group",
+            "url": "https://bertrandgroup.ca"
+        },
+        "sameAs": [
+            "https://bertrandbrands.ca",
+            "https://bertrandgroup.ca"
+        ]
+    }
+    </script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -78,6 +112,16 @@ function divisionEntryPage() {
             border-color: #D97706;
             background: rgba(217, 119, 6, 0.08);
         }
+        .entry__parent-link {
+            color: #a3a3a3;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .entry__parent-link:hover {
+            color: #fafafa;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
         .entry__redirect {
             margin-top: 1.5rem;
             font-size: 0.75rem;
@@ -86,14 +130,14 @@ function divisionEntryPage() {
     </style>
 </head>
 <body>
-    <div class="entry">
-        <img src="https://bertrandbrands.ca/assets/bg-brands-logomark.png" alt="" class="entry__logo">
-        <p class="entry__division">A division of Bertrand Group</p>
+    <main class="entry" role="main">
+        <img src="https://bertrandbrands.ca/assets/bg-brands-logomark.png" alt="Bertrand Brands logomark" class="entry__logo" width="48" height="48">
+        <p class="entry__division">A division of <a href="https://bertrandgroup.ca" class="entry__parent-link">Bertrand Group</a></p>
         <h1 class="entry__name">Bertrand Brands</h1>
-        <p class="entry__sub">Brand, web, and systems design studio based in Sudbury, Ontario.</p>
-        <a href="https://bertrandbrands.ca" class="entry__link">Visit bertrandbrands.ca</a>
+        <p class="entry__sub">Brand, web, and systems design studio based in Sudbury, Ontario. Strategy, websites, and digital platforms for businesses that value clarity.</p>
+        <a href="https://bertrandbrands.ca" class="entry__link">Visit bertrandbrands.ca &rarr;</a>
         <p class="entry__redirect">Redirecting automatically&hellip;</p>
-    </div>
+    </main>
 </body>
 </html>`, {
         status: 200,
