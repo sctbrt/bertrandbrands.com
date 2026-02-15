@@ -1,0 +1,271 @@
+---
+/**
+ * Privacy Policy — Data collection and usage transparency page.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderUniversal from '../components/HeaderUniversal.astro';
+import SkipLink from '../components/SkipLink.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+
+const currentYear = new Date().getFullYear();
+
+const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Privacy Policy — Bertrand Brands",
+    "description": "How Bertrand Brands collects, uses, and protects your information.",
+    "publisher": {
+        "@type": "ProfessionalService",
+        "name": "Bertrand Brands",
+        "url": "https://bertrandbrands.ca"
+    }
+};
+---
+
+<BaseLayout
+    title="Privacy Policy — Bertrand Brands"
+    description="How Bertrand Brands collects, uses, and protects your information. Based in Greater Sudbury, Ontario."
+    canonical="https://bertrandbrands.ca/privacy"
+    ogTitle="Privacy Policy — Bertrand Brands"
+    ogDescription="How Bertrand Brands collects, uses, and protects your information."
+    schemaJson={schema}
+    robots="noindex, follow"
+>
+    <Fragment slot="head">
+        <style is:inline>
+            html { touch-action: pan-x pan-y; }
+
+            @supports (-webkit-touch-callout: none) {
+                html { -webkit-text-size-adjust: 100%; }
+            }
+
+            /* Override main.css header to be visible by default */
+            .header {
+                opacity: 1 !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+                transform: translateY(0) !important;
+            }
+            .header__logo-icon,
+            .header__wordmark {
+                opacity: 1 !important;
+            }
+
+            .privacy-page {
+                min-height: 100vh;
+                padding-top: 80px;
+            }
+
+            .privacy-hero {
+                padding: var(--space-2xl) 0 var(--space-lg);
+                text-align: center;
+            }
+
+            .privacy-hero__title {
+                font-family: var(--font-body);
+                font-size: clamp(1.75rem, 4vw, 2.5rem);
+                font-weight: 300;
+                line-height: 1.2;
+                color: var(--text);
+                margin-bottom: var(--space-xs);
+            }
+
+            .privacy-hero__updated {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+            }
+
+            .privacy-content {
+                padding: 0 0 var(--space-xl);
+            }
+
+            .privacy-content h2 {
+                font-family: var(--font-body);
+                font-size: var(--text-lg);
+                font-weight: 500;
+                color: var(--text);
+                margin-top: var(--space-lg);
+                margin-bottom: var(--space-sm);
+                letter-spacing: -0.01em;
+            }
+
+            .privacy-content h2:first-child {
+                margin-top: 0;
+            }
+
+            .privacy-content p {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.75;
+                margin-bottom: var(--space-sm);
+            }
+
+            .privacy-content ul {
+                list-style: none;
+                padding: 0;
+                margin: 0 0 var(--space-sm);
+            }
+
+            .privacy-content li {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.75;
+                padding-left: 1.25rem;
+                position: relative;
+                margin-bottom: 0.25rem;
+            }
+
+            .privacy-content li::before {
+                content: "\2014";
+                position: absolute;
+                left: 0;
+                color: var(--text-subtle);
+            }
+
+            .privacy-content a {
+                color: var(--text);
+                text-decoration: underline;
+                text-underline-offset: 2px;
+                transition: color var(--duration-fast) ease;
+            }
+
+            .privacy-content a:hover {
+                color: var(--accent);
+            }
+
+            .privacy-footer {
+                border-top: 1px solid var(--border);
+                padding: var(--space-xl) 1.5rem;
+                text-align: center;
+            }
+
+            .privacy-footer__text {
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                margin-bottom: 0.5rem;
+            }
+
+            .privacy-footer__phone {
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+            }
+
+            .privacy-footer__phone a {
+                color: inherit;
+                text-decoration: none;
+            }
+        </style>
+    </Fragment>
+
+    <SkipLink />
+    <HeaderUniversal />
+
+    <main class="privacy-page" id="main-content">
+        <section class="privacy-hero">
+            <div class="container">
+                <h1 class="privacy-hero__title">Privacy Policy</h1>
+                <p class="privacy-hero__updated">Last updated: February 15, 2026</p>
+            </div>
+        </section>
+
+        <section class="privacy-content">
+            <div class="container">
+                <h2>Who we are</h2>
+                <p>Bertrand Brands is a web and brand studio based in Greater Sudbury, Ontario, operating as a division of Bertrand Group Canada. This policy explains how we collect, use, and protect your information when you interact with our website at bertrandbrands.ca and related services.</p>
+
+                <h2>What we collect</h2>
+                <p>We collect information you provide directly through our website:</p>
+                <ul>
+                    <li>Name, email address, and phone number (via intake forms and contact forms)</li>
+                    <li>Business name and website URL (via intake forms)</li>
+                    <li>Project details and service preferences you share through forms</li>
+                    <li>Booking and scheduling information (via Calendly)</li>
+                </ul>
+                <p>We also collect limited technical information automatically:</p>
+                <ul>
+                    <li>Pages visited and referral source</li>
+                    <li>Approximate geographic location (city, region, country) derived from your IP address</li>
+                    <li>Session cookies for authenticated features (pricing access, booking access)</li>
+                </ul>
+
+                <h2>How we use your information</h2>
+                <p>We use the information we collect to:</p>
+                <ul>
+                    <li>Respond to your inquiries and intake submissions</li>
+                    <li>Schedule and manage consultations</li>
+                    <li>Deliver services you have purchased</li>
+                    <li>Send project-related communications</li>
+                    <li>Improve our website and service offerings</li>
+                </ul>
+                <p>We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
+
+                <h2>Google Ads and lead forms</h2>
+                <p>If you submit information through a Google Ads lead form, your data (name, email, phone, and any responses you provide) is collected by Google and delivered to us via a secure webhook. This data is subject to both <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">Google&rsquo;s Privacy Policy</a> and this policy. We use this information solely to follow up on your inquiry.</p>
+
+                <h2>Third-party services</h2>
+                <p>We use the following services to operate our website and deliver our work:</p>
+                <ul>
+                    <li><strong>Vercel</strong> &mdash; Website hosting and serverless functions</li>
+                    <li><strong>Formspree</strong> &mdash; Form submission processing</li>
+                    <li><strong>Calendly</strong> &mdash; Appointment scheduling</li>
+                    <li><strong>Google Analytics</strong> &mdash; Website usage analytics</li>
+                    <li><strong>Google Ads</strong> &mdash; Advertising and lead form delivery</li>
+                    <li><strong>Resend</strong> &mdash; Transactional email delivery</li>
+                    <li><strong>Stripe</strong> &mdash; Payment processing</li>
+                </ul>
+                <p>Each service processes data according to its own privacy policy. We only share the minimum information necessary for each service to function.</p>
+
+                <h2>Cookies and tracking</h2>
+                <p>We use a limited number of cookies:</p>
+                <ul>
+                    <li><strong>Session cookies</strong> &mdash; Used for authenticated features such as pricing access and booking gates. These are HttpOnly, Secure, and expire after 4 hours.</li>
+                    <li><strong>Analytics cookies</strong> &mdash; Google Analytics may set cookies to understand site usage. You can opt out via your browser settings or the <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener noreferrer" target="_blank">Google Analytics opt-out extension</a>.</li>
+                </ul>
+                <p>We do not use cookies for advertising retargeting on this website.</p>
+
+                <h2>Data security</h2>
+                <p>We take reasonable measures to protect your information:</p>
+                <ul>
+                    <li>All data is transmitted over HTTPS</li>
+                    <li>Sensitive fields (email, phone, messages) are encrypted at rest using AES-256-GCM</li>
+                    <li>Session tokens are hashed before storage</li>
+                    <li>API endpoints use rate limiting and input validation</li>
+                    <li>Access to client data is restricted to authorized team members</li>
+                </ul>
+
+                <h2>Data retention</h2>
+                <p>We retain your information for as long as necessary to provide our services and comply with legal obligations. Intake form data is retained for up to 24 months after your last interaction. You may request deletion at any time.</p>
+
+                <h2>Your rights</h2>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access the personal information we hold about you</li>
+                    <li>Request correction of inaccurate information</li>
+                    <li>Request deletion of your information</li>
+                    <li>Withdraw consent for non-essential data processing</li>
+                </ul>
+                <p>To exercise any of these rights, contact us at <a href="mailto:hello@bertrandgroup.ca">hello@bertrandgroup.ca</a>.</p>
+
+                <h2>Contact</h2>
+                <p>If you have questions about this privacy policy or how we handle your data:</p>
+                <ul>
+                    <li>Email: <a href="mailto:hello@bertrandgroup.ca">hello@bertrandgroup.ca</a></li>
+                    <li>Phone: 705-413-3705</li>
+                    <li>Location: Greater Sudbury, Ontario, Canada</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="privacy-footer">
+        <p class="privacy-footer__text">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
+        <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
+        <p class="privacy-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
+    </footer>
+
+    <VisitorNotify />
+    <GesturePrevention />
+</BaseLayout>
