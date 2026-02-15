@@ -17,10 +17,10 @@ const currentYear = new Date().getFullYear();
 ---
 
 <BaseLayout
-    title="Sudbury Web Design & Branding — Starter Sites from $750 | BG | Brand & Web Systems"
+    title="Sudbury Web Design & Branding — Starter Sites from $750 | Bertrand Brands"
     description="Sudbury web designer offering website fixes, redesigns, and brand work for small businesses. Starter Site $750 (1 day), One-Page Redesign $1,250, Brandmark $950. Fixed pricing. Based in Greater Sudbury, Ontario."
     canonical="https://bertrandbrands.ca/sudbury"
-    ogTitle="Sudbury Web Design & Branding — Starter Sites from $750 | BG | Brand & Web Systems"
+    ogTitle="Sudbury Web Design & Branding — Starter Sites from $750 | Bertrand Brands"
     ogDescription="Website and brand work for Sudbury, Ontario businesses. Fixed pricing, fast turnaround. Based in Greater Sudbury."
     schemaJson={{
         "@context": "https://schema.org",
@@ -29,7 +29,7 @@ const currentYear = new Date().getFullYear();
         "description": "Fixed-scope web and brand work for small businesses in Greater Sudbury and Northern Ontario.",
         "provider": {
             "@type": "ProfessionalService",
-            "name": "Bertrand Group | Brand & Web Systems",
+            "name": "Bertrand Brands",
             "url": "https://bertrandbrands.ca",
             "telephone": "+17054133705",
             "address": {
@@ -68,10 +68,10 @@ const currentYear = new Date().getFullYear();
             "mainEntity": [
                 {
                     "@type": "Question",
-                    "name": "Does Bertrand Group work with Sudbury businesses?",
+                    "name": "Does Bertrand Brands work with Sudbury businesses?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Yes. Bertrand Group is based in Greater Sudbury, Ontario and works with local businesses across Sudbury and Northern Ontario, as well as clients across Canada."
+                        "text": "Yes. Bertrand Brands is based in Greater Sudbury, Ontario and works with local businesses across Sudbury and Northern Ontario, as well as clients across Canada."
                     }
                 },
                 {
@@ -79,7 +79,7 @@ const currentYear = new Date().getFullYear();
                     "name": "How much does a website cost for a small business in Sudbury?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Bertrand Group offers fixed-price website packages starting at $750 CAD for a Starter Site (delivered in 1 business day) and $1,250 CAD for a fully custom One-Page Redesign (2\u20133 business days). No hourly billing."
+                        "text": "Bertrand Brands offers fixed-price website packages starting at $750 CAD for a Starter Site (delivered in 1 business day) and $1,250 CAD for a fully custom One-Page Redesign (2\u20133 business days). No hourly billing."
                     }
                 },
                 {
@@ -103,7 +103,7 @@ const currentYear = new Date().getFullYear();
                     "name": "Can you fix my existing website in Sudbury?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Yes. If your website is outdated, unclear, or not generating leads, Bertrand Group can help. The One-Page Redesign ($1,250 CAD) is a fully custom rebuild delivered in 2\u20133 business days. We work with Sudbury businesses to make their websites clear, structured, and effective."
+                        "text": "Yes. If your website is outdated, unclear, or not generating leads, Bertrand Brands can help. The One-Page Redesign ($1,250 CAD) is a fully custom rebuild delivered in 2\u20133 business days. We work with Sudbury businesses to make their websites clear, structured, and effective."
                     }
                 },
                 {
@@ -111,7 +111,7 @@ const currentYear = new Date().getFullYear();
                     "name": "Is there a web designer near me in Sudbury?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Bertrand Group is based in Greater Sudbury, Ontario. All work is done remotely with fixed pricing and fast turnaround \u2014 no need for in-person meetings. Call 705-413-3705 or visit bertrandbrands.ca to get started."
+                        "text": "Bertrand Brands is based in Greater Sudbury, Ontario. All work is done remotely with fixed pricing and fast turnaround \u2014 no need for in-person meetings. Call 705-413-3705 or visit bertrandbrands.ca to get started."
                     }
                 }
             ]
@@ -143,6 +143,8 @@ const currentYear = new Date().getFullYear();
 
             /* ---- Hero ---- */
             .sb-hero {
+                position: relative;
+                overflow: hidden;
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
@@ -151,7 +153,155 @@ const currentYear = new Date().getFullYear();
                 padding: var(--space-2xl) var(--space-md);
             }
             .sb-hero__content {
+                position: relative;
+                z-index: 1;
                 max-width: 620px;
+            }
+
+            /* ---- Hero Spotlights ---- */
+            .sb-hero__spotlight {
+                position: absolute;
+                border-radius: 50%;
+                filter: blur(100px);
+                opacity: 0;
+                pointer-events: none;
+                z-index: 0;
+                will-change: transform, opacity;
+                transform: translateZ(0);
+                backface-visibility: hidden;
+                contain: layout style;
+            }
+            .sb-hero__spotlight--orange {
+                width: 500px;
+                height: 500px;
+                background: radial-gradient(circle, rgba(217, 119, 6, 0.8) 0%, rgba(217, 119, 6, 0.25) 40%, transparent 65%);
+                bottom: 5%;
+                left: -8%;
+                animation: sbFadeIn 3s ease-out forwards, sbFloatOrange 45s ease-in-out 3s infinite;
+            }
+            .sb-hero__spotlight--violet {
+                width: 450px;
+                height: 450px;
+                background: radial-gradient(circle, rgba(139, 92, 246, 0.7) 0%, rgba(139, 92, 246, 0.22) 40%, transparent 65%);
+                top: 10%;
+                left: 25%;
+                animation: sbFadeIn 3.5s ease-out 0.4s forwards, sbFloatViolet 38s ease-in-out 3.9s infinite;
+            }
+            .sb-hero__spotlight--blue {
+                width: 450px;
+                height: 450px;
+                background: radial-gradient(circle, rgba(37, 99, 235, 0.7) 0%, rgba(37, 99, 235, 0.22) 40%, transparent 65%);
+                top: 0%;
+                right: -6%;
+                animation: sbFadeIn 4s ease-out 0.8s forwards, sbFloatBlue 50s ease-in-out 4.8s infinite;
+            }
+
+            /* Spotlight fade-in (gentle appearance on page load) */
+            @keyframes sbFadeIn {
+                0% { opacity: 0; transform: scale(0.85) translateZ(0); filter: blur(140px); }
+                100% { opacity: 0.4; transform: scale(1) translateZ(0); filter: blur(100px); }
+            }
+
+            /* Organic drift — orange: bottom-left, wanders right and up */
+            @keyframes sbFloatOrange {
+                0%, 100% {
+                    transform: translate(0, 0) scale(1) translateZ(0);
+                    opacity: 0.4;
+                    border-radius: 50% 50% 50% 50%;
+                }
+                12% {
+                    transform: translate(12vw, -6vh) scale(1.06) translateZ(0);
+                    opacity: 0.36;
+                    border-radius: 58% 42% 55% 45%;
+                }
+                28% {
+                    transform: translate(28vw, -12vh) scale(0.95) translateZ(0);
+                    opacity: 0.32;
+                    border-radius: 44% 56% 42% 58%;
+                }
+                45% {
+                    transform: translate(36vw, -4vh) scale(1.04) translateZ(0);
+                    opacity: 0.38;
+                    border-radius: 55% 45% 58% 42%;
+                }
+                62% {
+                    transform: translate(24vw, 4vh) scale(0.96) translateZ(0);
+                    opacity: 0.34;
+                    border-radius: 42% 58% 46% 54%;
+                }
+                80% {
+                    transform: translate(10vw, 2vh) scale(1.03) translateZ(0);
+                    opacity: 0.38;
+                    border-radius: 56% 44% 50% 50%;
+                }
+            }
+
+            /* Organic drift — violet: centre, figure-eight wander */
+            @keyframes sbFloatViolet {
+                0%, 100% {
+                    transform: translate(0, 0) scale(1) translateZ(0);
+                    opacity: 0.3;
+                    border-radius: 50% 50% 50% 50%;
+                }
+                14% {
+                    transform: translate(14vw, -8vh) scale(1.05) translateZ(0);
+                    opacity: 0.34;
+                    border-radius: 56% 44% 52% 48%;
+                }
+                30% {
+                    transform: translate(6vw, 8vh) scale(0.94) translateZ(0);
+                    opacity: 0.27;
+                    border-radius: 46% 54% 44% 56%;
+                }
+                48% {
+                    transform: translate(-12vw, 5vh) scale(1.03) translateZ(0);
+                    opacity: 0.32;
+                    border-radius: 54% 46% 56% 44%;
+                }
+                66% {
+                    transform: translate(-8vw, -6vh) scale(0.97) translateZ(0);
+                    opacity: 0.28;
+                    border-radius: 44% 56% 48% 52%;
+                }
+                82% {
+                    transform: translate(4vw, -2vh) scale(1.02) translateZ(0);
+                    opacity: 0.31;
+                    border-radius: 52% 48% 54% 46%;
+                }
+            }
+
+            /* Organic drift — blue: upper-right, drifts to lower-left */
+            @keyframes sbFloatBlue {
+                0%, 100% {
+                    transform: translate(0, 0) scale(1) translateZ(0);
+                    opacity: 0.34;
+                    border-radius: 50% 50% 50% 50%;
+                }
+                12% {
+                    transform: translate(-10vw, 5vh) scale(1.04) translateZ(0);
+                    opacity: 0.3;
+                    border-radius: 54% 46% 48% 52%;
+                }
+                28% {
+                    transform: translate(-24vw, 10vh) scale(0.96) translateZ(0);
+                    opacity: 0.28;
+                    border-radius: 43% 57% 54% 46%;
+                }
+                45% {
+                    transform: translate(-32vw, 4vh) scale(1.05) translateZ(0);
+                    opacity: 0.32;
+                    border-radius: 57% 43% 46% 54%;
+                }
+                62% {
+                    transform: translate(-20vw, -2vh) scale(0.95) translateZ(0);
+                    opacity: 0.29;
+                    border-radius: 46% 54% 57% 43%;
+                }
+                80% {
+                    transform: translate(-8vw, -1vh) scale(1.02) translateZ(0);
+                    opacity: 0.32;
+                    border-radius: 52% 48% 43% 57%;
+                }
             }
             .sb-hero__eyebrow {
                 font-family: var(--font-body);
@@ -224,6 +374,21 @@ const currentYear = new Date().getFullYear();
             .sb-hero__secondary:hover {
                 color: var(--text);
             }
+            /* Spotlight mobile optimization */
+            @media (max-width: 768px) {
+                .sb-hero__spotlight {
+                    filter: blur(50px);
+                }
+                .sb-hero__spotlight--orange { width: 350px; height: 350px; }
+                .sb-hero__spotlight--violet { width: 300px; height: 300px; }
+                .sb-hero__spotlight--blue { width: 300px; height: 300px; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .sb-hero__spotlight {
+                    animation: none !important;
+                    opacity: 0.25;
+                }
+            }
             @media (max-width: 480px) {
                 .sb-hero {
                     min-height: 90vh;
@@ -232,6 +397,9 @@ const currentYear = new Date().getFullYear();
                 .sb-hero__title {
                     font-size: clamp(1.5rem, 8vw, 2.25rem);
                 }
+                .sb-hero__spotlight--orange { width: 280px; height: 280px; }
+                .sb-hero__spotlight--violet { width: 240px; height: 240px; }
+                .sb-hero__spotlight--blue { width: 240px; height: 240px; }
             }
 
             /* ---- Starter Card (Primary Offering) ---- */
@@ -365,12 +533,16 @@ const currentYear = new Date().getFullYear();
             .sb-hiw__grid {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
-                gap: var(--space-md);
+                gap: var(--space-sm);
             }
             .sb-hiw__step {
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
+                background: var(--bg-elevated);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: var(--space-4);
             }
             .sb-hiw__num {
                 font-family: var(--font-display);
@@ -382,7 +554,7 @@ const currentYear = new Date().getFullYear();
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid var(--border);
+                border: 1px solid var(--border-hover);
                 border-radius: 50%;
                 flex-shrink: 0;
             }
@@ -408,6 +580,7 @@ const currentYear = new Date().getFullYear();
                     flex-direction: row;
                     align-items: flex-start;
                     gap: 0.75rem;
+                    padding: var(--space-3) var(--space-4);
                 }
                 .sb-hiw__num {
                     margin-top: 2px;
@@ -417,7 +590,12 @@ const currentYear = new Date().getFullYear();
             /* ---- Trust Strip ---- */
             .sb-trust {
                 padding: var(--space-lg) 0;
-                border-top: 1px solid var(--border);
+            }
+            .sb-trust__card {
+                background: var(--bg-elevated);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: var(--space-6) var(--space-8);
             }
             .sb-trust__title {
                 font-family: var(--font-display);
@@ -449,6 +627,11 @@ const currentYear = new Date().getFullYear();
                 left: 0;
                 color: var(--text-subtle);
             }
+            @media (max-width: 480px) {
+                .sb-trust__card {
+                    padding: var(--space-4) var(--space-4);
+                }
+            }
 
             /* ---- Other Services ---- */
             .sb-other {
@@ -468,13 +651,38 @@ const currentYear = new Date().getFullYear();
                 gap: var(--space-sm);
             }
             .sb-other__card {
-                background: var(--bg-elevated);
-                border: 1px solid var(--border);
+                position: relative;
+                overflow: hidden;
+                background: rgba(139, 92, 246, 0.05);
+                border: 1px dashed rgba(139, 92, 246, 0.2);
                 border-radius: var(--radius-lg);
                 padding: var(--space-sm);
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
+                text-decoration: none;
+                color: inherit;
+                transition: border-color var(--duration-fast) ease, transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+                cursor: pointer;
+            }
+            .sb-other__card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent);
+                opacity: 0;
+                transition: opacity var(--duration-fast) ease;
+            }
+            .sb-other__card:hover {
+                border: 1px solid rgba(139, 92, 246, 0.5);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px -6px rgba(139, 92, 246, 0.2);
+            }
+            .sb-other__card:hover::before {
+                opacity: 1;
             }
             .sb-other__name {
                 font-family: var(--font-display);
@@ -503,17 +711,16 @@ const currentYear = new Date().getFullYear();
                 color: #d4d4d8;
                 margin-top: 0.25rem;
             }
-            .sb-other__cta {
+            .sb-other__arrow {
                 font-family: var(--font-body);
                 font-size: var(--text-sm);
                 font-weight: 400;
                 color: var(--text-muted);
-                text-decoration: none;
-                transition: color var(--duration-fast) ease;
                 margin-top: 0.25rem;
+                transition: color var(--duration-fast) ease;
             }
-            .sb-other__cta:hover {
-                color: var(--text);
+            .sb-other__card:hover .sb-other__arrow {
+                color: #a78bfa;
             }
             @media (max-width: 768px) {
                 .sb-other__grid {
@@ -524,7 +731,6 @@ const currentYear = new Date().getFullYear();
             /* ---- Get Started Form ---- */
             .sb-form {
                 padding: var(--space-xl) 0 var(--space-lg);
-                border-top: 1px solid var(--border);
             }
             .sb-form__title {
                 font-family: var(--font-display);
@@ -695,30 +901,37 @@ const currentYear = new Date().getFullYear();
 
             /* ---- Local SEO Content ---- */
             .sb-local {
-                padding: var(--space-10) 0;
-                border-top: 1px solid var(--border);
+                padding: var(--space-lg) 0;
+            }
+            .sb-local__card {
+                background: var(--bg-elevated);
+                border: 1px solid var(--border);
+                border-left: 3px solid rgba(217, 119, 6, 0.35);
+                border-radius: var(--radius-lg);
+                padding: var(--space-6) var(--space-8);
             }
             .sb-local__title {
                 font-family: var(--font-display);
                 font-size: var(--text-lg);
-                font-weight: 400;
-                color: var(--text-muted);
-                text-align: center;
-                margin-bottom: var(--space-6);
-            }
-            .sb-local__content {
-                max-width: 560px;
-                margin: 0 auto;
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: var(--space-4);
+                letter-spacing: -0.01em;
             }
             .sb-local__content p {
                 font-family: var(--font-body);
                 font-size: var(--text-sm);
-                color: var(--text-subtle);
+                color: var(--text-muted);
                 line-height: 1.7;
                 margin-bottom: var(--space-3);
             }
             .sb-local__content p:last-child {
                 margin-bottom: 0;
+            }
+            @media (max-width: 480px) {
+                .sb-local__card {
+                    padding: var(--space-4) var(--space-4);
+                }
             }
 
             /* ---- Footer ---- */
@@ -869,6 +1082,9 @@ const currentYear = new Date().getFullYear();
     <main id="main-content">
         <!-- Hero -->
         <section class="sb-hero" id="hero">
+            <div class="sb-hero__spotlight sb-hero__spotlight--orange"></div>
+            <div class="sb-hero__spotlight sb-hero__spotlight--violet"></div>
+            <div class="sb-hero__spotlight sb-hero__spotlight--blue"></div>
             <div class="sb-hero__content">
                 <p class="sb-hero__eyebrow">Sudbury &amp; Northern Ontario</p>
                 <h1 class="sb-hero__title">Your website isn&rsquo;t working.<br>Let&rsquo;s fix it.</h1>
@@ -938,12 +1154,28 @@ const currentYear = new Date().getFullYear();
         <!-- Trust Strip -->
         <section class="sb-trust sb-fade">
             <div class="sb-container">
-                <h2 class="sb-trust__title">What clients usually come to us for</h2>
-                <ul class="sb-trust__list">
-                    <li class="sb-trust__item">Confusing or unclear websites</li>
-                    <li class="sb-trust__item">Outdated design that doesn&rsquo;t build trust</li>
-                    <li class="sb-trust__item">Sites that aren&rsquo;t bringing in leads</li>
-                </ul>
+                <div class="sb-trust__card">
+                    <h2 class="sb-trust__title">What clients usually come to us for</h2>
+                    <ul class="sb-trust__list">
+                        <li class="sb-trust__item">Confusing or unclear websites</li>
+                        <li class="sb-trust__item">Outdated design that doesn&rsquo;t build trust</li>
+                        <li class="sb-trust__item">Sites that aren&rsquo;t bringing in leads</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Local SEO Content -->
+        <section class="sb-local sb-fade" id="about" aria-label="About Bertrand Brands in Sudbury">
+            <div class="sb-container">
+                <div class="sb-local__card">
+                    <h2 class="sb-local__title">Website and brand help for Sudbury businesses</h2>
+                    <div class="sb-local__content">
+                        <p>Bertrand Brands is a web and brand studio based in Greater Sudbury, Ontario. We help small businesses across Sudbury and Northern Ontario fix, rebuild, or launch websites that actually work &mdash; clear structure, honest messaging, and a design that earns trust.</p>
+                        <p>Whether you need a quick website fix, a full site redesign, or a brand identity built from scratch, every project has a fixed price and a clear timeline. No hourly billing, no open-ended scope. Most work is delivered in 1&ndash;7 business days.</p>
+                        <p>If your current site is outdated, confusing, or not bringing in leads &mdash; we can help. Sudbury businesses deserve web work that&rsquo;s straightforward and well-built, not overpriced and overcomplicated.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -952,20 +1184,20 @@ const currentYear = new Date().getFullYear();
             <div class="sb-container">
                 <p class="sb-other__intro">Already have a website?</p>
                 <div class="sb-other__grid">
-                    <div class="sb-other__card">
+                    <a href="#get-started" class="sb-other__card">
                         <h3 class="sb-other__name">One-Page System Redesign</h3>
                         <p class="sb-other__timeline">2&ndash;3 business days</p>
                         <p class="sb-other__desc">A fully custom, code-based one-page website.</p>
                         <p class="sb-other__price">$1,250 CAD</p>
-                        <a href="#get-started" class="sb-other__cta">Get started &rarr;</a>
-                    </div>
-                    <div class="sb-other__card">
+                        <span class="sb-other__arrow">Get started &rarr;</span>
+                    </a>
+                    <a href="#get-started" class="sb-other__card">
                         <h3 class="sb-other__name">Brandmark &amp; Visual Identity</h3>
                         <p class="sb-other__timeline">5&ndash;7 business days</p>
                         <p class="sb-other__desc">A complete brandmark with clear visual direction.</p>
                         <p class="sb-other__price">$950 CAD</p>
-                        <a href="#get-started" class="sb-other__cta">Get started &rarr;</a>
-                    </div>
+                        <span class="sb-other__arrow">Get started &rarr;</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -1032,18 +1264,6 @@ const currentYear = new Date().getFullYear();
         </section>
     </main>
 
-    <!-- Local SEO Content -->
-    <section class="sb-local sb-fade" id="about" aria-label="About Bertrand Group in Sudbury">
-        <div class="sb-container">
-            <h2 class="sb-local__title">Website and brand help for Sudbury businesses</h2>
-            <div class="sb-local__content">
-                <p>Bertrand Group is a web and brand studio based in Greater Sudbury, Ontario. We help small businesses across Sudbury and Northern Ontario fix, rebuild, or launch websites that actually work &mdash; clear structure, honest messaging, and a design that earns trust.</p>
-                <p>Whether you need a quick website fix, a full site redesign, or a brand identity built from scratch, every project has a fixed price and a clear timeline. No hourly billing, no open-ended scope. Most work is delivered in 1&ndash;7 business days.</p>
-                <p>If your current site is outdated, confusing, or not bringing in leads &mdash; we can help. Sudbury businesses deserve web work that&rsquo;s straightforward and well-built, not overpriced and overcomplicated.</p>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="sb-footer">
         <div class="sb-container">
@@ -1058,7 +1278,7 @@ const currentYear = new Date().getFullYear();
                     <a href="/?skip">Home</a> &middot;
                     <a href="/focus-studio">All Offerings</a>
                 </p>
-                <p class="sb-footer__phone"><a href="tel:+17054133705" class="phone-link" title="Call Bertrand Group">705-413-3705</a></p>
+                <p class="sb-footer__phone"><a href="tel:+17054133705" class="phone-link" title="Call Bertrand Brands">705-413-3705</a></p>
             </div>
         </div>
     </footer>
