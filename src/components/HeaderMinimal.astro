@@ -41,7 +41,10 @@ const {
             <div class="header__inner">
                 <a href="/?skip" class="header__logo">
                     <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon" width="40" height="40" fetchpriority="high">
-                    <span class="header__wordmark">Brand &amp; Web Systems</span>
+                    <span class="header__wordmark" aria-label="Bertrand Brands — Brand &amp; Web Systems">
+                        <span class="header__wordmark-short" aria-hidden="true">BERTRAND BRANDS</span>
+                        <span class="header__wordmark-full" aria-hidden="true">BERTRAND BRANDS <span class="header__wordmark-sep">|</span> <span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
+                    </span>
                 </a>
                 {!centered && (
                     <a href={ctaHref} style="font-family: var(--font-body); font-size: var(--text-sm); font-weight: 400; color: var(--text-muted); letter-spacing: 0.02em; text-decoration: none; transition: color 0.3s ease;">{ctaText}</a>
@@ -53,35 +56,77 @@ const {
 
 {variant === 'standard' && (
     <script is:inline>
-    /* Ambient lighting for minimal header (30fps) */
+    /* Ambient lighting + wordmark crossfade for minimal header */
     (function() {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var header = document.querySelector('.header');
         var headerGlass = document.querySelector('.header__glass');
-        if (!header || !headerGlass) return;
 
-        header.classList.add('lights-on');
+        /* Ambient lighting (30fps) */
+        if (!reducedMotion && header && headerGlass) {
+            header.classList.add('lights-on');
 
-        var pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
-        var lastFrame = 0;
-        var FRAME_INTERVAL = 1000 / 30;
+            var pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
+            var lastFrame = 0;
+            var FRAME_INTERVAL = 1000 / 30;
 
-        function animateLights(timestamp) {
-            if (timestamp - lastFrame < FRAME_INTERVAL) {
+            function animateLights(timestamp) {
+                if (timestamp - lastFrame < FRAME_INTERVAL) {
+                    requestAnimationFrame(animateLights);
+                    return;
+                }
+                lastFrame = timestamp;
+                pos1 += dir1 * 0.06;
+                pos2 += dir2 * 0.05;
+                if (pos1 > 35 || pos1 < 10) dir1 *= -1;
+                if (pos2 > 90 || pos2 < 60) dir2 *= -1;
+                headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
+                headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
                 requestAnimationFrame(animateLights);
-                return;
             }
-            lastFrame = timestamp;
-            pos1 += dir1 * 0.06;
-            pos2 += dir2 * 0.05;
-            if (pos1 > 35 || pos1 < 10) dir1 *= -1;
-            if (pos2 > 90 || pos2 < 60) dir2 *= -1;
-            headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
-            headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
             requestAnimationFrame(animateLights);
         }
-        requestAnimationFrame(animateLights);
+
+        /* Smooth wordmark crossfade */
+        var wmWrap = document.querySelector('.header__wordmark');
+        if (!wmWrap) return;
+
+        var collapseTimer = null;
+        var expandTimer = null;
+
+        function expand() { wmWrap.classList.add('is-expanded'); }
+        function collapse() { wmWrap.classList.remove('is-expanded'); }
+
+        if (reducedMotion) {
+            wmWrap.style.opacity = '1';
+            return;
+        }
+
+        wmWrap.style.opacity = '1';
+
+        /* Auto-expand after 4s, collapse after 8s */
+        expandTimer = setTimeout(function() {
+            expand();
+            collapseTimer = setTimeout(function() {
+                collapse();
+            }, 8000);
+        }, 4000);
+
+        /* Hover: expand on enter, collapse on leave (desktop only) */
+        var logoLink = document.querySelector('.header__logo');
+        if (logoLink && window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+            logoLink.addEventListener('mouseenter', function() {
+                clearTimeout(expandTimer);
+                clearTimeout(collapseTimer);
+                expand();
+            });
+            logoLink.addEventListener('mouseleave', function() {
+                clearTimeout(collapseTimer);
+                collapseTimer = setTimeout(function() {
+                    collapse();
+                }, 1500);
+            });
+        }
     })();
     </script>
 )}

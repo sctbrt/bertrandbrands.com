@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderCanonical from '../components/HeaderCanonical.astro';
 import SkipLink from '../components/SkipLink.astro';
-import AnnouncementBanner from '../components/AnnouncementBanner.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
 
@@ -70,20 +69,6 @@ const schemaJson = {
   <Fragment slot="head">
     <link rel="stylesheet" href="/styles/pricing-modal.css" />
     <link rel="stylesheet" href="/styles/founder-lightbox.css" />
-    <style is:inline>
-      .header__wordmark-text { display: inline-block; white-space: nowrap; }
-      .header__wordmark-text .wm-char {
-        display: inline-block;
-        transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-      }
-      .header__wordmark-text .wm-space {
-        display: inline-block; width: 0.3em;
-        transition: width 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s cubic-bezier(0.33, 1, 0.68, 1);
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .header__wordmark-text .wm-char, .header__wordmark-text .wm-space { transition: none !important; }
-      }
-    </style>
   </Fragment>
 
   <SkipLink />
@@ -98,8 +83,9 @@ const schemaJson = {
       <img src="/assets/bg-brands-logomark.png" alt="" class="intro__logo" width="256" height="256" fetchpriority="high">
       <div class="intro__brand">
           <span class="intro__brand-main">Bertrand</span>
-          <span class="intro__brand-main">Group</span>
+          <span class="intro__brand-main">Brands</span>
           <span class="intro__brand-sub">Brand &amp; Web Systems</span>
+          <span class="intro__brand-division">a division of Bertrand Group Canada</span>
       </div>
       <div class="intro__scroll-hint">
           <span class="intro__scroll-hint-text">Tap anywhere to begin</span>
@@ -122,6 +108,7 @@ const schemaJson = {
           </div>
           <div class="hero__spotlight hero__spotlight--orange"></div>
           <div class="hero__spotlight hero__spotlight--blue"></div>
+          <div class="hero__spotlight hero__spotlight--violet"></div>
 
           <div class="hero__content">
               <h1 class="hero__title">
@@ -504,8 +491,8 @@ const schemaJson = {
               </div>
               <div class="footer__inner">
                   <div class="footer__left">
-                      <p class="footer__copyright">© {currentYear} Bertrand Group</p>
-                      <p class="footer__parent"><a href="#work">Selected Work</a></p>
+                      <p class="footer__copyright">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
+                      <p class="footer__parent"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
                   </div>
                   <div class="footer__contact">
                       <a href="mailto:hello@bertrandgroup.ca" class="footer__link">hello@bertrandgroup.ca</a>
@@ -782,111 +769,43 @@ const schemaJson = {
           var logo = document.querySelector('.header__logo');
           var intro = document.querySelector('.intro');
 
-          // Animated wordmark: BERTRAND BRANDS ←→ BERTRAND BRAND & WEB SYSTEMS
-          var WM_SHORT = 'BERTRAND BRANDS';
-          var WM_FULL  = 'BERTRAND BRAND & WEB SYSTEMS';
-          var wmText = document.querySelector('.header__wordmark-text');
+          // Smooth wordmark crossfade: BERTRAND BRANDS ←→ BERTRAND BRANDS | Brand & Web Systems
           var wmWrap = document.querySelector('.header__wordmark');
-          var wmExpanded = false;
-          var wmAnimating = false;
           var wmCollapseTimer = null;
           var wmExpandTimer = null;
 
-          function wmRenderText(str) {
-              if (!wmText) return;
-              var html = '';
-              for (var i = 0; i < str.length; i++) {
-                  if (str[i] === ' ') {
-                      html += '<span class="wm-space"> </span>';
-                  } else {
-                      html += '<span class="wm-char">' + str[i] + '</span>';
-                  }
-              }
-              wmText.innerHTML = html;
+          function wmExpand() {
+              if (wmWrap) wmWrap.classList.add('is-expanded');
           }
-
-          function wmStaggerChars(direction, callback) {
-              if (!wmText) return;
-              var chars = wmText.querySelectorAll('.wm-char, .wm-space');
-              var count = chars.length;
-              var staggerMs = 20;
-              var totalDuration = (count * staggerMs) + 400;
-
-              if (direction === 'collapse') {
-                  for (var i = count - 1; i >= 0; i--) {
-                      (function(el, delay) {
-                          setTimeout(function() {
-                              el.style.transform = 'translateX(-8px)';
-                              el.style.opacity = '0';
-                          }, delay);
-                      })(chars[i], (count - 1 - i) * staggerMs);
-                  }
-              } else {
-                  for (var j = 0; j < count; j++) {
-                      (function(el, delay) {
-                          el.style.transform = 'translateX(-8px)';
-                          el.style.opacity = '0';
-                          el.offsetHeight;
-                          setTimeout(function() {
-                              el.style.transform = 'translateX(0)';
-                              el.style.opacity = '1';
-                          }, delay);
-                      })(chars[j], j * staggerMs);
-                  }
-              }
-              setTimeout(callback, totalDuration);
-          }
-
-          function wmTransitionTo(newText, newState, onDone) {
-              if (wmAnimating) return;
-              wmAnimating = true;
-              wmStaggerChars('collapse', function() {
-                  wmRenderText(newText);
-                  wmExpanded = newState;
-                  if (wmWrap) wmWrap.setAttribute('aria-label', newState ? 'Bertrand Brand & Web Systems' : 'Bertrand Brands');
-                  wmStaggerChars('expand', function() {
-                      wmAnimating = false;
-                      if (onDone) onDone();
-                  });
-              });
+          function wmCollapse() {
+              if (wmWrap) wmWrap.classList.remove('is-expanded');
           }
 
           function initWordmark() {
-              if (!wmText || !wmWrap) return;
+              if (!wmWrap) return;
               var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-              wmRenderText(WM_SHORT);
-              var initChars = wmText.querySelectorAll('.wm-char, .wm-space');
-              initChars.forEach(function(c) { c.style.opacity = '1'; c.style.transform = 'none'; });
               wmWrap.style.opacity = '1';
-
               if (reducedMotion) return;
 
               wmExpandTimer = setTimeout(function() {
-                  wmTransitionTo(WM_FULL, true, function() {
-                      wmCollapseTimer = setTimeout(function() {
-                          wmTransitionTo(WM_SHORT, false);
-                      }, 10000);
-                  });
-              }, 5000);
+                  wmExpand();
+                  wmCollapseTimer = setTimeout(function() {
+                      wmCollapse();
+                  }, 8000);
+              }, 4000);
 
-              /* Hover: expand when collapsed (desktop only) */
               var logoLink = document.querySelector('.header__logo');
               if (logoLink && window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
                   logoLink.addEventListener('mouseenter', function() {
-                      if (!wmExpanded && !wmAnimating) {
-                          clearTimeout(wmExpandTimer);
-                          clearTimeout(wmCollapseTimer);
-                          wmTransitionTo(WM_FULL, true);
-                      }
+                      clearTimeout(wmExpandTimer);
+                      clearTimeout(wmCollapseTimer);
+                      wmExpand();
                   });
                   logoLink.addEventListener('mouseleave', function() {
-                      if (wmExpanded && !wmAnimating) {
-                          clearTimeout(wmCollapseTimer);
-                          wmCollapseTimer = setTimeout(function() {
-                              wmTransitionTo(WM_SHORT, false);
-                          }, 2000);
-                      }
+                      clearTimeout(wmCollapseTimer);
+                      wmCollapseTimer = setTimeout(function() {
+                          wmCollapse();
+                      }, 1500);
                   });
               }
           }
@@ -931,7 +850,7 @@ const schemaJson = {
           if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
               if (logo) logo.classList.add('show-text');
               if (header) header.classList.add('visible', 'lights-on');
-              document.body.classList.add('intro-complete');
+              document.body.classList.add('intro-complete', 'intro-scrolled');
               var heroTitleRM = document.querySelector('.hero__title');
               if (heroTitleRM) heroTitleRM.classList.add('hero-animate');
               if (intro) intro.remove();
@@ -1462,6 +1381,5 @@ const schemaJson = {
   </a>
 
   <GesturePrevention />
-  <AnnouncementBanner />
   <VisitorNotify />
 </BaseLayout>

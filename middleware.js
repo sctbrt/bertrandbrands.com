@@ -151,22 +151,18 @@ function divisionEntryPage() {
 export default function middleware(request) {
     const hostname = request.headers.get('host') || '';
 
-    // brands.bertrandgroup.ca → division entry page (root) or pass-through (deep links)
-    // NOTE: Deep links currently pass through while bertrandbrands.ca DNS propagates.
-    //       Once .ca is live, change pass-through to 301 redirect:
-    //       url.hostname = 'bertrandbrands.ca'; return Response.redirect(url.toString(), 301);
+    // brands.bertrandgroup.ca → division entry page (root) or 301 redirect (deep links)
     if (hostname === 'brands.bertrandgroup.ca' || hostname === 'www.brands.bertrandgroup.ca') {
         const url = new URL(request.url);
         if (url.pathname === '/' || url.pathname === '') {
             return divisionEntryPage();
         }
-        return next();
+        url.hostname = 'bertrandbrands.ca';
+        url.port = '';
+        return Response.redirect(url.toString(), 301);
     }
 
-    // Legacy .com domains → pass-through (serve site content directly)
-    // NOTE: Once bertrandbrands.ca DNS is live, change to 301 redirect:
-    //       url.hostname = 'bertrandbrands.ca'; return Response.redirect(url.toString(), 301);
-    // Keep www.bertrandbrands.ca redirect since it's the same domain family
+    // www.bertrandbrands.ca → bertrandbrands.ca (canonical)
     if (hostname === 'www.bertrandbrands.ca') {
         const url = new URL(request.url);
         url.hostname = 'bertrandbrands.ca';
@@ -176,17 +172,6 @@ export default function middleware(request) {
 
     if (hostname.startsWith('group.')) {
         return Response.redirect('https://bertrandgroup.ca', 301);
-    }
-
-    // Maintenance gate — redirect all pages to /maintenance
-    // Bypass: append ?bypass=true to view the full site
-    // Remove this block when maintenance is complete.
-    const url = new URL(request.url);
-    const isMaintenance = url.pathname !== '/maintenance';
-    const hasBypass = url.searchParams.get('bypass') === 'true';
-
-    if (isMaintenance && !hasBypass) {
-        return Response.redirect(new URL('/maintenance', request.url).toString(), 302);
     }
 
     return next();

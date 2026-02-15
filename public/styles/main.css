@@ -148,9 +148,9 @@
                 /* Lights stay visible, animation runs if reduced-motion not set */
             }
 
-            /* Mobile: smaller wordmark font */
+            /* Mobile wordmark font size — display overrides moved below desktop styles */
             .header__wordmark {
-                font-size: 0.6rem;
+                font-size: 0.8rem;
             }
         }
 
@@ -203,42 +203,186 @@
             flex-shrink: 0;
         }
 
-        .header__logo:hover {
-            opacity: 0.7;
+        .header__logo {
+            position: relative;
+        }
+
+        /* Gradient overlay on logomark — fades in on hover */
+        .header__logo::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #D97706, #8B5CF6, #2563EB);
+            -webkit-mask-image: url('/assets/bg-brands-logomark.png');
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-image: url('/assets/bg-brands-logomark.png');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            opacity: 0;
+            transition: opacity 0.5s var(--ease-out);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .header__logo:hover::before {
+            opacity: 0.6;
         }
 
         .header__logo-icon {
-            width: 24px;
+            width: 32px;
             height: auto;
             margin-right: 0.75rem;
             filter: brightness(0) invert(1);
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease, filter 0.5s var(--ease-out);
+        }
+
+        .header__logo:hover .header__logo-icon {
+            filter: brightness(0) invert(1) opacity(0.3);
         }
 
         .header__logo.show-text .header__logo-icon {
             opacity: 1;
         }
 
-        /* Text-based wordmark (animated: BERTRAND BRANDS ←→ BERTRAND BRAND & WEB SYSTEMS) */
+        /* Text-based wordmark: BERTRAND BRANDS | Brand & Web Systems
+           Separator and subtitle slide out on expand, retract on collapse.
+           Collapse transitions use shorter durations + no delay for snappy retract. */
         .header__wordmark {
             display: inline-flex;
             align-items: baseline;
             position: relative;
             opacity: 0;
             transition: opacity 0.5s ease;
-            font-family: halyard-display, sans-serif;
-            font-weight: 300;
-            font-size: 0.7rem;
-            letter-spacing: 0.14em;
+            font-family: 'halyard-display', var(--font-body);
+            font-weight: 400;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--text);
             white-space: nowrap;
             overflow: hidden;
         }
 
+        /* Short form hidden — only used for mobile fallback */
+        .header__wordmark-short {
+            display: none;
+        }
+
+        .header__wordmark-full {
+            display: inline-flex;
+            align-items: baseline;
+            white-space: nowrap;
+            gap: 0;
+        }
+
+        /* Separator: grows from zero width outward.
+           DEFAULT = collapse transitions (fast retract, opacity fades first) */
+        .header__wordmark-sep {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-weight: var(--font-light);
+            font-size: 0.85em;
+            opacity: 0;
+            max-width: 0;
+            padding: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: max-width 0.4s var(--ease-in-out) 0.05s,
+                        opacity 0.25s var(--ease-out),
+                        padding 0.4s var(--ease-in-out) 0.05s;
+        }
+
+        /* Subtitle: slides from left (behind separator) and fades in.
+           DEFAULT = collapse transitions (opacity fades first, then width shrinks) */
+        .header__wordmark-sub {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-weight: var(--font-light);
+            font-size: 0.85em;
+            letter-spacing: 0.10em;
+            opacity: 0;
+            max-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transform: translateX(-6px);
+            transition: max-width 0.35s var(--ease-in-out),
+                        opacity 0.2s var(--ease-out),
+                        transform 0.3s var(--ease-out);
+        }
+
+        /* Expanded state: separator and subtitle reveal.
+           EXPAND transitions override default collapse transitions with
+           longer durations and staggered delays for a smooth unfurl. */
+        .header__wordmark.is-expanded .header__wordmark-sep {
+            max-width: 2em;
+            opacity: 0.4;
+            padding: 0 0.35em;
+            transition: max-width 0.5s var(--ease-out),
+                        opacity 0.4s var(--ease-out) 0.1s,
+                        padding 0.5s var(--ease-out);
+        }
+
+        .header__wordmark.is-expanded .header__wordmark-sub {
+            max-width: 20em;
+            opacity: 0.7;
+            transform: translateX(0);
+            transition: max-width 0.6s var(--ease-out) 0.12s,
+                        opacity 0.5s var(--ease-out) 0.2s,
+                        transform 0.5s var(--ease-out) 0.15s;
+        }
+
+        /* Hover state on logo area — subtle wordmark dim */
+        .header__logo:hover .header__wordmark {
+            opacity: 0.6;
+            transition: opacity 0.4s var(--ease-out);
+        }
+
         .header__logo.show-text .header__wordmark {
             opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .header__wordmark-sep,
+            .header__wordmark-sub {
+                transition: none !important;
+            }
+        }
+
+        /* Mobile: static short wordmark, no expand/hover animations */
+        @media (max-width: 768px) {
+            .header__wordmark-short {
+                display: inline !important;
+            }
+            .header__wordmark-full {
+                display: none !important;
+            }
+
+            /* Disable hover effects on mobile */
+            .header__logo:hover .header__wordmark {
+                opacity: 1;
+            }
+
+            .header__logo::before {
+                display: none;
+            }
+            .header__logo:hover .header__logo-icon {
+                filter: brightness(0) invert(1);
+            }
+
+            /* Neutralize is-expanded on mobile */
+            .header__wordmark.is-expanded .header__wordmark-sep,
+            .header__wordmark.is-expanded .header__wordmark-sub {
+                max-width: 0;
+                opacity: 0;
+            }
         }
 
         /* === INTAKE HEADER === */
@@ -382,26 +526,45 @@
             opacity: 0;
         }
 
-        /* Fade intro to full black when user scrolls past */
+        /* Fade intro smoothly when user scrolls past */
         .intro.intro--hidden .intro__fade {
             opacity: 1;
-            transition: opacity 0.8s ease-out;
+            transition: opacity 1.5s ease-out;
         }
 
-        /* Fade glows gradually when intro is hidden */
+        /* Glows fade slower than text — creates layered dissolve */
         .intro.intro--hidden .intro__glow {
             opacity: 0 !important;
-            transition: opacity 1.2s ease-out;
+            transition: opacity 2.5s ease-out;
         }
 
-        /* Then hide the entire intro after fade completes */
+        /* Intro text and logo dissolve upward */
+        .intro.intro--hidden .intro__brand,
+        .intro.intro--hidden .intro__logo {
+            opacity: 0;
+            transform: translateY(-30px) scale(0.97);
+            transition: opacity 1s ease-out, transform 1.2s ease-out;
+        }
+
+        .intro.intro--hidden .intro__grid {
+            opacity: 0;
+            transition: opacity 2s ease-out;
+        }
+
+        /* Scroll hint fades immediately */
+        .intro.intro--hidden .intro__scroll-hint {
+            opacity: 0 !important;
+            transition: opacity 0.3s ease-out;
+        }
+
+        /* Then hide the entire intro after dissolve completes */
         .intro.intro--hidden {
             pointer-events: none;
-            animation: introFadeOut 0.6s ease-out 1.2s forwards;
+            animation: introFadeOut 0.5s ease-out 2.5s forwards;
         }
 
         @keyframes introFadeOut {
-            to { opacity: 0; }
+            to { opacity: 0; visibility: hidden; }
         }
 
         /* Main content wrapper that scrolls over the intro */
@@ -599,6 +762,15 @@
                 0% { opacity: 0; }
                 100% { opacity: 0.65; }
             }
+
+            .intro__brand-division {
+                animation: divisionRevealMobile 0.5s cubic-bezier(0.16, 1, 0.3, 1) 2.2s forwards;
+            }
+
+            @keyframes divisionRevealMobile {
+                0% { opacity: 0; }
+                100% { opacity: 0.25; }
+            }
         }
 
         /* Grid — barely perceptible texture */
@@ -759,6 +931,29 @@
         @keyframes subtitleReveal {
             0% { opacity: 0; }
             100% { opacity: 0.6; }
+        }
+
+        .intro__brand-division {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.14em;
+            font-weight: var(--font-normal);
+            letter-spacing: 0.12em;
+            text-transform: none;
+            color: var(--text-subtle);
+            margin-top: 1.2em;
+            opacity: 0;
+            animation: divisionReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.8s forwards;
+        }
+
+        .intro__brand-division a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        @keyframes divisionReveal {
+            0% { opacity: 0; }
+            100% { opacity: 0.3; }
         }
 
         @keyframes introBrandReveal {
@@ -1213,14 +1408,18 @@
             padding-bottom: 4rem;
             background: var(--bg);
             contain: layout style;
-            /* Soft fade at top edge */
+            /* Soft fade at top edge — extended for smoother intro→hero blend */
             -webkit-mask-image: linear-gradient(to bottom,
                 transparent 0%,
-                black 15%,
+                rgba(0,0,0,0.15) 5%,
+                rgba(0,0,0,0.5) 10%,
+                black 20%,
                 black 100%);
             mask-image: linear-gradient(to bottom,
                 transparent 0%,
-                black 15%,
+                rgba(0,0,0,0.15) 5%,
+                rgba(0,0,0,0.5) 10%,
+                black 20%,
                 black 100%);
         }
 
@@ -1254,12 +1453,12 @@
             margin-bottom: var(--space-sm);
 
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(20px);
         }
 
-        /* Hero animations start only after intro exits */
-        .intro-complete .hero__title {
-            animation: heroReveal var(--duration-slow) var(--ease-out-expo) forwards;
+        /* Hero animations start when intro scrolls away — synced with dissolve */
+        .intro-scrolled .hero__title {
+            animation: heroReveal 1.8s var(--ease-out-expo) 0.6s forwards;
         }
 
         .hero__title span { display: block; }
@@ -1337,8 +1536,8 @@
             opacity: 0;
         }
 
-        .intro-complete .hero__subtitle {
-            animation: fadeIn var(--duration-medium) ease 0.4s forwards;
+        .intro-scrolled .hero__subtitle {
+            animation: fadeIn 1s ease 1.2s forwards;
         }
 
         @keyframes fadeIn { to { opacity: 1; } }
@@ -1347,8 +1546,8 @@
             color: var(--text-muted);
         }
 
-        .intro-complete .hero__subtitle-glow {
-            animation: subtitleGlow 3s ease-out 1.2s forwards;
+        .intro-scrolled .hero__subtitle-glow {
+            animation: subtitleGlow 3s ease-out 2s forwards;
         }
 
         @keyframes subtitleGlow {
@@ -1397,8 +1596,8 @@
             opacity: 0;
         }
 
-        .intro-complete .hero__cta {
-            animation: fadeIn var(--duration-medium) ease 0.6s forwards;
+        .intro-scrolled .hero__cta {
+            animation: fadeIn 1s ease 1.6s forwards;
         }
 
         .hero__cta:hover {
@@ -1539,48 +1738,73 @@
             right: -4%;
         }
 
-        /* Mobile: reduce spotlight sizes and blur for performance */
-        /* V5.0: Further blur reduction for smoother animations */
+        .hero__spotlight--violet {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, #8B5CF6 0%, rgba(139, 92, 246, 0.30) 40%, transparent 65%);
+            top: 15%;
+            left: 30%;
+        }
+
+        /* Mobile: reduce blur for performance, keep spotlights atmospheric */
         @media (max-width: 768px) {
             .hero__spotlight {
-                filter: blur(45px);
+                filter: blur(50px);
                 will-change: transform, opacity;
             }
             .hero__spotlight--orange {
-                width: 320px;
-                height: 320px;
+                width: 480px;
+                height: 480px;
             }
             .hero__spotlight--blue {
-                width: 280px;
-                height: 280px;
+                width: 420px;
+                height: 420px;
+            }
+            .hero__spotlight--violet {
+                width: 380px;
+                height: 380px;
             }
         }
 
-        /* Activate spotlights after intro scrolled - rehearsed theatre setup */
+        /* Activate spotlights after intro scrolled - theatrical curtain lights */
         body.intro-scrolled .hero__spotlight--orange {
-            animation: spotlightSetupOrange 5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, spotlightFloatOrange 20s ease-in-out 5s infinite;
+            animation: curtainSweepOrange 6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, curtainFloatOrange 45s ease-in-out 6s infinite;
         }
 
         body.intro-scrolled .hero__spotlight--blue {
-            animation: spotlightSetupBlue 5.5s cubic-bezier(0.25, 0.1, 0.25, 1) 0.4s forwards, spotlightFloatBlue 24s ease-in-out 5.9s infinite;
+            animation: curtainSweepBlue 6.5s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s forwards, curtainFloatBlue 50s ease-in-out 6.8s infinite;
         }
 
-        /* Theatre spotlight setup - orange glides in, spreads wide then focuses as it locks */
-        @keyframes spotlightSetupOrange {
+        body.intro-scrolled .hero__spotlight--violet {
+            animation: curtainSweepViolet 7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.6s forwards, curtainFloatViolet 38s ease-in-out 7.6s infinite;
+        }
+
+        /* Theatrical curtain sweep — orange enters from far left, sweeps right then settles center-left */
+        @keyframes curtainSweepOrange {
             0% {
                 opacity: 0;
-                transform: translate(60%, -20%) scale(1.3);
+                transform: translate(-80%, 10%) scale(0.7);
                 filter: blur(160px);
             }
-            35% {
-                opacity: 0.35;
-                transform: translate(10%, 5%) scale(1.15);
-                filter: blur(130px);
+            15% {
+                opacity: 0.3;
+                transform: translate(-40%, -5%) scale(0.9);
+                filter: blur(140px);
             }
-            70% {
+            35% {
                 opacity: 0.45;
-                transform: translate(-5%, -2%) scale(1.05);
+                transform: translate(30%, 5%) scale(1.15);
                 filter: blur(110px);
+            }
+            55% {
+                opacity: 0.4;
+                transform: translate(10%, -8%) scale(1.05);
+                filter: blur(105px);
+            }
+            80% {
+                opacity: 0.48;
+                transform: translate(-5%, 3%) scale(1.02);
+                filter: blur(100px);
             }
             100% {
                 opacity: 0.5;
@@ -1589,22 +1813,32 @@
             }
         }
 
-        /* Theatre spotlight setup - blue glides in wide, tightens focus as it settles */
-        @keyframes spotlightSetupBlue {
+        /* Theatrical curtain sweep — blue enters from far right, crosses orange, settles upper-right */
+        @keyframes curtainSweepBlue {
             0% {
                 opacity: 0;
-                transform: translate(-50%, 30%) scale(1.25);
+                transform: translate(80%, -15%) scale(0.7);
                 filter: blur(150px);
             }
-            40% {
-                opacity: 0.3;
-                transform: translate(-8%, 8%) scale(1.12);
-                filter: blur(125px);
+            15% {
+                opacity: 0.25;
+                transform: translate(40%, 10%) scale(0.85);
+                filter: blur(135px);
             }
-            75% {
-                opacity: 0.38;
-                transform: translate(4%, -3%) scale(1.03);
-                filter: blur(108px);
+            35% {
+                opacity: 0.4;
+                transform: translate(-25%, -5%) scale(1.1);
+                filter: blur(115px);
+            }
+            55% {
+                opacity: 0.35;
+                transform: translate(-8%, 8%) scale(1.03);
+                filter: blur(105px);
+            }
+            80% {
+                opacity: 0.4;
+                transform: translate(3%, -2%) scale(1.01);
+                filter: blur(100px);
             }
             100% {
                 opacity: 0.42;
@@ -1613,70 +1847,139 @@
             }
         }
 
-        /* Organic breathing motion with shape morphing after settling */
-        @keyframes spotlightFloatOrange {
+        /* Theatrical curtain sweep — violet drops from above center, settles mid-stage */
+        @keyframes curtainSweepViolet {
+            0% {
+                opacity: 0;
+                transform: translate(0%, -70%) scale(0.6);
+                filter: blur(160px);
+            }
+            20% {
+                opacity: 0.2;
+                transform: translate(15%, -30%) scale(0.8);
+                filter: blur(140px);
+            }
+            40% {
+                opacity: 0.35;
+                transform: translate(-10%, 10%) scale(1.1);
+                filter: blur(115px);
+            }
+            60% {
+                opacity: 0.3;
+                transform: translate(5%, -5%) scale(1.02);
+                filter: blur(105px);
+            }
+            85% {
+                opacity: 0.35;
+                transform: translate(-2%, 2%) scale(1.01);
+                filter: blur(100px);
+            }
+            100% {
+                opacity: 0.38;
+                transform: translate(0, 0) scale(1);
+                filter: blur(100px);
+            }
+        }
+
+        /* Slow drift — orange starts lower-left, drifts to upper-right area, returns */
+        @keyframes curtainFloatOrange {
             0%, 100% {
                 transform: translate(0, 0) scale(1);
                 opacity: 0.5;
                 border-radius: 50% 50% 50% 50%;
             }
-            15% {
-                transform: translate(15px, -20px) scale(1.06);
-                opacity: 0.55;
-                border-radius: 60% 40% 55% 45%;
-            }
-            35% {
-                transform: translate(-10px, 10px) scale(0.94);
-                opacity: 0.42;
-                border-radius: 45% 55% 40% 60%;
-            }
-            50% {
-                transform: translate(20px, 5px) scale(1.02);
-                opacity: 0.52;
-                border-radius: 55% 45% 60% 40%;
-            }
-            70% {
-                transform: translate(-5px, -15px) scale(0.97);
+            12% {
+                transform: translate(15vw, -8vh) scale(1.06);
                 opacity: 0.45;
-                border-radius: 40% 60% 45% 55%;
+                border-radius: 58% 42% 55% 45%;
             }
-            85% {
-                transform: translate(8px, 12px) scale(1.04);
-                opacity: 0.53;
-                border-radius: 58% 42% 48% 52%;
+            28% {
+                transform: translate(35vw, -15vh) scale(0.95);
+                opacity: 0.4;
+                border-radius: 44% 56% 42% 58%;
+            }
+            45% {
+                transform: translate(45vw, -5vh) scale(1.04);
+                opacity: 0.48;
+                border-radius: 55% 45% 58% 42%;
+            }
+            62% {
+                transform: translate(30vw, 5vh) scale(0.96);
+                opacity: 0.42;
+                border-radius: 42% 58% 46% 54%;
+            }
+            80% {
+                transform: translate(12vw, 3vh) scale(1.03);
+                opacity: 0.47;
+                border-radius: 56% 44% 50% 50%;
             }
         }
 
-        @keyframes spotlightFloatBlue {
+        /* Slow drift — blue starts upper-right, drifts to lower-left area, returns */
+        @keyframes curtainFloatBlue {
             0%, 100% {
                 transform: translate(0, 0) scale(1);
                 opacity: 0.42;
                 border-radius: 50% 50% 50% 50%;
             }
             12% {
-                transform: translate(-12px, 18px) scale(1.04);
-                opacity: 0.48;
-                border-radius: 55% 45% 48% 52%;
+                transform: translate(-12vw, 6vh) scale(1.04);
+                opacity: 0.38;
+                border-radius: 54% 46% 48% 52%;
+            }
+            28% {
+                transform: translate(-30vw, 12vh) scale(0.96);
+                opacity: 0.35;
+                border-radius: 43% 57% 54% 46%;
+            }
+            45% {
+                transform: translate(-40vw, 5vh) scale(1.05);
+                opacity: 0.4;
+                border-radius: 57% 43% 46% 54%;
+            }
+            62% {
+                transform: translate(-25vw, -3vh) scale(0.95);
+                opacity: 0.36;
+                border-radius: 46% 54% 57% 43%;
+            }
+            80% {
+                transform: translate(-10vw, -2vh) scale(1.02);
+                opacity: 0.4;
+                border-radius: 52% 48% 43% 57%;
+            }
+        }
+
+        /* Slow drift — violet wanders centre-stage in a wide figure-eight */
+        @keyframes curtainFloatViolet {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.38;
+                border-radius: 50% 50% 50% 50%;
+            }
+            14% {
+                transform: translate(18vw, -10vh) scale(1.05);
+                opacity: 0.42;
+                border-radius: 56% 44% 52% 48%;
             }
             30% {
-                transform: translate(8px, -12px) scale(0.96);
-                opacity: 0.38;
-                border-radius: 42% 58% 55% 45%;
+                transform: translate(8vw, 10vh) scale(0.94);
+                opacity: 0.34;
+                border-radius: 46% 54% 44% 56%;
             }
             48% {
-                transform: translate(-18px, -5px) scale(1.03);
-                opacity: 0.45;
-                border-radius: 58% 42% 45% 55%;
-            }
-            65% {
-                transform: translate(14px, 10px) scale(0.95);
+                transform: translate(-15vw, 6vh) scale(1.03);
                 opacity: 0.4;
-                border-radius: 45% 55% 58% 42%;
+                border-radius: 54% 46% 56% 44%;
+            }
+            66% {
+                transform: translate(-10vw, -8vh) scale(0.97);
+                opacity: 0.36;
+                border-radius: 44% 56% 48% 52%;
             }
             82% {
-                transform: translate(-6px, -8px) scale(1.02);
-                opacity: 0.46;
-                border-radius: 52% 48% 42% 58%;
+                transform: translate(5vw, -3vh) scale(1.02);
+                opacity: 0.39;
+                border-radius: 52% 48% 54% 46%;
             }
         }
 
@@ -4525,6 +4828,25 @@
             border-color: var(--text);
         }
 
+        /* Division line — shared across all footers */
+        .footer-division {
+            font-size: var(--text-xs);
+            color: var(--text-subtle);
+            margin-top: 0.25rem;
+        }
+
+        .footer-division a {
+            color: var(--text-subtle);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all var(--duration-fast) ease;
+        }
+
+        .footer-division a:hover {
+            color: var(--text-muted);
+            border-color: var(--text-muted);
+        }
+
         .footer__contact {
             display: flex;
             flex-direction: column;
@@ -4844,6 +5166,10 @@
                 animation: spotlightSetupBlueMobile 2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s forwards;
             }
 
+            body.intro-scrolled .hero__spotlight--violet {
+                animation: spotlightSetupVioletMobile 2.2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.4s forwards;
+            }
+
             /* Disable breathing animations on ambient glows */
             .core-systems__glow::before {
                 animation: none !important;
@@ -4929,8 +5255,8 @@
             }
 
             /* "Based in Sudbury" glow: single-layer */
-            .intro-complete .hero__subtitle-glow {
-                animation: subtitleGlowMobile 3s ease-out 1.2s forwards;
+            .intro-scrolled .hero__subtitle-glow {
+                animation: subtitleGlowMobile 3s ease-out 2s forwards;
             }
 
             /* About section spotlight sweep: single-layer, shorter */
@@ -4992,6 +5318,21 @@
             }
             100% {
                 opacity: 0.42;
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        @keyframes spotlightSetupVioletMobile {
+            0% {
+                opacity: 0;
+                transform: translate(0%, -40%) scale(1.1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: translate(2%, -5%) scale(1.03);
+            }
+            100% {
+                opacity: 0.38;
                 transform: translate(0, 0) scale(1);
             }
         }
@@ -5127,8 +5468,12 @@
             /* Reduce spotlight sizes */
             .hero__spotlight--orange,
             .hero__spotlight--blue {
-                width: 220px;
-                height: 220px;
+                width: 350px;
+                height: 350px;
+            }
+            .hero__spotlight--violet {
+                width: 300px;
+                height: 300px;
             }
 
             /* Faster animations on small screens */
@@ -5138,6 +5483,10 @@
             body.intro-scrolled .hero__spotlight--blue {
                 animation-duration: 1.5s;
                 animation-delay: 0.15s;
+            }
+            body.intro-scrolled .hero__spotlight--violet {
+                animation-duration: 1.8s;
+                animation-delay: 0.3s;
             }
         }
 

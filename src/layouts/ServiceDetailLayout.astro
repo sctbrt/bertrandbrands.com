@@ -2,7 +2,7 @@
 /**
  * ServiceDetailLayout — Layout for the 6 service detail pages.
  * Extends BaseLayout. Includes HeaderUniversal, SkipLink, VisitorNotify,
- * AnnouncementBanner, and header visibility override CSS.
+ * and header visibility override CSS.
  *
  * Props: same as BaseLayout, plus:
  *   spotlightColor — CSS color for ambient spotlights (default: violet)
@@ -11,7 +11,6 @@ import BaseLayout from './BaseLayout.astro';
 import SkipLink from '../components/SkipLink.astro';
 import HeaderUniversal from '../components/HeaderUniversal.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
-import AnnouncementBanner from '../components/AnnouncementBanner.astro';
 
 interface Props {
     title: string;
@@ -65,5 +64,4 @@ const {
     <HeaderUniversal />
     <slot />
     <VisitorNotify />
-    <AnnouncementBanner />
 </BaseLayout>
