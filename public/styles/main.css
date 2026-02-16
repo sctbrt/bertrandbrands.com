@@ -444,10 +444,10 @@
         }
 
         .intake-header__logo-text {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: var(--font-display);
             font-size: var(--text-sm);
-            font-weight: 500;
-            letter-spacing: 0.05em;
+            font-weight: 400;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--text);
         }
@@ -852,8 +852,8 @@
         }
 
         .intro__brand {
-            font-family: var(--font-body);
-            font-size: clamp(2.5rem, 10vw, 5.5rem);
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 5.5vw, 3.75rem);
             font-weight: var(--font-light);
             letter-spacing: 0.15em;
             text-transform: uppercase;
@@ -874,6 +874,7 @@
             font-weight: var(--font-medium);
             letter-spacing: 0.2em;
             line-height: 1.1;
+            white-space: nowrap;
             opacity: 0;
             background: linear-gradient(
                 105deg,
@@ -5213,6 +5214,245 @@
 
         .service__cta--gated:hover {
             color: var(--text);
+        }
+
+        /* ============================================================
+           MOBILE TYPOGRAPHY & SPACING (V8.1)
+           Tighten type hierarchy, add breathing room, reduce density
+           ============================================================ */
+        @media (max-width: 768px) {
+
+            /* --- R1: Body line-height — tighter on mobile for less air --- */
+            body {
+                line-height: 1.5;
+            }
+
+            /* --- R2: Section spacing — reduce massive gaps between sections --- */
+            .section {
+                padding: var(--space-lg) 0;             /* 12rem → 4rem */
+            }
+
+            .section__header {
+                margin-bottom: var(--space-md);          /* 8rem → 2rem */
+            }
+
+            .section__header--services {
+                margin-bottom: var(--space-sm);           /* 2rem → 1rem */
+            }
+
+            /* --- R3: Section title — slightly smaller on mobile for proportion --- */
+            .section__title {
+                font-size: clamp(1.5rem, 5vw, 2.5rem);  /* Tighter floor: 24px vs 32px */
+            }
+
+            /* --- R4: About text — drop from lg to base on mobile --- */
+            .about__text {
+                font-size: var(--text-base);
+                line-height: 1.6;
+                margin-bottom: var(--space-sm);
+            }
+
+            /* --- R5: Process intro — drop from lg to base on mobile --- */
+            .process__intro {
+                font-size: var(--text-base);
+                line-height: 1.6;
+                margin-bottom: var(--space-md);
+            }
+
+            /* --- R6: Tier containers — tighter internal padding --- */
+            .core-systems-wrapper,
+            .focused-studio,
+            .exploratory-sessions {
+                padding: var(--space-md);                 /* 4rem → 2rem */
+            }
+
+            /* --- R7: Tier header descriptions — smaller to separate from cards --- */
+            .core-systems__description,
+            .focused-studio__description,
+            .exploratory-sessions__description {
+                font-size: var(--text-xs);
+                line-height: 1.5;
+                margin-bottom: var(--space-sm);
+            }
+
+            /* --- R8: Tier sub-brand names — scale down for mobile proportion --- */
+            .core-systems__name,
+            .focused-studio__name {
+                font-size: var(--text-2xl);               /* 30px → 24px */
+            }
+
+            .exploratory-sessions__name {
+                font-size: var(--text-xl);                 /* 24px → 20px */
+            }
+
+            /* --- R9: Exploratory label — smaller to avoid crowding --- */
+            .exploratory-sessions__label {
+                font-size: var(--text-base);
+                margin-bottom: 0.25rem;
+            }
+
+            /* --- R10: Transformation card titles — scale down from 2xl to xl --- */
+            .service__title {
+                font-size: var(--text-lg);                 /* 24px → 18px — was xl (20px) */
+            }
+
+            .service__description {
+                font-size: var(--text-sm);
+                line-height: 1.55;
+                margin-bottom: var(--space-sm);
+            }
+
+            .service__number {
+                margin-bottom: var(--space-sm);            /* 2rem → 1rem */
+            }
+
+            /* --- R11: Build card spacing — reduce inner density --- */
+            .focused-studio__card-description {
+                font-size: var(--text-xs);
+                line-height: 1.5;
+            }
+
+            .focused-studio__card-title {
+                font-size: var(--text-base);               /* 18px → 16px */
+            }
+
+            .focused-studio__card-includes li {
+                font-size: 0.6875rem;                      /* 11px — subtler than xs (12px) */
+                line-height: 1.4;
+            }
+
+            .focused-studio__card-best-for {
+                font-size: 0.6875rem;                      /* 11px */
+                margin-bottom: var(--space-xs);
+            }
+
+            /* --- R12: Conversation card spacing --- */
+            .exploratory-sessions__card {
+                padding: var(--space-sm);
+            }
+
+            .exploratory-sessions__card-title {
+                font-size: var(--text-sm);                 /* 16px → 14px */
+                margin-bottom: 0.125rem;
+            }
+
+            .exploratory-sessions__card-meta {
+                font-size: 0.6875rem;                      /* 11px */
+            }
+
+            .exploratory-sessions__card-description {
+                font-size: var(--text-xs);
+                line-height: 1.45;
+                margin-bottom: var(--space-xs);
+            }
+
+            /* --- R13: Contact section — tighter on mobile --- */
+            .contact {
+                padding: var(--space-lg) 0;               /* 12rem → 4rem */
+            }
+
+            .contact__title {
+                font-size: clamp(1.75rem, 8vw, 3rem);     /* Tighter floor */
+                margin-bottom: var(--space-sm);
+            }
+
+            .contact__subtitle {
+                font-size: var(--text-sm);
+                margin-bottom: var(--space-md);
+            }
+
+            /* --- R14: Portal section — tighter --- */
+            .portal {
+                padding: var(--space-md) 0;
+            }
+
+            .portal__content {
+                padding: var(--space-md);
+            }
+
+            .portal__title {
+                font-size: var(--text-xl);
+            }
+
+            .portal__description {
+                font-size: var(--text-sm);
+            }
+
+            /* --- R15: Hero subtitle — slightly smaller on mobile --- */
+            .hero__subtitle {
+                font-size: var(--text-sm);
+                line-height: 1.5;
+            }
+
+            /* --- R16: Selected Work card — tighter --- */
+            .work__item {
+                padding: var(--space-md);
+            }
+
+            .work__title {
+                font-size: var(--text-lg);
+            }
+
+            .work__description {
+                font-size: var(--text-sm);
+                line-height: 1.55;
+                margin-bottom: var(--space-sm);
+            }
+
+            /* --- R17: Footer — tighter vertical space --- */
+            .footer {
+                padding: var(--space-md) 0 var(--space-sm);
+            }
+
+            .footer__cta {
+                margin-bottom: var(--space-sm);
+                padding-bottom: var(--space-sm);
+            }
+
+            /* --- R18: Exploratory tier margin --- */
+            .exploratory {
+                margin-bottom: var(--space-md);            /* 8rem → 2rem */
+            }
+
+            /* --- R19: Core systems margin --- */
+            .core-systems {
+                margin-bottom: var(--space-md);            /* 4rem → 2rem */
+            }
+
+            /* --- R20: Services divider spacing --- */
+            .services-divider {
+                margin: var(--space-md) 0;                 /* 4rem → 2rem */
+            }
+
+            .services-divider--section {
+                margin: var(--space-md) 0 var(--space-md); /* 8rem/4rem → 2rem/2rem */
+            }
+        }
+
+        /* Extra-small screens: further tightening */
+        @media (max-width: 480px) {
+            .section {
+                padding: var(--space-md) 0;               /* 4rem → 2rem */
+            }
+
+            .section__title {
+                font-size: clamp(1.25rem, 6vw, 2rem);    /* Even tighter floor */
+            }
+
+            .contact__title {
+                font-size: clamp(1.5rem, 10vw, 2.5rem);
+            }
+
+            /* Tier containers — even tighter */
+            .core-systems-wrapper,
+            .focused-studio,
+            .exploratory-sessions {
+                padding: var(--space-sm);                  /* 2rem → 1rem */
+            }
+
+            .contact {
+                padding: var(--space-md) 0;
+            }
         }
 
         /* ============================================================

@@ -28,6 +28,13 @@ const {
 
 {variant === 'ad' ? (
     <header class="ad-header">
+        <style is:inline>
+            .ad-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: var(--space-sm) 1.5rem; background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+            .ad-header__inner { max-width: var(--container-max); margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+            .ad-header__logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--text); }
+            .ad-header__logo-icon { width: 24px; height: auto; filter: brightness(0) invert(1); }
+            .ad-header__logo-text { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); }
+        </style>
         <div class="ad-header__inner">
             <span class="ad-header__logo">
                 <img src="/assets/bg-brands-logomark.png" alt="" class="ad-header__logo-icon" width="40" height="40" fetchpriority="high">
