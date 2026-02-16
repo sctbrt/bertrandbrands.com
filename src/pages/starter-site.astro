@@ -4,6 +4,7 @@
  */
 import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../components/InlineIntakeForm.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -83,6 +84,10 @@ const currentYear = new Date().getFullYear();
             .service-footer__phone { font-size: var(--text-sm); margin-top: 0.5rem; }
             .service-footer__phone a { color: var(--text-muted); text-decoration: none; }
             .service-footer__phone a:hover { color: var(--text); }
+            .service-footer__cta { margin-bottom: 1rem; }
+            .service-footer__cta-text { font-size: var(--text-sm); color: var(--text-subtle); margin-bottom: 0.25rem; }
+            .service-footer__cta-link { font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
+            .service-footer__cta-link:hover { color: var(--accent); }
 
             .service-hero { position: relative; }
             .service-hero__illustration-wrap {
@@ -175,8 +180,8 @@ const currentYear = new Date().getFullYear();
                     <path d="M 100 300 Q 250 180 400 100" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1" stroke-dasharray="2 6" fill="none"/>
                 </svg>
                 </div>
-                <h1 class="service-hero__headline">A clean, credible website — built to get you live without cutting corners.</h1>
-                <p class="service-hero__description">The Starter Site is a focused website build for businesses that need to show up professionally, clearly, and with confidence — without overbuilding or unnecessary complexity.</p>
+                <h1 class="service-hero__headline">A clean, credible website, built to get you live without cutting corners.</h1>
+                <p class="service-hero__description">The Starter Site is a focused website build for businesses that need to show up professionally, clearly, and with confidence, without overbuilding or unnecessary complexity.</p>
             </section>
 
             <section class="service-content">
@@ -236,6 +241,10 @@ const currentYear = new Date().getFullYear();
     </main>
 
     <footer class="service-footer">
+        <div class="service-footer__cta">
+            <p class="service-footer__cta-text">Not sure where to start?</p>
+            <a href="/intake/exploratory" class="service-footer__cta-link">Start with a free intake &rarr;</a>
+        </div>
         <p class="service-footer__text">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
         <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
         <p class="service-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
@@ -256,4 +265,10 @@ const currentYear = new Date().getFullYear();
             }
         })();
     </script>
+
+    <StickyMobileCTA
+        href="#inlineIntakeCard"
+        heroSelector=".service-hero"
+        formSelector="#inlineIntakeCard"
+    />
 </ServiceDetailLayout>

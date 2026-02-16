@@ -8,6 +8,8 @@ import HeaderUniversal from '../components/HeaderUniversal.astro';
 import SkipLink from '../components/SkipLink.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
+import InlineIntakeForm from '../components/InlineIntakeForm.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -361,6 +363,11 @@ const currentYear = new Date().getFullYear();
                 text-decoration: none;
             }
 
+            .cs-footer__cta { margin-bottom: 1rem; }
+            .cs-footer__cta-text { font-size: var(--text-sm); color: var(--text-subtle); margin-bottom: 0.25rem; }
+            .cs-footer__cta-link { font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
+            .cs-footer__cta-link:hover { color: var(--accent); }
+
             .cs-spotlight {
                 position: fixed;
                 border-radius: 50%;
@@ -549,6 +556,27 @@ const currentYear = new Date().getFullYear();
             </div>
         </section>
 
+        <!-- Inline Intake Form -->
+        <section class="cs-form-section" id="request">
+            <div class="container">
+                <div id="intakePrompt">
+                    <InlineIntakeForm
+                        serviceName="Transformation"
+                        serviceSlug="core-services"
+                        tierColor="#D97706"
+                        tierName="TRANSFORMATION"
+                    />
+                </div>
+                <div id="bookingPrompt" style="display: none;">
+                    <div style="background: rgba(217, 119, 6, 0.05); border: 1px solid rgba(217, 119, 6, 0.15); border-radius: 16px; padding: 2rem; text-align: center;">
+                        <h2 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Ready to schedule</h2>
+                        <p style="color: var(--text-muted); font-size: var(--text-sm); margin-bottom: 1rem;">Your intake is complete. Check your email for your booking link to schedule your Discovery call.</p>
+                        <a href="/book" style="display: inline-block; padding: 0.875rem 2rem; background: #D97706; color: #0a0a0a; border-radius: 8px; font-weight: 500; text-decoration: none;">Start Here &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <hr class="cs-divider">
 
         <!-- Conversation Sessions -->
@@ -581,10 +609,39 @@ const currentYear = new Date().getFullYear();
 
     <!-- Footer -->
     <footer class="cs-footer">
+        <div class="cs-footer__cta">
+            <p class="cs-footer__cta-text">Not sure where to start?</p>
+            <a href="/intake/exploratory" class="cs-footer__cta-link">Start with a free intake &rarr;</a>
+        </div>
         <p class="cs-footer__text">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
         <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
         <p class="cs-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
     </footer>
+
+    <StickyMobileCTA
+        href="#inlineIntakeCard"
+        heroSelector=".cs-hero"
+        formSelector="#inlineIntakeCard"
+    />
+
+    <script is:inline>
+        // Check for intake completion and show appropriate section
+        (function() {
+            var intakePrompt = document.getElementById('intakePrompt');
+            var bookingPrompt = document.getElementById('bookingPrompt');
+
+            function hasIntakeAccess() {
+                return document.cookie.split(';').some(function(c) {
+                    return c.trim().startsWith('bb_intake_completed=') || c.trim().startsWith('bb_returning_client=');
+                });
+            }
+
+            if (hasIntakeAccess() && intakePrompt && bookingPrompt) {
+                intakePrompt.style.display = 'none';
+                bookingPrompt.style.display = 'block';
+            }
+        })();
+    </script>
 
     <GesturePrevention />
 

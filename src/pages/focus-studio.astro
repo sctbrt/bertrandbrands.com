@@ -8,16 +8,18 @@ import HeaderUniversal from '../components/HeaderUniversal.astro';
 import SkipLink from '../components/SkipLink.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
+import InlineIntakeForm from '../components/InlineIntakeForm.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 
 const currentYear = new Date().getFullYear();
 ---
 
 <BaseLayout
     title="B Build — Fixed-Scope Web & Brand Work | BG | Brand & Web Systems"
-    description="Focused brand and website work—done fast, done properly. Starter Site, One-Page Redesign, and Brandmark & Visual Identity packages with clear timelines and fixed prices."
+    description="Focused brand and website work, done fast, done properly. Starter Site, One-Page Redesign, and Brandmark & Visual Identity packages with clear timelines and fixed prices."
     canonical="https://bertrandbrands.ca/focus-studio"
     ogTitle="B Build — Fixed-Scope Web & Brand Work | BG | Brand & Web Systems"
-    ogDescription="Focused brand and website work—done fast, done properly. Clear scope, clear timelines, clear outcomes."
+    ogDescription="Focused brand and website work, done fast, done properly. Clear scope, clear timelines, clear outcomes."
     schemaJson={{
         "@context": "https://schema.org",
         "@type": "Service",
@@ -504,6 +506,11 @@ const currentYear = new Date().getFullYear();
                 text-decoration: none;
             }
 
+            .fs-footer__cta { margin-bottom: 1rem; }
+            .fs-footer__cta-text { font-size: var(--text-sm); color: var(--text-subtle); margin-bottom: 0.25rem; }
+            .fs-footer__cta-link { font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
+            .fs-footer__cta-link:hover { color: var(--accent); }
+
             .fs-spotlight {
                 position: fixed;
                 border-radius: 50%;
@@ -648,7 +655,7 @@ const currentYear = new Date().getFullYear();
                         <span class="fs-offering__timeline">Done in 1 business day</span>
                         <h2 class="fs-offering__title">Starter Site</h2>
                     </div>
-                    <p class="fs-offering__description">A fast-launch website built for speed and simplicity. Clean, functional, and live quickly — ideal for businesses that need a professional web presence without complexity. Most businesses start here.</p>
+                    <p class="fs-offering__description">A fast-launch website built for speed and simplicity. Clean, functional, and live quickly. Ideal for businesses that need a professional web presence without complexity. Most businesses start here.</p>
                     <div class="fs-offering__footer">
                         <p class="fs-offering__price">$750 <span>CAD</span></p>
                         <span class="fs-offering__detail">Learn more →</span>
@@ -690,16 +697,14 @@ const currentYear = new Date().getFullYear();
         <!-- Start Here Section -->
         <section class="fs-form-section" id="request">
             <div class="container">
-                <!-- Default: Intake CTA -->
-                <div class="fs-intake-prompt" id="intakePrompt">
-                    <h2 class="fs-form-section__title">Ready to get started?</h2>
-                    <p class="fs-form-section__subtitle">All Build work begins with a quick intake. We'll review your situation and confirm this is the right fit before scheduling.</p>
-
-                    <div class="fs-intake-cta">
-                        <a href="/book" class="fs-form__submit" style="display: inline-block; text-decoration: none; text-align: center;">Start Intake →</a>
-                    </div>
-
-                    <p class="fs-intake-note">Takes 5 minutes. No commitment required.</p>
+                <!-- Default: Inline Intake Form -->
+                <div id="intakePrompt">
+                    <InlineIntakeForm
+                        serviceName="Focus Studio"
+                        serviceSlug="focus-studio"
+                        tierColor="#8B5CF6"
+                        tierName="BUILD"
+                    />
                 </div>
 
                 <!-- Conditional: Kickoff booking -->
@@ -732,6 +737,10 @@ const currentYear = new Date().getFullYear();
 
     <!-- Footer -->
     <footer class="fs-footer">
+        <div class="fs-footer__cta">
+            <p class="fs-footer__cta-text">Not sure where to start?</p>
+            <a href="/intake/exploratory" class="fs-footer__cta-link">Start with a free intake &rarr;</a>
+        </div>
         <p class="fs-footer__text">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
         <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
         <p class="fs-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
@@ -772,6 +781,12 @@ const currentYear = new Date().getFullYear();
         });
 
     </script>
+
+    <StickyMobileCTA
+        href="#inlineIntakeCard"
+        heroSelector=".fs-hero"
+        formSelector="#inlineIntakeCard"
+    />
 
     <GesturePrevention />
     <VisitorNotify />

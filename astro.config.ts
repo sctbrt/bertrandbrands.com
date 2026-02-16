@@ -26,6 +26,7 @@ export default defineConfig({
     '/login': { destination: '/#portal', status: 302 },
 
     // Convenience redirects (temporary)
+    '/book': { destination: '/exploratory', status: 301 },
     '/intake': { destination: '/focus-studio', status: 302 },
     '/start': { destination: '/focus-studio', status: 302 },
     '/start-here': { destination: '/focus-studio', status: 302 },

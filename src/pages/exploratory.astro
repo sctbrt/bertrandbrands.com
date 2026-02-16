@@ -493,6 +493,11 @@ const schema = {
             text-decoration: none;
         }
 
+        .exp-footer__cta { margin-bottom: 1rem; }
+        .exp-footer__cta-text { font-size: var(--text-sm); color: var(--text-subtle); margin-bottom: 0.25rem; }
+        .exp-footer__cta-link { font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
+        .exp-footer__cta-link:hover { color: var(--accent); }
+
         /* Hero illustration + glow */
         .exp-hero__illustration-wrap {
             position: relative;
@@ -660,7 +665,7 @@ const schema = {
               </div>
               <h1 class="exp-hero__title">Not sure what you need?</h1>
               <p class="exp-hero__subtitle">
-                  Start here. We'll help you figure out the right next step—whether that's working with us, doing it yourself, or doing nothing at all.
+                  Start here. We'll help you figure out the right next step, whether that's working with us, doing it yourself, or doing nothing at all.
               </p>
           </div>
       </section>
@@ -673,7 +678,7 @@ const schema = {
                   <h2 class="exp-primary__title">Guided Intake</h2>
                   <p class="exp-primary__meta">5–10 min · Asynchronous</p>
                   <p class="exp-primary__description">
-                      Answer a few questions about your business. We review within 1–2 business days and follow up with a clear recommendation—whether that's a Direction Call, Clarity Session, or a different path entirely.
+                      Answer a few questions about your business. We review within 1–2 business days and follow up with a clear recommendation: a Direction Call, Clarity Session, or a different path entirely.
                   </p>
                   <a href="/intake/exploratory" class="exp-primary__cta">
                       Start Intake
@@ -700,7 +705,7 @@ const schema = {
                       <h3 class="exp-option__title">Clarity Session (Brand / Web / Systems)</h3>
                       <p class="exp-option__meta">~45 min · Live Video</p>
                       <p class="exp-option__description">
-                          A focused, paid conversation about your brand, website, or systems. Walk away with diagnosis, direction, and a short written recap. This is a standalone entry point—no intake required.
+                          A focused, paid conversation about your brand, website, or systems. Walk away with diagnosis, direction, and a short written recap. This is a standalone entry point. No intake required.
                       </p>
                       <p class="exp-option__price">$145 <span>CAD + HST</span></p>
                       <a href="/clarity-session" class="exp-option__cta">
@@ -714,7 +719,7 @@ const schema = {
                       <h3 class="exp-option__title">Technical Feasibility Check</h3>
                       <p class="exp-option__meta">Verbal · By request</p>
                       <p class="exp-option__description">
-                          A focused verbal assessment for projects with technical unknowns — integrations, platforms, migrations, or architectural questions. No deliverables. No recommendations. Just a clear yes/no/maybe on feasibility.
+                          A focused verbal assessment for projects with technical unknowns: integrations, platforms, migrations, or architectural questions. No deliverables. No recommendations. Just a clear yes/no/maybe on feasibility.
                       </p>
                       <p class="exp-option__price"><span>By request only</span></p>
                       <a href="/intake/exploratory" class="exp-option__cta">
@@ -741,7 +746,7 @@ const schema = {
                   </div>
                   <div class="exp-how__step">
                       <span class="exp-how__step-number">3</span>
-                      <p class="exp-how__step-text"><strong>We follow up.</strong> You'll hear from us with a clear recommendation—Clarity Session, Technical Feasibility Check, or a different path entirely.</p>
+                      <p class="exp-how__step-text"><strong>We follow up.</strong> You'll hear from us with a clear recommendation: Clarity Session, Technical Feasibility Check, or a different path entirely.</p>
                   </div>
               </div>
           </div>
@@ -751,7 +756,7 @@ const schema = {
       <section class="exp-about">
           <div class="container">
               <p class="exp-about__text">
-                  B Conversation exists because most people don't need a full project—they need direction first. This is the side door. No commitment, no pressure, just clarity.
+                  B Conversation exists because most people don't need a full project. They need direction first. This is the side door. No commitment, no pressure, just clarity.
               </p>
               <p class="exp-about__text">
                   Based in Sudbury, Ontario. Working with businesses across Canada.
@@ -762,6 +767,10 @@ const schema = {
 
   <!-- Footer -->
   <footer class="exp-footer">
+      <div class="exp-footer__cta">
+          <p class="exp-footer__cta-text">Not sure where to start?</p>
+          <a href="/intake/exploratory" class="exp-footer__cta-link">Start with a free intake &rarr;</a>
+      </div>
       <p class="exp-footer__text">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
         <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
       <p class="exp-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>

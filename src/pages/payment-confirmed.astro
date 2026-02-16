@@ -300,6 +300,68 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 color: rgba(37, 99, 235, 0.9);
             }
 
+            /* Cross-sell section */
+            .explore-next {
+                margin-top: 2.5rem;
+                text-align: left;
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px;
+                padding: 1.5rem;
+            }
+
+            .explore-next__title {
+                font-family: var(--font-body);
+                font-size: var(--text-xs);
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--text-muted);
+                margin-bottom: 1rem;
+            }
+
+            .explore-next__links {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .explore-next__link {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.75rem 1rem;
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 8px;
+                color: var(--text);
+                text-decoration: none;
+                font-size: var(--text-sm);
+                font-weight: 500;
+                transition: border-color 0.2s ease, background 0.2s ease;
+            }
+
+            .explore-next__link:hover {
+                border-color: rgba(139, 92, 246, 0.4);
+                background: rgba(139, 92, 246, 0.05);
+            }
+
+            .explore-next__link--conversation:hover {
+                border-color: rgba(37, 99, 235, 0.4);
+                background: rgba(37, 99, 235, 0.05);
+            }
+
+            .explore-next__arrow {
+                color: var(--text-muted);
+                font-size: var(--text-sm);
+            }
+
+            .explore-next__desc {
+                font-size: var(--text-xs);
+                color: var(--text-muted);
+                font-weight: 400;
+            }
+
             @media (max-width: 480px) {
                 h1 {
                     font-size: var(--text-2xl);
@@ -324,6 +386,11 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             <p class="booking__label">Next Step</p>
             <h2 class="booking__title">Pick a time that works</h2>
             <div class="booking__calendly" id="calendlyEmbed"></div>
+        </div>
+
+        <div class="explore-next" id="exploreNext">
+            <h3 class="explore-next__title">While you're here</h3>
+            <div class="explore-next__links" id="exploreLinks"></div>
         </div>
 
         <a href="https://bertrandbrands.ca" class="back-link">&larr; Back to Bertrand Group</a>
@@ -399,6 +466,42 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             }
         }
         initCalendly();
+
+        // Context-aware cross-sell links
+        (function() {
+            var crossSell = {
+                'clarity-session': [
+                    { href: '/starter-site', label: 'Starter Site', desc: 'Launch a clean, credible website in 1 business day' },
+                    { href: '/one-page-redesign', label: 'One-Page System Redesign', desc: 'A fully custom, code-built website' }
+                ],
+                'starter-site': [
+                    { href: '/brandmark', label: 'Brandmark & Visual Identity', desc: 'A cohesive visual identity for your brand' },
+                    { href: '/one-page-redesign', label: 'One-Page System Redesign', desc: 'Ready for something fully custom?' }
+                ],
+                'brandmark': [
+                    { href: '/starter-site', label: 'Starter Site', desc: 'Pair your new brand with a website' },
+                    { href: '/one-page-redesign', label: 'One-Page System Redesign', desc: 'A fully custom, code-built website' }
+                ],
+                'one-page-redesign': [
+                    { href: '/brandmark', label: 'Brandmark & Visual Identity', desc: 'A cohesive visual identity for your brand' },
+                    { href: '/brand-system-reset', label: 'Brand System Reset', desc: 'Strategic realignment of your full brand system' }
+                ]
+            };
+
+            var links = crossSell[serviceKey] || crossSell['starter-site'];
+            var container = document.getElementById('exploreLinks');
+            if (!container) return;
+
+            var isConversation = serviceKey === 'clarity-session';
+
+            links.forEach(function(link) {
+                var a = document.createElement('a');
+                a.href = link.href;
+                a.className = 'explore-next__link' + (isConversation ? ' explore-next__link--conversation' : '');
+                a.innerHTML = '<div><span>' + link.label + '</span><br><span class="explore-next__desc">' + link.desc + '</span></div><span class="explore-next__arrow">&rarr;</span>';
+                container.appendChild(a);
+            });
+        })();
 
         // Background glow drift animation
         (function() {
