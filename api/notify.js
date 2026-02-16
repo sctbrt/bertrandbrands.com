@@ -8,7 +8,10 @@ export default async function handler(req, res) {
   }
 
   // Determine notification type based on request body
-  const { type, name, email, service, message, page, referrer } = req.body || {};
+  const { type, name, email, service, message, page, referrer,
+          source, business, website, details, concerns, situation,
+          budget, timeline, phone, description, challenge,
+          tier, price, context, outcome, industry, contact_pref } = req.body || {};
 
   // Pushover credentials (from environment variables)
   const PUSHOVER_USER = process.env.PUSHOVER_USER_KEY;
@@ -28,14 +31,60 @@ export default async function handler(req, res) {
     let sound;
 
     if (type === 'visitor') {
-      // Visitor notification (silent, low priority)
+      // Visitor notification
 
       // Get visitor IP from Vercel headers
       const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
                  req.headers['x-real-ip'] ||
                  'unknown';
 
-      // Use ip-api.com for reliable geolocation (more complete than Vercel geo headers)
+      // Use ip-api.com for reliable geolocation
+      let location = '';
+      if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
+        try {
+          const geoRes = await fetch(`https://ip-api.com/json/${ip}?fields=city,regionCode,country,isp`);
+          if (geoRes.ok) {
+            const geo = await geoRes.json();
+            if (geo.city) {
+              location = `${geo.city}${geo.regionCode ? `, ${geo.regionCode}` : ''}${geo.country ? `, ${geo.country}` : ''}`;
+            }
+          }
+        } catch (geoErr) {
+          // Silently fail - location is optional
+        }
+      }
+
+      // Parse user agent for device summary
+      const ua = req.headers['user-agent'] || '';
+      let device = '';
+      if (ua) {
+        const isMobile = /Mobile|Android|iPhone|iPad/i.test(ua);
+        let browser = 'Unknown';
+        if (/Edg\//i.test(ua)) browser = 'Edge';
+        else if (/Chrome\//i.test(ua)) browser = 'Chrome';
+        else if (/Safari\//i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+        else if (/Firefox\//i.test(ua)) browser = 'Firefox';
+        device = `${isMobile ? '📱' : '💻'} ${browser}`;
+      }
+
+      notificationMessage = `📍 ${page || '/'}`;
+      if (referrer) notificationMessage += `\nFrom: ${referrer}`;
+      if (location) notificationMessage += `\n📌 ${location}`;
+      if (device) notificationMessage += `\n${device}`;
+
+      notificationTitle = 'Visitor on BG Brands';
+      notificationUrl = `https://bertrandbrands.ca${page || '/'}`;
+      notificationUrlTitle = 'View Page';
+      priority = -1; // Silent — no sound, no popup
+      sound = null;
+    } else if (type === 'intake') {
+      // Intake form submission (high priority with distinct sound)
+
+      // Get visitor IP for geolocation
+      const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
+                 req.headers['x-real-ip'] ||
+                 'unknown';
+
       let location = '';
       if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
         try {
@@ -51,17 +100,40 @@ export default async function handler(req, res) {
         }
       }
 
-      notificationMessage = `📍 ${page || 'Homepage'}`;
-      if (referrer) notificationMessage += `\nFrom: ${referrer}`;
+      // Source labels for notification title
+      const sourceLabels = {
+        'exploratory-guided-intake': 'Exploratory Intake',
+        'website_conversion_snapshot': 'Website Snapshot',
+        'brand-clarity-diagnostic-intake': 'Brand Diagnostic',
+        'sudbury_focus_studio': 'Sudbury Lead',
+      };
+      const sourceLabel = sourceLabels[source] || source || 'Intake';
+
+      notificationMessage = `${name || 'Unknown'}`;
+      if (email) notificationMessage += `\n${email}`;
+      if (business) notificationMessage += `\nBusiness: ${business}`;
+      if (website) notificationMessage += `\nWebsite: ${website}`;
+      if (phone) notificationMessage += `\nPhone: ${phone}`;
+      if (service) notificationMessage += `\nService: ${service}`;
+      if (price) notificationMessage += `\nPrice: ${price}`;
+      if (situation) notificationMessage += `\nSituation: ${situation}`;
+      if (budget) notificationMessage += `\nBudget: ${budget}`;
+      if (timeline) notificationMessage += `\nTimeline: ${timeline}`;
+      if (concerns) notificationMessage += `\nConcerns: ${concerns.substring(0, 200)}`;
+      if (details) notificationMessage += `\nDetails: ${details.substring(0, 200)}`;
+      if (description) notificationMessage += `\nDescription: ${description.substring(0, 200)}`;
+      if (challenge) notificationMessage += `\nChallenge: ${challenge.substring(0, 200)}`;
+      if (context) notificationMessage += `\nContext: ${context.substring(0, 200)}`;
+      if (outcome) notificationMessage += `\nOutcome: ${outcome.substring(0, 200)}`;
       if (location) notificationMessage += `\n📌 ${location}`;
 
-      notificationTitle = 'Visitor on BG Brands';
-      notificationUrl = `https://bertrandbrands.ca${page || '/'}`;
-      notificationUrlTitle = 'View Page';
-      priority = -1; // Low priority (silent, no sound)
-      sound = null;
+      notificationTitle = `New ${sourceLabel}`;
+      notificationUrl = 'https://dash.bertrandgroup.ca/leads';
+      notificationUrlTitle = 'View Leads';
+      priority = 1; // High priority
+      sound = 'cashregister';
     } else {
-      // Form submission notification (normal priority with sound)
+      // Generic form submission notification (normal priority with sound)
       notificationMessage = `New inquiry from ${name || 'Unknown'}`;
       if (email) notificationMessage += `\nEmail: ${email}`;
       if (service) notificationMessage += `\nService: ${service}`;

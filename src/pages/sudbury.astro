@@ -1333,6 +1333,9 @@ const currentYear = new Date().getFullYear();
                     });
 
                     if (response.ok) {
+                        // Capture form data before reset
+                        var formData = new FormData(form);
+
                         feedback.className = 'sb-form__feedback sb-form__feedback--success';
                         feedback.textContent = 'Got it. We\'ll be in touch within 1 business day.';
                         form.reset();
@@ -1342,8 +1345,14 @@ const currentYear = new Date().getFullYear();
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                type: 'form',
-                                source: 'sudbury_focus_studio'
+                                type: 'intake',
+                                source: 'sudbury_focus_studio',
+                                service: formData.get('offering') || '',
+                                name: formData.get('name') || '',
+                                email: formData.get('email') || '',
+                                business: formData.get('business') || '',
+                                website: formData.get('website') || '',
+                                details: formData.get('details') || ''
                             })
                         }).catch(function() {});
 

@@ -265,7 +265,7 @@ A successful implementation:
 │   │   ├── FooterMain.astro       # Full footer (homepage, hub pages)
 │   │   ├── FooterMinimal.astro    # Simple footer (service, intake, confirmation)
 │   │   ├── SkipLink.astro         # Accessibility skip link
-│   │   ├── VisitorNotify.astro    # Silent Pushover notification script
+│   │   ├── VisitorNotify.astro    # Silent Pushover notification on page load (skips owner visits)
 │   │   ├── AnnouncementBanner.astro # Dismissible announcement banner
 │   │   └── GesturePrevention.astro # iOS gesture prevention (shared across all pages)
 │   ├── pages/
@@ -531,10 +531,33 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 - Security: Token hashing, rate limiting (3/hr per email)
 - Cookie: `bb_pricing_session` set on `.bertrandgroup.ca` domain
 
-### 7.4 Visitor Tracking
+### 7.4 Pushover Notification System
 
-- Page loads trigger Pushover notifications with geolocation
-- Form submissions logged with full details
+Pushover notifications provide real-time alerts for visitor activity, form submissions, and lead intake across both the static site and the CRM backend.
+
+**Environment Variables (shared across both projects):**
+- `PUSHOVER_USER_KEY` — Pushover user key
+- `PUSHOVER_API_TOKEN` — Pushover application token
+
+**Notification Types:**
+
+| Type | Priority | Sound | Trigger |
+|------|----------|-------|---------|
+| Visitor page view | -1 (silent) | None | Every page load (via `VisitorNotify.astro`) |
+| Generic form submission | 0 (normal) | `pushover` | Non-intake form submissions |
+| Intake form submission | 1 (high) | `cashregister` | Intake forms (exploratory, snapshot, diagnostic, sudbury) |
+| Snapshot booking | 1 (high) | `cashregister` | `/api/snapshot/book` endpoint |
+| Formspree CRM webhook | 1 (high) | `cashregister` | Formspree → system-build webhook |
+| Google Ads CRM webhook | 1 (high) | `cashregister` | Google Ads → system-build webhook |
+
+**Architecture:**
+- **bertrandbrands.ca** — `api/notify.js` handles visitor + form + intake notifications; `api/snapshot/book.js` handles snapshot bookings directly
+- **system-build** — `api/intake/formspree/route.ts` and `api/intake/google-ads/route.ts` each send Pushover notifications inline after creating leads
+
+**Owner Exclusion:**
+- Visit `bertrandbrands.ca/?owner` once to set a `localStorage` flag (`bb_owner`)
+- `VisitorNotify.astro` checks this flag and skips visitor notifications for the site owner
+- Intake/form notifications are NOT suppressed (those are always important)
 
 ---
 
@@ -1399,13 +1422,15 @@ Magic link system for gated booking access (client-specific). Parallels pricing 
 
 **CORS:** Restricted to `APP_URL` origin.
 
-### 25.4 Visitor Notifications (`api/notify.js`)
+### 25.4 Pushover Notifications (`api/notify.js`)
+
+Central notification endpoint handling three types: visitor tracking, intake submissions, and generic form inquiries.
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
-| `/api/notify` | POST | Sends visitor page-view notification via Pushover |
+| `/api/notify` | POST | Sends Pushover notification (visitor, intake, or form) |
 
-**Request body:**
+**Request body (visitor):**
 ```json
 {
   "type": "visitor",
@@ -1414,11 +1439,49 @@ Magic link system for gated booking access (client-specific). Parallels pricing 
 }
 ```
 
-**Behavior:**
-- Uses Vercel geo headers for location (no external geo API)
-- Sends formatted Pushover notification with page, city, region, country
-- Fails silently (no error exposed to client)
-- Called by `src/components/visitor-notify.js` on page load
+**Request body (intake):**
+```json
+{
+  "type": "intake",
+  "source": "exploratory-guided-intake",
+  "name": "...", "email": "...", "phone": "...",
+  "business": "...", "website": "...", "service": "...",
+  "situation": "...", "budget": "...", "timeline": "...",
+  "concerns": "...", "details": "...", "description": "...",
+  "challenge": "...", "context": "...", "outcome": "..."
+}
+```
+
+**Request body (generic form):**
+```json
+{
+  "type": "form",
+  "name": "...", "email": "...", "service": "...", "message": "..."
+}
+```
+
+**Type handling:**
+
+| Type | Title | Priority | Sound | Geolocation | URL |
+|------|-------|----------|-------|-------------|-----|
+| `visitor` | "Visitor on BG Brands" | -1 (silent) | None | ip-api.com | Page URL |
+| `intake` | "New {Source Label}" | 1 (high) | `cashregister` | ip-api.com | `dash.bertrandgroup.ca/leads` |
+| (other) | "BG Brands Inquiry" | 0 (normal) | `pushover` | None | `bertrandbrands.ca/#contact` |
+
+**Source labels (intake type):**
+- `exploratory-guided-intake` → "Exploratory Intake"
+- `website_conversion_snapshot` → "Website Snapshot"
+- `brand-clarity-diagnostic-intake` → "Brand Diagnostic"
+- `sudbury_focus_studio` → "Sudbury Lead"
+
+**Called by:**
+- `src/components/VisitorNotify.astro` — visitor tracking on every page load
+- `src/pages/intake/exploratory.astro` — after Formspree submission
+- `src/pages/intake/website-conversion-snapshot.astro` — after Formspree submission
+- `src/pages/intake/brand-clarity-diagnostic.astro` — after Formspree submission
+- `src/pages/sudbury.astro` — after Formspree submission
+
+**Owner exclusion:** `VisitorNotify.astro` checks `localStorage` for `bb_owner` flag (set via `?owner` URL param). Only visitor notifications are suppressed.
 
 ### 25.5 Database Utilities (`api/_lib/db.js`)
 

@@ -8,6 +8,12 @@
 <script is:inline>
 (function() {
   if (typeof navigator !== 'undefined' && navigator.webdriver) return;
+  // Set owner flag via ?owner param (persists in localStorage)
+  if (window.location.search.indexOf('owner') !== -1) {
+    try { localStorage.setItem('bb_owner', '1'); } catch(e) {}
+  }
+  // Skip visitor notifications for site owner
+  try { if (localStorage.getItem('bb_owner') === '1') return; } catch(e) {}
   fetch('/api/notify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
