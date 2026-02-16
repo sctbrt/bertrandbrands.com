@@ -505,6 +505,18 @@ const schema = {
             margin: 0 auto 0.75rem;
             width: clamp(200px, 35vw, 320px);
         }
+        /* Dark clearing behind illustration — isolates SVG from ambient spotlights */
+        .exp-hero__illustration-wrap::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 110%; height: 110%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 65%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+        }
         .exp-hero__illustration-wrap::before {
             content: '';
             position: absolute;

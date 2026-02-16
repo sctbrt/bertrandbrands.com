@@ -143,9 +143,11 @@
                 overflow: visible;
             }
 
-            /* Mobile: keep ambient lighting visible */
+            /* Mobile: smaller ellipses + wider spacing for organic separation */
             .header__glass::before {
-                /* Lights stay visible, animation runs if reduced-motion not set */
+                background:
+                    radial-gradient(ellipse 180px 60px at var(--orange-pos-1) 60%, var(--light-orange-1, transparent), transparent),
+                    radial-gradient(ellipse 140px 50px at var(--orange-pos-2) 40%, var(--light-orange-2, transparent), transparent);
             }
 
             /* Mobile wordmark font size — display overrides moved below desktop styles */

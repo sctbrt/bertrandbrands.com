@@ -93,6 +93,13 @@ const currentYear = new Date().getFullYear();
             .service-hero__illustration-wrap {
                 position: relative; display: block; margin: 0 auto 0.25rem; width: clamp(200px, 35vw, 320px);
             }
+            /* Dark clearing behind illustration — isolates SVG from ambient spotlights */
+            .service-hero__illustration-wrap::after {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 110%; height: 110%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 65%);
+                filter: blur(40px); pointer-events: none; z-index: 0;
+            }
             .service-hero__illustration-wrap::before {
                 content: ''; position: absolute; top: 50%; left: 50%; width: 70%; height: 70%;
                 transform: translate(-50%, -50%);

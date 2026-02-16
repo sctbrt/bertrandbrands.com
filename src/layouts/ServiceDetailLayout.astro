@@ -6,6 +6,10 @@
  *
  * Props: same as BaseLayout, plus:
  *   spotlightColor — CSS color for ambient spotlights (default: violet)
+ *
+ * Note: Each service detail page provides its own ambient spotlights
+ * (`.service-page__spotlight`) with `organicBreathe` drift animation.
+ * The layout does NOT add spotlights to avoid doubling.
  */
 import BaseLayout from './BaseLayout.astro';
 import SkipLink from '../components/SkipLink.astro';

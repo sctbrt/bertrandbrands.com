@@ -348,7 +348,7 @@ const currentYear = new Date().getFullYear();
                 background: radial-gradient(circle, rgba(217, 119, 6, 0.2) 0%, rgba(217, 119, 6, 0.06) 50%, transparent 70%);
                 bottom: -100px;
                 left: -100px;
-                animation: spotlightFadeIn 1.5s ease-out 0.3s forwards;
+                animation: spotlightFadeIn 1.5s ease-out 0.3s forwards, smokeDrift1 25s ease-in-out 2s infinite;
             }
 
             .ad-spotlight--blue {
@@ -357,11 +357,25 @@ const currentYear = new Date().getFullYear();
                 background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 70%);
                 top: 80px;
                 right: -80px;
-                animation: spotlightFadeIn 1.5s ease-out 0.5s forwards;
+                animation: spotlightFadeIn 1.5s ease-out 0.5s forwards, smokeDrift2 30s ease-in-out 2.5s infinite;
             }
 
             @keyframes spotlightFadeIn {
                 to { opacity: 1; }
+            }
+
+            @keyframes smokeDrift1 {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                25% { transform: translate(30px, -20px) scale(1.05); }
+                50% { transform: translate(15px, -35px) scale(0.95); }
+                75% { transform: translate(-20px, -15px) scale(1.02); }
+            }
+
+            @keyframes smokeDrift2 {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                25% { transform: translate(-25px, 15px) scale(0.97); }
+                50% { transform: translate(-10px, 30px) scale(1.04); }
+                75% { transform: translate(20px, 10px) scale(0.98); }
             }
 
             @media (max-width: 768px) {
@@ -373,18 +387,24 @@ const currentYear = new Date().getFullYear();
                     height: 280px;
                     bottom: -80px;
                     left: -80px;
+                    animation: spotlightFadeIn 1.5s ease-out 0.3s forwards, smokeDriftMobile 20s ease-in-out 2s infinite;
                 }
                 .ad-spotlight--blue {
                     width: 240px;
                     height: 240px;
                     top: 60px;
                     right: -60px;
+                    animation: spotlightFadeIn 1.5s ease-out 0.5s forwards, smokeDriftMobile 25s ease-in-out 2.5s infinite;
+                }
+                @keyframes smokeDriftMobile {
+                    0%, 100% { transform: translate(0, 0); }
+                    50% { transform: translate(15px, -10px); }
                 }
             }
 
             @media (prefers-reduced-motion: reduce) {
                 .ad-spotlight {
-                    animation: none;
+                    animation: none !important;
                     opacity: 1;
                 }
             }

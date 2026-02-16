@@ -367,6 +367,8 @@ This site is **more expressive** than scottbertrand.com:
 
 Ambient spotlights throughout the site use **organic breathing animations** to create a living, ethereal feel without distraction.
 
+**Hard Rule: All background ambient light must be living (animated).** No static radial-gradients as ambient lighting. Every glow, spotlight, or ambient light element must breathe, drift, or morph. If a page has background lighting, it must move. Static glows feel dead and break the site's organic quality.
+
 **Core Principles:**
 - Spotlights should feel alive but never demand attention
 - Movement is slow, asymmetric, and naturalistic

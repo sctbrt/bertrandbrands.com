@@ -117,6 +117,18 @@ const currentYear = new Date().getFullYear();
                 margin: 0 auto 0.75rem;
                 width: clamp(200px, 35vw, 320px);
             }
+            /* Dark clearing behind illustration — isolates SVG from ambient spotlights */
+            .cs-hero__illustration-wrap::after {
+                content: '';
+                position: absolute;
+                top: 50%; left: 50%;
+                width: 110%; height: 110%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 65%);
+                filter: blur(40px);
+                pointer-events: none;
+                z-index: 0;
+            }
             .cs-hero__illustration-wrap::before {
                 content: '';
                 position: absolute;
@@ -382,7 +394,7 @@ const currentYear = new Date().getFullYear();
             .cs-spotlight--amber {
                 width: 500px;
                 height: 500px;
-                background: radial-gradient(circle, rgba(217, 119, 6, 0.2) 0%, rgba(217, 119, 6, 0.06) 45%, transparent 70%);
+                background: radial-gradient(circle, rgba(217, 119, 6, 0.14) 0%, rgba(217, 119, 6, 0.04) 45%, transparent 70%);
                 bottom: -120px;
                 left: -100px;
                 animation: spotlightFadeIn 2s ease-out 0.3s forwards, smokeDrift1 25s ease-in-out 2s infinite;
@@ -391,7 +403,7 @@ const currentYear = new Date().getFullYear();
             .cs-spotlight--warm {
                 width: 450px;
                 height: 450px;
-                background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.04) 45%, transparent 70%);
+                background: radial-gradient(circle, rgba(251, 191, 36, 0.10) 0%, rgba(251, 191, 36, 0.03) 45%, transparent 70%);
                 top: 60px;
                 right: -100px;
                 animation: spotlightFadeIn 2s ease-out 0.6s forwards, smokeDrift2 30s ease-in-out 2.5s infinite;

@@ -1001,10 +1001,14 @@ const schemaJson = {
 
           // Ambient orange light animation (30fps throttled)
           if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-              var orangePos1 = 15;
-              var orangePos2 = 85;
+              /* Mobile: wider separation so lights feel organic, not merged */
+              var isMobile = window.innerWidth <= 768;
+              var orangePos1 = isMobile ? 10 : 15;
+              var orangePos2 = isMobile ? 90 : 85;
               var direction1 = 1;
               var direction2 = -1;
+              var min1 = isMobile ? 5 : 10, max1 = isMobile ? 25 : 35;
+              var min2 = isMobile ? 75 : 60, max2 = isMobile ? 95 : 90;
               var lightsAnimationId = null;
               var lastLightsFrame = 0;
               var LIGHTS_FRAME_INTERVAL = 1000 / 30;
@@ -1024,8 +1028,8 @@ const schemaJson = {
                   orangePos1 += direction1 * 0.06;
                   orangePos2 += direction2 * 0.05;
 
-                  if (orangePos1 > 35 || orangePos1 < 10) direction1 *= -1;
-                  if (orangePos2 > 90 || orangePos2 < 60) direction2 *= -1;
+                  if (orangePos1 > max1 || orangePos1 < min1) direction1 *= -1;
+                  if (orangePos2 > max2 || orangePos2 < min2) direction2 *= -1;
 
                   if (headerGlass) {
                       headerGlass.style.setProperty('--orange-pos-1', orangePos1 + '%');

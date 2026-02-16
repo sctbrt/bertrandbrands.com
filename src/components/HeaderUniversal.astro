@@ -80,7 +80,13 @@
         if (header && headerGlass) {
             header.classList.add('lights-on');
 
-            var pos1 = 15, pos2 = 85, dir1 = 1, dir2 = -1;
+            /* Mobile: wider separation so lights feel organic, not merged */
+            var isMobile = window.innerWidth <= 768;
+            var pos1 = isMobile ? 10 : 15;
+            var pos2 = isMobile ? 90 : 85;
+            var dir1 = 1, dir2 = -1;
+            var min1 = isMobile ? 5 : 10, max1 = isMobile ? 25 : 35;
+            var min2 = isMobile ? 75 : 60, max2 = isMobile ? 95 : 90;
             var lastFrame = 0;
             var FRAME_INTERVAL = 1000 / 30;
 
@@ -92,8 +98,8 @@
                 lastFrame = timestamp;
                 pos1 += dir1 * 0.06;
                 pos2 += dir2 * 0.05;
-                if (pos1 > 35 || pos1 < 10) dir1 *= -1;
-                if (pos2 > 90 || pos2 < 60) dir2 *= -1;
+                if (pos1 > max1 || pos1 < min1) dir1 *= -1;
+                if (pos2 > max2 || pos2 < min2) dir2 *= -1;
                 headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
                 headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
                 requestAnimationFrame(animateLights);
