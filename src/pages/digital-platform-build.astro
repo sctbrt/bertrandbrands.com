@@ -3,6 +3,7 @@
  * Digital Platform Build — B Transformation | Core Systems service detail page.
  */
 import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
+import InlineIntakeForm from '../components/InlineIntakeForm.astro';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -224,17 +225,18 @@ const currentYear = new Date().getFullYear();
             </section>
 
             <section class="service-cta">
-                <div class="service-cta__card">
-                    <div class="service-cta__intake" id="intakePrompt">
-                        <h2 class="service-cta__title">Start with an intake</h2>
-                        <p class="service-cta__text">All work begins with an intake to ensure fit and clarity. Takes about 5 minutes.</p>
-                        <a href="/book" class="service-cta__button">Start Intake →</a>
-                    </div>
-                    <div class="service-cta__booking" id="bookingPrompt">
-                        <h2 class="service-cta__title">Ready to schedule</h2>
-                        <p class="service-cta__text">Your intake is complete. Check your email for your booking link to schedule your Transformation Discovery.</p>
-                        <a href="/book" class="service-cta__button">Start Here →</a>
-                    </div>
+                <div id="intakePrompt">
+                    <InlineIntakeForm
+                        serviceName="Digital Platform Build"
+                        serviceSlug="digital-platform-build"
+                        tierColor="#D97706"
+                        tierName="TRANSFORMATION"
+                    />
+                </div>
+                <div class="service-cta__card" id="bookingPrompt" style="display: none;">
+                    <h2 class="service-cta__title">Ready to schedule</h2>
+                    <p class="service-cta__text">Your intake is complete. Check your email for your booking link to schedule your Transformation Discovery.</p>
+                    <a href="/book" class="service-cta__button">Start Here →</a>
                 </div>
             </section>
         </div>

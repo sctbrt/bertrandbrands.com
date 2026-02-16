@@ -743,6 +743,20 @@ const currentYear = new Date().getFullYear();
 
     <script is:inline>
         var form = document.getElementById('intakeForm');
+
+        // Capture referral source from URL param (e.g., ?ref=starter-site)
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var ref = params.get('ref');
+            if (ref && form) {
+                var refInput = document.createElement('input');
+                refInput.type = 'hidden';
+                refInput.name = 'referral_service';
+                refInput.value = ref;
+                form.appendChild(refInput);
+            }
+        })();
+
         var steps = document.querySelectorAll('.intake-step');
         var backBtn = document.getElementById('backBtn');
         var nextBtn = document.getElementById('nextBtn');
