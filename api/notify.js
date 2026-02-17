@@ -1,10 +1,66 @@
 // Vercel Serverless Function: Visitor & Form Notification via Pushover
 // Endpoint: /api/notify
 
+// In-memory rate limiting (resets on cold start, per-instance)
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10; // max 10 requests per minute per IP
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { windowStart: now, count: 1 });
+    return false;
+  }
+
+  entry.count++;
+  if (entry.count > RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+
+  return false;
+}
+
+// Periodic cleanup to prevent memory leak (every 5 minutes)
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap) {
+    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 5) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}, 5 * 60 * 1000);
+
 export default async function handler(req, res) {
+  // CORS: restrict to APP_URL origin
+  const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.ca';
+  const origin = req.headers.origin;
+
+  if (origin === allowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Rate limiting by IP
+  const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
+             req.headers['x-real-ip'] ||
+             'unknown';
+
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many requests' });
   }
 
   // Determine notification type based on request body
@@ -32,11 +88,6 @@ export default async function handler(req, res) {
 
     if (type === 'visitor') {
       // Visitor notification
-
-      // Get visitor IP from Vercel headers
-      const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
-                 req.headers['x-real-ip'] ||
-                 'unknown';
 
       // Use ip-api.com for reliable geolocation
       let location = '';
@@ -79,11 +130,6 @@ export default async function handler(req, res) {
       sound = null;
     } else if (type === 'intake') {
       // Intake form submission (high priority with distinct sound)
-
-      // Get visitor IP for geolocation
-      const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
-                 req.headers['x-real-ip'] ||
-                 'unknown';
 
       let location = '';
       if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {

@@ -3,7 +3,7 @@
  * HeaderUniversal — Standard header for sub-pages.
  * Uses /?skip#section links to navigate to homepage sections.
  * Includes mobile menu, ambient lighting (lights-on immediately),
- * and animated wordmark: BERTRAND BRANDS → BERTRAND BRAND & WEB SYSTEMS.
+ * and animated wordmark: BERTRAND GROUP → BERTRAND GROUP | Brand & Web Systems.
  * Pages using this header need the landing-page header visibility override CSS.
  */
 ---
@@ -13,9 +13,9 @@
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
                 <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon" width="40" height="40" fetchpriority="high">
-                <span class="header__wordmark" aria-label="Bertrand Brands — Brand &amp; Web Systems">
-                    <span class="header__wordmark-short" aria-hidden="true">BERTRAND BRANDS</span>
-                    <span class="header__wordmark-full" aria-hidden="true">BERTRAND BRANDS <span class="header__wordmark-sep">|</span> <span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
+                <span class="header__wordmark" aria-label="Bertrand Group — Brand &amp; Web Systems">
+                    <span class="header__wordmark-short" aria-hidden="true">BERTRAND GROUP</span>
+                    <span class="header__wordmark-full" aria-hidden="true">BERTRAND GROUP <span class="header__wordmark-sep">|</span> <span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
                 </span>
             </a>
             <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
@@ -110,7 +110,7 @@
 
     /* ============================================================
        Smooth Wordmark Crossfade
-       BERTRAND BRANDS ←→ BERTRAND BRANDS | Brand & Web Systems
+       BERTRAND GROUP ←→ BERTRAND GROUP | Brand & Web Systems
        ============================================================ */
     var wmWrap = document.querySelector('.header__wordmark');
     if (!wmWrap) return;

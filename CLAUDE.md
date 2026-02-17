@@ -1,8 +1,8 @@
-# CLAUDE.md - Bertrand Group | Brands & Web Systems
+# CLAUDE.md - Bertrand Group | Brand & Web Systems
 
 ## Version 8.0.0 (Current)
 
-This document is the **Bertrand Group | Brands & Web Systems** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
+This document is the **Bertrand Group | Brand & Web Systems** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
 ---
 
@@ -10,7 +10,7 @@ This document is the **Bertrand Group | Brands & Web Systems** studio site guide
 
 ### 1.1 Role & Boundaries
 
-**Bertrand Group | Brands & Web Systems** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand and Devin Major.
+**Bertrand Group | Brand & Web Systems** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand and Devin Major.
 
 **Scott handles:**
 - Brand strategy, UX direction, and design taste
@@ -229,7 +229,7 @@ A successful implementation:
 
 ## 2. Project Overview
 
-**Bertrand Group | Brands & Web Systems** — Premium brand and web systems design studio website. An Astro 5 static site with serverless backend functionality hosted on Vercel.
+**Bertrand Group | Brand & Web Systems** — Premium brand and web systems design studio website. An Astro 5 static site with serverless backend functionality hosted on Vercel.
 
 **Domain**: bertrandbrands.ca
 **Purpose**: Professional services showcase, lead generation, brand expression
@@ -471,7 +471,7 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 
 ```css
 /* Font Families */
---font-display: 'Fraunces', Georgia, serif;
+--font-display: halyard-display, sans-serif;
 --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
 /* Type Scale */
@@ -487,16 +487,14 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 
 /* Line Heights */
 --leading-tight: 1.25;
---leading-snug: 1.375;
 --leading-normal: 1.5;
---leading-relaxed: 1.625;
 ```
 
 ### 6.3 Motion
 
 ```css
 /* Durations */
---duration-fast: 150ms;
+--duration-fast: 0.3s;
 --duration-normal: 300ms;
 --duration-slow: 500ms;
 --duration-slower: 700ms;
@@ -1075,7 +1073,7 @@ Added `contain: layout style` to:
 | 5.5.1 | Feb 2026 | P5 polish pass: removed unused --font-mono token, consolidated duplicate scroll-behavior, added phone button title attr, fixed vercel.json formatting, sanitized PII in snapshot booking logs, documented canonical email regex, marked launch gate for removal, added audit log retention strategy, clarified header nav documentation |
 | 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0–P4): fixed version header, duplicate numbering, sub-numbering, GA/GTM status, pricing gate location, launch date; replaced project structure tree, expanded Section 16 routes (26 new), removed orphaned pages from Section 22.8, added APP_URL; added Section 25 API Endpoints Reference, expanded Section 11 security with CSP note; fixed exploratory blue token (#3B82F6→#2563EB in tokens.css + main.css), removed unused z-index tokens, kept glass tokens for future use; P4 code cleanup: removed empty scroll handler from dot-grid-about.js, deleted orphaned brand-clarity-call.html and website-clarity-call.html, extracted shared API utilities to api/lib/ (crypto.js, cookies.js, html.js) |
 | 6.0.0 | Feb 2026 | Service architecture v6: Added Devin (human full-stack dev) to Section 1.1. Unlocked Sections 1.4/1.5. Tier 1 Exploratory: 2→3 offerings (Guided Intake, Clarity Session w/ Systems domain, Technical Feasibility Check). Tier 2: One-Page Redesign→One-Page System Redesign, added scope boundary. Tier 3: renamed Core Services→Core Systems, reduced 5→3 offerings (Brand System Reset absorbs Strategic Brand Review, Integrated Brand+Platform replaces Full Brand+Platform Reset, dropped Brand Moments). Renamed files: brand-reset→brand-system-reset, full-brand-platform-reset→integrated-brand-platform. Deleted strategic-brand-review.html. New routes: /core-systems, /brand-system-reset, /integrated-brand-platform. CSS: all .core-services→.core-systems. Section 23: Brand Moments→Language Standards. Updated all ads pages, SEO files, booking labels, llms.txt. |
-| 7.0.0 | Feb 2026 | Full rebrand: Bertrand Brands → Bertrand Group | Brands & Web Systems. Domain: bertrandbrands.ca. Email: hello@bertrandgroup.ca. Text-based animated header wordmark (Inter semibold/regular, collapse after 2s, expand on hover). New logomark asset (bg-brands-logomark.png). Updated all ~45 files: titles, OG tags, Schema.org, email templates, error pages, notification titles, announcement banner, config files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
+| 7.0.0 | Feb 2026 | Full rebrand: Bertrand Brands → Bertrand Group | Brand & Web Systems. Domain: bertrandbrands.ca. Email: hello@bertrandgroup.ca. Text-based animated header wordmark (Inter semibold/regular, collapse after 2s, expand on hover). New logomark asset (bg-brands-logomark.png). Updated all ~45 files: titles, OG tags, Schema.org, email templates, error pages, notification titles, announcement banner, config files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
 | 8.0.0 | Feb 2026 | Astro 5 migration: Migrated all 27 pages from vanilla HTML to `.astro` files with `BaseLayout` + 5 header variants + 6 shared components. File-based routing eliminates all page rewrites. Redirects moved from `vercel.json` to `astro.config.ts` (28 entries). CSS/fonts/scripts relocated from `src/` to `public/` for Astro static serving. Extracted `GesturePrevention.astro` (replaced 21 inline occurrences). Extracted `pricing-modal.css` and `founder-lightbox.css` from main.css (homepage-only loading). Fixed HeaderCanonical double-binding bug. Removed legacy JS injectors (`header.js`, `visitor-notify.js`, `announcement-banner.js`). `vercel.json` reduced to API rewrites + security headers only. Legacy HTML archived in `src/_legacy/`. |
 
 ---
@@ -1092,9 +1090,9 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
                 <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon">
-                <span class="header__wordmark" aria-label="Bertrand Group | Brands &amp; Web Systems">
-                    <span class="header__wordmark-full"><span class="header__wordmark-brand">Bertrand Group</span> <span class="header__wordmark-sub">| Brands &amp; Web Systems</span></span>
-                    <span class="header__wordmark-short"><span class="header__wordmark-sub">Brands &amp; Web Systems</span></span>
+                <span class="header__wordmark" aria-label="Bertrand Group | Brand &amp; Web Systems">
+                    <span class="header__wordmark-full"><span class="header__wordmark-brand">Bertrand Group</span> <span class="header__wordmark-sub">| Brand &amp; Web Systems</span></span>
+                    <span class="header__wordmark-short"><span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
                 </span>
             </a>
             <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
@@ -1136,9 +1134,9 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
 ### 22.3 Logo Configuration
 
 - **Logomark**: `/assets/bg-brands-logomark.png` — always present
-- **Wordmark**: Text-based animated span (Inter font, semibold for "BERTRAND GROUP", regular for "| Brands & Web Systems"). Collapses to "Brands & Web Systems" after 2s, expands on hover.
+- **Wordmark**: Text-based animated span (Inter font, semibold for "BERTRAND GROUP", regular for "| Brand & Web Systems"). Collapses to "Brand & Web Systems" after 2s, expands on hover.
 - **Link**: `/?skip` — returns to homepage, bypassing intro
-- **Alt text**: Logomark has empty alt (decorative), wordmark has aria-label "Bertrand Group | Brands & Web Systems"
+- **Alt text**: Logomark has empty alt (decorative), wordmark has aria-label "Bertrand Group | Brand & Web Systems"
 
 ### 22.4 Mobile Menu Toggle
 
@@ -1259,8 +1257,8 @@ import HeaderUniversal from '../components/HeaderUniversal.astro';
 ```
 
 **Wordmark behavior** (HeaderUniversal + HeaderCanonical):
-- On load: Shows full "Bertrand Group | Brands & Web Systems"
-- After 2s: Collapses to "Brands & Web Systems" via `.is-collapsed` class
+- On load: Shows full "Bertrand Group | Brand & Web Systems"
+- After 2s: Collapses to "Brand & Web Systems" via `.is-collapsed` class
 - On hover: Expands back to full name
 - Mobile (≤768px): Always shows collapsed form
 - Respects `prefers-reduced-motion`

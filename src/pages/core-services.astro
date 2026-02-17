@@ -17,7 +17,7 @@ const currentYear = new Date().getFullYear();
 <BaseLayout
     title="Transformation — Strategic Brand & Web Systems | BG | Brand & Web Systems"
     description="Multi-week, relationship-based brand and web systems work. Brand resets, platform builds, and integrated brand + platform engagements. 50% deposit to begin, 50% on delivery."
-    canonical="https://bertrandbrands.ca/core-systems"
+    canonical="https://bertrandbrands.ca/core-services"
     ogTitle="Transformation — Strategic Brand & Web Systems | BG | Brand & Web Systems"
     ogDescription="Multi-week, relationship-based brand and web systems work. Brand resets, platform builds, and integrated engagements."
     schemaJson={{
@@ -115,17 +115,16 @@ const currentYear = new Date().getFullYear();
                 position: relative;
                 display: block;
                 margin: 0 auto 0.75rem;
-                width: clamp(200px, 35vw, 320px);
+                width: clamp(240px, 42vw, 400px);
             }
-            /* Dark clearing behind illustration — isolates SVG from ambient spotlights */
             .cs-hero__illustration-wrap::after {
                 content: '';
                 position: absolute;
                 top: 50%; left: 50%;
-                width: 110%; height: 110%;
+                width: 130%; height: 130%;
                 transform: translate(-50%, -50%);
-                background: radial-gradient(circle, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 65%);
-                filter: blur(40px);
+                background: radial-gradient(circle, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 60%);
+                filter: blur(50px);
                 pointer-events: none;
                 z-index: 0;
             }
@@ -133,35 +132,52 @@ const currentYear = new Date().getFullYear();
                 content: '';
                 position: absolute;
                 top: 50%; left: 50%;
-                width: 70%; height: 70%;
+                width: 90%; height: 90%;
                 transform: translate(-50%, -50%);
-                background: radial-gradient(circle, rgba(217, 119, 6, 0.4) 0%, rgba(217, 119, 6, 0) 70%);
-                filter: blur(30px);
+                background: radial-gradient(circle, rgba(217, 119, 6, 0.5) 0%, rgba(217, 119, 6, 0) 65%);
+                filter: blur(35px);
                 opacity: 0;
-                animation: csGlowPulse 2.8s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+                animation: csGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
                 pointer-events: none;
                 z-index: 0;
             }
             .cs-hero__illustration {
                 position: relative; z-index: 1;
                 display: block; width: 100%; height: auto; pointer-events: none;
-                opacity: 0;
-                animation: csIllustrationFadeIn 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+                opacity: 0; transform: scale(0.92);
+                animation: csIllustrationFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+            }
+            .cs-hero__illustration line, .cs-hero__illustration path,
+            .cs-hero__illustration rect, .cs-hero__illustration circle,
+            .cs-hero__illustration ellipse, .cs-hero__illustration polygon {
+                stroke-dasharray: 800; stroke-dashoffset: 800;
+                animation: csLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+            }
+            .cs-hero__illustration circle[fill]:not([fill="none"]),
+            .cs-hero__illustration rect[fill]:not([fill="none"]),
+            .cs-hero__illustration ellipse[fill]:not([fill="none"]),
+            .cs-hero__illustration polygon[fill]:not([fill="none"]) {
+                opacity: 0; animation: csLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards, csFillReveal 1s ease 1.4s forwards;
             }
             @keyframes csGlowPulse {
-                0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-                35%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-                100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+                0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+                30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+                100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
             }
             @keyframes csIllustrationFadeIn {
-                0%   { opacity: 0; }
-                100% { opacity: 1; }
+                0%   { opacity: 0; transform: scale(0.92); }
+                100% { opacity: 1; transform: scale(1); }
             }
-            @media (max-width: 900px) { .cs-hero__illustration-wrap { width: clamp(180px, 45vw, 280px); } }
-            @media (max-width: 480px) { .cs-hero__illustration-wrap { width: clamp(150px, 55vw, 220px); } }
+            @keyframes csLineDraw { 0% { stroke-dashoffset: 800; } 100% { stroke-dashoffset: 0; } }
+            @keyframes csFillReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
+            @media (max-width: 900px) { .cs-hero__illustration-wrap { width: clamp(200px, 50vw, 320px); } }
+            @media (max-width: 480px) { .cs-hero__illustration-wrap { width: clamp(130px, 38vw, 180px); } }
             @media (prefers-reduced-motion: reduce) {
-                .cs-hero__illustration-wrap::before { animation: none; opacity: 0.5; }
-                .cs-hero__illustration { animation: none; opacity: 1; }
+                .cs-hero__illustration-wrap::before { animation: none; opacity: 0.6; }
+                .cs-hero__illustration { animation: none; opacity: 1; transform: none; }
+                .cs-hero__illustration line, .cs-hero__illustration path,
+                .cs-hero__illustration rect, .cs-hero__illustration circle,
+                .cs-hero__illustration ellipse, .cs-hero__illustration polygon { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 1; }
             }
 
             .cs-hero__title {
@@ -456,6 +472,8 @@ const currentYear = new Date().getFullYear();
                 .cs-offering__title {
                     font-size: var(--text-lg);
                 }
+                .cs-offering__description { font-size: var(--text-xs); }
+                .cs-offering__detail { font-size: var(--text-xs); }
                 .cs-offering__footer {
                     flex-direction: column;
                     gap: var(--space-sm);
@@ -463,9 +481,27 @@ const currentYear = new Date().getFullYear();
                 }
                 .cs-offering__cta {
                     text-align: center;
+                    font-size: var(--text-xs);
                 }
-                .cs-hero { padding: var(--space-lg, 2rem) 0 var(--space-md, 1.5rem); }
+                .cs-hero__illustration-wrap { width: clamp(160px, 40vw, 240px); }
+                .cs-hero { padding: var(--space-lg, 2rem) 1rem var(--space-md, 1.5rem); }
+                .cs-hero__title { font-size: clamp(1.25rem, 4.5vw, 1.75rem); margin-bottom: 0.75rem; }
+                .cs-hero__subtitle { font-size: var(--text-xs); max-width: 100%; }
+                .core-systems__name { font-size: var(--text-xl); }
+                .core-systems__mark { width: 26px; height: 26px; }
                 .cs-offering { padding: var(--space-md, 1.5rem); }
+                .cs-page .container { padding: 0 0.75rem; }
+            }
+            @media (max-width: 480px) {
+                .cs-hero__illustration-wrap { width: clamp(130px, 38vw, 180px); }
+                .cs-hero__title { font-size: clamp(1.125rem, 4.5vw, 1.375rem); margin-bottom: 0.5rem; }
+                .cs-hero__subtitle { font-size: 0.6875rem; }
+                .cs-offering__title { font-size: var(--text-base); }
+                .cs-offering__description { font-size: 0.6875rem; }
+                .cs-offering { padding: 1rem; }
+                .core-systems__name { font-size: var(--text-lg); }
+                .core-systems__mark { width: 22px; height: 22px; }
+                .cs-hero { padding: var(--space-sm, 1rem) 0.75rem var(--space-xs, 0.5rem); }
             }
 
             @media (prefers-reduced-motion: reduce) {

@@ -438,10 +438,17 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             if (eventName) {
                 hasDetails = true;
                 var cleanEventName = decodeURIComponent(eventName);
-                detailsHTML += '<div class="booking-details__row">' +
-                    '<span class="booking-details__label">Session</span>' +
-                    '<span class="booking-details__value">' + cleanEventName + '</span>' +
-                    '</div>';
+                var row1 = document.createElement('div');
+                row1.className = 'booking-details__row';
+                var label1 = document.createElement('span');
+                label1.className = 'booking-details__label';
+                label1.textContent = 'Session';
+                var value1 = document.createElement('span');
+                value1.className = 'booking-details__value';
+                value1.textContent = cleanEventName;
+                row1.appendChild(label1);
+                row1.appendChild(value1);
+                detailsEl.appendChild(row1);
             }
 
             if (startTime) {
@@ -456,14 +463,20 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                     timeZoneName: 'short'
                 };
                 var formatted = date.toLocaleDateString('en-US', options);
-                detailsHTML += '<div class="booking-details__row">' +
-                    '<span class="booking-details__label">When</span>' +
-                    '<span class="booking-details__value">' + formatted + '</span>' +
-                    '</div>';
+                var row2 = document.createElement('div');
+                row2.className = 'booking-details__row';
+                var label2 = document.createElement('span');
+                label2.className = 'booking-details__label';
+                label2.textContent = 'When';
+                var value2 = document.createElement('span');
+                value2.className = 'booking-details__value';
+                value2.textContent = formatted;
+                row2.appendChild(label2);
+                row2.appendChild(value2);
+                detailsEl.appendChild(row2);
             }
 
             if (hasDetails) {
-                detailsEl.innerHTML = detailsHTML;
                 detailsEl.style.display = 'block';
                 document.getElementById('email-confirmation').style.display = 'block';
             }

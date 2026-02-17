@@ -32,10 +32,10 @@ const schema = {
 
 <BaseLayout
   title="B Conversation — Start Here | BG | Brand & Web Systems"
-  description="Not sure what you need? Start here. Guided intake, discovery calls, and clarity sessions to help you find the right next step for your brand or website."
+  description="Not sure what you need? Start here. Guided intake, clarity sessions, and feasibility checks to help you find the right next step for your brand or website."
   canonical="https://bertrandbrands.ca/exploratory"
   ogTitle="B Conversation — Start Here | BG | Brand & Web Systems"
-  ogDescription="Not sure what you need? Start here. Guided intake, discovery calls, and clarity sessions."
+  ogDescription="Not sure what you need? Start here. Guided intake, clarity sessions, and feasibility checks."
   schemaJson={schema}
 >
   <Fragment slot="head">
@@ -503,17 +503,16 @@ const schema = {
             position: relative;
             display: block;
             margin: 0 auto 0.75rem;
-            width: clamp(200px, 35vw, 320px);
+            width: clamp(240px, 42vw, 400px);
         }
-        /* Dark clearing behind illustration — isolates SVG from ambient spotlights */
         .exp-hero__illustration-wrap::after {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
-            width: 110%; height: 110%;
+            width: 130%; height: 130%;
             transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0) 65%);
-            filter: blur(40px);
+            background: radial-gradient(circle, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 60%);
+            filter: blur(50px);
             pointer-events: none;
             z-index: 0;
         }
@@ -521,35 +520,52 @@ const schema = {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
-            width: 70%; height: 70%;
+            width: 90%; height: 90%;
             transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.4) 0%, rgba(37, 99, 235, 0) 70%);
-            filter: blur(30px);
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.5) 0%, rgba(37, 99, 235, 0) 65%);
+            filter: blur(35px);
             opacity: 0;
-            animation: expGlowPulse 2.8s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+            animation: expGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
             pointer-events: none;
             z-index: 0;
         }
         .exp-hero__illustration {
             position: relative; z-index: 1;
             display: block; width: 100%; height: auto; pointer-events: none;
-            opacity: 0;
-            animation: expIllustrationFadeIn 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.3s forwards;
+            opacity: 0; transform: scale(0.92);
+            animation: expIllustrationFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+        .exp-hero__illustration line, .exp-hero__illustration path,
+        .exp-hero__illustration rect, .exp-hero__illustration circle,
+        .exp-hero__illustration ellipse, .exp-hero__illustration polygon {
+            stroke-dasharray: 800; stroke-dashoffset: 800;
+            animation: expLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+        }
+        .exp-hero__illustration circle[fill]:not([fill="none"]),
+        .exp-hero__illustration rect[fill]:not([fill="none"]),
+        .exp-hero__illustration ellipse[fill]:not([fill="none"]),
+        .exp-hero__illustration polygon[fill]:not([fill="none"]) {
+            opacity: 0; animation: expLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards, expFillReveal 1s ease 1.4s forwards;
         }
         @keyframes expGlowPulse {
-            0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            35%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-            100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+            30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
         }
         @keyframes expIllustrationFadeIn {
-            0%   { opacity: 0; }
-            100% { opacity: 1; }
+            0%   { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
         }
-        @media (max-width: 900px) { .exp-hero__illustration-wrap { width: clamp(180px, 45vw, 280px); } }
-        @media (max-width: 480px) { .exp-hero__illustration-wrap { width: clamp(150px, 55vw, 220px); } }
+        @keyframes expLineDraw { 0% { stroke-dashoffset: 800; } 100% { stroke-dashoffset: 0; } }
+        @keyframes expFillReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
+        @media (max-width: 900px) { .exp-hero__illustration-wrap { width: clamp(200px, 50vw, 320px); } }
+        @media (max-width: 480px) { .exp-hero__illustration-wrap { width: clamp(130px, 38vw, 180px); } }
         @media (prefers-reduced-motion: reduce) {
-            .exp-hero__illustration-wrap::before { animation: none; opacity: 0.5; }
-            .exp-hero__illustration { animation: none; opacity: 1; }
+            .exp-hero__illustration-wrap::before { animation: none; opacity: 0.6; }
+            .exp-hero__illustration { animation: none; opacity: 1; transform: none; }
+            .exp-hero__illustration line, .exp-hero__illustration path,
+            .exp-hero__illustration rect, .exp-hero__illustration circle,
+            .exp-hero__illustration ellipse, .exp-hero__illustration polygon { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 1; }
         }
 
         /* Ambient Effects */
@@ -618,14 +634,43 @@ const schema = {
                 width: 220px;
                 height: 220px;
             }
-            .exp-hero { padding: var(--space-lg, 2rem) 0 var(--space-md, 1.5rem); }
+            .exp-hero__illustration-wrap { width: clamp(160px, 40vw, 240px); }
+            .exp-hero { padding: var(--space-lg, 2rem) 1rem var(--space-md, 1.5rem); }
+            .exp-hero__title { font-size: clamp(1.25rem, 4.5vw, 1.75rem); margin-bottom: 0.75rem; }
+            .exp-hero__subtitle { font-size: var(--text-xs); max-width: 100%; }
+            .exp-hero__name { font-size: var(--text-xl); }
+            .exp-hero__mark { width: 26px; height: 26px; }
             .exp-primary { padding: var(--space-md, 1.5rem) 0; }
             .exp-primary__card { padding: var(--space-md, 1.5rem); max-width: 100%; }
+            .exp-primary__title { font-size: var(--text-xl); }
+            .exp-primary__description { font-size: var(--text-xs); max-width: 100%; }
+            .exp-primary__meta { font-size: var(--text-xs); }
+            .exp-primary__note { font-size: var(--text-xs); }
+            .exp-option__title { font-size: var(--text-base); }
+            .exp-option__description { font-size: var(--text-xs); }
+            .exp-option__meta { font-size: var(--text-xs); }
+            .exp-option__price { font-size: var(--text-sm); }
             .exp-secondary { padding: var(--space-md, 1.5rem) 0 var(--space-lg, 2rem); }
             .exp-option { padding: var(--space-md, 1.5rem); }
             .exp-how { padding: var(--space-md, 1.5rem) 0; }
             .exp-about { padding: var(--space-md, 1.5rem) 0; }
             .exp-divider { margin: var(--space-md, 1.5rem) auto; }
+            .exp-page .container { padding: 0 0.75rem; }
+        }
+        @media (max-width: 480px) {
+            .exp-hero__illustration-wrap { width: clamp(130px, 38vw, 180px); }
+            .exp-hero__title { font-size: clamp(1.125rem, 4.5vw, 1.375rem); margin-bottom: 0.5rem; }
+            .exp-hero__subtitle { font-size: 0.6875rem; }
+            .exp-primary__title { font-size: var(--text-lg); }
+            .exp-primary__description { font-size: 0.6875rem; }
+            .exp-primary__card { padding: 1rem; }
+            .exp-option__title { font-size: var(--text-sm); }
+            .exp-option__description { font-size: 0.6875rem; }
+            .exp-option__price { font-size: var(--text-xs); }
+            .exp-option { padding: 1rem; }
+            .exp-hero__name { font-size: var(--text-lg); }
+            .exp-hero__mark { width: 22px; height: 22px; }
+            .exp-hero { padding: var(--space-sm, 1rem) 0.75rem var(--space-xs, 0.5rem); }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -690,7 +735,7 @@ const schema = {
                   <h2 class="exp-primary__title">Guided Intake</h2>
                   <p class="exp-primary__meta">5–10 min · Asynchronous</p>
                   <p class="exp-primary__description">
-                      Answer a few questions about your business. We review within 1–2 business days and follow up with a clear recommendation: a Direction Call, Clarity Session, or a different path entirely.
+                      Answer a few questions about your business. We review within 1–2 business days and follow up with a clear recommendation: a Clarity Session, a specific service, or a different path entirely.
                   </p>
                   <a href="/intake/exploratory" class="exp-primary__cta">
                       Start Intake
