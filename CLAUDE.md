@@ -1,8 +1,8 @@
-# CLAUDE.md - Bertrand Group | Brand & Web Systems
+# CLAUDE.md - Bertrand Brands
 
 ## Version 8.0.0 (Current)
 
-This document is the **Bertrand Group | Brand & Web Systems** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
+This document is the **Bertrand Brands** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
 ---
 
@@ -10,7 +10,7 @@ This document is the **Bertrand Group | Brand & Web Systems** studio site guide.
 
 ### 1.1 Role & Boundaries
 
-**Bertrand Group | Brand & Web Systems** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand and Devin Major.
+**Bertrand Brands** is a Sudbury-based brand, web, and systems studio led by Scott Bertrand and Devin Major. A division of Bertrand Group Canada.
 
 **Scott handles:**
 - Brand strategy, UX direction, and design taste
@@ -78,7 +78,7 @@ If a technical or UX decision introduces confusion, pressure, or ambiguity, it v
 
 ### 1.4 Service Architecture
 
-Bertrand Group operates under **THREE strictly hierarchical service tiers**.
+Bertrand Brands operates under **THREE strictly hierarchical service tiers**.
 
 **Mental Model:** Conversation → Build → Transformation
 
@@ -115,13 +115,13 @@ Purpose: Fast, fixed-scope studio work with clear timelines and pricing.
 
 | Offering | Price | Timeline | Notes |
 |----------|-------|----------|-------|
-| Starter Site | $750 CAD | 1 business day | Template-assisted, fast-launch website. Built for speed and simplicity. |
-| One-Page System Redesign | $1,250 CAD | 2–3 business days | Fully custom, code-based. No templates, no builders. |
-| Brandmark & Visual Identity | $950 CAD | 5–7 business days | Primary brandmark + supporting marks + visual direction. |
+| Starter Site | $750 CAD | 7–10 days | Template-assisted, fast-launch website. Built for speed and simplicity. |
+| One-Page Conversion System | $1,250 CAD | 7 days | Fully custom, code-based. No templates, no builders. |
+| Brandmark Kit | $950 CAD | 5–7 business days | Primary brandmark + supporting marks + visual direction. |
 
 **Offering Distinctions (Critical):**
 - **Starter Site** = speed & simplicity (template-assisted, managed builder)
-- **One-Page System Redesign** = custom & crafted (code-based, no templates)
+- **One-Page Conversion System** = custom & crafted (code-based, no templates)
 - These are parallel options, not upgrades of each other
 
 **Platform Rule:**
@@ -168,16 +168,16 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 ### 1.5 Visual Hierarchy
 
 **Homepage Section Order (Top to Bottom):**
-1. **B Conversation** — "Not sure where to start?" (3 cards)
-2. **B Build** — Primary, largest, most prominent (3 cards)
-3. **B Transformation** — Strategic tier with pricing gate (3 cards)
+1. **Start Module** — Compact entry CTA ("Ready to begin?")
+2. **B Build (Amber)** — Primary, largest, most prominent (3 cards)
+3. **B Transformation (Violet)** — Strategic tier with pricing gate (3 cards)
+4. **B Care (Blue)** — Ongoing support tier (3 cards, no pricing)
 
 **Key Visual Rules:**
 - B Build is the primary revenue engine and Google Ads entry point
-- B Conversation is Tier 1 and appears first on homepage (top of services)
-- B Transformation uses amber accent and solid borders
-- B Build uses violet accent and dashed borders
-- B Conversation uses blue accent and dashed borders
+- B Build uses amber accent (#D97706) — appears first among tiers
+- B Transformation uses violet accent (#8B5CF6)
+- B Care uses blue accent (#2563EB)
 - All sub-brands use shared B logomark with differentiated wordmarks
 
 **Navigation Order:**
@@ -223,13 +223,13 @@ A successful implementation:
 - Can be reused across brands
 - Supports future delegation
 
-**Bertrand Group is not scaling chaos—it is scaling clarity.**
+**Bertrand Brands is not scaling chaos—it is scaling clarity.**
 
 ---
 
 ## 2. Project Overview
 
-**Bertrand Group | Brand & Web Systems** — Premium brand and web systems design studio website. An Astro 5 static site with serverless backend functionality hosted on Vercel.
+**Bertrand Brands** — Premium brand and web systems design studio website. A division of Bertrand Group Canada. Astro 5 static site with serverless backend functionality hosted on Vercel.
 
 **Domain**: bertrandbrands.ca
 **Purpose**: Professional services showcase, lead generation, brand expression
@@ -424,9 +424,9 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 - Border-radius range: 40%–60% per corner (subtle blob morphing)
 
 **Color Application:**
-- Amber (`rgba(217, 119, 6, x)`) — Primary accent, used in header and contact
-- Violet (`rgba(139, 92, 246, x)`) — B Build tier accent
-- Blue (`rgba(37, 99, 235, x)`) — B Conversation tier accent
+- Amber (`rgba(217, 119, 6, x)`) — Primary accent, used in header, contact, and B Build tier
+- Violet (`rgba(139, 92, 246, x)`) — B Transformation tier accent
+- Blue (`rgba(37, 99, 235, x)`) — B Care tier accent
 
 **Mobile Optimization:**
 - Header ambient lighting stays **enabled** on mobile (per design decision)
@@ -793,8 +793,8 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 **Build Offerings:**
 - Starter Site ($750)
-- One-Page System Redesign ($1,250)
-- Brandmark & Visual Identity ($950)
+- One-Page Conversion System ($1,250)
+- Brandmark Kit ($950)
 
 ### Transformation Routes (Tier 3)
 - `/core-systems` → B Transformation landing page
@@ -807,8 +807,8 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ### Service Detail Pages
 - `/starter-site` → B Build: Starter Site detail
-- `/one-page-redesign` → B Build: One-Page System Redesign detail
-- `/brandmark` → B Build: Brandmark & Visual Identity detail
+- `/one-page-redesign` → B Build: One-Page Conversion System detail
+- `/brandmark` → B Build: Brandmark Kit detail
 - `/digital-platform-build` → B Transformation detail
 - `/brand-system-reset` → B Transformation detail
 - `/integrated-brand-platform` → B Transformation detail
@@ -888,59 +888,92 @@ All three sub-brands use identical logomark + wordmark styling for consistency.
 
 ---
 
-## 18. Tier Container Styling (V5.2)
+## 18. Unified Card System (V5.3)
 
-All three service tiers use consistent container and card styling with tier-specific colors.
+All interactive service cards use a single card system defined in `main.css` with tier-color modifiers. Tokens in `tokens.css`.
 
 ### 18.1 Tier Color Tokens
 
-| Tier | Primary Color | CSS Variable |
-|------|---------------|--------------|
-| B Build | Violet | `#8B5CF6` / `rgba(139, 92, 246, x)` |
-| B Transformation | Amber | `#D97706` / `rgba(217, 119, 6, x)` |
-| B Conversation | Blue | `#2563EB` / `rgba(37, 99, 235, x)` |
+| Tier | Primary Color | CSS Variable | Hex |
+|------|---------------|--------------|-----|
+| B Build | Amber | `--build-accent` | `#D97706` / `rgba(217, 119, 6, x)` |
+| B Transformation | Violet | `--transform-accent` | `#8B5CF6` / `rgba(139, 92, 246, x)` |
+| B Conversation | Blue | `--care-accent` | `#2563EB` / `rgba(37, 99, 235, x)` |
 
-### 18.2 Container Styling
-
-All tier containers share:
-- **Background**: `rgba([color], 0.03)` — very subtle tint
-- **Border**: `1px solid rgba([color], 0.15)`
-- **Border radius**: `16px`
-- **Padding**: `var(--space-lg)`
-
-### 18.3 Card Styling
-
-All tier cards share:
-- **Background**: `rgba([color], 0.05)` — slightly more visible
-- **Border**: `1px dashed rgba([color], 0.2)` — dashed by default
-- **Border radius**: `12px`
-- **Hover border**: `1px solid rgba([color], 0.5)` — solid on hover
-- **Hover lift**: `translateY(-2px)` or `translateY(-3px)`
-- **Hover shadow**: `0 6px 20px -6px rgba([color], 0.2)`
-
-### 18.4 Edge Glow Effect
-
-All cards have a hover edge glow using `::before`:
+### 18.2 Card System Tokens (`tokens.css`)
 
 ```css
-.card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, [tier-color], transparent);
-    opacity: 0;
-    transition: opacity var(--duration-fast) ease;
-}
-
-.card:hover::before {
-    opacity: 1;
-}
+--card-bg: 0.05;           /* Background alpha */
+--card-bg-hover: 0.10;     /* Hover background alpha */
+--card-border: 0.12;       /* Border alpha */
+--card-border-hover: 0.40; /* Hover border alpha */
+--card-radius: var(--radius-lg);  /* 12px */
+--card-padding: var(--space-lg);  /* 4rem */
+--card-lift: -3px;          /* Hover translateY */
+--card-lift-active: -1px;   /* Active translateY */
+--card-shadow-spread: 0.20; /* Hover shadow alpha */
+--card-glow-height: 2px;    /* Edge glow height */
+--card-icon-size: 100px;    /* Watermark icon size */
+--card-icon-opacity: 0.06;  /* Watermark base opacity */
+--card-icon-opacity-hover: 0.10; /* Watermark hover opacity */
+--wrapper-bg: 0.03;         /* Tier wrapper background alpha */
+--wrapper-border: 0.15;     /* Tier wrapper border alpha */
+--wrapper-radius: 16px;
+--wrapper-padding: var(--space-lg);
 ```
 
-Cards must have `position: relative` and `overflow: hidden` for the edge glow to work.
+### 18.3 Card CSS Classes (`main.css`)
+
+**Base card**: `.tier-card` — All interactive service cards inherit from this. Provides padding, border-radius, cursor, will-change, transitions, `::before` edge glow, `::after` watermark icon, hover lift, active press.
+
+**Tier color modifiers** (one required):
+- `.tier-card--conversation` — Blue (`rgba(37, 99, 235, x)`)
+- `.tier-card--build` — Amber (`rgba(217, 119, 6, x)`)
+- `.tier-card--transform` — Violet (`rgba(139, 92, 246, x)`)
+
+**Size variants** (optional):
+- `.tier-card--compact` — Reduced padding (`var(--space-md)`)
+- `.tier-card--featured` — 2px border, larger padding (`var(--space-xl)`), max-width 600px, centered
+
+**Tier wrappers** (section containers):
+- `.tier-wrapper` — Base wrapper (padding, radius)
+- `.tier-wrapper--conversation` / `.tier-wrapper--build` / `.tier-wrapper--transform` — Color variants
+
+### 18.4 Usage Pattern
+
+```html
+<!-- Wrapper -->
+<div class="focused-studio tier-wrapper tier-wrapper--build">
+    <!-- Interactive card -->
+    <div class="focused-studio__card tier-card tier-card--build">
+        ...content...
+    </div>
+</div>
+```
+
+Old page-specific class names (`.focused-studio__card`, `.fs-offering`, `.cs-offering`, etc.) are kept for typography and layout rules. The `.tier-card` classes handle all card-surface properties (background, border, radius, padding, shadow, transitions, pseudo-elements, hover/active states).
+
+### 18.5 What Uses the Card System
+
+| Page | Elements | Tier Class |
+|------|----------|-----------|
+| `index.astro` | `.focused-studio__card` (×3) | `tier-card--build` |
+| `index.astro` | `.service` (×3) | `tier-card--transform` |
+| `index.astro` | `.exploratory-sessions__card` (×3) | `tier-card--conversation` |
+| `focus-studio.astro` | `.fs-offering--primary` | `tier-card--build tier-card--featured` |
+| `focus-studio.astro` | `.fs-offering` (×2 secondary) | `tier-card--build tier-card--compact` |
+| `core-services.astro` | `.cs-offering` (×3) | `tier-card--transform` |
+| `core-services.astro` | `.cs-exploratory__card` (×2) | `tier-card--conversation tier-card--compact` |
+| `exploratory.astro` | `.exp-primary__card` | `tier-card--conversation tier-card--featured` |
+| `exploratory.astro` | `.exp-option` (×2) | `tier-card--conversation` |
+| `sudbury.astro` | `.sb-other__card` (×2) | `tier-card--build tier-card--compact` |
+
+### 18.6 Mobile & Touch Behavior
+
+- **768px**: Card padding reduces to `var(--space-md)`; compact to `var(--space-sm)`; featured to `var(--space-lg)`
+- **480px**: Card padding reduces to `var(--space-sm)`
+- **Touch devices** (`@media (hover: none)`): No hover lift; active state uses `scale(0.98)`
+- **Reduced motion**: All card durations set to `0ms` via token overrides
 
 ---
 
@@ -1073,7 +1106,7 @@ Added `contain: layout style` to:
 | 5.5.1 | Feb 2026 | P5 polish pass: removed unused --font-mono token, consolidated duplicate scroll-behavior, added phone button title attr, fixed vercel.json formatting, sanitized PII in snapshot booking logs, documented canonical email regex, marked launch gate for removal, added audit log retention strategy, clarified header nav documentation |
 | 5.6.0 | Feb 2026 | CLAUDE.md accuracy audit (P0–P4): fixed version header, duplicate numbering, sub-numbering, GA/GTM status, pricing gate location, launch date; replaced project structure tree, expanded Section 16 routes (26 new), removed orphaned pages from Section 22.8, added APP_URL; added Section 25 API Endpoints Reference, expanded Section 11 security with CSP note; fixed exploratory blue token (#3B82F6→#2563EB in tokens.css + main.css), removed unused z-index tokens, kept glass tokens for future use; P4 code cleanup: removed empty scroll handler from dot-grid-about.js, deleted orphaned brand-clarity-call.html and website-clarity-call.html, extracted shared API utilities to api/lib/ (crypto.js, cookies.js, html.js) |
 | 6.0.0 | Feb 2026 | Service architecture v6: Added Devin (human full-stack dev) to Section 1.1. Unlocked Sections 1.4/1.5. Tier 1 Exploratory: 2→3 offerings (Guided Intake, Clarity Session w/ Systems domain, Technical Feasibility Check). Tier 2: One-Page Redesign→One-Page System Redesign, added scope boundary. Tier 3: renamed Core Services→Core Systems, reduced 5→3 offerings (Brand System Reset absorbs Strategic Brand Review, Integrated Brand+Platform replaces Full Brand+Platform Reset, dropped Brand Moments). Renamed files: brand-reset→brand-system-reset, full-brand-platform-reset→integrated-brand-platform. Deleted strategic-brand-review.html. New routes: /core-systems, /brand-system-reset, /integrated-brand-platform. CSS: all .core-services→.core-systems. Section 23: Brand Moments→Language Standards. Updated all ads pages, SEO files, booking labels, llms.txt. |
-| 7.0.0 | Feb 2026 | Full rebrand: Bertrand Brands → Bertrand Group | Brand & Web Systems. Domain: bertrandbrands.ca. Email: hello@bertrandgroup.ca. Text-based animated header wordmark (Inter semibold/regular, collapse after 2s, expand on hover). New logomark asset (bg-brands-logomark.png). Updated all ~45 files: titles, OG tags, Schema.org, email templates, error pages, notification titles, announcement banner, config files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
+| 7.0.0 | Feb 2026 | Rebrand: Introduced "Bertrand Group | Brand & Web Systems" wordmark with animated collapse. Domain: bertrandbrands.ca. Email: hello@bertrandgroup.ca. New logomark asset (bg-brands-logomark.png). Updated all ~45 files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
 | 8.0.0 | Feb 2026 | Astro 5 migration: Migrated all 27 pages from vanilla HTML to `.astro` files with `BaseLayout` + 5 header variants + 6 shared components. File-based routing eliminates all page rewrites. Redirects moved from `vercel.json` to `astro.config.ts` (28 entries). CSS/fonts/scripts relocated from `src/` to `public/` for Astro static serving. Extracted `GesturePrevention.astro` (replaced 21 inline occurrences). Extracted `pricing-modal.css` and `founder-lightbox.css` from main.css (homepage-only loading). Fixed HeaderCanonical double-binding bug. Removed legacy JS injectors (`header.js`, `visitor-notify.js`, `announcement-banner.js`). `vercel.json` reduced to API rewrites + security headers only. Legacy HTML archived in `src/_legacy/`. |
 
 ---
@@ -1090,9 +1123,9 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
                 <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon">
-                <span class="header__wordmark" aria-label="Bertrand Group | Brand &amp; Web Systems">
-                    <span class="header__wordmark-full"><span class="header__wordmark-brand">Bertrand Group</span> <span class="header__wordmark-sub">| Brand &amp; Web Systems</span></span>
-                    <span class="header__wordmark-short"><span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
+                <span class="header__wordmark" aria-label="Bertrand Brands | Brand &amp; Web Systems">
+                    <span class="header__wordmark-short" aria-hidden="true">BERTRAND BRANDS</span>
+                    <span class="header__wordmark-full" aria-hidden="true">BERTRAND BRANDS <span class="header__wordmark-sep">|</span> <span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
                 </span>
             </a>
             <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
@@ -1104,7 +1137,7 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
                 <a href="/?skip#about" class="header__link">About</a>
                 <a href="/?skip#process" class="header__link">How It Works</a>
                 <a href="/?skip#services" class="header__link">Services</a>
-                <a href="/book" class="header__link header__link--cta">Book a Call</a>
+                <a href="/exploratory" class="header__link header__link--cta">Book a Call</a>
                 <span class="header__divider" aria-hidden="true"></span>
                 <a href="https://clients.bertrandgroup.ca" class="header__link header__link--portal">Client Portal</a>
             </nav>
@@ -1120,7 +1153,7 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
 | 1 | About | `/?skip#about` | `header__link` |
 | 2 | How It Works | `/?skip#process` | `header__link` |
 | 3 | Services | `/?skip#services` | `header__link` |
-| 4 | Book a Call | `/book` | `header__link header__link--cta` |
+| 4 | Book a Call | `/exploratory` | `header__link header__link--cta` |
 | 5 | Divider | — | `header__divider` (span) |
 | 6 | Client Portal | `https://clients.bertrandgroup.ca` | `header__link header__link--portal` |
 
@@ -1134,9 +1167,9 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
 ### 22.3 Logo Configuration
 
 - **Logomark**: `/assets/bg-brands-logomark.png` — always present
-- **Wordmark**: Text-based animated span (Inter font, semibold for "BERTRAND GROUP", regular for "| Brand & Web Systems"). Collapses to "Brand & Web Systems" after 2s, expands on hover.
+- **Wordmark**: Text-based animated span (Inter font). Shows "BERTRAND BRANDS" (collapsed) or "BERTRAND BRANDS | Brand & Web Systems" (expanded). Collapses after 2s, expands on hover.
 - **Link**: `/?skip` — returns to homepage, bypassing intro
-- **Alt text**: Logomark has empty alt (decorative), wordmark has aria-label "Bertrand Group | Brand & Web Systems"
+- **Alt text**: Logomark has empty alt (decorative), wordmark has aria-label "Bertrand Brands | Brand & Web Systems"
 
 ### 22.4 Mobile Menu Toggle
 
@@ -1147,7 +1180,7 @@ Three-span hamburger button with accessibility attributes:
 
 ### 22.5 Landing Page Overrides
 
-Landing pages (e.g., `focus-studio.html`) require CSS override to show header immediately:
+Landing pages (e.g., `focus-studio.astro`) require CSS override to show header immediately:
 
 ```css
 /* Override main.css header to be visible by default on landing pages */
@@ -1257,8 +1290,8 @@ import HeaderUniversal from '../components/HeaderUniversal.astro';
 ```
 
 **Wordmark behavior** (HeaderUniversal + HeaderCanonical):
-- On load: Shows full "Bertrand Group | Brand & Web Systems"
-- After 2s: Collapses to "Brand & Web Systems" via `.is-collapsed` class
+- On load: Shows full "BERTRAND BRANDS | Brand & Web Systems"
+- After 2s: Collapses to "BERTRAND BRANDS" via `.is-collapsed` class
 - On hover: Expands back to full name
 - Mobile (≤768px): Always shows collapsed form
 - Respects `prefers-reduced-motion`
@@ -1306,9 +1339,10 @@ Some pages have custom header designs for specific UX or conversion purposes:
 ### 23.2 Offering Names (Exceptions)
 
 Offering names are proper nouns and are exempt from copy language rules:
-- "One-Page System Redesign" — uses "redesign" intentionally
+- "One-Page Conversion System" — uses "conversion" intentionally
 - "Digital Platform Build" — uses "build" intentionally
 - "Brand System Reset" — uses "reset" intentionally
+- "Brandmark Kit" — uses "kit" intentionally
 
 ### 23.3 Tone Rules
 
@@ -1326,10 +1360,10 @@ Offering names are proper nouns and are exempt from copy language rules:
 
 | Page | Method | PII Passed |
 |------|--------|------------|
-| `payment-confirmed.html` | Inline widget embed | None (widget handles collection) |
-| `booking/schedule.html` | Inline widget embed | Client email (prefill from session) |
-| `intake/brand-clarity-call.html` | URL link with query params | Name, email (URL params) |
-| `intake/website-clarity-call.html` | URL link with query params | Name, email (URL params) |
+| `payment-confirmed.astro` | Inline widget embed | None (widget handles collection) |
+| `booking/schedule.astro` | Inline widget embed | Client email (prefill from session) |
+| `intake/brand-clarity-call` (deprecated) | URL link with query params | Name, email (URL params) |
+| `intake/website-clarity-call` (deprecated) | URL link with query params | Name, email (URL params) |
 
 ### 24.2 PII Risk: URL Parameter Prefill
 
@@ -1345,13 +1379,13 @@ This exposes PII in:
 - Server access logs
 - Referrer headers if Calendly redirects
 
-**Mitigation**: These pages are deprecated (redirect to `/exploratory`). The active booking flow (`booking/schedule.html`) uses the inline widget with `prefill` object instead of URL params, which is the safer approach.
+**Mitigation**: These pages are deprecated (redirect to `/exploratory`). The active booking flow (`booking/schedule.astro`) uses the inline widget with `prefill` object instead of URL params, which is the safer approach.
 
 ### 24.3 Calendly Data Handling
 
 - Calendly collects: name, email, scheduling preferences
 - Data stored on Calendly's infrastructure (SOC 2 certified)
-- Bertrand Group receives booking confirmations via Calendly webhooks/email
+- Bertrand Brands receives booking confirmations via Calendly webhooks/email
 - No Calendly data is stored in our database — bookings are tracked through Stripe payment events
 
 ---

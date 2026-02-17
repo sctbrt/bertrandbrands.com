@@ -29,7 +29,7 @@ const currentYear = new Date().getFullYear();
         "description": "Fixed-scope web and brand work for small businesses in Greater Sudbury and Northern Ontario.",
         "provider": {
             "@type": "ProfessionalService",
-            "name": "Bertrand Brands",
+            "name": "Bertrand Brands — Brand & Web Systems",
             "url": "https://bertrandbrands.ca",
             "telephone": "+17054133705",
             "address": {
@@ -179,13 +179,13 @@ const currentYear = new Date().getFullYear();
                 left: -8%;
                 animation: sbFadeIn 3s ease-out forwards, sbFloatOrange 45s ease-in-out 3s infinite;
             }
-            .sb-hero__spotlight--violet {
+            .sb-hero__spotlight--warm {
                 width: 450px;
                 height: 450px;
-                background: radial-gradient(circle, rgba(139, 92, 246, 0.7) 0%, rgba(139, 92, 246, 0.22) 40%, transparent 65%);
+                background: radial-gradient(circle, rgba(251, 191, 36, 0.7) 0%, rgba(251, 191, 36, 0.22) 40%, transparent 65%);
                 top: 10%;
                 left: 25%;
-                animation: sbFadeIn 3.5s ease-out 0.4s forwards, sbFloatViolet 38s ease-in-out 3.9s infinite;
+                animation: sbFadeIn 3.5s ease-out 0.4s forwards, sbFloatWarm 38s ease-in-out 3.9s infinite;
             }
             .sb-hero__spotlight--blue {
                 width: 450px;
@@ -237,7 +237,7 @@ const currentYear = new Date().getFullYear();
             }
 
             /* Organic drift — violet: centre, figure-eight wander */
-            @keyframes sbFloatViolet {
+            @keyframes sbFloatWarm {
                 0%, 100% {
                     transform: translate(0, 0) scale(1) translateZ(0);
                     opacity: 0.3;
@@ -380,7 +380,7 @@ const currentYear = new Date().getFullYear();
                     filter: blur(50px);
                 }
                 .sb-hero__spotlight--orange { width: 350px; height: 350px; }
-                .sb-hero__spotlight--violet { width: 300px; height: 300px; }
+                .sb-hero__spotlight--warm { width: 300px; height: 300px; }
                 .sb-hero__spotlight--blue { width: 300px; height: 300px; }
             }
             @media (prefers-reduced-motion: reduce) {
@@ -398,7 +398,7 @@ const currentYear = new Date().getFullYear();
                     font-size: clamp(1.5rem, 8vw, 2.25rem);
                 }
                 .sb-hero__spotlight--orange { width: 280px; height: 280px; }
-                .sb-hero__spotlight--violet { width: 240px; height: 240px; }
+                .sb-hero__spotlight--warm { width: 240px; height: 240px; }
                 .sb-hero__spotlight--blue { width: 240px; height: 240px; }
             }
 
@@ -407,8 +407,8 @@ const currentYear = new Date().getFullYear();
                 padding: var(--space-lg) 0;
             }
             .sb-starter__card {
-                background: linear-gradient(135deg, #1e1033 0%, #160d26 100%);
-                border: 1px solid rgba(139, 92, 246, 0.2);
+                background: linear-gradient(135deg, #1a1207 0%, #16110a 100%);
+                border: 1px solid rgba(217, 119, 6, 0.2);
                 border-radius: var(--radius-lg);
                 padding: var(--space-md);
                 max-width: 480px;
@@ -427,8 +427,8 @@ const currentYear = new Date().getFullYear();
                 font-weight: 500;
                 text-transform: uppercase;
                 letter-spacing: 0.12em;
-                color: #c4b5fd;
-                background: rgba(139, 92, 246, 0.15);
+                color: #fbbf24;
+                background: rgba(217, 119, 6, 0.15);
                 padding: 0.25rem 0.625rem;
                 border-radius: var(--radius-sm);
             }
@@ -650,39 +650,13 @@ const currentYear = new Date().getFullYear();
                 grid-template-columns: 1fr 1fr;
                 gap: var(--space-sm);
             }
+            /* Card surface handled by .tier-card / .tier-card--build */
             .sb-other__card {
-                position: relative;
-                overflow: hidden;
-                background: rgba(139, 92, 246, 0.05);
-                border: 1px solid rgba(139, 92, 246, 0.2);
-                border-radius: var(--radius-lg);
-                padding: var(--space-sm);
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
                 text-decoration: none;
                 color: inherit;
-                transition: border-color var(--duration-fast) ease, transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
-                cursor: pointer;
-            }
-            .sb-other__card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent);
-                opacity: 0;
-                transition: opacity var(--duration-fast) ease;
-            }
-            .sb-other__card:hover {
-                border: 1px solid rgba(139, 92, 246, 0.5);
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px -6px rgba(139, 92, 246, 0.2);
-            }
-            .sb-other__card:hover::before {
-                opacity: 1;
             }
             .sb-other__name {
                 font-family: var(--font-display);
@@ -1083,7 +1057,7 @@ const currentYear = new Date().getFullYear();
         <!-- Hero -->
         <section class="sb-hero" id="hero">
             <div class="sb-hero__spotlight sb-hero__spotlight--orange"></div>
-            <div class="sb-hero__spotlight sb-hero__spotlight--violet"></div>
+            <div class="sb-hero__spotlight sb-hero__spotlight--warm"></div>
             <div class="sb-hero__spotlight sb-hero__spotlight--blue"></div>
             <div class="sb-hero__content">
                 <p class="sb-hero__eyebrow">Sudbury &amp; Northern Ontario</p>
@@ -1184,14 +1158,14 @@ const currentYear = new Date().getFullYear();
             <div class="sb-container">
                 <p class="sb-other__intro">Already have a website?</p>
                 <div class="sb-other__grid">
-                    <a href="#get-started" class="sb-other__card">
+                    <a href="#get-started" class="sb-other__card tier-card tier-card--build tier-card--compact">
                         <h3 class="sb-other__name">One-Page System Redesign</h3>
                         <p class="sb-other__timeline">2&ndash;3 business days</p>
                         <p class="sb-other__desc">A fully custom, code-based one-page website.</p>
                         <p class="sb-other__price">$1,250 CAD</p>
                         <span class="sb-other__arrow">Get started &rarr;</span>
                     </a>
-                    <a href="#get-started" class="sb-other__card">
+                    <a href="#get-started" class="sb-other__card tier-card tier-card--build tier-card--compact">
                         <h3 class="sb-other__name">Brandmark &amp; Visual Identity</h3>
                         <p class="sb-other__timeline">5&ndash;7 business days</p>
                         <p class="sb-other__desc">A complete brandmark with clear visual direction.</p>

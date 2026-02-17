@@ -18,7 +18,7 @@ const schema = {
   "description": "Low-friction entry for businesses exploring brand and web work. Guided Intake, Clarity Sessions, and Technical Feasibility Checks.",
   "provider": {
     "@type": "ProfessionalService",
-    "name": "Bertrand Brands | Brand & Web Systems",
+    "name": "Bertrand Brands — Brand & Web Systems",
     "url": "https://bertrandbrands.ca",
     "address": {
       "@type": "PostalAddress",
@@ -31,10 +31,10 @@ const schema = {
 ---
 
 <BaseLayout
-  title="B Conversation — Start Here | BG | Brand & Web Systems"
+  title="B Conversation — Start Here | Bertrand Brands"
   description="Not sure what you need? Start here. Guided intake, clarity sessions, and feasibility checks to help you find the right next step for your brand or website."
   canonical="https://bertrandbrands.ca/exploratory"
-  ogTitle="B Conversation — Start Here | BG | Brand & Web Systems"
+  ogTitle="B Conversation — Start Here | Bertrand Brands"
   ogDescription="Not sure what you need? Start here. Guided intake, clarity sessions, and feasibility checks."
   schemaJson={schema}
 >
@@ -122,26 +122,10 @@ const schema = {
             padding: var(--space-xl, 3rem) 0;
         }
 
+        /* Card surface handled by .tier-card / .tier-card--conversation */
         .exp-primary__card {
-            max-width: 600px;
             margin: 0 auto;
-            background: rgba(37, 99, 235, 0.08);
-            border: 2px solid rgba(37, 99, 235, 0.25);
-            border-radius: var(--radius-lg, 12px);
-            padding: var(--space-xl);
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .exp-primary__card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #2563EB, #3B82F6);
         }
 
         .exp-primary__label {
@@ -278,34 +262,8 @@ const schema = {
             }
         }
 
+        /* Card surface handled by .tier-card / .tier-card--conversation */
         .exp-option {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg, 12px);
-            padding: var(--space-lg);
-            transition: border-color var(--duration-fast) var(--ease-out);
-        }
-
-        .exp-option:hover {
-            border-color: var(--text-subtle);
-        }
-
-        .exp-option--discovery {
-            border-color: rgba(37, 99, 235, 0.2);
-            background: rgba(37, 99, 235, 0.03);
-        }
-
-        .exp-option--discovery:hover {
-            border-color: rgba(37, 99, 235, 0.4);
-        }
-
-        .exp-option--clarity {
-            border-color: rgba(37, 99, 235, 0.2);
-            background: rgba(37, 99, 235, 0.03);
-        }
-
-        .exp-option--clarity:hover {
-            border-color: rgba(37, 99, 235, 0.4);
         }
 
         .exp-option__badge {
@@ -641,7 +599,7 @@ const schema = {
             .exp-hero__name { font-size: var(--text-xl); }
             .exp-hero__mark { width: 26px; height: 26px; }
             .exp-primary { padding: var(--space-md, 1.5rem) 0; }
-            .exp-primary__card { padding: var(--space-md, 1.5rem); max-width: 100%; }
+            .exp-primary__card { max-width: 100%; }
             .exp-primary__title { font-size: var(--text-xl); }
             .exp-primary__description { font-size: var(--text-xs); max-width: 100%; }
             .exp-primary__meta { font-size: var(--text-xs); }
@@ -651,7 +609,6 @@ const schema = {
             .exp-option__meta { font-size: var(--text-xs); }
             .exp-option__price { font-size: var(--text-sm); }
             .exp-secondary { padding: var(--space-md, 1.5rem) 0 var(--space-lg, 2rem); }
-            .exp-option { padding: var(--space-md, 1.5rem); }
             .exp-how { padding: var(--space-md, 1.5rem) 0; }
             .exp-about { padding: var(--space-md, 1.5rem) 0; }
             .exp-divider { margin: var(--space-md, 1.5rem) auto; }
@@ -663,11 +620,9 @@ const schema = {
             .exp-hero__subtitle { font-size: 0.6875rem; }
             .exp-primary__title { font-size: var(--text-lg); }
             .exp-primary__description { font-size: 0.6875rem; }
-            .exp-primary__card { padding: 1rem; }
             .exp-option__title { font-size: var(--text-sm); }
             .exp-option__description { font-size: 0.6875rem; }
             .exp-option__price { font-size: var(--text-xs); }
-            .exp-option { padding: 1rem; }
             .exp-hero__name { font-size: var(--text-lg); }
             .exp-hero__mark { width: 22px; height: 22px; }
             .exp-hero { padding: var(--space-sm, 1rem) 0.75rem var(--space-xs, 0.5rem); }
@@ -730,7 +685,7 @@ const schema = {
       <!-- Primary CTA: Start Intake -->
       <section class="exp-primary">
           <div class="container">
-              <div class="exp-primary__card">
+              <div class="exp-primary__card tier-card tier-card--conversation tier-card--featured">
                   <span class="exp-primary__badge">Start Here</span>
                   <h2 class="exp-primary__title">Guided Intake</h2>
                   <p class="exp-primary__meta">5–10 min · Asynchronous</p>
@@ -757,7 +712,7 @@ const schema = {
               </div>
 
               <div class="exp-secondary__grid">
-                  <div class="exp-option exp-option--clarity">
+                  <div class="exp-option exp-option--clarity tier-card tier-card--conversation">
                       <span class="exp-option__badge exp-option__badge--paid">Paid</span>
                       <h3 class="exp-option__title">Clarity Session (Brand / Web / Systems)</h3>
                       <p class="exp-option__meta">~45 min · Live Video</p>
@@ -771,7 +726,7 @@ const schema = {
                       </a>
                   </div>
 
-                  <div class="exp-option exp-option--discovery">
+                  <div class="exp-option exp-option--discovery tier-card tier-card--conversation">
                       <span class="exp-option__badge exp-option__badge--free">Free</span>
                       <h3 class="exp-option__title">Technical Feasibility Check</h3>
                       <p class="exp-option__meta">Verbal · By request</p>

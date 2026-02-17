@@ -52,16 +52,19 @@
             transition: opacity 0.4s ease;
         }
 
-        .cta-glow:hover::before {
+        .cta-glow:hover::before,
+        .cta-glow:active::before {
             opacity: 1;
         }
 
-        .cta-glow:hover::after {
+        .cta-glow:hover::after,
+        .cta-glow:active::after {
             opacity: 1;
         }
 
         /* Outer glow halo — soft diffused light behind the border */
-        .cta-glow:hover {
+        .cta-glow:hover,
+        .cta-glow:active {
             box-shadow:
                 0 0 15px rgba(217, 119, 6, 0.12),
                 0 0 30px rgba(139, 92, 246, 0.08),
@@ -78,8 +81,9 @@
             --cta-bg: var(--bg-elevated);
         }
 
-        /* Override existing border on hover so gradient shows through */
-        .cta-glow:hover {
+        /* Override existing border on hover/active so gradient shows through */
+        .cta-glow:hover,
+        .cta-glow:active {
             border-color: transparent !important;
         }
 
@@ -355,7 +359,7 @@
             position: relative;
             opacity: 0;
             transition: opacity 0.5s ease;
-            font-family: 'halyard-display', var(--font-body);
+            font-family: var(--font-display);
             font-weight: 400;
             font-size: 0.9rem;
             letter-spacing: 0.2em;
@@ -3383,9 +3387,7 @@
             .exploratory-sessions::after {
                 animation: none;
             }
-            .exploratory-sessions__card:hover {
-                transform: none;
-            }
+            /* card hover transform handled by .tier-card via duration tokens */
         }
 
         /* Ensure content stays above spotlights */
@@ -3420,7 +3422,7 @@
         }
 
         .exploratory-sessions__name {
-            font-family: halyard-display, sans-serif;
+            font-family: var(--font-display);
             font-size: var(--text-2xl);
             font-weight: var(--font-light);
             letter-spacing: 0.02em;
@@ -3509,9 +3511,7 @@
                 gap: var(--space-sm);
             }
 
-            .exploratory-sessions__card {
-                padding: var(--space-sm);
-            }
+            /* card padding now via .tier-card responsive */
 
             .exploratory-sessions__card-title {
                 font-size: var(--text-base);
@@ -4067,9 +4067,7 @@
             .core-systems__glow::before {
                 animation: none;
             }
-            .service:hover {
-                transform: none;
-            }
+            /* card hover transform handled by .tier-card via duration tokens */
         }
 
         /* Mobile optimization for Core Services glow */
@@ -4123,7 +4121,7 @@
         }
 
         .core-systems__name {
-            font-family: halyard-display, sans-serif;
+            font-family: var(--font-display);
             font-size: var(--text-3xl);
             font-weight: var(--font-light);
             letter-spacing: 0.02em;
@@ -4270,7 +4268,7 @@
         }
 
         .focused-studio__name {
-            font-family: halyard-display, sans-serif;
+            font-family: var(--font-display);
             font-size: var(--text-3xl);
             font-weight: var(--font-normal);
             letter-spacing: 0.02em;
@@ -4494,9 +4492,7 @@
 
         /* V5.0: Mobile service cards - improved touch targets and spacing */
         @media (max-width: 768px) {
-            .service {
-                padding: var(--space-md);
-            }
+            /* padding now via .tier-card responsive */
 
             .service__title {
                 font-size: var(--text-xl);
@@ -4515,16 +4511,7 @@
                 gap: var(--space-sm);
             }
 
-            /* Disable hover lift on touch devices for better UX */
-            .service:hover,
-            .focused-studio__card:hover {
-                transform: none;
-            }
-
-            .service:active,
-            .focused-studio__card:active {
-                transform: scale(0.98);
-            }
+            /* hover lift / active press now via .tier-card @media (hover: none) */
         }
 
         /* === PROCESS === */
@@ -5543,12 +5530,7 @@
                 margin-bottom: var(--space-md);
             }
 
-            /* --- R6: Tier containers — tighter internal padding --- */
-            .core-systems-wrapper,
-            .focused-studio,
-            .exploratory-sessions {
-                padding: var(--space-md);                 /* 4rem → 2rem */
-            }
+            /* R6: Tier container padding now via .tier-wrapper responsive */
 
             /* --- R7: Tier header descriptions — smaller to separate from cards --- */
             .core-systems__description,
@@ -5610,10 +5592,7 @@
                 margin-bottom: var(--space-xs);
             }
 
-            /* --- R12: Conversation card spacing --- */
-            .exploratory-sessions__card {
-                padding: var(--space-sm);
-            }
+            /* R12: Conversation card padding now via .tier-card responsive */
 
             .exploratory-sessions__card-title {
                 font-size: var(--text-sm);                 /* 16px → 14px */
@@ -5727,12 +5706,7 @@
                 font-size: clamp(1.5rem, 10vw, 2.5rem);
             }
 
-            /* Tier containers — even tighter */
-            .core-systems-wrapper,
-            .focused-studio,
-            .exploratory-sessions {
-                padding: var(--space-sm);                  /* 2rem → 1rem */
-            }
+            /* Tier container padding now via .tier-wrapper responsive */
 
             .contact {
                 padding: var(--space-md) 0;

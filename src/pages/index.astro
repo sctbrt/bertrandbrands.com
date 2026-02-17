@@ -10,7 +10,7 @@ const currentYear = new Date().getFullYear();
 const schemaJson = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "Bertrand Brands | Brand & Web Systems",
+  "name": "Bertrand Brands — Brand & Web Systems",
   "description": "Clear, structured brand and web work for businesses that value clarity. Reviews, brand systems, and website foundations. Based in Greater Sudbury, Ontario.",
   "url": "https://bertrandbrands.ca",
   "email": "hello@bertrandgroup.ca",
@@ -59,10 +59,10 @@ const schemaJson = {
 ---
 
 <BaseLayout
-  title="Bertrand Brands | Brand & Web Systems — Sudbury, Ontario"
+  title="Bertrand Brands — Brand & Web Systems — Sudbury, Ontario"
   description="Brand and web systems studio in Sudbury, Ontario. Starter sites, redesigns, brandmarks, and strategic brand work. Fixed pricing, fast turnaround."
   canonical="https://bertrandbrands.ca/"
-  ogTitle="Bertrand Brands | Brand & Web Systems — Sudbury, Ontario"
+  ogTitle="Bertrand Brands — Brand & Web Systems — Sudbury, Ontario"
   ogDescription="Brand and web systems studio based in Greater Sudbury, Ontario. Clear scope, fixed pricing, fast turnaround. Serving Northern Ontario and across Canada."
   schemaJson={schemaJson}
 >
@@ -229,7 +229,7 @@ const schemaJson = {
               </div>
 
               <!-- SECTION 1: AMBER (BUILD) — Primary revenue tier -->
-              <div class="focused-studio reveal" id="focus-studio">
+              <div class="focused-studio tier-wrapper tier-wrapper--build reveal" id="focus-studio">
                   <div class="focused-studio__glow" aria-hidden="true"></div>
                   <div class="focused-studio__header">
                       <a href="/focus-studio" class="focused-studio__brand">
@@ -241,10 +241,10 @@ const schemaJson = {
 
                   <div class="focused-studio__grid">
                       <!-- Starter Site -->
-                      <div class="focused-studio__card" data-icon="rocket">
+                      <div class="focused-studio__card tier-card tier-card--build" data-icon="rocket">
                           <div class="focused-studio__card-header">
                               <h3 class="focused-studio__card-title">Starter Site</h3>
-                              <span class="focused-studio__card-timeline">7–10 days</span>
+                              <span class="focused-studio__card-timeline">1 business day</span>
                           </div>
                           <p class="focused-studio__card-description">A fast-launch website built for speed and simplicity. Clean, functional, and live quickly. Ideal for businesses that need a professional presence without complexity.</p>
                           <ul class="focused-studio__card-includes">
@@ -264,10 +264,10 @@ const schemaJson = {
                       </div>
 
                       <!-- One-Page Conversion System -->
-                      <div class="focused-studio__card" data-icon="code">
+                      <div class="focused-studio__card tier-card tier-card--build" data-icon="code">
                           <div class="focused-studio__card-header">
                               <h3 class="focused-studio__card-title">One-Page Conversion System</h3>
-                              <span class="focused-studio__card-timeline">7 days</span>
+                              <span class="focused-studio__card-timeline">2–3 business days</span>
                           </div>
                           <p class="focused-studio__card-description">A fully custom, code-based one-page website. Designed and built from scratch. No templates, no builders. Focused on narrative flow, layout precision, and polish.</p>
                           <ul class="focused-studio__card-includes">
@@ -287,10 +287,10 @@ const schemaJson = {
                       </div>
 
                       <!-- Brandmark Kit -->
-                      <div class="focused-studio__card" data-icon="pen">
+                      <div class="focused-studio__card tier-card tier-card--build" data-icon="pen">
                           <div class="focused-studio__card-header">
                               <h3 class="focused-studio__card-title">Brandmark Kit</h3>
-                              <span class="focused-studio__card-timeline">5–7 days</span>
+                              <span class="focused-studio__card-timeline">5–7 business days</span>
                           </div>
                           <p class="focused-studio__card-description">A complete, usable brandmark with supporting visual direction. Designed to work wherever your brand appears. Core brandmarking, not a full brand system.</p>
                           <ul class="focused-studio__card-includes">
@@ -316,7 +316,7 @@ const schemaJson = {
               <hr class="services-divider services-divider--section">
 
               <!-- SECTION 2: VIOLET (TRANSFORM) — Strategic tier -->
-              <div class="core-systems-wrapper">
+              <div class="core-systems-wrapper tier-wrapper tier-wrapper--transform">
                   <div class="core-systems__glow" aria-hidden="true"></div>
 
                   <div class="core-systems reveal">
@@ -334,7 +334,7 @@ const schemaJson = {
 
                   <!-- Transform — 3-card grid -->
                   <div class="services services--core reveal-stagger">
-                      <div class="service" data-gated="false" data-icon="refresh">
+                      <div class="service tier-card tier-card--transform" data-gated="false" data-icon="refresh">
                           <p class="service__number">01</p>
                           <h3 class="service__title">Brand System Reset</h3>
                           <p class="service__description">Strategic brand diagnosis, realignment, and implementation roadmap. Identity refinement with written findings.</p>
@@ -347,7 +347,7 @@ const schemaJson = {
                           </div>
                       </div>
 
-                      <div class="service" data-gated="false" data-icon="layers">
+                      <div class="service tier-card tier-card--transform" data-gated="false" data-icon="layers">
                           <p class="service__number">02</p>
                           <h3 class="service__title">Digital Platform Build</h3>
                           <p class="service__description">Full-stack digital platform with authentication, dashboards, and scalable architecture. Designed as a system, not a page.</p>
@@ -360,7 +360,7 @@ const schemaJson = {
                           </div>
                       </div>
 
-                      <div class="service" data-gated="false" data-icon="grid">
+                      <div class="service tier-card tier-card--transform" data-gated="false" data-icon="grid">
                           <p class="service__number">03</p>
                           <h3 class="service__title">Integrated Brand + Platform</h3>
                           <p class="service__description">Brand-informed technical design meets system-aware brand execution. Strategy, identity, and platform delivered as one.</p>
@@ -378,7 +378,7 @@ const schemaJson = {
               <hr class="services-divider services-divider--section">
 
               <!-- SECTION 3: BLUE (CARE) — Ongoing support tier -->
-              <div class="exploratory-sessions reveal" id="care">
+              <div class="exploratory-sessions tier-wrapper tier-wrapper--conversation reveal" id="care">
                   <div class="exploratory-sessions__header">
                       <div class="exploratory-sessions__brand">
                           <img src="/assets/bg-brands-logomark.png" alt="" class="exploratory-sessions__mark" width="40" height="40" loading="lazy">
@@ -390,7 +390,7 @@ const schemaJson = {
 
                   <div class="exploratory-sessions__grid">
                       <!-- Care Essentials -->
-                      <div class="exploratory-sessions__card" data-icon="compass">
+                      <div class="exploratory-sessions__card tier-card tier-card--conversation" data-icon="compass">
                           <div class="exploratory-sessions__card-header">
                               <h3 class="exploratory-sessions__card-title">Care Essentials</h3>
                               <span class="exploratory-sessions__card-meta">Routine support</span>
@@ -402,7 +402,7 @@ const schemaJson = {
                       </div>
 
                       <!-- Growth Care -->
-                      <div class="exploratory-sessions__card" data-icon="lightbulb">
+                      <div class="exploratory-sessions__card tier-card tier-card--conversation" data-icon="lightbulb">
                           <div class="exploratory-sessions__card-header">
                               <h3 class="exploratory-sessions__card-title">Growth Care</h3>
                               <span class="exploratory-sessions__card-meta">Monthly improvements</span>
@@ -414,7 +414,7 @@ const schemaJson = {
                       </div>
 
                       <!-- Partner Care -->
-                      <div class="exploratory-sessions__card" data-icon="settings">
+                      <div class="exploratory-sessions__card tier-card tier-card--conversation" data-icon="settings">
                           <div class="exploratory-sessions__card-header">
                               <h3 class="exploratory-sessions__card-title">Partner Care</h3>
                               <span class="exploratory-sessions__card-meta">Priority partnership</span>
@@ -1299,7 +1299,6 @@ const schemaJson = {
                   type: 'form',
                   name: nameField.value.trim(),
                   email: emailField.value.trim(),
-                  service: form.querySelector('#service') ? form.querySelector('#service').value : '',
                   message: messageField.value.trim()
               };
 
