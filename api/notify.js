@@ -67,7 +67,8 @@ export default async function handler(req, res) {
   const { type, name, email, service, message, page, referrer,
           source, business, website, details, concerns, situation,
           budget, timeline, phone, description, challenge,
-          tier, price, context, outcome, industry, contact_pref } = req.body || {};
+          tier, price, context, outcome, industry, contact_pref,
+          offer } = req.body || {};
 
   // Pushover credentials (from environment variables)
   const PUSHOVER_USER = process.env.PUSHOVER_USER_KEY;
@@ -171,6 +172,7 @@ export default async function handler(req, res) {
       if (challenge) notificationMessage += `\nChallenge: ${challenge.substring(0, 200)}`;
       if (context) notificationMessage += `\nContext: ${context.substring(0, 200)}`;
       if (outcome) notificationMessage += `\nOutcome: ${outcome.substring(0, 200)}`;
+      if (offer) notificationMessage += `\nOffer: ${offer}`;
       if (location) notificationMessage += `\n📌 ${location}`;
 
       notificationTitle = `New ${sourceLabel}`;

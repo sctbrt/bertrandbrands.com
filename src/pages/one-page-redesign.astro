@@ -1,6 +1,6 @@
 ---
 /**
- * One-Page System Redesign — B Build | Focus Studio service detail page.
+ * One-Page Conversion System — B Build | Focus Studio service detail page.
  */
 import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../components/InlineIntakeForm.astro';
@@ -10,31 +10,31 @@ const currentYear = new Date().getFullYear();
 ---
 
 <ServiceDetailLayout
-    title="One-Page System Redesign — B Build | BG | Brand & Web Systems"
-    description="A precise system redesign of the page that matters most. Concentrated refinement of a single high-value page when clarity, hierarchy, or confidence is missing."
+    title="One-Page Conversion System — B Build | BG | Brand & Web Systems"
+    description="A precise conversion system for the page that matters most. Concentrated refinement of a single high-value page when clarity, hierarchy, or confidence is missing."
     canonical="https://bertrandbrands.ca/one-page-redesign"
-    ogTitle="One-Page System Redesign — B Build | BG | Brand & Web Systems"
-    ogDescription="A precise system redesign of the page that matters most."
+    ogTitle="One-Page Conversion System — B Build | BG | Brand & Web Systems"
+    ogDescription="A precise conversion system for the page that matters most."
     schemaJson={{
         "@context": "https://schema.org",
         "@type": "Service",
-        "name": "One-Page System Redesign",
-        "description": "A precise system redesign of the page that matters most.",
+        "name": "One-Page Conversion System",
+        "description": "A precise conversion system for the page that matters most.",
         "provider": {
             "@type": "ProfessionalService",
-            "name": "Bertrand Group | Brand & Web Systems",
+            "name": "Bertrand Brands | Brand & Web Systems",
             "url": "https://bertrandbrands.ca"
         }
     }}
-    spotlightColor="rgba(139, 92, 246, 0.15)"
+    spotlightColor="rgba(217, 119, 6, 0.15)"
 >
     <Fragment slot="head">
         <style is:inline>
             .service-page { min-height: 100vh; padding-top: 80px; position: relative; overflow: hidden; }
 
             .service-page__spotlight { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; will-change: transform, opacity; }
-            .service-page__spotlight--1 { width: 400px; height: 400px; background: rgba(139, 92, 246, 0.15); top: 10%; left: -10%; animation: organicBreathe 18s ease-in-out infinite; }
-            .service-page__spotlight--2 { width: 350px; height: 350px; background: rgba(139, 92, 246, 0.12); bottom: 20%; right: -5%; animation: organicBreathe 22s ease-in-out infinite 0.5s; }
+            .service-page__spotlight--1 { width: 400px; height: 400px; background: rgba(217, 119, 6, 0.15); top: 10%; left: -10%; animation: organicBreathe 18s ease-in-out infinite; }
+            .service-page__spotlight--2 { width: 350px; height: 350px; background: rgba(217, 119, 6, 0.12); bottom: 20%; right: -5%; animation: organicBreathe 22s ease-in-out infinite 0.5s; }
 
             @keyframes organicBreathe {
                 0%, 100% { opacity: 0.85; transform: translate(0, 0) scale(1); }
@@ -53,27 +53,27 @@ const currentYear = new Date().getFullYear();
             .service-hero__description { font-size: var(--text-lg); color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
             .service-content { padding: var(--space-xl) 0; position: relative; z-index: 1; }
-            .service-card { background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: var(--radius-lg); padding: var(--space-xl); max-width: 700px; margin: 0 auto var(--space-lg); }
+            .service-card { background: rgba(217, 119, 6, 0.05); border: 1px solid rgba(217, 119, 6, 0.15); border-radius: var(--radius-lg); padding: var(--space-xl); max-width: 700px; margin: 0 auto var(--space-lg); }
             .service-card__section { margin-bottom: var(--space-lg); }
             .service-card__section:last-child { margin-bottom: 0; }
-            .service-card__label { font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(139, 92, 246, 0.8); margin-bottom: var(--space-sm); }
+            .service-card__label { font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(217, 119, 6, 0.8); margin-bottom: var(--space-sm); }
             .service-card__list { list-style: none; padding: 0; margin: 0; }
             .service-card__list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; font-size: var(--text-base); color: var(--text-muted); line-height: 1.5; }
-            .service-card__list li::before { content: ''; position: absolute; left: 0; top: 0.5rem; width: 6px; height: 6px; background: rgba(139, 92, 246, 0.6); border-radius: 50%; }
+            .service-card__list li::before { content: ''; position: absolute; left: 0; top: 0.5rem; width: 6px; height: 6px; background: rgba(217, 119, 6, 0.6); border-radius: 50%; }
             .service-card__text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.6; }
             .service-card__meta { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
             .service-card__meta-item { flex: 1; min-width: 150px; }
             .service-card__meta-value { font-size: var(--text-lg); font-weight: 500; color: var(--text); }
 
             .service-cta { padding: var(--space-xl) 0 var(--space-2xl); text-align: center; position: relative; z-index: 1; }
-            .service-cta__card { background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: var(--radius-lg); padding: var(--space-xl); max-width: 500px; margin: 0 auto; }
+            .service-cta__card { background: rgba(217, 119, 6, 0.08); border: 1px solid rgba(217, 119, 6, 0.25); border-radius: var(--radius-lg); padding: var(--space-xl); max-width: 500px; margin: 0 auto; }
             .service-cta__title { font-size: var(--text-xl); font-weight: 400; color: var(--text); margin-bottom: var(--space-sm); }
             .service-cta__text { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-md); line-height: 1.6; }
             .service-cta__intake { display: block; }
-            .service-cta__intake .service-cta__button { display: inline-block; padding: 0.875rem 2rem; background: #8B5CF6; color: #fff; font-size: var(--text-base); font-weight: 600; text-decoration: none; border-radius: var(--radius-md); transition: background var(--duration-fast) ease, transform var(--duration-fast) ease; }
+            .service-cta__intake .service-cta__button { display: inline-block; padding: 0.875rem 2rem; background: #D97706; color: #fff; font-size: var(--text-base); font-weight: 600; text-decoration: none; border-radius: var(--radius-md); transition: background var(--duration-fast) ease, transform var(--duration-fast) ease; }
             .service-cta__intake .service-cta__button:hover { background: #7C3AED; transform: translateY(-1px); }
             .service-cta__booking { display: none; }
-            .service-cta__booking .service-cta__button { display: inline-block; padding: 0.875rem 2rem; background: #8B5CF6; color: #fff; font-size: var(--text-base); font-weight: 600; text-decoration: none; border-radius: var(--radius-md); transition: background var(--duration-fast) ease; }
+            .service-cta__booking .service-cta__button { display: inline-block; padding: 0.875rem 2rem; background: #D97706; color: #fff; font-size: var(--text-base); font-weight: 600; text-decoration: none; border-radius: var(--radius-md); transition: background var(--duration-fast) ease; }
             .service-cta__booking .service-cta__button:hover { background: #7C3AED; }
 
             .service-back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; margin-bottom: var(--space-md); transition: color var(--duration-fast) ease; }
@@ -102,7 +102,7 @@ const currentYear = new Date().getFullYear();
             .service-hero__illustration-wrap::before {
                 content: ''; position: absolute; top: 50%; left: 50%; width: 90%; height: 90%;
                 transform: translate(-50%, -50%);
-                background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, rgba(139, 92, 246, 0) 65%);
+                background: radial-gradient(circle, rgba(217, 119, 6, 0.5) 0%, rgba(217, 119, 6, 0) 65%);
                 filter: blur(35px); opacity: 0; pointer-events: none; z-index: 0;
                 animation: svcGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
             }
@@ -206,40 +206,40 @@ const currentYear = new Date().getFullYear();
                 <div class="service-hero__illustration-wrap">
                 <svg class="service-hero__illustration" viewBox="65 48 345 305" fill="none" aria-hidden="true">
                     <!-- Page boundary -->
-                    <rect x="100" y="60" width="300" height="280" rx="2" stroke="rgba(139, 92, 246, 0.25)" stroke-width="1.5"/>
+                    <rect x="100" y="60" width="300" height="280" rx="2" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
                     <!-- Section dividers -->
-                    <line x1="100" y1="132" x2="400" y2="132" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
-                    <line x1="100" y1="192" x2="400" y2="192" stroke="rgba(139, 92, 246, 0.18)" stroke-width="1"/>
-                    <line x1="100" y1="252" x2="400" y2="252" stroke="rgba(139, 92, 246, 0.12)" stroke-width="1"/>
-                    <line x1="100" y1="305" x2="400" y2="305" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1" stroke-dasharray="3 5"/>
+                    <line x1="100" y1="132" x2="400" y2="132" stroke="rgba(217, 119, 6, 0.15)" stroke-width="1"/>
+                    <line x1="100" y1="192" x2="400" y2="192" stroke="rgba(217, 119, 6, 0.18)" stroke-width="1"/>
+                    <line x1="100" y1="252" x2="400" y2="252" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1"/>
+                    <line x1="100" y1="305" x2="400" y2="305" stroke="rgba(217, 119, 6, 0.08)" stroke-width="1" stroke-dasharray="3 5"/>
                     <!-- Column guides -->
-                    <line x1="185" y1="60" x2="185" y2="340" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
-                    <line x1="250" y1="60" x2="250" y2="340" stroke="rgba(139, 92, 246, 0.06)" stroke-width="1" stroke-dasharray="2 8"/>
-                    <line x1="315" y1="60" x2="315" y2="340" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
+                    <line x1="185" y1="60" x2="185" y2="340" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
+                    <line x1="250" y1="60" x2="250" y2="340" stroke="rgba(217, 119, 6, 0.06)" stroke-width="1" stroke-dasharray="2 8"/>
+                    <line x1="315" y1="60" x2="315" y2="340" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1" stroke-dasharray="4 6"/>
                     <!-- Hero zone -->
-                    <rect x="115" y="72" width="270" height="48" rx="1" fill="rgba(139, 92, 246, 0.04)" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
+                    <rect x="115" y="72" width="270" height="48" rx="1" fill="rgba(217, 119, 6, 0.04)" stroke="rgba(217, 119, 6, 0.15)" stroke-width="1"/>
                     <!-- Content blocks -->
-                    <rect x="115" y="142" width="155" height="38" rx="1" fill="rgba(139, 92, 246, 0.03)" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1"/>
-                    <rect x="285" y="142" width="100" height="38" rx="1" fill="rgba(139, 92, 246, 0.03)" stroke="rgba(139, 92, 246, 0.10)" stroke-width="1"/>
-                    <rect x="115" y="202" width="270" height="38" rx="1" fill="rgba(139, 92, 246, 0.02)" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1"/>
+                    <rect x="115" y="142" width="155" height="38" rx="1" fill="rgba(217, 119, 6, 0.03)" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1"/>
+                    <rect x="285" y="142" width="100" height="38" rx="1" fill="rgba(217, 119, 6, 0.03)" stroke="rgba(217, 119, 6, 0.10)" stroke-width="1"/>
+                    <rect x="115" y="202" width="270" height="38" rx="1" fill="rgba(217, 119, 6, 0.02)" stroke="rgba(217, 119, 6, 0.08)" stroke-width="1"/>
                     <!-- Text placeholder lines -->
-                    <line x1="125" y1="86" x2="260" y2="86" stroke="rgba(139, 92, 246, 0.12)" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="125" y1="96" x2="200" y2="96" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1.5" stroke-linecap="round"/>
-                    <line x1="125" y1="155" x2="220" y2="155" stroke="rgba(139, 92, 246, 0.08)" stroke-width="1.5" stroke-linecap="round"/>
-                    <line x1="125" y1="165" x2="190" y2="165" stroke="rgba(139, 92, 246, 0.06)" stroke-width="1" stroke-linecap="round"/>
+                    <line x1="125" y1="86" x2="260" y2="86" stroke="rgba(217, 119, 6, 0.12)" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="125" y1="96" x2="200" y2="96" stroke="rgba(217, 119, 6, 0.08)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="125" y1="155" x2="220" y2="155" stroke="rgba(217, 119, 6, 0.08)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="125" y1="165" x2="190" y2="165" stroke="rgba(217, 119, 6, 0.06)" stroke-width="1" stroke-linecap="round"/>
                     <!-- Corner markers -->
-                    <circle cx="100" cy="60" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
-                    <circle cx="400" cy="60" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
-                    <circle cx="100" cy="340" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
-                    <circle cx="400" cy="340" r="2.5" fill="rgba(139, 92, 246, 0.20)"/>
+                    <circle cx="100" cy="60" r="2.5" fill="rgba(217, 119, 6, 0.20)"/>
+                    <circle cx="400" cy="60" r="2.5" fill="rgba(217, 119, 6, 0.20)"/>
+                    <circle cx="100" cy="340" r="2.5" fill="rgba(217, 119, 6, 0.20)"/>
+                    <circle cx="400" cy="340" r="2.5" fill="rgba(217, 119, 6, 0.20)"/>
                     <!-- Outer construction lines -->
-                    <line x1="80" y1="132" x2="95" y2="132" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
-                    <line x1="80" y1="192" x2="95" y2="192" stroke="rgba(139, 92, 246, 0.15)" stroke-width="1"/>
-                    <line x1="80" y1="252" x2="95" y2="252" stroke="rgba(139, 92, 246, 0.12)" stroke-width="1"/>
+                    <line x1="80" y1="132" x2="95" y2="132" stroke="rgba(217, 119, 6, 0.15)" stroke-width="1"/>
+                    <line x1="80" y1="192" x2="95" y2="192" stroke="rgba(217, 119, 6, 0.15)" stroke-width="1"/>
+                    <line x1="80" y1="252" x2="95" y2="252" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1"/>
                 </svg>
                 </div>
                 <h1 class="service-hero__headline">A precise system redesign of the page that matters most.</h1>
-                <p class="service-hero__description">The One-Page System Redesign is a concentrated refinement of a single high-value page, usually a homepage or landing page, when the structure exists but clarity, hierarchy, or confidence is missing.</p>
+                <p class="service-hero__description">The One-Page Conversion System is a concentrated refinement of a single high-value page, usually a homepage or landing page, when the structure exists but clarity, hierarchy, or confidence is missing.</p>
             </section>
 
             <section class="service-content">
@@ -272,7 +272,7 @@ const currentYear = new Date().getFullYear();
                         <div class="service-card__meta">
                             <div class="service-card__meta-item">
                                 <p class="service-card__label">Timeline</p>
-                                <p class="service-card__meta-value">2–3 business days</p>
+                                <p class="service-card__meta-value">7 days</p>
                             </div>
                             <div class="service-card__meta-item">
                                 <p class="service-card__label">Pricing</p>
@@ -286,9 +286,9 @@ const currentYear = new Date().getFullYear();
             <section class="service-cta">
                 <div id="intakePrompt">
                     <InlineIntakeForm
-                        serviceName="One-Page System Redesign"
+                        serviceName="One-Page Conversion System"
                         serviceSlug="one-page-redesign"
-                        tierColor="#8B5CF6"
+                        tierColor="#D97706"
                         tierName="BUILD"
                     />
                 </div>
@@ -306,7 +306,7 @@ const currentYear = new Date().getFullYear();
             <p class="service-footer__cta-text">Not sure where to start?</p>
             <a href="/intake/exploratory" class="service-footer__cta-link">Start with a free intake &rarr;</a>
         </div>
-        <p class="service-footer__text">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
+        <p class="service-footer__text">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
         <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
         <p class="service-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
     </footer>

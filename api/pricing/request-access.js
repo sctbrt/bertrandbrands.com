@@ -74,7 +74,7 @@ function buildEmailHtml({ firstName, magicLink, expiresMinutes }) {
     </p>
   </div>
   <p style="margin: 24px 0 0 0; font-size: 12px; color: #999999; text-align: center;">
-    Bertrand Group | Brand &amp; Web Systems · Sudbury, Ontario
+    Bertrand Brands | Brand &amp; Web Systems · Sudbury, Ontario
   </p>
 </body>
 </html>
@@ -97,7 +97,7 @@ View Pricing: ${magicLink}
 This link expires in ${expiresMinutes} minutes and can only be used once.
 
 --
-Bertrand Group | Brand & Web Systems · Sudbury, Ontario
+Bertrand Brands | Brand & Web Systems · Sudbury, Ontario
   `.trim();
 }
 

@@ -737,7 +737,7 @@ const currentYear = new Date().getFullYear();
 
     <!-- Footer -->
     <footer class="intake-footer">
-        <p class="intake-footer__text">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
+        <p class="intake-footer__text">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
         <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
     </footer>
 
@@ -754,6 +754,37 @@ const currentYear = new Date().getFullYear();
                 refInput.name = 'referral_service';
                 refInput.value = ref;
                 form.appendChild(refInput);
+            }
+        })();
+
+        // Capture offer preselection from URL param (e.g., ?offer=amber-starter)
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var offer = params.get('offer');
+            if (offer && form) {
+                var offerInput = document.createElement('input');
+                offerInput.type = 'hidden';
+                offerInput.name = 'offer';
+                offerInput.value = offer;
+                form.appendChild(offerInput);
+
+                // Update subject line with offer context
+                var subjectField = form.querySelector('[name="_subject"]');
+                var offerLabels = {
+                    'amber-starter': 'Starter Site',
+                    'amber-conversion': 'One-Page Conversion System',
+                    'amber-brandmark': 'Brandmark Kit',
+                    'violet-brandreset': 'Brand System Reset',
+                    'violet-platform': 'Digital Platform Build',
+                    'violet-integrated': 'Integrated Brand + Platform',
+                    'blue-essentials': 'Care Essentials',
+                    'blue-growth': 'Growth Care',
+                    'blue-partner': 'Partner Care'
+                };
+                var label = offerLabels[offer];
+                if (subjectField && label) {
+                    subjectField.value = 'New Intake — ' + label;
+                }
             }
         })();
 
@@ -950,7 +981,8 @@ const currentYear = new Date().getFullYear();
                             outcome: formData.get('outcome') || '',
                             budget: formData.get('budget'),
                             timeline: formData.get('timeline'),
-                            contact_pref: formData.get('contact_pref')
+                            contact_pref: formData.get('contact_pref'),
+                            offer: formData.get('offer') || ''
                         })
                     }).catch(function() {});
                 } else {

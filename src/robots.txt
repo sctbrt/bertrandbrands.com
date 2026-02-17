@@ -1,4 +1,4 @@
-# Bertrand Group | Brand & Web Systems — bertrandbrands.ca
+# Bertrand Brands | Brand & Web Systems — bertrandbrands.ca
 # Brand, web, and systems studio based in Greater Sudbury, Ontario, Canada
 
 User-agent: *

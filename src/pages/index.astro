@@ -10,7 +10,7 @@ const currentYear = new Date().getFullYear();
 const schemaJson = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "Bertrand Group | Brand & Web Systems",
+  "name": "Bertrand Brands | Brand & Web Systems",
   "description": "Clear, structured brand and web work for businesses that value clarity. Reviews, brand systems, and website foundations. Based in Greater Sudbury, Ontario.",
   "url": "https://bertrandbrands.ca",
   "email": "hello@bertrandgroup.ca",
@@ -44,25 +44,25 @@ const schemaJson = {
     "@type": "OfferCatalog",
     "name": "Brand & Digital Systems Services",
     "itemListElement": [
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Guided Intake" }, "description": "Form-based intake for routing and clarity" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Clarity Session" }, "description": "45-minute working session — brand, web, or systems", "price": "145", "priceCurrency": "CAD" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technical Feasibility Check" }, "description": "Verbal assessment of technical viability" },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site" }, "price": "750", "priceCurrency": "CAD" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page System Redesign" }, "price": "1250", "priceCurrency": "CAD" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmark & Visual Identity" }, "price": "950", "priceCurrency": "CAD" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page Conversion System" }, "price": "1250", "priceCurrency": "CAD" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmark Kit" }, "price": "950", "priceCurrency": "CAD" },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand System Reset" }, "description": "Strategic brand diagnosis, realignment, and implementation roadmap" },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Platform Build" }, "description": "Full-stack digital platform with authentication, dashboards, and scalable architecture" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Integrated Brand + Platform" }, "description": "Brand-informed technical design and system-aware brand execution" }
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Integrated Brand + Platform" }, "description": "Brand-informed technical design and system-aware brand execution" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Care Essentials" }, "description": "Routine updates, content edits, performance checks, and priority fixes" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Growth Care" }, "description": "Monthly improvements, landing page updates, analytics review, and seasonal refreshes" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Partner Care" }, "description": "Priority queue, recurring CRO iterations, quarterly roadmap, and higher-touch support" }
     ]
   }
 };
 ---
 
 <BaseLayout
-  title="Bertrand Group | Brand & Web Systems — Sudbury, Ontario"
+  title="Bertrand Brands | Brand & Web Systems — Sudbury, Ontario"
   description="Brand and web systems studio in Sudbury, Ontario. Starter sites, redesigns, brandmarks, and strategic brand work. Fixed pricing, fast turnaround."
   canonical="https://bertrandbrands.ca/"
-  ogTitle="Bertrand Group | Brand & Web Systems — Sudbury, Ontario"
+  ogTitle="Bertrand Brands | Brand & Web Systems — Sudbury, Ontario"
   ogDescription="Brand and web systems studio based in Greater Sudbury, Ontario. Clear scope, fixed pricing, fast turnaround. Serving Northern Ontario and across Canada."
   schemaJson={schemaJson}
 >
@@ -82,7 +82,7 @@ const schemaJson = {
       <div class="intro__grid"></div>
       <img src="/assets/bg-brands-logomark.png" alt="" class="intro__logo" width="256" height="256" fetchpriority="high">
       <div class="intro__brand">
-          <span class="intro__brand-main">Bertrand Group</span>
+          <span class="intro__brand-main">Bertrand Brands</span>
           <span class="intro__brand-sub">Brand &amp; Web Systems</span>
           <span class="intro__brand-division">a division of Bertrand Group Canada</span>
       </div>
@@ -118,7 +118,7 @@ const schemaJson = {
                   Clear, structured work for businesses that value clarity over noise.
                   <span class="hero__subtitle-glow">Based in Sudbury</span>, available across Canada.
               </p>
-              <a href="/exploratory" class="hero__cta">Book a Call</a>
+              <a href="/exploratory" class="hero__cta cta-glow">Book a Call</a>
           </div>
           <div class="hero__scroll-hint">
               <span class="hero__scroll-hint-text"><span class="hint-desktop">Scroll to explore</span><span class="hint-mobile">Swipe to explore</span></span>
@@ -130,6 +130,8 @@ const schemaJson = {
 
       <!-- About -->
       <section class="section" id="about">
+          <div class="about__glow--violet" aria-hidden="true"></div>
+          <div class="about__glow--blue" aria-hidden="true"></div>
           <div class="container">
               <div class="section__header section__header--about reveal">
                   <p class="section__label">About</p>
@@ -138,12 +140,12 @@ const schemaJson = {
 
               <div class="about reveal">
                   <div class="about__content">
-                      <p class="about__text">Bertrand Group is a design studio for businesses who know their brand or website needs work, but aren't sure where to start.</p>
+                      <p class="about__text">Bertrand Brands is a design studio for businesses who know their brand or website needs work, but aren't sure where to start.</p>
                       <p class="about__text">We create clarity. Through structured reviews, brand systems, and conversion-focused websites, we help you understand what's working, what isn't, and what to do next.</p>
                       <p class="about__text">Based in Greater Sudbury, serving Northern Ontario and clients across Canada.</p>
                   </div>
                   <div class="about__cta">
-                      <button type="button" class="about__cta-link" data-founder-trigger>
+                      <button type="button" class="about__cta-link cta-glow" data-founder-trigger>
                           <span class="about__cta-label">Who's behind the work</span>
                           <span class="about__cta-name">About the Studio →</span>
                       </button>
@@ -216,59 +218,17 @@ const schemaJson = {
                   <h2 class="section__title">What we offer</h2>
               </div>
 
-              <!-- SECTION 1: B CONVERSATION (TIER 1) -->
-              <div class="exploratory-sessions reveal" id="exploratory">
-                  <div class="exploratory-sessions__header">
-                      <a href="/exploratory" class="exploratory-sessions__brand">
-                          <img src="/assets/bg-brands-logomark.png" alt="" class="exploratory-sessions__mark" width="40" height="40" loading="lazy">
-                          <span class="exploratory-sessions__name">Conversation</span>
-                      </a>
-                      <p class="exploratory-sessions__label">Not sure where to start?</p>
-                      <p class="exploratory-sessions__description">Start with a guided intake, a paid Clarity Session, or a technical feasibility check. No obligations. Just focused guidance to help you decide what's next.</p>
+              <!-- START MODULE -->
+              <div class="start-module reveal">
+                  <p class="start-module__title">Ready to begin?</p>
+                  <div class="start-module__actions">
+                      <a href="/intake/exploratory?offer=amber-starter" class="start-module__cta--primary cta-glow cta-glow--filled">Start Building →</a>
+                      <a href="/clarity-session" class="start-module__cta--secondary cta-glow">Clarity Session · $145</a>
                   </div>
-
-                  <div class="exploratory-sessions__grid">
-                      <!-- Guided Intake -->
-                      <div class="exploratory-sessions__card" data-icon="compass">
-                          <div class="exploratory-sessions__card-header">
-                              <h3 class="exploratory-sessions__card-title">Guided Intake</h3>
-                              <span class="exploratory-sessions__card-meta">Form-based · Free</span>
-                          </div>
-                          <p class="exploratory-sessions__card-description">A structured form to clarify what you need and route you to the right service. No call required. Takes about 5 minutes.</p>
-                          <div class="exploratory-sessions__card-footer">
-                              <a href="/intake/exploratory" class="exploratory-sessions__card-cta">Start intake →</a>
-                          </div>
-                      </div>
-
-                      <!-- Clarity Session -->
-                      <div class="exploratory-sessions__card" data-icon="lightbulb">
-                          <div class="exploratory-sessions__card-header">
-                              <h3 class="exploratory-sessions__card-title">Clarity Session</h3>
-                              <span class="exploratory-sessions__card-meta">~45 min · $145 CAD</span>
-                          </div>
-                          <p class="exploratory-sessions__card-description">A working session focused on your brand, website, or systems. Walk away with diagnosis, direction, and a short written recap. Unlocks Build or Transformation.</p>
-                          <div class="exploratory-sessions__card-footer">
-                              <a href="/exploratory" class="exploratory-sessions__card-cta">Book a session →</a>
-                          </div>
-                      </div>
-
-                      <!-- Technical Feasibility Check -->
-                      <div class="exploratory-sessions__card" data-icon="settings">
-                          <div class="exploratory-sessions__card-header">
-                              <h3 class="exploratory-sessions__card-title">Technical Feasibility Check</h3>
-                              <span class="exploratory-sessions__card-meta">Verbal · By request</span>
-                          </div>
-                          <p class="exploratory-sessions__card-description">A verbal assessment of technical viability for your project. No code, no audit. Just an honest evaluation of what's possible and what's not.</p>
-                          <div class="exploratory-sessions__card-footer">
-                              <a href="/exploratory" class="exploratory-sessions__card-cta">Learn more →</a>
-                          </div>
-                      </div>
-                  </div>
+                  <p class="start-module__note">Not sure which offer? Start with an intake. It takes 5 minutes and costs nothing.</p>
               </div>
 
-              <hr class="services-divider services-divider--section">
-
-              <!-- SECTION 2: B BUILD (TIER 2) -->
+              <!-- SECTION 1: AMBER (BUILD) — Primary revenue tier -->
               <div class="focused-studio reveal" id="focus-studio">
                   <div class="focused-studio__glow" aria-hidden="true"></div>
                   <div class="focused-studio__header">
@@ -284,7 +244,7 @@ const schemaJson = {
                       <div class="focused-studio__card" data-icon="rocket">
                           <div class="focused-studio__card-header">
                               <h3 class="focused-studio__card-title">Starter Site</h3>
-                              <span class="focused-studio__card-timeline">1 business day</span>
+                              <span class="focused-studio__card-timeline">7–10 days</span>
                           </div>
                           <p class="focused-studio__card-description">A fast-launch website built for speed and simplicity. Clean, functional, and live quickly. Ideal for businesses that need a professional presence without complexity.</p>
                           <ul class="focused-studio__card-includes">
@@ -297,17 +257,17 @@ const schemaJson = {
                           <div class="focused-studio__card-footer">
                               <p class="focused-studio__card-price">$750 <span>CAD</span></p>
                               <div class="focused-studio__card-actions">
-                                  <a href="/starter-site" class="focused-studio__card-cta">Learn More →</a>
-                                  <a href="/intake/exploratory?ref=starter-site" class="focused-studio__card-cta focused-studio__card-cta--quick">Start intake →</a>
+                                  <a href="/starter-site" class="focused-studio__card-cta">View scope →</a>
+                                  <a href="/intake/exploratory?offer=amber-starter" class="focused-studio__card-cta focused-studio__card-cta--quick">Start Building →</a>
                               </div>
                           </div>
                       </div>
 
-                      <!-- One-Page Redesign -->
+                      <!-- One-Page Conversion System -->
                       <div class="focused-studio__card" data-icon="code">
                           <div class="focused-studio__card-header">
-                              <h3 class="focused-studio__card-title">One-Page System Redesign</h3>
-                              <span class="focused-studio__card-timeline">2–3 business days</span>
+                              <h3 class="focused-studio__card-title">One-Page Conversion System</h3>
+                              <span class="focused-studio__card-timeline">7 days</span>
                           </div>
                           <p class="focused-studio__card-description">A fully custom, code-based one-page website. Designed and built from scratch. No templates, no builders. Focused on narrative flow, layout precision, and polish.</p>
                           <ul class="focused-studio__card-includes">
@@ -320,17 +280,17 @@ const schemaJson = {
                           <div class="focused-studio__card-footer">
                               <p class="focused-studio__card-price">$1,250 <span>CAD</span></p>
                               <div class="focused-studio__card-actions">
-                                  <a href="/one-page-redesign" class="focused-studio__card-cta">Learn More →</a>
-                                  <a href="/intake/exploratory?ref=one-page-redesign" class="focused-studio__card-cta focused-studio__card-cta--quick">Start intake →</a>
+                                  <a href="/one-page-redesign" class="focused-studio__card-cta">View scope →</a>
+                                  <a href="/intake/exploratory?offer=amber-conversion" class="focused-studio__card-cta focused-studio__card-cta--quick">Start Building →</a>
                               </div>
                           </div>
                       </div>
 
-                      <!-- Brandmark & Visual Identity -->
+                      <!-- Brandmark Kit -->
                       <div class="focused-studio__card" data-icon="pen">
                           <div class="focused-studio__card-header">
-                              <h3 class="focused-studio__card-title">Brandmark & Visual Identity</h3>
-                              <span class="focused-studio__card-timeline">5–7 business days</span>
+                              <h3 class="focused-studio__card-title">Brandmark Kit</h3>
+                              <span class="focused-studio__card-timeline">5–7 days</span>
                           </div>
                           <p class="focused-studio__card-description">A complete, usable brandmark with supporting visual direction. Designed to work wherever your brand appears. Core brandmarking, not a full brand system.</p>
                           <ul class="focused-studio__card-includes">
@@ -343,28 +303,28 @@ const schemaJson = {
                           <div class="focused-studio__card-footer">
                               <p class="focused-studio__card-price">$950 <span>CAD</span></p>
                               <div class="focused-studio__card-actions">
-                                  <a href="/brandmark" class="focused-studio__card-cta">Learn More →</a>
-                                  <a href="/intake/exploratory?ref=brandmark" class="focused-studio__card-cta focused-studio__card-cta--quick">Start intake →</a>
+                                  <a href="/brandmark" class="focused-studio__card-cta">View scope →</a>
+                                  <a href="/intake/exploratory?offer=amber-brandmark" class="focused-studio__card-cta focused-studio__card-cta--quick">Start Building →</a>
                               </div>
                           </div>
                       </div>
                   </div>
 
-                  <p class="focused-studio__boundary">B Build engagements are intentionally fixed-scope. No integrations, dashboards, or bespoke functionality. Full brand systems, strategy, and multi-phase work are scoped under Transformation.</p>
+                  <p class="focused-studio__boundary">Amber builds are intentionally fixed-scope. No integrations, dashboards, or bespoke functionality. Full brand systems, strategy, and multi-phase work are scoped under Violet.</p>
               </div>
 
               <hr class="services-divider services-divider--section">
 
-              <!-- SECTION 3: B TRANSFORMATION (TIER 3) -->
+              <!-- SECTION 2: VIOLET (TRANSFORM) — Strategic tier -->
               <div class="core-systems-wrapper">
                   <div class="core-systems__glow" aria-hidden="true"></div>
 
                   <div class="core-systems reveal">
-                      <a href="/core-systems" class="core-systems__brand">
+                      <a href="/core-services" class="core-systems__brand">
                           <img src="/assets/bg-brands-logomark.png" alt="" class="core-systems__mark" width="40" height="40" loading="lazy">
-                          <span class="core-systems__name">Transformation</span>
+                          <span class="core-systems__name">Transform</span>
                       </a>
-                      <p class="core-systems__description">Custom brand and digital systems. Discovery-led, multi-week engagements. 50% deposit to begin, 50% on delivery.</p>
+                      <p class="core-systems__description">Discovery-led, multi-week engagements. 50% deposit to begin, 50% on delivery.</p>
                   </div>
 
                   <!-- Pricing Access Banner -->
@@ -372,7 +332,7 @@ const schemaJson = {
                       <p class="pricing-banner__text">Pricing access active for <span id="pricingTimeRemaining">~60</span> minutes</p>
                   </div>
 
-                  <!-- Transformation — 3-card grid -->
+                  <!-- Transform — 3-card grid -->
                   <div class="services services--core reveal-stagger">
                       <div class="service" data-gated="false" data-icon="refresh">
                           <p class="service__number">01</p>
@@ -382,7 +342,7 @@ const schemaJson = {
                               <p class="service__price service__price--private">Private pricing</p>
                               <div class="service__actions">
                                   <a href="/brand-system-reset" class="service__cta">Learn More →</a>
-                                  <a href="/intake/exploratory?ref=brand-system-reset" class="service__cta service__cta--quick">Start intake →</a>
+                                  <a href="/intake/exploratory?offer=violet-brandreset" class="service__cta service__cta--quick">Request a Transformation →</a>
                               </div>
                           </div>
                       </div>
@@ -395,7 +355,7 @@ const schemaJson = {
                               <p class="service__price service__price--private">Private pricing</p>
                               <div class="service__actions">
                                   <a href="/digital-platform-build" class="service__cta">Learn More →</a>
-                                  <a href="/intake/exploratory?ref=digital-platform-build" class="service__cta service__cta--quick">Start intake →</a>
+                                  <a href="/intake/exploratory?offer=violet-platform" class="service__cta service__cta--quick">Request a Transformation →</a>
                               </div>
                           </div>
                       </div>
@@ -408,8 +368,60 @@ const schemaJson = {
                               <p class="service__price service__price--private">Private pricing</p>
                               <div class="service__actions">
                                   <a href="/integrated-brand-platform" class="service__cta">Learn More →</a>
-                                  <a href="/intake/exploratory?ref=integrated-brand-platform" class="service__cta service__cta--quick">Start intake →</a>
+                                  <a href="/intake/exploratory?offer=violet-integrated" class="service__cta service__cta--quick">Request a Transformation →</a>
                               </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <hr class="services-divider services-divider--section">
+
+              <!-- SECTION 3: BLUE (CARE) — Ongoing support tier -->
+              <div class="exploratory-sessions reveal" id="care">
+                  <div class="exploratory-sessions__header">
+                      <div class="exploratory-sessions__brand">
+                          <img src="/assets/bg-brands-logomark.png" alt="" class="exploratory-sessions__mark" width="40" height="40" loading="lazy">
+                          <span class="exploratory-sessions__name">Care</span>
+                      </div>
+                      <p class="exploratory-sessions__label">Ongoing support after launch</p>
+                      <p class="exploratory-sessions__description">Structured, recurring support to keep your brand and website sharp. No hourly billing. No vague retainers. Just clear, scoped care.</p>
+                  </div>
+
+                  <div class="exploratory-sessions__grid">
+                      <!-- Care Essentials -->
+                      <div class="exploratory-sessions__card" data-icon="compass">
+                          <div class="exploratory-sessions__card-header">
+                              <h3 class="exploratory-sessions__card-title">Care Essentials</h3>
+                              <span class="exploratory-sessions__card-meta">Routine support</span>
+                          </div>
+                          <p class="exploratory-sessions__card-description">Keep your site healthy with routine updates, small content edits, basic performance checks, light troubleshooting, and priority fixes.</p>
+                          <div class="exploratory-sessions__card-footer">
+                              <a href="/intake/exploratory?offer=blue-essentials" class="exploratory-sessions__card-cta">Request Ongoing Care →</a>
+                          </div>
+                      </div>
+
+                      <!-- Growth Care -->
+                      <div class="exploratory-sessions__card" data-icon="lightbulb">
+                          <div class="exploratory-sessions__card-header">
+                              <h3 class="exploratory-sessions__card-title">Growth Care</h3>
+                              <span class="exploratory-sessions__card-meta">Monthly improvements</span>
+                          </div>
+                          <p class="exploratory-sessions__card-description">Monthly improvements, new sections and landing page updates, analytics review with action list, and promo or seasonal refreshes.</p>
+                          <div class="exploratory-sessions__card-footer">
+                              <a href="/intake/exploratory?offer=blue-growth" class="exploratory-sessions__card-cta">Request Ongoing Care →</a>
+                          </div>
+                      </div>
+
+                      <!-- Partner Care -->
+                      <div class="exploratory-sessions__card" data-icon="settings">
+                          <div class="exploratory-sessions__card-header">
+                              <h3 class="exploratory-sessions__card-title">Partner Care</h3>
+                              <span class="exploratory-sessions__card-meta">Priority partnership</span>
+                          </div>
+                          <p class="exploratory-sessions__card-description">Priority queue, recurring CRO iterations, quarterly roadmap and planning sessions, and higher-touch support with faster turnaround.</p>
+                          <div class="exploratory-sessions__card-footer">
+                              <a href="/intake/exploratory?offer=blue-partner" class="exploratory-sessions__card-cta">Request Ongoing Care →</a>
                           </div>
                       </div>
                   </div>
@@ -453,6 +465,7 @@ const schemaJson = {
       <section class="section section--alt" id="contact">
           <div class="container">
               <div class="contact reveal">
+                  <div class="contact__spotlight contact__spotlight--amber" aria-hidden="true"></div>
                   <div class="contact__spotlight contact__spotlight--violet" aria-hidden="true"></div>
                   <div class="contact__spotlight contact__spotlight--blue" aria-hidden="true"></div>
                   <h2 class="contact__title">Get in touch</h2>
@@ -478,7 +491,7 @@ const schemaJson = {
                           <textarea class="contact-form__textarea" id="message" name="message" required placeholder="What's on your mind?"></textarea>
                       </div>
 
-                      <button class="contact-form__submit" type="submit">Send Message</button>
+                      <button class="contact-form__submit cta-glow" type="submit">Send Message</button>
                       <div class="contact-form__feedback" id="formFeedback"></div>
                   </form>
 
@@ -489,12 +502,13 @@ const schemaJson = {
 
       <!-- Client Portal -->
       <section class="section" id="portal">
+          <div class="portal__glow" aria-hidden="true"></div>
           <div class="container">
               <div class="portal reveal">
                   <div class="portal__content">
                       <h2 class="portal__title">Client Portal</h2>
                       <p class="portal__description">A dedicated space for active clients to access project files, timelines, and communication.</p>
-                      <a href="https://clients.bertrandgroup.ca" class="portal__link">Access Portal →</a>
+                      <a href="https://clients.bertrandgroup.ca" class="portal__link cta-glow">Access Portal →</a>
                   </div>
               </div>
           </div>
@@ -512,7 +526,7 @@ const schemaJson = {
               </div>
               <div class="footer__inner">
                   <div class="footer__left">
-                      <p class="footer__copyright">&copy; {currentYear} Bertrand Group. All rights reserved.</p>
+                      <p class="footer__copyright">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
                       <p class="footer__parent"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
                   </div>
                   <div class="footer__contact">
@@ -573,13 +587,13 @@ const schemaJson = {
           <h2 class="founder-lightbox__title" id="founderLightboxTitle">Scott Bertrand</h2>
           <p class="founder-lightbox__role">Founder & Creative / Strategic Lead</p>
           <p class="founder-lightbox__text">I'm Scott Bertrand, a brand and web systems builder based in Northern Ontario. I design calm, premium digital experiences and build the structure behind them so they stay clear, consistent, and easy to run.</p>
-          <p class="founder-lightbox__text">I lead Bertrand Group, where I help founders refine identity, rebuild websites, and install durable systems that hold up in the real world. My focus is clarity over cleverness, structure over noise, and work that feels finished, and stays that way.</p>
+          <p class="founder-lightbox__text">I lead Bertrand Brands, where I help founders refine identity, rebuild websites, and install durable systems that hold up in the real world. My focus is clarity over cleverness, structure over noise, and work that feels finished, and stays that way.</p>
           <hr class="founder-lightbox__divider">
           <h3 class="founder-lightbox__title">Devin Major</h3>
           <p class="founder-lightbox__role">Full-Stack Developer & Architect</p>
           <p class="founder-lightbox__text">Devin is a full-stack software developer and architect, translating strategy and creative direction into durable, high-performance systems. Architecture, data, security, and maintainability.</p>
           <hr class="founder-lightbox__divider">
-          <p class="founder-lightbox__studio-line">Clients work with Bertrand Group as a studio, with Scott leading strategy and direction, and the team executing the systems behind it.</p>
+          <p class="founder-lightbox__studio-line">Clients work with Bertrand Brands as a studio, with Scott leading strategy and direction, and the team executing the systems behind it.</p>
           <a href="/scottbertrand" class="founder-lightbox__cta">Learn more about Scott →</a>
       </div>
   </div>
@@ -1399,7 +1413,7 @@ const schemaJson = {
   </script>
 
   <!-- Floating Phone Button -->
-  <a href="tel:+17054133705" class="floating-phone" aria-label="Call Bertrand Group" title="+1 (705) 413-3705">
+  <a href="tel:+17054133705" class="floating-phone" aria-label="Call Bertrand Brands" title="+1 (705) 413-3705">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
       </svg>
