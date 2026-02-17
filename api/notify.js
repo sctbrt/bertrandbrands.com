@@ -64,7 +64,7 @@ export default async function handler(req, res) {
   }
 
   // Determine notification type based on request body
-  const { type, name, email, service, message, page, referrer,
+  const { type, name, email, service, message, page, referrer, utm,
           source, business, website, details, concerns, situation,
           budget, timeline, phone, description, challenge,
           tier, price, context, outcome, industry, contact_pref,
@@ -90,20 +90,17 @@ export default async function handler(req, res) {
     if (type === 'visitor') {
       // Visitor notification
 
-      // Use ip-api.com for reliable geolocation
+      // Geolocation via Vercel headers (free, instant, no external API call)
+      const geoCity = req.headers['x-vercel-ip-city'] ? decodeURIComponent(req.headers['x-vercel-ip-city']) : '';
+      const geoRegion = req.headers['x-vercel-ip-country-region'] || '';
+      const geoCountry = req.headers['x-vercel-ip-country'] || '';
       let location = '';
-      if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
-        try {
-          const geoRes = await fetch(`https://ip-api.com/json/${ip}?fields=city,regionCode,country,isp`);
-          if (geoRes.ok) {
-            const geo = await geoRes.json();
-            if (geo.city) {
-              location = `${geo.city}${geo.regionCode ? `, ${geo.regionCode}` : ''}${geo.country ? `, ${geo.country}` : ''}`;
-            }
-          }
-        } catch (geoErr) {
-          // Silently fail - location is optional
-        }
+      if (geoCity) {
+        location = geoCity;
+        if (geoRegion) location += `, ${geoRegion}`;
+        if (geoCountry) location += `, ${geoCountry}`;
+      } else if (geoCountry) {
+        location = geoCountry;
       }
 
       // Parse user agent for device summary
@@ -119,8 +116,26 @@ export default async function handler(req, res) {
         device = `${isMobile ? '📱' : '💻'} ${browser}`;
       }
 
+      // Build source attribution line (UTM > referrer > nothing)
+      let sourceLine = '';
+      if (utm && utm.source) {
+        const parts = [utm.source];
+        if (utm.medium) parts.push(utm.medium);
+        if (utm.campaign) parts.push(utm.campaign);
+        sourceLine = parts.join(' / ');
+        if (utm.gclid) sourceLine += ' (Google Ads)';
+      } else if (referrer) {
+        // Extract domain from referrer for cleaner display
+        try {
+          const refHost = new URL(referrer).hostname.replace('www.', '');
+          sourceLine = refHost;
+        } catch (e) {
+          sourceLine = referrer;
+        }
+      }
+
       notificationMessage = `📍 ${page || '/'}`;
-      if (referrer) notificationMessage += `\nFrom: ${referrer}`;
+      if (sourceLine) notificationMessage += `\n🔗 ${sourceLine}`;
       if (location) notificationMessage += `\n📌 ${location}`;
       if (device) notificationMessage += `\n${device}`;
 
@@ -132,19 +147,17 @@ export default async function handler(req, res) {
     } else if (type === 'intake') {
       // Intake form submission (high priority with distinct sound)
 
+      // Geolocation via Vercel headers (free, instant, no external API call)
+      const intakeCity = req.headers['x-vercel-ip-city'] ? decodeURIComponent(req.headers['x-vercel-ip-city']) : '';
+      const intakeRegion = req.headers['x-vercel-ip-country-region'] || '';
+      const intakeCountry = req.headers['x-vercel-ip-country'] || '';
       let location = '';
-      if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
-        try {
-          const geoRes = await fetch(`https://ip-api.com/json/${ip}?fields=city,regionCode,country`);
-          if (geoRes.ok) {
-            const geo = await geoRes.json();
-            if (geo.city) {
-              location = `${geo.city}${geo.regionCode ? `, ${geo.regionCode}` : ''}${geo.country ? `, ${geo.country}` : ''}`;
-            }
-          }
-        } catch (geoErr) {
-          // Silently fail - location is optional
-        }
+      if (intakeCity) {
+        location = intakeCity;
+        if (intakeRegion) location += `, ${intakeRegion}`;
+        if (intakeCountry) location += `, ${intakeCountry}`;
+      } else if (intakeCountry) {
+        location = intakeCountry;
       }
 
       // Source labels for notification title

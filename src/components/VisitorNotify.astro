@@ -1,7 +1,8 @@
 ---
 /**
  * VisitorNotify — Silent Pushover notification on page load.
- * Sends page path + referrer to /api/notify. No visible side effects.
+ * Sends page path, referrer, and UTM params to /api/notify.
+ * Geolocation uses Vercel headers (server-side). No visible side effects.
  */
 ---
 
@@ -14,13 +15,23 @@
   }
   // Skip visitor notifications for site owner
   try { if (localStorage.getItem('bb_owner') === '1') return; } catch(e) {}
+
+  // Capture UTM parameters for source attribution
+  var params = new URLSearchParams(window.location.search);
+  var utm = {};
+  if (params.get('utm_source')) utm.source = params.get('utm_source');
+  if (params.get('utm_medium')) utm.medium = params.get('utm_medium');
+  if (params.get('utm_campaign')) utm.campaign = params.get('utm_campaign');
+  if (params.get('gclid')) utm.gclid = '1';
+
   fetch('/api/notify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       type: 'visitor',
       page: window.location.pathname,
-      referrer: document.referrer || ''
+      referrer: document.referrer || '',
+      utm: Object.keys(utm).length > 0 ? utm : undefined
     })
   }).catch(function() {});
 })();

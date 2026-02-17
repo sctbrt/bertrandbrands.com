@@ -554,10 +554,64 @@ Pushover notifications provide real-time alerts for visitor activity, form submi
 - **bertrandbrands.ca** — `api/notify.js` handles visitor + form + intake notifications; `api/snapshot/book.js` handles snapshot bookings directly
 - **system-build** — `api/intake/formspree/route.ts` and `api/intake/google-ads/route.ts` each send Pushover notifications inline after creating leads
 
+**Geolocation (LOCKED):**
+- Uses **Vercel geo headers** (`x-vercel-ip-city`, `x-vercel-ip-country-region`, `x-vercel-ip-country`) — free, instant, no external API
+- Applied to both visitor and intake notifications
+- Do NOT use ip-api.com or any external geolocation API (fails from cloud/serverless IPs)
+- City names are URL-encoded by Vercel; always `decodeURIComponent()` the city header
+
+**Source Attribution (LOCKED):**
+- `VisitorNotify.astro` captures UTM parameters (`utm_source`, `utm_medium`, `utm_campaign`) and `gclid` from the URL
+- `api/notify.js` builds a source line using priority: **UTM params > referrer domain > nothing**
+- UTM display format: `google / cpc / sudbury-campaign (Google Ads)`
+- Referrer display format: cleaned domain only (e.g., `google.com` not `https://www.google.com/search?q=...`)
+- `gclid` presence is sent as a boolean flag (`'1'`), never the actual value (PII)
+
 **Owner Exclusion:**
 - Visit `bertrandbrands.ca/?owner` once to set a `localStorage` flag (`bb_owner`)
 - `VisitorNotify.astro` checks this flag and skips visitor notifications for the site owner
 - Intake/form notifications are NOT suppressed (those are always important)
+
+**Visitor Tracking Coverage (LOCKED):**
+
+Every page in `src/pages/` **must** include `VisitorNotify`. No exceptions. This is enforced either by:
+1. Direct import: `import VisitorNotify from '../components/VisitorNotify.astro';` + `<VisitorNotify />` before `</BaseLayout>`
+2. Shared layout: `ServiceDetailLayout.astro` and `IntakeLayout.astro` include it automatically
+
+**Current coverage (28/28 pages):**
+
+| Page | Source |
+|------|--------|
+| `index.astro` | Direct |
+| `focus-studio.astro` | Direct |
+| `core-services.astro` | Direct |
+| `exploratory.astro` | Direct |
+| `sudbury.astro` | Direct |
+| `clarity-session.astro` | Direct |
+| `scottbertrand.astro` | Direct |
+| `brand-clarity-diagnostic.astro` | Direct |
+| `website-conversion-snapshot.astro` | Direct |
+| `booking/schedule.astro` | Direct |
+| `booking-confirmed.astro` | Direct |
+| `payment-confirmed.astro` | Direct |
+| `snapshot-confirmed.astro` | Direct |
+| `intake/exploratory.astro` | Via IntakeLayout |
+| `intake/brand-clarity-diagnostic.astro` | Direct |
+| `intake/website-conversion-snapshot.astro` | Direct |
+| `thanks.astro` | Direct |
+| `404.astro` | Direct |
+| `privacy.astro` | Direct |
+| `group/index.astro` | Direct |
+| `sitemapX.astro` | Direct |
+| `maintenance.astro` | Direct |
+| `starter-site.astro` | Via ServiceDetailLayout |
+| `one-page-redesign.astro` | Via ServiceDetailLayout |
+| `brandmark.astro` | Via ServiceDetailLayout |
+| `brand-system-reset.astro` | Via ServiceDetailLayout |
+| `digital-platform-build.astro` | Via ServiceDetailLayout |
+| `integrated-brand-platform.astro` | Via ServiceDetailLayout |
+
+**Rule:** When adding a new page, include `<VisitorNotify />` or use a layout that includes it. If a page is missing visitor tracking, it is a bug.
 
 ---
 
