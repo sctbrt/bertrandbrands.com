@@ -33,6 +33,13 @@ Bertrand Brands | Brand & Web Systems is a brand, web, and systems studio led by
 
 Transformation engagements use private pricing and require a discovery process to begin.
 
+### Care (Ongoing monthly support)
+- **Care Essentials** — $249/mo CAD. Routine updates, small edits, and quick fixes. Response within 1 business day. 4 credits/month.
+- **Growth Care** — $649/mo CAD. Monthly improvements, landing page iteration, and action list. Response same or next business day. 10 credits/month.
+- **Partner Care** — Private pricing. Priority partnership with faster turnaround. Same business day response. 24 credits/month. Limited availability.
+
+Care plans are scoped monthly subscriptions. Credits cover defined units of work (Micro, Standard, Advanced). Anything outside scope becomes a fixed-scope Build quote.
+
 ## Team
 - **Scott Bertrand** — Brand strategy, design direction, client communication, and operations.
 - **Devin Major** — Full-stack software development & architecture, performance, security, and technical feasibility.

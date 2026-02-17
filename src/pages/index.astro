@@ -50,9 +50,9 @@ const schemaJson = {
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand System Reset" }, "description": "Strategic brand diagnosis, realignment, and implementation roadmap" },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Platform Build" }, "description": "Full-stack digital platform with authentication, dashboards, and scalable architecture" },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Integrated Brand + Platform" }, "description": "Brand-informed technical design and system-aware brand execution" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Care Essentials" }, "description": "Routine updates, content edits, performance checks, and priority fixes" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Growth Care" }, "description": "Monthly improvements, landing page updates, analytics review, and seasonal refreshes" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Partner Care" }, "description": "Priority queue, recurring CRO iterations, quarterly roadmap, and higher-touch support" }
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Care Essentials" }, "price": "249", "priceCurrency": "CAD", "description": "Routine updates, small edits, and quick fixes to keep your site healthy" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Growth Care" }, "price": "649", "priceCurrency": "CAD", "description": "Monthly improvements, landing page iteration, and action list to improve conversion and clarity" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Partner Care" }, "description": "Priority partnership with faster turnaround, recurring CRO, and quarterly roadmap" }
     ]
   }
 };
@@ -385,7 +385,7 @@ const schemaJson = {
                           <span class="exploratory-sessions__name">Care</span>
                       </div>
                       <p class="exploratory-sessions__label">Ongoing support after launch</p>
-                      <p class="exploratory-sessions__description">Structured, recurring support to keep your brand and website sharp. No hourly billing. No vague retainers. Just clear, scoped care.</p>
+                      <p class="exploratory-sessions__description">Scoped monthly support to keep your brand and website sharp. No hourly billing. No vague retainers. Just clear, recurring care.</p>
                   </div>
 
                   <div class="exploratory-sessions__grid">
@@ -395,9 +395,14 @@ const schemaJson = {
                               <h3 class="exploratory-sessions__card-title">Care Essentials</h3>
                               <span class="exploratory-sessions__card-meta">Routine support</span>
                           </div>
-                          <p class="exploratory-sessions__card-description">Keep your site healthy with routine updates, small content edits, basic performance checks, light troubleshooting, and priority fixes.</p>
+                          <p class="exploratory-sessions__card-description">Keep your site healthy with routine updates, small edits, and quick fixes. Text swaps, image changes, metadata tweaks, and light troubleshooting.</p>
+                          <ul class="exploratory-sessions__card-sla">
+                              <li>Response within 1 business day</li>
+                              <li>3 to 5 business day turnaround</li>
+                          </ul>
                           <div class="exploratory-sessions__card-footer">
-                              <a href="/intake/exploratory?offer=blue-essentials" class="exploratory-sessions__card-cta">Request Ongoing Care →</a>
+                              <p class="exploratory-sessions__card-price">$249<span>/mo CAD</span></p>
+                              <a href="/intake/exploratory?offer=care-essentials" class="exploratory-sessions__card-cta">Start Care Essentials →</a>
                           </div>
                       </div>
 
@@ -407,9 +412,14 @@ const schemaJson = {
                               <h3 class="exploratory-sessions__card-title">Growth Care</h3>
                               <span class="exploratory-sessions__card-meta">Monthly improvements</span>
                           </div>
-                          <p class="exploratory-sessions__card-description">Monthly improvements, new sections and landing page updates, analytics review with action list, and promo or seasonal refreshes.</p>
+                          <p class="exploratory-sessions__card-description">Monthly improvements, landing page iteration, and an action list to steadily improve conversion and clarity. New sections, analytics review, and seasonal refreshes.</p>
+                          <ul class="exploratory-sessions__card-sla">
+                              <li>Response same or next business day</li>
+                              <li>1 to 3 day turnaround on small items</li>
+                          </ul>
                           <div class="exploratory-sessions__card-footer">
-                              <a href="/intake/exploratory?offer=blue-growth" class="exploratory-sessions__card-cta">Request Ongoing Care →</a>
+                              <p class="exploratory-sessions__card-price">$649<span>/mo CAD</span></p>
+                              <a href="/intake/exploratory?offer=growth-care" class="exploratory-sessions__card-cta">Start Growth Care →</a>
                           </div>
                       </div>
 
@@ -419,12 +429,58 @@ const schemaJson = {
                               <h3 class="exploratory-sessions__card-title">Partner Care</h3>
                               <span class="exploratory-sessions__card-meta">Priority partnership</span>
                           </div>
-                          <p class="exploratory-sessions__card-description">Priority queue, recurring CRO iterations, quarterly roadmap and planning sessions, and higher-touch support with faster turnaround.</p>
+                          <p class="exploratory-sessions__card-description">Priority queue with faster turnaround, recurring CRO iterations, quarterly roadmap sessions, and higher-touch support.</p>
+                          <ul class="exploratory-sessions__card-sla">
+                              <li>Same business day response</li>
+                              <li>24 to 72 hour target turnaround</li>
+                          </ul>
+                          <p class="exploratory-sessions__card-scarcity">Limited seats. Fit + capacity confirmed before onboarding.</p>
                           <div class="exploratory-sessions__card-footer">
-                              <a href="/intake/exploratory?offer=blue-partner" class="exploratory-sessions__card-cta">Request Ongoing Care →</a>
+                              <a href="/intake/exploratory?offer=partner-care" class="exploratory-sessions__card-cta">Request Partner Care →</a>
                           </div>
                       </div>
                   </div>
+
+                  <!-- How Care Works — expandable -->
+                  <details class="care-details" id="care-details">
+                      <summary class="care-details__trigger">How Care works</summary>
+                      <div class="care-details__content">
+                          <div class="care-details__section">
+                              <h4 class="care-details__heading">Monthly Care Plans</h4>
+                              <ul class="care-details__list">
+                                  <li>Each plan is a scoped monthly subscription. You get a set number of credits each month.</li>
+                                  <li>Credits cover everything from small text edits to new page sections and CRO passes.</li>
+                                  <li>Anything outside your plan scope becomes a fixed-scope Build quote. No surprises.</li>
+                              </ul>
+                          </div>
+                          <div class="care-details__section">
+                              <h4 class="care-details__heading">What counts as a credit</h4>
+                              <div class="care-details__credits">
+                                  <div class="care-details__credit">
+                                      <span class="care-details__credit-label">Micro <span class="care-details__credit-cost">1 credit</span></span>
+                                      <p class="care-details__credit-desc">Text swap, image swap, link or button fix, metadata tweak, small CSS tweak, add or remove a simple block.</p>
+                                  </div>
+                                  <div class="care-details__credit">
+                                      <span class="care-details__credit-label">Standard <span class="care-details__credit-cost">2 credits</span></span>
+                                      <p class="care-details__credit-desc">New section on an existing page, landing page iteration, form changes, simple embed or integration swap, blog post upload and formatting.</p>
+                                  </div>
+                                  <div class="care-details__credit">
+                                      <span class="care-details__credit-label">Advanced <span class="care-details__credit-cost">4 credits</span></span>
+                                      <p class="care-details__credit-desc">New page from existing patterns, heavier layout work, performance sweep, structured CRO pass and implementation.</p>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="care-details__section">
+                              <h4 class="care-details__heading">Monthly credits by plan</h4>
+                              <ul class="care-details__list">
+                                  <li><strong>Essentials:</strong> 4 credits / month</li>
+                                  <li><strong>Growth:</strong> 10 credits / month</li>
+                                  <li><strong>Partner:</strong> 24 credits / month</li>
+                              </ul>
+                              <p class="care-details__note">Credits are not hours. They represent scoped units of work.</p>
+                          </div>
+                      </div>
+                  </details>
               </div>
 
           </div>
@@ -792,6 +848,21 @@ const schemaJson = {
                   var link = card.querySelector('.focused-studio__card-cta');
                   if (link) window.location.href = link.href;
               });
+          });
+      })();
+
+      // Prevent scroll-snap jump when Care accordion toggles
+      (function() {
+          var details = document.getElementById('care-details');
+          if (!details) return;
+          details.addEventListener('toggle', function() {
+              document.body.classList.remove('scroll-snap-enabled');
+              setTimeout(function() {
+                  if (document.body.dataset.scrollMode === 'fullpage' ||
+                      window.matchMedia('(max-width: 768px)').matches) {
+                      document.body.classList.add('scroll-snap-enabled');
+                  }
+              }, 400);
           });
       })();
   </script>

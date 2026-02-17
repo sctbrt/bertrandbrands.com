@@ -78,14 +78,15 @@ If a technical or UX decision introduces confusion, pressure, or ambiguity, it v
 
 ### 1.4 Service Architecture
 
-Bertrand Brands operates under **THREE strictly hierarchical service tiers**.
+Bertrand Brands operates under **THREE project tiers + one recurring support tier**.
 
-**Mental Model:** Conversation → Build → Transformation
+**Mental Model:** Conversation → Build → Transformation | Care (ongoing)
 
 **Hard Constraints:**
 - Tier 1: B Conversation (Exploratory) → **3 offerings only**
 - Tier 2: B Build (Focus Studio) → **3 offerings only**
 - Tier 3: B Transformation (Core Systems) → **3 offerings only**
+- B Care (Ongoing Support) → **3 plans only**
 
 Claude must not add services, rename tiers, or exceed these limits.
 
@@ -155,6 +156,31 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 
 ---
 
+**B Care** (Ongoing Support)
+
+Purpose: Scoped monthly subscription support after launch. Not project work.
+
+| Plan | Price | Credits/mo | Response | Turnaround |
+|------|-------|-----------|----------|------------|
+| Care Essentials | $249/mo CAD | 4 | Within 1 business day | 3-5 business days |
+| Growth Care | $649/mo CAD | 10 | Same or next business day | 1-3 days (Micro), 3-7 days (Standard/Advanced) |
+| Partner Care | Gated | 24 | Same business day | 24-72 hours target |
+
+**Credit Definitions:**
+- Micro (1 credit): text swap, image swap, link/button fix, metadata tweak, small CSS tweak, add/remove a simple block
+- Standard (2 credits): new section on existing page, landing page iteration, form changes, embed/integration swap, blog post upload + formatting
+- Advanced (4 credits): new page from existing patterns, heavier layout work, performance sweep, structured CRO pass + implementation
+
+**Rules:**
+- Credits are not hours. They represent scoped units of work.
+- Anything outside plan scope becomes a fixed-scope Build quote.
+- Partner Care uses scarcity framing: "Limited seats. Fit + capacity confirmed before onboarding."
+- Essentials and Growth show pricing publicly. Partner pricing is gated.
+- Use "Monthly Care Plan" or "scoped monthly support" language. Avoid "retainer."
+- Care plans use `?offer=care-essentials`, `?offer=growth-care`, `?offer=partner-care`
+
+---
+
 **Key Principles:**
 - No open-ended scope
 - No vague deliverables
@@ -171,7 +197,7 @@ Purpose: Discovery-led, multi-week engagements for brands requiring structural c
 1. **Start Module** — Compact entry CTA ("Ready to begin?")
 2. **B Build (Amber)** — Primary, largest, most prominent (3 cards)
 3. **B Transformation (Violet)** — Strategic tier with pricing gate (3 cards)
-4. **B Care (Blue)** — Ongoing support tier (3 cards, no pricing)
+4. **B Care (Blue)** — Ongoing support tier (3 cards, Essentials + Growth priced, Partner gated)
 
 **Key Visual Rules:**
 - B Build is the primary revenue engine and Google Ads entry point
