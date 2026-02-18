@@ -501,6 +501,7 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
 /* Type Scale */
+--text-2xs: 0.6875rem;   /* 11px */
 --text-xs: 0.75rem;      /* 12px */
 --text-sm: 0.875rem;     /* 14px */
 --text-base: 1rem;       /* 16px */

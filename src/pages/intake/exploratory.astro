@@ -36,22 +36,101 @@ const currentYear = new Date().getFullYear();
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 0.5rem;
-                margin-bottom: var(--space-xs);
+                gap: 0.625rem;
+                margin-bottom: var(--space-sm);
             }
 
             .intake-brand__mark {
-                width: 24px;
-                height: 24px;
+                width: 36px;
+                height: 36px;
                 filter: brightness(0) invert(1);
             }
 
             .intake-brand__name {
                 font-family: halyard-display, sans-serif;
-                font-size: var(--text-lg);
+                font-size: var(--text-3xl);
                 font-weight: 300;
                 letter-spacing: 0.02em;
-                color: #2563EB;
+                color: var(--text);
+            }
+
+            .intake-illustration-wrap {
+                position: relative;
+                display: block;
+                margin: 0 auto var(--space-sm);
+                width: clamp(260px, 50vw, 480px);
+            }
+
+            /* Tri-colour glow behind illustration */
+            .intake-illustration-wrap::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 90%;
+                height: 200%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(ellipse,
+                    rgba(139, 92, 246, 0.4) 0%,
+                    rgba(217, 119, 6, 0.15) 30%,
+                    rgba(37, 99, 235, 0.15) 60%,
+                    transparent 80%);
+                filter: blur(35px);
+                opacity: 0;
+                pointer-events: none;
+                z-index: 0;
+                animation: convGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
+            }
+
+            .intake-illustration {
+                position: relative;
+                z-index: 1;
+                display: block;
+                width: 100%;
+                height: auto;
+                pointer-events: none;
+                opacity: 0;
+                transform: scale(0.92);
+                animation: convFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+            }
+
+            /* Line-draw animation */
+            .intake-illustration line,
+            .intake-illustration path {
+                stroke-dasharray: 600;
+                stroke-dashoffset: 600;
+                animation: convLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+            }
+
+            /* Filled shapes fade in after lines draw */
+            .intake-illustration circle[fill]:not([fill="none"]) {
+                opacity: 0;
+                animation: convLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards, convFillReveal 1s ease 1.4s forwards;
+            }
+
+            @keyframes convGlowPulse {
+                0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+                30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+                100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            }
+
+            @keyframes convFadeIn {
+                to { opacity: 1; transform: scale(1); }
+            }
+
+            @keyframes convLineDraw {
+                to { stroke-dashoffset: 0; }
+            }
+
+            @keyframes convFillReveal {
+                to { opacity: 1; }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .intake-illustration-wrap::before { animation: none; opacity: 0.5; }
+                .intake-illustration { animation: none; opacity: 1; transform: none; }
+                .intake-illustration line, .intake-illustration path { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; }
+                .intake-illustration circle[fill]:not([fill="none"]) { animation: none; opacity: 1; }
             }
 
             .intake-title {
@@ -86,7 +165,10 @@ const currentYear = new Date().getFullYear();
 
             .intake-progress__fill {
                 height: 100%;
-                background: #2563EB;
+                background: linear-gradient(90deg,
+                    rgba(217, 119, 6, 1),
+                    rgba(139, 92, 246, 1),
+                    rgba(37, 99, 235, 1));
                 transition: width 0.3s ease;
             }
 
@@ -361,14 +443,66 @@ const currentYear = new Date().getFullYear();
 
             .intake-nav__btn--next,
             .intake-nav__btn--submit {
-                background: #2563EB;
-                border: none;
-                color: #fff;
+                position: relative;
+                background: var(--bg-elevated);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                color: var(--text);
+            }
+
+            .intake-nav__btn--next::before,
+            .intake-nav__btn--submit::before {
+                content: '';
+                position: absolute;
+                inset: -1px;
+                border-radius: inherit;
+                padding: 1px;
+                background: linear-gradient(90deg,
+                    rgba(217, 119, 6, 0.4),
+                    rgba(139, 92, 246, 0.4),
+                    rgba(37, 99, 235, 0.4),
+                    rgba(217, 119, 6, 0.4));
+                background-size: 300% 100%;
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                opacity: 0.6;
+                transition: opacity var(--duration-fast) var(--ease-out);
             }
 
             .intake-nav__btn--next:hover,
             .intake-nav__btn--submit:hover {
-                background: #1D4ED8;
+                background: var(--bg-elevated);
+                border-color: transparent;
+            }
+
+            .intake-nav__btn--next:hover::before,
+            .intake-nav__btn--submit:hover::before {
+                opacity: 1;
+                background: linear-gradient(90deg,
+                    rgba(217, 119, 6, 0.8),
+                    rgba(139, 92, 246, 0.8),
+                    rgba(37, 99, 235, 0.8),
+                    rgba(217, 119, 6, 0.8));
+                background-size: 300% 100%;
+                animation: btnGradientShift 3s linear infinite;
+            }
+
+            .intake-nav__btn--next:active::before,
+            .intake-nav__btn--submit:active::before {
+                opacity: 1;
+                background: linear-gradient(90deg,
+                    rgba(217, 119, 6, 1),
+                    rgba(139, 92, 246, 1),
+                    rgba(37, 99, 235, 1),
+                    rgba(217, 119, 6, 1));
+                background-size: 300% 100%;
+                animation: btnGradientShift 1.5s linear infinite;
+            }
+
+            @keyframes btnGradientShift {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 100% 50%; }
             }
 
             .intake-nav__btn:disabled {
@@ -523,6 +657,16 @@ const currentYear = new Date().getFullYear();
             }
 
             @media (max-width: 768px) {
+                .intake-brand__name {
+                    font-size: var(--text-2xl);
+                }
+                .intake-brand__mark {
+                    width: 28px;
+                    height: 28px;
+                }
+                .intake-illustration-wrap {
+                    width: clamp(200px, 60vw, 320px);
+                }
                 .intake-spotlight {
                     filter: blur(80px);
                 }
@@ -548,6 +692,33 @@ const currentYear = new Date().getFullYear();
                 <img src="/assets/bg-brands-logomark.png" alt="" class="intake-brand__mark" width="40" height="40">
                 <span class="intake-brand__name">Conversation</span>
             </div>
+
+            <div class="intake-illustration-wrap">
+            <svg class="intake-illustration" viewBox="0 0 480 120" fill="none" aria-hidden="true">
+                <!-- Three converging paths — amber, violet, blue meeting at center -->
+                <!-- Amber path (top-left to center) -->
+                <path d="M 40 20 Q 160 25 240 60" stroke="rgba(217, 119, 6, 0.30)" stroke-width="1.5" fill="none"/>
+                <path d="M 40 20 Q 160 25 240 60" stroke="rgba(217, 119, 6, 0.08)" stroke-width="6" fill="none"/>
+                <circle cx="40" cy="20" r="3" fill="rgba(217, 119, 6, 0.25)"/>
+                <!-- Violet path (left to center) -->
+                <path d="M 20 60 Q 130 55 240 60" stroke="rgba(139, 92, 246, 0.30)" stroke-width="1.5" fill="none"/>
+                <path d="M 20 60 Q 130 55 240 60" stroke="rgba(139, 92, 246, 0.08)" stroke-width="6" fill="none"/>
+                <circle cx="20" cy="60" r="3" fill="rgba(139, 92, 246, 0.25)"/>
+                <!-- Blue path (bottom-left to center) -->
+                <path d="M 40 100 Q 160 95 240 60" stroke="rgba(37, 99, 235, 0.30)" stroke-width="1.5" fill="none"/>
+                <path d="M 40 100 Q 160 95 240 60" stroke="rgba(37, 99, 235, 0.08)" stroke-width="6" fill="none"/>
+                <circle cx="40" cy="100" r="3" fill="rgba(37, 99, 235, 0.25)"/>
+                <!-- Convergence point -->
+                <circle cx="240" cy="60" r="6" stroke="rgba(255, 255, 255, 0.20)" stroke-width="1.5" fill="none"/>
+                <circle cx="240" cy="60" r="2.5" fill="rgba(255, 255, 255, 0.15)"/>
+                <!-- Forward path (center to right, single white) -->
+                <path d="M 240 60 Q 360 60 440 60" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" fill="none" stroke-dasharray="4 6"/>
+                <circle cx="440" cy="60" r="3" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" fill="none"/>
+                <!-- Subtle horizontal guide -->
+                <line x1="60" y1="60" x2="420" y2="60" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+            </svg>
+            </div>
+
             <h1 class="intake-title">Guided Intake</h1>
             <p class="intake-subtitle">Tell us about your business and what's on your mind. Takes about 5 minutes.</p>
 

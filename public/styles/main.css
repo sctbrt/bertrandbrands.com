@@ -402,10 +402,10 @@
            DEFAULT = collapse transitions (opacity fades first, then width shrinks) */
         .header__wordmark-sub {
             display: inline-block;
-            font-family: var(--font-body);
-            font-weight: var(--font-light);
-            font-size: 0.85em;
-            letter-spacing: 0.10em;
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: 1em;
+            letter-spacing: 0.20em;
             opacity: 0;
             max-width: 0;
             overflow: hidden;
@@ -1506,7 +1506,7 @@
             padding-top: 4rem;
             padding-bottom: 4rem;
             background: var(--bg);
-            contain: layout style;
+            contain: style;
             /* Soft fade at top edge — extended for smoother intro→hero blend */
             -webkit-mask-image: linear-gradient(to bottom,
                 transparent 0%,
@@ -2159,6 +2159,13 @@
             contain: layout style;
         }
 
+        /* About section needs visible overflow for ambient glows */
+        #about {
+            position: relative;
+            contain: style;
+            overflow: visible;
+        }
+
         .section--alt {
             background: var(--bg-elevated);
             position: relative;
@@ -2397,13 +2404,14 @@
             overflow: hidden;
         }
 
-        /* Desktop: scale process section to fill viewport */
+        /* Desktop: process section sits within viewport, content pushed low */
         @media (min-width: 769px) {
             .section--process {
                 min-height: 100vh;
                 min-height: 100dvh;
                 display: flex;
-                align-items: center;
+                align-items: flex-end;
+                padding-bottom: var(--space-xl);
             }
 
             .section--process > .container {
@@ -2585,40 +2593,60 @@
         }
 
         /* === PROCESS JOURNEY VISUAL === */
-        .process-journey {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 0;
-            margin-top: var(--space-lg);
-            padding: var(--space-sm) 0;
+
+        /* Track container: subtle glass strip behind timeline */
+        .process-journey__track {
+            margin-top: var(--space-md);
+            padding: var(--space-md) var(--space-md) var(--space-sm);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            position: relative;
         }
 
-        /* Staggered glow sweep across journey icons */
+        .process-journey {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 0;
+            padding: 0;
+        }
+
+        /* Hover hint microcopy */
+        .process-journey__hint {
+            font-size: var(--text-xs);
+            color: var(--text-subtle);
+            letter-spacing: 0.03em;
+            margin-top: 0.75rem;
+            opacity: 0.6;
+            text-align: center;
+        }
+
+        /* Staggered glow sweep across journey rings */
         @keyframes iconGlow {
             0%, 100% {
                 border-color: rgba(217, 119, 6, 0.15);
                 box-shadow: 0 0 0 rgba(217, 119, 6, 0);
             }
             50% {
-                border-color: rgba(217, 119, 6, 0.6);
-                box-shadow: 0 0 20px rgba(217, 119, 6, 0.25), inset 0 0 12px rgba(217, 119, 6, 0.08);
+                border-color: rgba(217, 119, 6, 0.5);
+                box-shadow: 0 0 16px rgba(217, 119, 6, 0.2), inset 0 0 8px rgba(217, 119, 6, 0.06);
             }
         }
 
-        .reveal-triggered .process-journey__step:nth-child(1) {
+        .reveal-triggered .process-journey__step:nth-child(1) .process-journey__ring {
             animation: iconGlow 1s ease-in-out 1.2s forwards;
         }
-        .reveal-triggered .process-journey__step:nth-child(3) {
+        .reveal-triggered .process-journey__step:nth-child(3) .process-journey__ring {
             animation: iconGlow 1s ease-in-out 1.5s forwards;
         }
-        .reveal-triggered .process-journey__step:nth-child(5) {
+        .reveal-triggered .process-journey__step:nth-child(5) .process-journey__ring {
             animation: iconGlow 1s ease-in-out 1.8s forwards;
         }
-        .reveal-triggered .process-journey__step:nth-child(7) {
+        .reveal-triggered .process-journey__step:nth-child(7) .process-journey__ring {
             animation: iconGlow 1s ease-in-out 2.1s forwards;
         }
-        .reveal-triggered .process-journey__step:nth-child(9) {
+        .reveal-triggered .process-journey__step:nth-child(9) .process-journey__ring {
             animation: iconGlow 1s ease-in-out 2.4s forwards;
         }
 
@@ -2648,14 +2676,28 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .reveal-triggered .process-journey__step,
+            .reveal-triggered .process-journey__step .process-journey__ring,
             .reveal-triggered .process-journey__connector {
+                animation: none !important;
+            }
+            .process-journey__step.pulse-once .process-journey__ring {
                 animation: none !important;
             }
         }
 
+        /* Step: now a flex column for ring + label */
         .process-journey__step {
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Ring: the circular icon container (extracted from step) */
+        .process-journey__ring {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2664,27 +2706,76 @@
             border-radius: 50%;
             background: rgba(217, 119, 6, 0.06);
             border: 1px solid rgba(217, 119, 6, 0.15);
-            transition: all var(--duration-normal) var(--ease-out);
-            cursor: pointer;
+            transition: background 200ms var(--ease-out),
+                        border-color 200ms var(--ease-out),
+                        box-shadow 200ms var(--ease-out),
+                        transform 200ms var(--ease-out);
         }
 
-        .process-journey__step:hover {
+        /* Active state: highlighted ring */
+        .process-journey__step.is-active .process-journey__ring {
             background: rgba(217, 119, 6, 0.12);
-            border-color: rgba(217, 119, 6, 0.3);
-            transform: scale(1.1);
+            border-color: rgba(217, 119, 6, 0.4);
+            box-shadow: 0 0 16px rgba(217, 119, 6, 0.15), inset 0 0 8px rgba(217, 119, 6, 0.06);
         }
 
-        .process-journey__step--final {
-            background: rgba(217, 119, 6, 0.12);
-            border-color: rgba(217, 119, 6, 0.3);
+        .process-journey__step:hover .process-journey__ring {
+            background: rgba(217, 119, 6, 0.14);
+            border-color: rgba(217, 119, 6, 0.45);
+            box-shadow: 0 0 20px rgba(217, 119, 6, 0.2), inset 0 0 10px rgba(217, 119, 6, 0.08);
+            transform: scale(1.08);
+        }
+
+        .process-journey__step--final .process-journey__ring {
+            background: rgba(217, 119, 6, 0.1);
+            border-color: rgba(217, 119, 6, 0.25);
+        }
+
+        /* One-time pulse on step 1 when section enters viewport */
+        @keyframes pulseOnce {
+            0% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.3); }
+            50% { box-shadow: 0 0 0 10px rgba(217, 119, 6, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+        }
+
+        .process-journey__step.pulse-once .process-journey__ring {
+            animation: pulseOnce 1.2s ease-out;
+        }
+
+        /* Step labels beneath icons */
+        .process-journey__step-label {
+            font-family: var(--font-body);
+            font-size: var(--text-2xs);
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            opacity: 0.7;
+            transition: color 200ms var(--ease-out), opacity 200ms var(--ease-out);
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .process-journey__step.is-active .process-journey__step-label {
+            color: var(--accent);
+            opacity: 1;
+        }
+
+        .process-journey__step:hover .process-journey__step-label {
+            color: var(--accent);
+            opacity: 1;
         }
 
         .process-journey__icon {
             width: 24px;
             height: 24px;
             color: var(--accent);
-            opacity: 0.7;
-            transition: opacity var(--duration-fast) var(--ease-out);
+            opacity: 0.6;
+            transition: opacity 200ms var(--ease-out);
+        }
+
+        .process-journey__step.is-active .process-journey__icon {
+            opacity: 0.9;
         }
 
         .process-journey__step:hover .process-journey__icon {
@@ -2692,26 +2783,69 @@
         }
 
         .process-journey__step--final .process-journey__icon {
-            opacity: 0.9;
+            opacity: 0.8;
         }
 
         .process-journey__connector {
             width: 32px;
             height: 1px;
             background: linear-gradient(90deg, rgba(217, 119, 6, 0.3), rgba(217, 119, 6, 0.15));
+            margin-top: 28px;
+            flex-shrink: 0;
+        }
+
+        /* Summary row beneath timeline */
+        .process-journey__summary {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-top: var(--space-sm);
+            max-width: 640px;
+            min-height: 1.6em;
+            transition: opacity 200ms var(--ease-out);
+        }
+
+        /* Outcomes list */
+        .process-journey__outcomes {
+            display: flex;
+            gap: var(--space-md);
+            list-style: none;
+            padding: 0;
+            margin: var(--space-sm) 0 0;
+        }
+
+        .process-journey__outcomes li {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            color: var(--text-subtle);
+            letter-spacing: 0.02em;
+            position: relative;
+            padding-left: 0.875rem;
+        }
+
+        .process-journey__outcomes li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(217, 119, 6, 0.4);
         }
 
         /* Desktop: larger icons and flex connectors to fill full width */
         @media (min-width: 769px) {
-            .process-journey {
-                margin-top: var(--space-lg);
-                padding: var(--space-md) 0;
+            .process-journey__track {
+                margin-top: var(--space-md);
+                padding: var(--space-lg) var(--space-lg) var(--space-md);
             }
 
-            .process-journey__step {
+            .process-journey__ring {
                 width: 72px;
                 height: 72px;
-                flex-shrink: 0;
             }
 
             .process-journey__icon {
@@ -2723,15 +2857,17 @@
                 width: auto;
                 flex: 1;
                 min-width: 32px;
+                margin-top: 36px;
             }
 
-            .process-journey__note {
-                margin-top: var(--space-xl);
+            .process-journey__summary {
+                margin-top: var(--space-md);
+                font-size: var(--text-base);
             }
         }
 
         @media (min-width: 1024px) {
-            .process-journey__step {
+            .process-journey__ring {
                 width: 80px;
                 height: 80px;
             }
@@ -2740,57 +2876,65 @@
                 width: 34px;
                 height: 34px;
             }
+
+            .process-journey__connector {
+                margin-top: 40px;
+            }
         }
 
-        /* Labels hidden on desktop, shown on mobile */
+        /* Original labels hidden on desktop, shown on mobile */
         .process-journey__label {
             display: none;
         }
 
-        /* Desktop: Tooltip on hover - positioned BELOW icons */
+        /* Desktop: Tooltip on hover - positioned BELOW step label */
         @media (min-width: 601px) {
             .process-journey__step::after {
                 content: attr(data-tooltip);
                 position: absolute;
-                top: calc(100% + 14px);
-                left: 0;
-                transform: translateX(0);
+                top: calc(100% + 8px);
+                left: 50%;
+                transform: translateX(-50%);
                 padding: 10px 14px;
-                background: rgba(10, 10, 10, 0.98);
-                border: 1px solid rgba(217, 119, 6, 0.25);
+                background: rgba(17, 17, 17, 0.95);
+                border: 1px solid rgba(255, 255, 255, 0.08);
                 border-radius: 8px;
                 font-family: var(--font-body);
                 font-size: var(--text-sm);
                 line-height: 1.45;
-                color: var(--text);
+                color: var(--text-muted);
                 white-space: nowrap;
                 opacity: 0;
                 visibility: hidden;
-                transition: opacity var(--duration-fast) var(--ease-out),
-                            visibility var(--duration-fast) var(--ease-out);
+                transition: opacity 150ms var(--ease-out),
+                            visibility 150ms var(--ease-out),
+                            transform 150ms var(--ease-out);
                 pointer-events: none;
                 z-index: 10;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
             }
 
             .process-journey__step:hover::after {
                 opacity: 1;
                 visibility: visible;
+                transform: translateX(-50%) translateY(0);
             }
 
             /* Tooltip arrow */
             .process-journey__step::before {
                 content: '';
                 position: absolute;
-                top: calc(100% + 3px);
-                left: 24px;
+                top: calc(100% - 3px);
+                left: 50%;
                 transform: translateX(-50%);
                 border: 6px solid transparent;
-                border-bottom-color: rgba(217, 119, 6, 0.25);
+                border-bottom-color: rgba(255, 255, 255, 0.08);
                 opacity: 0;
                 visibility: hidden;
-                transition: opacity var(--duration-fast) var(--ease-out),
-                            visibility var(--duration-fast) var(--ease-out);
+                transition: opacity 150ms var(--ease-out),
+                            visibility 150ms var(--ease-out);
                 z-index: 11;
             }
 
@@ -2799,10 +2943,26 @@
                 visibility: visible;
             }
 
+            /* First icon tooltip: anchor from left to prevent viewport overflow */
+            .process-journey__step:first-child::after {
+                left: 0;
+                transform: translateX(0);
+            }
+            .process-journey__step:first-child:hover::after {
+                transform: translateX(0) translateY(0);
+            }
+            .process-journey__step:first-child::before {
+                left: 24px;
+            }
+
             /* Last icon tooltip: anchor from right to prevent viewport overflow */
             .process-journey__step:nth-child(9)::after {
                 left: auto;
                 right: 0;
+                transform: translateX(0);
+            }
+            .process-journey__step:nth-child(9):hover::after {
+                transform: translateX(0) translateY(0);
             }
             .process-journey__step:nth-child(9)::before {
                 left: auto;
@@ -2813,33 +2973,44 @@
 
         /* Mobile: vertical layout with labels */
         @media (max-width: 600px) {
+            .process-journey__track {
+                padding: var(--space-sm) var(--space-sm) var(--space-xs);
+            }
+
             .process-journey {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 0;
-                margin-top: var(--space-sm);
             }
 
             .process-journey__step {
-                width: auto;
-                height: auto;
                 flex-direction: row;
                 gap: 0.75rem;
                 padding: 0.5rem 0;
-                background: transparent;
-                border: none;
-                border-radius: 0;
                 cursor: default;
             }
 
-            .process-journey__step:hover {
-                background: transparent;
+            .process-journey__ring {
+                width: 40px;
+                height: 40px;
+                flex-shrink: 0;
+                background: rgba(217, 119, 6, 0.06);
+                border: 1px solid rgba(217, 119, 6, 0.15);
+            }
+
+            .process-journey__step.is-active .process-journey__ring,
+            .process-journey__step:hover .process-journey__ring {
                 transform: none;
             }
 
-            .process-journey__step--final {
-                background: transparent;
-                border: none;
+            .process-journey__step--final .process-journey__ring {
+                background: rgba(217, 119, 6, 0.08);
+                border-color: rgba(217, 119, 6, 0.2);
+            }
+
+            /* Step label becomes inline on mobile */
+            .process-journey__step-label {
+                display: none;
             }
 
             /* Show tooltip text as label on mobile */
@@ -2867,13 +3038,13 @@
             }
 
             .process-journey__icon {
-                width: 22px;
-                height: 22px;
+                width: 20px;
+                height: 20px;
                 flex-shrink: 0;
                 opacity: 0.8;
             }
 
-            /* Hide short labels, use tooltips instead */
+            /* Hide original labels, use tooltips instead */
             .process-journey__label {
                 display: none;
             }
@@ -2881,18 +3052,24 @@
             .process-journey__connector {
                 width: 1px;
                 height: 12px;
-                margin-left: 10px;
+                margin-left: 19px;
+                margin-top: 0;
                 background: rgba(217, 119, 6, 0.2);
             }
-        }
 
-        /* Process note below journey */
-        .process-journey__note {
-            margin-top: var(--space-lg);
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            max-width: 640px;
-            line-height: 1.6;
+            .process-journey__hint {
+                display: none;
+            }
+
+            .process-journey__summary {
+                display: none;
+            }
+
+            .process-journey__outcomes {
+                flex-direction: column;
+                gap: 0.375rem;
+                margin-top: var(--space-md);
+            }
         }
 
         /* === ABOUT === */
@@ -3713,7 +3890,7 @@
             /* card padding now via .tier-card responsive */
 
             .exploratory-sessions__card-title {
-                font-size: var(--text-base);
+                font-size: var(--text-sm);                 /* Match 768px stepdown */
             }
 
             .exploratory-sessions__card-description {
@@ -3913,21 +4090,51 @@
 
         /* --- Tier color modifiers --- */
 
-        /* B Conversation (Blue) */
+        /* B Conversation (Gradient wash — amber + violet + blue) */
         .tier-card--conversation {
+            background: linear-gradient(135deg,
+                rgba(217, 119, 6, var(--card-bg)),
+                rgba(139, 92, 246, var(--card-bg)),
+                rgba(37, 99, 235, var(--card-bg)));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            /* Tri-colour corner glow hints at rest */
+            box-shadow:
+                inset 0 1px 0 0 rgba(217, 119, 6, 0.06),
+                inset 0 -1px 0 0 rgba(37, 99, 235, 0.06);
+        }
+
+        .tier-card--conversation:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg,
+                rgba(217, 119, 6, var(--card-bg-hover)),
+                rgba(139, 92, 246, var(--card-bg-hover)),
+                rgba(37, 99, 235, var(--card-bg-hover)));
+            box-shadow:
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+                0 4px 16px -4px rgba(217, 119, 6, 0.10),
+                0 8px 24px -8px rgba(139, 92, 246, 0.12),
+                0 4px 16px -4px rgba(37, 99, 235, 0.10);
+        }
+
+        .tier-card--conversation::before {
+            background: linear-gradient(90deg, transparent, var(--conv-amber), var(--conv-violet), var(--conv-blue), transparent);
+        }
+
+        /* B Care (Blue — dedicated support tier) */
+        .tier-card--care {
             background: rgba(37, 99, 235, var(--card-bg));
             border: 1px solid rgba(37, 99, 235, var(--card-border));
         }
 
-        .tier-card--conversation:hover {
+        .tier-card--care:hover {
             border-color: rgba(37, 99, 235, var(--card-border-hover));
             background: rgba(37, 99, 235, var(--card-bg-hover));
             box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
                         0 8px 24px -8px rgba(37, 99, 235, var(--card-shadow-spread));
         }
 
-        .tier-card--conversation::before {
-            background: linear-gradient(90deg, transparent, #2563EB, transparent);
+        .tier-card--care::before {
+            background: linear-gradient(90deg, transparent, var(--care-accent), transparent);
         }
 
         /* B Build (Amber) */
@@ -3988,6 +4195,14 @@
         }
 
         .tier-wrapper--conversation {
+            background: linear-gradient(135deg,
+                rgba(217, 119, 6, var(--wrapper-bg)),
+                rgba(139, 92, 246, var(--wrapper-bg)),
+                rgba(37, 99, 235, var(--wrapper-bg)));
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .tier-wrapper--care {
             background: rgba(37, 99, 235, var(--wrapper-bg));
             border: 1px solid rgba(37, 99, 235, var(--wrapper-border));
         }
@@ -4705,10 +4920,6 @@
         /* V5.0: Mobile service cards - improved touch targets and spacing */
         @media (max-width: 768px) {
             /* padding now via .tier-card responsive */
-
-            .service__title {
-                font-size: var(--text-xl);
-            }
 
             .service__cta,
             .service__cta--gated {
@@ -5725,7 +5936,7 @@
 
             /* --- R3: Section title — slightly smaller on mobile for proportion --- */
             .section__title {
-                font-size: clamp(1.5rem, 5vw, 2.5rem);  /* Tighter floor: 24px vs 32px */
+                font-size: clamp(2.5rem, 7vw, 3.5rem);  /* Larger on tablet: 40px floor */
             }
 
             /* --- R4: About text — drop from lg to base on mobile --- */
@@ -5795,12 +6006,12 @@
             }
 
             .focused-studio__card-includes li {
-                font-size: 0.6875rem;                      /* 11px — subtler than xs (12px) */
+                font-size: var(--text-2xs);                      /* 11px — subtler than xs (12px) */
                 line-height: 1.4;
             }
 
             .focused-studio__card-best-for {
-                font-size: 0.6875rem;                      /* 11px */
+                font-size: var(--text-2xs);                      /* 11px */
                 margin-bottom: var(--space-xs);
             }
 
@@ -5812,7 +6023,7 @@
             }
 
             .exploratory-sessions__card-meta {
-                font-size: 0.6875rem;                      /* 11px */
+                font-size: var(--text-2xs);                      /* 11px */
             }
 
             .exploratory-sessions__card-description {
@@ -5853,9 +6064,9 @@
                 font-size: var(--text-sm);
             }
 
-            /* --- R15: Hero subtitle — slightly smaller on mobile --- */
+            /* --- R15: Hero subtitle — smooth stepdown on mobile --- */
             .hero__subtitle {
-                font-size: var(--text-sm);
+                font-size: clamp(0.875rem, 2.5vw, 1rem);  /* 14px–16px fluid */
                 line-height: 1.5;
             }
 
@@ -5911,7 +6122,7 @@
             }
 
             .section__title {
-                font-size: clamp(1.25rem, 6vw, 2rem);    /* Even tighter floor */
+                font-size: clamp(2rem, 8vw, 3rem);  /* Larger on small mobile: 32px floor */
             }
 
             .contact__title {

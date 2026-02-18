@@ -163,49 +163,74 @@ const schemaJson = {
                   <p class="section__scope">Regardless of where you're starting</p>
 
                   <!-- Process Journey Visual -->
-                  <div class="process-journey">
-                      <div class="process-journey__step" data-tooltip="01 — You share context via a guided intake">
-                          <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M9 11V6a3 3 0 0 1 6 0v5"/>
-                              <rect x="4" y="11" width="16" height="10" rx="2"/>
-                          </svg>
-                          <span class="process-journey__label">01 — Share context</span>
+                  <div class="process-journey__track">
+                      <div class="process-journey" id="processJourney">
+                          <div class="process-journey__step is-active" data-step="0" data-tooltip="01 — You share context via a guided intake">
+                              <div class="process-journey__ring">
+                                  <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M9 11V6a3 3 0 0 1 6 0v5"/>
+                                      <rect x="4" y="11" width="16" height="10" rx="2"/>
+                                  </svg>
+                              </div>
+                              <span class="process-journey__step-label">Lock</span>
+                              <span class="process-journey__label">01 — Share context</span>
+                          </div>
+                          <div class="process-journey__connector"></div>
+                          <div class="process-journey__step" data-step="1" data-tooltip="02 — We analyze your inputs across brand, web, and systems">
+                              <div class="process-journey__ring">
+                                  <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                      <circle cx="11" cy="11" r="8"/>
+                                      <path d="m21 21-4.3-4.3"/>
+                                  </svg>
+                              </div>
+                              <span class="process-journey__step-label">Discover</span>
+                              <span class="process-journey__label">02 — Analyze</span>
+                          </div>
+                          <div class="process-journey__connector"></div>
+                          <div class="process-journey__step" data-step="2" data-tooltip="03 — You receive a written direction brief with priorities">
+                              <div class="process-journey__ring">
+                                  <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                      <polyline points="14 2 14 8 20 8"/>
+                                      <line x1="16" y1="13" x2="8" y2="13"/>
+                                      <line x1="16" y1="17" x2="8" y2="17"/>
+                                  </svg>
+                              </div>
+                              <span class="process-journey__step-label">Plan</span>
+                              <span class="process-journey__label">03 — Direction brief</span>
+                          </div>
+                          <div class="process-journey__connector"></div>
+                          <div class="process-journey__step" data-step="3" data-tooltip="04 — Optional clarification call to walk through findings">
+                              <div class="process-journey__ring">
+                                  <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                  </svg>
+                              </div>
+                              <span class="process-journey__step-label">Align</span>
+                              <span class="process-journey__label">04 — Clarify</span>
+                          </div>
+                          <div class="process-journey__connector"></div>
+                          <div class="process-journey__step process-journey__step--final" data-step="4" data-tooltip="05 — You move forward with a clear next step">
+                              <div class="process-journey__ring">
+                                  <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                      <polyline points="20 6 9 17 4 12"/>
+                                  </svg>
+                              </div>
+                              <span class="process-journey__step-label">Deliver</span>
+                              <span class="process-journey__label">05 — Move forward</span>
+                          </div>
                       </div>
-                      <div class="process-journey__connector"></div>
-                      <div class="process-journey__step" data-tooltip="02 — We analyze your inputs across brand, web, and systems">
-                          <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                              <circle cx="11" cy="11" r="8"/>
-                              <path d="m21 21-4.3-4.3"/>
-                          </svg>
-                          <span class="process-journey__label">02 — Analyze</span>
-                      </div>
-                      <div class="process-journey__connector"></div>
-                      <div class="process-journey__step" data-tooltip="03 — You receive a written direction brief with priorities">
-                          <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                              <polyline points="14 2 14 8 20 8"/>
-                              <line x1="16" y1="13" x2="8" y2="13"/>
-                              <line x1="16" y1="17" x2="8" y2="17"/>
-                          </svg>
-                          <span class="process-journey__label">03 — Direction brief</span>
-                      </div>
-                      <div class="process-journey__connector"></div>
-                      <div class="process-journey__step" data-tooltip="04 — Optional clarification call to walk through findings">
-                          <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                          </svg>
-                          <span class="process-journey__label">04 — Clarify</span>
-                      </div>
-                      <div class="process-journey__connector"></div>
-                      <div class="process-journey__step process-journey__step--final" data-tooltip="05 — You move forward with a clear next step">
-                          <svg class="process-journey__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                              <polyline points="20 6 9 17 4 12"/>
-                          </svg>
-                          <span class="process-journey__label">05 — Move forward</span>
-                      </div>
+                      <p class="process-journey__hint">Hover each step for details</p>
                   </div>
 
-                  <p class="process-journey__note">Every engagement follows a defined process that results in clear, written direction. No surprises, no scope creep.</p>
+                  <!-- Summary row: swaps on hover -->
+                  <p class="process-journey__summary" id="processSummary">We confirm scope, constraints, and what "done" means.</p>
+
+                  <ul class="process-journey__outcomes">
+                      <li>Written direction</li>
+                      <li>Clear next steps</li>
+                      <li>No scope creep</li>
+                  </ul>
               </div>
           </div>
       </section>
@@ -244,7 +269,7 @@ const schemaJson = {
                       <div class="focused-studio__card tier-card tier-card--build" data-icon="rocket">
                           <div class="focused-studio__card-header">
                               <h3 class="focused-studio__card-title">Starter Site</h3>
-                              <span class="focused-studio__card-timeline">1 business day</span>
+                              <span class="focused-studio__card-timeline">7–10 days</span>
                           </div>
                           <p class="focused-studio__card-description">A fast-launch website built for speed and simplicity. Clean, functional, and live quickly. Ideal for businesses that need a professional presence without complexity.</p>
                           <ul class="focused-studio__card-includes">
@@ -267,7 +292,7 @@ const schemaJson = {
                       <div class="focused-studio__card tier-card tier-card--build" data-icon="code">
                           <div class="focused-studio__card-header">
                               <h3 class="focused-studio__card-title">One-Page Conversion System</h3>
-                              <span class="focused-studio__card-timeline">2–3 business days</span>
+                              <span class="focused-studio__card-timeline">7 days</span>
                           </div>
                           <p class="focused-studio__card-description">A fully custom, code-based one-page website. Designed and built from scratch. No templates, no builders. Focused on narrative flow, layout precision, and polish.</p>
                           <ul class="focused-studio__card-includes">
@@ -378,7 +403,7 @@ const schemaJson = {
               <hr class="services-divider services-divider--section">
 
               <!-- SECTION 3: BLUE (CARE) — Ongoing support tier -->
-              <div class="exploratory-sessions tier-wrapper tier-wrapper--conversation reveal" id="care">
+              <div class="exploratory-sessions tier-wrapper tier-wrapper--care reveal" id="care">
                   <div class="exploratory-sessions__header">
                       <div class="exploratory-sessions__brand">
                           <img src="/assets/bg-brands-logomark.png" alt="" class="exploratory-sessions__mark" width="40" height="40" loading="lazy">
@@ -390,7 +415,7 @@ const schemaJson = {
 
                   <div class="exploratory-sessions__grid">
                       <!-- Care Essentials -->
-                      <div class="exploratory-sessions__card tier-card tier-card--conversation" data-icon="compass">
+                      <div class="exploratory-sessions__card tier-card tier-card--care" data-icon="compass">
                           <div class="exploratory-sessions__card-header">
                               <h3 class="exploratory-sessions__card-title">Care Essentials</h3>
                               <span class="exploratory-sessions__card-meta">Routine support</span>
@@ -407,7 +432,7 @@ const schemaJson = {
                       </div>
 
                       <!-- Growth Care -->
-                      <div class="exploratory-sessions__card tier-card tier-card--conversation" data-icon="lightbulb">
+                      <div class="exploratory-sessions__card tier-card tier-card--care" data-icon="lightbulb">
                           <div class="exploratory-sessions__card-header">
                               <h3 class="exploratory-sessions__card-title">Growth Care</h3>
                               <span class="exploratory-sessions__card-meta">Monthly improvements</span>
@@ -424,7 +449,7 @@ const schemaJson = {
                       </div>
 
                       <!-- Partner Care -->
-                      <div class="exploratory-sessions__card tier-card tier-card--conversation" data-icon="settings">
+                      <div class="exploratory-sessions__card tier-card tier-card--care" data-icon="settings">
                           <div class="exploratory-sessions__card-header">
                               <h3 class="exploratory-sessions__card-title">Partner Care</h3>
                               <span class="exploratory-sessions__card-meta">Priority partnership</span>
@@ -640,14 +665,45 @@ const schemaJson = {
                   <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
           </button>
-          <h2 class="founder-lightbox__title" id="founderLightboxTitle">Scott Bertrand</h2>
-          <p class="founder-lightbox__role">Founder & Creative / Strategic Lead</p>
-          <p class="founder-lightbox__text">I'm Scott Bertrand, a brand and web systems builder based in Northern Ontario. I design calm, premium digital experiences and build the structure behind them so they stay clear, consistent, and easy to run.</p>
-          <p class="founder-lightbox__text">I lead Bertrand Brands, where I help founders refine identity, rebuild websites, and install durable systems that hold up in the real world. My focus is clarity over cleverness, structure over noise, and work that feels finished, and stays that way.</p>
+          <div class="founder-lightbox__person">
+              <svg class="founder-lightbox__accent founder-lightbox__accent--scott" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <!-- Pencil — universally recognizable creative tool -->
+                  <g transform="rotate(-45 32 32)">
+                      <!-- Pencil body (long rectangle) -->
+                      <rect x="26" y="6" width="12" height="40" rx="1" fill="currentColor" opacity="0.85"/>
+                      <!-- Pencil stripe (center highlight) -->
+                      <rect x="30.5" y="6" width="3" height="40" fill="var(--bg-elevated)" opacity="0.15"/>
+                      <!-- Ferrule (eraser band) -->
+                      <rect x="25" y="4" width="14" height="4" rx="1" fill="currentColor" opacity="0.6"/>
+                      <!-- Eraser -->
+                      <rect x="27" y="0" width="10" height="5" rx="2" fill="currentColor" opacity="0.45"/>
+                      <!-- Pencil tip (triangle point) -->
+                      <polygon points="26,46 38,46 32,58" fill="currentColor"/>
+                      <!-- Exposed wood on tip -->
+                      <polygon points="28,46 36,46 32,54" fill="var(--bg-elevated)" opacity="0.12"/>
+                      <!-- Lead tip -->
+                      <polygon points="30.5,52 33.5,52 32,58" fill="currentColor"/>
+                  </g>
+              </svg>
+              <h2 class="founder-lightbox__title" id="founderLightboxTitle">Scott Bertrand</h2>
+              <p class="founder-lightbox__role">Founder & Creative / Strategic Lead</p>
+              <p class="founder-lightbox__text">I'm Scott Bertrand, a brand and web systems builder based in Northern Ontario. I design calm, premium digital experiences and build the structure behind them so they stay clear, consistent, and easy to run.</p>
+              <p class="founder-lightbox__text">I lead Bertrand Brands, where I help founders refine identity, rebuild websites, and install durable systems that hold up in the real world. My focus is clarity over cleverness, structure over noise, and work that feels finished, and stays that way.</p>
+          </div>
           <hr class="founder-lightbox__divider">
-          <h3 class="founder-lightbox__title">Devin Major</h3>
-          <p class="founder-lightbox__role">Full-Stack Developer & Architect</p>
-          <p class="founder-lightbox__text">Devin is a full-stack software developer and architect, translating strategy and creative direction into durable, high-performance systems. Architecture, data, security, and maintainability.</p>
+          <div class="founder-lightbox__person">
+              <svg class="founder-lightbox__accent founder-lightbox__accent--devin" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <!-- Large gear -->
+                  <path d="M26 8 L30 8 L31 12 C32.5 12.5 34 13.2 35.3 14.1 L39 12 L42 15 L40 18.7 C40.8 20 41.5 21.5 42 23 L46 24 L46 28 L42 29 C41.5 30.5 40.8 32 40 33.3 L42 37 L39 40 L35.3 38 C34 38.8 32.5 39.5 31 40 L30 44 L26 44 L25 40 C23.5 39.5 22 38.8 20.7 38 L17 40 L14 37 L16 33.3 C15.2 32 14.5 30.5 14 29 L10 28 L10 24 L14 23 C14.5 21.5 15.2 20 16 18.7 L14 15 L17 12 L20.7 14.1 C22 13.2 23.5 12.5 25 12 Z" fill="currentColor"/>
+                  <circle cx="28" cy="26" r="7" fill="var(--bg-elevated)"/>
+                  <!-- Small gear (meshed) -->
+                  <path d="M46 30 L49 30 L49.7 33 C50.7 33.3 51.6 33.8 52.4 34.4 L55 33 L57 35 L55.6 37.6 C56.2 38.4 56.7 39.3 57 40.3 L60 41 L60 44 L57 44.7 C56.7 45.7 56.2 46.6 55.6 47.4 L57 50 L55 52 L52.4 50.6 C51.6 51.2 50.7 51.7 49.7 52 L49 55 L46 55 L45.3 52 C44.3 51.7 43.4 51.2 42.6 50.6 L40 52 L38 50 L39.4 47.4 C38.8 46.6 38.3 45.7 38 44.7 L35 44 L35 41 L38 40.3 C38.3 39.3 38.8 38.4 39.4 37.6 L38 35 L40 33 L42.6 34.4 C43.4 33.8 44.3 33.3 45.3 33 Z" fill="currentColor"/>
+                  <circle cx="47.5" cy="42.5" r="5" fill="var(--bg-elevated)"/>
+              </svg>
+              <h3 class="founder-lightbox__title">Devin Major</h3>
+              <p class="founder-lightbox__role">Full-Stack Developer & Architect</p>
+              <p class="founder-lightbox__text">Devin is a full-stack software developer and architect, translating strategy and creative direction into durable, high-performance systems. Architecture, data, security, and maintainability.</p>
+          </div>
           <hr class="founder-lightbox__divider">
           <p class="founder-lightbox__studio-line">Clients work with Bertrand Brands as a studio, with Scott leading strategy and direction, and the team executing the systems behind it.</p>
           <a href="/scottbertrand" class="founder-lightbox__cta">Learn more about Scott →</a>
@@ -716,6 +772,66 @@ const schemaJson = {
               entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('reveal-triggered'); });
           }, { threshold: 0.15 });
           document.querySelectorAll('.section--process').forEach(function(el) { sectionObserver.observe(el); });
+      })();
+
+      // Process journey hover state machine
+      (function() {
+          var journey = document.getElementById('processJourney');
+          var summary = document.getElementById('processSummary');
+          if (!journey || !summary) return;
+
+          var oneLiners = [
+              'We confirm scope, constraints, and what \u201Cdone\u201D means.',
+              'We map goals, audience, and priorities\u2014fast and clearly.',
+              'You receive written direction and next-step recommendations.',
+              'We review together, decide, and lock the route forward.',
+              'We build\u2014or package a clean handoff if you\u2019re implementing elsewhere.'
+          ];
+
+          var steps = journey.querySelectorAll('.process-journey__step');
+          var defaultIndex = 0;
+
+          function setActive(index) {
+              steps.forEach(function(s, i) {
+                  s.classList.toggle('is-active', i === index);
+              });
+              summary.textContent = oneLiners[index];
+          }
+
+          // Set default
+          setActive(defaultIndex);
+
+          steps.forEach(function(step) {
+              step.addEventListener('mouseenter', function() {
+                  var idx = parseInt(step.getAttribute('data-step'), 10);
+                  setActive(idx);
+              });
+              step.addEventListener('mouseleave', function() {
+                  setActive(defaultIndex);
+              });
+              // Touch support: tap to show step details
+              step.addEventListener('touchstart', function(e) {
+                  var idx = parseInt(step.getAttribute('data-step'), 10);
+                  if (step.classList.contains('is-active') && idx !== defaultIndex) {
+                      setActive(defaultIndex);
+                  } else {
+                      setActive(idx);
+                  }
+              }, { passive: true });
+          });
+
+          // One-time pulse on Step 1 when section enters viewport
+          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              var pulseObserver = new IntersectionObserver(function(entries) {
+                  entries.forEach(function(entry) {
+                      if (entry.isIntersecting) {
+                          steps[0].classList.add('pulse-once');
+                          pulseObserver.disconnect();
+                      }
+                  });
+              }, { threshold: 0.3 });
+              pulseObserver.observe(journey);
+          }
       })();
 
       // Mobile menu toggle with focus trap

@@ -38,6 +38,11 @@
   --care-accent: #2563EB;
   --care-accent-muted: rgba(37, 99, 235, 0.15);
 
+  /* Conversation — Gradient wash (entry layer, touches all tiers) */
+  --conv-amber: rgba(217, 119, 6, 0.5);
+  --conv-violet: rgba(139, 92, 246, 0.5);
+  --conv-blue: rgba(37, 99, 235, 0.5);
+
   /* Legacy aliases (backward compat for detail pages) */
   --focus-accent: var(--build-accent);
   --focus-accent-hover: var(--build-accent-hover);
@@ -67,6 +72,7 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Type Scale */
+  --text-2xs: 0.6875rem;   /* 11px */
   --text-xs: 0.75rem;      /* 12px */
   --text-sm: 0.875rem;     /* 14px */
   --text-base: 1rem;       /* 16px */

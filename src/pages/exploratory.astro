@@ -133,7 +133,7 @@ const schema = {
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #2563EB;
+            color: rgba(139, 92, 246, 0.9);
             margin-bottom: var(--space-xs);
         }
 
@@ -162,22 +162,71 @@ const schema = {
         }
 
         .exp-primary__cta {
+            position: relative;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 1rem 2rem;
-            background: #2563EB;
-            border: none;
-            color: #fff;
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            color: var(--text);
             font-size: var(--text-base);
             font-weight: 500;
             border-radius: var(--radius-md);
             text-decoration: none;
-            transition: background var(--duration-fast) var(--ease-out);
+            transition: all var(--duration-fast) var(--ease-out);
+        }
+
+        .exp-primary__cta::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(90deg,
+                rgba(217, 119, 6, 0.4),
+                rgba(139, 92, 246, 0.4),
+                rgba(37, 99, 235, 0.4),
+                rgba(217, 119, 6, 0.4));
+            background-size: 300% 100%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.6;
+            transition: opacity var(--duration-fast) var(--ease-out);
         }
 
         .exp-primary__cta:hover {
-            background: #1D4ED8;
+            background: var(--bg-elevated);
+            border-color: transparent;
+        }
+
+        .exp-primary__cta:hover::before {
+            opacity: 1;
+            background: linear-gradient(90deg,
+                rgba(217, 119, 6, 0.8),
+                rgba(139, 92, 246, 0.8),
+                rgba(37, 99, 235, 0.8),
+                rgba(217, 119, 6, 0.8));
+            background-size: 300% 100%;
+            animation: expBtnGradientShift 3s linear infinite;
+        }
+
+        .exp-primary__cta:active::before {
+            opacity: 1;
+            background: linear-gradient(90deg,
+                rgba(217, 119, 6, 1),
+                rgba(139, 92, 246, 1),
+                rgba(37, 99, 235, 1),
+                rgba(217, 119, 6, 1));
+            background-size: 300% 100%;
+            animation: expBtnGradientShift 1.5s linear infinite;
+        }
+
+        @keyframes expBtnGradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         .exp-primary__cta svg {
@@ -198,7 +247,7 @@ const schema = {
         }
 
         .exp-primary__link:hover {
-            color: var(--exploratory-accent-hover, #2563EB);
+            color: var(--exploratory-accent-hover, rgba(139, 92, 246, 1));
         }
 
         .exp-primary__badge {
@@ -283,8 +332,8 @@ const schema = {
         }
 
         .exp-option__badge--paid {
-            background: rgba(37, 99, 235, 0.15);
-            color: #3B82F6;
+            background: rgba(139, 92, 246, 0.15);
+            color: rgba(139, 92, 246, 0.9);
         }
 
         .exp-option__title {
@@ -311,7 +360,7 @@ const schema = {
         .exp-option__price {
             font-size: var(--text-lg);
             font-weight: 500;
-            color: #2563EB;
+            color: rgba(139, 92, 246, 0.9);
             margin-bottom: var(--space-sm);
         }
 
@@ -327,13 +376,13 @@ const schema = {
             gap: 0.375rem;
             font-size: var(--text-sm);
             font-weight: 500;
-            color: #2563EB;
+            color: rgba(139, 92, 246, 0.9);
             text-decoration: none;
             transition: color var(--duration-fast) var(--ease-out);
         }
 
         .exp-option__cta:hover {
-            color: #1D4ED8;
+            color: rgba(139, 92, 246, 1);
         }
 
         .exp-option__cta svg {
@@ -392,14 +441,14 @@ const schema = {
             flex-shrink: 0;
             width: 28px;
             height: 28px;
-            background: rgba(37, 99, 235, 0.15);
+            background: rgba(139, 92, 246, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: var(--text-sm);
             font-weight: 500;
-            color: #2563EB;
+            color: rgba(139, 92, 246, 0.9);
         }
 
         .exp-how__step-text {
@@ -478,10 +527,14 @@ const schema = {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
-            width: 90%; height: 90%;
+            width: 110%; height: 110%;
             transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.5) 0%, rgba(37, 99, 235, 0) 65%);
-            filter: blur(35px);
+            background: radial-gradient(circle,
+                rgba(139, 92, 246, 0.55) 0%,
+                rgba(217, 119, 6, 0.25) 30%,
+                rgba(37, 99, 235, 0.25) 60%,
+                transparent 80%);
+            filter: blur(40px);
             opacity: 0;
             animation: expGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
             pointer-events: none;
@@ -541,7 +594,7 @@ const schema = {
         .exp-spotlight--blue {
             width: 450px;
             height: 450px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
+            background: radial-gradient(circle, rgba(217, 119, 6, 0.14) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 70%);
             top: 50px;
             left: -150px;
             animation: expFadeIn 2s ease-out 0.3s forwards, expDrift1 28s ease-in-out 2s infinite;
@@ -550,7 +603,7 @@ const schema = {
         .exp-spotlight--cyan {
             width: 350px;
             height: 350px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(6, 182, 212, 0.03) 50%, transparent 70%);
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.03) 50%, transparent 70%);
             bottom: 100px;
             right: -100px;
             animation: expFadeIn 2s ease-out 0.5s forwards, expDrift2 24s ease-in-out 2.5s infinite;
@@ -656,23 +709,23 @@ const schema = {
               <!-- Compass / direction illustration -->
               <div class="exp-hero__illustration-wrap">
               <svg class="exp-hero__illustration" viewBox="0 0 500 400" fill="none" aria-hidden="true">
-                  <circle cx="250" cy="200" r="130" stroke="rgba(37, 99, 235, 0.25)" stroke-width="1.5"/>
-                  <circle cx="250" cy="200" r="90" stroke="rgba(37, 99, 235, 0.12)" stroke-width="1"/>
+                  <circle cx="250" cy="200" r="130" stroke="rgba(139, 92, 246, 0.40)" stroke-width="1.5"/>
+                  <circle cx="250" cy="200" r="90" stroke="rgba(37, 99, 235, 0.25)" stroke-width="1"/>
                   <!-- Compass needle -->
-                  <line x1="250" y1="200" x2="250" y2="90" stroke="rgba(37, 99, 235, 0.25)" stroke-width="1.5"/>
-                  <line x1="250" y1="200" x2="310" y2="260" stroke="rgba(37, 99, 235, 0.15)" stroke-width="1"/>
+                  <line x1="250" y1="200" x2="250" y2="90" stroke="rgba(217, 119, 6, 0.50)" stroke-width="2"/>
+                  <line x1="250" y1="200" x2="310" y2="260" stroke="rgba(139, 92, 246, 0.30)" stroke-width="1.5"/>
                   <!-- Cardinal tick marks -->
-                  <line x1="250" y1="60" x2="250" y2="75" stroke="rgba(37, 99, 235, 0.18)" stroke-width="1"/>
-                  <line x1="250" y1="325" x2="250" y2="340" stroke="rgba(37, 99, 235, 0.18)" stroke-width="1"/>
-                  <line x1="110" y1="200" x2="125" y2="200" stroke="rgba(37, 99, 235, 0.18)" stroke-width="1"/>
-                  <line x1="375" y1="200" x2="390" y2="200" stroke="rgba(37, 99, 235, 0.18)" stroke-width="1"/>
+                  <line x1="250" y1="60" x2="250" y2="75" stroke="rgba(217, 119, 6, 0.35)" stroke-width="1.5"/>
+                  <line x1="250" y1="325" x2="250" y2="340" stroke="rgba(37, 99, 235, 0.35)" stroke-width="1.5"/>
+                  <line x1="110" y1="200" x2="125" y2="200" stroke="rgba(139, 92, 246, 0.35)" stroke-width="1.5"/>
+                  <line x1="375" y1="200" x2="390" y2="200" stroke="rgba(139, 92, 246, 0.35)" stroke-width="1.5"/>
                   <!-- Ordinal tick marks -->
-                  <line x1="155" y1="105" x2="163" y2="113" stroke="rgba(37, 99, 235, 0.10)" stroke-width="1"/>
-                  <line x1="337" y1="287" x2="345" y2="295" stroke="rgba(37, 99, 235, 0.10)" stroke-width="1"/>
-                  <line x1="337" y1="105" x2="345" y2="113" stroke="rgba(37, 99, 235, 0.10)" stroke-width="1"/>
-                  <line x1="155" y1="287" x2="163" y2="295" stroke="rgba(37, 99, 235, 0.10)" stroke-width="1"/>
+                  <line x1="155" y1="105" x2="163" y2="113" stroke="rgba(217, 119, 6, 0.22)" stroke-width="1"/>
+                  <line x1="337" y1="287" x2="345" y2="295" stroke="rgba(37, 99, 235, 0.22)" stroke-width="1"/>
+                  <line x1="337" y1="105" x2="345" y2="113" stroke="rgba(37, 99, 235, 0.22)" stroke-width="1"/>
+                  <line x1="155" y1="287" x2="163" y2="295" stroke="rgba(217, 119, 6, 0.22)" stroke-width="1"/>
                   <!-- Center point -->
-                  <circle cx="250" cy="200" r="4" stroke="rgba(37, 99, 235, 0.20)" stroke-width="1.5"/>
+                  <circle cx="250" cy="200" r="5" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.5" fill="rgba(255, 255, 255, 0.06)"/>
               </svg>
               </div>
               <h1 class="exp-hero__title">Not sure what you need?</h1>

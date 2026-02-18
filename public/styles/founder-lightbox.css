@@ -36,13 +36,13 @@
 .founder-lightbox__content {
     position: relative;
     width: 100%;
-    max-width: 560px;
+    max-width: 640px;
     max-height: 85vh;
-    overflow-y: auto;
+    overflow: hidden auto;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: var(--space-xl);
+    padding: var(--space-xl) 10rem var(--space-xl) var(--space-xl);
     transform: translateY(16px) scale(0.97);
     opacity: 0;
     transition: transform 0.3s var(--ease-out-expo),
@@ -125,6 +125,40 @@
     color: var(--text);
 }
 
+/* Person block with accent illustration */
+.founder-lightbox__person {
+    position: relative;
+}
+
+.founder-lightbox__accent {
+    position: absolute;
+    pointer-events: none;
+    color: var(--accent);
+    opacity: 0.25;
+    z-index: 0;
+}
+
+.founder-lightbox__accent--scott {
+    width: 220px;
+    height: 220px;
+    top: 50%;
+    right: -50px;
+    transform: translateY(-50%);
+}
+
+.founder-lightbox__accent--devin {
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    right: -44px;
+    transform: translateY(-50%);
+}
+
+.founder-lightbox__person > *:not(.founder-lightbox__accent) {
+    position: relative;
+    z-index: 1;
+}
+
 /* Founder Lightbox — Mobile */
 @media (max-width: 768px) {
     .founder-lightbox { padding: var(--space-sm); }
@@ -134,4 +168,6 @@
     .founder-lightbox__text { font-size: var(--text-base); line-height: 1.6; }
     .founder-lightbox__text:last-of-type { margin-bottom: 1.5rem; }
     .founder-lightbox__studio-line { font-size: var(--text-xs); }
+    .founder-lightbox__accent--scott { width: 150px; height: 150px; right: -20px; }
+    .founder-lightbox__accent--devin { width: 140px; height: 140px; right: -16px; }
 }
