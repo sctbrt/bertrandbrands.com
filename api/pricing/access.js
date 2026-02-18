@@ -11,7 +11,7 @@ import { buildCookie } from '../_lib/cookies.js';
 import { errorPageHtml } from '../_lib/html.js';
 
 // Config
-const SESSION_TTL_MINUTES = parseInt(process.env.PRICING_SESSION_TTL_MINUTES || '60', 10);
+const SESSION_TTL_MINUTES = parseInt(process.env.PRICING_SESSION_TTL_MINUTES || '240', 10);
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 
 export default async function handler(req, res) {
