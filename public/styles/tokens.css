@@ -50,6 +50,10 @@
   --exploratory-accent: var(--care-accent);
   --exploratory-accent-muted: var(--care-accent-muted);
 
+  /* Utility — Status Colors */
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+
   /* Borders */
   --border: rgba(255, 255, 255, 0.08);
   --border-hover: rgba(255, 255, 255, 0.15);
