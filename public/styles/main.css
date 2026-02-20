@@ -7337,31 +7337,40 @@
 
 /* --- Tier Selector (situation-based decision helper) --- */
 .tier-selector {
+    display: -webkit-flex;
     display: flex;
+    -webkit-justify-content: center;
     justify-content: center;
-    gap: 0.5rem;
     margin-bottom: var(--space-lg);
+    -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
 .tier-selector__option {
+    display: -webkit-inline-flex;
     display: inline-flex;
+    -webkit-align-items: center;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid transparent;
+    margin: 0.25rem;
+    padding: 0.5rem 1.125rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 100px;
     cursor: pointer;
-    background: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: rgba(255, 255, 255, 0.03);
     color: var(--text-muted);
     font-family: inherit;
     font-size: var(--text-sm);
-    transition: color var(--duration-fast) var(--ease-out),
-                border-color var(--duration-fast) var(--ease-out);
+    line-height: 1.4;
+    -webkit-transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .tier-selector__option:hover {
     color: var(--text);
+    border-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .tier-selector__option:focus-visible {
@@ -7369,23 +7378,41 @@
     outline-offset: 2px;
 }
 
-.tier-selector__option.is-active {
-    border-color: rgba(255, 255, 255, 0.1);
+/* Active states — tier-colored border */
+.tier-selector__option.is-active[data-target-tier="build"] {
+    border-color: rgba(217, 119, 6, 0.4);
+    background-color: rgba(217, 119, 6, 0.06);
+    color: var(--text);
+}
+
+.tier-selector__option.is-active[data-target-tier="transform"] {
+    border-color: rgba(139, 92, 246, 0.4);
+    background-color: rgba(139, 92, 246, 0.06);
+    color: var(--text);
+}
+
+.tier-selector__option.is-active[data-target-tier="care"] {
+    border-color: rgba(37, 99, 235, 0.4);
+    background-color: rgba(37, 99, 235, 0.06);
     color: var(--text);
 }
 
 .tier-selector__dot {
-    width: 6px;
-    height: 6px;
+    display: inline-block;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
+    margin-right: 0.5rem;
+    -webkit-flex-shrink: 0;
     flex-shrink: 0;
-    opacity: 0.5;
-    transition: opacity var(--duration-fast) var(--ease-out);
+    opacity: 0.6;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
-.tier-selector__dot--build { background: var(--build-accent); }
-.tier-selector__dot--transform { background: var(--transform-accent); }
-.tier-selector__dot--care { background: var(--care-accent); }
+.tier-selector__dot--build { background-color: #D97706; }
+.tier-selector__dot--transform { background-color: #8B5CF6; }
+.tier-selector__dot--care { background-color: #2563EB; }
 
 .tier-selector__option:hover .tier-selector__dot,
 .tier-selector__option.is-active .tier-selector__dot {
@@ -7399,28 +7426,32 @@
 /* Tier group dimming/highlighting when selector is active */
 .tier-group.is-dimmed {
     opacity: 0.35;
-    transition: opacity 0.4s var(--ease-out);
+    -webkit-transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease;
 }
 
 .tier-group.is-highlighted {
     opacity: 1;
-    transition: opacity 0.4s var(--ease-out);
+    -webkit-transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease;
 }
 
-/* Mobile: allow wrapping */
+/* Mobile */
 @media (max-width: 768px) {
-    .tier-selector {
-        gap: 0.375rem;
-    }
-
     .tier-selector__option {
         font-size: var(--text-xs);
-        padding: 0.4rem 0.75rem;
+        padding: 0.4rem 0.875rem;
     }
 }
 
 /* Touch devices */
 @media (hover: none) {
+    .tier-selector__option:hover {
+        color: var(--text-muted);
+        border-color: rgba(255, 255, 255, 0.08);
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+
     .tier-selector__option:active {
         opacity: 0.7;
     }
@@ -7429,12 +7460,10 @@
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .tier-selector__option,
-    .tier-selector__dot {
-        transition: none;
-    }
-
+    .tier-selector__dot,
     .tier-group.is-dimmed,
     .tier-group.is-highlighted {
+        -webkit-transition: none;
         transition: none;
     }
 }
