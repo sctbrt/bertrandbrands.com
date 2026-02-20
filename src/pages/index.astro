@@ -126,8 +126,9 @@ const schemaJson = {
 
           <div class="hero__content">
               <h1 class="hero__title">
-                  <span class="hero__title-glow">Brand &</span>
-                  <span><span class="hero__title-glow">Web</span> <span class="accent">Systems</span></span>
+                  <span class="hero__title-glow">Brand & Web</span>
+                  <span class="accent">Systems</span>
+                  <span class="hero__studio">Studio</span>
               </h1>
               <p class="hero__subtitle">
                   Websites, brands, and systems that convert.
@@ -152,34 +153,45 @@ const schemaJson = {
           <div class="container">
               <div class="section__header reveal">
                   <p class="section__label">Services</p>
-                  <h2 class="section__title">Choose your starting point</h2>
+                  <h2 class="section__title">Choose your starting point<span class="title-dots" aria-hidden="true"><span class="title-dot title-dot--amber"></span><span class="title-dot title-dot--violet"></span><span class="title-dot title-dot--blue"></span></span></h2>
                   <p class="section__scope">Fixed scope. Clear timelines. Defined revision rounds.</p>
               </div>
 
-              <!-- Intake Prompt (Tri-Colour) -->
-              <div class="intake-prompt reveal">
+              <!-- Intake Prompt with Tier Selector -->
+              <div class="intake-prompt reveal" id="tierSelector">
                   <p class="intake-prompt__text">Not sure which option fits? We'll help you figure it out.</p>
-                  <div class="intake-prompt__actions">
-                      <a href="tel:+17054133705" class="intake-prompt__cta intake-prompt__cta--phone phone-link__mobile">Call (705) 413-3705</a>
-                      <span class="intake-prompt__phone-text phone-link__desktop" aria-label="Phone number">(705) 413-3705</span>
+
+                  <div class="tier-selector" role="group" aria-label="Choose by situation">
+                      <button class="tier-selector__option" data-target-tier="build" type="button">
+                          <span class="tier-selector__accent tier-selector__accent--build" aria-hidden="true"></span>
+                          <span class="tier-selector__content">
+                              <span class="tier-selector__label">I need a website</span>
+                              <span class="tier-selector__sub">New site from scratch</span>
+                          </span>
+                      </button>
+                      <button class="tier-selector__option" data-target-tier="transform" type="button">
+                          <span class="tier-selector__accent tier-selector__accent--transform" aria-hidden="true"></span>
+                          <span class="tier-selector__content">
+                              <span class="tier-selector__label">I need to rebuild or grow</span>
+                              <span class="tier-selector__sub">Redesign, rebrand, or scale</span>
+                          </span>
+                      </button>
+                      <button class="tier-selector__option" data-target-tier="care" type="button">
+                          <span class="tier-selector__accent tier-selector__accent--care" aria-hidden="true"></span>
+                          <span class="tier-selector__content">
+                              <span class="tier-selector__label">I have a site &amp; need support</span>
+                              <span class="tier-selector__sub">Ongoing updates &amp; maintenance</span>
+                          </span>
+                      </button>
+                  </div>
+
+                  <div class="intake-prompt__footer">
+                      <p class="intake-prompt__phone-line">
+                          <span class="phone-link__desktop">Prefer to talk? Call <span class="intake-prompt__phone-number">(705) 413-3705</span></span>
+                          <a href="tel:+17054133705" class="phone-link__mobile intake-prompt__phone-link">Prefer to talk? Call us</a>
+                      </p>
                       <a href="/intake" class="intake-prompt__cta intake-prompt__cta--form">Fill out an intake form</a>
                   </div>
-              </div>
-
-              <!-- Tier Selector — situation-based decision helper -->
-              <div class="tier-selector reveal" id="tierSelector" role="group" aria-label="Choose by situation">
-                  <button class="tier-selector__option" data-target-tier="build" type="button">
-                      <span class="tier-selector__dot tier-selector__dot--build" aria-hidden="true"></span>
-                      <span class="tier-selector__label">I need a website</span>
-                  </button>
-                  <button class="tier-selector__option" data-target-tier="transform" type="button">
-                      <span class="tier-selector__dot tier-selector__dot--transform" aria-hidden="true"></span>
-                      <span class="tier-selector__label">I need to rebuild or grow</span>
-                  </button>
-                  <button class="tier-selector__option" data-target-tier="care" type="button">
-                      <span class="tier-selector__dot tier-selector__dot--care" aria-hidden="true"></span>
-                      <span class="tier-selector__label">I have a site &amp; need support</span>
-                  </button>
               </div>
 
               <!-- B Build — Quick Builds (Amber) -->
@@ -818,6 +830,20 @@ const schemaJson = {
               }, { threshold: 0 });
               clearObserver.observe(servicesSection);
           }
+
+          // Scroll-triggered arrival flare — one-time
+          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              var arrivalObserver = new IntersectionObserver(function(entries) {
+                  if (entries[0].isIntersecting) {
+                      selector.classList.add('is-arriving');
+                      arrivalObserver.disconnect();
+                  }
+              }, { threshold: 0.4 });
+              arrivalObserver.observe(selector);
+          } else {
+              // No animation — just show buttons immediately
+              selector.classList.add('is-arriving');
+          }
       })();
 
       // Mobile menu toggle with focus trap
@@ -924,6 +950,18 @@ const schemaJson = {
               });
               bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
           }
+      })();
+
+      // Clickable offer cards — container navigates to detail page,
+      // but CTA links (a tags inside) work independently
+      (function() {
+          document.querySelectorAll('.tier-card[data-href]').forEach(function(card) {
+              card.addEventListener('click', function(e) {
+                  // Don't navigate if user clicked a link, button, details, or summary inside
+                  if (e.target.closest('a, button, details, summary')) return;
+                  window.location.href = card.getAttribute('data-href');
+              });
+          });
       })();
   </script>
 

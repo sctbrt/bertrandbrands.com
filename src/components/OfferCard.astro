@@ -26,7 +26,8 @@ const {
 ---
 
 <div class={`tier-card tier-card--${tierClass}${featured ? ' tier-card--featured' : ''}`}
-     style="display:flex;flex-direction:column;">
+     data-href={detailHref || ctaHref}
+     style="display:flex;flex-direction:column;cursor:pointer;">
     <span class="offer-card__best-for">{bestFor}</span>
     <h3 class="offer-card__name">{name}</h3>
     <p class="offer-card__headline">{headline}</p>
