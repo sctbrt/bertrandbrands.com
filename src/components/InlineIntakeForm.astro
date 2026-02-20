@@ -65,7 +65,7 @@ const { serviceName, serviceSlug, tierColor, tierName } = Astro.props;
         <div class="inline-intake__card">
             <h2 class="inline-intake__title">Got it — we&rsquo;ll be in touch</h2>
             <p class="inline-intake__subhead">We&rsquo;ll review your details and respond within 1 business day. If you&rsquo;d like to move faster, book a Clarity Session.</p>
-            <a href="/clarity-session" class="inline-intake__cta">Book a Clarity Session ($145) &rarr;</a>
+            <a href="/intake" class="inline-intake__cta">Start a full intake &rarr;</a>
         </div>
     </div>
 </section>
@@ -330,6 +330,10 @@ const { serviceName, serviceSlug, tierColor, tierName } = Astro.props;
                     // Show success state
                     if (card) card.style.display = 'none';
                     if (success) success.style.display = 'block';
+
+                    // Conversion tracking
+                    var serviceSlug = formData.get('source') ? formData.get('source').replace('inline-', '') : 'unknown';
+                    if (typeof bbConvert === 'function') bbConvert('form_submit', 'inline_' + serviceSlug);
 
                     // Pushover notification
                     fetch('/api/notify', {

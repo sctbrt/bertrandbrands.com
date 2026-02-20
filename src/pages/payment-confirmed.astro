@@ -399,6 +399,27 @@ import GesturePrevention from '../components/GesturePrevention.astro';
     <script is:inline>
         // Service configuration
         var services = {
+            'starter': {
+                badge: 'Starter \u2014 $750',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            'refresh': {
+                badge: 'Refresh',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            'platform': {
+                badge: 'Platform',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
             'clarity-session': {
                 badge: 'Clarity Session \u2014 $145',
                 tier: 'Conversation',
@@ -407,7 +428,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 calendly: 'https://calendly.com/bertrandbrands/clarity-session'
             },
             'starter-site': {
-                badge: 'Starter Site \u2014 $750',
+                badge: 'Starter \u2014 $750',
                 tier: 'Build',
                 tierClass: '',
                 text: "Now let\u2019s schedule your kickoff call.",
@@ -431,8 +452,8 @@ import GesturePrevention from '../components/GesturePrevention.astro';
 
         // Get service from URL
         var params = new URLSearchParams(window.location.search);
-        var serviceKey = params.get('service') || 'starter-site';
-        var service = services[serviceKey] || services['starter-site'];
+        var serviceKey = params.get('service') || 'starter';
+        var service = services[serviceKey] || services['starter'];
 
         // Update page content
         var badge = document.getElementById('serviceBadge');
@@ -470,25 +491,37 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         // Context-aware cross-sell links
         (function() {
             var crossSell = {
+                'starter': [
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
+                ],
+                'refresh': [
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
+                ],
+                'platform': [
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' },
+                    { href: '/amber', label: 'Build', desc: 'Need a quick site for another venture?' }
+                ],
                 'clarity-session': [
-                    { href: '/starter-site', label: 'Starter Site', desc: 'Launch a clean, credible website in 7\u201310 days' },
-                    { href: '/one-page-redesign', label: 'One-Page Conversion System', desc: 'A fully custom, code-built website' }
+                    { href: '/amber', label: 'Build', desc: 'Quick builds \u2014 from $750' },
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' }
                 ],
                 'starter-site': [
-                    { href: '/brandmark', label: 'Brandmark Kit', desc: 'A cohesive visual identity for your brand' },
-                    { href: '/one-page-redesign', label: 'One-Page Conversion System', desc: 'Ready for something fully custom?' }
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
                 ],
                 'brandmark': [
-                    { href: '/starter-site', label: 'Starter Site', desc: 'Pair your new brand with a website' },
-                    { href: '/one-page-redesign', label: 'One-Page Conversion System', desc: 'A fully custom, code-built website' }
+                    { href: '/amber', label: 'Build', desc: 'Pair your new brand with a website' },
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' }
                 ],
                 'one-page-redesign': [
-                    { href: '/brandmark', label: 'Brandmark Kit', desc: 'A cohesive visual identity for your brand' },
-                    { href: '/brand-system-reset', label: 'Brand System Reset', desc: 'Strategic realignment of your full brand system' }
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
                 ]
             };
 
-            var links = crossSell[serviceKey] || crossSell['starter-site'];
+            var links = crossSell[serviceKey] || crossSell['starter'];
             var container = document.getElementById('exploreLinks');
             if (!container) return;
 

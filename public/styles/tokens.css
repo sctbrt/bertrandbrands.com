@@ -43,6 +43,17 @@
   --conv-violet: rgba(139, 92, 246, 0.5);
   --conv-blue: rgba(37, 99, 235, 0.5);
 
+  /* Service Tier aliases */
+  --tier-conversation: linear-gradient(135deg, var(--build-accent), var(--transform-accent), var(--care-accent));
+  --tier-build: var(--build-accent);           /* Amber #D97706 */
+  --tier-transform: var(--transform-accent);   /* Violet #8B5CF6 */
+  --tier-care: var(--care-accent);             /* Blue #2563EB */
+
+  /* V10 Package aliases (legacy — kept for backward compat) */
+  --pkg-starter: var(--build-accent);        /* Amber #D97706 */
+  --pkg-refresh: var(--transform-accent);    /* Violet #8B5CF6 */
+  --pkg-platform: var(--care-accent);        /* Blue #2563EB */
+
   /* Legacy aliases (backward compat for detail pages) */
   --focus-accent: var(--build-accent);
   --focus-accent-hover: var(--build-accent-hover);

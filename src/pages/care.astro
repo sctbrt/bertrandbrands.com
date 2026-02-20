@@ -1,0 +1,322 @@
+---
+/**
+ * Care — Ongoing support plans page.
+ * Tri-colour gradient accent (amber + violet + blue) per user direction.
+ */
+import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<ServiceDetailLayout
+    title="Care Plans — Ongoing Support | Bertrand Brands"
+    description="Scoped monthly support after launch. Bronze from $249/mo, Silver from $649/mo. Credits-based, not hourly."
+    canonical="https://bertrandbrands.ca/care"
+    ogTitle="Care Plans — Bertrand Brands"
+    ogDescription="Scoped monthly support after launch. From $249/mo CAD. Credits-based, not hourly."
+    schemaJson={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Care Plans",
+        "description": "Scoped monthly subscription support for websites and brand systems after launch.",
+        "provider": {
+            "@type": "ProfessionalService",
+            "name": "Bertrand Brands — Brand & Web Systems",
+            "url": "https://bertrandbrands.ca"
+        },
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Care Plans",
+            "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze" }, "price": "249", "priceCurrency": "CAD" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Silver" }, "price": "649", "priceCurrency": "CAD" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gold" }, "description": "Gated — limited seats" }
+            ]
+        }
+    }}
+    spotlightColor="rgba(139, 92, 246, 0.15)"
+>
+    <Fragment slot="head">
+        <style is:inline>
+            .service-page { min-height: 100vh; padding-top: 80px; position: relative; overflow: hidden; }
+
+            /* Tri-colour gradient spotlights: amber, violet, blue */
+            .service-page__spotlight { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; will-change: transform, opacity; }
+            .service-page__spotlight--1 { width: 350px; height: 350px; background: rgba(217, 119, 6, 0.12); top: 5%; left: -8%; animation: organicBreathe 18s ease-in-out infinite; }
+            .service-page__spotlight--2 { width: 300px; height: 300px; background: rgba(139, 92, 246, 0.12); top: 40%; right: -5%; animation: organicBreathe 22s ease-in-out infinite 0.5s; }
+            .service-page__spotlight--3 { width: 320px; height: 320px; background: rgba(37, 99, 235, 0.10); bottom: 10%; left: 20%; animation: organicBreathe 20s ease-in-out infinite 1s; }
+
+            @keyframes organicBreathe {
+                0%, 100% { opacity: 0.85; transform: translate(0, 0) scale(1); }
+                25% { opacity: 0.95; transform: translate(15px, -10px) scale(1.05); }
+                50% { opacity: 0.75; transform: translate(-10px, 15px) scale(0.95); }
+                75% { opacity: 0.9; transform: translate(10px, 5px) scale(1.02); }
+            }
+
+            .care-page__header { text-align: center; padding: var(--space-md) 0 var(--space-lg); position: relative; z-index: 1; }
+            .care-page__subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: var(--space-sm); text-decoration: none; transition: opacity var(--duration-fast) ease; }
+            .care-page__subbrand:hover { opacity: 0.8; }
+            .care-page__subbrand-mark { width: 32px; height: 32px; filter: brightness(0) invert(1); }
+            .care-page__subbrand-name { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 300; letter-spacing: 0.02em; color: var(--text); }
+            .care-page__title { font-family: 'Inter', -apple-system, sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 400; line-height: 1.25; color: var(--text); max-width: 700px; margin: 0 auto var(--space-sm); }
+            .care-page__subtitle { font-size: var(--text-lg); color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+            /* Care plan cards - tri-colour gradient border */
+            .care-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); max-width: var(--container-max); margin: 0 auto var(--space-xl); position: relative; z-index: 1; }
+            .care-plan {
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: var(--radius-lg);
+                padding: var(--space-lg);
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+            .care-plan--featured {
+                border-image: linear-gradient(135deg, rgba(217, 119, 6, 0.4), rgba(139, 92, 246, 0.4), rgba(37, 99, 235, 0.4)) 1;
+                border-width: 2px;
+                border-style: solid;
+            }
+            .care-plan__badge {
+                position: absolute;
+                top: -1px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: var(--text-2xs);
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                padding: 0.25rem 1rem;
+                border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+                background: linear-gradient(135deg, #D97706, #8B5CF6, #2563EB);
+                color: #fff;
+            }
+            .care-plan__name { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 300; line-height: var(--leading-tight); margin-bottom: 0.25rem; }
+            .care-plan__desc { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-sm); }
+            .care-plan__price { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 300; line-height: 1; margin-bottom: 0.25rem; }
+            .care-plan__price span { font-size: var(--text-sm); color: var(--text-muted); font-family: var(--font-body); font-weight: 400; }
+            .care-plan__price--gated { font-size: var(--text-lg); color: var(--text-muted); font-weight: 400; }
+            .care-plan__meta { font-size: var(--text-xs); color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-sm); }
+            .care-plan__features { list-style: none; padding: 0; margin: 0 0 var(--space-md); display: flex; flex-direction: column; gap: 0.5rem; }
+            .care-plan__features li { font-size: var(--text-sm); color: var(--text-muted); padding-left: 1.25rem; position: relative; }
+            .care-plan__features li::before { content: '\2713'; position: absolute; left: 0; font-size: var(--text-xs); }
+            /* Tri-colour checkmarks cycle through amber/violet/blue */
+            .care-plan__features li:nth-child(3n+1)::before { color: #D97706; }
+            .care-plan__features li:nth-child(3n+2)::before { color: #8B5CF6; }
+            .care-plan__features li:nth-child(3n)::before { color: #2563EB; }
+            .care-plan__cta { margin-top: auto; }
+            .care-plan__cta a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.75rem 1.5rem;
+                border-radius: var(--radius-md);
+                font-size: var(--text-sm);
+                font-weight: 500;
+                text-decoration: none;
+                transition: all var(--duration-fast) var(--ease-out);
+                min-height: 44px;
+                width: 100%;
+                text-align: center;
+            }
+            .care-plan__cta--gradient a {
+                background: linear-gradient(135deg, #D97706, #8B5CF6, #2563EB);
+                color: #fff;
+            }
+            .care-plan__cta--gradient a:hover { opacity: 0.85; }
+            .care-plan__cta--outline a {
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                color: var(--text-muted);
+            }
+            .care-plan__cta--outline a:hover { border-color: rgba(255, 255, 255, 0.25); color: var(--text); }
+
+            /* Credits section */
+            .care-credits { max-width: 700px; margin: 0 auto var(--space-xl); position: relative; z-index: 1; }
+            .care-credits__title { font-size: var(--text-lg); font-weight: 500; color: var(--text); margin-bottom: var(--space-sm); text-align: center; }
+            .care-credits__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); }
+            .care-credit { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: var(--space-md); }
+            .care-credit__label { font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+            .care-credit__label--micro { color: #D97706; }
+            .care-credit__label--standard { color: #8B5CF6; }
+            .care-credit__label--advanced { color: #2563EB; }
+            .care-credit__cost { font-size: var(--text-sm); font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+            .care-credit__examples { list-style: none; padding: 0; margin: 0; }
+            .care-credit__examples li { font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0.25rem; line-height: 1.4; }
+
+            /* Phone CTA at bottom */
+            .care-phone { text-align: center; padding: var(--space-lg) var(--space-md); max-width: 640px; margin: 0 auto; position: relative; z-index: 1; }
+            .care-phone__headline { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 300; margin-bottom: var(--space-xs); }
+            .care-phone__number { display: inline-block; font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 300; text-decoration: none; margin-bottom: var(--space-xs); transition: opacity var(--duration-fast) var(--ease-out); background: linear-gradient(135deg, #D97706, #8B5CF6, #2563EB); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+            .care-phone__number:hover { opacity: 0.8; }
+            .care-phone__note { font-size: var(--text-sm); color: var(--text-muted); max-width: 480px; margin: 0 auto; }
+
+            .service-back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; margin-bottom: var(--space-md); transition: color var(--duration-fast) ease; position: relative; z-index: 1; }
+            .service-back:hover { color: var(--text); }
+
+            .service-footer { padding: var(--space-lg) 0; text-align: center; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+            .service-footer__text { font-size: var(--text-sm); color: var(--text-subtle); }
+            .service-footer__phone { font-size: var(--text-sm); margin-top: 0.5rem; }
+            .service-footer__phone a { color: var(--text-muted); text-decoration: none; }
+            .service-footer__phone a:hover { color: var(--text); }
+
+            @media (max-width: 768px) {
+                .service-page__spotlight { filter: blur(40px); }
+                .service-page__spotlight--1 { width: 200px; height: 200px; }
+                .service-page__spotlight--2 { width: 180px; height: 180px; }
+                .service-page__spotlight--3 { width: 190px; height: 190px; }
+                .care-plans { grid-template-columns: 1fr; }
+                .care-credits__grid { grid-template-columns: 1fr; }
+                .care-page__header { padding: var(--space-sm) 0 var(--space-md); }
+                .care-page__title { font-size: clamp(1.25rem, 4.5vw, 1.75rem); }
+                .care-page__subtitle { font-size: var(--text-sm); }
+                .care-page__subbrand-name { font-size: var(--text-xl); }
+                .care-plan { padding: var(--space-md); }
+                .care-plan__name { font-size: var(--text-xl); }
+                .care-plan__price { font-size: var(--text-2xl); }
+                .care-phone__number { font-size: var(--text-3xl); }
+                .service-back { font-size: var(--text-xs); margin-bottom: 0.5rem; }
+            }
+            @media (max-width: 480px) {
+                .care-plan { padding: var(--space-sm); }
+                .care-plan__name { font-size: var(--text-lg); }
+                .care-plan__price { font-size: var(--text-xl); }
+                .care-credit { padding: var(--space-sm); }
+                .care-phone__number { font-size: var(--text-2xl); }
+            }
+        </style>
+    </Fragment>
+
+    <div class="service-page__spotlight service-page__spotlight--1" aria-hidden="true"></div>
+    <div class="service-page__spotlight service-page__spotlight--2" aria-hidden="true"></div>
+    <div class="service-page__spotlight service-page__spotlight--3" aria-hidden="true"></div>
+
+    <main class="service-page" id="main-content">
+        <div class="container">
+            <a href="/?skip#packages" class="service-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Packages
+            </a>
+
+            <div class="care-page__header">
+                <a href="/?skip" class="care-page__subbrand">
+                    <img src="/assets/bg-brands-logomark.png" alt="" class="care-page__subbrand-mark" width="40" height="40">
+                    <span class="care-page__subbrand-name">Care</span>
+                </a>
+                <h1 class="care-page__title">Ongoing support after launch.</h1>
+                <p class="care-page__subtitle">Scoped monthly plans with defined credits. Not hourly, not open-ended. You know exactly what you get.</p>
+            </div>
+
+            <div class="care-plans">
+                <div class="care-plan">
+                    <h3 class="care-plan__name">Bronze</h3>
+                    <p class="care-plan__desc">Basic maintenance and updates for sites that need steady attention.</p>
+                    <p class="care-plan__price">$249 <span>/mo CAD</span></p>
+                    <p class="care-plan__meta">4 credits / month</p>
+                    <ul class="care-plan__features">
+                        <li>Response within 1 business day</li>
+                        <li>3–5 business day turnaround</li>
+                        <li>Text, image, and link updates</li>
+                        <li>Small CSS tweaks</li>
+                        <li>Metadata and SEO updates</li>
+                        <li>Monthly status check-in</li>
+                    </ul>
+                    <div class="care-plan__cta care-plan__cta--outline">
+                        <a href="/intake?tier=blue&offer=bronze">Get started</a>
+                    </div>
+                </div>
+
+                <div class="care-plan care-plan--featured">
+                    <span class="care-plan__badge">Most Popular</span>
+                    <h3 class="care-plan__name">Silver</h3>
+                    <p class="care-plan__desc">Active support for sites that are growing and need regular iteration.</p>
+                    <p class="care-plan__price">$649 <span>/mo CAD</span></p>
+                    <p class="care-plan__meta">10 credits / month</p>
+                    <ul class="care-plan__features">
+                        <li>Same or next business day response</li>
+                        <li>1–3 day turnaround (Micro/Standard)</li>
+                        <li>New sections and landing pages</li>
+                        <li>Form and integration updates</li>
+                        <li>Performance sweeps</li>
+                        <li>Structured CRO pass + implementation</li>
+                        <li>Priority scheduling</li>
+                    </ul>
+                    <div class="care-plan__cta care-plan__cta--gradient">
+                        <a href="/intake?tier=blue&offer=silver">Get started</a>
+                    </div>
+                </div>
+
+                <div class="care-plan">
+                    <h3 class="care-plan__name">Gold</h3>
+                    <p class="care-plan__desc">Dedicated support for businesses that need us on call.</p>
+                    <p class="care-plan__price care-plan__price--gated">By application</p>
+                    <p class="care-plan__meta">24 credits / month &middot; limited seats</p>
+                    <ul class="care-plan__features">
+                        <li>Same business day response</li>
+                        <li>24–72 hour target turnaround</li>
+                        <li>All Silver features</li>
+                        <li>New pages from existing patterns</li>
+                        <li>Heavier layout work</li>
+                        <li>Priority over all other plans</li>
+                        <li>Fit + capacity confirmed before onboarding</li>
+                    </ul>
+                    <div class="care-plan__cta care-plan__cta--outline">
+                        <a href="/intake?tier=blue&offer=gold">Apply</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="care-credits">
+                <h2 class="care-credits__title">How credits work</h2>
+                <div class="care-credits__grid">
+                    <div class="care-credit">
+                        <p class="care-credit__label care-credit__label--micro">Micro &middot; 1 credit</p>
+                        <p class="care-credit__cost">Quick fixes</p>
+                        <ul class="care-credit__examples">
+                            <li>Text or image swap</li>
+                            <li>Link or button fix</li>
+                            <li>Metadata tweak</li>
+                            <li>Small CSS adjustment</li>
+                            <li>Add or remove a simple block</li>
+                        </ul>
+                    </div>
+                    <div class="care-credit">
+                        <p class="care-credit__label care-credit__label--standard">Standard &middot; 2 credits</p>
+                        <p class="care-credit__cost">Meaningful updates</p>
+                        <ul class="care-credit__examples">
+                            <li>New section on existing page</li>
+                            <li>Landing page iteration</li>
+                            <li>Form changes or additions</li>
+                            <li>Embed or integration swap</li>
+                            <li>Blog post upload + formatting</li>
+                        </ul>
+                    </div>
+                    <div class="care-credit">
+                        <p class="care-credit__label care-credit__label--advanced">Advanced &middot; 4 credits</p>
+                        <p class="care-credit__cost">Structural work</p>
+                        <ul class="care-credit__examples">
+                            <li>New page from existing patterns</li>
+                            <li>Heavier layout work</li>
+                            <li>Performance sweep</li>
+                            <li>Structured CRO pass + implementation</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="text-align:center;margin-top:var(--space-sm);font-size:var(--text-xs);color:var(--text-subtle);">
+                    Credits are scoped units of work, not hours. Anything outside plan scope becomes a fixed-scope project quote.
+                </p>
+            </div>
+
+            <div class="care-phone">
+                <h2 class="care-phone__headline">Questions about Care?</h2>
+                <a href="tel:+17054133705" class="care-phone__number">(705) 413-3705</a>
+                <p class="care-phone__note">Call to discuss which plan fits your needs. We'll help you figure out the right level of support.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="service-footer">
+        <p class="service-footer__text">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
+        <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
+        <p class="service-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
+    </footer>
+</ServiceDetailLayout>

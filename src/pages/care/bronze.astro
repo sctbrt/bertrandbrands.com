@@ -1,0 +1,317 @@
+---
+/**
+ * Bronze Care Plan — V10 care detail page.
+ * Blue accent (#2563EB). Follows starter.astro pattern with care credit system.
+ */
+import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
+import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
+import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<ServiceDetailLayout
+    title="Bronze Care Plan — $249/mo | Bertrand Brands"
+    description="Basic maintenance and updates. 4 credits/month, response within 1 business day, 3–5 day turnaround. $249/mo CAD."
+    canonical="https://bertrandbrands.ca/care/bronze"
+    ogTitle="Bronze Care Plan — Bertrand Brands"
+    ogDescription="Basic maintenance and updates. 4 credits/month, response within 1 business day. $249/mo CAD."
+    schemaJson={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Bronze Care Plan",
+        "description": "Basic maintenance and updates with 4 credits per month, response within 1 business day, 3–5 day turnaround.",
+        "provider": {
+            "@type": "ProfessionalService",
+            "name": "Bertrand Brands — Brand & Web Systems",
+            "url": "https://bertrandbrands.ca"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "249",
+            "priceCurrency": "CAD",
+            "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "249",
+                "priceCurrency": "CAD",
+                "unitText": "MONTH"
+            }
+        }
+    }}
+    spotlightColor="rgba(37, 99, 235, 0.15)"
+>
+    <Fragment slot="head">
+        <style is:inline>
+            .service-page { min-height: 100vh; padding-top: 80px; position: relative; overflow: hidden; }
+
+            .service-page__spotlight { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; will-change: transform, opacity; }
+            .service-page__spotlight--1 { width: 400px; height: 400px; background: rgba(37, 99, 235, 0.15); top: 10%; left: -10%; animation: organicBreathe 18s ease-in-out infinite; }
+            .service-page__spotlight--2 { width: 350px; height: 350px; background: rgba(37, 99, 235, 0.12); bottom: 20%; right: -5%; animation: organicBreathe 22s ease-in-out infinite 0.5s; }
+
+            @keyframes organicBreathe {
+                0%, 100% { opacity: 0.85; transform: translate(0, 0) scale(1); }
+                25% { opacity: 0.95; transform: translate(15px, -10px) scale(1.05); }
+                50% { opacity: 0.75; transform: translate(-10px, 15px) scale(0.95); }
+                75% { opacity: 0.9; transform: translate(10px, 5px) scale(1.02); }
+            }
+
+            .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: 0; text-decoration: none; transition: opacity var(--duration-fast) ease; }
+            .service-subbrand:hover { opacity: 0.8; }
+            .service-subbrand__mark { width: 32px; height: 32px; filter: brightness(0) invert(1); }
+            .service-subbrand__name { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 300; letter-spacing: 0.02em; color: var(--text); }
+
+            .service-hero { padding: var(--space-sm) 0 var(--space-md); text-align: center; position: relative; z-index: 1; }
+            .service-hero__headline { font-family: 'Inter', -apple-system, sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 400; line-height: 1.25; color: var(--text); max-width: 700px; margin: 0 auto var(--space-md); }
+            .service-hero__description { font-size: var(--text-lg); color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+            .service-content { padding: var(--space-xl) 0; position: relative; z-index: 1; }
+            .service-card { background: rgba(37, 99, 235, 0.05); border: 1px solid rgba(37, 99, 235, 0.15); border-radius: var(--radius-lg); padding: var(--space-xl); max-width: 700px; margin: 0 auto var(--space-lg); }
+            .service-card__section { margin-bottom: var(--space-lg); }
+            .service-card__section:last-child { margin-bottom: 0; }
+            .service-card__label { font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(37, 99, 235, 0.8); margin-bottom: var(--space-sm); }
+            .service-card__list { list-style: none; padding: 0; margin: 0; }
+            .service-card__list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; font-size: var(--text-base); color: var(--text-muted); line-height: 1.5; }
+            .service-card__list li::before { content: ''; position: absolute; left: 0; top: 0.5rem; width: 6px; height: 6px; background: rgba(37, 99, 235, 0.6); border-radius: 50%; }
+            .service-card__list--excluded li::before { background: rgba(255, 255, 255, 0.15); }
+            .service-card__text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.6; }
+            .service-card__meta { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
+            .service-card__meta-item { flex: 1; min-width: 150px; }
+            .service-card__meta-value { font-size: var(--text-lg); font-weight: 500; color: var(--text); }
+
+            /* Credit breakdown */
+            .care-credits { max-width: 700px; margin: 0 auto var(--space-xl); position: relative; z-index: 1; }
+            .care-credits__title { font-size: var(--text-lg); font-weight: 500; color: var(--text); margin-bottom: var(--space-sm); text-align: center; }
+            .care-credits__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); }
+            .care-credit { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: var(--space-md); }
+            .care-credit__label { font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+            .care-credit__label--micro { color: #D97706; }
+            .care-credit__label--standard { color: #8B5CF6; }
+            .care-credit__cost { font-size: var(--text-sm); font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+            .care-credit__examples { list-style: none; padding: 0; margin: 0; }
+            .care-credit__examples li { font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0.25rem; line-height: 1.4; }
+            .care-credits__note { text-align: center; margin-top: var(--space-sm); font-size: var(--text-xs); color: var(--text-subtle); }
+
+            .service-cta { padding: var(--space-xl) 0 var(--space-2xl); text-align: center; position: relative; z-index: 1; }
+
+            .service-back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; margin-bottom: var(--space-md); transition: color var(--duration-fast) ease; }
+            .service-back:hover { color: var(--text); }
+
+            .service-footer { padding: var(--space-lg) 0; text-align: center; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+            .service-footer__text { font-size: var(--text-sm); color: var(--text-subtle); }
+            .service-footer__phone { font-size: var(--text-sm); margin-top: 0.5rem; }
+            .service-footer__phone a { color: var(--text-muted); text-decoration: none; }
+            .service-footer__phone a:hover { color: var(--text); }
+            .service-footer__cta { margin-bottom: 1rem; }
+            .service-footer__cta-text { font-size: var(--text-sm); color: var(--text-subtle); margin-bottom: 0.25rem; }
+            .service-footer__cta-link { font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
+            .service-footer__cta-link:hover { color: var(--accent); }
+
+            @media (max-width: 768px) {
+                .service-page__spotlight { filter: blur(40px); }
+                .service-page__spotlight--1 { width: 250px; height: 250px; }
+                .service-page__spotlight--2 { width: 200px; height: 200px; }
+                .service-page .container { padding: 0 0.75rem; }
+                .service-hero { padding: var(--space-xs) 1rem var(--space-sm); }
+                .service-hero__headline { font-size: clamp(1.25rem, 4.5vw, 1.75rem); margin-bottom: 0.75rem; max-width: 100%; }
+                .service-hero__description { font-size: var(--text-xs); line-height: 1.5; max-width: 100%; }
+                .service-subbrand__name { font-size: var(--text-xl); }
+                .service-subbrand__mark { width: 26px; height: 26px; }
+                .service-content { padding: var(--space-sm) 0; }
+                .service-card { padding: 1.5rem; max-width: 100%; }
+                .service-card__label { font-size: 0.625rem; margin-bottom: 0.375rem; }
+                .service-card__list li { font-size: var(--text-xs); margin-bottom: 0.25rem; line-height: 1.45; }
+                .service-card__text { font-size: var(--text-xs); line-height: 1.5; }
+                .service-card__meta-value { font-size: var(--text-sm); }
+                .service-card__section { margin-bottom: var(--space-sm); }
+                .service-cta { padding: 0.5rem 0 var(--space-sm); }
+                .service-subbrand { margin-bottom: 0.25rem; gap: 0.5rem; }
+                .service-back { font-size: var(--text-xs); margin-bottom: 0.5rem; }
+                .service-footer { padding: var(--space-md) 0; }
+                .care-credits__grid { grid-template-columns: 1fr; }
+                .care-credit { padding: var(--space-sm); }
+            }
+            @media (max-width: 480px) {
+                .service-card { padding: 1rem; }
+                .service-hero__headline { font-size: clamp(1.125rem, 4.5vw, 1.375rem); margin-bottom: 0.5rem; }
+                .service-hero__description { font-size: 0.6875rem; line-height: 1.5; }
+                .service-card__label { font-size: 0.5625rem; }
+                .service-card__list li { font-size: 0.6875rem; margin-bottom: 0.1875rem; }
+                .service-card__text { font-size: 0.6875rem; }
+                .service-card__meta-value { font-size: var(--text-xs); }
+                .service-subbrand__name { font-size: var(--text-lg); }
+                .service-subbrand__mark { width: 22px; height: 22px; }
+                .service-subbrand { gap: 0.375rem; }
+                .service-hero { padding: 0.25rem 0.75rem 0.5rem; }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .service-page__spotlight { animation: none !important; }
+            }
+        </style>
+    </Fragment>
+
+    <div class="service-page__spotlight service-page__spotlight--1" aria-hidden="true"></div>
+    <div class="service-page__spotlight service-page__spotlight--2" aria-hidden="true"></div>
+
+    <main class="service-page" id="main-content">
+        <div class="container">
+            <a href="/care" class="service-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Care Plans
+            </a>
+
+            <a href="/care" class="service-subbrand">
+                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <span class="service-subbrand__name">Bronze</span>
+            </a>
+
+            <section class="service-hero">
+                <h1 class="service-hero__headline">Steady maintenance, clear scope.</h1>
+                <p class="service-hero__description">The essentials &mdash; regular updates and fixes with defined credits, predictable response times, and no surprises.</p>
+            </section>
+
+            <section class="service-content">
+                <div class="service-card">
+                    <div class="service-card__section">
+                        <p class="service-card__text">The Bronze plan keeps your site current and functional with a set number of monthly credits. You know exactly what you get, and we handle the rest.</p>
+                    </div>
+                    <div class="service-card__section">
+                        <p class="service-card__label">What's included</p>
+                        <ul class="service-card__list">
+                            <li>Text, image, and link updates (Micro)</li>
+                            <li>Small CSS tweaks (Micro)</li>
+                            <li>Metadata and SEO updates (Micro)</li>
+                            <li>Monthly status check-in</li>
+                            <li>Rollover not included &mdash; use it or lose it</li>
+                        </ul>
+                    </div>
+                    <div class="service-card__section">
+                        <p class="service-card__label">Not included</p>
+                        <ul class="service-card__list service-card__list--excluded">
+                            <li>New page creation</li>
+                            <li>Complex integrations</li>
+                            <li>Performance optimization</li>
+                            <li>CRO analysis</li>
+                        </ul>
+                    </div>
+                    <div class="service-card__section">
+                        <p class="service-card__label">Best for</p>
+                        <ul class="service-card__list">
+                            <li>Sites that need steady attention</li>
+                            <li>Post-launch maintenance</li>
+                        </ul>
+                    </div>
+                    <div class="service-card__section">
+                        <div class="service-card__meta">
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Pricing</p>
+                                <p class="service-card__meta-value">$249/mo CAD</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Credits</p>
+                                <p class="service-card__meta-value">4 per month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card__section">
+                        <div class="service-card__meta">
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Response time</p>
+                                <p class="service-card__meta-value">Within 1 business day</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Turnaround</p>
+                                <p class="service-card__meta-value">3&ndash;5 business days</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card__section">
+                        <div class="service-card__meta">
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Meeting cadence</p>
+                                <p class="service-card__meta-value">None included</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="care-credits">
+                    <h2 class="care-credits__title">How your credits work</h2>
+                    <div class="care-credits__grid">
+                        <div class="care-credit">
+                            <p class="care-credit__label care-credit__label--micro">Micro &middot; 1 credit</p>
+                            <p class="care-credit__cost">Quick fixes</p>
+                            <ul class="care-credit__examples">
+                                <li>Text or image swap</li>
+                                <li>Link or button fix</li>
+                                <li>Metadata tweak</li>
+                                <li>Small CSS adjustment</li>
+                                <li>Add or remove a simple block</li>
+                            </ul>
+                        </div>
+                        <div class="care-credit">
+                            <p class="care-credit__label care-credit__label--standard">Standard &middot; 2 credits</p>
+                            <p class="care-credit__cost">Meaningful updates</p>
+                            <ul class="care-credit__examples">
+                                <li>New section on existing page</li>
+                                <li>Landing page iteration</li>
+                                <li>Form changes or additions</li>
+                                <li>Embed or integration swap</li>
+                                <li>Blog post upload + formatting</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="care-credits__note">Credits are scoped units of work, not hours. Anything outside plan scope becomes a fixed-scope project quote.</p>
+                </div>
+            </section>
+
+            <section class="service-cta">
+                <div id="intakePrompt">
+                    <InlineIntakeForm
+                        serviceName="Bronze Care"
+                        serviceSlug="bronze"
+                        tierColor="#2563EB"
+                        tierName="CARE"
+                    />
+                </div>
+                <div class="service-cta__card" id="bookingPrompt" style="display: none;">
+                    <h2 class="service-cta__title">Ready to schedule</h2>
+                    <p class="service-cta__text">Your intake is complete. We'll be in touch within 1 business day to confirm next steps.</p>
+                    <a href="/intake" class="service-cta__button">View intake form &rarr;</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="service-footer">
+        <div class="service-footer__cta">
+            <p class="service-footer__cta-text">Not sure which plan?</p>
+            <a href="/care" class="service-footer__cta-link">Compare all Care plans &rarr;</a>
+        </div>
+        <p class="service-footer__text">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
+        <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
+        <p class="service-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
+    </footer>
+
+    <script is:inline>
+        (function() {
+            var intakePrompt = document.getElementById('intakePrompt');
+            var bookingPrompt = document.getElementById('bookingPrompt');
+            function hasIntakeAccess() {
+                return document.cookie.split(';').some(function(c) {
+                    return c.trim().startsWith('bb_intake_completed=') || c.trim().startsWith('bb_returning_client=');
+                });
+            }
+            if (hasIntakeAccess() && intakePrompt && bookingPrompt) {
+                intakePrompt.style.display = 'none';
+                bookingPrompt.style.display = 'block';
+            }
+        })();
+    </script>
+
+    <StickyMobileCTA
+        href="#inlineIntakeCard"
+        heroSelector=".service-hero"
+        formSelector="#inlineIntakeCard"
+    />
+</ServiceDetailLayout>

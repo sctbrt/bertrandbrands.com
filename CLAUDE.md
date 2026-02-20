@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 8.0.0 (Current)
+## Version 11.0.0 (Current)
 
 This document is the **Bertrand Brands** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -76,95 +76,60 @@ All decisions must align with BRIGHTS:
 
 If a technical or UX decision introduces confusion, pressure, or ambiguity, it violates BRIGHTS.
 
-### 1.4 Service Architecture
+### 1.4 Service Tier Architecture (V11)
 
-Bertrand Brands operates under **THREE project tiers + one recurring support tier**.
+Bertrand Brands operates under a **4-tier service model** with sub-brand naming:
 
-**Mental Model:** Conversation → Build → Transformation | Care (ongoing)
+| Tier | Sub-Brand | Color | Hex | CSS Class | Offers |
+|------|-----------|-------|-----|-----------|--------|
+| Conversation | B Conversation | Tri-colour gradient | Amber → Violet → Blue | `--conversation` | Intake/qualification routing |
+| Build | B Build | Amber | `#D97706` | `--build` | 3 offers (One-Page, Multi-Page, Full Site) |
+| Transform | B Transform | Violet | `#8B5CF6` | `--transform` | 3 offers (Foundation+Growth, SMB Platform, Brand+Platform) |
+| Care | B Care | Blue | `#2563EB` | `--care` | 3 levels (Bronze, Silver, Gold) |
 
 **Hard Constraints:**
-- Tier 1: B Conversation (Exploratory) → **3 offerings only**
-- Tier 2: B Build (Focus Studio) → **3 offerings only**
-- Tier 3: B Transformation (Core Systems) → **3 offerings only**
-- B Care (Ongoing Support) → **3 plans only**
+- 4 tiers, 9 offers + 3 care levels
+- Single unified intake at `/intake`
+- Phone-first conversion: calling is the PRIMARY CTA, web intake is secondary
+- Async-first policy: meetings are escalators, not defaults
 
-Claude must not add services, rename tiers, or exceed these limits.
-
----
-
-**Tier 1 — B Conversation** (Entry Layer)
-
-Purpose: Low-friction entry, qualification, and clarity. Not asset delivery.
-
-| Offering | Price | Format | Notes |
-|----------|-------|--------|-------|
-| Guided Intake | Free | Form-based, 5–10 min | Asynchronous. No deliverables. No recommendations. Determines fit and routing. |
-| Clarity Session (Brand / Web / Systems) | $145 CAD | ~45 min, live video | Working session (diagnosis + direction + written recap). Standalone entry point. |
-| Technical Feasibility Check | Free | Verbal, by request | For projects with technical unknowns. No deliverables. No recommendations. Yes/no/maybe on feasibility. |
-
-**Rules:**
-- Two free options, one paid option
-- Guided Intake and Technical Feasibility Check: no recommendations, no deliverables
-- Clarity Session: includes recommendations and written recap
-- Tier 1 never includes execution work
+Claude must not add tiers, invent offers, or exceed these limits.
 
 ---
 
-**Tier 2 — B Build** (Primary Revenue Engine)
+**B Build** (Amber #D97706) — Quick Builds
 
-Purpose: Fast, fixed-scope studio work with clear timelines and pricing.
+| Offer | Slug | Price | Timeline | Revisions | Meetings |
+|-------|------|-------|----------|-----------|----------|
+| Starter Site — One-Page + Contact | `starter-onepage` | $750 CAD | 7–10 days | 1 round | 0 (optional 15-min call) |
+| Starter Site — Multi-Page + Contact | `starter-multipage` | Scoped | 2–3 weeks | 2 rounds | 0 (optional 15-min call) |
+| Full Site — Multi-Page + Booking | `fullsite-booking` | Scoped | 3–4 weeks | 2 rounds | 0 (optional 15-min call) |
 
-| Offering | Price | Timeline | Notes |
-|----------|-------|----------|-------|
-| Starter Site | $750 CAD | 7–10 days | Template-assisted, fast-launch website. Built for speed and simplicity. |
-| One-Page Conversion System | $1,250 CAD | 7 days | Fully custom, code-based. No templates, no builders. |
-| Brandmark Kit | $950 CAD | 5–7 business days | Primary brandmark + supporting marks + visual direction. |
-
-**Offering Distinctions (Critical):**
-- **Starter Site** = speed & simplicity (template-assisted, managed builder)
-- **One-Page Conversion System** = custom & crafted (code-based, no templates)
-- These are parallel options, not upgrades of each other
-
-**Platform Rule:**
-- Do NOT name or foreground the website builder platform (e.g., Wix) in client-facing copy
-- Position as "Starter" or "Launch" solution, not "builder site"
-
-**Scope Boundary:**
-- No integrations, dashboards, or bespoke functionality
-- No multi-page sites or applications
-- No brand strategy or multi-week discovery
-
-B Build is the primary revenue engine and Google Ads entry point.
+**Intake URL format:** `/intake?tier=amber&offer={slug}`
 
 ---
 
-**Tier 3 — B Transformation** (Strategic Work)
+**B Transform** (Violet #8B5CF6) — Bigger Commitments
 
-Purpose: Discovery-led, multi-week engagements for brands requiring structural clarity.
+| Offer | Slug | Price | Timeline | Revisions | Meetings |
+|-------|------|-------|----------|-----------|----------|
+| Website Foundation + Growth System | `foundation-growth` | Scoped | 4–8 weeks | Tied to approval gates | 2–4 |
+| SMB Platform Development | `smb-platform` | Scoped | 6–12 weeks | Tied to approval gates | 2–4 |
+| Brand Design + Platform Development | `brand-platform` | Scoped | 8–16 weeks | Tied to approval gates | 2–4 |
 
-| Offering | Pricing | Notes |
-|----------|---------|-------|
-| Brand System Reset | Private | Strategic realignment of positioning, messaging, and visual system. Absorbs all audit/review work. |
-| Digital Platform Build | Private | Multi-page website or application built as a brand platform. Includes auth, dashboards, portals. |
-| Integrated Brand + Platform | Private | End-to-end brand and digital platform built together from the ground up. |
+**Meeting types:** Discovery, Direction Approval, Pre-Launch QA, Optional Training
 
-**Rules:**
-- 50% deposit to begin, 50% on delivery
-- No public pricing
-- Always discovery-led
-- Never sold as an entry service
+**Intake URL format:** `/intake?tier=violet&offer={slug}`
 
 ---
 
-**B Care** (Ongoing Support)
+**B Care** (Blue #2563EB) — Ongoing Support
 
-Purpose: Scoped monthly subscription support after launch. Not project work.
-
-| Plan | Price | Credits/mo | Response | Turnaround |
-|------|-------|-----------|----------|------------|
-| Care Essentials | $249/mo CAD | 4 | Within 1 business day | 3-5 business days |
-| Growth Care | $649/mo CAD | 10 | Same or next business day | 1-3 days (Micro), 3-7 days (Standard/Advanced) |
-| Partner Care | Gated | 24 | Same business day | 24-72 hours target |
+| Plan | Slug | Price | Credits/mo | Response | Turnaround | Meeting Cadence |
+|------|------|-------|-----------|----------|------------|-----------------|
+| Bronze | `bronze` | $249/mo CAD | 4 | Within 1 business day | 3–5 business days | None |
+| Silver | `silver` | $649/mo CAD | 10 | Same or next business day | 1–3 days (Micro/Standard), 3–7 days (Advanced) | Monthly optional |
+| Gold | `gold` | By application | 24 | Same business day | 24–72 hours target | 1–2x monthly |
 
 **Credit Definitions:**
 - Micro (1 credit): text swap, image swap, link/button fix, metadata tweak, small CSS tweak, add/remove a simple block
@@ -174,12 +139,20 @@ Purpose: Scoped monthly subscription support after launch. Not project work.
 **Rules:**
 - Credits are not hours. They represent scoped units of work.
 - Anything outside plan scope becomes a fixed-scope Build quote.
-- Partner Care uses scarcity framing: "Limited seats. Fit + capacity confirmed before onboarding."
-- Essentials and Growth show pricing publicly. Partner pricing is gated.
+- Gold uses scarcity framing: "Limited seats. Fit + capacity confirmed before onboarding."
+- Bronze and Silver show pricing publicly. Gold pricing is gated.
 - Use "Monthly Care Plan" or "scoped monthly support" language. Avoid "retainer."
-- Care plans use `?offer=care-essentials`, `?offer=growth-care`, `?offer=partner-care`
+
+**Intake URL format:** `/intake?tier=blue&offer={slug}`
 
 ---
+
+**Beside AI Phone Policy:**
+- Beside is phone/text routing only
+- No assumed API integration
+- All Beside leads manually entered into CRM
+- Beside does not issue custom quotes
+- All calls are qualified and manually routed into intake system
 
 **Key Principles:**
 - No open-ended scope
@@ -191,24 +164,37 @@ Purpose: Scoped monthly subscription support after launch. Not project work.
 
 **Never invent new services, pricing, or scopes.**
 
-### 1.5 Visual Hierarchy
+### 1.5 Visual Hierarchy (V11)
 
 **Homepage Section Order (Top to Bottom):**
-1. **Start Module** — Compact entry CTA ("Ready to begin?")
-2. **B Build (Amber)** — Primary, largest, most prominent (3 cards)
-3. **B Transformation (Violet)** — Strategic tier with pricing gate (3 cards)
-4. **B Care (Blue)** — Ongoing support tier (3 cards, Essentials + Growth priced, Partner gated)
+1. **Intro** — Cinematic brand signature (4-second animation)
+2. **Header** — Fixed glass header with nav
+3. **Hero** — "Brands & Web Systems" with spotlights
+4. **Services (#packages)** — Tri-Colour intake CTA, then 3 tier groups:
+   - B Build (Amber) — 3 OfferCards
+   - B Transform (Violet) — 3 OfferCards
+   - B Care (Blue) — 3 OfferCards
+5. **Process (#process)** — 5-step journey + tier-specific workflows
+6. **About (#about)** — Founder section with dot grid
+7. **Trust Stack** — Social proof
+8. **Phone CTA** — Phone-first conversion block with Beside AI
+9. **FAQ** — Accordion with Schema.org
+10. **Contact (#contact)** — Email + phone + link to /intake
+11. **Footer**
 
-**Key Visual Rules:**
-- B Build is the primary revenue engine and Google Ads entry point
-- B Build uses amber accent (#D97706) — appears first among tiers
-- B Transformation uses violet accent (#8B5CF6)
-- B Care uses blue accent (#2563EB)
-- All sub-brands use shared B logomark with differentiated wordmarks
+**Tier Color System:**
+- Build uses amber accent (#D97706)
+- Transform uses violet accent (#8B5CF6)
+- Care uses blue accent (#2563EB)
+- Conversation uses tri-colour gradient (amber → violet → blue)
 
-**Navigation Order:**
-1. Build (first in dropdown)
-2. Transformation (second in dropdown)
+**Navigation Order (V11):**
+1. Services
+2. How It Works
+3. About
+4. CTA: Mobile = "Call Now" (tel:), Desktop = "Get a Quote" (→ /intake)
+5. Divider
+6. Client Portal
 
 ### 1.6 AI Positioning (Critical)
 
@@ -293,34 +279,40 @@ A successful implementation:
 │   │   ├── SkipLink.astro         # Accessibility skip link
 │   │   ├── VisitorNotify.astro    # Silent Pushover notification on page load (skips owner visits)
 │   │   ├── AnnouncementBanner.astro # Dismissible announcement banner
-│   │   └── GesturePrevention.astro # iOS gesture prevention (shared across all pages)
+│   │   ├── GesturePrevention.astro # iOS gesture prevention (shared across all pages)
+│   │   ├── OfferCard.astro        # V11 offer card (used in homepage tier groups)
+│   │   ├── TierGroupHeader.astro  # B logomark + tier name header for homepage
+│   │   ├── PackageCard.astro      # V10 legacy card (kept for sudbury.astro compat)
+│   │   ├── InlineIntakeForm.astro # 2-step inline intake form (used on detail pages)
+│   │   ├── StickyMobileCTA.astro  # Mobile-only sticky CTA bar
+│   │   ├── PhoneFirstCTA.astro    # Phone-first conversion block with Beside AI
+│   │   └── FAQ.astro              # FAQ accordion with optional Schema.org
 │   ├── pages/
-│   │   ├── index.astro            # Homepage (1,300+ lines, most complex)
+│   │   ├── index.astro            # Homepage (V11 — 3 tier groups + FAQ + phone CTA)
 │   │   ├── 404.astro              # Error page
 │   │   ├── thanks.astro           # Formspree redirect
 │   │   ├── sitemapX.astro         # Ecosystem sitemap
-│   │   ├── book.astro             # Booking page
-│   │   ├── exploratory.astro      # B Conversation tier landing
-│   │   ├── clarity-session.astro  # Clarity session page
+│   │   ├── intake.astro           # Tier-aware intake form (replaces start.astro)
+│   │   ├── amber.astro            # B Build tier hub (3 offers)
+│   │   ├── violet.astro           # B Transform tier hub (3 offers)
+│   │   ├── care.astro             # B Care hub (Bronze/Silver/Gold)
+│   │   ├── amber/
+│   │   │   ├── starter-onepage.astro    # One-Page + Contact detail ($750)
+│   │   │   ├── starter-multipage.astro  # Multi-Page + Contact detail
+│   │   │   └── fullsite-booking.astro   # Full Site + Booking detail
+│   │   ├── violet/
+│   │   │   ├── foundation-growth.astro  # Foundation + Growth System detail
+│   │   │   ├── smb-platform.astro       # SMB Platform Development detail
+│   │   │   └── brand-platform.astro     # Brand Design + Platform detail
+│   │   ├── care/
+│   │   │   ├── bronze.astro             # Bronze plan detail ($249/mo)
+│   │   │   ├── silver.astro             # Silver plan detail ($649/mo)
+│   │   │   └── gold.astro              # Gold plan detail (by application)
 │   │   ├── scottbertrand.astro    # Personal cross-promotion
-│   │   ├── focus-studio.astro     # B Build landing (Google Ads)
-│   │   ├── core-services.astro    # B Transformation landing (Google Ads)
-│   │   ├── sudbury.astro          # Sudbury local campaign landing
-│   │   ├── website-conversion-snapshot.astro  # Snapshot diagnostic landing
-│   │   ├── brand-clarity-diagnostic.astro     # Brand diagnostic landing
-│   │   ├── starter-site.astro           # Service detail: Starter Site
-│   │   ├── one-page-redesign.astro      # Service detail: One-Page Redesign
-│   │   ├── brandmark.astro              # Service detail: Brandmark
-│   │   ├── brand-system-reset.astro     # Service detail: Brand System Reset
-│   │   ├── digital-platform-build.astro # Service detail: Digital Platform Build
-│   │   ├── integrated-brand-platform.astro # Service detail: Integrated Brand+Platform
+│   │   ├── sudbury.astro          # Sudbury local campaign landing (Google Ads)
 │   │   ├── payment-confirmed.astro      # Post-payment confirmation
 │   │   ├── booking-confirmed.astro      # Post-booking confirmation
 │   │   ├── snapshot-confirmed.astro     # Post-snapshot confirmation
-│   │   ├── intake/
-│   │   │   ├── exploratory.astro              # B Conversation intake form
-│   │   │   ├── brand-clarity-diagnostic.astro # Brand diagnostic intake
-│   │   │   └── website-conversion-snapshot.astro # Snapshot intake
 │   │   ├── booking/
 │   │   │   └── schedule.astro     # Calendly booking widget
 │   │   └── group/
@@ -450,9 +442,10 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 - Border-radius range: 40%–60% per corner (subtle blob morphing)
 
 **Color Application:**
-- Amber (`rgba(217, 119, 6, x)`) — Primary accent, used in header, contact, and B Build tier
-- Violet (`rgba(139, 92, 246, x)`) — B Transformation tier accent
-- Blue (`rgba(37, 99, 235, x)`) — B Care tier accent
+- Amber (`rgba(217, 119, 6, x)`) — Primary accent, used in header, contact, and Starter package
+- Violet (`rgba(139, 92, 246, x)`) — Refresh package accent
+- Blue (`rgba(37, 99, 235, x)`) — Platform package accent
+- Tri-colour gradient (Amber → Violet → Blue) — Care tier accent
 
 **Mobile Optimization:**
 - Header ambient lighting stays **enabled** on mobile (per design decision)
@@ -605,38 +598,36 @@ Every page in `src/pages/` **must** include `VisitorNotify`. No exceptions. This
 1. Direct import: `import VisitorNotify from '../components/VisitorNotify.astro';` + `<VisitorNotify />` before `</BaseLayout>`
 2. Shared layout: `ServiceDetailLayout.astro` and `IntakeLayout.astro` include it automatically
 
-**Current coverage (28/28 pages):**
+**Current coverage (26/26 pages):**
 
 | Page | Source |
 |------|--------|
 | `index.astro` | Direct |
-| `focus-studio.astro` | Direct |
-| `core-services.astro` | Direct |
-| `exploratory.astro` | Direct |
+| `intake.astro` | Via IntakeLayout |
+| `care.astro` | Direct |
+| `amber.astro` | Direct |
+| `violet.astro` | Direct |
+| `amber/starter-onepage.astro` | Via ServiceDetailLayout |
+| `amber/starter-multipage.astro` | Via ServiceDetailLayout |
+| `amber/fullsite-booking.astro` | Via ServiceDetailLayout |
+| `violet/foundation-growth.astro` | Via ServiceDetailLayout |
+| `violet/smb-platform.astro` | Via ServiceDetailLayout |
+| `violet/brand-platform.astro` | Via ServiceDetailLayout |
+| `care/bronze.astro` | Via ServiceDetailLayout |
+| `care/silver.astro` | Via ServiceDetailLayout |
+| `care/gold.astro` | Via ServiceDetailLayout |
 | `sudbury.astro` | Direct |
-| `clarity-session.astro` | Direct |
 | `scottbertrand.astro` | Direct |
-| `brand-clarity-diagnostic.astro` | Direct |
-| `website-conversion-snapshot.astro` | Direct |
 | `booking/schedule.astro` | Direct |
 | `booking-confirmed.astro` | Direct |
 | `payment-confirmed.astro` | Direct |
 | `snapshot-confirmed.astro` | Direct |
-| `intake/exploratory.astro` | Via IntakeLayout |
-| `intake/brand-clarity-diagnostic.astro` | Direct |
-| `intake/website-conversion-snapshot.astro` | Direct |
 | `thanks.astro` | Direct |
 | `404.astro` | Direct |
 | `privacy.astro` | Direct |
 | `group/index.astro` | Direct |
 | `sitemapX.astro` | Direct |
 | `maintenance.astro` | Direct |
-| `starter-site.astro` | Via ServiceDetailLayout |
-| `one-page-redesign.astro` | Via ServiceDetailLayout |
-| `brandmark.astro` | Via ServiceDetailLayout |
-| `brand-system-reset.astro` | Via ServiceDetailLayout |
-| `digital-platform-build.astro` | Via ServiceDetailLayout |
-| `integrated-brand-platform.astro` | Via ServiceDetailLayout |
 
 **Rule:** When adding a new page, include `<VisitorNotify />` or use a layout that includes it. If a page is missing visitor tracking, it is a bug.
 
@@ -856,116 +847,100 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ---
 
-## 16. Routes Reference
+## 16. Routes Reference (V11)
 
-### Conversation Routes (Tier 1)
-
-**Active Routes:**
-- `/exploratory` → B Conversation landing page (serves all 3 offerings)
-- `/intake/exploratory` → B Conversation intake form
-
-**Conversation Offerings (all via shared intake):**
-- Guided Intake (Free, form-based)
-- Clarity Session — Brand / Web / Systems ($145, ~45 min)
-- Technical Feasibility Check (Free, verbal, by request)
-
-### Build Routes (Tier 2)
-- `/focus-studio` → B Build landing page
-
-**Build Offerings:**
-- Starter Site ($750)
-- One-Page Conversion System ($1,250)
-- Brandmark Kit ($950)
-
-### Transformation Routes (Tier 3)
-- `/core-systems` → B Transformation landing page
-- `/core-services` → Same page (alias for existing campaigns)
-
-**Transformation Offerings (3):**
-- Brand System Reset
-- Digital Platform Build
-- Integrated Brand + Platform
-
-### Service Detail Pages
-- `/starter-site` → B Build: Starter Site detail
-- `/one-page-redesign` → B Build: One-Page Conversion System detail
-- `/brandmark` → B Build: Brandmark Kit detail
-- `/digital-platform-build` → B Transformation detail
-- `/brand-system-reset` → B Transformation detail
-- `/integrated-brand-platform` → B Transformation detail
-
-### Tier 3 Redirects (permanent)
-- `/strategic-brand-review` → `/brand-system-reset`
-- `/brand-reset` → `/brand-system-reset`
-- `/full-brand-platform-reset` → `/integrated-brand-platform`
-
-### Google Ads Landing Pages
-- `/sudbury` → Sudbury-specific B Build landing (local campaign)
-- `/website-conversion-snapshot` → Website Snapshot Diagnostic landing
-- `/brand-clarity-diagnostic` → Brand Clarity Diagnostic landing
-- `/intake/website-conversion-snapshot` → Snapshot intake form
-- `/intake/brand-clarity-diagnostic` → Diagnostic intake form
+### Active Pages (File-based routes)
+- `/` → Homepage (3 tier groups, FAQ, phone CTA)
+- `/intake` → Tier-aware intake form (`?tier=amber&offer=starter-onepage`)
+- `/care` → B Care hub page (Bronze/Silver/Gold plans)
+- `/amber` → B Build hub page (3 offers)
+- `/violet` → B Transform hub page (3 offers)
+- `/amber/starter-onepage` → Starter One-Page detail (Amber)
+- `/amber/starter-multipage` → Starter Multi-Page detail (Amber)
+- `/amber/fullsite-booking` → Full Site + Booking detail (Amber)
+- `/violet/foundation-growth` → Foundation + Growth System detail (Violet)
+- `/violet/smb-platform` → SMB Platform Development detail (Violet)
+- `/violet/brand-platform` → Brand + Platform Development detail (Violet)
+- `/care/bronze` → Bronze plan detail (Blue)
+- `/care/silver` → Silver plan detail (Blue)
+- `/care/gold` → Gold plan detail (Blue)
+- `/sudbury` → Sudbury local campaign landing (Google Ads)
+- `/scottbertrand` → Scott Bertrand cross-promotion
 
 ### Booking & Confirmation Routes
-- `/book` → Main booking page
 - `/booking/schedule` → Calendly inline widget
-- `/clarity-session` → Clarity session page
-- `/payment-confirmed` → Post-payment confirmation
+- `/payment-confirmed` → Post-payment confirmation (service config via `?service=`)
 - `/booking-confirmed` → Post-booking confirmation
 - `/snapshot-confirmed` → Post-snapshot confirmation
+- `/thanks` → Formspree redirect confirmation
 
-### Utility Routes
-- `/scottbertrand` → Scott Bertrand cross-promotion page
+### V11 Redirects (permanent — V10 packages → tier pages)
+- `/start` → `/intake`
+- `/packages/starter` → `/amber/starter-onepage`
+- `/packages/refresh` → `/violet/foundation-growth`
+- `/packages/platform` → `/violet/brand-platform`
+- `/build` → `/amber`
+- `/transform` → `/violet`
+- `/blue` → `/care`
 
-### Campaign Aliases (redirects)
-- `/sudbury-brand-website-clarity` → `/sudbury` (permanent)
-- `/sudbury-small-business-website-leads` → `/sudbury` (permanent)
-- `/website-snapshot-review` → `/website-conversion-snapshot` (permanent)
-- `/intake/website-snapshot-review` → `/intake/website-conversion-snapshot` (permanent)
+### Legacy Redirects (permanent → tier pages or /intake)
+- `/focus-studio` → `/#packages`
+- `/core-services` → `/#packages`
+- `/core-systems` → `/#packages`
+- `/exploratory` → `/intake`
+- `/clarity-session` → `/intake`
+- `/starter-site` → `/amber/starter-onepage`
+- `/one-page-redesign` → `/violet/foundation-growth`
+- `/brandmark` → `/amber/starter-onepage`
+- `/brand-system-reset` → `/violet/brand-platform`
+- `/digital-platform-build` → `/violet/brand-platform`
+- `/integrated-brand-platform` → `/violet/brand-platform`
+- `/website-conversion-snapshot` → `/intake`
+- `/brand-clarity-diagnostic` → `/intake`
+- `/intake/exploratory` → `/intake`
+- `/intake/website-conversion-snapshot` → `/intake`
+- `/intake/brand-clarity-diagnostic` → `/intake`
+- `/book` → `/intake`
+- `/direction-session`, `/business-clarity-call`, `/brand-clarity-call`, `/website-clarity-call` → `/intake`
+- `/founders-direction-check`, `/founders-check` → `/intake`
+- All `/intake/*` legacy paths → `/intake`
 
-### Legacy Routes (redirects)
-- `/direction-session` → `/exploratory` (permanent)
-- `/business-clarity-call` → `/exploratory` (permanent)
-- `/founders-check` → `/exploratory` (permanent)
-- `/founders-direction-check` → `/exploratory` (permanent)
-- `/brand-clarity-call` → `/exploratory` (permanent)
-- `/website-clarity-call` → `/exploratory` (permanent)
-- `/intake/direction-session` → `/intake/exploratory` (permanent)
-- `/intake/business-clarity-call` → `/intake/exploratory` (permanent)
-- `/intake/founders-check` → `/intake/exploratory` (permanent)
-- `/intake/brand-clarity-call` → `/intake/exploratory` (permanent)
-- `/intake/website-clarity-call` → `/intake/exploratory` (permanent)
+### Campaign Aliases (permanent)
+- `/sudbury-brand-website-clarity` → `/sudbury`
+- `/sudbury-small-business-website-leads` → `/sudbury`
+- `/website-snapshot-review` → `/intake`
 
-### Convenience Redirects
-- `/about`, `/services`, `/process` → Homepage anchors (`/#about`, etc.)
-- `/intake`, `/start`, `/start-here` → `/focus-studio`
+### Convenience Redirects (temporary)
+- `/about`, `/services`, `/process`, `/how-it-works` → Homepage anchors
+- `/start-here` → `/intake`
 - `/portal`, `/client-portal`, `/login` → `/#portal`
-- `/brand-website-starter-map` → `/#services` (temporary)
+- `/brand-website-starter-map` → `/#packages`
 
 ---
 
 ## 17. Sub-Brand Visual System
 
-### B Transformation (Core Systems)
-- Shared B logomark (40px, white)
-- "Transformation" wordmark in Fraunces (1.875rem, 300 weight)
-- Positioned below "What we offer" heading
-- Solid borders on service cards
+> **V11:** The 4-tier sub-brand system (B Conversation, B Build, B Transform, B Care) is fully active. The homepage displays 3 tier groups (Build, Transform, Care). Conversation tier handles intake/qualification routing.
 
-### B Build (Focus Studio)
+### Tier Hub + Detail Pages
 - Shared B logomark (40px, white)
-- "Build" wordmark in Fraunces (1.875rem, 300 weight)
-- Positioned within Build section header
-- Dashed borders on service cards
-- Includes boundary statement at bottom
+- Tier/offer name wordmark in Fraunces (1.875rem, 300 weight)
+- Each tier uses its accent color for spotlights, borders, and accents
+- Hub pages: self-contained inline styles (not main.css)
+- Detail pages: inherit from `ServiceDetailLayout.astro`
 
-### B Conversation (Exploratory)
-- Shared B logomark (40px, white)
-- "Conversation" wordmark in Fraunces (1.875rem, 300 weight)
-- Positioned within Conversation section header
-- Dashed borders on service cards
+### Tier Color Mapping (V11)
+| Tier | Sub-Brand | Tier Class | Accent Color | Hex |
+|------|-----------|-----------|--------------|-----|
+| Build | B Build | `--build` / `tier-card--build` | Amber | `#D97706` |
+| Transform | B Transform | `--transform` / `tier-card--transform` | Violet | `#8B5CF6` |
+| Care | B Care | `--care` / `tier-card--care` | Blue | `#2563EB` |
+| Conversation | B Conversation | `--conversation` / `tier-card--conversation` | Tri-colour gradient | `linear-gradient(135deg, #D97706, #8B5CF6, #2563EB)` |
 
-All three sub-brands use identical logomark + wordmark styling for consistency.
+### Sub-Brand Name Display
+- Homepage tier group headers: white text (not accent-colored)
+- Hub pages: white text with accent-colored spotlights
+- Detail pages: white text with accent-colored spotlights and borders
 
 ---
 
@@ -977,9 +952,10 @@ All interactive service cards use a single card system defined in `main.css` wit
 
 | Tier | Primary Color | CSS Variable | Hex |
 |------|---------------|--------------|-----|
-| B Build | Amber | `--build-accent` | `#D97706` / `rgba(217, 119, 6, x)` |
-| B Transformation | Violet | `--transform-accent` | `#8B5CF6` / `rgba(139, 92, 246, x)` |
-| B Conversation | Blue | `--care-accent` | `#2563EB` / `rgba(37, 99, 235, x)` |
+| Build (Amber) | Amber | `--build-accent` / `--tier-build` / `--pkg-starter` | `#D97706` / `rgba(217, 119, 6, x)` |
+| Transform (Violet) | Violet | `--transform-accent` / `--tier-transform` / `--pkg-refresh` | `#8B5CF6` / `rgba(139, 92, 246, x)` |
+| Care (Blue) | Blue | `--care-accent` / `--tier-care` / `--pkg-platform` | `#2563EB` / `rgba(37, 99, 235, x)` |
+| Conversation | Tri-colour | `--tier-conversation` | `linear-gradient(135deg, #D97706, #8B5CF6, #2563EB)` |
 
 ### 18.2 Card System Tokens (`tokens.css`)
 
@@ -1038,16 +1014,11 @@ Old page-specific class names (`.focused-studio__card`, `.fs-offering`, `.cs-off
 
 | Page | Elements | Tier Class |
 |------|----------|-----------|
-| `index.astro` | `.focused-studio__card` (×3) | `tier-card--build` |
-| `index.astro` | `.service` (×3) | `tier-card--transform` |
-| `index.astro` | `.exploratory-sessions__card` (×3) | `tier-card--conversation` |
-| `focus-studio.astro` | `.fs-offering--primary` | `tier-card--build tier-card--featured` |
-| `focus-studio.astro` | `.fs-offering` (×2 secondary) | `tier-card--build tier-card--compact` |
-| `core-services.astro` | `.cs-offering` (×3) | `tier-card--transform` |
-| `core-services.astro` | `.cs-exploratory__card` (×2) | `tier-card--conversation tier-card--compact` |
-| `exploratory.astro` | `.exp-primary__card` | `tier-card--conversation tier-card--featured` |
-| `exploratory.astro` | `.exp-option` (×2) | `tier-card--conversation` |
-| `sudbury.astro` | `.sb-other__card` (×2) | `tier-card--build tier-card--compact` |
+| `index.astro` | `OfferCard` (×9 via `.offer-grid` in 3 `.tier-group` sections) | `tier-card--build`, `tier-card--transform`, `tier-card--care` |
+| `sudbury.astro` | `.sb-other__card` (×2) | `tier-card--transform tier-card--compact`, `tier-card--care tier-card--compact` |
+| `care.astro` | `.care-plan-card` (×3) | Uses `.care-plan-card` system (not `.tier-card`) |
+
+**V11 Offer Card System:** The `.offer-card__*` classes in main.css handle offer card internals (best-for chip, name, headline, price, timeline, features, revisions, meeting policy, exclusions, CTAs). These are used by `OfferCard.astro` and sit inside `.tier-card` wrappers. Legacy `.pkg-card__*` classes remain for backward compat (`PackageCard.astro` still used by `sudbury.astro`).
 
 ### 18.6 Mobile & Touch Behavior
 
@@ -1189,6 +1160,8 @@ Added `contain: layout style` to:
 | 6.0.0 | Feb 2026 | Service architecture v6: Added Devin (human full-stack dev) to Section 1.1. Unlocked Sections 1.4/1.5. Tier 1 Exploratory: 2→3 offerings (Guided Intake, Clarity Session w/ Systems domain, Technical Feasibility Check). Tier 2: One-Page Redesign→One-Page System Redesign, added scope boundary. Tier 3: renamed Core Services→Core Systems, reduced 5→3 offerings (Brand System Reset absorbs Strategic Brand Review, Integrated Brand+Platform replaces Full Brand+Platform Reset, dropped Brand Moments). Renamed files: brand-reset→brand-system-reset, full-brand-platform-reset→integrated-brand-platform. Deleted strategic-brand-review.html. New routes: /core-systems, /brand-system-reset, /integrated-brand-platform. CSS: all .core-services→.core-systems. Section 23: Brand Moments→Language Standards. Updated all ads pages, SEO files, booking labels, llms.txt. |
 | 7.0.0 | Feb 2026 | Rebrand: Introduced "Bertrand Group | Brand & Web Systems" wordmark with animated collapse. Domain: bertrandbrands.ca. Email: hello@bertrandgroup.ca. New logomark asset (bg-brands-logomark.png). Updated all ~45 files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
 | 8.0.0 | Feb 2026 | Astro 5 migration: Migrated all 27 pages from vanilla HTML to `.astro` files with `BaseLayout` + 5 header variants + 6 shared components. File-based routing eliminates all page rewrites. Redirects moved from `vercel.json` to `astro.config.ts` (28 entries). CSS/fonts/scripts relocated from `src/` to `public/` for Astro static serving. Extracted `GesturePrevention.astro` (replaced 21 inline occurrences). Extracted `pricing-modal.css` and `founder-lightbox.css` from main.css (homepage-only loading). Fixed HeaderCanonical double-binding bug. Removed legacy JS injectors (`header.js`, `visitor-notify.js`, `announcement-banner.js`). `vercel.json` reduced to API rewrites + security headers only. Legacy HTML archived in `src/_legacy/`. |
+| 10.0.0 | Feb 2026 | V10 Offerings Reset: Restructured from 4-tier × 12-offering catalog to 3 packages (Starter $750 / Refresh / Platform) + Care plans. Phone-first conversion via Beside AI receptionist — mobile nav shows "Call Now", desktop shows "Get a Quote". New components: PackageCard, PhoneFirstCTA, FAQ. Created unified intake at `/start` replacing 3 separate intake forms. Created `/care` page with tri-colour gradient. 3 package detail pages at `/packages/starter|refresh|platform`. Deleted 15 deprecated `.astro` files (focus-studio, core-services, exploratory, clarity-session, starter-site, one-page-redesign, brandmark, brand-system-reset, digital-platform-build, integrated-brand-platform, website-conversion-snapshot, brand-clarity-diagnostic, + 3 intake pages). Rewrote all redirects in `astro.config.ts` (~50 entries). Updated homepage with 3-up PackageCard grid, Trust Stack, FAQ accordion, phone CTA. Added GA4 + Google Ads conversion tracking (`bbConvert()` helper) to BaseLayout. Updated Sudbury landing, all confirmation pages. V10 CSS: `.pkg-grid`, `.pkg-card__*`, `.phone-cta__*`, `.faq__*`, responsive nav CTA classes. |
+| 11.0.0 | Feb 2026 | V11 Service Tier Architecture: Restructured from 3 packages to 4-tier sub-brand model (B Conversation, B Build, B Transform, B Care). Homepage now shows 3 tier groups with OfferCard grid (Amber 3 offers + Violet 3 offers + Blue 3 plans). New components: OfferCard, TierGroupHeader, InlineIntakeForm, StickyMobileCTA. Created tier-aware intake at `/intake` replacing `/start` with URL params (`?tier=amber&offer=starter-onepage`). Created 3 tier hub pages (`/amber`, `/violet`, updated `/care`). Created 9 individual detail pages (`/amber/starter-onepage|starter-multipage|fullsite-booking`, `/violet/foundation-growth|smb-platform|brand-platform`, `/care/bronze|silver|gold`). Care plans renamed: Essentials→Bronze, Growth→Silver, Partner→Gold. Deleted V10 pages (`start.astro`, `packages/starter|refresh|platform.astro`). Added V10→V11 redirects (`/start`→`/intake`, `/packages/*`→tier pages, `/build`→`/amber`, `/transform`→`/violet`, `/blue`→`/care`). Updated all legacy redirect destinations. Nav: "Packages"→"Services", CTA→`/intake`. Updated all confirmation pages with tier hub cross-sell links. Added tier-specific Pushover source labels (`tier-intake-amber|violet|blue`). V11 CSS: `.tier-group`, `.offer-grid`, `.offer-card__*`, tier group header styles. 26 total pages (was 18). |
 
 ---
 
@@ -1215,10 +1188,11 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
                 <span></span>
             </button>
             <nav class="header__nav" id="mainNav">
-                <a href="/?skip#about" class="header__link">About</a>
+                <a href="/?skip#packages" class="header__link">Services</a>
                 <a href="/?skip#process" class="header__link">How It Works</a>
-                <a href="/?skip#services" class="header__link">Services</a>
-                <a href="/exploratory" class="header__link header__link--cta">Book a Call</a>
+                <a href="/?skip#about" class="header__link">About</a>
+                <a href="tel:+17054133705" class="header__link header__link--cta header__link--cta-call">Call Now</a>
+                <a href="/intake" class="header__link header__link--cta header__link--cta-form">Get a Quote</a>
                 <span class="header__divider" aria-hidden="true"></span>
                 <a href="https://clients.bertrandgroup.ca" class="header__link header__link--portal">Client Portal</a>
             </nav>
@@ -1227,22 +1201,26 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
 </header>
 ```
 
-### 22.2 Nav Link Order (LOCKED)
+### 22.2 Nav Link Order (V11 — LOCKED)
 
-| Order | Element | Href | Class |
-|-------|---------|------|-------|
-| 1 | About | `/?skip#about` | `header__link` |
-| 2 | How It Works | `/?skip#process` | `header__link` |
-| 3 | Services | `/?skip#services` | `header__link` |
-| 4 | Book a Call | `/exploratory` | `header__link header__link--cta` |
-| 5 | Divider | — | `header__divider` (span) |
-| 6 | Client Portal | `https://clients.bertrandgroup.ca` | `header__link header__link--portal` |
+| Order | Element | Href (Universal) | Href (Canonical) | Class |
+|-------|---------|-------------------|------------------|-------|
+| 1 | Services | `/?skip#packages` | `#packages` | `header__link` |
+| 2 | How It Works | `/?skip#process` | `#process` | `header__link` |
+| 3 | About | `/?skip#about` | `#about` | `header__link` |
+| 4 | Call Now (mobile) | `tel:+17054133705` | `tel:+17054133705` | `header__link header__link--cta header__link--cta-call` |
+| 5 | Get a Quote (desktop) | `/intake` | `/intake` | `header__link header__link--cta header__link--cta-form` |
+| 6 | Divider | — | — | `header__divider` (span) |
+| 7 | Client Portal | `https://clients.bertrandgroup.ca` | same | `header__link header__link--portal` |
+
+**CTA is responsive:**
+- Mobile: "Call Now" (tel: link) via `.header__link--cta-call` (hidden on desktop)
+- Desktop: "Get a Quote" (→ /intake) via `.header__link--cta-form` (hidden on mobile)
+- In mobile menu (`.is-open`), both CTAs are visible
 
 **Rules:**
-- The table above shows the **sub-page / universal header** format (`/?skip#section`)
-- Homepage (`index.astro` via `HeaderCanonical.astro`) uses bare anchor links (`#about`, `#process`, `#services`) since it's the SPA
+- Homepage (`index.astro` via `HeaderCanonical.astro`) uses bare anchor links (`#packages`, `#process`, `#about`)
 - Sub-pages use `HeaderUniversal.astro` with `/?skip#section` links to bypass the intro animation
-- "Book a Call" always uses `header__link--cta` modifier (amber styling)
 - "Client Portal" always uses `header__link--portal` modifier (subtle styling)
 
 ### 22.3 Logo Configuration
@@ -1261,7 +1239,7 @@ Three-span hamburger button with accessibility attributes:
 
 ### 22.5 Landing Page Overrides
 
-Landing pages (e.g., `focus-studio.astro`) require CSS override to show header immediately:
+Landing pages (e.g., `sudbury.astro`) and service detail pages use CSS override to show header immediately:
 
 ```css
 /* Override main.css header to be visible by default on landing pages */
@@ -1357,10 +1335,10 @@ Headers are now Astro components that render static HTML at build time (no runti
 | Component | Used By | Includes |
 |-----------|---------|----------|
 | `HeaderCanonical.astro` | Homepage only | HTML only (scripts provided by index.astro) |
-| `HeaderUniversal.astro` | Sub-pages (7 pages) | Mobile menu + ambient lighting + wordmark collapse |
-| `HeaderIntake.astro` | Intake forms (3 pages) | Back button + logo |
+| `HeaderUniversal.astro` | Sub-pages (care, amber, violet, amber/*, violet/*, care/*, scottbertrand, group, sitemapX, privacy) | Mobile menu + ambient lighting + wordmark collapse |
+| `HeaderIntake.astro` | Intake form (`intake.astro`) | Back button + logo |
 | `HeaderTierBadge.astro` | Confirmation pages (3 pages) | Service tier badge |
-| `HeaderMinimal.astro` | Ad landing pages (3 pages) | Logo only |
+| `HeaderMinimal.astro` | Ad landing page (`sudbury.astro`) | Logo only |
 
 **Usage:**
 ```astro
@@ -1384,9 +1362,7 @@ Some pages have custom header designs for specific UX or conversion purposes:
 | Page | Header Component | Reason |
 |------|-----------------|--------|
 | `sudbury.astro` | `HeaderMinimal` | Google Ads landing page — focus on conversion |
-| `website-conversion-snapshot.astro` | `HeaderMinimal` | Google Ads landing page |
-| `brand-clarity-diagnostic.astro` | `HeaderMinimal` | Google Ads landing page |
-| All `intake/*.astro` pages | `HeaderIntake` | Form pages need back navigation |
+| `intake.astro` | `HeaderIntake` | Tier-aware intake form needs back navigation |
 | `payment-confirmed.astro` | `HeaderTierBadge` | Confirmation page with service tier context |
 | `snapshot-confirmed.astro` | `HeaderTierBadge` | Confirmation page with service tier context |
 | `booking-confirmed.astro` | `HeaderTierBadge` | Confirmation page with service tier context |
@@ -1419,11 +1395,12 @@ Some pages have custom header designs for specific UX or conversion purposes:
 
 ### 23.2 Offering Names (Exceptions)
 
-Offering names are proper nouns and are exempt from copy language rules:
-- "One-Page Conversion System" — uses "conversion" intentionally
-- "Digital Platform Build" — uses "build" intentionally
-- "Brand System Reset" — uses "reset" intentionally
-- "Brandmark Kit" — uses "kit" intentionally
+Package names are proper nouns and are exempt from copy language rules:
+- "Starter" — entry-level website package
+- "Refresh" — brand + site redesign package
+- "Platform" — full brand + systems build package
+- "Care Essentials" / "Growth Care" / "Partner Care" — monthly support plans
+- "Brandmark Kit" — add-on, uses "kit" intentionally
 
 ### 23.3 Tone Rules
 
@@ -1460,7 +1437,7 @@ This exposes PII in:
 - Server access logs
 - Referrer headers if Calendly redirects
 
-**Mitigation**: These pages are deprecated (redirect to `/exploratory`). The active booking flow (`booking/schedule.astro`) uses the inline widget with `prefill` object instead of URL params, which is the safer approach.
+**Mitigation**: These pages are deprecated (redirect to `/start`). The active booking flow (`booking/schedule.astro`) uses the inline widget with `prefill` object instead of URL params, which is the safer approach.
 
 ### 24.3 Calendly Data Handling
 
@@ -1558,7 +1535,7 @@ Central notification endpoint handling three types: visitor tracking, intake sub
 ```json
 {
   "type": "intake",
-  "source": "exploratory-guided-intake",
+  "source": "unified-intake",
   "name": "...", "email": "...", "phone": "...",
   "business": "...", "website": "...", "service": "...",
   "situation": "...", "budget": "...", "timeline": "...",
@@ -1579,22 +1556,29 @@ Central notification endpoint handling three types: visitor tracking, intake sub
 
 | Type | Title | Priority | Sound | Geolocation | URL |
 |------|-------|----------|-------|-------------|-----|
-| `visitor` | "Visitor on BG Brands" | -1 (silent) | None | ip-api.com | Page URL |
-| `intake` | "New {Source Label}" | 1 (high) | `cashregister` | ip-api.com | `dash.bertrandgroup.ca/leads` |
+| `visitor` | "Visitor on BG Brands" | -1 (silent) | None | Vercel geo | Page URL |
+| `intake` | "New {Source Label}" | 1 (high) | `cashregister` | Vercel geo | `dash.bertrandgroup.ca/leads` |
 | (other) | "BG Brands Inquiry" | 0 (normal) | `pushover` | None | `bertrandbrands.ca/#contact` |
 
 **Source labels (intake type):**
-- `exploratory-guided-intake` → "Exploratory Intake"
-- `website_conversion_snapshot` → "Website Snapshot"
-- `brand-clarity-diagnostic-intake` → "Brand Diagnostic"
+- `tier-intake` → "General Intake"
+- `tier-intake-amber` → "Build Tier Inquiry"
+- `tier-intake-violet` → "Transform Tier Inquiry"
+- `tier-intake-blue` → "Care Tier Inquiry"
+- `unified-intake` → "V10 Intake" (legacy)
+- `inline-starter` → "Starter Package Inquiry" (legacy)
+- `inline-refresh` → "Refresh Package Inquiry" (legacy)
+- `inline-platform` → "Platform Package Inquiry" (legacy)
+- `exploratory-guided-intake` → "Exploratory Intake" (legacy)
+- `website_conversion_snapshot` → "Website Snapshot" (legacy)
+- `brand-clarity-diagnostic-intake` → "Brand Diagnostic" (legacy)
 - `sudbury_focus_studio` → "Sudbury Lead"
 
 **Called by:**
 - `src/components/VisitorNotify.astro` — visitor tracking on every page load
-- `src/pages/intake/exploratory.astro` — after Formspree submission
-- `src/pages/intake/website-conversion-snapshot.astro` — after Formspree submission
-- `src/pages/intake/brand-clarity-diagnostic.astro` — after Formspree submission
+- `src/pages/intake.astro` — tier-aware intake form submission
 - `src/pages/sudbury.astro` — after Formspree submission
+- `src/components/InlineIntakeForm.astro` — inline form on offer detail pages
 
 **Owner exclusion:** `VisitorNotify.astro` checks `localStorage` for `bb_owner` flag (set via `?owner` URL param). Only visitor notifications are suppressed.
 
