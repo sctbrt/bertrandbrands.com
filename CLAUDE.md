@@ -293,14 +293,14 @@ A successful implementation:
 │   │   ├── thanks.astro           # Formspree redirect
 │   │   ├── sitemapX.astro         # Ecosystem sitemap
 │   │   ├── intake.astro           # Tier-aware intake form (replaces start.astro)
-│   │   ├── amber.astro            # B Build tier hub (3 offers)
-│   │   ├── violet.astro           # B Transform tier hub (3 offers)
+│   │   ├── build.astro            # B Build tier hub (3 offers)
+│   │   ├── transform.astro       # B Transform tier hub (3 offers)
 │   │   ├── care.astro             # B Care hub (Bronze/Silver/Gold)
-│   │   ├── amber/
+│   │   ├── build/
 │   │   │   ├── starter-onepage.astro    # One-Page + Contact detail ($750)
 │   │   │   ├── starter-multipage.astro  # Multi-Page + Contact detail
 │   │   │   └── fullsite-booking.astro   # Full Site + Booking detail
-│   │   ├── violet/
+│   │   ├── transform/
 │   │   │   ├── foundation-growth.astro  # Foundation + Growth System detail
 │   │   │   ├── smb-platform.astro       # SMB Platform Development detail
 │   │   │   └── brand-platform.astro     # Brand Design + Platform detail
@@ -605,14 +605,14 @@ Every page in `src/pages/` **must** include `VisitorNotify`. No exceptions. This
 | `index.astro` | Direct |
 | `intake.astro` | Via IntakeLayout |
 | `care.astro` | Direct |
-| `amber.astro` | Direct |
-| `violet.astro` | Direct |
-| `amber/starter-onepage.astro` | Via ServiceDetailLayout |
-| `amber/starter-multipage.astro` | Via ServiceDetailLayout |
-| `amber/fullsite-booking.astro` | Via ServiceDetailLayout |
-| `violet/foundation-growth.astro` | Via ServiceDetailLayout |
-| `violet/smb-platform.astro` | Via ServiceDetailLayout |
-| `violet/brand-platform.astro` | Via ServiceDetailLayout |
+| `build.astro` | Direct |
+| `transform.astro` | Direct |
+| `build/starter-onepage.astro` | Via ServiceDetailLayout |
+| `build/starter-multipage.astro` | Via ServiceDetailLayout |
+| `build/fullsite-booking.astro` | Via ServiceDetailLayout |
+| `transform/foundation-growth.astro` | Via ServiceDetailLayout |
+| `transform/smb-platform.astro` | Via ServiceDetailLayout |
+| `transform/brand-platform.astro` | Via ServiceDetailLayout |
 | `care/bronze.astro` | Via ServiceDetailLayout |
 | `care/silver.astro` | Via ServiceDetailLayout |
 | `care/gold.astro` | Via ServiceDetailLayout |
@@ -853,14 +853,14 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - `/` → Homepage (3 tier groups, FAQ, phone CTA)
 - `/intake` → Tier-aware intake form (`?tier=amber&offer=starter-onepage`)
 - `/care` → B Care hub page (Bronze/Silver/Gold plans)
-- `/amber` → B Build hub page (3 offers)
-- `/violet` → B Transform hub page (3 offers)
-- `/amber/starter-onepage` → Starter One-Page detail (Amber)
-- `/amber/starter-multipage` → Starter Multi-Page detail (Amber)
-- `/amber/fullsite-booking` → Full Site + Booking detail (Amber)
-- `/violet/foundation-growth` → Foundation + Growth System detail (Violet)
-- `/violet/smb-platform` → SMB Platform Development detail (Violet)
-- `/violet/brand-platform` → Brand + Platform Development detail (Violet)
+- `/build` → B Build hub page (3 offers)
+- `/transform` → B Transform hub page (3 offers)
+- `/build/starter-onepage` → Starter One-Page detail (Amber)
+- `/build/starter-multipage` → Starter Multi-Page detail (Amber)
+- `/build/fullsite-booking` → Full Site + Booking detail (Amber)
+- `/transform/foundation-growth` → Foundation + Growth System detail (Violet)
+- `/transform/smb-platform` → SMB Platform Development detail (Violet)
+- `/transform/brand-platform` → Brand + Platform Development detail (Violet)
 - `/care/bronze` → Bronze plan detail (Blue)
 - `/care/silver` → Silver plan detail (Blue)
 - `/care/gold` → Gold plan detail (Blue)
@@ -874,13 +874,13 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - `/snapshot-confirmed` → Post-snapshot confirmation
 - `/thanks` → Formspree redirect confirmation
 
-### V11 Redirects (permanent — V10 packages → tier pages)
+### V11 Redirects (permanent — V10/V11 legacy paths → current routes)
 - `/start` → `/intake`
-- `/packages/starter` → `/amber/starter-onepage`
-- `/packages/refresh` → `/violet/foundation-growth`
-- `/packages/platform` → `/violet/brand-platform`
-- `/build` → `/amber`
-- `/transform` → `/violet`
+- `/packages/starter` → `/build/starter-onepage`
+- `/packages/refresh` → `/transform/foundation-growth`
+- `/packages/platform` → `/transform/brand-platform`
+- `/amber` → `/build`
+- `/violet` → `/transform`
 - `/blue` → `/care`
 
 ### Legacy Redirects (permanent → tier pages or /intake)
@@ -889,12 +889,12 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - `/core-systems` → `/#packages`
 - `/exploratory` → `/intake`
 - `/clarity-session` → `/intake`
-- `/starter-site` → `/amber/starter-onepage`
-- `/one-page-redesign` → `/violet/foundation-growth`
-- `/brandmark` → `/amber/starter-onepage`
-- `/brand-system-reset` → `/violet/brand-platform`
-- `/digital-platform-build` → `/violet/brand-platform`
-- `/integrated-brand-platform` → `/violet/brand-platform`
+- `/starter-site` → `/build/starter-onepage`
+- `/one-page-redesign` → `/transform/foundation-growth`
+- `/brandmark` → `/build/starter-onepage`
+- `/brand-system-reset` → `/transform/brand-platform`
+- `/digital-platform-build` → `/transform/brand-platform`
+- `/integrated-brand-platform` → `/transform/brand-platform`
 - `/website-conversion-snapshot` → `/intake`
 - `/brand-clarity-diagnostic` → `/intake`
 - `/intake/exploratory` → `/intake`
@@ -1161,7 +1161,7 @@ Added `contain: layout style` to:
 | 7.0.0 | Feb 2026 | Rebrand: Introduced "Bertrand Group | Brand & Web Systems" wordmark with animated collapse. Domain: bertrandbrands.ca. Email: hello@bertrandgroup.ca. New logomark asset (bg-brands-logomark.png). Updated all ~45 files. Kept Calendly URLs as-is (calendly.com/bertrandbrands/*). |
 | 8.0.0 | Feb 2026 | Astro 5 migration: Migrated all 27 pages from vanilla HTML to `.astro` files with `BaseLayout` + 5 header variants + 6 shared components. File-based routing eliminates all page rewrites. Redirects moved from `vercel.json` to `astro.config.ts` (28 entries). CSS/fonts/scripts relocated from `src/` to `public/` for Astro static serving. Extracted `GesturePrevention.astro` (replaced 21 inline occurrences). Extracted `pricing-modal.css` and `founder-lightbox.css` from main.css (homepage-only loading). Fixed HeaderCanonical double-binding bug. Removed legacy JS injectors (`header.js`, `visitor-notify.js`, `announcement-banner.js`). `vercel.json` reduced to API rewrites + security headers only. Legacy HTML archived in `src/_legacy/`. |
 | 10.0.0 | Feb 2026 | V10 Offerings Reset: Restructured from 4-tier × 12-offering catalog to 3 packages (Starter $750 / Refresh / Platform) + Care plans. Phone-first conversion via Beside AI receptionist — mobile nav shows "Call Now", desktop shows "Get a Quote". New components: PackageCard, PhoneFirstCTA, FAQ. Created unified intake at `/start` replacing 3 separate intake forms. Created `/care` page with tri-colour gradient. 3 package detail pages at `/packages/starter|refresh|platform`. Deleted 15 deprecated `.astro` files (focus-studio, core-services, exploratory, clarity-session, starter-site, one-page-redesign, brandmark, brand-system-reset, digital-platform-build, integrated-brand-platform, website-conversion-snapshot, brand-clarity-diagnostic, + 3 intake pages). Rewrote all redirects in `astro.config.ts` (~50 entries). Updated homepage with 3-up PackageCard grid, Trust Stack, FAQ accordion, phone CTA. Added GA4 + Google Ads conversion tracking (`bbConvert()` helper) to BaseLayout. Updated Sudbury landing, all confirmation pages. V10 CSS: `.pkg-grid`, `.pkg-card__*`, `.phone-cta__*`, `.faq__*`, responsive nav CTA classes. |
-| 11.0.0 | Feb 2026 | V11 Service Tier Architecture: Restructured from 3 packages to 4-tier sub-brand model (B Conversation, B Build, B Transform, B Care). Homepage now shows 3 tier groups with OfferCard grid (Amber 3 offers + Violet 3 offers + Blue 3 plans). New components: OfferCard, TierGroupHeader, InlineIntakeForm, StickyMobileCTA. Created tier-aware intake at `/intake` replacing `/start` with URL params (`?tier=amber&offer=starter-onepage`). Created 3 tier hub pages (`/amber`, `/violet`, updated `/care`). Created 9 individual detail pages (`/amber/starter-onepage|starter-multipage|fullsite-booking`, `/violet/foundation-growth|smb-platform|brand-platform`, `/care/bronze|silver|gold`). Care plans renamed: Essentials→Bronze, Growth→Silver, Partner→Gold. Deleted V10 pages (`start.astro`, `packages/starter|refresh|platform.astro`). Added V10→V11 redirects (`/start`→`/intake`, `/packages/*`→tier pages, `/build`→`/amber`, `/transform`→`/violet`, `/blue`→`/care`). Updated all legacy redirect destinations. Nav: "Packages"→"Services", CTA→`/intake`. Updated all confirmation pages with tier hub cross-sell links. Added tier-specific Pushover source labels (`tier-intake-amber|violet|blue`). V11 CSS: `.tier-group`, `.offer-grid`, `.offer-card__*`, tier group header styles. 26 total pages (was 18). |
+| 11.0.0 | Feb 2026 | V11 Service Tier Architecture: Restructured from 3 packages to 4-tier sub-brand model (B Conversation, B Build, B Transform, B Care). Homepage now shows 3 tier groups with OfferCard grid (Amber 3 offers + Violet 3 offers + Blue 3 plans). New components: OfferCard, TierGroupHeader, InlineIntakeForm, StickyMobileCTA. Created tier-aware intake at `/intake` replacing `/start` with URL params (`?tier=amber&offer=starter-onepage`). Created 3 tier hub pages (`/build`, `/transform`, updated `/care`). Created 9 individual detail pages (`/build/starter-onepage|starter-multipage|fullsite-booking`, `/transform/foundation-growth|smb-platform|brand-platform`, `/care/bronze|silver|gold`). Care plans renamed: Essentials→Bronze, Growth→Silver, Partner→Gold. Deleted V10 pages (`start.astro`, `packages/starter|refresh|platform.astro`). Added V10→V11 redirects (`/start`→`/intake`, `/packages/*`→tier pages, `/amber`→`/build`, `/violet`→`/transform`, `/blue`→`/care`). Updated all legacy redirect destinations. Nav: "Packages"→"Services", CTA→`/intake`. Updated all confirmation pages with tier hub cross-sell links. Added tier-specific Pushover source labels (`tier-intake-amber|violet|blue`). V11 CSS: `.tier-group`, `.offer-grid`, `.offer-card__*`, tier group header styles. 26 total pages (was 18). |
 
 ---
 
@@ -1335,7 +1335,7 @@ Headers are now Astro components that render static HTML at build time (no runti
 | Component | Used By | Includes |
 |-----------|---------|----------|
 | `HeaderCanonical.astro` | Homepage only | HTML only (scripts provided by index.astro) |
-| `HeaderUniversal.astro` | Sub-pages (care, amber, violet, amber/*, violet/*, care/*, scottbertrand, group, sitemapX, privacy) | Mobile menu + ambient lighting + wordmark collapse |
+| `HeaderUniversal.astro` | Sub-pages (care, build, transform, build/*, transform/*, care/*, scottbertrand, group, sitemapX, privacy) | Mobile menu + ambient lighting + wordmark collapse |
 | `HeaderIntake.astro` | Intake form (`intake.astro`) | Back button + logo |
 | `HeaderTierBadge.astro` | Confirmation pages (3 pages) | Service tier badge |
 | `HeaderMinimal.astro` | Ad landing page (`sudbury.astro`) | Logo only |
