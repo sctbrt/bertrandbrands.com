@@ -6,6 +6,89 @@ import { next, rewrite } from '@vercel/functions';
 const MAINTENANCE_MODE = true;
 // ────────────────────────────────────────────────────────
 
+// ─── KNOWN BOTS (bypass geo-fence for SEO & ads) ─────
+// These bots must reach your actual content for indexing,
+// ad verification, and social media link previews.
+const BOT_PATTERNS = [
+    'googlebot', 'google-inspectiontool', 'adsbot-google', 'mediapartners-google',
+    'apis-google', 'google-safety',
+    'bingbot', 'msnbot', 'adidxbot',
+    'facebookexternalhit', 'facebot',
+    'twitterbot',
+    'linkedinbot',
+    'slackbot', 'slack-imgproxy',
+    'whatsapp',
+    'pinterestbot',
+    'discordbot',
+    'applebot',
+    'duckduckbot',
+    'yandexbot',
+    'baiduspider',
+    'ia_archiver',
+    'semrushbot', 'ahrefsbot', 'dotbot', 'rogerbot', 'screaming frog',
+    'gtmetrix', 'pagespeed', 'lighthouse',
+    'uptimerobot', 'pingdom', 'statuscake',
+    'vercel-edge-functions',
+];
+
+function isKnownBot(userAgent) {
+    if (!userAgent) return false;
+    const ua = userAgent.toLowerCase();
+    return BOT_PATTERNS.some(bot => ua.includes(bot));
+}
+// ────────────────────────────────────────────────────────
+
+// ─── GEO-BLOCKED RESPONSE ──────────────────────────────
+// Minimal on-brand 451 page for visitors from blocked regions.
+const GEO_BLOCKED_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Available — Bertrand Brands</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fafafa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .geo-block { max-width: 420px; }
+        .geo-block__logo {
+            width: 40px; height: 40px;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+        .geo-block__title {
+            font-size: 1.125rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            margin-bottom: 0.75rem;
+        }
+        .geo-block__message {
+            font-size: 0.875rem;
+            color: #737373;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <main class="geo-block">
+        <img src="/assets/bg-brands-logomark.png" alt="" class="geo-block__logo" width="40" height="40">
+        <h1 class="geo-block__title">This site serves Canadian clients only.</h1>
+        <p class="geo-block__message">Bertrand Brands is a studio based in Sudbury, Ontario, serving businesses across Canada. If you believe this is an error, contact us at hello@bertrandgroup.ca</p>
+    </main>
+</body>
+</html>`;
+// ────────────────────────────────────────────────────────
+
 export const config = {
     matcher: '/((?!api|assets|styles|scripts|components|favicon|apple-touch|og-image|robots|sitemap|llms|fonts).*)',
 };
@@ -178,6 +261,37 @@ export default function middleware(request) {
     if (hostname.startsWith('group.')) {
         return Response.redirect('https://bertrandgroup.ca', 301);
     }
+
+    // ─── Geo-fencing (country allowlist) ────────────────────
+    // Env var format: "CA" or "CA,US" (comma-separated ISO country codes)
+    // Empty or unset = no geo-fencing (all countries allowed).
+    // Bypass cookie and ?bypass param skip the check.
+    const allowedCountries = (process.env.GEO_ALLOWED_COUNTRIES || '')
+        .split(',')
+        .map(c => c.trim().toUpperCase())
+        .filter(Boolean);
+
+    if (allowedCountries.length > 0) {
+        const cookies = request.headers.get('cookie') || '';
+        const hasBypass = cookies.includes('bb_maintenance_bypass=1');
+
+        if (!hasBypass && !url.searchParams.has('bypass')) {
+            // Let known bots through so Google can index, ads can verify,
+            // and social platforms can generate link previews.
+            const userAgent = request.headers.get('user-agent') || '';
+            if (!isKnownBot(userAgent)) {
+                const country = (request.headers.get('x-vercel-ip-country') || '').toUpperCase();
+
+                if (country && !allowedCountries.includes(country)) {
+                    return new Response(GEO_BLOCKED_HTML, {
+                        status: 451,
+                        headers: { 'Content-Type': 'text/html; charset=utf-8' },
+                    });
+                }
+            }
+        }
+    }
+    // ─────────────────────────────────────────────────────
 
     // ─── Maintenance gate ───────────────────────────────
     if (MAINTENANCE_MODE) {

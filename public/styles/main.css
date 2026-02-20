@@ -1220,9 +1220,62 @@
                 padding: 4rem 2rem calc(2rem + env(safe-area-inset-bottom, 0px));
                 box-sizing: border-box;
                 overflow-y: auto;
+                overflow-x: hidden;
             }
+
+            /* Ambient accent backlighting — tri-colour organic glows */
+            .header__nav::before,
+            .header__nav::after {
+                content: '';
+                position: fixed;
+                pointer-events: none;
+                border-radius: 50%;
+                filter: blur(80px);
+                opacity: 0;
+                transition: opacity 0.6s ease-out;
+                z-index: -1;
+            }
+
+            /* Amber glow — top right, drifts organically */
+            .header__nav::before {
+                width: 320px;
+                height: 320px;
+                top: -5%;
+                right: -15%;
+                background: radial-gradient(
+                    circle at center,
+                    rgba(217, 119, 6, 0.18) 0%,
+                    rgba(217, 119, 6, 0.05) 50%,
+                    transparent 70%
+                );
+            }
+
+            /* Violet glow — bottom left, counter-rhythm */
+            .header__nav::after {
+                width: 280px;
+                height: 280px;
+                bottom: 10%;
+                left: -12%;
+                background: radial-gradient(
+                    circle at center,
+                    rgba(139, 92, 246, 0.14) 0%,
+                    rgba(139, 92, 246, 0.04) 50%,
+                    transparent 70%
+                );
+            }
+
             .header__nav.is-open {
                 display: flex;
+            }
+
+            .header__nav.is-open::before,
+            .header__nav.is-open::after {
+                opacity: 1;
+                animation: menuGlowBreathe 18s ease-in-out infinite;
+            }
+
+            .header__nav.is-open::after {
+                animation: menuGlowBreatheAlt 21s ease-in-out 0.4s infinite;
             }
             .header__nav .header__link {
                 font-size: var(--text-xl);
@@ -1294,6 +1347,82 @@
         /* Don't pulse if menu is already open */
         .header__toggle.is-open.header__toggle--pulse {
             animation: none;
+        }
+
+        /* Mobile menu ambient glow — organic breathing with shape morph */
+        @keyframes menuGlowBreathe {
+            0%, 100% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+                border-radius: 50% 50% 50% 50%;
+            }
+            18% {
+                opacity: 0.85;
+                transform: translate(12px, -18px) scale(1.05);
+                border-radius: 58% 42% 55% 45%;
+            }
+            40% {
+                opacity: 0.7;
+                transform: translate(-8px, 10px) scale(0.95);
+                border-radius: 45% 55% 42% 58%;
+            }
+            55% {
+                opacity: 0.9;
+                transform: translate(15px, 5px) scale(1.03);
+                border-radius: 52% 48% 58% 42%;
+            }
+            72% {
+                opacity: 0.75;
+                transform: translate(-5px, -12px) scale(0.97);
+                border-radius: 42% 58% 45% 55%;
+            }
+            88% {
+                opacity: 0.95;
+                transform: translate(6px, 8px) scale(1.02);
+                border-radius: 56% 44% 50% 50%;
+            }
+        }
+
+        @keyframes menuGlowBreatheAlt {
+            0%, 100% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+                border-radius: 50% 50% 50% 50%;
+            }
+            22% {
+                opacity: 0.8;
+                transform: translate(-10px, 15px) scale(1.04);
+                border-radius: 44% 56% 48% 52%;
+            }
+            45% {
+                opacity: 0.92;
+                transform: translate(8px, -8px) scale(0.96);
+                border-radius: 55% 45% 58% 42%;
+            }
+            60% {
+                opacity: 0.72;
+                transform: translate(-12px, -5px) scale(1.02);
+                border-radius: 48% 52% 42% 58%;
+            }
+            78% {
+                opacity: 0.88;
+                transform: translate(5px, 12px) scale(0.98);
+                border-radius: 58% 42% 52% 48%;
+            }
+            92% {
+                opacity: 0.78;
+                transform: translate(-3px, -10px) scale(1.04);
+                border-radius: 42% 58% 55% 45%;
+            }
+        }
+
+        /* Reduced motion — disable menu ambient animations */
+        @media (prefers-reduced-motion: reduce) {
+            .header__nav.is-open::before,
+            .header__nav.is-open::after {
+                animation: none;
+                opacity: 0.7;
+            }
         }
 
         .header__link {
@@ -7041,10 +7170,182 @@
 /* --- Tier Group (section container on homepage) --- */
 .tier-group {
     margin-bottom: var(--space-lg);
+    position: relative;
+    overflow: visible;
 }
 
 .tier-group:last-child {
     margin-bottom: 0;
+}
+
+/* --- Tier Group Ambient Lighting (V1-5 style accent backlighting) --- */
+.tier-group::before {
+    content: '';
+    position: absolute;
+    width: 130%;
+    height: 110%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(70px);
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+}
+
+/* Activate glow when tier group is revealed by scroll */
+.tier-group.is-visible::before {
+    opacity: 1;
+}
+
+/* Build — Amber ambient wash */
+.tier-group[data-tier="build"]::before {
+    background: radial-gradient(
+        ellipse 75% 55% at 50% 50%,
+        rgba(217, 119, 6, 0.16) 0%,
+        rgba(217, 119, 6, 0.08) 35%,
+        rgba(217, 119, 6, 0.03) 55%,
+        transparent 75%
+    );
+    animation: tierGlowBuild 18s ease-in-out infinite;
+}
+
+/* Transform — Violet ambient wash */
+.tier-group[data-tier="transform"]::before {
+    background: radial-gradient(
+        ellipse 75% 55% at 50% 50%,
+        rgba(139, 92, 246, 0.14) 0%,
+        rgba(139, 92, 246, 0.07) 35%,
+        rgba(139, 92, 246, 0.03) 55%,
+        transparent 75%
+    );
+    animation: tierGlowTransform 20s ease-in-out infinite;
+}
+
+/* Care — Blue ambient wash */
+.tier-group[data-tier="care"]::before {
+    background: radial-gradient(
+        ellipse 75% 55% at 50% 50%,
+        rgba(37, 99, 235, 0.14) 0%,
+        rgba(37, 99, 235, 0.07) 35%,
+        rgba(37, 99, 235, 0.03) 55%,
+        transparent 75%
+    );
+    animation: tierGlowCare 22s ease-in-out infinite;
+}
+
+/* Organic breathing — Build (amber) */
+@keyframes tierGlowBuild {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        border-radius: 50% 50% 50% 50%;
+    }
+    20% {
+        transform: translate(-48%, -52%) scale(1.04);
+        opacity: 0.85;
+        border-radius: 55% 45% 52% 48%;
+    }
+    45% {
+        transform: translate(-52%, -48%) scale(0.96);
+        opacity: 0.92;
+        border-radius: 48% 52% 45% 55%;
+    }
+    65% {
+        transform: translate(-49%, -51%) scale(1.03);
+        opacity: 0.78;
+        border-radius: 52% 48% 55% 45%;
+    }
+    85% {
+        transform: translate(-51%, -49%) scale(0.98);
+        opacity: 0.88;
+        border-radius: 45% 55% 48% 52%;
+    }
+}
+
+/* Organic breathing — Transform (violet) */
+@keyframes tierGlowTransform {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        border-radius: 50% 50% 50% 50%;
+    }
+    18% {
+        transform: translate(-52%, -48%) scale(1.05);
+        opacity: 0.82;
+        border-radius: 45% 55% 48% 52%;
+    }
+    42% {
+        transform: translate(-48%, -52%) scale(0.95);
+        opacity: 0.9;
+        border-radius: 55% 45% 52% 48%;
+    }
+    60% {
+        transform: translate(-51%, -49%) scale(1.02);
+        opacity: 0.75;
+        border-radius: 48% 52% 55% 45%;
+    }
+    80% {
+        transform: translate(-49%, -51%) scale(0.97);
+        opacity: 0.88;
+        border-radius: 52% 48% 45% 55%;
+    }
+}
+
+/* Organic breathing — Care (blue) */
+@keyframes tierGlowCare {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        border-radius: 50% 50% 50% 50%;
+    }
+    15% {
+        transform: translate(-49%, -52%) scale(1.03);
+        opacity: 0.84;
+        border-radius: 52% 48% 45% 55%;
+    }
+    38% {
+        transform: translate(-51%, -48%) scale(0.97);
+        opacity: 0.92;
+        border-radius: 45% 55% 52% 48%;
+    }
+    58% {
+        transform: translate(-50%, -51%) scale(1.04);
+        opacity: 0.78;
+        border-radius: 55% 45% 48% 52%;
+    }
+    78% {
+        transform: translate(-50%, -49%) scale(0.96);
+        opacity: 0.86;
+        border-radius: 48% 52% 55% 45%;
+    }
+}
+
+/* Mobile: tighter glow spread, reduced blur for GPU performance */
+@media (max-width: 768px) {
+    .tier-group::before {
+        width: 110%;
+        height: 105%;
+        filter: blur(45px);
+    }
+}
+
+/* Reduced motion — static glow, no animation */
+@media (prefers-reduced-motion: reduce) {
+    .tier-group::before {
+        animation: none;
+    }
+    .tier-group.is-visible::before {
+        opacity: 0.6;
+    }
+}
+
+/* Ensure tier group content stays above ambient glow */
+.tier-group__header,
+.offer-grid {
+    position: relative;
+    z-index: 1;
 }
 
 /* --- Tier Group Header (B logomark + name + subtitle) --- */
