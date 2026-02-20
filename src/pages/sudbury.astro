@@ -51,11 +51,11 @@ const currentYear = new Date().getFullYear();
         ],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
-            "name": "Website & Brand Packages",
+            "name": "Website & Brand Services",
             "itemListElement": [
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter" }, "price": "750", "priceCurrency": "CAD" },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Refresh" }, "description": "Brand refresh + website redesign" },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Platform" }, "description": "Full brand + platform overhaul" }
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site — One-Page + Contact" }, "price": "750", "priceCurrency": "CAD" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation + Growth System" }, "description": "Full website rebuild with content strategy, conversion UX, and growth playbook" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze Care Plan" }, "price": "249", "priceCurrency": "CAD", "description": "Monthly website maintenance and updates" }
             ]
         }
     }}
@@ -79,7 +79,7 @@ const currentYear = new Date().getFullYear();
                     "name": "How much does a website cost for a small business in Sudbury?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Bertrand Brands offers fixed-price website packages starting at $750 CAD for a Starter package (7\u201310 days). Refresh and Platform packages are scoped to your needs. No hourly billing."
+                        "text": "Bertrand Brands offers fixed-price website services starting at $750 CAD for a Starter Site — One-Page + Contact (7\u201310 days). Larger projects like our Website Foundation + Growth System are scoped to your needs. Monthly care plans start at $249/mo. No hourly billing."
                     }
                 },
                 {
@@ -87,7 +87,7 @@ const currentYear = new Date().getFullYear();
                     "name": "How fast can I get a new website?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Starter sites launch in 7\u201310 business days. Refresh projects take 2\u20133 weeks. Platform builds take 4\u20138 weeks depending on complexity."
+                        "text": "Starter sites launch in 7\u201310 business days. Transform projects like the Website Foundation + Growth System take 4\u20138 weeks depending on complexity."
                     }
                 },
                 {
@@ -103,7 +103,7 @@ const currentYear = new Date().getFullYear();
                     "name": "Can you fix my existing website in Sudbury?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Yes. If your website is outdated, unclear, or not generating leads, Bertrand Brands can help. Our Refresh package is a brand refresh + website redesign with conversion UX. We work with Sudbury businesses to make their websites clear, structured, and effective."
+                        "text": "Yes. If your website is outdated, unclear, or not generating leads, Bertrand Brands can help. Our Website Foundation + Growth System is a full website rebuild with content strategy, conversion UX, and a growth playbook. We work with Sudbury businesses to make their websites clear, structured, and effective."
                     }
                 },
                 {
@@ -1079,7 +1079,7 @@ const currentYear = new Date().getFullYear();
                         <span class="sb-starter__badge-rec">Recommended</span>
                         <span class="sb-starter__badge-time">Delivered in 7–10 days</span>
                     </div>
-                    <h2 class="sb-starter__title">Starter Site</h2>
+                    <h2 class="sb-starter__title">Starter Site &mdash; One-Page + Contact</h2>
                     <p class="sb-starter__desc">A fast, focused website that clearly explains what you do and makes it easy for customers to contact you.</p>
                     <ul class="sb-starter__list">
                         <li>Clear messaging and contact flow</li>
@@ -1159,15 +1159,15 @@ const currentYear = new Date().getFullYear();
                 <p class="sb-other__intro">Need more than a starter site?</p>
                 <div class="sb-other__grid">
                     <a href="#get-started" class="sb-other__card tier-card tier-card--transform tier-card--compact">
-                        <h3 class="sb-other__name">Refresh</h3>
-                        <p class="sb-other__timeline">2&ndash;3 weeks</p>
-                        <p class="sb-other__desc">Brand refresh + website redesign with conversion UX.</p>
+                        <h3 class="sb-other__name">Website Foundation + Growth System</h3>
+                        <p class="sb-other__timeline">4&ndash;8 weeks</p>
+                        <p class="sb-other__desc">Full website rebuild with content strategy, conversion UX, and growth playbook.</p>
                         <span class="sb-other__arrow">Get started &rarr;</span>
                     </a>
                     <a href="#get-started" class="sb-other__card tier-card tier-card--care tier-card--compact">
-                        <h3 class="sb-other__name">Platform</h3>
-                        <p class="sb-other__timeline">4&ndash;8 weeks</p>
-                        <p class="sb-other__desc">Full brand system + multi-page website or application.</p>
+                        <h3 class="sb-other__name">Bronze Care Plan</h3>
+                        <p class="sb-other__timeline">$249/mo</p>
+                        <p class="sb-other__desc">Monthly website maintenance. 4 credits, 3&ndash;5 day turnaround.</p>
                         <span class="sb-other__arrow">Get started &rarr;</span>
                     </a>
                 </div>
@@ -1183,15 +1183,16 @@ const currentYear = new Date().getFullYear();
                 <form class="sb-form__form" action="https://formspree.io/f/xnjjgoay" method="POST" id="sudburyForm">
                     <input type="hidden" name="source" value="sudbury_focus_studio">
                     <input type="hidden" name="_subject" value="New Lead — Sudbury Build">
+                    <input type="hidden" name="gclid" id="gclidField" value="">
                     <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off">
 
                     <!-- Offering — always visible -->
                     <div class="sb-form__field">
                         <label class="sb-form__label" for="offering">Which offering?</label>
                         <select id="offering" name="offering" class="sb-form__select">
-                            <option value="Starter ($750)" selected>Starter &mdash; $750 (Recommended)</option>
-                            <option value="Refresh">Refresh &mdash; Brand + site redesign</option>
-                            <option value="Platform">Platform &mdash; Full brand + systems build</option>
+                            <option value="Starter Site — One-Page + Contact ($750)" selected>Starter Site &mdash; One-Page + Contact &mdash; $750 (Recommended)</option>
+                            <option value="Website Foundation + Growth System (Scoped)">Website Foundation + Growth System &mdash; Scoped</option>
+                            <option value="Bronze Care Plan ($249/mo)">Bronze Care Plan &mdash; $249/mo</option>
                             <option value="Not sure">Not sure yet</option>
                         </select>
                     </div>
@@ -1249,7 +1250,7 @@ const currentYear = new Date().getFullYear();
                 <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
                 <p class="sb-footer__links">
                     <a href="/?skip">Home</a> &middot;
-                    <a href="/?skip#packages">All Packages</a>
+                    <a href="/?skip#packages">All Services</a>
                 </p>
                 <p class="sb-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile" title="Call Bertrand Brands">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
             </div>
@@ -1266,6 +1267,15 @@ const currentYear = new Date().getFullYear();
 
     <script is:inline>
         // Phone click tracking now handled globally by BaseLayout
+
+        // Capture gclid from URL params for offline conversion tracking
+        (function() {
+            var gclid = new URLSearchParams(window.location.search).get('gclid');
+            if (gclid) {
+                var field = document.getElementById('gclidField');
+                if (field) field.value = gclid;
+            }
+        })();
 
         // Two-step form logic
         (function() {
@@ -1328,6 +1338,13 @@ const currentYear = new Date().getFullYear();
                                 details: formData.get('details') || ''
                             })
                         }).catch(function() {});
+
+                        // Enhanced Conversions — send user data for better attribution
+                        if (typeof gtag === 'function') {
+                            gtag('set', 'user_data', {
+                                email: formData.get('email') || ''
+                            });
+                        }
 
                         // Google Ads: Lead — Intake Submitted
                         if (typeof gtag === 'function') {
