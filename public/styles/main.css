@@ -3228,7 +3228,7 @@
             bottom: -8%;
             left: 50%;
             margin-left: -300px;
-            background: radial-gradient(ellipse 60% 50%, rgba(139, 92, 246, 0.10) 0%, rgba(139, 92, 246, 0.04) 40%, transparent 70%);
+            background: radial-gradient(ellipse 60% 50%, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             filter: blur(70px);
@@ -6821,7 +6821,7 @@
     bottom: -8%;
     left: 50%;
     margin-left: -280px;
-    background: radial-gradient(ellipse 60% 50%, rgba(37, 99, 235, 0.09) 0%, rgba(37, 99, 235, 0.03) 40%, transparent 70%);
+    background: radial-gradient(ellipse 60% 50%, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.05) 40%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     filter: blur(65px);
