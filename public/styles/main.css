@@ -6708,7 +6708,6 @@
     margin-bottom: var(--space-xs);
 }
 .phone-cta__number {
-    display: inline-block;
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: var(--font-light);
