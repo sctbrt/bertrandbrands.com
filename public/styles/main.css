@@ -6491,21 +6491,20 @@
    ========================================================================== */
 
 .phone-link__mobile {
-    display: none;
+    display: none !important;
 }
 
 .phone-link__desktop {
-    display: inline;
     cursor: default;
     user-select: all;
 }
 
 @media (max-width: 768px) {
     .phone-link__mobile {
-        display: inline;
+        display: inline-flex !important;
     }
     .phone-link__desktop {
-        display: none;
+        display: none !important;
     }
 }
 
