@@ -1457,10 +1457,11 @@
             font-size: var(--text-xs);
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            --cta-bg: #0a0a0a;
         }
 
         .header__link--portal:hover {
-            border-color: var(--text-subtle);
+            color: var(--text);
         }
 
         .header__divider {
