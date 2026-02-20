@@ -7174,17 +7174,16 @@
 .intake-prompt__cta--form:hover { color: var(--text); border-color: var(--border-hover); }
 
 /* --- SERVICE TIER SYSTEM — Responsive --- */
+
+/* 2-column grid for medium screens */
 @media (max-width: 1024px) {
     .offer-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
-        max-width: 480px;
     }
     .offer-grid .tier-card {
         padding: 1.5rem;
     }
-    .offer-card__name { font-size: var(--text-2xl); }
-    .offer-card__price { font-size: var(--text-3xl); }
     .offer-card__price span {
         display: inline;
         margin-top: 0;
@@ -7200,7 +7199,12 @@
     }
 }
 
+/* 1-column grid for small screens */
 @media (max-width: 768px) {
+    .offer-grid {
+        grid-template-columns: 1fr;
+        max-width: 540px;
+    }
     .tier-group__name {
         font-size: var(--text-xl);
     }
