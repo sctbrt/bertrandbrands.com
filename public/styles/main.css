@@ -7337,29 +7337,31 @@
 
 /* --- Tier Selector (situation-based decision helper) --- */
 .tier-selector {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
     margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
 }
 
 .tier-selector__option {
-    text-align: center;
-    padding: 1.25rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 100px;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.02);
-    color: inherit;
+    background: none;
+    color: var(--text-muted);
     font-family: inherit;
-    transition: border-color var(--duration-fast) var(--ease-out),
-                background var(--duration-fast) var(--ease-out),
-                transform var(--duration-fast) var(--ease-out);
+    font-size: var(--text-sm);
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
 }
 
 .tier-selector__option:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
 }
 
 .tier-selector__option:focus-visible {
@@ -7368,59 +7370,30 @@
 }
 
 .tier-selector__option.is-active {
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text);
 }
 
-.tier-selector__option[data-target-tier="build"].is-active {
-    border-color: rgba(217, 119, 6, 0.4);
-    background: rgba(217, 119, 6, 0.05);
-}
-.tier-selector__option[data-target-tier="transform"].is-active {
-    border-color: rgba(139, 92, 246, 0.4);
-    background: rgba(139, 92, 246, 0.05);
-}
-.tier-selector__option[data-target-tier="care"].is-active {
-    border-color: rgba(37, 99, 235, 0.4);
-    background: rgba(37, 99, 235, 0.05);
-}
-
-.tier-selector__icon {
-    width: 36px;
-    height: 36px;
-    margin: 0 auto 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.tier-selector__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
     opacity: 0.5;
     transition: opacity var(--duration-fast) var(--ease-out);
 }
 
-.tier-selector__icon svg {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-}
+.tier-selector__dot--build { background: var(--build-accent); }
+.tier-selector__dot--transform { background: var(--transform-accent); }
+.tier-selector__dot--care { background: var(--care-accent); }
 
-.tier-selector__icon--build { color: var(--build-accent); }
-.tier-selector__icon--transform { color: var(--transform-accent); }
-.tier-selector__icon--care { color: var(--care-accent); }
-
-.tier-selector__option:hover .tier-selector__icon,
-.tier-selector__option.is-active .tier-selector__icon {
+.tier-selector__option:hover .tier-selector__dot,
+.tier-selector__option.is-active .tier-selector__dot {
     opacity: 1;
 }
 
-.tier-selector__situation {
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.375rem;
-}
-
-.tier-selector__detail {
-    font-size: var(--text-xs);
-    color: var(--text-subtle);
-    line-height: 1.5;
+.tier-selector__label {
+    white-space: nowrap;
 }
 
 /* Tier group dimming/highlighting when selector is active */
@@ -7434,42 +7407,29 @@
     transition: opacity 0.4s var(--ease-out);
 }
 
-/* Responsive: stack on mobile */
+/* Mobile: allow wrapping */
 @media (max-width: 768px) {
     .tier-selector {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-        margin-left: auto;
-        margin-right: auto;
+        gap: 0.375rem;
     }
-}
 
-@media (max-width: 480px) {
     .tier-selector__option {
-        padding: 1rem 0.75rem;
+        font-size: var(--text-xs);
+        padding: 0.4rem 0.75rem;
     }
 }
 
-/* Touch devices: no hover lift on selector */
+/* Touch devices */
 @media (hover: none) {
-    .tier-selector__option:hover {
-        transform: none;
-        background: rgba(255, 255, 255, 0.02);
-        border-color: var(--border);
-    }
-
     .tier-selector__option:active {
-        transform: scale(0.98);
-    }
-
-    .tier-selector__option.is-active {
-        transform: none;
+        opacity: 0.7;
     }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    .tier-selector__option {
+    .tier-selector__option,
+    .tier-selector__dot {
         transition: none;
     }
 
