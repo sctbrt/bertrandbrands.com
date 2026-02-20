@@ -166,6 +166,14 @@ export default async function handler(req, res) {
         'website_conversion_snapshot': 'Website Snapshot',
         'brand-clarity-diagnostic-intake': 'Brand Diagnostic',
         'sudbury_focus_studio': 'Sudbury Lead',
+        'unified-intake': 'V10 Intake',
+        'inline-starter': 'Starter Package Inquiry',
+        'inline-refresh': 'Refresh Package Inquiry',
+        'inline-platform': 'Platform Package Inquiry',
+        'tier-intake': 'General Intake',
+        'tier-intake-amber': 'Build Tier Inquiry',
+        'tier-intake-violet': 'Transform Tier Inquiry',
+        'tier-intake-blue': 'Care Tier Inquiry',
       };
       const sourceLabel = sourceLabels[source] || source || 'Intake';
 

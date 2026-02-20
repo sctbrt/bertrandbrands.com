@@ -1,0 +1,41 @@
+---
+/* Legacy V10 component — kept for backward compat (sudbury.astro).
+   New pages should use OfferCard.astro instead. */
+interface Props {
+    name: string;
+    headline: string;
+    bestFor: string;
+    price: string;
+    priceNote?: string;
+    timeline: string;
+    tierClass: 'build' | 'transform' | 'care';
+    ctaText?: string;
+    ctaHref: string;
+    detailHref?: string;
+    features: string[];
+    featured?: boolean;
+}
+
+const {
+    name, headline, bestFor, price, priceNote, timeline,
+    tierClass, ctaText = 'Get Started', ctaHref, detailHref,
+    features, featured = false,
+} = Astro.props;
+---
+
+<div class={`tier-card tier-card--${tierClass}${featured ? ' tier-card--featured' : ''}`}
+     style="display:flex;flex-direction:column;">
+    {featured && <span class="pkg-card__badge">Most Popular</span>}
+    <span class="pkg-card__best-for">{bestFor}</span>
+    <h3 class="pkg-card__name">{name}</h3>
+    <p class="pkg-card__headline">{headline}</p>
+    <p class="pkg-card__price">{price}<span>{priceNote || 'CAD'}</span></p>
+    <p class="pkg-card__timeline">{timeline}</p>
+    <ul class="pkg-card__features">
+        {features.map(f => <li>{f}</li>)}
+    </ul>
+    <div class="pkg-card__actions">
+        <a href={ctaHref} class="pkg-card__cta pkg-card__cta--primary">{ctaText}</a>
+        {detailHref && <a href={detailHref} class="pkg-card__cta pkg-card__cta--secondary">See what's included &rarr;</a>}
+    </div>
+</div>

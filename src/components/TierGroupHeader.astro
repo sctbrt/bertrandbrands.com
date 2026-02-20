@@ -1,0 +1,22 @@
+---
+interface Props {
+    tierName: string;
+    tierClass: 'build' | 'transform' | 'care';
+    subtitle: string;
+}
+
+const { tierName, tierClass, subtitle } = Astro.props;
+---
+
+<div class={`tier-group__header tier-group--${tierClass}`}>
+    <img
+        src="/assets/bg-brands-logomark.png"
+        alt=""
+        class="tier-group__logomark"
+        width="32"
+        height="32"
+        loading="lazy"
+    />
+    <span class="tier-group__name">{tierName}</span>
+    <span class="tier-group__subtitle">{subtitle}</span>
+</div>

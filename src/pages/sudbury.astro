@@ -17,10 +17,10 @@ const currentYear = new Date().getFullYear();
 ---
 
 <BaseLayout
-    title="Sudbury Web Design & Branding — Starter Sites from $750 | Bertrand Brands"
-    description="Sudbury web designer offering website fixes, redesigns, and brand work for small businesses. Starter Site $750, One-Page Conversion System $1,250, Brandmark Kit $950. Fixed pricing. Based in Greater Sudbury, Ontario."
+    title="Sudbury Web Design & Branding — Websites from $750 | Bertrand Brands"
+    description="Sudbury web designer offering website builds, redesigns, and brand work for small businesses. Starter $750, Refresh, Platform packages. Fixed pricing. Based in Greater Sudbury, Ontario."
     canonical="https://bertrandbrands.ca/sudbury"
-    ogTitle="Sudbury Web Design & Branding — Starter Sites from $750 | Bertrand Brands"
+    ogTitle="Sudbury Web Design & Branding — Websites from $750 | Bertrand Brands"
     ogDescription="Website and brand work for Sudbury, Ontario businesses. Fixed pricing, fast turnaround. Based in Greater Sudbury."
     schemaJson={{
         "@context": "https://schema.org",
@@ -51,11 +51,11 @@ const currentYear = new Date().getFullYear();
         ],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
-            "name": "Build Offerings",
+            "name": "Website & Brand Packages",
             "itemListElement": [
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site" }, "price": "750", "priceCurrency": "CAD" },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-Page Conversion System" }, "price": "1250", "priceCurrency": "CAD" },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brandmark Kit" }, "price": "950", "priceCurrency": "CAD" }
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter" }, "price": "750", "priceCurrency": "CAD" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Refresh" }, "description": "Brand refresh + website redesign" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Platform" }, "description": "Full brand + platform overhaul" }
             ]
         }
     }}
@@ -79,7 +79,7 @@ const currentYear = new Date().getFullYear();
                     "name": "How much does a website cost for a small business in Sudbury?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Bertrand Brands offers fixed-price website packages starting at $750 CAD for a Starter Site (7\u201310 days) and $1,250 CAD for a fully custom One-Page Conversion System (7 days). No hourly billing."
+                        "text": "Bertrand Brands offers fixed-price website packages starting at $750 CAD for a Starter package (7\u201310 days). Refresh and Platform packages are scoped to your needs. No hourly billing."
                     }
                 },
                 {
@@ -87,7 +87,7 @@ const currentYear = new Date().getFullYear();
                     "name": "How fast can I get a new website?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "The Starter Site is delivered in 7\u201310 days. The One-Page Conversion System takes 7 days. Brandmark Kit work takes 5\u20137 business days."
+                        "text": "Starter sites launch in 7\u201310 business days. Refresh projects take 2\u20133 weeks. Platform builds take 4\u20138 weeks depending on complexity."
                     }
                 },
                 {
@@ -103,7 +103,7 @@ const currentYear = new Date().getFullYear();
                     "name": "Can you fix my existing website in Sudbury?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Yes. If your website is outdated, unclear, or not generating leads, Bertrand Brands can help. The One-Page Conversion System ($1,250 CAD) is a fully custom rebuild delivered in 7 days. We work with Sudbury businesses to make their websites clear, structured, and effective."
+                        "text": "Yes. If your website is outdated, unclear, or not generating leads, Bertrand Brands can help. Our Refresh package is a brand refresh + website redesign with conversion UX. We work with Sudbury businesses to make their websites clear, structured, and effective."
                     }
                 },
                 {
@@ -1156,20 +1156,18 @@ const currentYear = new Date().getFullYear();
         <!-- Other Services -->
         <section class="sb-other sb-fade">
             <div class="sb-container">
-                <p class="sb-other__intro">Already have a website?</p>
+                <p class="sb-other__intro">Need more than a starter site?</p>
                 <div class="sb-other__grid">
-                    <a href="#get-started" class="sb-other__card tier-card tier-card--build tier-card--compact">
-                        <h3 class="sb-other__name">One-Page Conversion System</h3>
-                        <p class="sb-other__timeline">7 days</p>
-                        <p class="sb-other__desc">A fully custom, code-based one-page website.</p>
-                        <p class="sb-other__price">$1,250 CAD</p>
+                    <a href="#get-started" class="sb-other__card tier-card tier-card--transform tier-card--compact">
+                        <h3 class="sb-other__name">Refresh</h3>
+                        <p class="sb-other__timeline">2&ndash;3 weeks</p>
+                        <p class="sb-other__desc">Brand refresh + website redesign with conversion UX.</p>
                         <span class="sb-other__arrow">Get started &rarr;</span>
                     </a>
-                    <a href="#get-started" class="sb-other__card tier-card tier-card--build tier-card--compact">
-                        <h3 class="sb-other__name">Brandmark Kit</h3>
-                        <p class="sb-other__timeline">5&ndash;7 business days</p>
-                        <p class="sb-other__desc">A complete brandmark with clear visual direction.</p>
-                        <p class="sb-other__price">$950 CAD</p>
+                    <a href="#get-started" class="sb-other__card tier-card tier-card--care tier-card--compact">
+                        <h3 class="sb-other__name">Platform</h3>
+                        <p class="sb-other__timeline">4&ndash;8 weeks</p>
+                        <p class="sb-other__desc">Full brand system + multi-page website or application.</p>
                         <span class="sb-other__arrow">Get started &rarr;</span>
                     </a>
                 </div>
@@ -1191,9 +1189,10 @@ const currentYear = new Date().getFullYear();
                     <div class="sb-form__field">
                         <label class="sb-form__label" for="offering">Which offering?</label>
                         <select id="offering" name="offering" class="sb-form__select">
-                            <option value="Starter Site ($750)" selected>Starter Site &mdash; $750 (Recommended)</option>
-                            <option value="One-Page Conversion System ($1,250)">One-Page Conversion System &mdash; $1,250</option>
-                            <option value="Brandmark Kit ($950)">Brandmark Kit &mdash; $950</option>
+                            <option value="Starter ($750)" selected>Starter &mdash; $750 (Recommended)</option>
+                            <option value="Refresh">Refresh &mdash; Brand + site redesign</option>
+                            <option value="Platform">Platform &mdash; Full brand + systems build</option>
+                            <option value="Not sure">Not sure yet</option>
                         </select>
                     </div>
 
@@ -1250,7 +1249,7 @@ const currentYear = new Date().getFullYear();
                 <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
                 <p class="sb-footer__links">
                     <a href="/?skip">Home</a> &middot;
-                    <a href="/focus-studio">All Offerings</a>
+                    <a href="/?skip#packages">All Packages</a>
                 </p>
                 <p class="sb-footer__phone"><a href="tel:+17054133705" class="phone-link" title="Call Bertrand Brands">705-413-3705</a></p>
             </div>

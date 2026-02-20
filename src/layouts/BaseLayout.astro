@@ -70,13 +70,31 @@ const effectiveOgDescription = ogDescription || description;
     <script type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
   )}
 
-  {/* Google Ads conversion tracking — global on all pages */}
+  {/* Google Ads + GA4 conversion tracking — global on all pages */}
   <script is:inline src="https://www.googletagmanager.com/gtag/js?id=AW-17925090292" async></script>
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'AW-17925090292');
+    /* GA4 — replace G-XXXXXXXXXX with real property ID */
+    gtag('config', 'G-XXXXXXXXXX');
+
+    /* Unified conversion helper — fires both GA4 + Google Ads events */
+    window.bbConvert = function(type, label, value) {
+      if (typeof gtag !== 'function') return;
+      gtag('event', 'generate_lead', {
+        event_category: type,
+        event_label: label,
+        value: value || 0,
+        currency: 'CAD'
+      });
+      gtag('event', 'conversion', {
+        send_to: 'AW-17925090292/3B0-CJDv6vUbEPTXrONC',
+        value: value || 1.0,
+        currency: 'CAD'
+      });
+    };
   </script>
 
   {/* Global tel: and mailto: click tracking */}
@@ -90,11 +108,13 @@ const effectiveOgDescription = ogDescription || description;
           gtag('event', 'conversion', {
             send_to: 'AW-17925090292/ueyZCPOf6_UbEPTXrONC'
           });
+          if (typeof bbConvert === 'function') bbConvert('phone_click', 'global_tel');
         }
         if (href.startsWith('mailto:')) {
           gtag('event', 'conversion', {
             send_to: 'AW-17925090292/ueyZCPOf6_UbEPTXrONC'
           });
+          if (typeof bbConvert === 'function') bbConvert('email_click', 'global_mailto');
         }
       });
     });

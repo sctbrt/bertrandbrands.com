@@ -1,7 +1,13 @@
-import { next } from '@vercel/functions';
+import { next, rewrite } from '@vercel/functions';
+
+// ─── MAINTENANCE MODE ───────────────────────────────────
+// Set to true to gate the entire site behind /maintenance.
+// Bypass: visit any page with ?bypass to set a cookie and skip the gate.
+const MAINTENANCE_MODE = true;
+// ────────────────────────────────────────────────────────
 
 export const config = {
-    matcher: '/((?!api|assets|styles|scripts|components|favicon|apple-touch|og-image|robots|sitemap|llms).*)',
+    matcher: '/((?!api|assets|styles|scripts|components|favicon|apple-touch|og-image|robots|sitemap|llms|fonts).*)',
 };
 
 /**
@@ -150,10 +156,10 @@ function divisionEntryPage() {
 
 export default function middleware(request) {
     const hostname = request.headers.get('host') || '';
+    const url = new URL(request.url);
 
     // brands.bertrandgroup.ca → division entry page (root) or 301 redirect (deep links)
     if (hostname === 'brands.bertrandgroup.ca' || hostname === 'www.brands.bertrandgroup.ca') {
-        const url = new URL(request.url);
         if (url.pathname === '/' || url.pathname === '') {
             return divisionEntryPage();
         }
@@ -164,7 +170,6 @@ export default function middleware(request) {
 
     // www.bertrandbrands.ca → bertrandbrands.ca (canonical)
     if (hostname === 'www.bertrandbrands.ca') {
-        const url = new URL(request.url);
         url.hostname = 'bertrandbrands.ca';
         url.port = '';
         return Response.redirect(url.toString(), 301);
@@ -173,6 +178,31 @@ export default function middleware(request) {
     if (hostname.startsWith('group.')) {
         return Response.redirect('https://bertrandgroup.ca', 301);
     }
+
+    // ─── Maintenance gate ───────────────────────────────
+    if (MAINTENANCE_MODE) {
+        // Allow the maintenance page itself
+        if (url.pathname === '/maintenance') {
+            return next();
+        }
+
+        // ?bypass sets a cookie to skip the gate (for owner/dev access)
+        if (url.searchParams.has('bypass')) {
+            const response = next();
+            response.headers.set('Set-Cookie', 'bb_maintenance_bypass=1; Path=/; Max-Age=86400; SameSite=Lax');
+            return response;
+        }
+
+        // Check for bypass cookie
+        const cookies = request.headers.get('cookie') || '';
+        if (cookies.includes('bb_maintenance_bypass=1')) {
+            return next();
+        }
+
+        // Rewrite everything else to the maintenance page
+        return rewrite('/maintenance');
+    }
+    // ────────────────────────────────────────────────────
 
     return next();
 }

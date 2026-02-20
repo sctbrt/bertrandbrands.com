@@ -1,0 +1,72 @@
+---
+interface Props {
+    name: string;
+    headline: string;
+    bestFor: string;
+    price?: string;
+    priceNote?: string;
+    timeline: string;
+    tierClass: 'build' | 'transform' | 'care' | 'conversation';
+    ctaText?: string;
+    ctaHref: string;
+    detailHref?: string;
+    features: string[];
+    exclusions?: string[];
+    revisionRounds?: number;
+    meetingPolicy?: string;
+    featured?: boolean;
+}
+
+const {
+    name, headline, bestFor, price, priceNote, timeline,
+    tierClass, ctaText = 'Get Started', ctaHref, detailHref,
+    features, exclusions, revisionRounds, meetingPolicy,
+    featured = false,
+} = Astro.props;
+---
+
+<div class={`tier-card tier-card--${tierClass}${featured ? ' tier-card--featured' : ''}`}
+     style="display:flex;flex-direction:column;">
+    <span class="offer-card__best-for">{bestFor}</span>
+    <h3 class="offer-card__name">{name}</h3>
+    <p class="offer-card__headline">{headline}</p>
+
+    {price && (
+        <p class="offer-card__price">{price}{priceNote && <span>{priceNote}</span>}{!priceNote && price.startsWith('$') && <span>CAD</span>}</p>
+    )}
+
+    <p class="offer-card__timeline">{timeline}</p>
+
+    {(revisionRounds || meetingPolicy) && (
+        <div class="offer-card__meta">
+            {revisionRounds && (
+                <span class="offer-card__revisions">
+                    ↻ {revisionRounds} revision {revisionRounds === 1 ? 'round' : 'rounds'}
+                </span>
+            )}
+            {meetingPolicy && (
+                <span class="offer-card__meeting-policy">
+                    {meetingPolicy}
+                </span>
+            )}
+        </div>
+    )}
+
+    <ul class="offer-card__features">
+        {features.map(f => <li>{f}</li>)}
+    </ul>
+
+    {exclusions && exclusions.length > 0 && (
+        <details class="offer-card__exclusions">
+            <summary>Not included</summary>
+            <ul class="offer-card__exclusions-list">
+                {exclusions.map(e => <li>{e}</li>)}
+            </ul>
+        </details>
+    )}
+
+    <div class="offer-card__actions">
+        <a href={ctaHref} class="offer-card__cta offer-card__cta--primary">{ctaText}</a>
+        {detailHref && <a href={detailHref} class="offer-card__cta offer-card__cta--secondary">Learn more &rarr;</a>}
+    </div>
+</div>

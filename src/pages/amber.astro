@@ -1,0 +1,371 @@
+---
+/**
+ * Build — B Build tier hub page.
+ * Amber accent (#D97706). Three-offer catalog: Starter One-Page, Starter Multi-Page, Full Site + Booking.
+ * Uses ServiceDetailLayout (HeaderUniversal + VisitorNotify included via layout).
+ */
+import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<ServiceDetailLayout
+    title="Build — Quick Builds | Bertrand Brands"
+    description="Fast-launch websites for new and growing businesses. One-Page from $750, Multi-Page, and Full Site + Booking."
+    canonical="https://bertrandbrands.ca/amber"
+    ogTitle="Build — Quick Builds | Bertrand Brands"
+    ogDescription="Fast-launch websites for new and growing businesses. One-Page from $750, Multi-Page, and Full Site + Booking."
+    schemaJson={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Build — Quick Builds",
+        "description": "Fast-launch websites for businesses that need to get live, look credible, and start converting.",
+        "provider": {
+            "@type": "ProfessionalService",
+            "name": "Bertrand Brands — Brand & Web Systems",
+            "url": "https://bertrandbrands.ca"
+        },
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Build Offers",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "name": "Starter Site — One-Page + Contact",
+                    "price": "750",
+                    "priceCurrency": "CAD",
+                    "description": "One-page marketing website, mobile-first, single primary CTA, contact form, light brand cleanup, basic local SEO setup."
+                },
+                {
+                    "@type": "Offer",
+                    "name": "Starter Site — Multi-Page + Contact",
+                    "description": "3–5 page marketing website with service or product pages, contact form + CTAs, light brand cleanup, SEO fundamentals."
+                },
+                {
+                    "@type": "Offer",
+                    "name": "Full Site — Multi-Page + Booking",
+                    "description": "5–10 page website with booking or scheduling integration, service pages with conversion UX, reviews, FAQ, analytics."
+                }
+            ]
+        }
+    }}
+    spotlightColor="rgba(217, 119, 6, 0.15)"
+>
+    <Fragment slot="head">
+        <style is:inline>
+            .service-page { min-height: 100vh; padding-top: 80px; position: relative; overflow: hidden; }
+
+            .service-page__spotlight { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; will-change: transform, opacity; }
+            .service-page__spotlight--1 { width: 400px; height: 400px; background: rgba(217, 119, 6, 0.15); top: 10%; left: -10%; animation: organicBreathe 18s ease-in-out infinite; }
+            .service-page__spotlight--2 { width: 350px; height: 350px; background: rgba(217, 119, 6, 0.12); bottom: 20%; right: -5%; animation: organicBreathe 22s ease-in-out infinite 0.5s; }
+
+            @keyframes organicBreathe {
+                0%, 100% { opacity: 0.85; transform: translate(0, 0) scale(1); }
+                25% { opacity: 0.95; transform: translate(15px, -10px) scale(1.05); }
+                50% { opacity: 0.75; transform: translate(-10px, 15px) scale(0.95); }
+                75% { opacity: 0.9; transform: translate(10px, 5px) scale(1.02); }
+            }
+
+            .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: 0; text-decoration: none; transition: opacity var(--duration-fast) ease; }
+            .service-subbrand:hover { opacity: 0.8; }
+            .service-subbrand__mark { width: 32px; height: 32px; filter: brightness(0) invert(1); }
+            .service-subbrand__name { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 300; letter-spacing: 0.02em; color: var(--text); }
+
+            .service-hero { padding: var(--space-sm) 0 var(--space-md); text-align: center; position: relative; z-index: 1; }
+            .service-hero__headline { font-family: 'Inter', -apple-system, sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 400; line-height: 1.25; color: var(--text); max-width: 700px; margin: 0 auto var(--space-md); }
+            .service-hero__description { font-size: var(--text-lg); color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+
+            .service-content { padding: var(--space-xl) 0; position: relative; z-index: 1; }
+            .service-card { background: rgba(217, 119, 6, 0.05); border: 1px solid rgba(217, 119, 6, 0.15); border-radius: var(--radius-lg); padding: var(--space-xl); max-width: 700px; margin: 0 auto var(--space-lg); }
+            .service-card__title { font-family: 'Inter', -apple-system, sans-serif; font-size: var(--text-xl); font-weight: 500; color: var(--text); margin: 0 0 var(--space-xs); }
+            .service-card__bestfor { font-size: var(--text-sm); color: rgba(217, 119, 6, 0.8); margin: 0 0 var(--space-md); }
+            .service-card__section { margin-bottom: var(--space-lg); }
+            .service-card__section:last-child { margin-bottom: 0; }
+            .service-card__label { font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(217, 119, 6, 0.8); margin-bottom: var(--space-sm); }
+            .service-card__list { list-style: none; padding: 0; margin: 0; }
+            .service-card__list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; font-size: var(--text-base); color: var(--text-muted); line-height: 1.5; }
+            .service-card__list li::before { content: ''; position: absolute; left: 0; top: 0.5rem; width: 6px; height: 6px; background: rgba(217, 119, 6, 0.6); border-radius: 50%; }
+            .service-card__list--excluded li::before { background: rgba(255, 255, 255, 0.15); }
+            .service-card__text { font-size: var(--text-base); color: var(--text-muted); line-height: 1.6; }
+            .service-card__meta { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
+            .service-card__meta-item { flex: 1; min-width: 120px; }
+            .service-card__meta-value { font-size: var(--text-lg); font-weight: 500; color: var(--text); }
+
+            .service-card__cta { text-align: center; margin-top: var(--space-md); }
+            .service-card__cta-link {
+                display: inline-block; padding: 0.75rem 2rem;
+                background: rgba(217, 119, 6, 0.12); border: 1px solid rgba(217, 119, 6, 0.3);
+                color: var(--text); font-size: var(--text-sm); font-weight: 600;
+                text-decoration: none; border-radius: 8px; min-height: 44px; line-height: 1.4;
+                transition: background var(--duration-fast) ease, border-color var(--duration-fast) ease, transform var(--duration-fast) ease;
+            }
+            .service-card__cta-link:hover { background: rgba(217, 119, 6, 0.2); border-color: rgba(217, 119, 6, 0.5); transform: translateY(-1px); }
+            .service-card__cta-link:active { transform: translateY(0); }
+
+            .service-back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; margin-bottom: var(--space-md); transition: color var(--duration-fast) ease; }
+            .service-back:hover { color: var(--text); }
+
+            .service-footer { padding: var(--space-lg) 0; text-align: center; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+            .service-footer__text { font-size: var(--text-sm); color: var(--text-subtle); }
+            .service-footer__phone { font-size: var(--text-sm); margin-top: 0.5rem; }
+            .service-footer__phone a { color: var(--text-muted); text-decoration: none; }
+            .service-footer__phone a:hover { color: var(--text); }
+            .service-footer__cta { margin-bottom: 1rem; }
+            .service-footer__cta-text { font-size: var(--text-sm); color: var(--text-subtle); margin-bottom: 0.25rem; }
+            .service-footer__cta-link { font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
+            .service-footer__cta-link:hover { color: var(--accent); }
+
+            @media (max-width: 768px) {
+                .service-page__spotlight { filter: blur(40px); }
+                .service-page__spotlight--1 { width: 250px; height: 250px; }
+                .service-page__spotlight--2 { width: 200px; height: 200px; }
+                .service-page .container { padding: 0 0.75rem; }
+                .service-hero { padding: var(--space-xs) 1rem var(--space-sm); }
+                .service-hero__headline { font-size: clamp(1.25rem, 4.5vw, 1.75rem); margin-bottom: 0.75rem; max-width: 100%; }
+                .service-hero__description { font-size: var(--text-xs); line-height: 1.5; max-width: 100%; }
+                .service-subbrand__name { font-size: var(--text-xl); }
+                .service-subbrand__mark { width: 26px; height: 26px; }
+                .service-content { padding: var(--space-sm) 0; }
+                .service-card { padding: 1.5rem; max-width: 100%; }
+                .service-card__title { font-size: var(--text-lg); }
+                .service-card__label { font-size: 0.625rem; margin-bottom: 0.375rem; }
+                .service-card__list li { font-size: var(--text-xs); margin-bottom: 0.25rem; line-height: 1.45; }
+                .service-card__text { font-size: var(--text-xs); line-height: 1.5; }
+                .service-card__meta-value { font-size: var(--text-sm); }
+                .service-card__section { margin-bottom: var(--space-sm); }
+                .service-subbrand { margin-bottom: 0.25rem; gap: 0.5rem; }
+                .service-back { font-size: var(--text-xs); margin-bottom: 0.5rem; }
+                .service-footer { padding: var(--space-md) 0; }
+            }
+            @media (max-width: 480px) {
+                .service-card { padding: 1rem; }
+                .service-hero__headline { font-size: clamp(1.125rem, 4.5vw, 1.375rem); margin-bottom: 0.5rem; }
+                .service-hero__description { font-size: 0.6875rem; line-height: 1.5; }
+                .service-card__title { font-size: var(--text-base); }
+                .service-card__label { font-size: 0.5625rem; }
+                .service-card__list li { font-size: 0.6875rem; margin-bottom: 0.1875rem; }
+                .service-card__text { font-size: 0.6875rem; }
+                .service-card__meta-value { font-size: var(--text-xs); }
+                .service-subbrand__name { font-size: var(--text-lg); }
+                .service-subbrand__mark { width: 22px; height: 22px; }
+                .service-subbrand { gap: 0.375rem; }
+                .service-hero { padding: 0.25rem 0.75rem 0.5rem; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .service-page__spotlight { animation: none !important; }
+            }
+        </style>
+    </Fragment>
+
+    <div class="service-page__spotlight service-page__spotlight--1" aria-hidden="true"></div>
+    <div class="service-page__spotlight service-page__spotlight--2" aria-hidden="true"></div>
+
+    <main class="service-page" id="main-content">
+        <div class="container">
+            <a href="/?skip#packages" class="service-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Packages
+            </a>
+
+            <a href="/?skip#packages" class="service-subbrand">
+                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <span class="service-subbrand__name">Build</span>
+            </a>
+
+            <section class="service-hero">
+                <h1 class="service-hero__headline">Quick Builds</h1>
+                <p class="service-hero__description">Fast-launch websites for businesses that need to get live, look credible, and start converting.</p>
+            </section>
+
+            <section class="service-content">
+
+                <!-- Offer 1: Starter Site — One-Page + Contact -->
+                <div class="service-card" id="offer-onepage">
+                    <h2 class="service-card__title">Starter Site &mdash; One-Page + Contact</h2>
+                    <p class="service-card__bestfor">Best for: New businesses, first website</p>
+
+                    <div class="service-card__section">
+                        <div class="service-card__meta">
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Pricing</p>
+                                <p class="service-card__meta-value">$750 CAD</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Timeline</p>
+                                <p class="service-card__meta-value">7&ndash;10 business days</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Revisions</p>
+                                <p class="service-card__meta-value">1 round</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Meetings</p>
+                                <p class="service-card__meta-value">0 meetings</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card__section">
+                        <p class="service-card__text" style="font-size: var(--text-xs); color: var(--text-subtle); margin-top: -0.5rem;">Optional 15-min clarification call</p>
+                    </div>
+
+                    <div class="service-card__section">
+                        <p class="service-card__label">What&rsquo;s included</p>
+                        <ul class="service-card__list">
+                            <li>One-page marketing website</li>
+                            <li>Mobile-first fast-loading</li>
+                            <li>Single primary CTA</li>
+                            <li>Contact form</li>
+                            <li>Light brand cleanup</li>
+                            <li>Basic local SEO setup</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card__section">
+                        <p class="service-card__label">Not included</p>
+                        <ul class="service-card__list service-card__list--excluded">
+                            <li>Custom brand identity</li>
+                            <li>Multi-page architecture</li>
+                            <li>Booking/scheduling integration</li>
+                            <li>Ongoing maintenance</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card__cta">
+                        <a href="/intake?tier=amber&offer=starter-onepage" class="service-card__cta-link">Get Started &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Offer 2: Starter Site — Multi-Page + Contact -->
+                <div class="service-card" id="offer-multipage">
+                    <h2 class="service-card__title">Starter Site &mdash; Multi-Page + Contact</h2>
+                    <p class="service-card__bestfor">Best for: Growing businesses, multiple service pages</p>
+
+                    <div class="service-card__section">
+                        <div class="service-card__meta">
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Pricing</p>
+                                <p class="service-card__meta-value">Scoped to project</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Timeline</p>
+                                <p class="service-card__meta-value">2&ndash;3 weeks</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Revisions</p>
+                                <p class="service-card__meta-value">2 rounds</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Meetings</p>
+                                <p class="service-card__meta-value">0 meetings</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card__section">
+                        <p class="service-card__text" style="font-size: var(--text-xs); color: var(--text-subtle); margin-top: -0.5rem;">Optional 15-min clarification call</p>
+                    </div>
+
+                    <div class="service-card__section">
+                        <p class="service-card__label">What&rsquo;s included</p>
+                        <ul class="service-card__list">
+                            <li>3&ndash;5 page marketing website</li>
+                            <li>Mobile-first fast-loading</li>
+                            <li>Service or product pages</li>
+                            <li>Contact form + CTAs</li>
+                            <li>Light brand cleanup</li>
+                            <li>SEO fundamentals</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card__section">
+                        <p class="service-card__label">Not included</p>
+                        <ul class="service-card__list service-card__list--excluded">
+                            <li>Custom brand identity</li>
+                            <li>Booking/scheduling integration</li>
+                            <li>CRM or dashboard</li>
+                            <li>Ongoing maintenance</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card__cta">
+                        <a href="/intake?tier=amber&offer=starter-multipage" class="service-card__cta-link">Request a Quote &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- Offer 3: Full Site — Multi-Page + Booking -->
+                <div class="service-card" id="offer-fullsite">
+                    <h2 class="service-card__title">Full Site &mdash; Multi-Page + Booking</h2>
+                    <p class="service-card__bestfor">Best for: Service businesses ready for online booking</p>
+
+                    <div class="service-card__section">
+                        <div class="service-card__meta">
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Pricing</p>
+                                <p class="service-card__meta-value">Scoped to project</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Timeline</p>
+                                <p class="service-card__meta-value">3&ndash;4 weeks</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Revisions</p>
+                                <p class="service-card__meta-value">2 rounds</p>
+                            </div>
+                            <div class="service-card__meta-item">
+                                <p class="service-card__label">Meetings</p>
+                                <p class="service-card__meta-value">0 meetings</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-card__section">
+                        <p class="service-card__text" style="font-size: var(--text-xs); color: var(--text-subtle); margin-top: -0.5rem;">Optional 15-min clarification call</p>
+                    </div>
+
+                    <div class="service-card__section">
+                        <p class="service-card__label">What&rsquo;s included</p>
+                        <ul class="service-card__list">
+                            <li>5&ndash;10 page website</li>
+                            <li>Booking or scheduling integration</li>
+                            <li>Service pages with conversion UX</li>
+                            <li>Reviews + testimonials section</li>
+                            <li>FAQ + sticky CTAs</li>
+                            <li>Analytics setup</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card__section">
+                        <p class="service-card__label">Not included</p>
+                        <ul class="service-card__list service-card__list--excluded">
+                            <li>Custom brand identity</li>
+                            <li>CRM or dashboard build</li>
+                            <li>Automation workflows</li>
+                            <li>Ongoing maintenance</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card__cta">
+                        <a href="/intake?tier=amber&offer=fullsite-booking" class="service-card__cta-link">Request a Quote &rarr;</a>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <footer class="service-footer">
+        <div class="service-footer__cta">
+            <p class="service-footer__cta-text">Not sure which Build offer?</p>
+            <a href="/intake?tier=amber" class="service-footer__cta-link">Start with a quick intake &rarr;</a>
+        </div>
+        <p class="service-footer__text">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
+        <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a></p>
+        <p class="service-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">705-413-3705</a><span class="phone-link__desktop">705-413-3705</span></p>
+    </footer>
+
+    <StickyMobileCTA
+        href="/intake?tier=amber"
+        text="Get a Build Quote"
+        heroSelector=".service-hero"
+        formSelector=".service-footer"
+    />
+</ServiceDetailLayout>
