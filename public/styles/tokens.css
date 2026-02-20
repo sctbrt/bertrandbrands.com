@@ -36,6 +36,8 @@
 
   /* Care — Blue (ongoing support tier) */
   --care-accent: #2563EB;
+  --care-accent-hover: #1D4ED8;
+  --care-border: rgba(37, 99, 235, 0.25);
   --care-accent-muted: rgba(37, 99, 235, 0.15);
 
   /* Conversation — Gradient wash (entry layer, touches all tiers) */

@@ -399,6 +399,51 @@ import GesturePrevention from '../components/GesturePrevention.astro';
     <script is:inline>
         // Service configuration
         var services = {
+            /* --- B Build (Amber) --- */
+            'starter-onepage': {
+                badge: 'Starter One-Page \u2014 $750',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            'starter-multipage': {
+                badge: 'Starter Multi-Page',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            'fullsite-booking': {
+                badge: 'Full Site + Booking',
+                tier: 'Build',
+                tierClass: '',
+                text: "Now let\u2019s schedule your kickoff call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            /* --- B Transform (Violet) --- */
+            'foundation-growth': {
+                badge: 'Foundation + Growth System',
+                tier: 'Transform',
+                tierClass: '',
+                text: "Now let\u2019s schedule your discovery call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            'smb-platform': {
+                badge: 'SMB Platform Development',
+                tier: 'Transform',
+                tierClass: '',
+                text: "Now let\u2019s schedule your discovery call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            'brand-platform': {
+                badge: 'Brand + Platform Development',
+                tier: 'Transform',
+                tierClass: '',
+                text: "Now let\u2019s schedule your discovery call.",
+                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
+            },
+            /* --- Legacy keys (V10 compat — old Stripe links may still use these) --- */
             'starter': {
                 badge: 'Starter \u2014 $750',
                 tier: 'Build',
@@ -408,52 +453,24 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             },
             'refresh': {
                 badge: 'Refresh',
-                tier: 'Build',
+                tier: 'Transform',
                 tierClass: '',
-                text: "Now let\u2019s schedule your kickoff call.",
+                text: "Now let\u2019s schedule your discovery call.",
                 calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
             },
             'platform': {
                 badge: 'Platform',
-                tier: 'Build',
+                tier: 'Transform',
                 tierClass: '',
-                text: "Now let\u2019s schedule your kickoff call.",
-                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
-            },
-            'clarity-session': {
-                badge: 'Clarity Session \u2014 $145',
-                tier: 'Conversation',
-                tierClass: 'service-badge--exploratory',
-                text: "Now let\u2019s schedule your clarity session.",
-                calendly: 'https://calendly.com/bertrandbrands/clarity-session'
-            },
-            'starter-site': {
-                badge: 'Starter \u2014 $750',
-                tier: 'Build',
-                tierClass: '',
-                text: "Now let\u2019s schedule your kickoff call.",
-                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
-            },
-            'brandmark': {
-                badge: 'Brandmark Kit \u2014 $950',
-                tier: 'Build',
-                tierClass: '',
-                text: "Now let\u2019s schedule your kickoff call.",
-                calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
-            },
-            'one-page-redesign': {
-                badge: 'One-Page Conversion System \u2014 $1,250',
-                tier: 'Build',
-                tierClass: '',
-                text: "Now let\u2019s schedule your kickoff call.",
+                text: "Now let\u2019s schedule your discovery call.",
                 calendly: 'https://calendly.com/bertrandbrands/focus-studio-kickoff'
             }
         };
 
         // Get service from URL
         var params = new URLSearchParams(window.location.search);
-        var serviceKey = params.get('service') || 'starter';
-        var service = services[serviceKey] || services['starter'];
+        var serviceKey = params.get('service') || 'starter-onepage';
+        var service = services[serviceKey] || services['starter-onepage'];
 
         // Update page content
         var badge = document.getElementById('serviceBadge');
@@ -463,14 +480,10 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         document.getElementById('confirmText').textContent = service.text;
         document.querySelector('.header__tier').textContent = service.tier;
 
-        // Update tier color for clarity-session (Conversation = blue)
-        if (serviceKey === 'clarity-session') {
-            document.querySelector('.header__tier').style.color = 'rgba(37, 99, 235, 0.9)';
-        }
-
-        // Google Ads: Lead — Clarity Booked (GA4 event, payment-confirmed)
-        if (serviceKey === 'clarity-session' && typeof gtag === 'function') {
-            gtag('event', 'ads_conversion_Book_appointment_1');
+        // Update tier color based on service tier
+        var tierEl = document.querySelector('.header__tier');
+        if (service.tier === 'Transform') {
+            tierEl.style.color = 'var(--transform-accent)';
         }
 
         // Initialize Calendly when ready
@@ -491,41 +504,52 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         // Context-aware cross-sell links
         (function() {
             var crossSell = {
+                /* B Build offers → suggest Transform + Care */
+                'starter-onepage': [
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
+                ],
+                'starter-multipage': [
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
+                ],
+                'fullsite-booking': [
+                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
+                ],
+                /* B Transform offers → suggest Care + Build */
+                'foundation-growth': [
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' },
+                    { href: '/amber', label: 'Build', desc: 'Need a quick site for another venture?' }
+                ],
+                'smb-platform': [
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' },
+                    { href: '/amber', label: 'Build', desc: 'Need a quick site for another venture?' }
+                ],
+                'brand-platform': [
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' },
+                    { href: '/amber', label: 'Build', desc: 'Need a quick site for another venture?' }
+                ],
+                /* Legacy V10 keys (compat) */
                 'starter': [
                     { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
                     { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
                 ],
                 'refresh': [
-                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
-                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
+                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' },
+                    { href: '/amber', label: 'Build', desc: 'Need a quick site for another venture?' }
                 ],
                 'platform': [
                     { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' },
                     { href: '/amber', label: 'Build', desc: 'Need a quick site for another venture?' }
-                ],
-                'clarity-session': [
-                    { href: '/amber', label: 'Build', desc: 'Quick builds \u2014 from $750' },
-                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' }
-                ],
-                'starter-site': [
-                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
-                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
-                ],
-                'brandmark': [
-                    { href: '/amber', label: 'Build', desc: 'Pair your new brand with a website' },
-                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' }
-                ],
-                'one-page-redesign': [
-                    { href: '/violet', label: 'Transform', desc: 'Bigger commitments, discovery-led' },
-                    { href: '/care', label: 'Care Plans', desc: 'Ongoing support after launch' }
                 ]
             };
 
-            var links = crossSell[serviceKey] || crossSell['starter'];
+            var links = crossSell[serviceKey] || crossSell['starter-onepage'];
             var container = document.getElementById('exploreLinks');
             if (!container) return;
 
-            var isConversation = serviceKey === 'clarity-session';
+            var isConversation = false;
 
             links.forEach(function(link) {
                 var a = document.createElement('a');

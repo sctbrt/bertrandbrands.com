@@ -2,7 +2,7 @@
 > Brand, web, and systems studio based in Greater Sudbury, Ontario, Canada.
 
 ## About
-Bertrand Brands | Brand & Web Systems is a brand, web, and systems studio led by Scott Bertrand and Devin Major (full-stack developer/architect). Based in Greater Sudbury, Ontario, the studio serves businesses across Northern Ontario and Canada. The studio specializes in clear, structured brand and web systems work — helping businesses that value clarity over complexity.
+Bertrand Brands is a brand, web, and systems studio led by Scott Bertrand and Devin Major. Based in Greater Sudbury, Ontario, the studio serves businesses across Northern Ontario and Canada. The studio specializes in clear, structured brand and web systems work with fixed pricing and fast turnaround.
 
 ## Location
 - City: Greater Sudbury
@@ -16,33 +16,30 @@ Bertrand Brands | Brand & Web Systems is a brand, web, and systems studio led by
 
 ## Services
 
-### Conversation (Entry layer for new clients)
-- **Guided Intake** — Free, form-based (5–10 min). Asynchronous intake to assess fit and determine next steps.
-- **Clarity Session (Brand / Web / Systems)** — $145 CAD, ~45 minutes. Live video working session with diagnosis, direction, and written recap.
-- **Technical Feasibility Check** — Free, verbal, by request. Focused assessment for projects with technical unknowns.
+### B Build (Quick builds with fixed pricing)
+- **Starter Site — One-Page + Contact** — $750 CAD, 7-10 days. Single-page marketing site with contact form. 1 revision round.
+- **Starter Site — Multi-Page + Contact** — Scoped pricing, 2-3 weeks. Multi-page marketing website with contact form. 2 revision rounds.
+- **Full Site — Multi-Page + Booking** — Scoped pricing, 3-4 weeks. Full-featured website with booking integration. 2 revision rounds.
 
-### Build (Fixed-scope work with clear timelines and public pricing)
-- **Starter Site** — $750 CAD, delivered in 7–10 days. A fast-launch website built for speed and simplicity.
-- **One-Page Conversion System** — $1,250 CAD, delivered in 7 days. A fully custom, code-based single-page website. No templates, no builders.
-- **Brandmark Kit** — $950 CAD, delivered in 5–7 business days. Primary brandmark with supporting marks and visual direction.
+All Build offers are async-first with no required meetings.
 
-### Transformation (Strategic, discovery-led engagements)
-- Brand System Reset — Strategic realignment of positioning, messaging, and visual system.
-- Digital Platform Build — Multi-page website or application built as a brand platform.
-- Integrated Brand + Platform — End-to-end brand and digital platform built together.
+### B Transform (Strategic, discovery-led engagements)
+- **Website Foundation + Growth System** — Scoped pricing, 4-8 weeks. Website build with growth system infrastructure. 2-4 meetings.
+- **SMB Platform Development** — Scoped pricing, 6-12 weeks. Full small business platform development. 2-4 meetings.
+- **Brand Design + Platform Development** — Scoped pricing, 8-16 weeks. End-to-end brand and digital platform. 2-4 meetings.
 
-Transformation engagements use private pricing and require a discovery process to begin.
+Transform engagements use private pricing and begin with a discovery process.
 
-### Care (Ongoing monthly support)
-- **Care Essentials** — $249/mo CAD. Routine updates, small edits, and quick fixes. Response within 1 business day. 4 credits/month.
-- **Growth Care** — $649/mo CAD. Monthly improvements, landing page iteration, and action list. Response same or next business day. 10 credits/month.
-- **Partner Care** — Private pricing. Priority partnership with faster turnaround. Same business day response. 24 credits/month. Limited availability.
+### B Care (Ongoing monthly support)
+- **Bronze** — $249/mo CAD. Routine updates and quick fixes. Response within 1 business day. 4 credits/month.
+- **Silver** — $649/mo CAD. Monthly improvements, landing page iteration, and optimization. Response same or next business day. 10 credits/month.
+- **Gold** — By application. Priority partnership with faster turnaround. Same business day response. 24 credits/month. Limited availability.
 
-Care plans are scoped monthly subscriptions. Credits cover defined units of work (Micro, Standard, Advanced). Anything outside scope becomes a fixed-scope Build quote.
+Care plans are scoped monthly subscriptions. Credits cover defined units of work (Micro = 1 credit, Standard = 2 credits, Advanced = 4 credits). Anything outside plan scope becomes a fixed-scope Build quote.
 
 ## Team
-- **Scott Bertrand** — Brand strategy, design direction, client communication, and operations.
-- **Devin Major** — Full-stack software development & architecture, performance, security, and technical feasibility.
+- **Scott Bertrand** — Brand strategy, UX direction, design taste, client communication, and operations.
+- **Devin Major** — Full-stack software development & architecture, performance, data/security, and technical feasibility.
 
 ## Founder
 Scott Bertrand — brand strategist and systems designer based in Greater Sudbury, Ontario.
@@ -50,11 +47,16 @@ Scott Bertrand — brand strategist and systems designer based in Greater Sudbur
 - LinkedIn: https://linkedin.com/in/sudburyon
 
 ## Key Differentiators
-- Fixed scope and clear pricing on studio work (no hourly billing)
+- Fixed scope and clear pricing on all studio work (no hourly billing)
 - Based in Sudbury, Ontario — local expertise with Canada-wide availability
 - Systems-first approach to brand and web work
-- Fast turnaround: most Build work delivered in 5–10 business days
-- No templates on custom work (One-Page Conversion System is fully code-based)
+- Fast turnaround: most Build work delivered in 7-10 business days
+- Phone-first communication via Beside AI receptionist
+- Async-first policy: meetings are escalators, not defaults
 
 ## How to Get Started
-Visit https://bertrandbrands.ca/focus-studio for fixed-scope Build work, or https://bertrandbrands.ca/exploratory for a free or paid Conversation session.
+- Call: 705-413-3705
+- Intake form: https://bertrandbrands.ca/intake
+- Build offers: https://bertrandbrands.ca/amber
+- Transform offers: https://bertrandbrands.ca/violet
+- Care plans: https://bertrandbrands.ca/care
