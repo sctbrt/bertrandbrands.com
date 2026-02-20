@@ -178,7 +178,7 @@ const schemaJson = {
                           timeline="7\u201310 business days"
                           tierClass="build"
                           ctaHref="/intake?tier=amber&offer=starter-onepage"
-                          detailHref="/amber/starter-onepage"
+                          detailHref="/build/starter-onepage"
                           revisionRounds={1}
                           meetingPolicy="0 meetings"
                           features={[
@@ -204,7 +204,7 @@ const schemaJson = {
                           tierClass="build"
                           ctaText="Request a Quote"
                           ctaHref="/intake?tier=amber&offer=starter-multipage"
-                          detailHref="/amber/starter-multipage"
+                          detailHref="/build/starter-multipage"
                           revisionRounds={2}
                           meetingPolicy="0 meetings"
                           features={[
@@ -230,7 +230,7 @@ const schemaJson = {
                           tierClass="build"
                           ctaText="Request a Quote"
                           ctaHref="/intake?tier=amber&offer=fullsite-booking"
-                          detailHref="/amber/fullsite-booking"
+                          detailHref="/build/fullsite-booking"
                           revisionRounds={2}
                           meetingPolicy="0 meetings"
                           features={[
@@ -263,7 +263,7 @@ const schemaJson = {
                           tierClass="transform"
                           ctaText="Request a Quote"
                           ctaHref="/intake?tier=violet&offer=foundation-growth"
-                          detailHref="/violet/foundation-growth"
+                          detailHref="/transform/foundation-growth"
                           meetingPolicy="2\u20134 meetings"
                           features={[
                               "Full website rebuild",
@@ -286,7 +286,7 @@ const schemaJson = {
                           tierClass="transform"
                           ctaText="Request a Quote"
                           ctaHref="/intake?tier=violet&offer=smb-platform"
-                          detailHref="/violet/smb-platform"
+                          detailHref="/transform/smb-platform"
                           featured={true}
                           meetingPolicy="2\u20134 meetings"
                           features={[
@@ -309,7 +309,7 @@ const schemaJson = {
                           tierClass="transform"
                           ctaText="Request a Quote"
                           ctaHref="/intake?tier=violet&offer=brand-platform"
-                          detailHref="/violet/brand-platform"
+                          detailHref="/transform/brand-platform"
                           meetingPolicy="2\u20134 meetings"
                           features={[
                               "Brand strategy + identity system",
@@ -508,6 +508,7 @@ const schemaJson = {
 
       <!-- FAQ -->
       <section class="section section--alt" id="faq">
+          <div class="faq__glow--blue" aria-hidden="true"></div>
           <div class="container">
               <div class="section__header reveal">
                   <p class="section__label">FAQ</p>
@@ -525,6 +526,7 @@ const schemaJson = {
               <div class="contact reveal">
                   <div class="contact__spotlight contact__spotlight--amber" aria-hidden="true"></div>
                   <div class="contact__spotlight contact__spotlight--violet" aria-hidden="true"></div>
+                  <div class="contact__spotlight contact__spotlight--blue" aria-hidden="true"></div>
                   <h2 class="contact__title">Get in touch</h2>
                   <p class="contact__subtitle">Call us or fill out an intake form. We'll respond within one business day.</p>
                   <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-sm);margin-top:var(--space-md);">

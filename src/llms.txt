@@ -57,6 +57,6 @@ Scott Bertrand — brand strategist and systems designer based in Greater Sudbur
 ## How to Get Started
 - Call: 705-413-3705
 - Intake form: https://bertrandbrands.ca/intake
-- Build offers: https://bertrandbrands.ca/amber
-- Transform offers: https://bertrandbrands.ca/violet
+- Build offers: https://bertrandbrands.ca/build
+- Transform offers: https://bertrandbrands.ca/transform
 - Care plans: https://bertrandbrands.ca/care

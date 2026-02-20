@@ -3223,14 +3223,15 @@
 
         .about__glow--violet {
             position: absolute;
-            width: 420px;
-            height: 360px;
-            top: 15%;
-            right: -3%;
-            background: radial-gradient(ellipse 55% 50%, rgba(139, 92, 246, 0.06) 0%, rgba(139, 92, 246, 0.02) 40%, transparent 70%);
+            width: 600px;
+            height: 300px;
+            bottom: -8%;
+            left: 50%;
+            margin-left: -300px;
+            background: radial-gradient(ellipse 60% 50%, rgba(139, 92, 246, 0.10) 0%, rgba(139, 92, 246, 0.04) 40%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
-            filter: blur(60px);
+            filter: blur(70px);
             z-index: 0;
             animation: aboutVioletBreathe 20s ease-in-out infinite;
         }
@@ -3302,10 +3303,10 @@
 
         @media (max-width: 768px) {
             .about__glow--violet {
-                width: 260px;
-                height: 220px;
-                filter: blur(35px);
-                right: -8%;
+                width: 320px;
+                height: 180px;
+                margin-left: -160px;
+                filter: blur(40px);
             }
 
             .about__glow--blue {
@@ -6800,6 +6801,76 @@
 }
 .faq__answer a:hover {
     color: var(--accent-hover);
+}
+
+/* --- FAQ Section Glow --- */
+#faq {
+    position: relative;
+    overflow: hidden;
+}
+
+#faq > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.faq__glow--blue {
+    position: absolute;
+    width: 560px;
+    height: 280px;
+    bottom: -8%;
+    left: 50%;
+    margin-left: -280px;
+    background: radial-gradient(ellipse 60% 50%, rgba(37, 99, 235, 0.09) 0%, rgba(37, 99, 235, 0.03) 40%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(65px);
+    z-index: 0;
+    animation: faqBlueBreathe 22s ease-in-out infinite;
+}
+
+@keyframes faqBlueBreathe {
+    0%, 100% {
+        opacity: 0.7;
+        transform: translate(0, 0) scale(1);
+        border-radius: 50% 50% 50% 50%;
+    }
+    20% {
+        opacity: 0.85;
+        transform: translate(15px, -8px) scale(1.04);
+        border-radius: 55% 45% 52% 48%;
+    }
+    45% {
+        opacity: 0.6;
+        transform: translate(-10px, 5px) scale(0.96);
+        border-radius: 48% 52% 45% 55%;
+    }
+    70% {
+        opacity: 0.78;
+        transform: translate(8px, -5px) scale(1.02);
+        border-radius: 52% 48% 55% 45%;
+    }
+    85% {
+        opacity: 0.65;
+        transform: translate(-5px, 3px) scale(0.98);
+        border-radius: 45% 55% 50% 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .faq__glow--blue {
+        width: 300px;
+        height: 160px;
+        margin-left: -150px;
+        filter: blur(35px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .faq__glow--blue {
+        animation: none !important;
+        opacity: 0.7;
+    }
 }
 
 /* --- Trust Stack --- */
