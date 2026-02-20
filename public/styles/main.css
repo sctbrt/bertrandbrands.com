@@ -8272,3 +8272,108 @@
     }
 }
 
+/* ============================================================
+   PHONE MODAL (desktop only)
+   Intercepts tel: clicks on desktop and shows a copy-friendly
+   modal instead of triggering a useless tel: handler.
+   ============================================================ */
+.phone-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.phone-modal-backdrop.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+.phone-modal {
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2.5rem 2rem 2rem;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    transform: scale(0.95) translateY(8px);
+    transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.phone-modal-backdrop.is-visible .phone-modal {
+    transform: scale(1) translateY(0);
+}
+.phone-modal__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    color: var(--text-muted, #a3a3a3);
+    font-size: 1.125rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.phone-modal__close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text, #fafafa);
+}
+.phone-modal__label {
+    font-size: 0.8125rem;
+    color: var(--text-subtle, #737373);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+}
+.phone-modal__number {
+    font-family: var(--font-display, 'halyard-display', sans-serif);
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    color: var(--text, #fafafa);
+    margin-bottom: 1.25rem;
+    user-select: all;
+    -webkit-user-select: all;
+}
+.phone-modal__copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    color: var(--text-muted, #a3a3a3);
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.phone-modal__copy:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text, #fafafa);
+}
+.phone-modal__copy.is-copied {
+    border-color: rgba(217, 119, 6, 0.4);
+    color: #D97706;
+}
+.phone-modal__copy svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
