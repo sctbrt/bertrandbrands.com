@@ -3223,17 +3223,18 @@
 
         .about__glow--violet {
             position: absolute;
-            width: 600px;
-            height: 300px;
-            bottom: -8%;
-            left: 50%;
-            margin-left: -300px;
-            background: radial-gradient(ellipse 60% 50%, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%);
-            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(
+                ellipse 80% 60% at 50% 100%,
+                rgba(139, 92, 246, 0.12) 0%,
+                rgba(139, 92, 246, 0.05) 40%,
+                transparent 70%
+            );
             pointer-events: none;
-            filter: blur(70px);
             z-index: 0;
-            animation: aboutVioletBreathe 20s ease-in-out infinite;
         }
 
         .about__glow--blue {
@@ -3248,34 +3249,6 @@
             filter: blur(55px);
             z-index: 0;
             animation: aboutBlueBreathe 24s ease-in-out 0.5s infinite;
-        }
-
-        @keyframes aboutVioletBreathe {
-            0%, 100% {
-                opacity: 0.7;
-                transform: translate(0, 0) scale(1);
-                border-radius: 50% 50% 50% 50%;
-            }
-            20% {
-                opacity: 0.85;
-                transform: translate(-12px, 15px) scale(1.04);
-                border-radius: 55% 45% 58% 42%;
-            }
-            45% {
-                opacity: 0.6;
-                transform: translate(8px, -10px) scale(0.96);
-                border-radius: 42% 58% 45% 55%;
-            }
-            65% {
-                opacity: 0.78;
-                transform: translate(-5px, 8px) scale(1.02);
-                border-radius: 58% 42% 50% 50%;
-            }
-            85% {
-                opacity: 0.68;
-                transform: translate(10px, -5px) scale(0.98);
-                border-radius: 48% 52% 55% 45%;
-            }
         }
 
         @keyframes aboutBlueBreathe {
@@ -3302,13 +3275,6 @@
         }
 
         @media (max-width: 768px) {
-            .about__glow--violet {
-                width: 320px;
-                height: 180px;
-                margin-left: -160px;
-                filter: blur(40px);
-            }
-
             .about__glow--blue {
                 width: 240px;
                 height: 200px;
@@ -3318,7 +3284,6 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .about__glow--violet,
             .about__glow--blue {
                 animation: none !important;
                 opacity: 0.7;
@@ -6731,20 +6696,21 @@
 /* --- Phone CTA Block --- */
 .phone-cta {
     text-align: center;
-    padding: var(--space-lg) var(--space-md);
-    max-width: 640px;
+    padding: var(--space-md) var(--space-md);
+    max-width: 480px;
     margin: 0 auto;
 }
 .phone-cta__headline {
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
+    font-size: var(--text-lg);
     font-weight: var(--font-light);
+    color: var(--text-muted);
     margin-bottom: var(--space-xs);
 }
 .phone-cta__number {
     display: inline-block;
     font-family: var(--font-display);
-    font-size: var(--text-4xl);
+    font-size: var(--text-2xl);
     font-weight: var(--font-light);
     text-decoration: none;
     margin-bottom: var(--space-xs);
@@ -6752,10 +6718,11 @@
 }
 .phone-cta__number:hover { opacity: 0.8; }
 .phone-cta__note {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    max-width: 480px;
+    font-size: var(--text-xs);
+    color: var(--text-subtle);
+    max-width: 400px;
     margin: 0 auto;
+    line-height: var(--leading-normal);
 }
 
 /* --- FAQ Accordion --- */
@@ -6816,61 +6783,18 @@
 
 .faq__glow--blue {
     position: absolute;
-    width: 560px;
-    height: 280px;
-    bottom: -8%;
-    left: 50%;
-    margin-left: -280px;
-    background: radial-gradient(ellipse 60% 50%, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.05) 40%, transparent 70%);
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(
+        ellipse 80% 60% at 50% 100%,
+        rgba(37, 99, 235, 0.12) 0%,
+        rgba(37, 99, 235, 0.05) 40%,
+        transparent 70%
+    );
     pointer-events: none;
-    filter: blur(65px);
     z-index: 0;
-    animation: faqBlueBreathe 22s ease-in-out infinite;
-}
-
-@keyframes faqBlueBreathe {
-    0%, 100% {
-        opacity: 0.7;
-        transform: translate(0, 0) scale(1);
-        border-radius: 50% 50% 50% 50%;
-    }
-    20% {
-        opacity: 0.85;
-        transform: translate(15px, -8px) scale(1.04);
-        border-radius: 55% 45% 52% 48%;
-    }
-    45% {
-        opacity: 0.6;
-        transform: translate(-10px, 5px) scale(0.96);
-        border-radius: 48% 52% 45% 55%;
-    }
-    70% {
-        opacity: 0.78;
-        transform: translate(8px, -5px) scale(1.02);
-        border-radius: 52% 48% 55% 45%;
-    }
-    85% {
-        opacity: 0.65;
-        transform: translate(-5px, 3px) scale(0.98);
-        border-radius: 45% 55% 50% 50%;
-    }
-}
-
-@media (max-width: 768px) {
-    .faq__glow--blue {
-        width: 300px;
-        height: 160px;
-        margin-left: -150px;
-        filter: blur(35px);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .faq__glow--blue {
-        animation: none !important;
-        opacity: 0.7;
-    }
 }
 
 /* --- Trust Stack --- */
@@ -6933,7 +6857,7 @@
         margin-top: 0;
         margin-left: 0.25rem;
     }
-    .phone-cta__number { font-size: var(--text-3xl); }
+    .phone-cta__number { font-size: var(--text-xl); }
 }
 
 @media (max-width: 480px) {
