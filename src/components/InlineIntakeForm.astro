@@ -4,9 +4,15 @@ interface Props {
     serviceSlug: string;
     tierColor: string;
     tierName: string;
+    step2Label?: string;
+    step2Placeholder?: string;
 }
 
-const { serviceName, serviceSlug, tierColor, tierName } = Astro.props;
+const {
+    serviceName, serviceSlug, tierColor, tierName,
+    step2Label = "What\u2019s not working?",
+    step2Placeholder = "What feels unclear, outdated, or ineffective about your current brand or website?",
+} = Astro.props;
 ---
 
 <section class="inline-intake" style={`--tier-color: ${tierColor};`}>
@@ -48,8 +54,8 @@ const { serviceName, serviceSlug, tierColor, tierName } = Astro.props;
                 </div>
 
                 <div class="inline-intake__field inline-intake__field--step2">
-                    <label class="inline-intake__label" for="inlineDetails">What&rsquo;s not working?</label>
-                    <textarea id="inlineDetails" name="details" class="inline-intake__textarea" placeholder="What feels unclear, outdated, or ineffective about your current brand or website?" rows="4"></textarea>
+                    <label class="inline-intake__label" for="inlineDetails">{step2Label}</label>
+                    <textarea id="inlineDetails" name="details" class="inline-intake__textarea" placeholder={step2Placeholder} rows="4"></textarea>
                 </div>
 
                 <button type="submit" class="inline-intake__submit" id="inlineSubmitBtn">Submit intake &rarr;</button>

@@ -379,6 +379,65 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             }
 
             .form-honeypot { display: none !important; }
+
+            /* Situation picker (general intake only) */
+            .intake-situation-options {
+                display: flex;
+                flex-direction: column;
+                gap: 0.625rem;
+            }
+
+            .intake-situation__option {
+                cursor: pointer;
+                display: block;
+            }
+
+            .intake-situation__radio {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .intake-situation__card {
+                display: block;
+                padding: 0.75rem 1rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                transition: border-color 0.2s ease, background 0.2s ease;
+            }
+
+            .intake-situation__card strong {
+                display: block;
+                font-size: var(--text-sm);
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 0.125rem;
+            }
+
+            .intake-situation__card span {
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+            }
+
+            .intake-situation__card:hover {
+                border-color: rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.03);
+            }
+
+            .intake-situation__radio:checked + .intake-situation__card {
+                border-color: rgba(217, 119, 6, 0.4);
+                background: rgba(217, 119, 6, 0.05);
+            }
+
+            .intake-situation__radio:focus-visible + .intake-situation__card {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .intake-situation__card { transition: none; }
+            }
         </style>
     </Fragment>
 
@@ -449,9 +508,36 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                         <input class="intake-form__input" type="url" id="website" name="website" placeholder="https://yourbusiness.com">
                     </div>
 
-                    <!-- General (no tier): what are you looking for? -->
+                    <!-- General (no tier): situation picker + description -->
+                    <fieldset class="intake-form__group tier-field tier-field--general visible" id="fieldSituationPicker" style="border:none;padding:0;margin:0;">
+                        <legend class="intake-form__label">What best describes your situation?</legend>
+                        <div class="intake-situation-options" id="situationOptions">
+                            <label class="intake-situation__option">
+                                <input type="radio" name="situation_type" value="new_site" class="intake-situation__radio">
+                                <span class="intake-situation__card">
+                                    <strong>I need a website</strong>
+                                    <span>First site or simple marketing site</span>
+                                </span>
+                            </label>
+                            <label class="intake-situation__option">
+                                <input type="radio" name="situation_type" value="rebuild_grow" class="intake-situation__radio">
+                                <span class="intake-situation__card">
+                                    <strong>I need to rebuild or grow</strong>
+                                    <span>Outgrown my current brand or website</span>
+                                </span>
+                            </label>
+                            <label class="intake-situation__option">
+                                <input type="radio" name="situation_type" value="ongoing_support" class="intake-situation__radio">
+                                <span class="intake-situation__card">
+                                    <strong>I need ongoing support</strong>
+                                    <span>Monthly updates on an existing site</span>
+                                </span>
+                            </label>
+                        </div>
+                    </fieldset>
+
                     <div class="intake-form__group tier-field tier-field--general visible" id="fieldGeneral">
-                        <label class="intake-form__label" for="description">What are you looking for?</label>
+                        <label class="intake-form__label" for="description">Tell us more</label>
                         <textarea class="intake-form__textarea" id="description" name="description" placeholder="Tell us what prompted you to reach out. What do you need help with?"></textarea>
                     </div>
 
@@ -662,6 +748,27 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             });
         }
         configureTierFields();
+
+        // Situation picker — dynamically changes description placeholder for general intake
+        (function() {
+            var situationRadios = document.querySelectorAll('.intake-situation__radio');
+            var descriptionField = document.getElementById('description');
+            if (!situationRadios.length || !descriptionField) return;
+
+            var placeholders = {
+                'new_site': 'What kind of site do you need? How many pages? Any specific features?',
+                'rebuild_grow': 'What\'s not working with your current site or brand? What are you trying to achieve?',
+                'ongoing_support': 'What kind of updates or support do you need? How often?'
+            };
+
+            situationRadios.forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    if (placeholders[radio.value]) {
+                        descriptionField.placeholder = placeholders[radio.value];
+                    }
+                });
+            });
+        })();
 
         function showToast(message, type) {
             toast.textContent = message;

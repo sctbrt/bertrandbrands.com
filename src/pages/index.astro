@@ -158,12 +158,37 @@ const schemaJson = {
 
               <!-- Intake Prompt (Tri-Colour) -->
               <div class="intake-prompt reveal">
-                  <p class="intake-prompt__text">Not sure where to start? Talk to us and we'll help you find the right fit.</p>
+                  <p class="intake-prompt__text">Not sure which option fits? We'll help you figure it out.</p>
                   <div class="intake-prompt__actions">
                       <a href="tel:+17054133705" class="intake-prompt__cta intake-prompt__cta--phone phone-link__mobile">Call (705) 413-3705</a>
                       <span class="intake-prompt__cta intake-prompt__cta--phone phone-link__desktop" aria-label="Phone number">(705) 413-3705</span>
                       <a href="/intake" class="intake-prompt__cta intake-prompt__cta--form">Fill out an intake form</a>
                   </div>
+              </div>
+
+              <!-- Tier Selector — situation-based decision helper -->
+              <div class="tier-selector reveal" id="tierSelector" role="group" aria-label="Choose by situation">
+                  <button class="tier-selector__option" data-target-tier="build" type="button">
+                      <div class="tier-selector__icon tier-selector__icon--build" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                      </div>
+                      <p class="tier-selector__situation">I need a website</p>
+                      <p class="tier-selector__detail">First site or simple marketing site. Fast turnaround, fixed price.</p>
+                  </button>
+                  <button class="tier-selector__option" data-target-tier="transform" type="button">
+                      <div class="tier-selector__icon tier-selector__icon--transform" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      </div>
+                      <p class="tier-selector__situation">I need to rebuild or grow</p>
+                      <p class="tier-selector__detail">Outgrown your current site, brand, or systems.</p>
+                  </button>
+                  <button class="tier-selector__option" data-target-tier="care" type="button">
+                      <div class="tier-selector__icon tier-selector__icon--care" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                      </div>
+                      <p class="tier-selector__situation">I have a site &amp; need support</p>
+                      <p class="tier-selector__detail">Monthly updates, fixes, and improvements.</p>
+                  </button>
               </div>
 
               <!-- B Build — Quick Builds (Amber) -->
@@ -473,6 +498,16 @@ const schemaJson = {
                       <li>Clear next steps</li>
                       <li>No scope creep</li>
                   </ul>
+
+                  <!-- Process CTA — closes the dead end -->
+                  <div class="process-cta">
+                      <p class="process-cta__text">Ready to start?</p>
+                      <div class="process-cta__actions">
+                          <a href="tel:+17054133705" class="process-cta__link process-cta__link--phone phone-link__mobile">Call (705) 413-3705</a>
+                          <span class="process-cta__link process-cta__link--phone phone-link__desktop" aria-label="Phone number">(705) 413-3705</span>
+                          <a href="/intake" class="process-cta__link process-cta__link--form">Fill out an intake form &rarr;</a>
+                      </div>
+                  </div>
               </div>
           </div>
       </section>
@@ -727,6 +762,70 @@ const schemaJson = {
                   });
               }, { threshold: 0.3 });
               pulseObserver.observe(journey);
+          }
+      })();
+
+      // Tier Selector — scroll-to and highlight
+      (function() {
+          var selector = document.getElementById('tierSelector');
+          if (!selector) return;
+          var options = selector.querySelectorAll('.tier-selector__option');
+          var tierGroups = document.querySelectorAll('.tier-group');
+          var activeOption = null;
+
+          var tierMap = { build: 0, transform: 1, care: 2 };
+
+          function clearSelection() {
+              options.forEach(function(o) { o.classList.remove('is-active'); });
+              tierGroups.forEach(function(g) {
+                  g.classList.remove('is-dimmed', 'is-highlighted');
+              });
+              activeOption = null;
+          }
+
+          options.forEach(function(option) {
+              option.addEventListener('click', function() {
+                  var tier = option.getAttribute('data-target-tier');
+                  var targetIndex = tierMap[tier];
+                  if (targetIndex === undefined) return;
+
+                  // Toggle: if same option clicked, clear
+                  if (activeOption === option) {
+                      clearSelection();
+                      return;
+                  }
+
+                  // Set active
+                  clearSelection();
+                  activeOption = option;
+                  option.classList.add('is-active');
+
+                  // Dim/highlight tier groups
+                  tierGroups.forEach(function(g, i) {
+                      if (i === targetIndex) {
+                          g.classList.add('is-highlighted');
+                      } else {
+                          g.classList.add('is-dimmed');
+                      }
+                  });
+
+                  // Smooth-scroll to targeted tier group
+                  var target = tierGroups[targetIndex];
+                  if (target) {
+                      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+              });
+          });
+
+          // Clear selection when user scrolls away from services section
+          var servicesSection = document.getElementById('packages');
+          if (servicesSection) {
+              var clearObserver = new IntersectionObserver(function(entries) {
+                  if (!entries[0].isIntersecting && activeOption) {
+                      clearSelection();
+                  }
+              }, { threshold: 0 });
+              clearObserver.observe(servicesSection);
           }
       })();
 
