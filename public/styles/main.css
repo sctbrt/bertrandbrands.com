@@ -6530,6 +6530,8 @@
 
 .phone-link__desktop {
     display: inline;
+    cursor: default;
+    user-select: all;
 }
 
 @media (max-width: 768px) {
