@@ -122,13 +122,11 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         </p>
     </main>
 
-    {/* Fire Google Ads form-submit conversion on page load */}
+    {/* Fire conversion on page load — uses bbConvert() for consistent GA4 + Ads tracking */}
     <script is:inline>
       document.addEventListener('DOMContentLoaded', function() {
-        if (typeof gtag === 'function') {
-          gtag('event', 'conversion', {
-            send_to: 'AW-17925090292/3B0-CJDv6vUbEPTXrONC'
-          });
+        if (typeof bbConvert === 'function') {
+          bbConvert('form_submit', 'contact_form');
         }
       });
     </script>
