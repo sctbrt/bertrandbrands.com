@@ -711,7 +711,7 @@ const schemaJson = {
           document.querySelectorAll('.section--process').forEach(function(el) { sectionObserver.observe(el); });
       })();
 
-      // Process journey hover state machine
+      // Process journey — click to select, hover to preview
       (function() {
           var journey = document.getElementById('processJourney');
           var summary = document.getElementById('processSummary');
@@ -726,7 +726,7 @@ const schemaJson = {
           ];
 
           var steps = journey.querySelectorAll('.process-journey__step');
-          var defaultIndex = 0;
+          var selectedIndex = 0;
 
           function setActive(index) {
               steps.forEach(function(s, i) {
@@ -735,24 +735,24 @@ const schemaJson = {
               summary.textContent = oneLiners[index];
           }
 
-          setActive(defaultIndex);
+          setActive(selectedIndex);
 
           steps.forEach(function(step) {
+              // Click/tap locks selection to this step
+              step.addEventListener('click', function() {
+                  var idx = parseInt(step.getAttribute('data-step'), 10);
+                  selectedIndex = idx;
+                  setActive(idx);
+              });
+              // Hover previews, but doesn't change the locked selection
               step.addEventListener('mouseenter', function() {
                   var idx = parseInt(step.getAttribute('data-step'), 10);
                   setActive(idx);
               });
+              // On mouse leave, return to the locked/selected step
               step.addEventListener('mouseleave', function() {
-                  setActive(defaultIndex);
+                  setActive(selectedIndex);
               });
-              step.addEventListener('touchstart', function(e) {
-                  var idx = parseInt(step.getAttribute('data-step'), 10);
-                  if (step.classList.contains('is-active') && idx !== defaultIndex) {
-                      setActive(defaultIndex);
-                  } else {
-                      setActive(idx);
-                  }
-              }, { passive: true });
           });
 
           if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

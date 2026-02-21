@@ -92,6 +92,60 @@ const currentYear = new Date().getFullYear();
             .care-credit__examples li { font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0.25rem; line-height: 1.4; }
             .care-credits__note { text-align: center; margin-top: var(--space-sm); font-size: var(--text-xs); color: var(--text-subtle); }
 
+            .service-hero { position: relative; }
+            .service-hero__illustration-wrap {
+                position: relative; display: block; margin: 0 auto 0.5rem; width: clamp(240px, 42vw, 400px);
+            }
+            .service-hero__illustration-wrap::after {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 130%; height: 130%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 60%);
+                filter: blur(50px); pointer-events: none; z-index: 0;
+            }
+            .service-hero__illustration-wrap::before {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 90%; height: 90%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(37, 99, 235, 0.5) 0%, rgba(37, 99, 235, 0) 65%);
+                filter: blur(35px); opacity: 0; pointer-events: none; z-index: 0;
+                animation: svcGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
+            }
+            .service-hero__illustration {
+                position: relative; z-index: 1; display: block; width: 100%; height: auto; pointer-events: none;
+                opacity: 0; transform: scale(0.92);
+                animation: svcFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+            }
+            .service-hero__illustration line,
+            .service-hero__illustration path,
+            .service-hero__illustration rect,
+            .service-hero__illustration circle,
+            .service-hero__illustration ellipse {
+                stroke-dasharray: 800; stroke-dashoffset: 800;
+                animation: svcLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+            }
+            .service-hero__illustration circle[fill]:not([fill="none"]),
+            .service-hero__illustration rect[fill]:not([fill="none"]),
+            .service-hero__illustration ellipse[fill]:not([fill="none"]) {
+                opacity: 0; animation: svcLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards, svcFillReveal 1s ease 1.4s forwards;
+            }
+            @keyframes svcGlowPulse {
+                0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+                30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+                100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            }
+            @keyframes svcFadeIn {
+                0%   { opacity: 0; transform: scale(0.92); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes svcLineDraw {
+                0%   { stroke-dashoffset: 800; }
+                100% { stroke-dashoffset: 0; }
+            }
+            @keyframes svcFillReveal {
+                0%   { opacity: 0; }
+                100% { opacity: 1; }
+            }
+            @media (max-width: 900px) { .service-hero__illustration-wrap { width: clamp(200px, 50vw, 320px); } }
+
             .service-cta { padding: var(--space-xl) 0 var(--space-2xl); text-align: center; position: relative; z-index: 1; }
 
             .service-back { display: inline-flex; align-items: center; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; margin-bottom: var(--space-md); transition: color var(--duration-fast) ease; }
@@ -113,6 +167,7 @@ const currentYear = new Date().getFullYear();
                 .service-page__spotlight--2 { width: 200px; height: 200px; }
                 .service-page .container { padding: 0 0.75rem; }
                 .service-hero { padding: var(--space-xs) 1rem var(--space-sm); }
+                .service-hero__illustration-wrap { width: clamp(160px, 40vw, 240px); }
                 .service-hero__headline { font-size: clamp(1.25rem, 4.5vw, 1.75rem); margin-bottom: 0.75rem; max-width: 100%; }
                 .service-hero__description { font-size: var(--text-xs); line-height: 1.5; max-width: 100%; }
                 .service-subbrand__name { font-size: var(--text-xl); }
@@ -132,6 +187,7 @@ const currentYear = new Date().getFullYear();
                 .care-credit { padding: var(--space-sm); }
             }
             @media (max-width: 480px) {
+                .service-hero__illustration-wrap { width: clamp(130px, 38vw, 180px); }
                 .service-card { padding: 1rem; }
                 .service-hero__headline { font-size: clamp(1.125rem, 4.5vw, 1.375rem); margin-bottom: 0.5rem; }
                 .service-hero__description { font-size: 0.6875rem; line-height: 1.5; }
@@ -146,6 +202,11 @@ const currentYear = new Date().getFullYear();
             }
 
             @media (prefers-reduced-motion: reduce) {
+                .service-hero__illustration-wrap::before { animation: none; opacity: 0.6; }
+                .service-hero__illustration { animation: none; opacity: 1; transform: none; }
+                .service-hero__illustration line, .service-hero__illustration path,
+                .service-hero__illustration rect, .service-hero__illustration circle,
+                .service-hero__illustration ellipse { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 1; }
                 .service-page__spotlight { animation: none !important; }
             }
         </style>
@@ -167,6 +228,46 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <section class="service-hero">
+                <div class="service-hero__illustration-wrap">
+                <svg class="service-hero__illustration" viewBox="40 40 420 320" fill="none" aria-hidden="true">
+                    <!-- Baseline -->
+                    <line x1="80" y1="290" x2="420" y2="290" stroke="rgba(37, 99, 235, 0.18)" stroke-width="1.5"/>
+                    <!-- Subtle grid -->
+                    <line x1="80" y1="170" x2="420" y2="170" stroke="rgba(37, 99, 235, 0.06)" stroke-width="1" stroke-dasharray="4 8"/>
+                    <line x1="80" y1="230" x2="420" y2="230" stroke="rgba(37, 99, 235, 0.08)" stroke-width="1"/>
+                    <line x1="250" y1="70" x2="250" y2="320" stroke="rgba(37, 99, 235, 0.06)" stroke-width="1" stroke-dasharray="4 8"/>
+                    <!-- Outer orbit ring -->
+                    <circle cx="250" cy="195" r="95" stroke="rgba(37, 99, 235, 0.25)" stroke-width="2" fill="none"/>
+                    <!-- Inner ring -->
+                    <circle cx="250" cy="195" r="55" stroke="rgba(37, 99, 235, 0.20)" stroke-width="1.5" fill="none"/>
+                    <!-- Core ring -->
+                    <circle cx="250" cy="195" r="20" stroke="rgba(37, 99, 235, 0.30)" stroke-width="1.5" fill="none"/>
+                    <!-- Center point -->
+                    <circle cx="250" cy="195" r="3" fill="rgba(37, 99, 235, 0.40)"/>
+                    <!-- Growth trajectory arc (upward) -->
+                    <path d="M 140 290 Q 200 160 340 110" stroke="rgba(37, 99, 235, 0.30)" stroke-width="2" fill="none"/>
+                    <!-- Arrow tip on trajectory -->
+                    <path d="M 332 118 L 340 110 L 330 112" stroke="rgba(37, 99, 235, 0.30)" stroke-width="1.5" fill="none"/>
+                    <!-- Trajectory target -->
+                    <circle cx="340" cy="110" r="8" stroke="rgba(37, 99, 235, 0.22)" stroke-width="1"/>
+                    <circle cx="340" cy="110" r="3" fill="rgba(37, 99, 235, 0.25)"/>
+                    <!-- Orbital nodes (representing activity) -->
+                    <circle cx="345" cy="195" r="4" fill="rgba(37, 99, 235, 0.28)"/>
+                    <circle cx="250" cy="100" r="4" fill="rgba(37, 99, 235, 0.28)"/>
+                    <circle cx="155" cy="195" r="4" fill="rgba(37, 99, 235, 0.28)"/>
+                    <circle cx="250" cy="290" r="4" fill="rgba(37, 99, 235, 0.28)"/>
+                    <circle cx="305" cy="140" r="3.5" fill="rgba(37, 99, 235, 0.22)"/>
+                    <circle cx="195" cy="250" r="3.5" fill="rgba(37, 99, 235, 0.22)"/>
+                    <!-- Connecting elements -->
+                    <line x1="250" y1="175" x2="250" y2="105" stroke="rgba(37, 99, 235, 0.12)" stroke-width="1"/>
+                    <line x1="270" y1="195" x2="340" y2="195" stroke="rgba(37, 99, 235, 0.12)" stroke-width="1"/>
+                    <!-- Base anchors -->
+                    <circle cx="120" cy="290" r="3" fill="rgba(37, 99, 235, 0.15)"/>
+                    <circle cx="380" cy="290" r="3" fill="rgba(37, 99, 235, 0.15)"/>
+                    <!-- Subtle growth zone -->
+                    <rect x="195" y="165" width="110" height="60" rx="2" fill="rgba(37, 99, 235, 0.03)" stroke="rgba(37, 99, 235, 0.06)" stroke-width="1"/>
+                </svg>
+                </div>
                 <h1 class="service-hero__headline">Active support for active growth.</h1>
                 <p class="service-hero__description">For sites that are growing and need regular iteration &mdash; new sections, landing pages, form updates, and performance work.</p>
             </section>
