@@ -1,7 +1,7 @@
 ---
 /**
  * Bronze Care Plan — V10 care detail page.
- * Blue accent (#2563EB). Follows starter.astro pattern with care credit system.
+ * Blue accent (#2563EB) with bronze hint. Follows starter.astro pattern with care credit system.
  */
 import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
@@ -47,6 +47,7 @@ const currentYear = new Date().getFullYear();
             .service-page__spotlight { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; will-change: transform, opacity; }
             .service-page__spotlight--1 { width: 400px; height: 400px; background: rgba(37, 99, 235, 0.15); top: 10%; left: -10%; animation: organicBreathe 18s ease-in-out infinite; }
             .service-page__spotlight--2 { width: 350px; height: 350px; background: rgba(37, 99, 235, 0.12); bottom: 20%; right: -5%; animation: organicBreathe 22s ease-in-out infinite 0.5s; }
+            .service-page__spotlight--3 { width: 280px; height: 280px; background: rgba(205, 127, 50, 0.06); top: 30%; right: 10%; animation: organicBreathe 24s ease-in-out infinite 1s; }
 
             @keyframes organicBreathe {
                 0%, 100% { opacity: 0.85; transform: translate(0, 0) scale(1); }
@@ -58,7 +59,7 @@ const currentYear = new Date().getFullYear();
             .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: 0; text-decoration: none; transition: opacity var(--duration-fast) ease; }
             .service-subbrand:hover { opacity: 0.8; }
             .service-subbrand__mark { width: 32px; height: 32px; filter: brightness(0) invert(1); }
-            .service-subbrand__name { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 300; letter-spacing: 0.02em; color: var(--text); }
+            .service-subbrand__name { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 300; letter-spacing: 0.02em; color: #CD7F32; }
 
             .service-hero { padding: var(--space-sm) 0 var(--space-md); text-align: center; position: relative; z-index: 1; }
             .service-hero__headline { font-family: 'Inter', -apple-system, sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 400; line-height: 1.25; color: var(--text); max-width: 700px; margin: 0 auto var(--space-md); }
@@ -104,7 +105,7 @@ const currentYear = new Date().getFullYear();
             .service-hero__illustration-wrap::before {
                 content: ''; position: absolute; top: 50%; left: 50%; width: 90%; height: 90%;
                 transform: translate(-50%, -50%);
-                background: radial-gradient(circle, rgba(37, 99, 235, 0.5) 0%, rgba(37, 99, 235, 0) 65%);
+                background: radial-gradient(circle, rgba(37, 99, 235, 0.4) 0%, rgba(205, 127, 50, 0.15) 45%, rgba(37, 99, 235, 0) 65%);
                 filter: blur(35px); opacity: 0; pointer-events: none; z-index: 0;
                 animation: svcGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
             }
@@ -213,6 +214,7 @@ const currentYear = new Date().getFullYear();
 
     <div class="service-page__spotlight service-page__spotlight--1" aria-hidden="true"></div>
     <div class="service-page__spotlight service-page__spotlight--2" aria-hidden="true"></div>
+    <div class="service-page__spotlight service-page__spotlight--3" aria-hidden="true"></div>
 
     <main class="service-page" id="main-content">
         <div class="container">
@@ -241,12 +243,12 @@ const currentYear = new Date().getFullYear();
                     <circle cx="250" cy="200" r="45" stroke="rgba(37, 99, 235, 0.18)" stroke-width="1" fill="none"/>
                     <!-- Center core -->
                     <circle cx="250" cy="200" r="6" stroke="rgba(37, 99, 235, 0.40)" stroke-width="1.5" fill="none"/>
-                    <circle cx="250" cy="200" r="2.5" fill="rgba(37, 99, 235, 0.35)"/>
-                    <!-- 4 checkpoint nodes on orbit (representing 4 credits) -->
-                    <circle cx="330" cy="200" r="4" fill="rgba(37, 99, 235, 0.30)"/>
-                    <circle cx="250" cy="120" r="4" fill="rgba(37, 99, 235, 0.30)"/>
-                    <circle cx="170" cy="200" r="4" fill="rgba(37, 99, 235, 0.30)"/>
-                    <circle cx="250" cy="280" r="4" fill="rgba(37, 99, 235, 0.30)"/>
+                    <circle cx="250" cy="200" r="2.5" fill="rgba(205, 127, 50, 0.40)"/>
+                    <!-- 4 checkpoint nodes on orbit (representing 4 credits) — bronze tint -->
+                    <circle cx="330" cy="200" r="4" fill="rgba(205, 127, 50, 0.35)"/>
+                    <circle cx="250" cy="120" r="4" fill="rgba(205, 127, 50, 0.35)"/>
+                    <circle cx="170" cy="200" r="4" fill="rgba(205, 127, 50, 0.35)"/>
+                    <circle cx="250" cy="280" r="4" fill="rgba(205, 127, 50, 0.35)"/>
                     <!-- Connecting spokes -->
                     <line x1="250" y1="155" x2="250" y2="125" stroke="rgba(37, 99, 235, 0.15)" stroke-width="1"/>
                     <line x1="285" y1="200" x2="325" y2="200" stroke="rgba(37, 99, 235, 0.15)" stroke-width="1"/>
