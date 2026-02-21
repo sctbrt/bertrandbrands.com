@@ -57,6 +57,12 @@ const effectiveOgDescription = ogDescription || description;
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Bertrand Brands | Brand & Web Systems" />
 
+  {/* Twitter / X Card */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={effectiveOgTitle} />
+  {effectiveOgDescription && <meta name="twitter:description" content={effectiveOgDescription} />}
+  <meta name="twitter:image" content={ogImage} />
+
   {/* Favicon & Touch Icons */}
   <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -70,6 +76,11 @@ const effectiveOgDescription = ogDescription || description;
     <script type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
   )}
 
+  {/* Third-party preconnect */}
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+  <link rel="dns-prefetch" href="https://formspree.io" />
+
   {/* Google Ads + GA4 conversion tracking — global on all pages */}
   <script is:inline src="https://www.googletagmanager.com/gtag/js?id=AW-17925090292" async></script>
   <script is:inline>
@@ -77,8 +88,8 @@ const effectiveOgDescription = ogDescription || description;
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'AW-17925090292');
-    /* GA4 — property ID not yet configured; uncomment when ready */
-    /* gtag('config', 'G-XXXXXXXXXX'); */
+    /* GA4 Analytics */
+    gtag('config', 'G-CFMDTBXNV7');
 
     /* Unified conversion helper — fires both GA4 + Google Ads events */
     window.bbConvert = function(type, label, value) {
@@ -159,6 +170,20 @@ const effectiveOgDescription = ogDescription || description;
       var numberEl = document.getElementById('phoneModalNumber');
       if (!backdrop) return;
 
+      var triggerEl = null;
+
+      function trapFocus(e) {
+        if (e.key !== 'Tab') return;
+        var focusable = backdrop.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+
       function show(number) {
         var clean = number.replace(/^tel:\+?1?/, '').replace(/\D/g, '');
         var formatted = clean.length === 10
@@ -170,11 +195,15 @@ const effectiveOgDescription = ogDescription || description;
         copyBtn.classList.remove('is-copied');
         backdrop.classList.add('is-visible');
         backdrop.setAttribute('aria-hidden', 'false');
+        closeBtn.focus();
+        backdrop.addEventListener('keydown', trapFocus);
       }
 
       function hide() {
         backdrop.classList.remove('is-visible');
         backdrop.setAttribute('aria-hidden', 'true');
+        backdrop.removeEventListener('keydown', trapFocus);
+        if (triggerEl) { triggerEl.focus(); triggerEl = null; }
       }
 
       document.addEventListener('click', function(e) {
@@ -182,6 +211,7 @@ const effectiveOgDescription = ogDescription || description;
         if (!link) return;
         if (window.matchMedia('(min-width: 769px)').matches && !('ontouchstart' in window)) {
           e.preventDefault();
+          triggerEl = link;
           show(link.getAttribute('href'));
         }
       });

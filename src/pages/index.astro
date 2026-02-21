@@ -1237,18 +1237,42 @@ const schemaJson = {
           var lightbox = document.getElementById('founderLightbox');
           if (!lightbox) return;
 
+          var triggerEl = null;
+          var content = lightbox.querySelector('.founder-lightbox__content');
+          var closeBtn = lightbox.querySelector('.founder-lightbox__close');
+
+          function trapFocus(e) {
+              if (e.key !== 'Tab') return;
+              var focusable = content.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+              if (!focusable.length) return;
+              var first = focusable[0];
+              var last = focusable[focusable.length - 1];
+              if (e.shiftKey) {
+                  if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+              } else {
+                  if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+              }
+          }
+
           function openLightbox() {
               lightbox.classList.add('is-open');
               document.body.style.overflow = 'hidden';
+              if (closeBtn) closeBtn.focus();
+              lightbox.addEventListener('keydown', trapFocus);
           }
 
           function closeLightbox() {
               lightbox.classList.remove('is-open');
               document.body.style.overflow = '';
+              lightbox.removeEventListener('keydown', trapFocus);
+              if (triggerEl) { triggerEl.focus(); triggerEl = null; }
           }
 
           document.querySelectorAll('[data-founder-trigger]').forEach(function(el) {
-              el.addEventListener('click', openLightbox);
+              el.addEventListener('click', function() {
+                  triggerEl = el;
+                  openLightbox();
+              });
           });
 
           document.querySelectorAll('[data-founder-close]').forEach(function(el) {

@@ -125,8 +125,9 @@ import GesturePrevention from '../components/GesturePrevention.astro';
     {/* Fire conversion on page load — uses bbConvert() for consistent GA4 + Ads tracking */}
     <script is:inline>
       document.addEventListener('DOMContentLoaded', function() {
-        if (typeof bbConvert === 'function') {
+        if (typeof bbConvert === 'function' && !sessionStorage.getItem('bb_thanks_fired')) {
           bbConvert('form_submit', 'contact_form');
+          sessionStorage.setItem('bb_thanks_fired', '1');
         }
       });
     </script>

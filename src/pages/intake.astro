@@ -1034,7 +1034,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                         })
                     }).catch(function() {});
 
-                    document.cookie = 'bb_intake_completed=1; path=/; max-age=86400; SameSite=Lax';
+                    document.cookie = 'bb_intake_completed=1; path=/; max-age=86400; domain=.bertrandgroup.ca; secure; samesite=lax';
 
                 } else {
                     throw new Error('Submission failed');
