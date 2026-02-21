@@ -159,6 +159,61 @@ const currentYear = new Date().getFullYear();
             .service-footer__phone a { color: var(--text-muted); text-decoration: none; }
             .service-footer__phone a:hover { color: var(--text); }
 
+            .care-page__header { position: relative; }
+            .care-illustration-wrap {
+                position: relative; display: block; margin: 0 auto 0.5rem; width: clamp(240px, 42vw, 400px);
+            }
+            .care-illustration-wrap::after {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 130%; height: 130%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 60%);
+                filter: blur(50px); pointer-events: none; z-index: 0;
+            }
+            .care-illustration-wrap::before {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 90%; height: 90%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(37, 99, 235, 0.5) 0%, rgba(37, 99, 235, 0) 65%);
+                filter: blur(35px); opacity: 0; pointer-events: none; z-index: 0;
+                animation: careGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
+            }
+            .care-illustration {
+                position: relative; z-index: 1; display: block; width: 100%; height: auto; pointer-events: none;
+                opacity: 0; transform: scale(0.92);
+                animation: careFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+            }
+            .care-illustration line,
+            .care-illustration path,
+            .care-illustration circle,
+            .care-illustration ellipse,
+            .care-illustration rect {
+                stroke-dasharray: 800; stroke-dashoffset: 800;
+                animation: careLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+            }
+            .care-illustration circle[fill]:not([fill="none"]),
+            .care-illustration rect[fill]:not([fill="none"]),
+            .care-illustration ellipse[fill]:not([fill="none"]) {
+                opacity: 0; animation: careLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards, careFillReveal 1s ease 1.4s forwards;
+            }
+            @keyframes careGlowPulse {
+                0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+                30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+                100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            }
+            @keyframes careFadeIn {
+                0%   { opacity: 0; transform: scale(0.92); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes careLineDraw {
+                0%   { stroke-dashoffset: 800; }
+                100% { stroke-dashoffset: 0; }
+            }
+            @keyframes careFillReveal {
+                0%   { opacity: 0; }
+                100% { opacity: 1; }
+            }
+            @media (max-width: 900px) { .care-illustration-wrap { width: clamp(200px, 50vw, 320px); } }
+            @media (max-width: 480px) { .care-illustration-wrap { width: clamp(130px, 38vw, 180px); } }
+
             @media (max-width: 768px) {
                 .service-page__spotlight { filter: blur(40px); }
                 .service-page__spotlight--1 { width: 200px; height: 200px; }
@@ -175,6 +230,7 @@ const currentYear = new Date().getFullYear();
                 .care-plan__price { font-size: var(--text-2xl); }
                 .care-phone__number { font-size: var(--text-3xl); }
                 .service-back { font-size: var(--text-sm); margin-bottom: 0.5rem; padding: 0.5rem 0; min-height: 44px; }
+                .care-illustration-wrap { width: clamp(160px, 40vw, 240px); }
             }
             @media (max-width: 480px) {
                 .care-plan { padding: var(--space-sm); }
@@ -182,6 +238,15 @@ const currentYear = new Date().getFullYear();
                 .care-plan__price { font-size: var(--text-xl); }
                 .care-credit { padding: var(--space-sm); }
                 .care-phone__number { font-size: var(--text-2xl); }
+                .care-illustration-wrap { width: clamp(130px, 38vw, 180px); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .service-page__spotlight { animation: none !important; }
+                .care-illustration-wrap::before { animation: none; opacity: 0.6; }
+                .care-illustration { animation: none; opacity: 1; transform: none; }
+                .care-illustration line, .care-illustration path,
+                .care-illustration circle, .care-illustration ellipse,
+                .care-illustration rect { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 1; }
             }
         </style>
     </Fragment>
@@ -202,6 +267,56 @@ const currentYear = new Date().getFullYear();
                     <img src="/assets/bg-brands-logomark.png" alt="" class="care-page__subbrand-mark" width="40" height="40">
                     <span class="care-page__subbrand-name">Care</span>
                 </a>
+
+                <div class="care-illustration-wrap">
+                <svg class="care-illustration" viewBox="20 20 460 360" fill="none" aria-hidden="true">
+                    <!-- Grid -->
+                    <line x1="50" y1="200" x2="450" y2="200" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+                    <line x1="250" y1="40" x2="250" y2="370" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+
+                    <!-- Protective shield arc -->
+                    <path d="M 100 300 Q 100 80 250 60 Q 400 80 400 300" stroke="rgba(37, 99, 235, 0.40)" stroke-width="2" fill="none"/>
+                    <!-- Inner shield arc -->
+                    <path d="M 140 280 Q 140 120 250 100 Q 360 120 360 280" stroke="rgba(37, 99, 235, 0.25)" stroke-width="1.5" fill="none"/>
+
+                    <!-- Cycling refresh arcs (continuous support) -->
+                    <path d="M 200 200 A 50 50 0 0 1 300 200" stroke="rgba(37, 99, 235, 0.35)" stroke-width="1.5" fill="none"/>
+                    <path d="M 300 200 A 50 50 0 0 1 200 200" stroke="rgba(37, 99, 235, 0.20)" stroke-width="1.5" fill="none" stroke-dasharray="4 6"/>
+
+                    <!-- Arrow tips on refresh arcs -->
+                    <path d="M 295 192 L 300 200 L 292 204" stroke="rgba(37, 99, 235, 0.40)" stroke-width="1.5" fill="none"/>
+                    <path d="M 205 208 L 200 200 L 208 196" stroke="rgba(37, 99, 235, 0.25)" stroke-width="1.5" fill="none"/>
+
+                    <!-- Central core -->
+                    <circle cx="250" cy="200" r="20" stroke="rgba(37, 99, 235, 0.30)" stroke-width="1.5"/>
+                    <circle cx="250" cy="200" r="10" stroke="rgba(37, 99, 235, 0.45)" stroke-width="2"/>
+                    <circle cx="250" cy="200" r="3.5" fill="rgba(37, 99, 235, 0.55)"/>
+
+                    <!-- Shield apex -->
+                    <circle cx="250" cy="60" r="6" stroke="rgba(37, 99, 235, 0.35)" stroke-width="1.5"/>
+                    <circle cx="250" cy="60" r="2.5" fill="rgba(37, 99, 235, 0.45)"/>
+
+                    <!-- Shield base nodes -->
+                    <circle cx="100" cy="300" r="4" stroke="rgba(37, 99, 235, 0.25)" stroke-width="1"/>
+                    <circle cx="400" cy="300" r="4" stroke="rgba(37, 99, 235, 0.25)" stroke-width="1"/>
+
+                    <!-- Pulse rings (ongoing monitoring) -->
+                    <circle cx="250" cy="200" r="70" stroke="rgba(37, 99, 235, 0.08)" stroke-width="1" stroke-dasharray="6 8"/>
+                    <circle cx="250" cy="200" r="100" stroke="rgba(37, 99, 235, 0.05)" stroke-width="1" stroke-dasharray="4 10"/>
+
+                    <!-- Support connection lines -->
+                    <line x1="250" y1="60" x2="250" y2="180" stroke="rgba(37, 99, 235, 0.15)" stroke-width="1" stroke-dasharray="3 5"/>
+                    <line x1="140" y1="200" x2="230" y2="200" stroke="rgba(37, 99, 235, 0.12)" stroke-width="1" stroke-dasharray="3 5"/>
+                    <line x1="270" y1="200" x2="360" y2="200" stroke="rgba(37, 99, 235, 0.12)" stroke-width="1" stroke-dasharray="3 5"/>
+
+                    <!-- Waypoint nodes on shield -->
+                    <circle cx="150" cy="150" r="2.5" fill="rgba(37, 99, 235, 0.30)"/>
+                    <circle cx="350" cy="150" r="2.5" fill="rgba(37, 99, 235, 0.30)"/>
+                    <circle cx="125" cy="230" r="2" fill="rgba(37, 99, 235, 0.22)"/>
+                    <circle cx="375" cy="230" r="2" fill="rgba(37, 99, 235, 0.22)"/>
+                </svg>
+                </div>
+
                 <h1 class="care-page__title">Ongoing support after launch.</h1>
                 <p class="care-page__subtitle">Scoped monthly plans with defined credits. Not hourly, not open-ended. You know exactly what you get.</p>
             </div>

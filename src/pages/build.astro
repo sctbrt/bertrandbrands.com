@@ -122,6 +122,7 @@ const currentYear = new Date().getFullYear();
                 .service-page__spotlight--2 { width: 200px; height: 200px; }
                 .service-page .container { padding: 0 0.75rem; }
                 .service-hero { padding: var(--space-xs) 1rem var(--space-sm); }
+                .service-hero__illustration-wrap { width: clamp(160px, 40vw, 240px); }
                 .service-hero__headline { font-size: clamp(1.25rem, 4.5vw, 1.75rem); margin-bottom: 0.75rem; max-width: 100%; }
                 .service-hero__description { font-size: var(--text-xs); line-height: 1.5; max-width: 100%; }
                 .service-subbrand__name { font-size: var(--text-xl); }
@@ -139,6 +140,7 @@ const currentYear = new Date().getFullYear();
                 .service-footer { padding: var(--space-md) 0; }
             }
             @media (max-width: 480px) {
+                .service-hero__illustration-wrap { width: clamp(130px, 38vw, 180px); }
                 .service-card { padding: 1rem; }
                 .service-hero__headline { font-size: clamp(1.125rem, 4.5vw, 1.375rem); margin-bottom: 0.5rem; }
                 .service-hero__description { font-size: 0.6875rem; line-height: 1.5; }
@@ -152,8 +154,70 @@ const currentYear = new Date().getFullYear();
                 .service-subbrand { gap: 0.375rem; }
                 .service-hero { padding: 0.25rem 0.75rem 0.5rem; }
             }
+            .service-hero { position: relative; }
+            .service-hero__illustration-wrap {
+                position: relative; display: block; margin: 0 auto 0.5rem; width: clamp(240px, 42vw, 400px);
+            }
+            .service-hero__illustration-wrap::after {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 130%; height: 130%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 60%);
+                filter: blur(50px); pointer-events: none; z-index: 0;
+            }
+            .service-hero__illustration-wrap::before {
+                content: ''; position: absolute; top: 50%; left: 50%; width: 90%; height: 90%;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(circle, rgba(217, 119, 6, 0.5) 0%, rgba(217, 119, 6, 0) 65%);
+                filter: blur(35px); opacity: 0; pointer-events: none; z-index: 0;
+                animation: svcGlowPulse 3s cubic-bezier(0.33, 1, 0.68, 1) 0.1s forwards;
+            }
+            .service-hero__illustration {
+                position: relative; z-index: 1; display: block; width: 100%; height: auto; pointer-events: none;
+                opacity: 0; transform: scale(0.92);
+                animation: svcFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+            }
+            .service-hero__illustration line,
+            .service-hero__illustration path,
+            .service-hero__illustration rect,
+            .service-hero__illustration circle,
+            .service-hero__illustration ellipse,
+            .service-hero__illustration polygon {
+                stroke-dasharray: 800; stroke-dashoffset: 800;
+                animation: svcLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+            }
+            .service-hero__illustration circle[fill]:not([fill="none"]),
+            .service-hero__illustration rect[fill]:not([fill="none"]),
+            .service-hero__illustration ellipse[fill]:not([fill="none"]),
+            .service-hero__illustration polygon[fill]:not([fill="none"]) {
+                opacity: 0; animation: svcLineDraw 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards, svcFillReveal 1s ease 1.4s forwards;
+            }
+            @keyframes svcGlowPulse {
+                0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+                30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+                100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            }
+            @keyframes svcFadeIn {
+                0%   { opacity: 0; transform: scale(0.92); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes svcLineDraw {
+                0%   { stroke-dashoffset: 800; }
+                100% { stroke-dashoffset: 0; }
+            }
+            @keyframes svcFillReveal {
+                0%   { opacity: 0; }
+                100% { opacity: 1; }
+            }
+            @media (max-width: 900px) { .service-hero__illustration-wrap { width: clamp(200px, 50vw, 320px); } }
+            @media (max-width: 480px) { .service-hero__illustration-wrap { width: clamp(130px, 38vw, 180px); } }
+
             @media (prefers-reduced-motion: reduce) {
                 .service-page__spotlight { animation: none !important; }
+                .service-hero__illustration-wrap::before { animation: none; opacity: 0.6; }
+                .service-hero__illustration { animation: none; opacity: 1; transform: none; }
+                .service-hero__illustration line, .service-hero__illustration path,
+                .service-hero__illustration rect, .service-hero__illustration circle,
+                .service-hero__illustration ellipse, .service-hero__illustration polygon { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 1; }
             }
         </style>
     </Fragment>
@@ -174,6 +238,55 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <section class="service-hero">
+                <div class="service-hero__illustration-wrap">
+                <svg class="service-hero__illustration" viewBox="20 20 460 360" fill="none" aria-hidden="true">
+                    <!-- Grid -->
+                    <line x1="50" y1="200" x2="450" y2="200" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+                    <line x1="250" y1="40" x2="250" y2="370" stroke="rgba(255, 255, 255, 0.03)" stroke-width="1"/>
+                    <line x1="150" y1="40" x2="150" y2="370" stroke="rgba(255, 255, 255, 0.02)" stroke-width="1" stroke-dasharray="2 12"/>
+                    <line x1="350" y1="40" x2="350" y2="370" stroke="rgba(255, 255, 255, 0.02)" stroke-width="1" stroke-dasharray="2 12"/>
+
+                    <!-- Foundation baseline -->
+                    <line x1="80" y1="320" x2="420" y2="320" stroke="rgba(217, 119, 6, 0.20)" stroke-width="1.5"/>
+
+                    <!-- Rising framework columns -->
+                    <line x1="120" y1="320" x2="120" y2="220" stroke="rgba(217, 119, 6, 0.40)" stroke-width="2"/>
+                    <line x1="250" y1="320" x2="250" y2="140" stroke="rgba(217, 119, 6, 0.50)" stroke-width="2"/>
+                    <line x1="380" y1="320" x2="380" y2="180" stroke="rgba(217, 119, 6, 0.45)" stroke-width="2"/>
+
+                    <!-- Cross beams -->
+                    <line x1="120" y1="220" x2="250" y2="180" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
+                    <line x1="250" y1="180" x2="380" y2="200" stroke="rgba(217, 119, 6, 0.25)" stroke-width="1.5"/>
+                    <line x1="120" y1="260" x2="380" y2="260" stroke="rgba(217, 119, 6, 0.12)" stroke-width="1" stroke-dasharray="4 6"/>
+
+                    <!-- Upward trajectory -->
+                    <path d="M 80 300 Q 200 180 420 80" stroke="rgba(217, 119, 6, 0.35)" stroke-width="1.5" fill="none"/>
+
+                    <!-- Node joints -->
+                    <circle cx="120" cy="220" r="5" stroke="rgba(217, 119, 6, 0.40)" stroke-width="1.5"/>
+                    <circle cx="120" cy="220" r="2" fill="rgba(217, 119, 6, 0.50)"/>
+                    <circle cx="250" cy="140" r="6" stroke="rgba(217, 119, 6, 0.45)" stroke-width="1.5"/>
+                    <circle cx="250" cy="140" r="2.5" fill="rgba(217, 119, 6, 0.55)"/>
+                    <circle cx="380" cy="180" r="5" stroke="rgba(217, 119, 6, 0.40)" stroke-width="1.5"/>
+                    <circle cx="380" cy="180" r="2" fill="rgba(217, 119, 6, 0.50)"/>
+
+                    <!-- Base anchors -->
+                    <circle cx="120" cy="320" r="3" fill="rgba(217, 119, 6, 0.30)"/>
+                    <circle cx="250" cy="320" r="3" fill="rgba(217, 119, 6, 0.30)"/>
+                    <circle cx="380" cy="320" r="3" fill="rgba(217, 119, 6, 0.30)"/>
+
+                    <!-- Target marker (top of trajectory) -->
+                    <circle cx="420" cy="80" r="8" stroke="rgba(217, 119, 6, 0.30)" stroke-width="1"/>
+                    <circle cx="420" cy="80" r="3" fill="rgba(217, 119, 6, 0.45)"/>
+
+                    <!-- Construction arcs -->
+                    <path d="M 120 320 Q 185 250 250 180" stroke="rgba(217, 119, 6, 0.08)" stroke-width="1" stroke-dasharray="2 8" fill="none"/>
+                    <path d="M 250 320 Q 315 230 380 200" stroke="rgba(217, 119, 6, 0.08)" stroke-width="1" stroke-dasharray="2 8" fill="none"/>
+
+                    <!-- Subtle filled zone -->
+                    <rect x="200" y="180" width="100" height="80" rx="2" fill="rgba(217, 119, 6, 0.03)" stroke="rgba(217, 119, 6, 0.06)" stroke-width="1"/>
+                </svg>
+                </div>
                 <h1 class="service-hero__headline">Quick Builds</h1>
                 <p class="service-hero__description">Fast-launch websites for businesses that need to get live, look credible, and start converting.</p>
             </section>
