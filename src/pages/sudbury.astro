@@ -355,12 +355,29 @@ const currentYear = new Date().getFullYear();
                 background: var(--accent-hover);
                 transform: translateY(-1px);
             }
-            .sb-hero__microcopy {
+            .sb-hero__or {
                 font-family: var(--font-body);
-                font-size: var(--text-xs);
+                font-size: var(--text-2xs);
                 font-weight: 400;
                 color: var(--text-subtle);
-                margin-top: var(--space-xs);
+                margin: 0.125rem 0;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+            }
+            .sb-hero__phone {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                font-weight: 400;
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color var(--duration-fast) ease;
+            }
+            .sb-hero__phone:hover {
+                color: var(--text);
+            }
+            .sb-hero__phone-number {
+                color: var(--text);
+                font-weight: 500;
             }
             .sb-hero__secondary {
                 font-family: var(--font-body);
@@ -862,6 +879,43 @@ const currentYear = new Date().getFullYear();
                 display: contents;
             }
 
+            /* ---- Phone Alternative (below form) ---- */
+            .sb-form__phone-alt {
+                margin-top: var(--space-lg);
+                padding-top: var(--space-md);
+                border-top: 1px solid var(--border);
+                text-align: center;
+                max-width: 480px;
+            }
+            .sb-form__phone-alt-text {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                font-weight: 400;
+                color: var(--text-muted);
+                margin-bottom: 0.375rem;
+            }
+            .sb-form__phone-alt-link {
+                font-family: var(--font-body);
+                font-size: var(--text-lg);
+                font-weight: 500;
+                color: var(--text);
+                text-decoration: none;
+                transition: color var(--duration-fast) ease;
+            }
+            .sb-form__phone-alt-link:hover {
+                color: var(--accent);
+            }
+            .sb-form__phone-alt-number {
+                white-space: nowrap;
+            }
+            .sb-form__phone-alt-sub {
+                font-family: var(--font-body);
+                font-size: var(--text-xs);
+                font-weight: 400;
+                color: var(--text-subtle);
+                margin-top: 0.375rem;
+            }
+
             /* Honeypot */
             .form-honeypot {
                 position: absolute;
@@ -993,7 +1047,7 @@ const currentYear = new Date().getFullYear();
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: var(--space-sm);
+                gap: 0.625rem;
             }
             .sb-sticky__cta {
                 display: inline-block;
@@ -1007,16 +1061,29 @@ const currentYear = new Date().getFullYear();
                 text-decoration: none;
                 transition: background var(--duration-fast) ease;
                 white-space: nowrap;
+                flex: 1;
+                text-align: center;
             }
             .sb-sticky__cta:hover {
                 background: var(--accent-hover);
             }
-            .sb-sticky__sub {
+            .sb-sticky__phone {
+                display: inline-block;
+                background: transparent;
+                color: var(--text);
                 font-family: var(--font-body);
-                font-size: var(--text-xs);
-                font-weight: 400;
-                color: var(--text-subtle);
+                font-size: var(--text-sm);
+                font-weight: 500;
+                padding: 0.625rem 1.25rem;
+                border-radius: 6px;
+                border: 1px solid var(--border);
+                text-decoration: none;
+                transition: border-color var(--duration-fast) ease;
                 white-space: nowrap;
+                text-align: center;
+            }
+            .sb-sticky__phone:hover {
+                border-color: var(--text-subtle);
             }
             @media (min-width: 769px) {
                 .sb-sticky {
@@ -1051,7 +1118,7 @@ const currentYear = new Date().getFullYear();
 
     <SkipLink />
 
-    <HeaderMinimal variant="standard" ctaText="Get started &rarr;" ctaHref="#get-started" />
+    <HeaderMinimal variant="standard" ctaText="Get started &rarr;" ctaHref="#get-started" showPhone={true} />
 
     <main id="main-content">
         <!-- Hero -->
@@ -1065,7 +1132,8 @@ const currentYear = new Date().getFullYear();
                 <p class="sb-hero__subhead">It&rsquo;s not broken. It&rsquo;s unclear, outdated, or not doing its job. We fix websites so they&rsquo;re clear, trustworthy, and built to convert.</p>
                 <div class="sb-hero__actions">
                     <a href="#get-started" class="sb-hero__cta">Get started &rarr;</a>
-                    <p class="sb-hero__microcopy">No sales calls. We confirm next steps within 1 business day.</p>
+                    <p class="sb-hero__or">or</p>
+                    <a href="tel:+17054133705" class="sb-hero__phone">Prefer to talk it out? Call <span class="sb-hero__phone-number">(705) 413-3705</span></a>
                     <a href="#pricing" class="sb-hero__secondary">See pricing &darr;</a>
                 </div>
             </div>
@@ -1103,15 +1171,15 @@ const currentYear = new Date().getFullYear();
                     <div class="sb-hiw__step">
                         <span class="sb-hiw__num">1</span>
                         <div>
-                            <h3 class="sb-hiw__heading">Submit your details</h3>
-                            <p class="sb-hiw__desc">Tell us what&rsquo;s not working and which service you&rsquo;re interested in.</p>
+                            <h3 class="sb-hiw__heading">Tell us what you need</h3>
+                            <p class="sb-hiw__desc">Fill out the form below or call us. We&rsquo;ll collect your details either way.</p>
                         </div>
                     </div>
                     <div class="sb-hiw__step">
                         <span class="sb-hiw__num">2</span>
                         <div>
                             <h3 class="sb-hiw__heading">We confirm scope</h3>
-                            <p class="sb-hiw__desc">We review availability, confirm access, and outline next steps.</p>
+                            <p class="sb-hiw__desc">We&rsquo;ll outline what&rsquo;s included, confirm the timeline, and answer any questions.</p>
                         </div>
                     </div>
                     <div class="sb-hiw__step">
@@ -1125,60 +1193,11 @@ const currentYear = new Date().getFullYear();
             </div>
         </section>
 
-        <!-- Trust Strip -->
-        <section class="sb-trust sb-fade">
-            <div class="sb-container">
-                <div class="sb-trust__card">
-                    <h2 class="sb-trust__title">What clients usually come to us for</h2>
-                    <ul class="sb-trust__list">
-                        <li class="sb-trust__item">Confusing or unclear websites</li>
-                        <li class="sb-trust__item">Outdated design that doesn&rsquo;t build trust</li>
-                        <li class="sb-trust__item">Sites that aren&rsquo;t bringing in leads</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Local SEO Content -->
-        <section class="sb-local sb-fade" id="about" aria-label="About Bertrand Brands in Sudbury">
-            <div class="sb-container">
-                <div class="sb-local__card">
-                    <h2 class="sb-local__title">Website and brand help for Sudbury businesses</h2>
-                    <div class="sb-local__content">
-                        <p>Bertrand Brands is a web and brand studio based in Greater Sudbury, Ontario. We help small businesses across Sudbury and Northern Ontario fix, rebuild, or launch websites that actually work: clear structure, honest messaging, and a design that earns trust.</p>
-                        <p>Whether you need a quick website fix, a full site redesign, or a brand identity built from scratch, every project has a fixed price and a clear timeline. No hourly billing, no open-ended scope. Most work is delivered in 5&ndash;10 business days.</p>
-                        <p>If your current site is outdated, confusing, or not bringing in leads, we can help. Sudbury businesses deserve web work that&rsquo;s straightforward and well-built, not overpriced and overcomplicated.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Other Services -->
-        <section class="sb-other sb-fade">
-            <div class="sb-container">
-                <p class="sb-other__intro">Need more than a starter site?</p>
-                <div class="sb-other__grid">
-                    <a href="#get-started" class="sb-other__card tier-card tier-card--transform tier-card--compact">
-                        <h3 class="sb-other__name">Website Foundation + Growth System</h3>
-                        <p class="sb-other__timeline">4&ndash;8 weeks</p>
-                        <p class="sb-other__desc">Full website rebuild with content strategy, conversion UX, and growth playbook.</p>
-                        <span class="sb-other__arrow">Get started &rarr;</span>
-                    </a>
-                    <a href="#get-started" class="sb-other__card tier-card tier-card--care tier-card--compact">
-                        <h3 class="sb-other__name">Bronze Care Plan</h3>
-                        <p class="sb-other__timeline">$249/mo</p>
-                        <p class="sb-other__desc">Monthly website maintenance. 4 credits, 3&ndash;5 day turnaround.</p>
-                        <span class="sb-other__arrow">Get started &rarr;</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
         <!-- Get Started Form -->
         <section class="sb-form" id="get-started">
             <div class="sb-container">
                 <h2 class="sb-form__title">Get started</h2>
-                <p class="sb-form__subhead">Send your details. We&rsquo;ll confirm availability and next steps within 1 business day.</p>
+                <p class="sb-form__subhead">Tell us what you need. We&rsquo;ll confirm scope and next steps within 1 business day.</p>
 
                 <form class="sb-form__form" action="https://formspree.io/f/xnjjgoay" method="POST" id="sudburyForm">
                     <input type="hidden" name="source" value="sudbury_focus_studio">
@@ -1234,6 +1253,61 @@ const currentYear = new Date().getFullYear();
 
                     <div class="sb-form__feedback" id="formFeedback"></div>
                 </form>
+
+                <div class="sb-form__phone-alt">
+                    <p class="sb-form__phone-alt-text">Prefer to talk it out?</p>
+                    <a href="tel:+17054133705" class="sb-form__phone-alt-link">Call <span class="sb-form__phone-alt-number">(705) 413-3705</span></a>
+                    <p class="sb-form__phone-alt-sub">We&rsquo;ll collect your details over the phone instead.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Strip -->
+        <section class="sb-trust sb-fade">
+            <div class="sb-container">
+                <div class="sb-trust__card">
+                    <h2 class="sb-trust__title">What clients usually come to us for</h2>
+                    <ul class="sb-trust__list">
+                        <li class="sb-trust__item">Confusing or unclear websites</li>
+                        <li class="sb-trust__item">Outdated design that doesn&rsquo;t build trust</li>
+                        <li class="sb-trust__item">Sites that aren&rsquo;t bringing in leads</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other Services -->
+        <section class="sb-other sb-fade">
+            <div class="sb-container">
+                <p class="sb-other__intro">Need more than a starter site?</p>
+                <div class="sb-other__grid">
+                    <a href="#get-started" class="sb-other__card tier-card tier-card--transform tier-card--compact">
+                        <h3 class="sb-other__name">Website Foundation + Growth System</h3>
+                        <p class="sb-other__timeline">4&ndash;8 weeks</p>
+                        <p class="sb-other__desc">Full website rebuild with content strategy, conversion UX, and growth playbook.</p>
+                        <span class="sb-other__arrow">Get started &rarr;</span>
+                    </a>
+                    <a href="#get-started" class="sb-other__card tier-card tier-card--care tier-card--compact">
+                        <h3 class="sb-other__name">Bronze Care Plan</h3>
+                        <p class="sb-other__timeline">$249/mo</p>
+                        <p class="sb-other__desc">Monthly website maintenance. 4 credits, 3&ndash;5 day turnaround.</p>
+                        <span class="sb-other__arrow">Get started &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Local SEO Content -->
+        <section class="sb-local sb-fade" id="about" aria-label="About Bertrand Brands in Sudbury">
+            <div class="sb-container">
+                <div class="sb-local__card">
+                    <h2 class="sb-local__title">Website and brand help for Sudbury businesses</h2>
+                    <div class="sb-local__content">
+                        <p>Bertrand Brands is a web and brand studio based in Greater Sudbury, Ontario. We help small businesses across Sudbury and Northern Ontario fix, rebuild, or launch websites that actually work: clear structure, honest messaging, and a design that earns trust.</p>
+                        <p>Whether you need a quick website fix, a full site redesign, or a brand identity built from scratch, every project has a fixed price and a clear timeline. No hourly billing, no open-ended scope. Most work is delivered in 5&ndash;10 business days.</p>
+                        <p>If your current site is outdated, confusing, or not bringing in leads, we can help. Sudbury businesses deserve web work that&rsquo;s straightforward and well-built, not overpriced and overcomplicated.</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -1243,7 +1317,7 @@ const currentYear = new Date().getFullYear();
         <div class="sb-container">
             <div class="sb-footer__trust">
                 <p class="sb-footer__location">Based in Greater Sudbury, Ontario.<br>Serving Northern Ontario &amp; Canada.</p>
-                <p class="sb-footer__privacy">Your information is only used to respond to your request.</p>
+                <p class="sb-footer__privacy">Questions? <a href="tel:+17054133705" style="color: inherit;">Call (705) 413-3705</a> or fill out the form above.</p>
             </div>
             <div class="sb-footer__bottom">
                 <p class="sb-footer__copy">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
@@ -1261,7 +1335,7 @@ const currentYear = new Date().getFullYear();
     <div class="sb-sticky" id="stickyCta" aria-hidden="true">
         <div class="sb-sticky__inner">
             <a href="#get-started" class="sb-sticky__cta">Get started &rarr;</a>
-            <p class="sb-sticky__sub">Response within 1 business day</p>
+            <a href="tel:+17054133705" class="sb-sticky__phone" title="Call Bertrand Brands">Call us</a>
         </div>
     </div>
 

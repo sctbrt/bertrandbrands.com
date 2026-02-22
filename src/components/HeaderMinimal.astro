@@ -16,6 +16,7 @@ interface Props {
     ctaText?: string;
     ctaHref?: string;
     variant?: 'standard' | 'ad';
+    showPhone?: boolean;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
     ctaText = 'Get started \u2192',
     ctaHref = '#get-started',
     variant = 'standard',
+    showPhone = false,
 } = Astro.props;
 ---
 
@@ -54,7 +56,12 @@ const {
                     </span>
                 </a>
                 {!centered && (
-                    <a href={ctaHref} style="font-family: var(--font-body); font-size: var(--text-sm); font-weight: 400; color: var(--text-muted); letter-spacing: 0.02em; text-decoration: none; transition: color 0.3s ease;">{ctaText}</a>
+                    <div style="display: flex; align-items: center; gap: 1.25rem;">
+                        {showPhone && (
+                            <a href="tel:+17054133705" class="header-minimal__phone" style="font-family: var(--font-body); font-size: var(--text-xs); font-weight: 400; color: var(--text-subtle); text-decoration: none; transition: color 0.3s ease; white-space: nowrap;">(705) 413-3705</a>
+                        )}
+                        <a href={ctaHref} style="font-family: var(--font-body); font-size: var(--text-sm); font-weight: 400; color: var(--text-muted); letter-spacing: 0.02em; text-decoration: none; transition: color 0.3s ease;">{ctaText}</a>
+                    </div>
                 )}
             </div>
         </div>
