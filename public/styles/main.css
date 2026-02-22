@@ -1282,6 +1282,14 @@
             .header__nav .header__divider {
                 display: none;
             }
+            /* Suppress blocky focus outline in mobile menu — use text color instead */
+            .header__nav .header__link:focus-visible {
+                outline: none;
+                color: var(--text);
+            }
+            .header__nav .header__link--cta:focus-visible {
+                color: var(--accent-hover);
+            }
         }
 
         /* Mobile menu toggle */
