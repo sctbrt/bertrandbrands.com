@@ -7143,6 +7143,28 @@
     .tier-group__name {
         font-size: var(--text-lg);
     }
+
+    /* --- Services intro proportioning (mobile) --- */
+    #packages .section__header {
+        margin-bottom: 1.25rem;
+    }
+    .intake-prompt {
+        padding: 1.25rem 1rem;
+        margin-bottom: 2rem;
+    }
+    .intake-prompt__text {
+        margin-bottom: 0.75rem;
+        font-size: var(--text-sm);
+    }
+    .intake-prompt__footer {
+        margin-top: 0.75rem;
+        padding-top: 0.625rem;
+        gap: 0.5rem;
+    }
+    .intake-prompt__phone-link,
+    .intake-prompt__cta {
+        font-size: var(--text-xs);
+    }
 }
 
 /* Touch devices: no hover lift on offer cards */
@@ -7476,7 +7498,16 @@
         min-width: 0;
         -webkit-flex: none;
         flex: none;
-        margin: 0.25rem 0;
+        margin: 0.1875rem 0;
+        padding: 0.625rem 0.875rem;
+    }
+
+    .tier-selector__label {
+        font-size: var(--text-sm);
+    }
+
+    .tier-selector__sub {
+        font-size: 0.625rem;
     }
 }
 
