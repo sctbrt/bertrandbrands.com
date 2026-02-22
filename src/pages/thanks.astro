@@ -2,9 +2,11 @@
 /**
  * Thanks — Formspree redirect confirmation page.
  * Self-contained page with inline styles. Does not use main.css.
+ * Matches confirmation page pattern: HeaderTierBadge + cross-sell + back link.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SkipLink from '../components/SkipLink.astro';
+import HeaderTierBadge from '../components/HeaderTierBadge.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
 ---
@@ -21,12 +23,12 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             @supports (-webkit-touch-callout: none) { html { -webkit-text-size-adjust: 100%; } }
 
             :root {
-                --bg: #0a0a0a; --bg-elevated: #111111; --text: #fafafa; --text-muted: #a3a3a3;
-                --text-subtle: #737373; --accent: #D97706; --accent-hover: #B45309;
-                --border: rgba(255, 255, 255, 0.08);
+                --bg: #0a0a0a; --text: #fafafa; --text-muted: #a3a3a3;
+                --text-subtle: #737373; --accent: #D97706;
                 --font-display: halyard-display, sans-serif;
                 --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-                --radius-md: 8px; --text-sm: 0.875rem; --text-base: 1rem;
+                --text-xs: 0.75rem; --text-sm: 0.875rem; --text-base: 1rem;
+                --text-2xl: 1.5rem; --text-4xl: 2.25rem;
             }
 
             @media (prefers-reduced-motion: reduce) {
@@ -38,89 +40,177 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 line-height: 1.6; -webkit-font-smoothing: antialiased;
                 min-height: 100vh; display: flex; flex-direction: column;
                 align-items: center; justify-content: center; padding: 2rem;
+                text-align: center;
             }
 
-            .thanks-page { text-align: center; max-width: 480px; }
-            .thanks-page__brand { margin-bottom: 2rem; }
-            .thanks-page__logomark {
-                width: 64px; height: auto; margin-bottom: 1rem;
-                filter: brightness(0) saturate(100%) invert(48%) sepia(89%) saturate(1000%) hue-rotate(4deg) brightness(88%);
+            /* Background glow */
+            body::before {
+                content: '';
+                position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                background:
+                    radial-gradient(ellipse 600px 400px at var(--bg-glow-1-x, 20%) var(--bg-glow-1-y, 30%), rgba(37, 99, 235, 0.06), transparent 70%),
+                    radial-gradient(ellipse 500px 350px at var(--bg-glow-2-x, 80%) var(--bg-glow-2-y, 70%), rgba(37, 99, 235, 0.04), transparent 70%);
+                pointer-events: none; z-index: -1;
             }
-            .thanks-page__title {
-                font-family: halyard-display, sans-serif; font-size: clamp(1.5rem, 4vw, 2rem);
-                font-weight: 400; margin-bottom: 1rem; color: var(--text);
-            }
-            .thanks-page__message { font-size: var(--text-base); color: var(--text-muted); margin-bottom: 2rem; line-height: 1.7; }
-            .thanks-page__actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
-            .thanks-page__link {
-                display: inline-flex; align-items: center; gap: 0.5rem;
-                padding: 0.875rem 1.5rem; font-size: var(--text-base); font-weight: 500;
-                border-radius: var(--radius-md); text-decoration: none; transition: all 0.2s ease;
-            }
-            .thanks-page__link--primary { background: var(--accent); color: white; }
-            .thanks-page__link--primary:hover { background: var(--accent-hover); }
 
-            @keyframes rgb-border-rotate { 0% { --rgb-angle: 0deg; } 100% { --rgb-angle: 360deg; } }
-            @property --rgb-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+            /* Header (shared with HeaderTierBadge) */
+            .header {
+                position: fixed; top: 0; left: 0; right: 0;
+                padding: 0.75rem clamp(1rem, 4vw, 2rem); z-index: 100;
+            }
+            .header__glass {
+                max-width: 1200px; margin: 0 auto; padding: 0.75rem 1.5rem;
+                background: color-mix(in srgb, var(--bg) 60%, transparent);
+                backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+                border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.06);
+                position: relative; overflow: hidden;
+                --orange-pos-1: 15%; --orange-pos-2: 85%;
+            }
+            .header__glass::before {
+                content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+                background:
+                    radial-gradient(ellipse 280px 90px at var(--orange-pos-1) 60%, rgba(217, 119, 6, 0.15), transparent 70%),
+                    radial-gradient(ellipse 220px 80px at var(--orange-pos-2) 40%, rgba(217, 119, 6, 0.10), transparent 70%);
+                pointer-events: none; z-index: 0; border-radius: inherit;
+            }
+            .header__inner {
+                display: flex; justify-content: space-between; align-items: center;
+                position: relative; z-index: 1;
+            }
+            .header__logo {
+                display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s ease;
+            }
+            .header__logo:hover { opacity: 0.7; }
+            .header__logo-icon { width: 24px; height: auto; margin-right: 0.75rem; filter: brightness(0) invert(1); }
+            .header__wordmark {
+                font-family: var(--font-body); font-size: 0.7rem; font-weight: 400;
+                letter-spacing: 0.14em; text-transform: uppercase; color: var(--text); white-space: nowrap;
+            }
+            .header__tier {
+                font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500; letter-spacing: 0.02em;
+            }
 
-            .thanks-page__link--secondary {
-                background: var(--bg); color: var(--text-muted);
-                border: 1px solid transparent; position: relative; z-index: 0;
-                background-clip: padding-box;
-            }
-            .thanks-page__link--secondary::before {
-                content: ''; position: absolute; inset: -2px; border-radius: var(--radius-md);
-                background: conic-gradient(from var(--rgb-angle), #ff6666 0deg, #66ff66 120deg, #6699ff 240deg, #ff6666 360deg);
-                z-index: -1; animation: rgb-border-rotate 4s linear infinite; filter: blur(4px); opacity: 0.4;
-            }
-            .thanks-page__link--secondary::after {
-                content: ''; position: absolute; inset: 0; background: var(--bg);
-                border-radius: var(--radius-md); z-index: -1;
-            }
-            .thanks-page__link--secondary:hover { color: var(--text); }
-            .thanks-page__link--secondary:hover::before { filter: blur(6px); opacity: 0.7; inset: -3px; }
+            /* Content */
+            .container { max-width: 480px; padding-top: 5rem; width: 100%; }
 
-            .thanks-page__footer { margin-top: 4rem; font-size: var(--text-sm); color: var(--text-subtle); }
-            .thanks-page__footer a { color: var(--text-muted); text-decoration: none; transition: all 0.3s ease; }
-            .thanks-page__footer a:hover {
-                color: var(--text);
-                text-shadow: 0 0 2px rgba(255,255,255,0.3), 0 0 10px rgba(255,60,60,0.7), 0 0 20px rgba(255,60,60,0.4), 0 0 10px rgba(60,255,60,0.7), 0 0 25px rgba(60,255,60,0.4), 0 0 10px rgba(60,100,255,0.7), 0 0 30px rgba(60,100,255,0.4);
+            h1 {
+                font-family: var(--font-display); font-size: var(--text-4xl);
+                font-weight: 300; margin-bottom: 1rem; letter-spacing: -0.02em;
             }
+            p { color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+
+            .next-steps {
+                background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px; padding: 1.5rem; margin-top: 2rem; text-align: left;
+            }
+            .next-steps h2 {
+                font-family: var(--font-body); font-size: var(--text-xs); font-weight: 500;
+                text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem;
+            }
+            .next-steps ul { list-style: none; }
+            .next-steps li {
+                position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem;
+                color: var(--text-muted); font-size: var(--text-base); line-height: 1.5;
+            }
+            .next-steps li::before {
+                content: ''; position: absolute; left: 0; top: 0.5rem;
+                width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+            }
+            .next-steps li:last-child { margin-bottom: 0; }
+
+            /* Cross-sell */
+            .explore-next {
+                margin-top: 2.5rem; text-align: left;
+                background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px; padding: 1.5rem;
+            }
+            .explore-next__title {
+                font-family: var(--font-body); font-size: var(--text-xs); font-weight: 500;
+                text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem;
+            }
+            .explore-next__links { display: flex; flex-direction: column; gap: 0.75rem; }
+            .explore-next__link {
+                display: flex; justify-content: space-between; align-items: center;
+                padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px;
+                color: var(--text); text-decoration: none; font-size: var(--text-sm); font-weight: 500;
+                transition: border-color 0.2s ease, background 0.2s ease;
+            }
+            .explore-next__link--amber:hover { border-color: rgba(217, 119, 6, 0.4); background: rgba(217, 119, 6, 0.05); }
+            .explore-next__link--violet:hover { border-color: rgba(139, 92, 246, 0.4); background: rgba(139, 92, 246, 0.05); }
+            .explore-next__link--blue:hover { border-color: rgba(37, 99, 235, 0.4); background: rgba(37, 99, 235, 0.05); }
+            .explore-next__arrow { color: var(--text-muted); font-size: var(--text-sm); }
+            .explore-next__desc { font-size: var(--text-xs); color: var(--text-muted); font-weight: 400; }
+
+            .back-link {
+                display: inline-block; margin-top: 2rem; color: var(--text-muted);
+                text-decoration: none; font-size: var(--text-sm); transition: color 0.2s ease;
+            }
+            .back-link:hover { color: var(--text); }
+
+            .footer-phone {
+                margin-top: 1.5rem; font-size: var(--text-sm); color: var(--text-subtle);
+            }
+            .footer-phone a { color: var(--text-muted); text-decoration: none; transition: color 0.2s ease; }
+            .footer-phone a:hover { color: var(--text); }
+
+            .footer-brand {
+                margin-top: 1.5rem; font-size: var(--text-sm); color: var(--text-subtle);
+            }
+            .footer-brand a { color: var(--text-muted); text-decoration: none; transition: color 0.2s ease; }
+            .footer-brand a:hover { color: var(--text); }
+
             :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-            .skip-link {
-                position: fixed; top: -100%; left: 1rem; padding: 0.75rem 1rem;
-                background: var(--text); color: var(--bg); font-family: var(--font-body);
-                font-size: 0.875rem; font-weight: 500; border-radius: 6px;
-                z-index: 10001; text-decoration: none; transition: top 0.15s ease;
+
+            @media (max-width: 480px) {
+                h1 { font-size: var(--text-2xl); }
             }
-            .skip-link:focus { top: 1rem; }
         </style>
     </Fragment>
 
     <SkipLink />
+    <HeaderTierBadge tierLabel="Inquiry" tierColor="rgba(217, 119, 6, 0.9)" />
 
-    <main class="thanks-page" id="main-content">
-        <div class="thanks-page__brand">
-            <img src="/assets/bg-brands-logomark.png" alt="" class="thanks-page__logomark" width="40" height="40" fetchpriority="high">
-            <br>
-            <span style="font-family: var(--font-body); font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);">Brand &amp; Web Systems</span>
+    <div class="container" id="main-content">
+        <h1>Thanks for reaching out</h1>
+        <p>Your message has been received. We'll review it and get back to you within 1–2 business days.</p>
+
+        <div class="next-steps">
+            <h2>What happens next</h2>
+            <ul>
+                <li>We review your message and any details you've shared</li>
+                <li>You'll hear back within 1–2 business days</li>
+                <li>If it's a fit, we'll outline a clear next step</li>
+            </ul>
         </div>
-        <h1 class="thanks-page__title">Thanks for reaching out</h1>
-        <p class="thanks-page__message">
-            Your message has been received. I'll review it and get back to you within 1-2 business days.
+
+        <div class="explore-next">
+            <h3 class="explore-next__title">While you're here</h3>
+            <div class="explore-next__links">
+                <a href="/build" class="explore-next__link explore-next__link--amber">
+                    <div><span>Build</span><br><span class="explore-next__desc">Quick builds — from $750</span></div>
+                    <span class="explore-next__arrow">&rarr;</span>
+                </a>
+                <a href="/transform" class="explore-next__link explore-next__link--violet">
+                    <div><span>Transform</span><br><span class="explore-next__desc">Bigger commitments, discovery-led</span></div>
+                    <span class="explore-next__arrow">&rarr;</span>
+                </a>
+                <a href="/care" class="explore-next__link explore-next__link--blue">
+                    <div><span>Care</span><br><span class="explore-next__desc">Ongoing support after launch</span></div>
+                    <span class="explore-next__arrow">&rarr;</span>
+                </a>
+            </div>
+        </div>
+
+        <a href="https://bertrandbrands.ca" class="back-link">&larr; Back to Bertrand Brands</a>
+
+        <p class="footer-phone">
+            <a href="tel:+17054133705">(705) 413-3705</a>
         </p>
-        <div class="thanks-page__actions">
-            <a href="/" class="thanks-page__link thanks-page__link--primary">
-                Back to homepage
-            </a>
-            <a href="https://scottbertrand.com" class="thanks-page__link thanks-page__link--secondary">
-                Visit scottbertrand.com
-            </a>
-        </div>
-        <p class="thanks-page__footer">
+        <p class="footer-brand">
             <a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a>
         </p>
-    </main>
+    </div>
 
     {/* Fire conversion on page load — uses bbConvert() for consistent GA4 + Ads tracking */}
     <script is:inline>
@@ -130,6 +220,37 @@ import GesturePrevention from '../components/GesturePrevention.astro';
           sessionStorage.setItem('bb_thanks_fired', '1');
         }
       });
+    </script>
+
+    <script is:inline>
+        // Background glow drift animation
+        (function() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var glow1X = 20, glow1Y = 30;
+            var glow2X = 80, glow2Y = 70;
+            var dir1X = 1, dir1Y = 1;
+            var dir2X = -1, dir2Y = -1;
+
+            function animateBgGlow() {
+                glow1X += 0.015 * dir1X;
+                glow1Y += 0.012 * dir1Y;
+                glow2X += 0.018 * dir2X;
+                glow2Y += 0.014 * dir2Y;
+
+                if (glow1X > 35 || glow1X < 10) dir1X *= -1;
+                if (glow1Y > 45 || glow1Y < 20) dir1Y *= -1;
+                if (glow2X > 90 || glow2X < 65) dir2X *= -1;
+                if (glow2Y > 80 || glow2Y < 55) dir2Y *= -1;
+
+                document.body.style.setProperty('--bg-glow-1-x', glow1X + '%');
+                document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
+                document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
+                document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
+                requestAnimationFrame(animateBgGlow);
+            }
+            requestAnimationFrame(animateBgGlow);
+        })();
     </script>
 
     <GesturePrevention />

@@ -40,6 +40,16 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 align-items: center; justify-content: center; padding: 2rem;
             }
 
+            /* Subtle background glow */
+            body::before {
+                content: '';
+                position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                background:
+                    radial-gradient(ellipse 600px 400px at var(--bg-glow-1-x, 20%) var(--bg-glow-1-y, 30%), rgba(37, 99, 235, 0.04), transparent 70%),
+                    radial-gradient(ellipse 500px 350px at var(--bg-glow-2-x, 80%) var(--bg-glow-2-y, 70%), rgba(217, 119, 6, 0.03), transparent 70%);
+                pointer-events: none; z-index: -1;
+            }
+
             .error-page { text-align: center; max-width: 480px; }
             .error-page__code {
                 font-family: var(--font-display); font-size: clamp(5rem, 15vw, 8rem);
@@ -96,6 +106,37 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             <a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a>
         </p>
     </main>
+
+    <script is:inline>
+        // Background glow drift animation
+        (function() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var glow1X = 20, glow1Y = 30;
+            var glow2X = 80, glow2Y = 70;
+            var dir1X = 1, dir1Y = 1;
+            var dir2X = -1, dir2Y = -1;
+
+            function animateBgGlow() {
+                glow1X += 0.015 * dir1X;
+                glow1Y += 0.012 * dir1Y;
+                glow2X += 0.018 * dir2X;
+                glow2Y += 0.014 * dir2Y;
+
+                if (glow1X > 35 || glow1X < 10) dir1X *= -1;
+                if (glow1Y > 45 || glow1Y < 20) dir1Y *= -1;
+                if (glow2X > 90 || glow2X < 65) dir2X *= -1;
+                if (glow2Y > 80 || glow2Y < 55) dir2Y *= -1;
+
+                document.body.style.setProperty('--bg-glow-1-x', glow1X + '%');
+                document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
+                document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
+                document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
+                requestAnimationFrame(animateBgGlow);
+            }
+            requestAnimationFrame(animateBgGlow);
+        })();
+    </script>
 
     <GesturePrevention />
     <VisitorNotify />

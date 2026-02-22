@@ -146,98 +146,102 @@ const effectiveOgDescription = ogDescription || description;
 <body class={bodyClass}>
   <slot />
 
-  {/* Phone modal — desktop intercept for tel: links */}
-  <div class="phone-modal-backdrop" id="phoneModal" aria-hidden="true" role="dialog" aria-label="Phone number">
-    <div class="phone-modal">
-      <button class="phone-modal__close" aria-label="Close" id="phoneModalClose">&times;</button>
-      <p class="phone-modal__label">Please call</p>
-      <p class="phone-modal__number" id="phoneModalNumber">(705) 413-3705</p>
-      <button class="phone-modal__copy" id="phoneModalCopy">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-        <span id="phoneModalCopyText">Copy number</span>
-      </button>
-    </div>
-  </div>
-  <script is:inline>
-    (function() {
-      var isDesktop = window.matchMedia('(min-width: 769px)').matches && !('ontouchstart' in window);
-      if (!isDesktop) return;
+  {/* Phone modal — desktop intercept for tel: links (requires main.css for styling) */}
+  {includeMainCss && (
+    <Fragment>
+      <div class="phone-modal-backdrop" id="phoneModal" aria-hidden="true" role="dialog" aria-label="Phone number">
+        <div class="phone-modal">
+          <button class="phone-modal__close" aria-label="Close" id="phoneModalClose">&times;</button>
+          <p class="phone-modal__label">Please call</p>
+          <p class="phone-modal__number" id="phoneModalNumber">(705) 413-3705</p>
+          <button class="phone-modal__copy" id="phoneModalCopy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <span id="phoneModalCopyText">Copy number</span>
+          </button>
+        </div>
+      </div>
+      <script is:inline>
+        (function() {
+          var isDesktop = window.matchMedia('(min-width: 769px)').matches && !('ontouchstart' in window);
+          if (!isDesktop) return;
 
-      var backdrop = document.getElementById('phoneModal');
-      var closeBtn = document.getElementById('phoneModalClose');
-      var copyBtn = document.getElementById('phoneModalCopy');
-      var copyText = document.getElementById('phoneModalCopyText');
-      var numberEl = document.getElementById('phoneModalNumber');
-      if (!backdrop) return;
+          var backdrop = document.getElementById('phoneModal');
+          var closeBtn = document.getElementById('phoneModalClose');
+          var copyBtn = document.getElementById('phoneModalCopy');
+          var copyText = document.getElementById('phoneModalCopyText');
+          var numberEl = document.getElementById('phoneModalNumber');
+          if (!backdrop) return;
 
-      var triggerEl = null;
+          var triggerEl = null;
 
-      function trapFocus(e) {
-        if (e.key !== 'Tab') return;
-        var focusable = backdrop.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
-        var first = focusable[0];
-        var last = focusable[focusable.length - 1];
-        if (e.shiftKey) {
-          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-        } else {
-          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-        }
-      }
+          function trapFocus(e) {
+            if (e.key !== 'Tab') return;
+            var focusable = backdrop.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+            var first = focusable[0];
+            var last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+              if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+            } else {
+              if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+          }
 
-      function show(number) {
-        var clean = number.replace(/^tel:\+?1?/, '').replace(/\D/g, '');
-        var formatted = clean.length === 10
-          ? '(' + clean.slice(0,3) + ') ' + clean.slice(3,6) + '-' + clean.slice(6)
-          : number.replace('tel:', '');
-        numberEl.textContent = formatted;
-        copyBtn.dataset.number = clean.length === 10 ? '1' + clean : clean;
-        copyText.textContent = 'Copy number';
-        copyBtn.classList.remove('is-copied');
-        backdrop.classList.add('is-visible');
-        backdrop.setAttribute('aria-hidden', 'false');
-        closeBtn.focus();
-        backdrop.addEventListener('keydown', trapFocus);
-      }
+          function show(number) {
+            var clean = number.replace(/^tel:\+?1?/, '').replace(/\D/g, '');
+            var formatted = clean.length === 10
+              ? '(' + clean.slice(0,3) + ') ' + clean.slice(3,6) + '-' + clean.slice(6)
+              : number.replace('tel:', '');
+            numberEl.textContent = formatted;
+            copyBtn.dataset.number = clean.length === 10 ? '1' + clean : clean;
+            copyText.textContent = 'Copy number';
+            copyBtn.classList.remove('is-copied');
+            backdrop.classList.add('is-visible');
+            backdrop.setAttribute('aria-hidden', 'false');
+            closeBtn.focus();
+            backdrop.addEventListener('keydown', trapFocus);
+          }
 
-      function hide() {
-        backdrop.classList.remove('is-visible');
-        backdrop.setAttribute('aria-hidden', 'true');
-        backdrop.removeEventListener('keydown', trapFocus);
-        if (triggerEl) { triggerEl.focus(); triggerEl = null; }
-      }
+          function hide() {
+            backdrop.classList.remove('is-visible');
+            backdrop.setAttribute('aria-hidden', 'true');
+            backdrop.removeEventListener('keydown', trapFocus);
+            if (triggerEl) { triggerEl.focus(); triggerEl = null; }
+          }
 
-      document.addEventListener('click', function(e) {
-        var link = e.target.closest('a[href^="tel:"]');
-        if (!link) return;
-        if (window.matchMedia('(min-width: 769px)').matches && !('ontouchstart' in window)) {
-          e.preventDefault();
-          triggerEl = link;
-          show(link.getAttribute('href'));
-        }
-      });
-
-      closeBtn.addEventListener('click', hide);
-      backdrop.addEventListener('click', function(e) {
-        if (e.target === backdrop) hide();
-      });
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && backdrop.classList.contains('is-visible')) hide();
-      });
-
-      copyBtn.addEventListener('click', function() {
-        var num = copyBtn.dataset.number || '';
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(num).then(function() {
-            copyText.textContent = 'Copied!';
-            copyBtn.classList.add('is-copied');
-            setTimeout(function() {
-              copyText.textContent = 'Copy number';
-              copyBtn.classList.remove('is-copied');
-            }, 2000);
+          document.addEventListener('click', function(e) {
+            var link = e.target.closest('a[href^="tel:"]');
+            if (!link) return;
+            if (window.matchMedia('(min-width: 769px)').matches && !('ontouchstart' in window)) {
+              e.preventDefault();
+              triggerEl = link;
+              show(link.getAttribute('href'));
+            }
           });
-        }
-      });
-    })();
-  </script>
+
+          closeBtn.addEventListener('click', hide);
+          backdrop.addEventListener('click', function(e) {
+            if (e.target === backdrop) hide();
+          });
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && backdrop.classList.contains('is-visible')) hide();
+          });
+
+          copyBtn.addEventListener('click', function() {
+            var num = copyBtn.dataset.number || '';
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText(num).then(function() {
+                copyText.textContent = 'Copied!';
+                copyBtn.classList.add('is-copied');
+                setTimeout(function() {
+                  copyText.textContent = 'Copy number';
+                  copyBtn.classList.remove('is-copied');
+                }, 2000);
+              });
+            }
+          });
+        })();
+      </script>
+    </Fragment>
+  )}
 </body>
 </html>
