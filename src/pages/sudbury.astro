@@ -4,7 +4,7 @@
  * HeaderMinimal standard variant with "Get started →" CTA.
  * Google Ads: AW-17925090292 with phone + form conversion events.
  * Two schema blocks: Service (with geo) + FAQPage.
- * 2-step Formspree form, sticky mobile CTA, scroll fade-in.
+ * 3-field Formspree form (name/email/phone), sticky mobile CTA, scroll fade-in.
  * All CSS uses sb- prefix.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -787,27 +787,13 @@ const currentYear = new Date().getFullYear();
                 flex-direction: column;
                 gap: 0.375rem;
             }
-            .sb-form__field--step2 {
-                animation: sb-fadeIn 0.3s var(--ease-out);
-            }
-            @keyframes sb-fadeIn {
-                from { opacity: 0; transform: translateY(8px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            @media (prefers-reduced-motion: reduce) {
-                .sb-form__field--step2 {
-                    animation: none;
-                }
-            }
             .sb-form__label {
                 font-family: var(--font-body);
                 font-size: var(--text-sm);
                 font-weight: 500;
                 color: var(--text);
             }
-            .sb-form__input,
-            .sb-form__select,
-            .sb-form__textarea {
+            .sb-form__input {
                 font-family: var(--font-body);
                 font-size: var(--text-base);
                 font-weight: 400;
@@ -820,33 +806,13 @@ const currentYear = new Date().getFullYear();
                 width: 100%;
                 box-sizing: border-box;
             }
-            .sb-form__input::placeholder,
-            .sb-form__textarea::placeholder {
+            .sb-form__input::placeholder {
                 color: var(--text-subtle);
             }
-            .sb-form__input:focus,
-            .sb-form__select:focus,
-            .sb-form__textarea:focus {
+            .sb-form__input:focus {
                 outline: none;
                 border-color: var(--accent);
             }
-            .sb-form__select {
-                appearance: none;
-                background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23737373' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-                background-repeat: no-repeat;
-                background-position: right 0.875rem center;
-                padding-right: 2.5rem;
-                cursor: pointer;
-            }
-            .sb-form__select option {
-                background: var(--bg-elevated);
-                color: var(--text);
-            }
-            .sb-form__textarea {
-                resize: vertical;
-                min-height: 100px;
-            }
-            .sb-form__next,
             .sb-form__submit {
                 display: inline-block;
                 font-family: var(--font-body);
@@ -858,16 +824,6 @@ const currentYear = new Date().getFullYear();
                 cursor: pointer;
                 transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
                 align-self: flex-start;
-            }
-            .sb-form__next {
-                background: var(--bg-elevated);
-                color: var(--text);
-                border: 1px solid var(--border);
-            }
-            .sb-form__next:hover {
-                border-color: var(--border-hover);
-            }
-            .sb-form__submit {
                 background: var(--accent);
                 color: #0a0a0a;
             }
@@ -907,12 +863,6 @@ const currentYear = new Date().getFullYear();
                 background: rgba(239, 68, 68, 0.1);
                 border: 1px solid rgba(239, 68, 68, 0.3);
                 color: #ef4444;
-            }
-            .sb-form__step2 {
-                display: none;
-            }
-            .sb-form__step2--visible {
-                display: contents;
             }
 
             /* ---- Phone Alternative (below form) ---- */
@@ -1249,6 +1199,20 @@ const currentYear = new Date().getFullYear();
             </div>
         </section>
 
+        <!-- Trust Strip (above form — social proof before commitment) -->
+        <section class="sb-trust sb-fade">
+            <div class="sb-container">
+                <div class="sb-trust__card">
+                    <h2 class="sb-trust__title">Why Sudbury businesses choose us</h2>
+                    <ul class="sb-trust__list">
+                        <li class="sb-trust__item">Custom-coded &mdash; no page builders or WordPress themes</li>
+                        <li class="sb-trust__item">Fixed pricing &mdash; you know the cost before we start</li>
+                        <li class="sb-trust__item">Strategy first &mdash; brand + dev team under one roof</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <!-- Get Started Form -->
         <section class="sb-form" id="get-started">
             <div class="sb-container">
@@ -1258,21 +1222,10 @@ const currentYear = new Date().getFullYear();
                 <form class="sb-form__form" action="https://formspree.io/f/xnjjgoay" method="POST" id="sudburyForm">
                     <input type="hidden" name="source" value="sudbury_focus_studio">
                     <input type="hidden" name="_subject" value="New Lead — Sudbury Build">
+                    <input type="hidden" name="offering" value="Starter Site — One-Page + Contact ($750)">
                     <input type="hidden" name="gclid" id="gclidField" value="">
                     <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off">
 
-                    <!-- Offering — always visible -->
-                    <div class="sb-form__field">
-                        <label class="sb-form__label" for="offering">Which offering?</label>
-                        <select id="offering" name="offering" class="sb-form__select">
-                            <option value="Starter Site — One-Page + Contact ($750)" selected>Starter Site &mdash; One-Page + Contact &mdash; $750 (Recommended)</option>
-                            <option value="Website Foundation + Growth System (Scoped)">Website Foundation + Growth System &mdash; Scoped</option>
-                            <option value="Bronze Care Plan ($249/mo)">Bronze Care Plan &mdash; $249/mo</option>
-                            <option value="Not sure">Not sure yet</option>
-                        </select>
-                    </div>
-
-                    <!-- Step 1 fields -->
                     <div class="sb-form__field">
                         <label class="sb-form__label" for="name">Your name</label>
                         <input id="name" name="name" type="text" class="sb-form__input" placeholder="Full name" required>
@@ -1284,28 +1237,13 @@ const currentYear = new Date().getFullYear();
                     </div>
 
                     <div class="sb-form__field">
-                        <label class="sb-form__label" for="business">Business name</label>
-                        <input id="business" name="business" type="text" class="sb-form__input" placeholder="Your business or organization" required>
+                        <label class="sb-form__label" for="phone">Phone <span style="color: var(--text-subtle); font-weight: 400;">(optional)</span></label>
+                        <input id="phone" name="phone" type="tel" class="sb-form__input" placeholder="(705) 555-1234">
                     </div>
 
-                    <button type="button" class="sb-form__next" id="formContinueBtn">Continue &rarr;</button>
+                    <button type="submit" class="sb-form__submit" id="submitBtn">Send my details &rarr;</button>
 
-                    <!-- Step 2 fields (hidden initially) -->
-                    <div class="sb-form__step2" id="formStep2">
-                        <div class="sb-form__field sb-form__field--step2">
-                            <label class="sb-form__label" for="website">Your website (if you have one)</label>
-                            <input id="website" name="website" type="url" class="sb-form__input" placeholder="https://yoursite.com">
-                        </div>
-
-                        <div class="sb-form__field sb-form__field--step2">
-                            <label class="sb-form__label" for="details">Tell us about your project</label>
-                            <textarea id="details" name="details" class="sb-form__textarea" placeholder="What are you looking for? New site, redesign, or something else?" rows="4"></textarea>
-                        </div>
-
-                        <button type="submit" class="sb-form__submit" id="submitBtn">Send my details &rarr;</button>
-
-                        <p class="sb-form__disclaimer">Free, no-obligation quote. We&rsquo;ll respond within 1 business day.</p>
-                    </div>
+                    <p class="sb-form__disclaimer">Free, no-obligation quote. We&rsquo;ll respond within 1 business day.</p>
 
                     <div class="sb-form__feedback" id="formFeedback"></div>
                 </form>
@@ -1314,20 +1252,6 @@ const currentYear = new Date().getFullYear();
                     <p class="sb-form__phone-alt-text">Prefer to talk it out?</p>
                     <a href="tel:+17054133705" class="sb-form__phone-alt-link">Call <span class="sb-form__phone-alt-number">(705) 413-3705</span></a>
                     <p class="sb-form__phone-alt-sub">We&rsquo;ll collect your details over the phone instead.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Trust Strip -->
-        <section class="sb-trust sb-fade">
-            <div class="sb-container">
-                <div class="sb-trust__card">
-                    <h2 class="sb-trust__title">Why Sudbury businesses choose us</h2>
-                    <ul class="sb-trust__list">
-                        <li class="sb-trust__item">Custom-coded &mdash; no page builders or WordPress themes</li>
-                        <li class="sb-trust__item">Fixed pricing &mdash; you know the cost before we start</li>
-                        <li class="sb-trust__item">Strategy first &mdash; brand + dev team under one roof</li>
-                    </ul>
                 </div>
             </div>
         </section>
@@ -1407,19 +1331,6 @@ const currentYear = new Date().getFullYear();
             }
         })();
 
-        // Two-step form logic
-        (function() {
-            var continueBtn = document.getElementById('formContinueBtn');
-            var step2 = document.getElementById('formStep2');
-            if (!continueBtn || !step2) return;
-
-            continueBtn.addEventListener('click', function() {
-                step2.classList.add('sb-form__step2--visible');
-                continueBtn.style.display = 'none';
-                step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            });
-        })();
-
         // Form submission
         (function() {
             var form = document.getElementById('sudburyForm');
@@ -1460,12 +1371,9 @@ const currentYear = new Date().getFullYear();
                             body: JSON.stringify({
                                 type: 'intake',
                                 source: 'sudbury_focus_studio',
-                                service: formData.get('offering') || '',
                                 name: formData.get('name') || '',
                                 email: formData.get('email') || '',
-                                business: formData.get('business') || '',
-                                website: formData.get('website') || '',
-                                details: formData.get('details') || ''
+                                phone: formData.get('phone') || ''
                             })
                         }).catch(function() {});
 
@@ -1492,7 +1400,7 @@ const currentYear = new Date().getFullYear();
                     feedback.textContent = 'Something went wrong. Please try again or email hello@bertrandgroup.ca';
                 } finally {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Fix my website \u2192';
+                    submitBtn.textContent = 'Send my details \u2192';
                 }
             });
         })();
