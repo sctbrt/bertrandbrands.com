@@ -145,12 +145,11 @@ const currentYear = new Date().getFullYear();
             .sb-hero {
                 position: relative;
                 overflow: hidden;
-                min-height: 100vh;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 text-align: center;
-                padding: var(--space-2xl) var(--space-md);
+                padding: 10rem var(--space-md) var(--space-lg);
             }
             .sb-hero__content {
                 position: relative;
@@ -408,8 +407,7 @@ const currentYear = new Date().getFullYear();
             }
             @media (max-width: 480px) {
                 .sb-hero {
-                    min-height: 90vh;
-                    padding: var(--space-xl) var(--space-sm);
+                    padding: 7rem var(--space-sm) var(--space-lg);
                 }
                 .sb-hero__title {
                     font-size: clamp(1.5rem, 8vw, 2.25rem);
@@ -721,7 +719,7 @@ const currentYear = new Date().getFullYear();
 
             /* ---- Get Started Form ---- */
             .sb-form {
-                padding: var(--space-xl) 0 var(--space-lg);
+                padding: var(--space-lg) 0;
             }
             .sb-form__title {
                 font-family: var(--font-display);
@@ -1118,7 +1116,7 @@ const currentYear = new Date().getFullYear();
 
     <SkipLink />
 
-    <HeaderMinimal variant="standard" ctaText="Get started &rarr;" ctaHref="#get-started" showPhone={true} />
+    <HeaderMinimal variant="standard" ctaText="See pricing" ctaHref="#pricing" showPhone={true} />
 
     <main id="main-content">
         <!-- Hero -->
