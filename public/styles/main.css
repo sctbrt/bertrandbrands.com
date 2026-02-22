@@ -133,7 +133,10 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
+            html {
+                scroll-behavior: auto;
+                scroll-snap-type: none;
+            }
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
@@ -148,14 +151,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
-        }
-
-        /* Respect reduced motion preference */
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-snap-type: none;
-                scroll-behavior: auto;
-            }
         }
 
         a { color: inherit; text-decoration: none; }
@@ -4872,382 +4867,6 @@
             max-width: 500px;
         }
 
-        /* === FOCUSED STUDIO WORK (Secondary Services) === */
-        .services-divider--section {
-            margin: var(--space-xl) 0 var(--space-lg);
-        }
-
-        .focused-studio {
-            margin-top: var(--space-md);
-            scroll-margin-top: 5rem;
-            /* Surface properties now via .tier-wrapper.tier-wrapper--build */
-        }
-
-        /* Ambient spotlight container - allows overflow for glow effect */
-        .focused-studio__glow {
-            position: absolute;
-            top: -100px;
-            left: -200px;
-            right: -200px;
-            bottom: -100px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Violet ambient wash - spreads across entire section */
-        .focused-studio__glow::before {
-            content: '';
-            position: absolute;
-            width: 120%;
-            height: 100%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(217, 119, 6, 0.25) 0%, rgba(217, 119, 6, 0.15) 30%, rgba(217, 119, 6, 0.08) 50%, rgba(217, 119, 6, 0.03) 70%, transparent 100%);
-            filter: blur(60px);
-            animation: amberBuildBreathe 15s ease-in-out infinite;
-        }
-
-        /* Amber accent - DISABLED (violet-only) */
-        .focused-studio__glow::after {
-            display: none;
-        }
-
-        /* Violet: gentle ambient breathing */
-        @keyframes amberBuildBreathe {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: translate(-50%, -48%) scale(1.05);
-                opacity: 0.85;
-            }
-        }
-
-        /* Ensure content stays above spotlights */
-        .focused-studio__header,
-        .focused-studio__grid,
-        .focused-studio__boundary {
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .focused-studio__glow::before,
-            .focused-studio__glow::after {
-                animation: none;
-            }
-
-            /* Disable stagger animations for reduced motion */
-            .focused-studio__header,
-            .focused-studio__grid .focused-studio__card,
-            .focused-studio__boundary {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-        }
-
-        /* Mobile optimization for Build glow */
-        @media (max-width: 768px) {
-            .focused-studio__glow {
-                left: -100px;
-                right: -100px;
-                top: -50px;
-                bottom: -50px;
-            }
-
-            .focused-studio__glow::before {
-                filter: blur(40px);
-                background: radial-gradient(ellipse 90% 70% at 50% 50%, rgba(217, 119, 6, 0.2) 0%, rgba(217, 119, 6, 0.1) 40%, rgba(217, 119, 6, 0.04) 60%, transparent 80%);
-            }
-
-            .focused-studio__glow::after {
-                width: 250px;
-                height: 250px;
-                filter: blur(50px);
-                right: -10%;
-                background: radial-gradient(circle, rgba(217, 119, 6, 0.2) 0%, rgba(217, 119, 6, 0.08) 50%, transparent 70%);
-            }
-        }
-
-        .focused-studio__header {
-            margin-bottom: var(--space-md);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity var(--duration-medium) var(--ease-out-expo),
-                        transform var(--duration-medium) var(--ease-out-expo);
-        }
-
-        .focused-studio.is-visible .focused-studio__header {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .focused-studio__brand {
-            display: flex;
-            align-items: center;
-            gap: 0.625rem;
-            margin-bottom: var(--space-xs);
-            text-decoration: none;
-            transition: opacity var(--duration-fast) var(--ease-out);
-        }
-
-        .focused-studio__brand:hover {
-            opacity: 0.8;
-        }
-
-        .focused-studio__mark {
-            width: 40px;
-            height: 40px;
-            opacity: 1;
-            filter: brightness(0) invert(1);
-        }
-
-        .focused-studio__name {
-            font-family: var(--font-display);
-            font-size: var(--text-3xl);
-            font-weight: var(--font-normal);
-            letter-spacing: 0.02em;
-            color: var(--text);
-        }
-
-        .focused-studio__description {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            max-width: 500px;
-        }
-
-        .focused-studio__grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-sm);
-        }
-
-        /* Staggered reveal for Build cards */
-        .focused-studio__grid .focused-studio__card {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity var(--duration-medium) var(--ease-out-expo),
-                        transform var(--duration-medium) var(--ease-out-expo);
-        }
-
-        .focused-studio.is-visible .focused-studio__grid .focused-studio__card:nth-child(1) {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.1s;
-        }
-
-        .focused-studio.is-visible .focused-studio__grid .focused-studio__card:nth-child(2) {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.2s;
-        }
-
-        .focused-studio.is-visible .focused-studio__grid .focused-studio__card:nth-child(3) {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.3s;
-        }
-
-        /* Card surface properties now via .tier-card.tier-card--build */
-        .focused-studio__card {
-            /* Typography/layout only — surface handled by .tier-card */
-        }
-
-        /* Rocket icon - Starter Site */
-        .focused-studio__card[data-icon="rocket"]::after {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z'/%3E%3Cpath d='M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z'/%3E%3Cpath d='M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'/%3E%3Cpath d='M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5'/%3E%3C/svg%3E");
-        }
-
-        /* Code brackets icon - One-Page Redesign */
-        .focused-studio__card[data-icon="code"]::after {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='16 18 22 12 16 6'/%3E%3Cpolyline points='8 6 2 12 8 18'/%3E%3C/svg%3E");
-        }
-
-        /* Pen tool icon - Brandmark & Visual Identity */
-        .focused-studio__card[data-icon="pen"]::after {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97706' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19l7-7 3 3-7 7-3-3z'/%3E%3Cpath d='M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'/%3E%3Cpath d='M2 2l7.586 7.586'/%3E%3Ccircle cx='11' cy='11' r='2'/%3E%3C/svg%3E");
-        }
-
-        .focused-studio__card-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: var(--space-xs);
-            gap: 0.25rem;
-        }
-
-        .focused-studio__card-title {
-            font-family: var(--font-display);
-            font-size: var(--text-lg);
-            font-weight: var(--font-normal);
-            letter-spacing: -0.01em;
-        }
-
-        .focused-studio__card-timeline {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            white-space: nowrap;
-            order: -1;
-        }
-
-        .focused-studio__card-description {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: var(--space-xs);
-        }
-
-        .focused-studio__card-includes {
-            list-style: none;
-            margin-bottom: var(--space-xs);
-            padding-left: 0;
-        }
-
-        .focused-studio__card-includes li {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            line-height: 1.5;
-            padding-left: 1rem;
-            position: relative;
-        }
-
-        .focused-studio__card-includes li::before {
-            content: '·';
-            position: absolute;
-            left: 0.25rem;
-            color: var(--build-accent);
-        }
-
-        .focused-studio__card-best-for {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            font-style: italic;
-            margin-bottom: var(--space-sm);
-            flex-grow: 1;
-        }
-
-        .focused-studio__card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: var(--space-xs);
-            border-top: 1px solid var(--build-border);
-        }
-
-        .focused-studio__card-price {
-            font-family: var(--font-display);
-            font-size: var(--text-base);
-            font-weight: var(--font-medium);
-            color: var(--build-accent);
-        }
-
-        .focused-studio__card-price span {
-            font-size: var(--text-xs);
-            font-weight: var(--font-normal);
-            color: var(--text-muted);
-        }
-
-        .focused-studio__card-cta {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            transition: color var(--duration-fast) var(--ease-out);
-        }
-
-        .focused-studio__card-cta:hover {
-            color: var(--build-accent);
-        }
-
-        .focused-studio__card-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.375rem;
-        }
-
-        .focused-studio__card-cta--quick {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            opacity: 0.7;
-            transition: color var(--duration-fast) var(--ease-out),
-                        opacity var(--duration-fast) var(--ease-out);
-        }
-
-        .focused-studio__card-cta--quick:hover {
-            color: var(--build-accent);
-            opacity: 1;
-        }
-
-        .focused-studio__boundary {
-            margin-top: var(--space-md);
-            font-size: var(--text-xs);
-            color: var(--text-subtle);
-            font-style: italic;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity var(--duration-medium) var(--ease-out-expo),
-                        transform var(--duration-medium) var(--ease-out-expo);
-            transition-delay: 0.4s;
-        }
-
-        .focused-studio.is-visible .focused-studio__boundary {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Tablet: Single column to avoid orphaned third card */
-        @media (max-width: 900px) and (min-width: 601px) {
-            .focused-studio__grid {
-                grid-template-columns: 1fr;
-                max-width: 500px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        /* Mobile adjustments for focused studio - V5.0: Enhanced touch targets and spacing */
-        @media (max-width: 768px) {
-            /* V5.0: Improve touch targets (min 44px) */
-            .focused-studio__card {
-                min-height: 44px;
-                /* padding now via .tier-card responsive */
-            }
-
-            .focused-studio__card-cta {
-                font-size: var(--text-sm);
-                padding: 0.5rem 0;
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-            }
-
-            .focused-studio__card-footer {
-                padding-top: var(--space-sm);
-            }
-        }
-
-        /* V5.0: Mobile service cards - improved touch targets and spacing */
-        @media (max-width: 768px) {
-            /* padding now via .tier-card responsive */
-
-            .service__cta,
-            .service__cta--gated {
-                font-size: var(--text-sm);
-                padding: 0.5rem 0;
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-            }
-
-            .service__footer {
-                gap: var(--space-sm);
-            }
-
-            /* hover lift / active press now via .tier-card @media (hover: none) */
-        }
-
         /* === PROCESS === */
         .process {
             max-width: 700px;
@@ -6273,68 +5892,6 @@
 
             /* R6: Tier container padding now via .tier-wrapper responsive */
 
-            /* --- R7: Tier header descriptions — smaller to separate from cards --- */
-            .core-systems__description,
-            .focused-studio__description,
-            .exploratory-sessions__description {
-                font-size: var(--text-xs);
-                line-height: 1.5;
-                margin-bottom: var(--space-sm);
-            }
-
-            /* --- R8: Tier sub-brand names — scale down for mobile proportion --- */
-            .core-systems__name,
-            .focused-studio__name {
-                font-size: var(--text-2xl);               /* 30px → 24px */
-            }
-
-            .exploratory-sessions__name {
-                font-size: var(--text-xl);                 /* 24px → 20px */
-            }
-
-            /* --- R9: Exploratory label — smaller to avoid crowding --- */
-            .exploratory-sessions__label {
-                font-size: var(--text-base);
-                margin-bottom: 0.25rem;
-            }
-
-            /* --- R10: Transformation card titles — scale down from 2xl to xl --- */
-            .service__title {
-                font-size: var(--text-lg);                 /* 24px → 18px — was xl (20px) */
-            }
-
-            .service__description {
-                font-size: var(--text-sm);
-                line-height: 1.55;
-                margin-bottom: var(--space-sm);
-            }
-
-            .service__number {
-                margin-bottom: var(--space-sm);            /* 2rem → 1rem */
-            }
-
-            /* --- R11: Build card spacing — reduce inner density --- */
-            .focused-studio__card-description {
-                font-size: var(--text-xs);
-                line-height: 1.5;
-            }
-
-            .focused-studio__card-title {
-                font-size: var(--text-base);               /* 18px → 16px */
-            }
-
-            .focused-studio__card-includes li {
-                font-size: var(--text-2xs);                      /* 11px — subtler than xs (12px) */
-                line-height: 1.4;
-            }
-
-            .focused-studio__card-best-for {
-                font-size: var(--text-2xs);                      /* 11px */
-                margin-bottom: var(--space-xs);
-            }
-
-            /* R12: Conversation card padding now via .tier-card responsive */
-
             .exploratory-sessions__card-title {
                 font-size: var(--text-sm);                 /* 16px → 14px */
                 margin-bottom: 0.125rem;
@@ -6481,12 +6038,6 @@
                 opacity: 0.9;
             }
 
-            .focused-studio__glow::before,
-            .focused-studio__glow::after {
-                animation: none !important;
-                opacity: 0.85;
-            }
-
             /* V5.0: Reduced blur values for better performance */
             .hero__spotlight {
                 filter: blur(30px);
@@ -6515,9 +6066,7 @@
             }
 
             /* Use transform3d for better GPU compositing */
-            .core-systems__glow::before,
-            .focused-studio__glow::before,
-            .focused-studio__glow::after {
+            .core-systems__glow::before {
                 transform: translate3d(-50%, -50%, 0);
             }
 
@@ -6750,14 +6299,8 @@
                 filter: blur(20px);
             }
 
-            .core-systems__glow::before,
-            .focused-studio__glow::before {
+            .core-systems__glow::before {
                 filter: blur(20px);
-            }
-
-            /* Hide secondary glow elements entirely */
-            .focused-studio__glow::after {
-                display: none;
             }
 
             /* Simplify hero gradient */
@@ -6813,188 +6356,9 @@
     }
 }
 
-/* ============================================================
-   V10 PACKAGE SYSTEM
-   ============================================================ */
-
 /* --- Packages section header override (reduce 8rem gap) --- */
 #packages .section__header {
     margin-bottom: 2.5rem;
-}
-
-/* --- Package Grid (3-up on desktop) --- */
-.pkg-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    max-width: var(--container-max);
-    margin: 0 auto;
-    align-items: start;
-}
-
-/* Override base tier-card padding inside pkg-grid */
-.pkg-grid .tier-card {
-    padding: 1.75rem 1.5rem 1.5rem;
-    overflow: visible;
-}
-
-/* Featured card gets a subtle scale bump on desktop */
-.pkg-grid .tier-card--featured {
-    padding-top: 2.25rem;
-}
-
-/* --- Package Card Internals --- */
-.pkg-card__best-for {
-    display: inline-block;
-    align-self: flex-start;
-    font-size: var(--text-2xs);
-    font-weight: var(--font-medium);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.625rem;
-    border-radius: 999px;
-    margin-bottom: 0.75rem;
-}
-.tier-card--build .pkg-card__best-for {
-    background: rgba(217, 119, 6, 0.12);
-    color: var(--build-accent);
-}
-.tier-card--transform .pkg-card__best-for {
-    background: rgba(139, 92, 246, 0.12);
-    color: var(--transform-accent);
-}
-.tier-card--care .pkg-card__best-for {
-    background: rgba(37, 99, 235, 0.12);
-    color: var(--care-accent);
-}
-
-.pkg-card__name {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--font-light);
-    line-height: var(--leading-tight);
-    margin-bottom: 0.25rem;
-}
-
-.pkg-card__headline {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-}
-
-.pkg-card__price {
-    font-family: var(--font-display);
-    font-size: var(--text-3xl);
-    font-weight: var(--font-light);
-    line-height: 1.1;
-    margin-bottom: 0.25rem;
-}
-.pkg-card__price span {
-    display: block;
-    font-size: var(--text-xs);
-    color: var(--text-subtle);
-    font-family: var(--font-body);
-    font-weight: var(--font-normal);
-    margin-top: 0.125rem;
-}
-
-.pkg-card__price-note {
-    font-size: var(--text-xs);
-    color: var(--text-subtle);
-    margin-bottom: 0.75rem;
-}
-
-.pkg-card__timeline {
-    font-size: var(--text-xs);
-    color: var(--text-subtle);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-}
-
-.pkg-card__features {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-.pkg-card__features li {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    padding-left: 1.25rem;
-    position: relative;
-    line-height: 1.4;
-}
-.pkg-card__features li::before {
-    content: '\2713';
-    position: absolute;
-    left: 0;
-    font-size: var(--text-xs);
-}
-.tier-card--build .pkg-card__features li::before { color: var(--build-accent); }
-.tier-card--transform .pkg-card__features li::before { color: var(--transform-accent); }
-.tier-card--care .pkg-card__features li::before { color: var(--care-accent); }
-
-.pkg-card__actions {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.pkg-card__cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-md);
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    text-decoration: none;
-    transition: all var(--duration-fast) var(--ease-out);
-    min-height: 44px;
-    width: 100%;
-    text-align: center;
-}
-.pkg-card__cta--primary {
-    color: var(--bg);
-}
-.tier-card--build .pkg-card__cta--primary { background: var(--build-accent); }
-.tier-card--build .pkg-card__cta--primary:hover { background: var(--build-accent-hover); }
-.tier-card--transform .pkg-card__cta--primary { background: var(--transform-accent); }
-.tier-card--transform .pkg-card__cta--primary:hover { background: var(--transform-accent-hover); }
-.tier-card--care .pkg-card__cta--primary { background: var(--care-accent); }
-.tier-card--care .pkg-card__cta--primary:hover { opacity: 0.85; }
-
-.pkg-card__cta--secondary {
-    color: var(--text-muted);
-    font-size: var(--text-xs);
-    padding: 0.5rem;
-}
-.pkg-card__cta--secondary:hover { color: var(--text); }
-
-/* Recommended badge */
-.pkg-card__badge {
-    position: absolute;
-    top: -1px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: var(--text-2xs);
-    font-weight: var(--font-semibold);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.25rem 1rem;
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    z-index: 2;
-    white-space: nowrap;
-}
-.tier-card--transform .pkg-card__badge {
-    background: var(--transform-accent);
-    color: #fff;
 }
 
 /* --- Phone CTA Block --- */
@@ -7148,32 +6512,8 @@
 .header__nav.is-open .header__link--cta-call { display: inline-flex; }
 .header__nav.is-open .header__link--cta-form { display: inline-flex; }
 
-/* --- V10 Responsive --- */
 @media (max-width: 1024px) {
-    .pkg-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        max-width: 480px;
-    }
-    .pkg-grid .tier-card {
-        padding: 1.5rem;
-    }
-    .pkg-grid .tier-card--featured {
-        padding-top: 2rem;
-    }
-    .pkg-card__name { font-size: var(--text-2xl); }
-    .pkg-card__price { font-size: var(--text-3xl); }
-    .pkg-card__price span {
-        display: inline;
-        margin-top: 0;
-        margin-left: 0.25rem;
-    }
     .phone-cta__number { font-size: var(--text-xl); }
-}
-
-@media (max-width: 480px) {
-    .pkg-card__name { font-size: var(--text-xl); }
-    .pkg-card__price { font-size: var(--text-2xl); }
 }
 
 /* ============================================================
@@ -7431,7 +6771,7 @@
     border-left-color: rgba(217, 119, 6, 0.3);
 }
 .tier-card--transform .offer-card__best-for {
-    color: rgba(139, 92, 246, 0.6);
+    color: rgba(167, 139, 250, 0.7);
     border-left-color: rgba(139, 92, 246, 0.3);
 }
 .tier-card--care .offer-card__best-for {
@@ -7547,7 +6887,7 @@
 }
 
 .tier-card--build .offer-card__features li::before { color: var(--build-accent); }
-.tier-card--transform .offer-card__features li::before { color: var(--transform-accent); }
+.tier-card--transform .offer-card__features li::before { color: var(--transform-text); }
 .tier-card--care .offer-card__features li::before { color: var(--care-accent); }
 
 /* --- Exclusions (collapsed details element) --- */

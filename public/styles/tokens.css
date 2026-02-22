@@ -32,6 +32,7 @@
   /* Transform — Violet (strategic tier) */
   --transform-accent: #8B5CF6;
   --transform-accent-hover: #7C3AED;
+  --transform-text: #A78BFA;         /* Violet 400 — WCAG AA compliant on dark bg */
   --transform-border: rgba(139, 92, 246, 0.25);
 
   /* Care — Blue (ongoing support tier) */
@@ -50,18 +51,6 @@
   --tier-build: var(--build-accent);           /* Amber #D97706 */
   --tier-transform: var(--transform-accent);   /* Violet #8B5CF6 */
   --tier-care: var(--care-accent);             /* Blue #2563EB */
-
-  /* V10 Package aliases (legacy — kept for backward compat) */
-  --pkg-starter: var(--build-accent);        /* Amber #D97706 */
-  --pkg-refresh: var(--transform-accent);    /* Violet #8B5CF6 */
-  --pkg-platform: var(--care-accent);        /* Blue #2563EB */
-
-  /* Legacy aliases (backward compat for detail pages) */
-  --focus-accent: var(--build-accent);
-  --focus-accent-hover: var(--build-accent-hover);
-  --focus-border: var(--build-border);
-  --exploratory-accent: var(--care-accent);
-  --exploratory-accent-muted: var(--care-accent-muted);
 
   /* Utility — Status Colors */
   --color-error: #ef4444;

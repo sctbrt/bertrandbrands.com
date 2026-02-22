@@ -10,6 +10,31 @@ import { hashToken } from '../_lib/crypto.js';
 import { buildCookie } from '../_lib/cookies.js';
 import { errorPageHtml } from '../_lib/html.js';
 
+// In-memory rate limiting (resets on cold start, per-instance)
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10;
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { windowStart: now, count: 1 });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX_REQUESTS;
+}
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap) {
+    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 5) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}, 5 * 60 * 1000);
+
 // Config
 const SESSION_TTL_MINUTES = parseInt(process.env.BOOKING_SESSION_TTL_MINUTES || '240', 10); // 4 hours
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
@@ -18,6 +43,17 @@ export default async function handler(req, res) {
   // Only allow GET
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Rate limit by IP
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  if (isRateLimited(ip)) {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    return res.status(429).send(errorPageHtml(
+      'Too Many Requests',
+      'Please wait a moment before trying again.',
+      { backHref: '/', backLabel: 'Back to Home' }
+    ));
   }
 
   // Initialize database tables if needed
