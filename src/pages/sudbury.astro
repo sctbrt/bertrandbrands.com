@@ -5,6 +5,7 @@
  * Google Ads: AW-17925090292 with phone + form conversion events.
  * Two schema blocks: Service (with geo) + FAQPage.
  * 3-field Formspree form (name/email/phone), sticky mobile CTA, scroll fade-in.
+ * Launch pricing: $499 for first 10 Sudbury clients (regular $750).
  * All CSS uses sb- prefix.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -17,11 +18,11 @@ const currentYear = new Date().getFullYear();
 ---
 
 <BaseLayout
-    title="Sudbury Web Design & Branding — Websites from $750 | Bertrand Brands"
-    description="Custom-coded websites for Sudbury small businesses. Fixed pricing from $750. No templates, no WordPress. Strategy-first web design by a real dev team. Based in Greater Sudbury, Ontario."
+    title="Sudbury Web Design & Branding — Starter Sites $499 (Launch) | Bertrand Brands"
+    description="Custom-coded websites for Sudbury small businesses. Launch pricing: $499 for our first 10 clients (regular $750). No templates, no WordPress. Strategy-first web design by a real dev team. Based in Greater Sudbury, Ontario."
     canonical="https://bertrandbrands.ca/sudbury"
-    ogTitle="Sudbury Web Design & Branding — Websites from $750 | Bertrand Brands"
-    ogDescription="Custom-coded websites from $750. Fixed pricing, fast turnaround. No templates. Based in Greater Sudbury, Ontario."
+    ogTitle="Sudbury Web Design & Branding — Starter Sites $499 (Launch) | Bertrand Brands"
+    ogDescription="Custom-coded websites from $499 — launch pricing for our first 10 Sudbury clients. Fixed pricing, fast turnaround. No templates. Based in Greater Sudbury, Ontario."
     schemaJson={{
         "@context": "https://schema.org",
         "@type": "Service",
@@ -53,7 +54,7 @@ const currentYear = new Date().getFullYear();
             "@type": "OfferCatalog",
             "name": "Website & Brand Services",
             "itemListElement": [
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site — One-Page + Contact" }, "price": "750", "priceCurrency": "CAD" },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site — One-Page + Contact" }, "price": "499", "priceCurrency": "CAD" },
                 { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation + Growth System" }, "description": "Full website rebuild with content strategy, conversion UX, and growth playbook" },
                 { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze — Monthly Care Plan" }, "price": "249", "priceCurrency": "CAD", "description": "Monthly website maintenance and updates" }
             ]
@@ -79,7 +80,7 @@ const currentYear = new Date().getFullYear();
                     "name": "How much does a website cost for a small business in Sudbury?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Bertrand Brands offers fixed-price website services starting at $750 CAD for a Starter Site — One-Page + Contact (7\u201310 days). Larger projects like our Website Foundation + Growth System are scoped to your needs. Monthly care plans start at $249/mo. No hourly billing."
+                        "text": "Bertrand Brands offers fixed-price website services. Starter Site — One-Page + Contact is currently $499 CAD (launch pricing for the first 10 clients, regular $750). Delivered in 7–10 days. Larger projects like our Website Foundation + Growth System are scoped to your needs. Monthly care plans start at $249/mo. No hourly billing."
                     }
                 },
                 {
@@ -339,8 +340,9 @@ const currentYear = new Date().getFullYear();
             }
             .sb-hero__cta {
                 display: inline-block;
-                background: var(--accent);
-                color: #0a0a0a;
+                position: relative;
+                background: var(--bg);
+                color: var(--text);
                 font-family: var(--font-body);
                 font-size: var(--text-base);
                 font-weight: 500;
@@ -348,11 +350,21 @@ const currentYear = new Date().getFullYear();
                 border-radius: var(--radius-md);
                 letter-spacing: 0.01em;
                 text-decoration: none;
-                transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
+                border: 1.5px solid transparent;
+                background-clip: padding-box;
+                transition: transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+            }
+            .sb-hero__cta::before {
+                content: "";
+                position: absolute;
+                inset: -1.5px;
+                border-radius: inherit;
+                background: linear-gradient(135deg, #D97706, #8B5CF6, #2563EB);
+                z-index: -1;
             }
             .sb-hero__cta:hover {
-                background: var(--accent-hover);
                 transform: translateY(-1px);
+                box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
             }
             .sb-hero__or {
                 font-family: var(--font-body);
@@ -532,22 +544,38 @@ const currentYear = new Date().getFullYear();
             }
             .sb-starter__cta {
                 display: inline-block;
-                background: var(--accent);
-                color: #0a0a0a;
+                position: relative;
+                background: rgba(255, 255, 255, 0.04);
+                color: var(--text);
                 font-family: var(--font-body);
                 font-size: var(--text-sm);
                 font-weight: 500;
                 padding: 0.75rem 1.75rem;
                 border-radius: var(--radius-md);
                 text-decoration: none;
-                transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
+                border: 1.5px solid transparent;
+                background-clip: padding-box;
+                transition: transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
                 margin-bottom: var(--space-sm);
             }
+            .sb-starter__cta::before {
+                content: "";
+                position: absolute;
+                inset: -1.5px;
+                border-radius: inherit;
+                background: linear-gradient(135deg, #D97706, #8B5CF6, #2563EB);
+                z-index: -1;
+            }
             .sb-starter__cta:hover {
-                background: var(--accent-hover);
                 transform: translateY(-1px);
+                box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
             }
             .sb-starter__price {
+                display: flex;
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            .sb-starter__price-row {
                 display: flex;
                 align-items: baseline;
                 gap: 0.5rem;
@@ -555,15 +583,36 @@ const currentYear = new Date().getFullYear();
             }
             .sb-starter__amount {
                 font-family: var(--font-display);
-                font-size: var(--text-lg);
-                font-weight: 500;
-                color: #e4e4e7;
+                font-size: var(--text-xl);
+                font-weight: 600;
+                color: var(--text);
+            }
+            .sb-starter__regular {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                font-weight: 400;
+                color: var(--text-subtle);
+                text-decoration: line-through;
+                text-decoration-color: var(--text-subtle);
             }
             .sb-starter__note {
                 font-family: var(--font-body);
                 font-size: var(--text-xs);
                 font-weight: 400;
                 color: #a1a1aa;
+            }
+            .sb-starter__launch-badge {
+                display: inline-block;
+                font-family: var(--font-body);
+                font-size: var(--text-2xs);
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--text-muted);
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--border);
+                padding: 0.2rem 0.5rem;
+                border-radius: var(--radius-sm);
             }
             @media (max-width: 480px) {
                 .sb-starter__card {
@@ -811,25 +860,35 @@ const currentYear = new Date().getFullYear();
             }
             .sb-form__input:focus {
                 outline: none;
-                border-color: var(--accent);
+                border-color: rgba(255, 255, 255, 0.25);
             }
             .sb-form__submit {
                 display: inline-block;
+                position: relative;
                 font-family: var(--font-body);
                 font-size: var(--text-base);
                 font-weight: 500;
                 padding: 0.875rem 2rem;
                 border-radius: var(--radius-md);
-                border: none;
+                border: 1.5px solid transparent;
+                background: var(--bg);
+                background-clip: padding-box;
+                color: var(--text);
                 cursor: pointer;
-                transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
+                transition: transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
                 align-self: flex-start;
-                background: var(--accent);
-                color: #0a0a0a;
+            }
+            .sb-form__submit::before {
+                content: "";
+                position: absolute;
+                inset: -1.5px;
+                border-radius: inherit;
+                background: linear-gradient(135deg, #D97706, #8B5CF6, #2563EB);
+                z-index: -1;
             }
             .sb-form__submit:hover {
-                background: var(--accent-hover);
                 transform: translateY(-1px);
+                box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
             }
             .sb-form__submit:disabled {
                 opacity: 0.6;
@@ -1037,21 +1096,32 @@ const currentYear = new Date().getFullYear();
             }
             .sb-sticky__cta {
                 display: inline-block;
-                background: var(--accent);
-                color: #0a0a0a;
+                position: relative;
+                background: var(--bg);
+                color: var(--text);
                 font-family: var(--font-body);
                 font-size: var(--text-sm);
                 font-weight: 500;
                 padding: 0.625rem 1.5rem;
                 border-radius: 6px;
                 text-decoration: none;
-                transition: background var(--duration-fast) ease;
+                border: 1.5px solid transparent;
+                background-clip: padding-box;
+                transition: transform var(--duration-fast) ease;
                 white-space: nowrap;
                 flex: 1;
                 text-align: center;
             }
+            .sb-sticky__cta::before {
+                content: "";
+                position: absolute;
+                inset: -1.5px;
+                border-radius: inherit;
+                background: linear-gradient(135deg, #D97706, #8B5CF6, #2563EB);
+                z-index: -1;
+            }
             .sb-sticky__cta:hover {
-                background: var(--accent-hover);
+                transform: translateY(-1px);
             }
             .sb-sticky__phone {
                 display: inline-block;
@@ -1162,8 +1232,12 @@ const currentYear = new Date().getFullYear();
                     </ul>
                     <a href="#get-started" class="sb-starter__cta">Get a free quote &rarr;</a>
                     <div class="sb-starter__price">
-                        <span class="sb-starter__amount">$750 CAD</span>
-                        <span class="sb-starter__note">Most businesses start here.</span>
+                        <div class="sb-starter__price-row">
+                            <span class="sb-starter__amount">$499 CAD</span>
+                            <span class="sb-starter__regular">$750</span>
+                            <span class="sb-starter__launch-badge">Launch pricing</span>
+                        </div>
+                        <span class="sb-starter__note">First 10 Sudbury clients. Then $750.</span>
                     </div>
                 </div>
             </div>
@@ -1222,7 +1296,7 @@ const currentYear = new Date().getFullYear();
                 <form class="sb-form__form" action="https://formspree.io/f/xnjjgoay" method="POST" id="sudburyForm">
                     <input type="hidden" name="source" value="sudbury_focus_studio">
                     <input type="hidden" name="_subject" value="New Lead — Sudbury Build">
-                    <input type="hidden" name="offering" value="Starter Site — One-Page + Contact ($750)">
+                    <input type="hidden" name="offering" value="Starter Site — One-Page + Contact ($499 launch / $750 regular)">
                     <input type="hidden" name="gclid" id="gclidField" value="">
                     <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off">
 
@@ -1314,7 +1388,7 @@ const currentYear = new Date().getFullYear();
     <!-- Sticky CTA (Mobile Only) -->
     <div class="sb-sticky" id="stickyCta" aria-hidden="true">
         <div class="sb-sticky__inner">
-            <a href="#get-started" class="sb-sticky__cta">Free quote &rarr;</a>
+            <a href="#get-started" class="sb-sticky__cta">From $499 &mdash; Get a quote &rarr;</a>
             <a href="tel:+17054133705" class="sb-sticky__phone" title="Call Bertrand Brands">Call us</a>
         </div>
     </div>
