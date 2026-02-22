@@ -18,10 +18,10 @@ const currentYear = new Date().getFullYear();
 
 <BaseLayout
     title="Sudbury Web Design & Branding — Websites from $750 | Bertrand Brands"
-    description="Sudbury web designer offering website builds, redesigns, and brand work for small businesses. Starter $750, Refresh, Platform packages. Fixed pricing. Based in Greater Sudbury, Ontario."
+    description="Custom-coded websites for Sudbury small businesses. Fixed pricing from $750. No templates, no WordPress. Strategy-first web design by a real dev team. Based in Greater Sudbury, Ontario."
     canonical="https://bertrandbrands.ca/sudbury"
     ogTitle="Sudbury Web Design & Branding — Websites from $750 | Bertrand Brands"
-    ogDescription="Website and brand work for Sudbury, Ontario businesses. Fixed pricing, fast turnaround. Based in Greater Sudbury."
+    ogDescription="Custom-coded websites from $750. Fixed pricing, fast turnaround. No templates. Based in Greater Sudbury, Ontario."
     schemaJson={{
         "@context": "https://schema.org",
         "@type": "Service",
@@ -415,6 +415,44 @@ const currentYear = new Date().getFullYear();
                 .sb-hero__spotlight--orange { width: 280px; height: 280px; }
                 .sb-hero__spotlight--warm { width: 240px; height: 240px; }
                 .sb-hero__spotlight--blue { width: 240px; height: 240px; }
+            }
+
+            /* ---- Proof Strip ---- */
+            .sb-proof {
+                padding: 0 0 var(--space-lg);
+            }
+            .sb-proof__grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--space-sm);
+                max-width: 620px;
+                margin: 0 auto;
+            }
+            .sb-proof__item {
+                text-align: center;
+                padding: var(--space-sm) var(--space-xs);
+            }
+            .sb-proof__number {
+                display: block;
+                font-family: var(--font-display);
+                font-size: var(--text-2xl);
+                font-weight: 300;
+                color: var(--text);
+                letter-spacing: -0.02em;
+                line-height: 1.1;
+            }
+            .sb-proof__label {
+                display: block;
+                font-family: var(--font-body);
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+                margin-top: 0.35rem;
+                letter-spacing: 0.02em;
+            }
+
+            @media (max-width: 480px) {
+                .sb-proof__number { font-size: var(--text-xl); }
+                .sb-proof__label { font-size: var(--text-2xs); }
             }
 
             /* ---- Starter Card (Primary Offering) ---- */
@@ -1126,13 +1164,33 @@ const currentYear = new Date().getFullYear();
             <div class="sb-hero__spotlight sb-hero__spotlight--blue"></div>
             <div class="sb-hero__content">
                 <p class="sb-hero__eyebrow">Sudbury &amp; Northern Ontario</p>
-                <h1 class="sb-hero__title">Your website isn&rsquo;t working.<br>Let&rsquo;s fix it.</h1>
-                <p class="sb-hero__subhead">It&rsquo;s not broken. It&rsquo;s unclear, outdated, or not doing its job. We fix websites so they&rsquo;re clear, trustworthy, and built to convert.</p>
+                <h1 class="sb-hero__title">A website that works<br>for your business.</h1>
+                <p class="sb-hero__subhead">Custom-coded sites with fixed pricing. No templates, no surprises. Strategy first, then we build. Delivered in days, not months.</p>
                 <div class="sb-hero__actions">
-                    <a href="#get-started" class="sb-hero__cta">Get started &rarr;</a>
+                    <a href="#get-started" class="sb-hero__cta">Get a free quote &rarr;</a>
                     <p class="sb-hero__or">or</p>
-                    <a href="tel:+17054133705" class="sb-hero__phone">Prefer to talk it out? Call <span class="sb-hero__phone-number">(705) 413-3705</span></a>
+                    <a href="tel:+17054133705" class="sb-hero__phone">Prefer to talk? Call <span class="sb-hero__phone-number">(705) 413-3705</span></a>
                     <a href="#pricing" class="sb-hero__secondary">See pricing &darr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proof Strip -->
+        <section class="sb-proof sb-fade">
+            <div class="sb-container">
+                <div class="sb-proof__grid">
+                    <div class="sb-proof__item">
+                        <span class="sb-proof__number">100%</span>
+                        <span class="sb-proof__label">Custom code &mdash; no templates</span>
+                    </div>
+                    <div class="sb-proof__item">
+                        <span class="sb-proof__number">5&ndash;10</span>
+                        <span class="sb-proof__label">Business days to deliver</span>
+                    </div>
+                    <div class="sb-proof__item">
+                        <span class="sb-proof__number">Fixed</span>
+                        <span class="sb-proof__label">Pricing &mdash; no hourly billing</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1146,13 +1204,13 @@ const currentYear = new Date().getFullYear();
                         <span class="sb-starter__badge-time">Delivered in 7–10 days</span>
                     </div>
                     <h2 class="sb-starter__title">Starter Site &mdash; One-Page + Contact</h2>
-                    <p class="sb-starter__desc">A fast, focused website that clearly explains what you do and makes it easy for customers to contact you.</p>
+                    <p class="sb-starter__desc">A clean, custom-coded website that explains what you do and turns visitors into customers. No templates. No WordPress.</p>
                     <ul class="sb-starter__list">
-                        <li>Clear messaging and contact flow</li>
-                        <li>Clean, mobile-first layout</li>
-                        <li>Fast turnaround with simple handoff</li>
+                        <li>Clear messaging that builds trust</li>
+                        <li>Mobile-first, fast-loading design</li>
+                        <li>Built by our dev team &mdash; code you own</li>
                     </ul>
-                    <a href="#get-started" class="sb-starter__cta">Get started &rarr;</a>
+                    <a href="#get-started" class="sb-starter__cta">Get a free quote &rarr;</a>
                     <div class="sb-starter__price">
                         <span class="sb-starter__amount">$750 CAD</span>
                         <span class="sb-starter__note">Most businesses start here.</span>
@@ -1169,22 +1227,22 @@ const currentYear = new Date().getFullYear();
                     <div class="sb-hiw__step">
                         <span class="sb-hiw__num">1</span>
                         <div>
-                            <h3 class="sb-hiw__heading">Tell us what you need</h3>
-                            <p class="sb-hiw__desc">Fill out the form below or call us. We&rsquo;ll collect your details either way.</p>
+                            <h3 class="sb-hiw__heading">Request a free quote</h3>
+                            <p class="sb-hiw__desc">Fill out the form or call us. We&rsquo;ll respond within 1 business day.</p>
                         </div>
                     </div>
                     <div class="sb-hiw__step">
                         <span class="sb-hiw__num">2</span>
                         <div>
-                            <h3 class="sb-hiw__heading">We confirm scope</h3>
-                            <p class="sb-hiw__desc">We&rsquo;ll outline what&rsquo;s included, confirm the timeline, and answer any questions.</p>
+                            <h3 class="sb-hiw__heading">We send your quote</h3>
+                            <p class="sb-hiw__desc">Clear scope, fixed price, and timeline. No surprises, no hidden fees.</p>
                         </div>
                     </div>
                     <div class="sb-hiw__step">
                         <span class="sb-hiw__num">3</span>
                         <div>
                             <h3 class="sb-hiw__heading">We build &amp; deliver</h3>
-                            <p class="sb-hiw__desc">Most projects are completed in 1&ndash;7 business days.</p>
+                            <p class="sb-hiw__desc">Custom-coded and delivered in days. You own the code.</p>
                         </div>
                     </div>
                 </div>
@@ -1194,8 +1252,8 @@ const currentYear = new Date().getFullYear();
         <!-- Get Started Form -->
         <section class="sb-form" id="get-started">
             <div class="sb-container">
-                <h2 class="sb-form__title">Get started</h2>
-                <p class="sb-form__subhead">Tell us what you need. We&rsquo;ll confirm scope and next steps within 1 business day.</p>
+                <h2 class="sb-form__title">Get a free quote</h2>
+                <p class="sb-form__subhead">Tell us about your project. We&rsquo;ll review your details and send a clear scope and price within 1 business day.</p>
 
                 <form class="sb-form__form" action="https://formspree.io/f/xnjjgoay" method="POST" id="sudburyForm">
                     <input type="hidden" name="source" value="sudbury_focus_studio">
@@ -1240,13 +1298,13 @@ const currentYear = new Date().getFullYear();
                         </div>
 
                         <div class="sb-form__field sb-form__field--step2">
-                            <label class="sb-form__label" for="details">What&rsquo;s not working?</label>
-                            <textarea id="details" name="details" class="sb-form__textarea" placeholder="What feels unclear, outdated, or ineffective about your current site?" rows="4"></textarea>
+                            <label class="sb-form__label" for="details">Tell us about your project</label>
+                            <textarea id="details" name="details" class="sb-form__textarea" placeholder="What are you looking for? New site, redesign, or something else?" rows="4"></textarea>
                         </div>
 
-                        <button type="submit" class="sb-form__submit" id="submitBtn">Fix my website &rarr;</button>
+                        <button type="submit" class="sb-form__submit" id="submitBtn">Send my details &rarr;</button>
 
-                        <p class="sb-form__disclaimer">No obligation. We&rsquo;ll review and respond before any work begins.</p>
+                        <p class="sb-form__disclaimer">Free, no-obligation quote. We&rsquo;ll respond within 1 business day.</p>
                     </div>
 
                     <div class="sb-form__feedback" id="formFeedback"></div>
@@ -1264,11 +1322,11 @@ const currentYear = new Date().getFullYear();
         <section class="sb-trust sb-fade">
             <div class="sb-container">
                 <div class="sb-trust__card">
-                    <h2 class="sb-trust__title">What clients usually come to us for</h2>
+                    <h2 class="sb-trust__title">Why Sudbury businesses choose us</h2>
                     <ul class="sb-trust__list">
-                        <li class="sb-trust__item">Confusing or unclear websites</li>
-                        <li class="sb-trust__item">Outdated design that doesn&rsquo;t build trust</li>
-                        <li class="sb-trust__item">Sites that aren&rsquo;t bringing in leads</li>
+                        <li class="sb-trust__item">Custom-coded &mdash; no page builders or WordPress themes</li>
+                        <li class="sb-trust__item">Fixed pricing &mdash; you know the cost before we start</li>
+                        <li class="sb-trust__item">Strategy first &mdash; brand + dev team under one roof</li>
                     </ul>
                 </div>
             </div>
@@ -1299,11 +1357,11 @@ const currentYear = new Date().getFullYear();
         <section class="sb-local sb-fade" id="about" aria-label="About Bertrand Brands in Sudbury">
             <div class="sb-container">
                 <div class="sb-local__card">
-                    <h2 class="sb-local__title">Website and brand help for Sudbury businesses</h2>
+                    <h2 class="sb-local__title">Sudbury web design &amp; brand studio</h2>
                     <div class="sb-local__content">
-                        <p>Bertrand Brands is a web and brand studio based in Greater Sudbury, Ontario. We help small businesses across Sudbury and Northern Ontario fix, rebuild, or launch websites that actually work: clear structure, honest messaging, and a design that earns trust.</p>
-                        <p>Whether you need a quick website fix, a full site redesign, or a brand identity built from scratch, every project has a fixed price and a clear timeline. No hourly billing, no open-ended scope. Most work is delivered in 5&ndash;10 business days.</p>
-                        <p>If your current site is outdated, confusing, or not bringing in leads, we can help. Sudbury businesses deserve web work that&rsquo;s straightforward and well-built, not overpriced and overcomplicated.</p>
+                        <p>Bertrand Brands is a web and brand studio based in Greater Sudbury, Ontario. We have a brand strategist and full-stack developer under one roof &mdash; no outsourcing, no freelancers. Every site is custom-coded from scratch.</p>
+                        <p>We work with small businesses across Sudbury and Northern Ontario. Every project has a fixed price and a clear timeline &mdash; no hourly billing, no open-ended scope. Starter sites are delivered in 7&ndash;10 business days.</p>
+                        <p>No page builders. No WordPress themes. No templates. Just clean, fast websites built with real code that you own. <a href="#get-started" style="color: var(--accent); text-decoration: none;">Get a free quote</a> or call <a href="tel:+17054133705" style="color: var(--accent); text-decoration: none;">(705) 413-3705</a>.</p>
                     </div>
                 </div>
             </div>
@@ -1315,7 +1373,7 @@ const currentYear = new Date().getFullYear();
         <div class="sb-container">
             <div class="sb-footer__trust">
                 <p class="sb-footer__location">Based in Greater Sudbury, Ontario.<br>Serving Northern Ontario &amp; Canada.</p>
-                <p class="sb-footer__privacy">Questions? <a href="tel:+17054133705" style="color: inherit;">Call (705) 413-3705</a> or fill out the form above.</p>
+                <p class="sb-footer__privacy">Questions? <a href="tel:+17054133705" style="color: inherit;">Call (705) 413-3705</a> or <a href="#get-started" style="color: inherit;">get a free quote</a>.</p>
             </div>
             <div class="sb-footer__bottom">
                 <p class="sb-footer__copy">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
@@ -1332,7 +1390,7 @@ const currentYear = new Date().getFullYear();
     <!-- Sticky CTA (Mobile Only) -->
     <div class="sb-sticky" id="stickyCta" aria-hidden="true">
         <div class="sb-sticky__inner">
-            <a href="#get-started" class="sb-sticky__cta">Get started &rarr;</a>
+            <a href="#get-started" class="sb-sticky__cta">Free quote &rarr;</a>
             <a href="tel:+17054133705" class="sb-sticky__phone" title="Call Bertrand Brands">Call us</a>
         </div>
     </div>
