@@ -7115,6 +7115,12 @@
         grid-template-columns: 1fr;
         max-width: 540px;
     }
+    /* Reset tablet orphan-centering — all cards full-width in 1-col */
+    .offer-grid .tier-card:last-child:nth-child(odd) {
+        grid-column: auto;
+        max-width: none;
+        margin: 0;
+    }
     .tier-group__name {
         font-size: var(--text-xl);
     }
