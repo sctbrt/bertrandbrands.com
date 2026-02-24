@@ -463,26 +463,20 @@ Ambient spotlights throughout the site use **organic breathing animations** to c
 ```css
 /* Dark Theme (Default) */
 --bg: #0a0a0a;
---bg-elevated: #111111;
+--bg-elevated: #161618;      /* +12 delta above --bg (above JND threshold) */
+--bg-subtle: #1c1c1e;        /* +18 delta (clearly visible) */
 --text: #fafafa;
 --text-muted: #a3a3a3;
 --text-subtle: #737373;
 --accent: #D97706;           /* Amber 600 */
 --accent-hover: #B45309;     /* Amber 700 */
---border: rgba(255, 255, 255, 0.08);
-
-/* Light Theme */
---bg: #fafaf8;
---bg-elevated: #ffffff;
---text: #111111;
---text-muted: #666666;
---accent: #B45309;           /* Amber 700 */
+--border: rgba(255, 255, 255, 0.10);
 
 /* Glass Properties */
 --glass-blur: 12px;
---glass-bg: rgba(255, 255, 255, 0.02);
---glass-border: rgba(255, 255, 255, 0.06);
---glass-edge-highlight: rgba(255, 255, 255, 0.08);
+--glass-bg: rgba(255, 255, 255, 0.04);
+--glass-border: rgba(255, 255, 255, 0.08);
+--glass-edge-highlight: rgba(255, 255, 255, 0.12);
 ```
 
 ### 6.2 Typography
@@ -959,9 +953,9 @@ All interactive service cards use a single card system defined in `main.css` wit
 ### 18.2 Card System Tokens (`tokens.css`)
 
 ```css
---card-bg: 0.05;           /* Background alpha */
---card-bg-hover: 0.10;     /* Hover background alpha */
---card-border: 0.12;       /* Border alpha */
+--card-bg: 0.08;           /* Background alpha (was 0.05) */
+--card-bg-hover: 0.14;     /* Hover background alpha (was 0.10) */
+--card-border: 0.16;       /* Border alpha (was 0.12) */
 --card-border-hover: 0.40; /* Hover border alpha */
 --card-radius: var(--radius-lg);  /* 12px */
 --card-padding: var(--space-lg);  /* 4rem */
@@ -972,7 +966,7 @@ All interactive service cards use a single card system defined in `main.css` wit
 --card-icon-size: 100px;    /* Watermark icon size */
 --card-icon-opacity: 0.06;  /* Watermark base opacity */
 --card-icon-opacity-hover: 0.10; /* Watermark hover opacity */
---wrapper-bg: 0.03;         /* Tier wrapper background alpha */
+--wrapper-bg: 0.05;         /* Tier wrapper background alpha (was 0.03) */
 --wrapper-border: 0.15;     /* Tier wrapper border alpha */
 --wrapper-radius: 16px;
 --wrapper-padding: var(--space-lg);
@@ -1163,6 +1157,7 @@ Added `contain: layout style` to:
 | 11.0.0 | Feb 2026 | V11 Service Tier Architecture: Restructured from 3 packages to 4-tier sub-brand model (B Conversation, B Build, B Transform, B Care). Homepage now shows 3 tier groups with OfferCard grid (Amber 3 offers + Violet 3 offers + Blue 3 plans). New components: OfferCard, TierGroupHeader, InlineIntakeForm, StickyMobileCTA. Created tier-aware intake at `/intake` replacing `/start` with URL params (`?tier=amber&offer=starter-onepage`). Created 3 tier hub pages (`/build`, `/transform`, updated `/care`). Created 9 individual detail pages (`/build/starter-onepage|starter-multipage|fullsite-booking`, `/transform/foundation-growth|smb-platform|brand-platform`, `/care/bronze|silver|gold`). Care plans renamed: Essentials→Bronze, Growth→Silver, Partner→Gold. Deleted V10 pages (`start.astro`, `packages/starter|refresh|platform.astro`). Added V10→V11 redirects (`/start`→`/intake`, `/packages/*`→tier pages, `/amber`→`/build`, `/violet`→`/transform`, `/blue`→`/care`). Updated all legacy redirect destinations. Nav: "Packages"→"Services", CTA→`/intake`. Updated all confirmation pages with tier hub cross-sell links. Added tier-specific Pushover source labels (`tier-intake-amber|violet|blue`). V11 CSS: `.tier-group`, `.offer-grid`, `.offer-card__*`, tier group header styles. 26 total pages (was 18). |
 | 11.1.0 | Feb 2026 | Performance, polish & technical debt. P0: Removed ~600 lines dead V10 CSS (`.focused-studio__*`, `.pkg-card__*`, V10 responsive rules) + legacy token aliases + deleted unused `PackageCard.astro`. P1: Deduplicated ~2,000 lines of shared detail page CSS into `ServiceDetailLayout.astro` using `--svc-r/g/b` custom properties (all 9 detail pages). P2: Added `/intake` to `sitemap.xml`. P3: Added `--transform-text: #A78BFA` (Violet 400, WCAG AA compliant) for violet text-on-dark contexts. P4: Added in-memory IP rate limiting (10 req/min) to `api/snapshot/book.js` and `api/booking/access.js`. P5: Added keyboard focus trap to mobile menu in `HeaderUniversal.astro`. P6: Consolidated duplicate `prefers-reduced-motion` media queries in `main.css`. P7: Replaced deprecated `e.keyCode` with `e.key` in homepage intro scroll lock. |
 | 11.2.0 | Feb 2026 | Layer depth pass: Widened `--bg-elevated` delta from +7 to +12 RGB points (above human JND threshold), `--bg-subtle` to +18. Bumped card fill (5%→8%), card border (12%→16%), glass (2%→4%), border (8%→10%) alphas for visible surfaces. Added resting card drop shadow (`0 2px 8px -2px`) for depth without hover. Fixed orphaned 3rd offer card at tablet breakpoint (was capped at 540px, now matches sibling column width via `calc(50% - 0.5rem)`). Added RGB tuple tokens (`--bg-rgb`, `--bg-elevated-rgb`, `--highlight-rgb`, `--scrim-rgb`) and replaced ~25 hardcoded rgba values in main.css with token-driven equivalents. Replaced hardcoded vignette overlays in hub pages (build, transform, care). Removed ~250 lines of theme prototype CSS (graphite/light/partial variants) and theme switcher script from BaseLayout. |
+| 11.2.1 | Feb 2026 | Documentation accuracy patch: Updated CLAUDE.md Section 6.1 color tokens to match V11.2.0 values (`--bg-elevated`, `--bg-subtle`, `--border`, `--glass-bg/border/edge-highlight`), removed stale Light Theme block. Updated Section 18.2 card system tokens (`--card-bg`, `--card-bg-hover`, `--card-border`, `--wrapper-bg`). Updated `tokens.css` version header from V5.0.0 to V11.2.0. Removed legacy V8.1 version tag from main.css mobile typography comment. Deleted 25 development screenshot .jpeg files from project root. |
 
 ---
 

@@ -5857,7 +5857,7 @@
         }
 
         /* ============================================================
-           MOBILE TYPOGRAPHY & SPACING (V8.1)
+           MOBILE TYPOGRAPHY & SPACING
            Tighten type hierarchy, add breathing room, reduce density
            ============================================================ */
         @media (max-width: 768px) {
