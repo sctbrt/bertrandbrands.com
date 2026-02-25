@@ -5,48 +5,7 @@ import {
   initializeDatabase,
   deletePricingSession
 } from '../_lib/db.js';
-
-const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
-
-/**
- * Parse cookies from header
- */
-function parseCookies(cookieHeader) {
-  if (!cookieHeader) return {};
-
-  return cookieHeader.split(';').reduce((cookies, cookie) => {
-    const [name, value] = cookie.trim().split('=');
-    if (name && value) {
-      cookies[name] = value;
-    }
-    return cookies;
-  }, {});
-}
-
-/**
- * Build cookie string to clear the session
- */
-function buildClearCookie(hostname) {
-  const parts = [
-    `bb_pricing_session=`,
-    `Path=/`,
-    `Max-Age=0`,
-    `HttpOnly`,
-    `SameSite=Lax`
-  ];
-
-  if (IS_PRODUCTION) {
-    parts.push('Secure');
-    // Clear on parent domain to match how it was set
-    if (hostname && hostname.endsWith('bertrandbrands.ca')) {
-      parts.push('Domain=.bertrandbrands.ca');
-    } else {
-      parts.push('Domain=.bertrandgroup.ca');
-    }
-  }
-
-  return parts.join('; ');
-}
+import { parseCookies, buildClearCookie } from '../_lib/cookies.js';
 
 export default async function handler(req, res) {
   // Only allow POST
@@ -62,7 +21,7 @@ export default async function handler(req, res) {
   const sessionId = cookies.bb_pricing_session;
 
   // Clear cookie regardless
-  res.setHeader('Set-Cookie', buildClearCookie(req.headers.host));
+  res.setHeader('Set-Cookie', buildClearCookie('bb_pricing_session', req.headers.host));
 
   // Delete session from database if exists
   if (sessionId) {

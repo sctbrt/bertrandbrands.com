@@ -1,6 +1,8 @@
 // Vercel Serverless Function: Website Snapshot Review Booking
 // Endpoint: /api/snapshot/book
 
+import { EMAIL_REGEX } from '../_lib/validation.js';
+
 // In-memory rate limiting (resets on cold start, per-instance)
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
@@ -54,9 +56,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing required fields: name, email, website' });
   }
 
-  // Validate email format (RFC 5321 compliant — canonical pattern in api/pricing/request-access.js)
-  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-  if (!emailRegex.test(email)) {
+  // Validate email format (RFC 5321 compliant — canonical pattern in api/_lib/validation.js)
+  if (!EMAIL_REGEX.test(email)) {
     return res.status(400).json({ error: 'Invalid email format' });
   }
 

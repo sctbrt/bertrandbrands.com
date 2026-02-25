@@ -9,6 +9,7 @@ import {
   createBookingToken
 } from '../_lib/db.js';
 import { sql } from '@vercel/postgres';
+import { EMAIL_REGEX } from '../_lib/validation.js';
 
 // Config
 const BOOKING_TOKEN_TTL_HOURS = 72; // Token valid for 3 days
@@ -152,7 +153,6 @@ export default async function handler(req, res) {
 
   // Validate email format
   const normalizedEmail = clientEmail.trim().toLowerCase();
-  const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
   if (!EMAIL_REGEX.test(normalizedEmail)) {
     return res.status(400).json({ error: 'Invalid email address' });
   }

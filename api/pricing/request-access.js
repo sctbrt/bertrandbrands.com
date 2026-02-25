@@ -30,9 +30,7 @@ function checkIpRateLimit(ip) {
   return false;
 }
 
-// Email validation regex (RFC 5321 compliant)
-// CANONICAL: If updating this pattern, also update api/snapshot/book.js
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+import { EMAIL_REGEX } from '../_lib/validation.js';
 
 /**
  * Generate secure random token and its hash

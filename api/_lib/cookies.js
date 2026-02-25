@@ -3,6 +3,50 @@
 const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
 
 /**
+ * Parse cookies from a Cookie header string
+ * @param {string} cookieHeader - Raw Cookie header value
+ * @returns {Object} Key-value map of cookie names to values
+ */
+export function parseCookies(cookieHeader) {
+  if (!cookieHeader) return {};
+
+  return cookieHeader.split(';').reduce((cookies, cookie) => {
+    const [name, value] = cookie.trim().split('=');
+    if (name && value) {
+      cookies[name] = value;
+    }
+    return cookies;
+  }, {});
+}
+
+/**
+ * Build a cookie string that clears/expires a session cookie
+ * @param {string} cookieName - Cookie name to clear (e.g. 'bb_pricing_session')
+ * @param {string} hostname - Request hostname for domain detection
+ */
+export function buildClearCookie(cookieName, hostname) {
+  const parts = [
+    `${cookieName}=`,
+    `Path=/`,
+    `Max-Age=0`,
+    `HttpOnly`,
+    `SameSite=Lax`
+  ];
+
+  if (IS_PRODUCTION) {
+    parts.push('Secure');
+    // Clear on parent domain to match how it was set
+    if (hostname && hostname.endsWith('bertrandbrands.ca')) {
+      parts.push('Domain=.bertrandbrands.ca');
+    } else {
+      parts.push('Domain=.bertrandgroup.ca');
+    }
+  }
+
+  return parts.join('; ');
+}
+
+/**
  * Build a secure cookie string
  * @param {string} name - Cookie name (e.g. 'bb_pricing_session')
  * @param {string} value - Cookie value (e.g. session ID)

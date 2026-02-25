@@ -319,7 +319,7 @@ import GesturePrevention from '../../components/GesturePrevention.astro';
               var data = await res.json();
               return data;
           } catch (err) {
-              console.error('Booking access check failed:', err);
+              // Graceful fallback — returns { hasAccess: false } below
               return { hasAccess: false };
           }
       }

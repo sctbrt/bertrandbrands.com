@@ -7,8 +7,7 @@ import {
   validateBookingSession,
   deleteBookingSession
 } from '../_lib/db.js';
-
-const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
+import { parseCookies, buildClearCookie } from '../_lib/cookies.js';
 
 // Calendly URL map — the ONLY place these URLs exist
 // Set active: true when Calendly events are ready for use
@@ -22,45 +21,6 @@ const CALENDLY_MAP = {
     active: true
   }
 };
-
-/**
- * Parse cookies from header
- */
-function parseCookies(cookieHeader) {
-  if (!cookieHeader) return {};
-
-  return cookieHeader.split(';').reduce((cookies, cookie) => {
-    const [name, value] = cookie.trim().split('=');
-    if (name && value) {
-      cookies[name] = value;
-    }
-    return cookies;
-  }, {});
-}
-
-/**
- * Build cookie string to clear the session
- */
-function buildClearCookie(hostname) {
-  const parts = [
-    `bb_booking_session=`,
-    `Path=/`,
-    `Max-Age=0`,
-    `HttpOnly`,
-    `SameSite=Lax`
-  ];
-
-  if (IS_PRODUCTION) {
-    parts.push('Secure');
-    if (hostname && hostname.endsWith('bertrandbrands.ca')) {
-      parts.push('Domain=.bertrandbrands.ca');
-    } else {
-      parts.push('Domain=.bertrandgroup.ca');
-    }
-  }
-
-  return parts.join('; ');
-}
 
 export default async function handler(req, res) {
   // Only allow GET
@@ -97,7 +57,7 @@ export default async function handler(req, res) {
 
     if (!session) {
       // Session expired or invalid - clear cookie
-      res.setHeader('Set-Cookie', buildClearCookie(req.headers.host));
+      res.setHeader('Set-Cookie', buildClearCookie('bb_booking_session', req.headers.host));
 
       return res.status(200).json({
         hasAccess: false,

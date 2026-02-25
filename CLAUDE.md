@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 11.0.0 (Current)
+## Version 11.2.2 (Current)
 
 This document is the **Bertrand Brands** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -1158,6 +1158,7 @@ Added `contain: layout style` to:
 | 11.1.0 | Feb 2026 | Performance, polish & technical debt. P0: Removed ~600 lines dead V10 CSS (`.focused-studio__*`, `.pkg-card__*`, V10 responsive rules) + legacy token aliases + deleted unused `PackageCard.astro`. P1: Deduplicated ~2,000 lines of shared detail page CSS into `ServiceDetailLayout.astro` using `--svc-r/g/b` custom properties (all 9 detail pages). P2: Added `/intake` to `sitemap.xml`. P3: Added `--transform-text: #A78BFA` (Violet 400, WCAG AA compliant) for violet text-on-dark contexts. P4: Added in-memory IP rate limiting (10 req/min) to `api/snapshot/book.js` and `api/booking/access.js`. P5: Added keyboard focus trap to mobile menu in `HeaderUniversal.astro`. P6: Consolidated duplicate `prefers-reduced-motion` media queries in `main.css`. P7: Replaced deprecated `e.keyCode` with `e.key` in homepage intro scroll lock. |
 | 11.2.0 | Feb 2026 | Layer depth pass: Widened `--bg-elevated` delta from +7 to +12 RGB points (above human JND threshold), `--bg-subtle` to +18. Bumped card fill (5%→8%), card border (12%→16%), glass (2%→4%), border (8%→10%) alphas for visible surfaces. Added resting card drop shadow (`0 2px 8px -2px`) for depth without hover. Fixed orphaned 3rd offer card at tablet breakpoint (was capped at 540px, now matches sibling column width via `calc(50% - 0.5rem)`). Added RGB tuple tokens (`--bg-rgb`, `--bg-elevated-rgb`, `--highlight-rgb`, `--scrim-rgb`) and replaced ~25 hardcoded rgba values in main.css with token-driven equivalents. Replaced hardcoded vignette overlays in hub pages (build, transform, care). Removed ~250 lines of theme prototype CSS (graphite/light/partial variants) and theme switcher script from BaseLayout. |
 | 11.2.1 | Feb 2026 | Documentation accuracy patch: Updated CLAUDE.md Section 6.1 color tokens to match V11.2.0 values (`--bg-elevated`, `--bg-subtle`, `--border`, `--glass-bg/border/edge-highlight`), removed stale Light Theme block. Updated Section 18.2 card system tokens (`--card-bg`, `--card-bg-hover`, `--card-border`, `--wrapper-bg`). Updated `tokens.css` version header from V5.0.0 to V11.2.0. Removed legacy V8.1 version tag from main.css mobile typography comment. Deleted 25 development screenshot .jpeg files from project root. |
+| 11.2.2 | Feb 2026 | Polish & hygiene batch: P0 — Replaced 2 hardcoded colors in main.css with design tokens (`var(--text)`, `var(--glass-edge-highlight)`), updated stale version header. P1 — DRY extraction: created `api/_lib/validation.js` (canonical `EMAIL_REGEX`), extended `cookies.js` with `parseCookies()` and `buildClearCookie()`, removed ~160 lines of duplicated code across 7 API files. P2 — Removed duplicate `.gitignore` entries. P3 — Deleted 5 stale root documentation files (~35 KB). P4 — Added `rel="noopener noreferrer"` to all `target="_blank"` links in `sitemapX.astro`. P5 — Replaced production `console.error` in `booking/schedule.astro` with comment. |
 
 ---
 
@@ -1596,8 +1597,9 @@ Common utilities extracted from the pricing and booking access endpoints:
 | Module | Exports | Used By |
 |--------|---------|---------|
 | `crypto.js` | `hashToken(rawToken)` — SHA-256 hash | pricing/access, booking/access |
-| `cookies.js` | `buildCookie(name, value, maxAgeSeconds)` — Secure cookie builder (HttpOnly, SameSite=Lax, Secure in production, `.bertrandgroup.ca` domain) | pricing/access, booking/access |
+| `cookies.js` | `buildCookie(name, value, maxAgeSeconds, options?)` — Secure cookie builder; `parseCookies(cookieHeader)` — Cookie header parser; `buildClearCookie(cookieName, hostname)` — Expiry cookie builder | pricing/*, booking/*, all session endpoints |
 | `html.js` | `escapeHtml(str)`, `errorPageHtml(title, message, options?)` — HTML escaping + styled error page template with configurable back link | pricing/access, booking/access |
+| `validation.js` | `EMAIL_REGEX` — RFC 5321 email validation regex (canonical, single source of truth) | pricing/request-access, snapshot/book, booking/create-token |
 
 ---
 
