@@ -2873,7 +2873,7 @@
 
         /* Surrounding text fades to translucent */
         .section__title--clear-phrase {
-            font-size: clamp(1.75rem, 4vw, 3.25rem);
+            font-size: clamp(2rem, 5vw, 4rem);
         }
 
         .section__title--clear-phrase .text-fade {
@@ -5869,7 +5869,7 @@
 
             /* --- R2: Section spacing — reduce massive gaps between sections --- */
             .section {
-                padding: var(--space-lg) 0;             /* 12rem → 4rem */
+                padding: 5rem 0;                         /* 12rem → 5rem */
             }
 
             .section__header {
@@ -6002,7 +6002,7 @@
         /* Extra-small screens: further tightening */
         @media (max-width: 480px) {
             .section {
-                padding: var(--space-md) 0;               /* 4rem → 2rem */
+                padding: 3rem 0;                           /* 4rem → 3rem */
             }
 
             .section__title {
@@ -7122,12 +7122,12 @@
 @media (max-width: 768px) {
     .offer-grid {
         grid-template-columns: 1fr;
-        max-width: 540px;
     }
     /* Reset tablet orphan-centering — all cards full-width in 1-col */
     .offer-grid .tier-card:last-child:nth-child(odd) {
         grid-column: auto;
         max-width: none;
+        justify-self: stretch;
         margin: 0;
     }
     .tier-group__name {
@@ -7184,27 +7184,22 @@
         color: var(--text-muted);
     }
 
-    /* --- Process heading: single line on mobile --- */
-    .section__title--clear-phrase {
-        font-size: clamp(1.35rem, 5.8vw, 2rem);
-    }
-
     /* --- Services intro proportioning (mobile) --- */
     #packages .section__header {
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.75rem;
     }
     .intake-prompt {
-        padding: 1.25rem 1rem;
+        padding: 1.5rem 1.25rem;
         margin-bottom: 2rem;
     }
     .intake-prompt__text {
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
         font-size: var(--text-sm);
     }
     .intake-prompt__footer {
-        margin-top: 0.75rem;
-        padding-top: 0.625rem;
-        gap: 0.5rem;
+        margin-top: 1rem;
+        padding-top: 0.875rem;
+        gap: 0.75rem;
     }
     .intake-prompt__phone-link,
     .intake-prompt__cta {
@@ -7543,8 +7538,8 @@
         min-width: 0;
         -webkit-flex: none;
         flex: none;
-        margin: 0.1875rem 0;
-        padding: 0.625rem 0.875rem;
+        margin: 0.3rem 0;
+        padding: 0.875rem 1rem;
     }
 
     .tier-selector__label {
@@ -7552,7 +7547,7 @@
     }
 
     .tier-selector__sub {
-        font-size: 0.625rem;
+        font-size: 0.6875rem;
     }
 }
 
