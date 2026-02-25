@@ -16,6 +16,7 @@ import BaseLayout from './BaseLayout.astro';
 import SkipLink from '../components/SkipLink.astro';
 import HeaderUniversal from '../components/HeaderUniversal.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
+import VersionStamp from '../components/VersionStamp.astro';
 
 interface Props {
     title: string;
@@ -243,4 +244,5 @@ const svcLabelColor = labelColor || `rgba(${r}, ${g}, ${b}, 1)`;
         <slot />
     </div>
     <VisitorNotify />
+    <VersionStamp />
 </BaseLayout>

@@ -12,6 +12,7 @@ import BaseLayout from './BaseLayout.astro';
 import SkipLink from '../components/SkipLink.astro';
 import HeaderIntake from '../components/HeaderIntake.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
+import VersionStamp from '../components/VersionStamp.astro';
 
 interface Props {
     title: string;
@@ -51,4 +52,5 @@ const {
     <HeaderIntake backHref={backHref} backLabel={backLabel} />
     <slot />
     <VisitorNotify />
+    <VersionStamp />
 </BaseLayout>

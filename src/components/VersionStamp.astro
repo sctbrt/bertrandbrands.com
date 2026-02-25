@@ -1,0 +1,23 @@
+---
+/**
+ * VersionStamp — Barely-visible version indicator below footer.
+ * Update the version string here when CLAUDE.md version bumps.
+ * Self-contained styles — no main.css dependency.
+ */
+const version = 'v11.2.2';
+---
+
+<div class="version-stamp" aria-hidden="true">{version}</div>
+
+<style is:inline>
+    .version-stamp {
+        text-align: right;
+        padding: 3rem 1.5rem 1rem;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        color: rgba(255, 255, 255, 0.12);
+        user-select: none;
+        pointer-events: none;
+    }
+</style>
