@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 11.2.2 (Current)
+## Version 11.2.3 (Current)
 
 This document is the **Bertrand Brands** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -51,6 +51,7 @@ This document is the **Bertrand Brands** studio site guide. For full ecosystem c
 3. Confirm with Scott
 4. Repeat until threshold met
 5. Deploy once with meaningful commit message
+6. **Bump version on every batch** — update version in `VersionStamp.astro`, CLAUDE.md header, and version history table. Follow semver: patch (x.x.X) for polish/fixes, minor (x.X.0) for features/restructuring, major (X.0.0) for architecture changes.
 
 ### 1.3 Core Operating Philosophy
 
@@ -1159,6 +1160,7 @@ Added `contain: layout style` to:
 | 11.2.0 | Feb 2026 | Layer depth pass: Widened `--bg-elevated` delta from +7 to +12 RGB points (above human JND threshold), `--bg-subtle` to +18. Bumped card fill (5%→8%), card border (12%→16%), glass (2%→4%), border (8%→10%) alphas for visible surfaces. Added resting card drop shadow (`0 2px 8px -2px`) for depth without hover. Fixed orphaned 3rd offer card at tablet breakpoint (was capped at 540px, now matches sibling column width via `calc(50% - 0.5rem)`). Added RGB tuple tokens (`--bg-rgb`, `--bg-elevated-rgb`, `--highlight-rgb`, `--scrim-rgb`) and replaced ~25 hardcoded rgba values in main.css with token-driven equivalents. Replaced hardcoded vignette overlays in hub pages (build, transform, care). Removed ~250 lines of theme prototype CSS (graphite/light/partial variants) and theme switcher script from BaseLayout. |
 | 11.2.1 | Feb 2026 | Documentation accuracy patch: Updated CLAUDE.md Section 6.1 color tokens to match V11.2.0 values (`--bg-elevated`, `--bg-subtle`, `--border`, `--glass-bg/border/edge-highlight`), removed stale Light Theme block. Updated Section 18.2 card system tokens (`--card-bg`, `--card-bg-hover`, `--card-border`, `--wrapper-bg`). Updated `tokens.css` version header from V5.0.0 to V11.2.0. Removed legacy V8.1 version tag from main.css mobile typography comment. Deleted 25 development screenshot .jpeg files from project root. |
 | 11.2.2 | Feb 2026 | Polish & hygiene batch: P0 — Replaced 2 hardcoded colors in main.css with design tokens (`var(--text)`, `var(--glass-edge-highlight)`), updated stale version header. P1 — DRY extraction: created `api/_lib/validation.js` (canonical `EMAIL_REGEX`), extended `cookies.js` with `parseCookies()` and `buildClearCookie()`, removed ~160 lines of duplicated code across 7 API files. P2 — Removed duplicate `.gitignore` entries. P3 — Deleted 5 stale root documentation files (~35 KB). P4 — Added `rel="noopener noreferrer"` to all `target="_blank"` links in `sitemapX.astro`. P5 — Replaced production `console.error` in `booking/schedule.astro` with comment. |
+| 11.2.3 | Feb 2026 | Full audit & polish pass: P0 — Deleted ~947 lines of dead V10 CSS (6 class families: `.care-plan-card`, `.contact-form`, `.core-systems`, `.exploratory`, `.exploratory-sessions`, `.start-module` + associated keyframes & responsive rules). P1 — Replaced ~42 hardcoded color values with design tokens (`var(--text)`, `var(--build-accent)`, `var(--transform-accent)`, `var(--care-accent)`, `rgba(var(--highlight-rgb), ...)`, `rgba(var(--scrim-rgb), ...)`). P2 — Replaced 7 hardcoded `font-weight` values with tokens. P3 — Verified all `target="_blank"` links have `rel="noopener noreferrer"` (all clean). P4 — Added missing meta description to `booking/schedule.astro`. P5 — Removed unused `findValidMagicLink()` export and unused `ip` param from `countRecentRequests()` in `db.js`; standardized `notify.js` response to `{ ok: true }`. P6 — Updated 13 stale version comments (removed V5.0/V5.5 tags, fixed V10 tier naming). P7 — Added IP-based rate limiting (10 req/min) to `api/booking/create-token.js`. |
 
 ---
 

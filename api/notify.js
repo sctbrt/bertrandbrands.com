@@ -245,7 +245,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Failed to send notification' });
     }
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ ok: true });
   } catch (error) {
     console.error('Notification error:', error);
     return res.status(500).json({ error: 'Internal server error' });

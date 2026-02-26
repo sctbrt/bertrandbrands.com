@@ -120,21 +120,6 @@ export async function createMagicLink({ email, tokenHash, expiresAt }) {
 }
 
 /**
- * Find and validate a magic link by token hash
- * Returns null if not found, expired, or already used
- */
-export async function findValidMagicLink(tokenHash) {
-  const result = await sql`
-    SELECT id, email, expires_at, used_at
-    FROM pricing_magic_links
-    WHERE token_hash = ${tokenHash}
-      AND used_at IS NULL
-      AND expires_at > NOW()
-  `;
-  return result.rows[0] || null;
-}
-
-/**
  * Mark a magic link as used (atomic operation)
  * Returns the link if successfully marked, null if already used or invalid
  */
@@ -206,7 +191,7 @@ export async function deletePricingSession(sessionId) {
  * Count recent magic link requests for rate limiting
  * Returns count of requests in the last hour for given email or IP
  */
-export async function countRecentRequests({ email, ip }) {
+export async function countRecentRequests({ email }) {
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
 
   // Count by email

@@ -11,6 +11,38 @@ import {
 import { sql } from '@vercel/postgres';
 import { EMAIL_REGEX } from '../_lib/validation.js';
 
+// In-memory rate limiting (resets on cold start, per-instance)
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10; // max 10 requests per minute per IP
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { windowStart: now, count: 1 });
+    return false;
+  }
+
+  entry.count++;
+  if (entry.count > RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+
+  return false;
+}
+
+// Periodic cleanup to prevent memory leak (every 5 minutes)
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap) {
+    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 5) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}, 5 * 60 * 1000);
+
 // Config
 const BOOKING_TOKEN_TTL_HOURS = 72; // Token valid for 3 days
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
@@ -128,6 +160,15 @@ export default async function handler(req, res) {
   const authHeader = req.headers['x-admin-secret'];
   if (!authHeader || authHeader !== adminSecret) {
     return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  // Rate limiting by IP
+  const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
+             req.headers['x-real-ip'] ||
+             'unknown';
+
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many requests' });
   }
 
   // Initialize database tables if needed
