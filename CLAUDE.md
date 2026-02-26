@@ -51,7 +51,17 @@ This document is the **Bertrand Brands** studio site guide. For full ecosystem c
 3. Confirm with Scott
 4. Repeat until threshold met
 5. Deploy once with meaningful commit message
-6. **Bump version on every batch** — update version in `VersionStamp.astro`, CLAUDE.md header, and version history table. Follow semver: patch (x.x.X) for polish/fixes, minor (x.X.0) for features/restructuring, major (X.0.0) for architecture changes.
+6. **Bump version on every deploy** — update version in `VersionStamp.astro`, CLAUDE.md header, and version history table
+
+**Version Numbering (MAJOR.MINOR.PATCH):**
+
+| Level | When to bump | What it signals | Typical scope |
+|-------|-------------|-----------------|---------------|
+| **MAJOR** (X.0.0) | Rebrand, framework migration, service architecture overhaul, new tier/offering structure | Clients would notice. The site looks or works fundamentally differently. | 15+ files, page deletions/creations, routing changes |
+| **MINOR** (x.X.0) | New pages or components, visible design changes, new API endpoints, significant code restructuring, multi-priority passes with new user-facing functionality | Internally significant. Adds capabilities or makes visible improvements. | 5–15 files, may include new components or layouts |
+| **PATCH** (x.x.X) | Bug fixes, dead code removal, token standardization, comment cleanup, security hardening, documentation updates, API hygiene | Nobody notices but the codebase is better. | 1–7 files, maintenance work only |
+
+**Rule of thumb:** If a visitor or client would see the difference → MAJOR. If the dev team benefits but visitors wouldn't notice → MINOR if it adds capability, PATCH if it's pure cleanup.
 
 ### 1.3 Core Operating Philosophy
 
