@@ -6,6 +6,9 @@
 import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
 import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -16,17 +19,24 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/transform/brand-platform"
     ogTitle="Brand Design + Platform Development — Bertrand Brands"
     ogDescription="Full rebrand with identity system, logo, typography, website or platform build, and brand guidelines. 8-16 weeks."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Brand Design + Platform Development",
-        "description": "Full rebrand with identity system, logo, typography, color system, website or platform build, and brand guidelines.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
+    serviceName="Brand Design + Platform Development"
+    serviceTier="Transform"
+    serviceSlug="brand-platform"
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Transform", url: "https://bertrandbrands.ca/transform" },
+            { name: "Brand + Platform", url: "https://bertrandbrands.ca/transform/brand-platform" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "Brand Design + Platform Development",
+            "url": "https://bertrandbrands.ca/transform/brand-platform",
+            "description": "Full rebrand with identity system, logo, typography, color system, website or platform build, and brand guidelines.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED
         }
-    }}
+    )}
     spotlightColor="rgba(139, 92, 246, 0.15)"
     accentRgb="139, 92, 246"
     labelColor="#A78BFA"
@@ -42,7 +52,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/transform" class="service-subbrand">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                 <span class="service-subbrand__name">Brand + Platform</span>
             </a>
 

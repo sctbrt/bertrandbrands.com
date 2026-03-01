@@ -1,74 +1,55 @@
 // GET /api/booking/access
 // Verifies booking access token, creates session, sets cookie, redirects
 
-import {
-  initializeDatabase,
-  consumeBookingToken,
-  createBookingSession
-} from '../_lib/db.js';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { sql } from '@vercel/postgres';
+import { initializeDatabase, consumeBookingToken, createBookingSession } from '../_lib/db.js';
 import { hashToken } from '../_lib/crypto.js';
 import { buildCookie } from '../_lib/cookies.js';
 import { errorPageHtml } from '../_lib/html.js';
+import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
+import type { ClientRow } from '../_lib/types.js';
 
 // In-memory rate limiting (resets on cold start, per-instance)
-const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 10;
-
-function isRateLimited(ip) {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
-    rateLimitMap.set(ip, { windowStart: now, count: 1 });
-    return false;
-  }
-  entry.count++;
-  return entry.count > RATE_LIMIT_MAX_REQUESTS;
-}
-
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, entry] of rateLimitMap) {
-    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 5) {
-      rateLimitMap.delete(ip);
-    }
-  }
-}, 5 * 60 * 1000);
+const isRateLimited = createRateLimiter(60_000, 10);
 
 // Config
 const SESSION_TTL_MINUTES = parseInt(process.env.BOOKING_SESSION_TTL_MINUTES || '240', 10); // 4 hours
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   // Only allow GET
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   // Rate limit by IP
-  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  const ip = getClientIp(req.headers);
   if (isRateLimited(ip)) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.status(429).send(errorPageHtml(
+    res.status(429).send(errorPageHtml(
       'Too Many Requests',
       'Please wait a moment before trying again.',
       { backHref: '/', backLabel: 'Back to Home' }
     ));
+    return;
   }
 
   // Initialize database tables if needed
   await initializeDatabase();
 
-  const { token } = req.query;
+  const token = req.query.token as string | undefined;
 
   // Validate token presence
   if (!token || typeof token !== 'string' || token.length !== 64) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.status(400).send(errorPageHtml(
+    res.status(400).send(errorPageHtml(
       'Invalid Link',
       'This link appears to be malformed. Please request a new booking access link from your contact at Bertrand Brands.',
       { backHref: '/book', backLabel: 'Back to Booking' }
     ));
+    return;
   }
 
   try {
@@ -79,17 +60,16 @@ export default async function handler(req, res) {
 
     if (!bookingToken) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      return res.status(400).send(errorPageHtml(
+      res.status(400).send(errorPageHtml(
         'Link Expired or Already Used',
         'This booking link has either expired or has already been used. Please contact Bertrand Brands for a new link.',
         { backHref: '/book', backLabel: 'Back to Booking' }
       ));
+      return;
     }
 
     // Look up client email from the token's client_id
-    // We need to query it since the token table doesn't store email
-    const { sql } = await import('@vercel/postgres');
-    const clientResult = await sql`
+    const clientResult = await sql<ClientRow>`
       SELECT contact_email FROM clients WHERE id = ${bookingToken.client_id}
     `;
     const clientEmail = clientResult.rows[0]?.contact_email || '';
@@ -110,12 +90,12 @@ export default async function handler(req, res) {
 
     // Redirect to booking schedule page
     res.setHeader('Location', `${APP_URL}/booking/schedule`);
-    return res.status(302).end();
+    res.status(302).end();
 
   } catch (error) {
     console.error('Booking access verification error:', error);
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.status(500).send(errorPageHtml(
+    res.status(500).send(errorPageHtml(
       'Something Went Wrong',
       'We encountered an error processing your request. Please try again or contact Bertrand Brands for assistance.',
       { backHref: '/book', backLabel: 'Back to Booking' }

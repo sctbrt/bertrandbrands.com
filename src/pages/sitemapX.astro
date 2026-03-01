@@ -8,6 +8,8 @@ import SkipLink from '../components/SkipLink.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import VersionStamp from '../components/VersionStamp.astro';
+import { Image } from 'astro:assets';
+import logomark from '../assets/bg-brands-logomark.png';
 ---
 
 <BaseLayout
@@ -86,7 +88,7 @@ import VersionStamp from '../components/VersionStamp.astro';
 
     <main class="sitemap" id="main-content">
         <header class="sitemap__header">
-            <img src="/assets/bg-brands-logomark.png" alt="" class="sitemap__logomark" width="40" height="40" fetchpriority="high">
+            <Image src={logomark} alt="" class="sitemap__logomark" width={40} height={40} format="webp" loading="eager" fetchpriority="high" />
             <h1 class="sitemap__title">Ecosystem Sitemap</h1>
             <p class="sitemap__subtitle">All pages across the Scott Bertrand digital properties</p>
         </header>

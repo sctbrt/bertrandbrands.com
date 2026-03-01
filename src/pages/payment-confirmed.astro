@@ -14,6 +14,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
 
 <BaseLayout
     title="Payment Confirmed — Bertrand Brands"
+    description="Your payment has been received. Book your project kickoff call to get started."
     robots="noindex, nofollow"
     includeMainCss={false}
 >
@@ -588,6 +589,16 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 requestAnimationFrame(animateBgGlow);
             }
             requestAnimationFrame(animateBgGlow);
+        })();
+    </script>
+
+    {/* GA4: payment confirmation conversion */}
+    <script is:inline>
+        (function() {
+            if (typeof bbConvert !== 'function' || sessionStorage.getItem('bb_payment_tracked')) return;
+            sessionStorage.setItem('bb_payment_tracked', '1');
+            var serviceKey = new URLSearchParams(window.location.search).get('service') || 'unknown';
+            bbConvert('payment_confirmed', 'payment_' + serviceKey, 1);
         })();
     </script>
 

@@ -4,6 +4,8 @@ import HeaderUniversal from '../components/HeaderUniversal.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import VersionStamp from '../components/VersionStamp.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
+import { Image } from 'astro:assets';
+import scottWordmark from '../assets/scott-bertrand-logo-wordmark-light.png';
 
 const currentYear = new Date().getFullYear();
 
@@ -832,7 +834,7 @@ const schemaJson = {
               <div class="intro__orbit-light intro__orbit-light--yellow"></div>
               <div class="intro__orbit-light intro__orbit-light--blue"></div>
           </div>
-          <img src="/assets/scott-bertrand-logo-wordmark-light.png" alt="Scott Bertrand" class="intro__logo-wordmark" width="543" height="50" fetchpriority="high">
+          <Image src={scottWordmark} alt="Scott Bertrand" class="intro__logo-wordmark" width={543} height={50} format="webp" loading="eager" fetchpriority="high" />
       </div>
       <div class="intro__prompt" id="introPrompt">Tap to begin</div>
   </div>

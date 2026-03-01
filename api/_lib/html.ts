@@ -1,9 +1,11 @@
 // Shared HTML utilities for API endpoints
 
+import type { ErrorPageOptions } from './types.js';
+
 /**
  * Escape HTML entities for safe interpolation
  */
-export function escapeHtml(str) {
+export function escapeHtml(str: string): string {
   return str
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -14,13 +16,12 @@ export function escapeHtml(str) {
 
 /**
  * Generate a styled error page HTML
- * @param {string} title - Error title
- * @param {string} message - Error message
- * @param {Object} [options]
- * @param {string} [options.backHref='/#services'] - Back link URL
- * @param {string} [options.backLabel='Back to Services'] - Back link text
  */
-export function errorPageHtml(title, message, { backHref = '/#services', backLabel = 'Back to Services' } = {}) {
+export function errorPageHtml(
+  title: string,
+  message: string,
+  { backHref = '/#services', backLabel = 'Back to Services' }: ErrorPageOptions = {}
+): string {
   title = escapeHtml(title);
   message = escapeHtml(message);
   return `

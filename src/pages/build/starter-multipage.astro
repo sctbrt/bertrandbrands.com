@@ -7,6 +7,9 @@
 import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
 import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -17,17 +20,24 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/build/starter-multipage"
     ogTitle="Starter Site — Multi-Page + Contact | Bertrand Brands"
     ogDescription="A focused multi-page website with service or product pages. Scoped pricing, 2-3 weeks."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Starter Site — Multi-Page + Contact",
-        "description": "A focused multi-page website with service or product pages, built for businesses that need more room to present what they do.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
+    serviceName="Starter Site — Multi-Page + Contact"
+    serviceTier="Build"
+    serviceSlug="starter-multipage"
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Build", url: "https://bertrandbrands.ca/build" },
+            { name: "Starter Multi-Page", url: "https://bertrandbrands.ca/build/starter-multipage" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "Starter Site — Multi-Page + Contact",
+            "url": "https://bertrandbrands.ca/build/starter-multipage",
+            "description": "A focused multi-page website with service or product pages, built for businesses that need more room to present what they do.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED
         }
-    }}
+    )}
     spotlightColor="rgba(217, 119, 6, 0.15)"
     accentRgb="217, 119, 6"
 >
@@ -42,7 +52,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/build" class="service-subbrand">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                 <span class="service-subbrand__name">Starter Multi-Page</span>
             </a>
 

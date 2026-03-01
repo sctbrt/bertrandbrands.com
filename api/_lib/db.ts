@@ -2,12 +2,22 @@
 // Uses @vercel/postgres for serverless-friendly connection pooling
 
 import { sql } from '@vercel/postgres';
+import type {
+  MagicLinkRow,
+  PricingSessionRow,
+  BookingTokenRow,
+  BookingSessionRow,
+  CreateMagicLinkParams,
+  CreatePricingSessionParams,
+  CreateBookingTokenParams,
+  CreateBookingSessionParams,
+} from './types.js';
 
 /**
  * Initialize database tables if they don't exist
  * Called on first request or can be run manually
  */
-export async function initializeDatabase() {
+export async function initializeDatabase(): Promise<{ success: boolean; error?: string }> {
   try {
     // Create pricing_magic_links table
     await sql`
@@ -103,15 +113,15 @@ export async function initializeDatabase() {
     return { success: true };
   } catch (error) {
     console.error('Database initialization error:', error);
-    return { success: false, error: error.message };
+    return { success: false, error: (error as Error).message };
   }
 }
 
 /**
  * Create a magic link record
  */
-export async function createMagicLink({ email, tokenHash, expiresAt }) {
-  const result = await sql`
+export async function createMagicLink({ email, tokenHash, expiresAt }: CreateMagicLinkParams): Promise<{ id: string }> {
+  const result = await sql<{ id: string }>`
     INSERT INTO pricing_magic_links (email, token_hash, expires_at)
     VALUES (${email}, ${tokenHash}, ${expiresAt})
     RETURNING id
@@ -123,8 +133,8 @@ export async function createMagicLink({ email, tokenHash, expiresAt }) {
  * Mark a magic link as used (atomic operation)
  * Returns the link if successfully marked, null if already used or invalid
  */
-export async function consumeMagicLink(tokenHash) {
-  const result = await sql`
+export async function consumeMagicLink(tokenHash: string): Promise<MagicLinkRow | null> {
+  const result = await sql<MagicLinkRow>`
     UPDATE pricing_magic_links
     SET used_at = NOW()
     WHERE token_hash = ${tokenHash}
@@ -138,8 +148,8 @@ export async function consumeMagicLink(tokenHash) {
 /**
  * Create a pricing session
  */
-export async function createPricingSession({ email, expiresAt }) {
-  const result = await sql`
+export async function createPricingSession({ email, expiresAt }: CreatePricingSessionParams): Promise<{ id: string }> {
+  const result = await sql<{ id: string }>`
     INSERT INTO pricing_sessions (email, expires_at)
     VALUES (${email}, ${expiresAt})
     RETURNING id
@@ -151,11 +161,11 @@ export async function createPricingSession({ email, expiresAt }) {
  * Validate a pricing session by ID
  * Returns session if valid, null if not found or expired
  */
-export async function validatePricingSession(sessionId) {
+export async function validatePricingSession(sessionId: string): Promise<PricingSessionRow | null> {
   if (!sessionId) return null;
 
   try {
-    const result = await sql`
+    const result = await sql<PricingSessionRow>`
       SELECT id, email, expires_at
       FROM pricing_sessions
       WHERE id = ${sessionId}::uuid
@@ -172,7 +182,7 @@ export async function validatePricingSession(sessionId) {
 /**
  * Delete a pricing session
  */
-export async function deletePricingSession(sessionId) {
+export async function deletePricingSession(sessionId: string): Promise<boolean> {
   if (!sessionId) return false;
 
   try {
@@ -189,13 +199,13 @@ export async function deletePricingSession(sessionId) {
 
 /**
  * Count recent magic link requests for rate limiting
- * Returns count of requests in the last hour for given email or IP
+ * Returns count of requests in the last hour for given email
  */
-export async function countRecentRequests({ email }) {
+export async function countRecentRequests({ email }: { email: string }): Promise<{ emailCount: number }> {
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
 
   // Count by email
-  const emailResult = await sql`
+  const emailResult = await sql<{ count: string }>`
     SELECT COUNT(*) as count
     FROM pricing_magic_links
     WHERE email = ${email}
@@ -203,7 +213,7 @@ export async function countRecentRequests({ email }) {
   `;
 
   return {
-    emailCount: parseInt(emailResult.rows[0]?.count || 0, 10)
+    emailCount: parseInt(emailResult.rows[0]?.count || '0', 10)
   };
 }
 
@@ -214,8 +224,8 @@ export async function countRecentRequests({ email }) {
 /**
  * Create a booking access token
  */
-export async function createBookingToken({ clientId, bookingType, tokenHash, expiresAt, createdBy }) {
-  const result = await sql`
+export async function createBookingToken({ clientId, bookingType, tokenHash, expiresAt, createdBy }: CreateBookingTokenParams): Promise<{ id: string }> {
+  const result = await sql<{ id: string }>`
     INSERT INTO booking_access_tokens (client_id, booking_type, token_hash, expires_at, created_by)
     VALUES (${clientId}, ${bookingType}, ${tokenHash}, ${expiresAt}, ${createdBy})
     RETURNING id
@@ -227,8 +237,8 @@ export async function createBookingToken({ clientId, bookingType, tokenHash, exp
  * Consume a booking access token (atomic operation)
  * Returns the token if successfully marked, null if already used or invalid
  */
-export async function consumeBookingToken(tokenHash) {
-  const result = await sql`
+export async function consumeBookingToken(tokenHash: string): Promise<BookingTokenRow | null> {
+  const result = await sql<BookingTokenRow>`
     UPDATE booking_access_tokens
     SET used_at = NOW()
     WHERE token_hash = ${tokenHash}
@@ -242,8 +252,8 @@ export async function consumeBookingToken(tokenHash) {
 /**
  * Create a booking session
  */
-export async function createBookingSession({ clientId, bookingType, clientEmail, expiresAt }) {
-  const result = await sql`
+export async function createBookingSession({ clientId, bookingType, clientEmail, expiresAt }: CreateBookingSessionParams): Promise<{ id: string }> {
+  const result = await sql<{ id: string }>`
     INSERT INTO booking_sessions (client_id, booking_type, client_email, expires_at)
     VALUES (${clientId}, ${bookingType}, ${clientEmail}, ${expiresAt})
     RETURNING id
@@ -255,11 +265,11 @@ export async function createBookingSession({ clientId, bookingType, clientEmail,
  * Validate a booking session by ID
  * Returns session if valid, null if not found or expired
  */
-export async function validateBookingSession(sessionId) {
+export async function validateBookingSession(sessionId: string): Promise<BookingSessionRow | null> {
   if (!sessionId) return null;
 
   try {
-    const result = await sql`
+    const result = await sql<BookingSessionRow>`
       SELECT id, client_id, booking_type, client_email, expires_at
       FROM booking_sessions
       WHERE id = ${sessionId}::uuid
@@ -275,7 +285,7 @@ export async function validateBookingSession(sessionId) {
 /**
  * Delete a booking session
  */
-export async function deleteBookingSession(sessionId) {
+export async function deleteBookingSession(sessionId: string): Promise<boolean> {
   if (!sessionId) return false;
 
   try {
@@ -293,7 +303,7 @@ export async function deleteBookingSession(sessionId) {
 /**
  * Clean up expired records (optional maintenance)
  */
-export async function cleanupExpiredRecords() {
+export async function cleanupExpiredRecords(): Promise<{ success: boolean; error?: string }> {
   try {
     // Delete expired magic links older than 24 hours
     await sql`
@@ -322,6 +332,6 @@ export async function cleanupExpiredRecords() {
     return { success: true };
   } catch (error) {
     console.error('Cleanup error:', error);
-    return { success: false, error: error.message };
+    return { success: false, error: (error as Error).message };
   }
 }

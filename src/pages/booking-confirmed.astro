@@ -513,6 +513,15 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         })();
     </script>
 
+    {/* GA4: booking confirmation conversion */}
+    <script is:inline>
+        (function() {
+            if (typeof bbConvert !== 'function' || sessionStorage.getItem('bb_booking_tracked')) return;
+            sessionStorage.setItem('bb_booking_tracked', '1');
+            bbConvert('booking_confirmed', 'calendly_booking', 0);
+        })();
+    </script>
+
     <GesturePrevention />
     <VisitorNotify />
     <VersionStamp />

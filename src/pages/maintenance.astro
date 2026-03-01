@@ -7,6 +7,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import VersionStamp from '../components/VersionStamp.astro';
+import { Image } from 'astro:assets';
+import logomark from '../assets/bg-brands-logomark.png';
 ---
 
 <BaseLayout
@@ -18,13 +20,7 @@ import VersionStamp from '../components/VersionStamp.astro';
 >
     <main class="maintenance">
         <div class="maintenance__inner">
-            <img
-                src="/assets/bg-brands-logomark.png"
-                alt=""
-                class="maintenance__logo"
-                width="64"
-                height="64"
-            />
+            <Image src={logomark} alt="" class="maintenance__logo" width={64} height={64} format="webp" />
             <h1 class="maintenance__brand">
                 <span class="maintenance__brand-name">Bertrand Brands</span>
                 <span class="maintenance__brand-sub">| Brand &amp; Web Systems</span>

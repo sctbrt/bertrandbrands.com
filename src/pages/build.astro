@@ -6,6 +6,9 @@
  */
 import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -16,40 +19,49 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/build"
     ogTitle="Build — Quick Builds | Bertrand Brands"
     ogDescription="Fast-launch websites for new and growing businesses. One-Page from $750, Multi-Page, and Full Site + Booking."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Build — Quick Builds",
-        "description": "Fast-launch websites for businesses that need to get live, look credible, and start converting.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
-        },
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Build Offers",
-            "itemListElement": [
-                {
-                    "@type": "Offer",
-                    "name": "Starter Site — One-Page + Contact",
-                    "price": "750",
-                    "priceCurrency": "CAD",
-                    "description": "One-page marketing website, mobile-first, single primary CTA, contact form, light brand cleanup, basic local SEO setup."
-                },
-                {
-                    "@type": "Offer",
-                    "name": "Starter Site — Multi-Page + Contact",
-                    "description": "3–5 page marketing website with service or product pages, contact form + CTAs, light brand cleanup, SEO fundamentals."
-                },
-                {
-                    "@type": "Offer",
-                    "name": "Full Site — Multi-Page + Booking",
-                    "description": "5–10 page website with booking or scheduling integration, service pages with conversion UX, reviews, FAQ, analytics."
-                }
-            ]
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Build", url: "https://bertrandbrands.ca/build" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "Build — Quick Builds",
+            "url": "https://bertrandbrands.ca/build",
+            "description": "Fast-launch websites for businesses that need to get live, look credible, and start converting.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED,
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Build Offers",
+                "itemListElement": [
+                    {
+                        "@type": "Offer",
+                        "name": "Starter Site — One-Page + Contact",
+                        "url": "https://bertrandbrands.ca/build/starter-onepage",
+                        "price": "750",
+                        "priceCurrency": "CAD",
+                        "availability": "https://schema.org/InStock",
+                        "description": "One-page marketing website, mobile-first, single primary CTA, contact form, light brand cleanup, basic local SEO setup."
+                    },
+                    {
+                        "@type": "Offer",
+                        "name": "Starter Site — Multi-Page + Contact",
+                        "url": "https://bertrandbrands.ca/build/starter-multipage",
+                        "availability": "https://schema.org/InStock",
+                        "description": "3–5 page marketing website with service or product pages, contact form + CTAs, light brand cleanup, SEO fundamentals."
+                    },
+                    {
+                        "@type": "Offer",
+                        "name": "Full Site — Multi-Page + Booking",
+                        "url": "https://bertrandbrands.ca/build/fullsite-booking",
+                        "availability": "https://schema.org/InStock",
+                        "description": "5–10 page website with booking or scheduling integration, service pages with conversion UX, reviews, FAQ, analytics."
+                    }
+                ]
+            }
         }
-    }}
+    )}
     spotlightColor="rgba(217, 119, 6, 0.15)"
 >
     <Fragment slot="head">
@@ -115,6 +127,9 @@ const currentYear = new Date().getFullYear();
             .service-footer__cta-text { font-size: var(--text-sm); color: var(--text-subtle); margin-bottom: 0.25rem; }
             .service-footer__cta-link { font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
             .service-footer__cta-link:hover { color: var(--accent); }
+            .service-footer__compare { font-size: var(--text-sm); color: var(--text-subtle); margin-top: 0.5rem; }
+            .service-footer__compare a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; transition: color 0.2s ease; }
+            .service-footer__compare a:hover { color: var(--text); }
 
             @media (max-width: 768px) {
                 .service-page__spotlight { filter: blur(40px); }
@@ -233,7 +248,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/?skip#packages" class="service-subbrand">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                 <span class="service-subbrand__name">Build</span>
             </a>
 
@@ -469,6 +484,7 @@ const currentYear = new Date().getFullYear();
         <div class="service-footer__cta">
             <p class="service-footer__cta-text">Not sure which Build offer?</p>
             <a href="/intake?tier=amber" class="service-footer__cta-link">Start with a quick intake &rarr;</a>
+            <p class="service-footer__compare">or <a href="/compare">compare all tiers side by side</a></p>
         </div>
         <p class="service-footer__text">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
         <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a> &middot; <a href="/privacy">Privacy</a></p>

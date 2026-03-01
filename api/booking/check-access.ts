@@ -2,16 +2,15 @@
 // Validates booking session from cookie
 // Returns access status + Calendly URL for frontend
 
-import {
-  initializeDatabase,
-  validateBookingSession,
-  deleteBookingSession
-} from '../_lib/db.js';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { initializeDatabase, validateBookingSession } from '../_lib/db.js';
 import { parseCookies, buildClearCookie } from '../_lib/cookies.js';
+import { UUID_REGEX } from '../_lib/validation.js';
+import type { CalendlyEntry } from '../_lib/types.js';
 
 // Calendly URL map — the ONLY place these URLs exist
 // Set active: true when Calendly events are ready for use
-const CALENDLY_MAP = {
+const CALENDLY_MAP: Record<string, CalendlyEntry> = {
   focus_studio_kickoff: {
     url: 'https://calendly.com/bertrandbrands/focus-studio-kickoff',
     active: true
@@ -22,10 +21,11 @@ const CALENDLY_MAP = {
   }
 };
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   // Only allow GET
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   // Initialize database if needed
@@ -36,19 +36,20 @@ export default async function handler(req, res) {
   const sessionId = cookies.bb_booking_session;
 
   // Validate session ID format (must be valid UUID)
-  const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (sessionId && !UUID_REGEX.test(sessionId)) {
-    return res.status(200).json({
+    res.status(200).json({
       hasAccess: false,
       expiresAt: null
     });
+    return;
   }
 
   if (!sessionId) {
-    return res.status(200).json({
+    res.status(200).json({
       hasAccess: false,
       expiresAt: null
     });
+    return;
   }
 
   try {
@@ -59,10 +60,11 @@ export default async function handler(req, res) {
       // Session expired or invalid - clear cookie
       res.setHeader('Set-Cookie', buildClearCookie('bb_booking_session', req.headers.host));
 
-      return res.status(200).json({
+      res.status(200).json({
         hasAccess: false,
         expiresAt: null
       });
+      return;
     }
 
     // Look up Calendly config for this booking type
@@ -72,7 +74,7 @@ export default async function handler(req, res) {
     const expiresAt = new Date(session.expires_at);
     const remainingMinutes = Math.max(0, Math.floor((expiresAt.getTime() - Date.now()) / 60000));
 
-    return res.status(200).json({
+    res.status(200).json({
       hasAccess: true,
       bookingType: session.booking_type,
       calendlyUrl: calendly?.url || null,
@@ -84,7 +86,7 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Booking check access error:', error);
-    return res.status(200).json({
+    res.status(200).json({
       hasAccess: false,
       expiresAt: null
     });

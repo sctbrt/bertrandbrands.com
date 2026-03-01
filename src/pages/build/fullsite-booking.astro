@@ -7,6 +7,9 @@
 import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
 import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -17,17 +20,24 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/build/fullsite-booking"
     ogTitle="Full Site — Multi-Page + Booking | Bertrand Brands"
     ogDescription="A comprehensive website with booking integration and conversion-focused service pages. Scoped pricing, 3-4 weeks."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Full Site — Multi-Page + Booking",
-        "description": "A comprehensive website with booking integration, conversion-focused service pages, and everything needed to turn visitors into clients.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
+    serviceName="Full Site — Multi-Page + Booking"
+    serviceTier="Build"
+    serviceSlug="fullsite-booking"
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Build", url: "https://bertrandbrands.ca/build" },
+            { name: "Full Site + Booking", url: "https://bertrandbrands.ca/build/fullsite-booking" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "Full Site — Multi-Page + Booking",
+            "url": "https://bertrandbrands.ca/build/fullsite-booking",
+            "description": "A comprehensive website with booking integration, conversion-focused service pages, and everything needed to turn visitors into clients.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED
         }
-    }}
+    )}
     spotlightColor="rgba(217, 119, 6, 0.15)"
     accentRgb="217, 119, 6"
 >
@@ -42,7 +52,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/build" class="service-subbrand">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                 <span class="service-subbrand__name">Full Site + Booking</span>
             </a>
 

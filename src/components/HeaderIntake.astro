@@ -6,6 +6,9 @@
  *   backHref — where the back button navigates (default: /exploratory)
  *   backLabel — text for back button (default: Back)
  */
+import { Image } from 'astro:assets';
+import logomark from '../assets/bg-brands-logomark.png';
+
 interface Props {
     backHref?: string;
     backLabel?: string;
@@ -21,7 +24,7 @@ const { backHref = '/exploratory', backLabel = 'Back' } = Astro.props;
             {backLabel}
         </a>
         <a href="/?skip" class="intake-header__logo">
-            <img src="/assets/bg-brands-logomark.png" alt="" class="intake-header__logo-icon" width="40" height="40" fetchpriority="high">
+            <Image src={logomark} alt="" class="intake-header__logo-icon" width={40} height={40} format="webp" loading="eager" fetchpriority="high" />
             <span class="intake-header__logo-text">Bertrand Brands</span>
         </a>
         <div class="intake-header__spacer"></div>

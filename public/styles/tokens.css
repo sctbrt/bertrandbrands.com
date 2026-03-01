@@ -1,6 +1,6 @@
 /* ============================================================
    BERTRAND GROUP — Design System Tokens
-   V11.2.0 — Layer Depth Pass
+   V12.0 — Infrastructure Modernization
    ============================================================ */
 
 :root {
@@ -21,30 +21,30 @@
   /* Accent — Amber (Primary Brand) */
   --accent: #D97706;
   --accent-hover: #B45309;
-  --accent-glow: rgba(217, 119, 6, 0.4);
-  --accent-muted: rgba(217, 119, 6, 0.15);
+  --accent-glow: rgba(var(--build-rgb), 0.4);
+  --accent-muted: rgba(var(--build-rgb), 0.15);
 
   /* Build — Amber (primary revenue tier) */
   --build-accent: #D97706;
   --build-accent-hover: #B45309;
-  --build-border: rgba(217, 119, 6, 0.25);
+  --build-border: rgba(var(--build-rgb), 0.25);
 
   /* Transform — Violet (strategic tier) */
   --transform-accent: #8B5CF6;
   --transform-accent-hover: #7C3AED;
   --transform-text: #A78BFA;         /* Violet 400 — WCAG AA compliant on dark bg */
-  --transform-border: rgba(139, 92, 246, 0.25);
+  --transform-border: rgba(var(--transform-rgb), 0.25);
 
   /* Care — Blue (ongoing support tier) */
   --care-accent: #2563EB;
   --care-accent-hover: #1D4ED8;
-  --care-border: rgba(37, 99, 235, 0.25);
-  --care-accent-muted: rgba(37, 99, 235, 0.15);
+  --care-border: rgba(var(--care-rgb), 0.25);
+  --care-accent-muted: rgba(var(--care-rgb), 0.15);
 
   /* Conversation — Gradient wash (entry layer, touches all tiers) */
-  --conv-amber: rgba(217, 119, 6, 0.5);
-  --conv-violet: rgba(139, 92, 246, 0.5);
-  --conv-blue: rgba(37, 99, 235, 0.5);
+  --conv-amber: rgba(var(--build-rgb), 0.5);
+  --conv-violet: rgba(var(--transform-rgb), 0.5);
+  --conv-blue: rgba(var(--care-rgb), 0.5);
 
   /* Service Tier aliases */
   --tier-conversation: linear-gradient(135deg, var(--build-accent), var(--transform-accent), var(--care-accent));
@@ -65,6 +65,9 @@
   --bg-elevated-rgb: 22, 22, 24;
   --highlight-rgb: 255, 255, 255;
   --scrim-rgb: 0, 0, 0;
+  --build-rgb: 217, 119, 6;
+  --transform-rgb: 139, 92, 246;
+  --care-rgb: 37, 99, 235;
 
   /* ==========================================================
      GLASS PROPERTIES

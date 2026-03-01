@@ -104,10 +104,110 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 margin-top: var(--space-xs);
             }
 
-            /* Form Steps */
-            .intake-form { display: flex; flex-direction: column; gap: var(--space-md); }
-            .intake-step { display: none; }
-            .intake-step.active { display: block; }
+            /* Form Steps — progressive disclosure transitions */
+            .intake-form { display: flex; flex-direction: column; gap: var(--space-md); position: relative; }
+            .intake-step {
+                display: none;
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            .intake-step.active {
+                display: block;
+                animation: stepReveal 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+            }
+            .intake-step.exiting {
+                display: block;
+                animation: stepExit 0.2s cubic-bezier(0.33, 0, 0.67, 0) forwards;
+            }
+
+            @keyframes stepReveal {
+                0%   { opacity: 0; transform: translateY(12px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes stepExit {
+                0%   { opacity: 1; transform: translateY(0); }
+                100% { opacity: 0; transform: translateY(-8px); }
+            }
+
+            /* Field stagger — children animate in sequentially */
+            .intake-step.active .intake-form__group,
+            .intake-step.active .tier-field.visible,
+            .intake-step.active .intake-form__help {
+                opacity: 0;
+                animation: fieldSlideIn 0.35s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+            }
+            .intake-step.active .intake-form__group:nth-child(2) { animation-delay: 0.06s; }
+            .intake-step.active .intake-form__group:nth-child(3) { animation-delay: 0.12s; }
+            .intake-step.active .intake-form__group:nth-child(4) { animation-delay: 0.18s; }
+            .intake-step.active .intake-form__group:nth-child(5) { animation-delay: 0.24s; }
+            .intake-step.active .intake-form__group:nth-child(6) { animation-delay: 0.30s; }
+            .intake-step.active .tier-field.visible { animation-delay: 0.15s; }
+            .intake-step.active .intake-form__help { animation-delay: 0.25s; }
+
+            @keyframes fieldSlideIn {
+                0%   { opacity: 0; transform: translateY(8px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+
+            /* Input completion indicator */
+            .intake-form__group.is-complete .intake-form__input,
+            .intake-form__group.is-complete .intake-form__textarea,
+            .intake-form__group.is-complete .intake-form__select {
+                border-color: rgba(16, 185, 129, 0.3);
+            }
+            .intake-form__group.is-complete .intake-form__label::after {
+                content: '\2713';
+                margin-left: 0.375rem;
+                color: #10B981;
+                font-size: var(--text-xs);
+                opacity: 0;
+                animation: checkFadeIn 0.3s ease forwards;
+            }
+            @keyframes checkFadeIn {
+                0%   { opacity: 0; transform: scale(0.5); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+
+            /* Smart reveal for description after situation picker */
+            .tier-field--general-desc {
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                transition: max-height 0.4s cubic-bezier(0.33, 1, 0.68, 1),
+                            opacity 0.3s ease 0.1s,
+                            margin 0.3s ease;
+                margin-bottom: 0;
+            }
+            .tier-field--general-desc.revealed {
+                max-height: 300px;
+                opacity: 1;
+                margin-bottom: var(--space-md);
+            }
+
+            /* Step summary breadcrumb */
+            .intake-summary {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                margin-bottom: var(--space-sm);
+            }
+            .intake-summary__chip {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                font-size: var(--text-2xs);
+                padding: 0.15rem 0.5rem;
+                border-radius: var(--radius-sm);
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                color: var(--text-muted);
+                opacity: 0;
+                animation: chipFadeIn 0.3s ease forwards;
+            }
+            @keyframes chipFadeIn {
+                0%   { opacity: 0; transform: scale(0.9); }
+                100% { opacity: 1; transform: scale(1); }
+            }
 
             .intake-step__title {
                 font-family: 'Inter', -apple-system, sans-serif;
@@ -436,6 +536,18 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 .intake-illustration line, .intake-illustration path,
                 .intake-illustration circle, .intake-illustration ellipse,
                 .intake-illustration rect { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 1; }
+                /* Progressive disclosure: disable all transitions */
+                .intake-step.active,
+                .intake-step.active .intake-form__group,
+                .intake-step.active .tier-field.visible,
+                .intake-step.active .intake-form__help,
+                .intake-form__group.is-complete .intake-form__label::after,
+                .intake-summary__chip {
+                    animation: none;
+                    opacity: 1;
+                    transform: none;
+                }
+                .tier-field--general-desc { transition: none; max-height: none; opacity: 1; }
             }
 
             .form-honeypot { display: none !important; }
@@ -590,6 +702,9 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 <p class="intake-progress__text" id="progressText">Step 1 of 3</p>
             </div>
 
+            <!-- Step summary (populated by JS after step 1) -->
+            <div class="intake-summary" id="intakeSummary" aria-live="polite"></div>
+
             <!-- Form -->
             <form class="intake-form" id="intakeForm" action="https://formspree.io/f/xnjjgoay" method="POST">
                 <input type="hidden" name="source" id="hiddenSource" value="tier-intake">
@@ -665,7 +780,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                         </div>
                     </fieldset>
 
-                    <div class="intake-form__group tier-field tier-field--general visible" id="fieldGeneral">
+                    <div class="intake-form__group tier-field tier-field--general tier-field--general-desc visible" id="fieldGeneral">
                         <label class="intake-form__label" for="description">Tell us more</label>
                         <textarea class="intake-form__textarea" id="description" name="description" placeholder="Tell us what prompted you to reach out. What do you need help with?"></textarea>
                     </div>
@@ -878,10 +993,28 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         }
         configureTierFields();
 
-        // Situation picker — dynamically changes description placeholder for general intake
+        // GA4: form_start on first interaction
+        (function() {
+            var intakeStarted = false;
+            form.addEventListener('focusin', function() {
+                if (intakeStarted) return;
+                intakeStarted = true;
+                if (typeof gtag === 'function') {
+                    gtag('event', 'form_start', {
+                        form_id: 'tier_intake',
+                        form_location: '/intake',
+                        item_category: tierParam || '',
+                        item_id: offerParam || ''
+                    });
+                }
+            });
+        })();
+
+        // Situation picker — dynamically changes placeholder + reveals description (progressive disclosure)
         (function() {
             var situationRadios = document.querySelectorAll('.intake-situation__radio');
             var descriptionField = document.getElementById('description');
+            var descriptionWrap = document.getElementById('fieldGeneral');
             if (!situationRadios.length || !descriptionField) return;
 
             var placeholders = {
@@ -895,7 +1028,30 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                     if (placeholders[radio.value]) {
                         descriptionField.placeholder = placeholders[radio.value];
                     }
+                    // Reveal description textarea with animation
+                    if (descriptionWrap && !descriptionWrap.classList.contains('revealed')) {
+                        descriptionWrap.classList.add('revealed');
+                        setTimeout(function() { descriptionField.focus(); }, 350);
+                    }
                 });
+            });
+        })();
+
+        // Input completion indicators — show checkmark when fields are valid
+        (function() {
+            var inputs = form.querySelectorAll('.intake-form__input, .intake-form__textarea, .intake-form__select');
+            inputs.forEach(function(input) {
+                function checkComplete() {
+                    var group = input.closest('.intake-form__group');
+                    if (!group) return;
+                    var val = input.value.trim();
+                    var isSelect = input.tagName === 'SELECT';
+                    var hasValue = isSelect ? (val && !input.selectedOptions[0].disabled) : val.length > 0;
+                    var isValid = input.checkValidity();
+                    group.classList.toggle('is-complete', hasValue && isValid);
+                }
+                input.addEventListener('blur', checkComplete);
+                input.addEventListener('change', checkComplete);
             });
         })();
 
@@ -905,10 +1061,28 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             setTimeout(function() { toast.classList.remove('visible'); }, 4000);
         }
 
-        function updateUI() {
-            steps.forEach(function(s) {
-                s.classList.toggle('active', parseInt(s.dataset.step) === currentStep);
-            });
+        var summaryEl = document.getElementById('intakeSummary');
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function updateUI(direction) {
+            var oldStep = document.querySelector('.intake-step.active');
+            var newStep = document.querySelector('[data-step="' + currentStep + '"]');
+
+            if (reduceMotion || !oldStep || oldStep === newStep) {
+                // No animation: instant switch
+                steps.forEach(function(s) {
+                    s.classList.remove('active', 'exiting');
+                    if (parseInt(s.dataset.step) === currentStep) s.classList.add('active');
+                });
+            } else {
+                // Animated transition: exit old → enter new
+                oldStep.classList.add('exiting');
+                oldStep.classList.remove('active');
+                setTimeout(function() {
+                    oldStep.classList.remove('exiting');
+                    newStep.classList.add('active');
+                }, 200);
+            }
 
             var pct = Math.round((currentStep / totalSteps) * 100);
             progressFill.style.width = pct + '%';
@@ -924,7 +1098,43 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 submitBtn.style.display = 'none';
             }
 
+            // Build summary chips for completed steps
+            updateSummary();
+
             document.querySelector('.intake-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function updateSummary() {
+            if (!summaryEl) return;
+            summaryEl.innerHTML = '';
+
+            // Only show summary after step 1
+            if (currentStep <= 1) return;
+
+            var nameVal = document.getElementById('name').value.trim();
+            var emailVal = document.getElementById('email').value.trim();
+            var bizVal = document.getElementById('business').value.trim();
+
+            if (nameVal) addChip(nameVal);
+            if (bizVal) addChip(bizVal);
+            if (emailVal) addChip(emailVal);
+
+            // Step 2 summary (only if on step 3)
+            if (currentStep > 2) {
+                var situationRadio = document.querySelector('.intake-situation__radio:checked');
+                if (situationRadio) {
+                    var card = situationRadio.closest('.intake-situation__option');
+                    var label = card ? card.querySelector('strong') : null;
+                    if (label) addChip(label.textContent);
+                }
+            }
+        }
+
+        function addChip(text) {
+            var chip = document.createElement('span');
+            chip.className = 'intake-summary__chip';
+            chip.textContent = text;
+            summaryEl.appendChild(chip);
         }
 
         function validateStep(step) {
@@ -971,6 +1181,15 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             if (currentStep < totalSteps) {
                 currentStep++;
                 updateUI();
+                // GA4: step progression
+                if (typeof gtag === 'function') {
+                    gtag('event', 'checkout_progress', {
+                        step: currentStep,
+                        form_id: 'tier_intake',
+                        item_category: tierParam || '',
+                        item_id: offerParam || ''
+                    });
+                }
             }
         });
 

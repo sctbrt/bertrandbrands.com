@@ -8,6 +8,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import VisitorNotify from '../../components/VisitorNotify.astro';
 import VersionStamp from '../../components/VersionStamp.astro';
 import GesturePrevention from '../../components/GesturePrevention.astro';
+import { Image } from 'astro:assets';
+import logomark from '../../assets/bg-brands-logomark.png';
+import scottWordmark from '../../assets/scott-bertrand-logo-wordmark-light.png';
 
 const currentYear = new Date().getFullYear();
 
@@ -530,7 +533,7 @@ const schema = {
               <!-- Bertrand Group | Brand & Web Systems -->
               <a href="https://bertrandbrands.ca/?skip" class="bg-portfolio__tile">
                   <div class="bg-portfolio__lockup">
-                      <img src="/assets/bg-brands-logomark.png" alt="" class="bg-portfolio__logomark" width="40" height="40" loading="lazy">
+                      <Image src={logomark} alt="" class="bg-portfolio__logomark" width={40} height={40} format="webp" loading="lazy" />
                       <span class="bg-portfolio__divider" aria-hidden="true"></span>
                       <span class="bg-portfolio__wordmark" style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: inherit;">Brand &amp; Web Systems</span>
                   </div>
@@ -541,7 +544,7 @@ const schema = {
 
               <!-- Scott Bertrand -->
               <a href="https://scottbertrand.com" class="bg-portfolio__tile">
-                  <img src="/assets/scott-bertrand-logo-wordmark-light.png" alt="Scott Bertrand" class="bg-portfolio__wordmark" width="543" height="50" loading="lazy">
+                  <Image src={scottWordmark} alt="Scott Bertrand" class="bg-portfolio__wordmark" width={543} height={50} format="webp" loading="lazy" />
                   <p class="bg-portfolio__role">Principal</p>
                   <p class="bg-portfolio__desc">Strategy, direction, and leadership across all Group ventures.</p>
                   <span class="bg-portfolio__link">scottbertrand.com &rarr;</span>

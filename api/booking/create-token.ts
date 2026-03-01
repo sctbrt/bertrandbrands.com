@@ -2,61 +2,38 @@
 // Admin-only endpoint to generate a booking access token and email it to the client
 // Authenticated via BOOKING_ADMIN_SECRET header
 
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import crypto from 'crypto';
 import { Resend } from 'resend';
-import {
-  initializeDatabase,
-  createBookingToken
-} from '../_lib/db.js';
 import { sql } from '@vercel/postgres';
+import { initializeDatabase, createBookingToken } from '../_lib/db.js';
 import { EMAIL_REGEX } from '../_lib/validation.js';
+import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
 
 // In-memory rate limiting (resets on cold start, per-instance)
-const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 10; // max 10 requests per minute per IP
-
-function isRateLimited(ip) {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-
-  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
-    rateLimitMap.set(ip, { windowStart: now, count: 1 });
-    return false;
-  }
-
-  entry.count++;
-  if (entry.count > RATE_LIMIT_MAX_REQUESTS) {
-    return true;
-  }
-
-  return false;
-}
-
-// Periodic cleanup to prevent memory leak (every 5 minutes)
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, entry] of rateLimitMap) {
-    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 5) {
-      rateLimitMap.delete(ip);
-    }
-  }
-}, 5 * 60 * 1000);
+const isRateLimited = createRateLimiter(60_000, 10);
 
 // Config
 const BOOKING_TOKEN_TTL_HOURS = 72; // Token valid for 3 days
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 
 // Booking type labels for emails
-const BOOKING_TYPE_LABELS = {
+const BOOKING_TYPE_LABELS: Record<string, string> = {
   focus_studio_kickoff: 'Build Kickoff',
   core_services_discovery: 'Transformation Discovery'
 };
 
+interface ClientRecord {
+  id: string;
+  name: string;
+  contact_email: string;
+  company: string | null;
+}
+
 /**
  * Generate secure random token and its hash
  */
-function generateToken() {
+function generateToken(): { rawToken: string; tokenHash: string } {
   const rawToken = crypto.randomBytes(32).toString('hex');
   const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
   return { rawToken, tokenHash };
@@ -65,9 +42,9 @@ function generateToken() {
 /**
  * Upsert a client record — insert if new, return existing if found
  */
-async function upsertClient({ name, email, company }) {
+async function upsertClient({ name, email, company }: { name: string; email: string; company: string | null }): Promise<ClientRecord> {
   // Check if client exists by email
-  const existing = await sql`
+  const existing = await sql<ClientRecord>`
     SELECT id, name, contact_email, company FROM clients
     WHERE contact_email = ${email}
   `;
@@ -78,7 +55,7 @@ async function upsertClient({ name, email, company }) {
 
   // Create new client with a short deterministic ID
   const id = crypto.randomBytes(8).toString('hex');
-  const result = await sql`
+  const result = await sql<ClientRecord>`
     INSERT INTO clients (id, name, contact_email, company)
     VALUES (${id}, ${name}, ${email}, ${company || null})
     RETURNING id, name, contact_email, company
@@ -86,10 +63,17 @@ async function upsertClient({ name, email, company }) {
   return result.rows[0];
 }
 
+interface EmailTemplateParams {
+  firstName: string;
+  bookingLink: string;
+  bookingTypeLabel: string;
+  expiresHours: number;
+}
+
 /**
  * Build the booking access email HTML
  */
-function buildEmailHtml({ firstName, bookingLink, bookingTypeLabel, expiresHours }) {
+function buildEmailHtml({ firstName, bookingLink, bookingTypeLabel, expiresHours }: EmailTemplateParams): string {
   const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
 
   return `
@@ -127,7 +111,7 @@ function buildEmailHtml({ firstName, bookingLink, bookingTypeLabel, expiresHours
 /**
  * Build plain text version
  */
-function buildEmailText({ firstName, bookingLink, bookingTypeLabel, expiresHours }) {
+function buildEmailText({ firstName, bookingLink, bookingTypeLabel, expiresHours }: EmailTemplateParams): string {
   const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
 
   return `
@@ -144,58 +128,70 @@ Bertrand Brands | Brand & Web Systems · Sudbury, Ontario
   `.trim();
 }
 
-export default async function handler(req, res) {
+interface CreateTokenBody {
+  clientName?: string;
+  clientEmail?: string;
+  company?: string;
+  bookingType?: string;
+  createdBy?: string;
+}
+
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   // Only allow POST
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   // Admin authentication via shared secret
   const adminSecret = process.env.BOOKING_ADMIN_SECRET;
   if (!adminSecret) {
     console.error('BOOKING_ADMIN_SECRET not configured');
-    return res.status(500).json({ error: 'Server misconfigured' });
+    res.status(500).json({ error: 'Server misconfigured' });
+    return;
   }
 
-  const authHeader = req.headers['x-admin-secret'];
+  const authHeader = req.headers['x-admin-secret'] as string | undefined;
   if (!authHeader || authHeader !== adminSecret) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
   }
 
   // Rate limiting by IP
-  const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
-             req.headers['x-real-ip'] ||
-             'unknown';
-
+  const ip = getClientIp(req.headers);
   if (isRateLimited(ip)) {
-    return res.status(429).json({ error: 'Too many requests' });
+    res.status(429).json({ error: 'Too many requests' });
+    return;
   }
 
   // Initialize database tables if needed
   await initializeDatabase();
 
-  const { clientName, clientEmail, company, bookingType, createdBy } = req.body || {};
+  const { clientName, clientEmail, company, bookingType, createdBy } = (req.body || {}) as CreateTokenBody;
 
   // Validate required fields
   if (!clientName || !clientEmail || !bookingType) {
-    return res.status(400).json({
+    res.status(400).json({
       error: 'Missing required fields',
       required: ['clientName', 'clientEmail', 'bookingType']
     });
+    return;
   }
 
   // Validate booking type
   if (!BOOKING_TYPE_LABELS[bookingType]) {
-    return res.status(400).json({
+    res.status(400).json({
       error: 'Invalid booking type',
       valid: Object.keys(BOOKING_TYPE_LABELS)
     });
+    return;
   }
 
   // Validate email format
   const normalizedEmail = clientEmail.trim().toLowerCase();
   if (!EMAIL_REGEX.test(normalizedEmail)) {
-    return res.status(400).json({ error: 'Invalid email address' });
+    res.status(400).json({ error: 'Invalid email address' });
+    return;
   }
 
   try {
@@ -247,7 +243,7 @@ export default async function handler(req, res) {
 
     console.log(`Booking token created: ${normalizedEmail.substring(0, 3)}***@*** type=${bookingType} by=${createdBy || 'admin'}`);
 
-    return res.status(200).json({
+    res.status(200).json({
       ok: true,
       clientId: client.id,
       bookingType,
@@ -258,6 +254,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Create booking token error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 }

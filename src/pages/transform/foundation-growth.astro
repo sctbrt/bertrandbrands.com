@@ -6,6 +6,9 @@
 import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
 import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -16,17 +19,24 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/transform/foundation-growth"
     ogTitle="Website Foundation + Growth System — Bertrand Brands"
     ogDescription="Full website rebuild with content strategy, conversion UX, SEO foundation, and growth playbook. Discovery-led, 4-8 weeks."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Website Foundation + Growth System",
-        "description": "Full website rebuild with content strategy, conversion UX, SEO foundation, and growth playbook.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
+    serviceName="Website Foundation + Growth System"
+    serviceTier="Transform"
+    serviceSlug="foundation-growth"
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Transform", url: "https://bertrandbrands.ca/transform" },
+            { name: "Foundation + Growth", url: "https://bertrandbrands.ca/transform/foundation-growth" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "Website Foundation + Growth System",
+            "url": "https://bertrandbrands.ca/transform/foundation-growth",
+            "description": "Full website rebuild with content strategy, conversion UX, SEO foundation, and growth playbook.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED
         }
-    }}
+    )}
     spotlightColor="rgba(139, 92, 246, 0.15)"
     accentRgb="139, 92, 246"
     labelColor="#A78BFA"
@@ -42,7 +52,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/transform" class="service-subbrand">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                 <span class="service-subbrand__name">Foundation + Growth</span>
             </a>
 

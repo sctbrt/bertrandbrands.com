@@ -30,6 +30,10 @@ interface Props {
     spotlightColor?: string;
     accentRgb?: string;
     labelColor?: string;
+    serviceName?: string;
+    serviceTier?: string;
+    serviceSlug?: string;
+    servicePrice?: string;
 }
 
 const {
@@ -44,6 +48,10 @@ const {
     spotlightColor = 'rgba(139, 92, 246, 0.15)',
     accentRgb = '139, 92, 246',
     labelColor,
+    serviceName = '',
+    serviceTier = '',
+    serviceSlug = '',
+    servicePrice = '',
 } = Astro.props;
 
 // Parse RGB for inline style injection
@@ -243,6 +251,27 @@ const svcLabelColor = labelColor || `rgba(${r}, ${g}, ${b}, 1)`;
     <div style={`--svc-r:${r};--svc-g:${g};--svc-b:${b};--svc-label-color:${svcLabelColor}`}>
         <slot />
     </div>
+    {/* GA4 view_item — fires once per service detail page view */}
+    {serviceName && (
+        <script is:inline data-astro-rerun
+            data-svc-name={serviceName}
+            data-svc-tier={serviceTier}
+            data-svc-slug={serviceSlug}
+            data-svc-price={servicePrice}
+        >
+            (function() {
+                if (typeof gtag !== 'function') return;
+                var el = document.currentScript;
+                gtag('event', 'view_item', {
+                    item_name: el.dataset.svcName,
+                    item_category: el.dataset.svcTier,
+                    item_id: el.dataset.svcSlug,
+                    price: parseFloat(el.dataset.svcPrice) || 0,
+                    currency: 'CAD'
+                });
+            })();
+        </script>
+    )}
     <VisitorNotify />
     <VersionStamp />
 </BaseLayout>

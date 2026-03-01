@@ -7,6 +7,9 @@
 import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
 import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -17,22 +20,32 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/build/starter-onepage"
     ogTitle="Starter Site — One-Page + Contact | Bertrand Brands"
     ogDescription="A clean one-page marketing website to get you live. $750 CAD, 7-10 business days."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Starter Site — One-Page + Contact",
-        "description": "A clean, credible one-page website built to get you online fast with a clear call-to-action and professional presentation.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": "750",
-            "priceCurrency": "CAD"
+    serviceName="Starter Site — One-Page + Contact"
+    serviceTier="Build"
+    serviceSlug="starter-onepage"
+    servicePrice="750"
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Build", url: "https://bertrandbrands.ca/build" },
+            { name: "Starter One-Page", url: "https://bertrandbrands.ca/build/starter-onepage" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "Starter Site — One-Page + Contact",
+            "url": "https://bertrandbrands.ca/build/starter-onepage",
+            "description": "A clean, credible one-page website built to get you online fast with a clear call-to-action and professional presentation.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED,
+            "offers": {
+                "@type": "Offer",
+                "url": "https://bertrandbrands.ca/build/starter-onepage",
+                "price": "750",
+                "priceCurrency": "CAD",
+                "availability": "https://schema.org/InStock"
+            }
         }
-    }}
+    )}
     spotlightColor="rgba(217, 119, 6, 0.15)"
     accentRgb="217, 119, 6"
 >
@@ -47,7 +60,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/build" class="service-subbrand">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                 <span class="service-subbrand__name">Starter One-Page</span>
             </a>
 

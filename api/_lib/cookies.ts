@@ -1,16 +1,16 @@
 // Shared cookie utilities for API endpoints
 
+import type { BuildCookieOptions } from './types.js';
+
 const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
 
 /**
  * Parse cookies from a Cookie header string
- * @param {string} cookieHeader - Raw Cookie header value
- * @returns {Object} Key-value map of cookie names to values
  */
-export function parseCookies(cookieHeader) {
+export function parseCookies(cookieHeader: string | undefined): Record<string, string> {
   if (!cookieHeader) return {};
 
-  return cookieHeader.split(';').reduce((cookies, cookie) => {
+  return cookieHeader.split(';').reduce<Record<string, string>>((cookies, cookie) => {
     const [name, value] = cookie.trim().split('=');
     if (name && value) {
       cookies[name] = value;
@@ -21,10 +21,8 @@ export function parseCookies(cookieHeader) {
 
 /**
  * Build a cookie string that clears/expires a session cookie
- * @param {string} cookieName - Cookie name to clear (e.g. 'bb_pricing_session')
- * @param {string} hostname - Request hostname for domain detection
  */
-export function buildClearCookie(cookieName, hostname) {
+export function buildClearCookie(cookieName: string, hostname: string | undefined): string {
   const parts = [
     `${cookieName}=`,
     `Path=/`,
@@ -48,13 +46,13 @@ export function buildClearCookie(cookieName, hostname) {
 
 /**
  * Build a secure cookie string
- * @param {string} name - Cookie name (e.g. 'bb_pricing_session')
- * @param {string} value - Cookie value (e.g. session ID)
- * @param {number} maxAgeSeconds - Cookie lifetime in seconds
- * @param {object} [options] - Optional settings
- * @param {string} [options.hostname] - Request hostname for domain detection
  */
-export function buildCookie(name, value, maxAgeSeconds, options = {}) {
+export function buildCookie(
+  name: string,
+  value: string,
+  maxAgeSeconds: number,
+  options: BuildCookieOptions = {}
+): string {
   const parts = [
     `${name}=${value}`,
     `Path=/`,
@@ -71,9 +69,8 @@ export function buildCookie(name, value, maxAgeSeconds, options = {}) {
       parts.push('Domain=.bertrandgroup.ca');
     } else if (hostname.endsWith('bertrandbrands.ca')) {
       parts.push('Domain=.bertrandbrands.ca');
-    } else {
-      // Fallback: let browser set domain to exact origin
     }
+    // Fallback: let browser set domain to exact origin
   }
 
   return parts.join('; ');

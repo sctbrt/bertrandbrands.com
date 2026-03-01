@@ -13,6 +13,9 @@ interface Props {
     logoHref?: string;
 }
 
+import { Image } from 'astro:assets';
+import logomark from '../assets/bg-brands-logomark.png';
+
 const {
     tierLabel = 'Conversation',
     tierColor = 'rgba(37, 99, 235, 0.9)',
@@ -24,7 +27,7 @@ const {
     <div class="header__glass">
         <div class="header__inner">
             <a href={logoHref} class="header__logo">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon" width="40" height="40" fetchpriority="high">
+                <Image src={logomark} alt="" class="header__logo-icon" width={40} height={40} format="webp" loading="eager" fetchpriority="high" />
                 <span class="header__wordmark">Brand &amp; Web Systems</span>
             </a>
             <span class="header__tier" style={`color: ${tierColor}`}>{tierLabel}</span>

@@ -6,6 +6,9 @@
 import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
 import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -16,28 +19,38 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/care/silver"
     ogTitle="Silver Care Plan — Bertrand Brands"
     ogDescription="Active support for growing sites. 10 credits/month, same/next day response. $649/mo CAD."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Silver Care Plan",
-        "description": "Active support for growing sites with 10 credits per month, same or next business day response, priority scheduling.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": "649",
-            "priceCurrency": "CAD",
-            "priceSpecification": {
-                "@type": "UnitPriceSpecification",
+    serviceName="Silver Care Plan"
+    serviceTier="Care"
+    serviceSlug="silver"
+    servicePrice="649"
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Care", url: "https://bertrandbrands.ca/care" },
+            { name: "Silver", url: "https://bertrandbrands.ca/care/silver" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "Silver Care Plan",
+            "url": "https://bertrandbrands.ca/care/silver",
+            "description": "Active support for growing sites with 10 credits per month, same or next business day response, priority scheduling.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED,
+            "offers": {
+                "@type": "Offer",
+                "url": "https://bertrandbrands.ca/care/silver",
                 "price": "649",
                 "priceCurrency": "CAD",
-                "unitText": "MONTH"
+                "availability": "https://schema.org/InStock",
+                "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "price": "649",
+                    "priceCurrency": "CAD",
+                    "unitText": "MONTH"
+                }
             }
         }
-    }}
+    )}
     spotlightColor="rgba(37, 99, 235, 0.15)"
     accentRgb="37, 99, 235"
 >
@@ -86,7 +99,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/care" class="service-subbrand">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                 <span class="service-subbrand__name">Silver</span>
             </a>
 

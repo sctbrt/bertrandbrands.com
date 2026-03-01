@@ -1,11 +1,8 @@
 // GET /api/pricing/access
 // Verifies magic link token, creates session, sets cookie, redirects
 
-import {
-  initializeDatabase,
-  consumeMagicLink,
-  createPricingSession
-} from '../_lib/db.js';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { initializeDatabase, consumeMagicLink, createPricingSession } from '../_lib/db.js';
 import { hashToken } from '../_lib/crypto.js';
 import { buildCookie } from '../_lib/cookies.js';
 import { errorPageHtml } from '../_lib/html.js';
@@ -14,24 +11,26 @@ import { errorPageHtml } from '../_lib/html.js';
 const SESSION_TTL_MINUTES = parseInt(process.env.PRICING_SESSION_TTL_MINUTES || '240', 10);
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   // Only allow GET
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   // Initialize database tables if needed
   await initializeDatabase();
 
-  const { token } = req.query;
+  const token = req.query.token as string | undefined;
 
   // Validate token presence
   if (!token || typeof token !== 'string' || token.length !== 64) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.status(400).send(errorPageHtml(
+    res.status(400).send(errorPageHtml(
       'Invalid Link',
       'This link appears to be malformed. Please request a new pricing access link.'
     ));
+    return;
   }
 
   try {
@@ -42,10 +41,11 @@ export default async function handler(req, res) {
 
     if (!magicLink) {
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      return res.status(400).send(errorPageHtml(
+      res.status(400).send(errorPageHtml(
         'Link Expired or Already Used',
         'This link has either expired or has already been used. Pricing links can only be used once and expire after 15 minutes.'
       ));
+      return;
     }
 
     // Create new pricing session
@@ -62,12 +62,12 @@ export default async function handler(req, res) {
 
     // Redirect to services section
     res.setHeader('Location', `${APP_URL}/#services`);
-    return res.status(302).end();
+    res.status(302).end();
 
   } catch (error) {
     console.error('Access verification error:', error);
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.status(500).send(errorPageHtml(
+    res.status(500).send(errorPageHtml(
       'Something Went Wrong',
       'We encountered an error processing your request. Please try requesting a new pricing access link.'
     ));

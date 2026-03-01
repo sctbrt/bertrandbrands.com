@@ -295,7 +295,35 @@ const {
             step2.classList.add('inline-intake__step2--visible');
             continueBtn.style.display = 'none';
             step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            // GA4: step 1 complete → step 2 visible
+            if (typeof gtag === 'function') {
+                var slug = document.querySelector('#inlineIntakeForm input[name="source"]');
+                gtag('event', 'checkout_progress', {
+                    step: 2,
+                    form_id: 'inline_intake',
+                    item_id: slug ? slug.value : ''
+                });
+            }
         });
+
+        // GA4: form_start on first interaction
+        var started = false;
+        var card = document.getElementById('inlineIntakeCard');
+        if (card) {
+            card.addEventListener('focusin', function() {
+                if (started) return;
+                started = true;
+                if (typeof gtag === 'function') {
+                    var slug = document.querySelector('#inlineIntakeForm input[name="source"]');
+                    gtag('event', 'form_start', {
+                        form_id: 'inline_intake',
+                        form_location: window.location.pathname,
+                        item_id: slug ? slug.value : ''
+                    });
+                }
+            }, { once: false });
+        }
     })();
 
     // Form submission

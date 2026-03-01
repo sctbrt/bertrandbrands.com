@@ -7,7 +7,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "db:init": "node scripts/init-db.js"
+    "db:init": "tsx scripts/init-db.js",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui"
   },
   "author": "Scott Bertrand",
   "license": "UNLICENSED",
@@ -17,6 +21,12 @@
     "@vercel/functions": "^3.4.1",
     "@vercel/postgres": "^0.10.0",
     "astro": "^5.17.1",
-    "resend": "^4.0.0"
+    "resend": "^4.0.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@vercel/node": "^5.6.9",
+    "tsx": "^4.21.0"
   }
 }

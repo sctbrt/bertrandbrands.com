@@ -1,34 +1,15 @@
 // Vercel Serverless Function: Website Snapshot Review Booking
 // Endpoint: /api/snapshot/book
 
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { EMAIL_REGEX } from '../_lib/validation.js';
+import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
+import type { PushoverPayload, SnapshotBookBody } from '../_lib/types.js';
 
 // In-memory rate limiting (resets on cold start, per-instance)
-const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 10;
+const isRateLimited = createRateLimiter(60_000, 10);
 
-function isRateLimited(ip) {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
-    rateLimitMap.set(ip, { windowStart: now, count: 1 });
-    return false;
-  }
-  entry.count++;
-  return entry.count > RATE_LIMIT_MAX_REQUESTS;
-}
-
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, entry] of rateLimitMap) {
-    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 5) {
-      rateLimitMap.delete(ip);
-    }
-  }
-}, 5 * 60 * 1000);
-
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   // CORS headers — restrict to own domain
   const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.ca';
   res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
@@ -36,46 +17,56 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    res.status(200).end();
+    return;
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   // Rate limit by IP
-  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  const ip = getClientIp(req.headers);
   if (isRateLimited(ip)) {
-    return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    return;
   }
 
-  const { name, email, website, concern, source, offer, rate } = req.body || {};
+  const { name, email, website, concern, source, offer, rate } = (req.body || {}) as SnapshotBookBody;
 
   // Validate required fields exist and are strings
   if (!name || typeof name !== 'string' || !email || typeof email !== 'string' || !website || typeof website !== 'string') {
-    return res.status(400).json({ error: 'Missing required fields: name, email, website' });
+    res.status(400).json({ error: 'Missing required fields: name, email, website' });
+    return;
   }
 
-  // Validate email format (RFC 5321 compliant — canonical pattern in api/_lib/validation.js)
+  // Validate email format (RFC 5321 compliant — canonical pattern in api/_lib/validation.ts)
   if (!EMAIL_REGEX.test(email)) {
-    return res.status(400).json({ error: 'Invalid email format' });
+    res.status(400).json({ error: 'Invalid email format' });
+    return;
   }
 
   // Validate input lengths
   if (name.length > 200 || email.length > 254 || website.length > 500) {
-    return res.status(400).json({ error: 'Input exceeds maximum length' });
+    res.status(400).json({ error: 'Input exceeds maximum length' });
+    return;
   }
   if (concern && (typeof concern !== 'string' || concern.length > 2000)) {
-    return res.status(400).json({ error: 'Concern exceeds maximum length' });
+    res.status(400).json({ error: 'Concern exceeds maximum length' });
+    return;
   }
   if (source && (typeof source !== 'string' || source.length > 200)) {
-    return res.status(400).json({ error: 'Invalid source parameter' });
+    res.status(400).json({ error: 'Invalid source parameter' });
+    return;
   }
   if (offer && (typeof offer !== 'string' || offer.length > 200)) {
-    return res.status(400).json({ error: 'Invalid offer parameter' });
+    res.status(400).json({ error: 'Invalid offer parameter' });
+    return;
   }
   if (rate && (typeof rate !== 'string' || rate.length > 100)) {
-    return res.status(400).json({ error: 'Invalid rate parameter' });
+    res.status(400).json({ error: 'Invalid rate parameter' });
+    return;
   }
 
   // Pushover credentials
@@ -84,7 +75,8 @@ export default async function handler(req, res) {
 
   if (!PUSHOVER_USER || !PUSHOVER_TOKEN) {
     console.error('Pushover credentials not configured');
-    return res.status(500).json({ error: 'Notification service not configured' });
+    res.status(500).json({ error: 'Notification service not configured' });
+    return;
   }
 
   try {
@@ -98,19 +90,21 @@ export default async function handler(req, res) {
     message += `💰 Rate: ${rate || 'standard'}`;
 
     // Send Pushover notification
+    const payload: PushoverPayload = {
+      token: PUSHOVER_TOKEN,
+      user: PUSHOVER_USER,
+      message,
+      title: 'New Snapshot Booking!',
+      url: website,
+      url_title: 'View Their Website',
+      priority: 1, // High priority
+      sound: 'cashregister',
+    };
+
     const pushoverResponse = await fetch('https://api.pushover.net/1/messages.json', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        token: PUSHOVER_TOKEN,
-        user: PUSHOVER_USER,
-        message: message,
-        title: 'New Snapshot Booking!',
-        url: website,
-        url_title: 'View Their Website',
-        priority: 1, // High priority
-        sound: 'cashregister',
-      }),
+      body: JSON.stringify(payload),
     });
 
     if (!pushoverResponse.ok) {
@@ -126,13 +120,13 @@ export default async function handler(req, res) {
       rate: rate || 'standard',
     });
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       message: 'Booking received. We\'ll confirm within 1-2 business days.'
     });
 
   } catch (error) {
     console.error('Booking error:', error);
-    return res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 }

@@ -6,13 +6,15 @@
  * Mobile menu, ambient lighting, and wordmark animation are handled by
  * the homepage's own inline scripts (avoids double-binding).
  */
+import { Image } from 'astro:assets';
+import logomark from '../assets/bg-brands-logomark.png';
 ---
 
 <header class="header">
     <div class="header__glass">
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon" width="40" height="40" fetchpriority="high">
+                <Image src={logomark} alt="" class="header__logo-icon" width={40} height={40} format="webp" loading="eager" fetchpriority="high" />
                 <span class="header__wordmark" aria-label="Bertrand Brands | Brand &amp; Web Systems">
                     <span class="header__wordmark-short" aria-hidden="true">BERTRAND BRANDS</span>
                     <span class="header__wordmark-full" aria-hidden="true">BERTRAND BRANDS <span class="header__wordmark-sep">|</span> <span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>

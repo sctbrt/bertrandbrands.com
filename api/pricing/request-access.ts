@@ -1,13 +1,12 @@
 // POST /api/pricing/request-access
 // Sends magic link email for pricing access via Resend
 
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import crypto from 'crypto';
 import { Resend } from 'resend';
-import {
-  initializeDatabase,
-  createMagicLink,
-  countRecentRequests
-} from '../_lib/db.js';
+import { initializeDatabase, createMagicLink, countRecentRequests } from '../_lib/db.js';
+import { EMAIL_REGEX } from '../_lib/validation.js';
+import type { PricingRequestAccessBody } from '../_lib/types.js';
 
 // Config
 const MAGIC_LINK_TTL_MINUTES = parseInt(process.env.PRICING_MAGIC_LINK_TTL_MINUTES || '15', 10);
@@ -18,9 +17,9 @@ const RATE_LIMIT_IP_PER_HOUR = 10;
 // In-memory IP rate limiter (per warm instance — protects against burst abuse)
 // LIMITATION: Resets when function cold-starts. For persistent cross-instance rate limiting,
 // migrate to Vercel KV or Upstash Redis. Email-based rate limiting (via DB) is persistent.
-const ipRequestLog = new Map();
+const ipRequestLog = new Map<string, number[]>();
 
-function checkIpRateLimit(ip) {
+function checkIpRateLimit(ip: string): boolean {
   const now = Date.now();
   const oneHourAgo = now - 60 * 60 * 1000;
   const timestamps = (ipRequestLog.get(ip) || []).filter(t => t > oneHourAgo);
@@ -30,21 +29,25 @@ function checkIpRateLimit(ip) {
   return false;
 }
 
-import { EMAIL_REGEX } from '../_lib/validation.js';
-
 /**
  * Generate secure random token and its hash
  */
-function generateToken() {
+function generateToken(): { rawToken: string; tokenHash: string } {
   const rawToken = crypto.randomBytes(32).toString('hex');
   const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
   return { rawToken, tokenHash };
 }
 
+interface EmailTemplateParams {
+  firstName: string | null;
+  magicLink: string;
+  expiresMinutes: number;
+}
+
 /**
  * Build the magic link email HTML
  */
-function buildEmailHtml({ firstName, magicLink, expiresMinutes }) {
+function buildEmailHtml({ firstName, magicLink, expiresMinutes }: EmailTemplateParams): string {
   const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
 
   return `
@@ -82,7 +85,7 @@ function buildEmailHtml({ firstName, magicLink, expiresMinutes }) {
 /**
  * Build plain text version
  */
-function buildEmailText({ firstName, magicLink, expiresMinutes }) {
+function buildEmailText({ firstName, magicLink, expiresMinutes }: EmailTemplateParams): string {
   const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
 
   return `
@@ -99,7 +102,7 @@ Bertrand Brands | Brand & Web Systems · Sudbury, Ontario
   `.trim();
 }
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   // CORS — restrict to own domain
   const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.ca';
   res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
@@ -107,51 +110,58 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
-    return res.status(204).end();
+    res.status(204).end();
+    return;
   }
 
   // Only allow POST
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   // Initialize database tables if needed
   await initializeDatabase();
 
-  const { email, firstName } = req.body || {};
+  const { email, firstName } = (req.body || {}) as PricingRequestAccessBody;
 
   // Validate email
   if (!email || typeof email !== 'string') {
     // Always return success to prevent enumeration
-    return res.status(200).json({ ok: true });
+    res.status(200).json({ ok: true });
+    return;
   }
 
   const normalizedEmail = email.trim().toLowerCase();
 
   if (normalizedEmail.length > 254 || !EMAIL_REGEX.test(normalizedEmail)) {
     // Always return success to prevent enumeration
-    return res.status(200).json({ ok: true });
+    res.status(200).json({ ok: true });
+    return;
   }
 
   // Get client IP
-  const clientIp = req.headers['x-forwarded-for']?.split(',')[0] ||
-                   req.headers['x-real-ip'] ||
-                   'unknown';
+  const clientIp =
+    (typeof req.headers['x-forwarded-for'] === 'string' ? req.headers['x-forwarded-for'].split(',')[0] : undefined) ||
+    (req.headers['x-real-ip'] as string | undefined) ||
+    'unknown';
 
   // IP-based rate limiting (in-memory, per warm instance)
   if (clientIp !== 'unknown' && checkIpRateLimit(clientIp)) {
     console.log(`IP rate limit exceeded: ${clientIp}`);
-    return res.status(200).json({ ok: true });
+    res.status(200).json({ ok: true });
+    return;
   }
 
   try {
     // Rate limiting check (by email, via database)
-    const { emailCount } = await countRecentRequests({ email: normalizedEmail, ip: clientIp });
+    const { emailCount } = await countRecentRequests({ email: normalizedEmail });
 
     if (emailCount >= RATE_LIMIT_EMAIL_PER_HOUR) {
       // Still return success to prevent enumeration
       console.log(`Email rate limit exceeded: ${normalizedEmail}`);
-      return res.status(200).json({ ok: true });
+      res.status(200).json({ ok: true });
+      return;
     }
 
     // Generate token
@@ -190,11 +200,11 @@ export default async function handler(req, res) {
     // Optional: Log for abuse review (without sensitive data)
     console.log(`Magic link sent: ${normalizedEmail.substring(0, 3)}***@*** from ${clientIp}`);
 
-    return res.status(200).json({ ok: true });
+    res.status(200).json({ ok: true });
 
   } catch (error) {
     console.error('Request access error:', error);
     // Still return success to prevent enumeration
-    return res.status(200).json({ ok: true });
+    res.status(200).json({ ok: true });
   }
 }

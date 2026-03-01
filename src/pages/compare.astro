@@ -1,0 +1,636 @@
+---
+/**
+ * Compare — Side-by-side service tier comparison.
+ * Helps visitors understand Build vs Transform vs Care at a glance.
+ * Uses HeaderUniversal. VisitorNotify included via direct import.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderUniversal from '../components/HeaderUniversal.astro';
+import FooterMain from '../components/FooterMain.astro';
+import SkipLink from '../components/SkipLink.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+import { breadcrumbList, schemaGraph } from '../lib/schema';
+---
+
+<BaseLayout
+    title="Compare Services — Bertrand Brands"
+    description="Compare Build, Transform, and Care service tiers. Find the right fit for your project scope, timeline, and budget."
+    canonical="https://bertrandbrands.ca/compare"
+    ogTitle="Compare Services — Bertrand Brands"
+    ogDescription="Compare Build, Transform, and Care service tiers side by side."
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Compare", url: "https://bertrandbrands.ca/compare" }
+        ])
+    )}
+>
+    <Fragment slot="head">
+        <link rel="stylesheet" href="/styles/main.css">
+        <style is:inline>
+            /* Override header for sub-pages */
+            .header { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateY(0) !important; }
+            .header__logo-icon { opacity: 1 !important; }
+            .header__wordmark { opacity: 1 !important; }
+
+            .compare-page {
+                min-height: 100vh;
+                padding-top: 100px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .compare-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 1.5rem var(--space-2xl);
+            }
+
+            .compare-header {
+                text-align: center;
+                margin-bottom: var(--space-xl);
+            }
+
+            .compare-header__title {
+                font-family: var(--font-display, 'Inter', sans-serif);
+                font-size: clamp(1.75rem, 4vw, 2.5rem);
+                font-weight: 300;
+                line-height: 1.2;
+                color: var(--text);
+                margin-bottom: var(--space-sm);
+            }
+
+            .compare-header__sub {
+                font-size: var(--text-base);
+                color: var(--text-muted);
+                max-width: 520px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+            /* === Comparison Table === */
+            .compare-table-wrap {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-bottom: var(--space-xl);
+                border-radius: var(--radius-lg, 12px);
+                border: 1px solid var(--border);
+            }
+
+            .compare-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: var(--text-sm);
+                min-width: 700px;
+            }
+
+            .compare-table th,
+            .compare-table td {
+                padding: 0.875rem 1.25rem;
+                text-align: left;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                vertical-align: top;
+            }
+
+            .compare-table thead th {
+                font-family: var(--font-display, 'Inter', sans-serif);
+                font-weight: 300;
+                font-size: var(--text-lg);
+                color: var(--text);
+                padding: 1.25rem 1.25rem 1rem;
+                position: sticky;
+                top: 0;
+                z-index: 2;
+                background: var(--bg-elevated);
+            }
+
+            .compare-table thead th:first-child {
+                color: var(--text-muted);
+                font-family: var(--font-body, 'Inter', sans-serif);
+                font-weight: 400;
+                font-size: var(--text-sm);
+            }
+
+            /* Tier header — logomark + name */
+            .compare-tier-header {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .compare-tier-header__logo {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                opacity: 0.9;
+                -webkit-mask-image: url('/assets/bg-brands-logomark.png');
+                mask-image: url('/assets/bg-brands-logomark.png');
+                -webkit-mask-size: contain;
+                mask-size: contain;
+                -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+                -webkit-mask-position: center;
+                mask-position: center;
+                vertical-align: middle;
+            }
+            .compare-tier-header__logo--build { background-color: var(--build-accent); }
+            .compare-tier-header__logo--transform { background-color: var(--transform-accent); }
+            .compare-tier-header__logo--care { background-color: var(--care-accent); }
+
+            /* Tier column accents */
+            .compare-table .col-build-cell { border-left: 1px solid rgba(217, 119, 6, 0.08); }
+            .compare-table .col-transform-cell { border-left: 1px solid rgba(139, 92, 246, 0.08); }
+            .compare-table .col-care-cell { border-left: 1px solid rgba(37, 99, 235, 0.08); }
+
+            .compare-table tbody tr:hover {
+                background: rgba(255, 255, 255, 0.02);
+            }
+
+            .compare-table tbody tr:last-child td,
+            .compare-table tbody tr:last-child th {
+                border-bottom: none;
+            }
+
+            /* Row label (first column) */
+            .compare-table td:first-child,
+            .compare-table th.row-label {
+                font-weight: 500;
+                color: var(--text);
+                white-space: nowrap;
+                background: rgba(255, 255, 255, 0.015);
+                border-right: 1px solid rgba(255, 255, 255, 0.05);
+                min-width: 160px;
+            }
+
+            /* Category header rows */
+            .compare-table .category-row td {
+                font-weight: 600;
+                font-size: var(--text-xs);
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--text-subtle);
+                padding-top: 1.25rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                background: rgba(255, 255, 255, 0.02);
+            }
+
+            .compare-table .category-row td:first-child {
+                background: rgba(255, 255, 255, 0.03);
+            }
+
+            /* Cell content styling */
+            .compare-cell { color: var(--text-muted); line-height: 1.5; }
+            .compare-cell strong { color: var(--text); font-weight: 500; }
+            .compare-check { color: #10B981; }
+            .compare-dash { color: var(--text-subtle); }
+
+            /* CTA row */
+            .compare-cta-row td {
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+                border-bottom: none;
+            }
+
+            .compare-cta {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                font-size: var(--text-sm);
+                font-weight: 500;
+                text-decoration: none;
+                padding: 0.5rem 1rem;
+                border-radius: var(--radius-md, 8px);
+                transition: all 0.2s ease;
+                border: 1px solid;
+            }
+
+            .compare-cta--build {
+                color: var(--build-accent);
+                border-color: rgba(217, 119, 6, 0.25);
+                background: rgba(217, 119, 6, 0.06);
+            }
+            .compare-cta--build:hover { background: rgba(217, 119, 6, 0.12); border-color: rgba(217, 119, 6, 0.4); }
+
+            .compare-cta--transform {
+                color: var(--transform-accent);
+                border-color: rgba(139, 92, 246, 0.25);
+                background: rgba(139, 92, 246, 0.06);
+            }
+            .compare-cta--transform:hover { background: rgba(139, 92, 246, 0.12); border-color: rgba(139, 92, 246, 0.4); }
+
+            .compare-cta--care {
+                color: var(--care-accent);
+                border-color: rgba(37, 99, 235, 0.25);
+                background: rgba(37, 99, 235, 0.06);
+            }
+            .compare-cta--care:hover { background: rgba(37, 99, 235, 0.12); border-color: rgba(37, 99, 235, 0.4); }
+
+            /* Help section */
+            .compare-help {
+                text-align: center;
+                padding: var(--space-xl) 0;
+            }
+
+            .compare-help__title {
+                font-size: var(--text-lg);
+                font-weight: 400;
+                color: var(--text);
+                margin-bottom: var(--space-xs);
+            }
+
+            .compare-help__text {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                margin-bottom: var(--space-md);
+                line-height: 1.6;
+            }
+
+            .compare-help__cta {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.375rem;
+                color: var(--accent);
+                font-size: var(--text-sm);
+                font-weight: 500;
+                text-decoration: none;
+                transition: opacity 0.2s ease;
+            }
+            .compare-help__cta:hover { opacity: 0.8; }
+
+            /* ── Compare Page Accent Lighting ──
+               Unique to /compare: three vertical "lane" glows sit behind
+               each tier column, reinforcing the side-by-side decision frame.
+               A top wash ties the trio together. All light is living (§5.3). */
+
+            .compare-lighting {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 0;
+                overflow: hidden;
+            }
+
+            /* Top gradient wash — ties three tiers together */
+            .compare-wash {
+                position: absolute;
+                top: -40px;
+                left: 0;
+                right: 0;
+                height: 220px;
+                background: linear-gradient(
+                    180deg,
+                    rgba(217, 119, 6, 0.04) 0%,
+                    rgba(139, 92, 246, 0.03) 40%,
+                    rgba(37, 99, 235, 0.02) 70%,
+                    transparent 100%
+                );
+                opacity: 0.8;
+                animation: washPulse 20s ease-in-out infinite;
+            }
+
+            @keyframes washPulse {
+                0%, 100% { opacity: 0.8; }
+                50% { opacity: 0.55; }
+            }
+
+            /* Lane glows — tall, narrow vertical columns of tier color */
+            .compare-lane {
+                position: absolute;
+                width: 200px;
+                height: 110vh;
+                top: 60px;
+                filter: blur(100px);
+                opacity: 0;
+            }
+
+            .compare-lane--amber {
+                left: 22%;
+                background: radial-gradient(
+                    ellipse 100% 60% at 50% 30%,
+                    rgba(217, 119, 6, 0.07) 0%,
+                    rgba(217, 119, 6, 0.03) 40%,
+                    transparent 70%
+                );
+                animation: laneDriftAmber 19s ease-in-out infinite;
+            }
+
+            .compare-lane--violet {
+                left: 48%;
+                transform: translateX(-50%);
+                background: radial-gradient(
+                    ellipse 100% 60% at 50% 40%,
+                    rgba(139, 92, 246, 0.06) 0%,
+                    rgba(139, 92, 246, 0.025) 40%,
+                    transparent 70%
+                );
+                animation: laneDriftViolet 23s ease-in-out infinite 0.4s;
+            }
+
+            .compare-lane--blue {
+                right: 12%;
+                background: radial-gradient(
+                    ellipse 100% 60% at 50% 50%,
+                    rgba(37, 99, 235, 0.06) 0%,
+                    rgba(37, 99, 235, 0.025) 40%,
+                    transparent 70%
+                );
+                animation: laneDriftBlue 21s ease-in-out infinite 0.8s;
+            }
+
+            /* Each lane has its own drift rhythm — asymmetric, naturalistic */
+            @keyframes laneDriftAmber {
+                0%, 100% {
+                    opacity: 0.65;
+                    transform: translateX(0) scaleX(1);
+                }
+                20% {
+                    opacity: 0.8;
+                    transform: translateX(8px) scaleX(1.04);
+                }
+                45% {
+                    opacity: 0.55;
+                    transform: translateX(-6px) scaleX(0.96);
+                }
+                70% {
+                    opacity: 0.75;
+                    transform: translateX(4px) scaleX(1.02);
+                }
+                90% {
+                    opacity: 0.6;
+                    transform: translateX(-3px) scaleX(0.98);
+                }
+            }
+
+            @keyframes laneDriftViolet {
+                0%, 100% {
+                    opacity: 0.6;
+                    transform: translateX(-50%) scaleX(1);
+                }
+                15% {
+                    opacity: 0.75;
+                    transform: translateX(calc(-50% - 5px)) scaleX(1.05);
+                }
+                40% {
+                    opacity: 0.5;
+                    transform: translateX(calc(-50% + 7px)) scaleX(0.95);
+                }
+                60% {
+                    opacity: 0.7;
+                    transform: translateX(calc(-50% - 3px)) scaleX(1.03);
+                }
+                85% {
+                    opacity: 0.55;
+                    transform: translateX(calc(-50% + 4px)) scaleX(0.97);
+                }
+            }
+
+            @keyframes laneDriftBlue {
+                0%, 100% {
+                    opacity: 0.6;
+                    transform: translateX(0) scaleX(1);
+                }
+                25% {
+                    opacity: 0.5;
+                    transform: translateX(-7px) scaleX(0.95);
+                }
+                50% {
+                    opacity: 0.72;
+                    transform: translateX(5px) scaleX(1.04);
+                }
+                75% {
+                    opacity: 0.58;
+                    transform: translateX(-4px) scaleX(0.98);
+                }
+            }
+
+            /* Anchor spots — small focused glows near the CTA row for grounding */
+            .compare-anchor {
+                position: absolute;
+                width: 120px;
+                height: 120px;
+                bottom: 18vh;
+                border-radius: 50%;
+                filter: blur(60px);
+                opacity: 0;
+            }
+
+            .compare-anchor--amber {
+                left: 24%;
+                background: rgba(217, 119, 6, 0.08);
+                animation: anchorPulse 16s ease-in-out infinite;
+            }
+            .compare-anchor--violet {
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(139, 92, 246, 0.06);
+                animation: anchorPulse 20s ease-in-out infinite 0.5s;
+            }
+            .compare-anchor--blue {
+                right: 14%;
+                background: rgba(37, 99, 235, 0.06);
+                animation: anchorPulse 18s ease-in-out infinite 1s;
+            }
+
+            @keyframes anchorPulse {
+                0%, 100% { opacity: 0.5; transform: scale(1); }
+                30% { opacity: 0.7; transform: scale(1.06); }
+                60% { opacity: 0.4; transform: scale(0.94); }
+                80% { opacity: 0.6; transform: scale(1.02); }
+            }
+            .compare-anchor--violet {
+                animation-name: anchorPulseCenter;
+            }
+            @keyframes anchorPulseCenter {
+                0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+                30% { opacity: 0.7; transform: translateX(-50%) scale(1.06); }
+                60% { opacity: 0.4; transform: translateX(-50%) scale(0.94); }
+                80% { opacity: 0.6; transform: translateX(-50%) scale(1.02); }
+            }
+
+            /* Mobile responsive */
+            @media (max-width: 768px) {
+                .compare-content { padding: 0 1rem var(--space-xl); }
+                .compare-table { font-size: var(--text-xs); }
+                .compare-table th, .compare-table td { padding: 0.625rem 0.75rem; }
+                .compare-lane { filter: blur(70px); width: 140px; }
+                .compare-anchor { filter: blur(40px); width: 80px; height: 80px; }
+                .compare-wash { height: 140px; }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .compare-table tbody tr:hover { background: none; }
+                .compare-cta { transition: none; }
+                .compare-lane,
+                .compare-anchor,
+                .compare-wash { animation: none !important; opacity: 0.5 !important; }
+            }
+        </style>
+    </Fragment>
+
+    <SkipLink />
+    <HeaderUniversal />
+
+    <!-- Accent lighting — vertical lane glows unique to /compare -->
+    <div class="compare-lighting" aria-hidden="true">
+        <div class="compare-wash"></div>
+        <div class="compare-lane compare-lane--amber"></div>
+        <div class="compare-lane compare-lane--violet"></div>
+        <div class="compare-lane compare-lane--blue"></div>
+        <div class="compare-anchor compare-anchor--amber"></div>
+        <div class="compare-anchor compare-anchor--violet"></div>
+        <div class="compare-anchor compare-anchor--blue"></div>
+    </div>
+
+    <main class="compare-page" id="main-content">
+        <div class="compare-content">
+            <div class="compare-header">
+                <h1 class="compare-header__title">Compare services</h1>
+                <p class="compare-header__sub">Not sure where to start? Here's how our three service tiers stack up so you can find the right fit.</p>
+            </div>
+
+            <div class="compare-table-wrap">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="col-build-cell"><span class="compare-tier-header"><span class="compare-tier-header__logo compare-tier-header__logo--build" aria-hidden="true"></span> Build</span></th>
+                            <th class="col-transform-cell"><span class="compare-tier-header"><span class="compare-tier-header__logo compare-tier-header__logo--transform" aria-hidden="true"></span> Transform</span></th>
+                            <th class="col-care-cell"><span class="compare-tier-header"><span class="compare-tier-header__logo compare-tier-header__logo--care" aria-hidden="true"></span> Care</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Overview -->
+                        <tr class="category-row">
+                            <td colspan="4">Overview</td>
+                        </tr>
+                        <tr>
+                            <td>Best for</td>
+                            <td class="compare-cell col-build-cell">New businesses or simple site needs</td>
+                            <td class="compare-cell col-transform-cell">Growing businesses ready for a strategic investment</td>
+                            <td class="compare-cell col-care-cell">Businesses with an existing site that needs ongoing support</td>
+                        </tr>
+                        <tr>
+                            <td>Scope</td>
+                            <td class="compare-cell col-build-cell">Fixed, defined deliverables</td>
+                            <td class="compare-cell col-transform-cell">Discovery-driven, custom scoped</td>
+                            <td class="compare-cell col-care-cell">Monthly credit-based support</td>
+                        </tr>
+                        <tr>
+                            <td>Offers</td>
+                            <td class="compare-cell col-build-cell">One-Page, Multi-Page, Full&nbsp;Site</td>
+                            <td class="compare-cell col-transform-cell">Foundation&nbsp;+&nbsp;Growth, SMB&nbsp;Platform, Brand&nbsp;+&nbsp;Platform</td>
+                            <td class="compare-cell col-care-cell">Bronze, Silver, Gold</td>
+                        </tr>
+
+                        <!-- Pricing & Timeline -->
+                        <tr class="category-row">
+                            <td colspan="4">Pricing &amp; Timeline</td>
+                        </tr>
+                        <tr>
+                            <td>Starting price</td>
+                            <td class="compare-cell col-build-cell"><strong>$750 CAD</strong></td>
+                            <td class="compare-cell col-transform-cell"><strong>Custom scoped</strong></td>
+                            <td class="compare-cell col-care-cell"><strong>$249/mo CAD</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Timeline</td>
+                            <td class="compare-cell col-build-cell">1&ndash;4 weeks</td>
+                            <td class="compare-cell col-transform-cell">4&ndash;16 weeks</td>
+                            <td class="compare-cell col-care-cell">Ongoing monthly</td>
+                        </tr>
+                        <tr>
+                            <td>Pricing model</td>
+                            <td class="compare-cell col-build-cell">Fixed project fee</td>
+                            <td class="compare-cell col-transform-cell">Fixed project fee (scoped)</td>
+                            <td class="compare-cell col-care-cell">Monthly subscription</td>
+                        </tr>
+
+                        <!-- Process -->
+                        <tr class="category-row">
+                            <td colspan="4">Process</td>
+                        </tr>
+                        <tr>
+                            <td>Meetings</td>
+                            <td class="compare-cell col-build-cell">0 <span class="compare-dash">(optional 15-min call)</span></td>
+                            <td class="compare-cell col-transform-cell">2&ndash;4 structured</td>
+                            <td class="compare-cell col-care-cell">None &ndash; monthly optional</td>
+                        </tr>
+                        <tr>
+                            <td>Revisions</td>
+                            <td class="compare-cell col-build-cell">1&ndash;2 rounds</td>
+                            <td class="compare-cell col-transform-cell">Tied to approval gates</td>
+                            <td class="compare-cell col-care-cell">Within credit scope</td>
+                        </tr>
+                        <tr>
+                            <td>Communication</td>
+                            <td class="compare-cell col-build-cell">Async-first (email/portal)</td>
+                            <td class="compare-cell col-transform-cell">Async + scheduled meetings</td>
+                            <td class="compare-cell col-care-cell">Async-first (email/portal)</td>
+                        </tr>
+
+                        <!-- Deliverables -->
+                        <tr class="category-row">
+                            <td colspan="4">What's Included</td>
+                        </tr>
+                        <tr>
+                            <td>Website</td>
+                            <td class="compare-cell col-build-cell"><span class="compare-check">&#10003;</span> Template-assisted</td>
+                            <td class="compare-cell col-transform-cell"><span class="compare-check">&#10003;</span> Custom built</td>
+                            <td class="compare-cell col-care-cell"><span class="compare-dash">&mdash;</span> Existing site</td>
+                        </tr>
+                        <tr>
+                            <td>Brand strategy</td>
+                            <td class="compare-cell col-build-cell"><span class="compare-dash">&mdash;</span></td>
+                            <td class="compare-cell col-transform-cell"><span class="compare-check">&#10003;</span> Select offers</td>
+                            <td class="compare-cell col-care-cell"><span class="compare-dash">&mdash;</span></td>
+                        </tr>
+                        <tr>
+                            <td>CRM / Systems</td>
+                            <td class="compare-cell col-build-cell"><span class="compare-dash">&mdash;</span></td>
+                            <td class="compare-cell col-transform-cell"><span class="compare-check">&#10003;</span> Select offers</td>
+                            <td class="compare-cell col-care-cell"><span class="compare-dash">&mdash;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Booking integration</td>
+                            <td class="compare-cell col-build-cell"><span class="compare-check">&#10003;</span> Full Site only</td>
+                            <td class="compare-cell col-transform-cell"><span class="compare-check">&#10003;</span></td>
+                            <td class="compare-cell col-care-cell"><span class="compare-dash">&mdash;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Analytics</td>
+                            <td class="compare-cell col-build-cell"><span class="compare-check">&#10003;</span> Basic</td>
+                            <td class="compare-cell col-transform-cell"><span class="compare-check">&#10003;</span> Full</td>
+                            <td class="compare-cell col-care-cell"><span class="compare-check">&#10003;</span> Via credits</td>
+                        </tr>
+                        <tr>
+                            <td>Ongoing updates</td>
+                            <td class="compare-cell col-build-cell"><span class="compare-dash">&mdash;</span></td>
+                            <td class="compare-cell col-transform-cell"><span class="compare-dash">&mdash;</span></td>
+                            <td class="compare-cell col-care-cell"><span class="compare-check">&#10003;</span> Monthly credits</td>
+                        </tr>
+
+                        <!-- CTA row -->
+                        <tr class="compare-cta-row">
+                            <td></td>
+                            <td class="col-build-cell"><a href="/build" class="compare-cta compare-cta--build">Explore Build &rarr;</a></td>
+                            <td class="col-transform-cell"><a href="/transform" class="compare-cta compare-cta--transform">Explore Transform &rarr;</a></td>
+                            <td class="col-care-cell"><a href="/care" class="compare-cta compare-cta--care">Explore Care &rarr;</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Help section -->
+            <div class="compare-help">
+                <h2 class="compare-help__title">Still not sure?</h2>
+                <p class="compare-help__text">Tell us about your project and we'll recommend the right fit. No commitment, no pressure.</p>
+                <a href="/intake" class="compare-help__cta">Get a quote &rarr;</a>
+            </div>
+        </div>
+    </main>
+
+    <FooterMain />
+    <VisitorNotify />
+    <GesturePrevention />
+</BaseLayout>

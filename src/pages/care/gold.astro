@@ -7,6 +7,9 @@
 import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
 import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -17,17 +20,30 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/care/gold"
     ogTitle="Gold Care Plan — Bertrand Brands"
     ogDescription="Dedicated priority support. 24 credits/month, same-day response. Limited seats, by application."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Gold Care Plan",
-        "description": "Dedicated priority support with 24 credits per month, same-day response, 24–72 hour turnaround. Limited seats, by application.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
+    serviceName="Gold Care Plan"
+    serviceTier="Care"
+    serviceSlug="gold"
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Care", url: "https://bertrandbrands.ca/care" },
+            { name: "Gold", url: "https://bertrandbrands.ca/care/gold" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "Gold Care Plan",
+            "url": "https://bertrandbrands.ca/care/gold",
+            "description": "Dedicated priority support with 24 credits per month, same-day response, 24–72 hour turnaround. Limited seats, by application.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED,
+            "offers": {
+                "@type": "Offer",
+                "url": "https://bertrandbrands.ca/care/gold",
+                "availability": "https://schema.org/LimitedAvailability",
+                "description": "Limited seats — by application only"
+            }
         }
-    }}
+    )}
     spotlightColor="rgba(37, 99, 235, 0.15)"
     accentRgb="37, 99, 235"
 >
@@ -81,7 +97,7 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/care" class="service-subbrand">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                 <span class="service-subbrand__name">Gold</span>
             </a>
 

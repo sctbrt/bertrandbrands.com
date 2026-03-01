@@ -9,6 +9,9 @@ import OfferCard from '../components/OfferCard.astro';
 import TierGroupHeader from '../components/TierGroupHeader.astro';
 import PhoneFirstCTA from '../components/PhoneFirstCTA.astro';
 import FAQ from '../components/FAQ.astro';
+import { Image } from 'astro:assets';
+import logomark from '../assets/bg-brands-logomark.png';
+import { breadcrumbList, schemaGraph, AREA_SERVED } from '../lib/schema';
 
 const currentYear = new Date().getFullYear();
 
@@ -22,55 +25,55 @@ const homepageFAQ = [
     { question: "How do I get started?", answer: "Call us at <a href='tel:+17054133705'>(705) 413-3705</a> or fill out an <a href='/intake'>intake form</a>. We'll get back to you within one business day." },
 ];
 
-const schemaJson = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Bertrand Brands \u2014 Brand & Web Systems",
-  "description": "Brand and web systems studio in Sudbury, Ontario. Starter sites, redesigns, and full platform builds. Fixed pricing, fast turnaround.",
-  "url": "https://bertrandbrands.ca",
-  "email": "hello@bertrandgroup.ca",
-  "telephone": "+17054133705",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Greater Sudbury",
-    "addressRegion": "Ontario",
-    "addressCountry": "CA"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 46.4917,
-    "longitude": -80.9930
-  },
-  "areaServed": [
-    { "@type": "City", "name": "Greater Sudbury", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ontario" } },
-    { "@type": "AdministrativeArea", "name": "Northern Ontario" },
-    { "@type": "Country", "name": "Canada" }
-  ],
-  "priceRange": "$750 - $6,500+ CAD",
-  "sameAs": [
-    "https://linkedin.com/in/sudburyon"
-  ],
-  "founder": {
-    "@type": "Person",
-    "name": "Scott Bertrand",
-    "url": "https://scottbertrand.com"
-  },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Brand & Web Services",
-    "itemListElement": [
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site \u2014 One-Page + Contact" }, "price": "750", "priceCurrency": "CAD" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site \u2014 Multi-Page + Contact" }, "description": "Multi-page marketing website, scoped to project" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Site \u2014 Multi-Page + Booking" }, "description": "Full-featured website with booking integration" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation + Growth System" }, "description": "Website rebuild with content strategy and growth tools" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SMB Platform Development" }, "description": "Multi-system platform for established businesses" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Design + Platform Development" }, "description": "Full brand system + web platform, built together" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze Care" }, "price": "249", "priceCurrency": "CAD" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Silver Care" }, "price": "649", "priceCurrency": "CAD" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gold Care" }, "description": "Premium care, by application" }
-    ]
+const schemaJson = schemaGraph(
+  breadcrumbList([
+    { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" }
+  ]),
+  {
+    "@type": "ProfessionalService",
+    "name": "Bertrand Brands \u2014 Brand & Web Systems",
+    "description": "Brand and web systems studio in Sudbury, Ontario. Starter sites, redesigns, and full platform builds. Fixed pricing, fast turnaround.",
+    "url": "https://bertrandbrands.ca",
+    "email": "hello@bertrandgroup.ca",
+    "telephone": "+17054133705",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Greater Sudbury",
+      "addressRegion": "Ontario",
+      "addressCountry": "CA"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 46.4917,
+      "longitude": -80.9930
+    },
+    "areaServed": AREA_SERVED,
+    "priceRange": "$750 - $6,500+ CAD",
+    "sameAs": [
+      "https://linkedin.com/in/sudburyon"
+    ],
+    "founder": {
+      "@type": "Person",
+      "name": "Scott Bertrand",
+      "url": "https://scottbertrand.com"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Brand & Web Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site \u2014 One-Page + Contact" }, "price": "750", "priceCurrency": "CAD", "url": "https://bertrandbrands.ca/build/starter-onepage" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site \u2014 Multi-Page + Contact" }, "description": "Multi-page marketing website, scoped to project", "url": "https://bertrandbrands.ca/build/starter-multipage" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Site \u2014 Multi-Page + Booking" }, "description": "Full-featured website with booking integration", "url": "https://bertrandbrands.ca/build/fullsite-booking" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation + Growth System" }, "description": "Website rebuild with content strategy and growth tools", "url": "https://bertrandbrands.ca/transform/foundation-growth" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SMB Platform Development" }, "description": "Multi-system platform for established businesses", "url": "https://bertrandbrands.ca/transform/smb-platform" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Design + Platform Development" }, "description": "Full brand system + web platform, built together", "url": "https://bertrandbrands.ca/transform/brand-platform" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze Care" }, "price": "249", "priceCurrency": "CAD", "url": "https://bertrandbrands.ca/care/bronze" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Silver Care" }, "price": "649", "priceCurrency": "CAD", "url": "https://bertrandbrands.ca/care/silver" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gold Care" }, "description": "Premium care, by application", "url": "https://bertrandbrands.ca/care/gold" }
+      ]
+    }
   }
-};
+);
 ---
 
 <BaseLayout
@@ -82,9 +85,10 @@ const schemaJson = {
   schemaJson={schemaJson}
 >
   <Fragment slot="head">
+    <link rel="stylesheet" href="/styles/homepage.css" />
     <link rel="stylesheet" href="/styles/founder-lightbox.css" />
     <style is:inline>
-        /* V12 concept: editorial sentence hero (overrides main.css fragment-style sizing) */
+        /* V12 concept: editorial sentence hero (overrides shared.css fragment-style sizing) */
         .hero__content {
             text-align: left;
             max-width: 900px;
@@ -115,7 +119,7 @@ const schemaJson = {
       <div class="intro__glow intro__glow--blue"></div>
       <div class="intro__fade"></div>
       <div class="intro__grid"></div>
-      <img src="/assets/bg-brands-logomark.png" alt="" class="intro__logo" width="256" height="256" fetchpriority="high">
+      <Image src={logomark} alt="" class="intro__logo" width={256} height={256} format="webp" loading="eager" fetchpriority="high" />
       <div class="intro__brand">
           <span class="intro__brand-main">Bertrand Brands</span>
           <span class="intro__brand-sub">Brand &amp; Web Systems</span>
@@ -166,14 +170,14 @@ const schemaJson = {
       <!-- Services -->
       <section class="section section--alt" id="packages">
           <div class="container">
-              <div class="section__header reveal">
+              <div class="section__header reveal" data-scroll="fade-up">
                   <p class="section__label">Services</p>
                   <h2 class="section__title">Choose your starting point<span class="title-dots" aria-hidden="true"><span class="title-dot title-dot--amber"></span><span class="title-dot title-dot--violet"></span><span class="title-dot title-dot--blue"></span></span></h2>
                   <p class="section__scope">Fixed scope. Clear timelines. Defined revision rounds.</p>
               </div>
 
               <!-- Intake Prompt with Tier Selector -->
-              <div class="intake-prompt reveal" id="tierSelector">
+              <div class="intake-prompt reveal" id="tierSelector" data-scroll="fade-up">
                   <p class="intake-prompt__text">Not sure which option fits? We'll help you figure it out.</p>
 
                   <div class="tier-selector" role="group" aria-label="Choose by situation">
@@ -207,10 +211,11 @@ const schemaJson = {
                       </p>
                       <a href="/intake" class="intake-prompt__cta intake-prompt__cta--form">Fill out an intake form</a>
                   </div>
+                  <p class="intake-prompt__compare">Or <a href="/compare">compare all services side by side</a></p>
               </div>
 
               <!-- B Build — Quick Builds (Amber) -->
-              <div class="tier-group reveal" data-tier="build">
+              <div class="tier-group reveal" data-scroll="cascade" data-tier="build">
                   <TierGroupHeader tierName="Build" tierClass="build" subtitle="Quick Builds" />
                   <div class="offer-grid">
                       <OfferCard
@@ -295,7 +300,7 @@ const schemaJson = {
               </div>
 
               <!-- B Transform — Bigger Commitments (Violet) -->
-              <div class="tier-group reveal" data-tier="transform">
+              <div class="tier-group reveal" data-scroll="cascade" data-tier="transform">
                   <TierGroupHeader tierName="Transform" tierClass="transform" subtitle="Bigger Commitments" />
                   <div class="offer-grid">
                       <OfferCard
@@ -370,7 +375,7 @@ const schemaJson = {
               </div>
 
               <!-- B Care — Ongoing Care (Blue) -->
-              <div class="tier-group reveal" data-tier="care">
+              <div class="tier-group reveal" data-scroll="cascade" data-tier="care">
                   <TierGroupHeader tierName="Care" tierClass="care" subtitle="Ongoing Care" />
                   <div class="offer-grid">
                       <OfferCard
@@ -442,7 +447,7 @@ const schemaJson = {
       <!-- Process (How It Works) -->
       <section class="section section--alt section--process" id="process">
           <div class="container">
-              <div class="section__header section__header--process reveal">
+              <div class="section__header section__header--process reveal" data-scroll="blur-in">
                   <p class="section__label">How It Works</p>
                   <h2 class="section__title section__title--clear-phrase"><span class="text-fade">A </span><span class="text-spotlight text-spotlight--clear">clear</span><span class="text-fade"> path</span><br><span class="text-fade">towards what's next</span></h2>
                   <p class="section__scope">Regardless of where you're starting</p>
@@ -535,12 +540,12 @@ const schemaJson = {
           <div class="about__glow--violet" aria-hidden="true"></div>
           <div class="about__glow--blue" aria-hidden="true"></div>
           <div class="container">
-              <div class="section__header section__header--about reveal">
+              <div class="section__header section__header--about reveal" data-scroll="blur-in">
                   <p class="section__label">About</p>
                   <h2 class="section__title">Forward thinking, <span class="text-spotlight text-spotlight--focused">focused</span> work</h2>
               </div>
 
-              <div class="about reveal">
+              <div class="about reveal" data-scroll="fade-up">
                   <div class="about__content">
                       <p class="about__text">Bertrand Brands is a design studio for businesses who know their brand or website needs work, but aren't sure where to start.</p>
                       <p class="about__text">We create clarity. Through structured reviews, brand systems, and conversion-focused websites, we help you understand what's working, what isn't, and what to do next.</p>
@@ -563,11 +568,11 @@ const schemaJson = {
       <section class="section section--alt" id="faq">
           <div class="faq__glow--blue" aria-hidden="true"></div>
           <div class="container">
-              <div class="section__header reveal">
+              <div class="section__header reveal" data-scroll="fade-up">
                   <p class="section__label">FAQ</p>
                   <h2 class="section__title">Common questions</h2>
               </div>
-              <div class="reveal">
+              <div class="reveal" data-scroll="fade-up">
                   <FAQ items={homepageFAQ} schemaJson={true} />
               </div>
           </div>
@@ -576,7 +581,7 @@ const schemaJson = {
       <!-- Contact -->
       <section class="section" id="contact">
           <div class="container">
-              <div class="contact reveal">
+              <div class="contact reveal" data-scroll="fade-up">
                   <div class="contact__spotlight contact__spotlight--amber" aria-hidden="true"></div>
                   <div class="contact__spotlight contact__spotlight--violet" aria-hidden="true"></div>
                   <div class="contact__spotlight contact__spotlight--blue" aria-hidden="true"></div>
@@ -596,7 +601,7 @@ const schemaJson = {
       <footer class="footer">
           <div class="container">
               <div class="footer__logomark">
-                  <img src="/assets/bg-brands-logomark.png" alt="" class="footer__logomark-img" width="40" height="40" loading="lazy">
+                  <Image src={logomark} alt="" class="footer__logomark-img" width={40} height={40} format="webp" loading="lazy" />
               </div>
               <div class="footer__cta">
                   <p class="footer__cta-text">Not sure where to start?</p>
@@ -707,23 +712,143 @@ const schemaJson = {
           }
       })();
 
-      // Scroll reveal
+      // Premium scroll-linked reveal (Apple-like progressive animations)
       (function() {
-          var reveals = document.querySelectorAll('.reveal, .reveal-stagger');
+          var scrollEls = document.querySelectorAll('[data-scroll]');
+          var plainReveals = document.querySelectorAll('.reveal:not([data-scroll]), .reveal-stagger');
+
+          // Reduced motion: show everything immediately
           if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-              reveals.forEach(function(el) { el.classList.add('is-visible'); });
+              scrollEls.forEach(function(el) {
+                  el.style.setProperty('--sp', '1');
+                  el.classList.add('is-visible');
+                  el.classList.add('scroll-complete');
+                  // Cascade children
+                  if (el.dataset.scroll === 'cascade') {
+                      var header = el.querySelector('.tier-group-header');
+                      if (header) header.style.setProperty('--sp', '1');
+                      el.querySelectorAll('.tier-card').forEach(function(c) { c.style.setProperty('--sp', '1'); });
+                  }
+              });
+              plainReveals.forEach(function(el) { el.classList.add('is-visible'); });
               document.querySelectorAll('.section--process').forEach(function(el) { el.classList.add('reveal-triggered'); });
               return;
           }
-          var observer = new IntersectionObserver(function(entries) {
+
+          // Track active + completed elements
+          var active = [];
+          var vh = window.innerHeight;
+          var resizeTimer;
+          window.addEventListener('resize', function() {
+              clearTimeout(resizeTimer);
+              resizeTimer = setTimeout(function() { vh = window.innerHeight; }, 200);
+          }, { passive: true });
+
+          // Easing — cubic ease-out (smooth deceleration)
+          function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+          // Bring elements into tracking range via IntersectionObserver
+          var rangeObserver = new IntersectionObserver(function(entries) {
+              var added = false;
+              entries.forEach(function(entry) {
+                  var el = entry.target;
+                  if (entry.isIntersecting) {
+                      if (active.indexOf(el) === -1) { active.push(el); added = true; }
+                  }
+              });
+              // Trigger update when new elements enter range (fixes instant-scroll race condition)
+              if (added && !ticking) { ticking = true; requestAnimationFrame(update); }
+          }, { rootMargin: '100px 0px 100px 0px' });
+          scrollEls.forEach(function(el) { rangeObserver.observe(el); });
+
+          // Immediately complete elements already scrolled past (e.g. after ?skip or browser restore)
+          scrollEls.forEach(function(el) {
+              var rect = el.getBoundingClientRect();
+              if (rect.bottom < 0) {
+                  // Element is entirely above the viewport — mark complete
+                  el.style.setProperty('--sp', '1');
+                  el.classList.add('scroll-complete');
+                  el.classList.add('is-visible');
+                  if (el.dataset.scroll === 'cascade') {
+                      var h = el.querySelector('.tier-group-header');
+                      if (h) h.style.setProperty('--sp', '1');
+                      el.querySelectorAll('.tier-card').forEach(function(c) { c.style.setProperty('--sp', '1'); });
+                  }
+                  rangeObserver.unobserve(el);
+              }
+          });
+
+          // Calculate and apply scroll progress per frame
+          var ticking = false;
+          function update() {
+              var i = active.length;
+              while (i--) {
+                  var el = active[i];
+                  var rect = el.getBoundingClientRect();
+
+                  // Progress: 0 when entering viewport bottom, 1 when 30% from top
+                  var start = vh + 30;
+                  var end = vh * 0.28;
+                  var raw = (start - rect.top) / (start - end);
+                  var progress = Math.min(Math.max(raw, 0), 1);
+                  var eased = easeOutCubic(progress);
+
+                  var scrollType = el.dataset.scroll;
+
+                  if (scrollType === 'cascade') {
+                      // Header animates first, then cards stagger
+                      var header = el.querySelector('.tier-group-header');
+                      if (header) {
+                          var hp = Math.min(progress / 0.4, 1);
+                          header.style.setProperty('--sp', easeOutCubic(hp).toFixed(3));
+                      }
+                      var cards = el.querySelectorAll('.tier-card');
+                      for (var c = 0; c < cards.length; c++) {
+                          var offset = 0.15 + c * 0.18;
+                          var cRaw = (progress - offset) / 0.55;
+                          var cProgress = Math.min(Math.max(cRaw, 0), 1);
+                          cards[c].style.setProperty('--sp', easeOutCubic(cProgress).toFixed(3));
+                      }
+                      // Container still needs --sp for .reveal override
+                      el.style.setProperty('--sp', eased.toFixed(3));
+                  } else {
+                      el.style.setProperty('--sp', eased.toFixed(3));
+                  }
+
+                  // Mark complete when fully visible
+                  if (progress >= 1) {
+                      el.classList.add('scroll-complete');
+                      el.classList.add('is-visible');
+                      rangeObserver.unobserve(el);
+                      active.splice(i, 1);
+                  }
+              }
+              ticking = false;
+          }
+
+          function onScroll() {
+              if (!ticking && active.length > 0) {
+                  ticking = true;
+                  requestAnimationFrame(update);
+              }
+          }
+
+          window.addEventListener('scroll', onScroll, { passive: true });
+
+          // Fallback reveal for non-scroll-linked .reveal elements
+          var fallbackObserver = new IntersectionObserver(function(entries) {
               entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
           }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-          reveals.forEach(function(el) { observer.observe(el); });
+          plainReveals.forEach(function(el) { fallbackObserver.observe(el); });
 
+          // Process section trigger (separate animation system)
           var sectionObserver = new IntersectionObserver(function(entries) {
               entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add('reveal-triggered'); });
           }, { threshold: 0.15 });
           document.querySelectorAll('.section--process').forEach(function(el) { sectionObserver.observe(el); });
+
+          // Initial update on load
+          requestAnimationFrame(function() { update(); });
       })();
 
       // Process journey — click to select, hover to preview
@@ -974,6 +1099,17 @@ const schemaJson = {
               card.addEventListener('click', function(e) {
                   // Don't navigate if user clicked a link, button, details, or summary inside
                   if (e.target.closest('a, button, details, summary')) return;
+                  // GA4: select_item when offer card is clicked
+                  if (typeof gtag === 'function') {
+                      var name = card.querySelector('.offer-card__name');
+                      var tier = card.classList.contains('tier-card--build') ? 'Build' :
+                                 card.classList.contains('tier-card--transform') ? 'Transform' : 'Care';
+                      gtag('event', 'select_item', {
+                          item_name: name ? name.textContent : '',
+                          item_category: tier,
+                          item_id: card.getAttribute('data-href')
+                      });
+                  }
                   window.location.href = card.getAttribute('data-href');
               });
           });

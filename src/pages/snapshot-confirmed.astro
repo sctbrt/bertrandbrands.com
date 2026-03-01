@@ -397,6 +397,15 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         })();
     </script>
 
+    {/* GA4: snapshot confirmation conversion */}
+    <script is:inline>
+        (function() {
+            if (typeof bbConvert !== 'function' || sessionStorage.getItem('bb_snapshot_tracked')) return;
+            sessionStorage.setItem('bb_snapshot_tracked', '1');
+            bbConvert('snapshot_confirmed', 'snapshot_payment', 1);
+        })();
+    </script>
+
     <VisitorNotify />
     <VersionStamp />
 </BaseLayout>

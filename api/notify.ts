@@ -1,42 +1,67 @@
 // Vercel Serverless Function: Visitor & Form Notification via Pushover
 // Endpoint: /api/notify
 
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { createRateLimiter, getClientIp } from './_lib/rate-limit.js';
+import type { NotifyRequestBody, PushoverPayload } from './_lib/types.js';
+
 // In-memory rate limiting (resets on cold start, per-instance)
-const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 10; // max 10 requests per minute per IP
+const isRateLimited = createRateLimiter(60_000, 10);
 
-function isRateLimited(ip) {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
+// Source labels for intake notification titles
+const SOURCE_LABELS: Record<string, string> = {
+  'exploratory-guided-intake': 'Exploratory Intake',
+  'website_conversion_snapshot': 'Website Snapshot',
+  'brand-clarity-diagnostic-intake': 'Brand Diagnostic',
+  'sudbury_focus_studio': 'Sudbury Lead',
+  'unified-intake': 'V10 Intake',
+  'inline-starter': 'Starter Package Inquiry',
+  'inline-refresh': 'Refresh Package Inquiry',
+  'inline-platform': 'Platform Package Inquiry',
+  'tier-intake': 'General Intake',
+  'tier-intake-amber': 'Build Tier Inquiry',
+  'tier-intake-violet': 'Transform Tier Inquiry',
+  'tier-intake-blue': 'Care Tier Inquiry',
+  'start-landing': 'Start Page Lead',
+};
 
-  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
-    rateLimitMap.set(ip, { windowStart: now, count: 1 });
-    return false;
+/**
+ * Build geo location string from Vercel headers
+ */
+function buildGeoLocation(headers: VercelRequest['headers']): string {
+  const geoCity = headers['x-vercel-ip-city']
+    ? decodeURIComponent(headers['x-vercel-ip-city'] as string)
+    : '';
+  const geoRegion = (headers['x-vercel-ip-country-region'] as string) || '';
+  const geoCountry = (headers['x-vercel-ip-country'] as string) || '';
+
+  if (geoCity) {
+    let location = geoCity;
+    if (geoRegion) location += `, ${geoRegion}`;
+    if (geoCountry) location += `, ${geoCountry}`;
+    return location;
   }
-
-  entry.count++;
-  if (entry.count > RATE_LIMIT_MAX_REQUESTS) {
-    return true;
-  }
-
-  return false;
+  return geoCountry;
 }
 
-// Periodic cleanup to prevent memory leak (every 5 minutes)
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, entry] of rateLimitMap) {
-    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS * 5) {
-      rateLimitMap.delete(ip);
-    }
-  }
-}, 5 * 60 * 1000);
+/**
+ * Parse user agent into device summary
+ */
+function parseDevice(ua: string): string {
+  if (!ua) return '';
+  const isMobile = /Mobile|Android|iPhone|iPad/i.test(ua);
+  let browser = 'Unknown';
+  if (/Edg\//i.test(ua)) browser = 'Edge';
+  else if (/Chrome\//i.test(ua)) browser = 'Chrome';
+  else if (/Safari\//i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+  else if (/Firefox\//i.test(ua)) browser = 'Firefox';
+  return `${isMobile ? '📱' : '💻'} ${browser}`;
+}
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   // CORS: restrict to APP_URL origin
   const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.ca';
-  const origin = req.headers.origin;
+  const origin = req.headers.origin as string | undefined;
 
   if (origin === allowedOrigin) {
     res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
@@ -46,29 +71,26 @@ export default async function handler(req, res) {
 
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
-    return res.status(204).end();
+    res.status(204).end();
+    return;
   }
 
   // Only allow POST requests
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   // Rate limiting by IP
-  const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
-             req.headers['x-real-ip'] ||
-             'unknown';
-
+  const ip = getClientIp(req.headers);
   if (isRateLimited(ip)) {
-    return res.status(429).json({ error: 'Too many requests' });
+    res.status(429).json({ error: 'Too many requests' });
+    return;
   }
 
   // Determine notification type based on request body
-  const { type, name, email, service, message, page, referrer, utm,
-          source, business, website, details, concerns, situation,
-          budget, timeline, phone, description, challenge,
-          tier, price, context, outcome, industry, contact_pref,
-          offer } = req.body || {};
+  const body = (req.body || {}) as NotifyRequestBody;
+  const { type } = body;
 
   // Pushover credentials (from environment variables)
   const PUSHOVER_USER = process.env.PUSHOVER_USER_KEY;
@@ -76,45 +98,24 @@ export default async function handler(req, res) {
 
   if (!PUSHOVER_USER || !PUSHOVER_TOKEN) {
     console.error('Pushover credentials not configured');
-    return res.status(500).json({ error: 'Notification service not configured' });
+    res.status(500).json({ error: 'Notification service not configured' });
+    return;
   }
 
   try {
-    let notificationMessage;
-    let notificationTitle;
-    let notificationUrl;
-    let notificationUrlTitle;
-    let priority;
-    let sound;
+    let notificationMessage: string;
+    let notificationTitle: string;
+    let notificationUrl: string | undefined;
+    let notificationUrlTitle: string | undefined;
+    let priority: number;
+    let sound: string | undefined;
 
     if (type === 'visitor') {
       // Visitor notification
+      const { page, referrer, utm } = body as { page?: string; referrer?: string; utm?: { source?: string; medium?: string; campaign?: string; gclid?: string } };
 
-      // Geolocation via Vercel headers (free, instant, no external API call)
-      const geoCity = req.headers['x-vercel-ip-city'] ? decodeURIComponent(req.headers['x-vercel-ip-city']) : '';
-      const geoRegion = req.headers['x-vercel-ip-country-region'] || '';
-      const geoCountry = req.headers['x-vercel-ip-country'] || '';
-      let location = '';
-      if (geoCity) {
-        location = geoCity;
-        if (geoRegion) location += `, ${geoRegion}`;
-        if (geoCountry) location += `, ${geoCountry}`;
-      } else if (geoCountry) {
-        location = geoCountry;
-      }
-
-      // Parse user agent for device summary
-      const ua = req.headers['user-agent'] || '';
-      let device = '';
-      if (ua) {
-        const isMobile = /Mobile|Android|iPhone|iPad/i.test(ua);
-        let browser = 'Unknown';
-        if (/Edg\//i.test(ua)) browser = 'Edge';
-        else if (/Chrome\//i.test(ua)) browser = 'Chrome';
-        else if (/Safari\//i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
-        else if (/Firefox\//i.test(ua)) browser = 'Firefox';
-        device = `${isMobile ? '📱' : '💻'} ${browser}`;
-      }
+      const location = buildGeoLocation(req.headers);
+      const device = parseDevice((req.headers['user-agent'] as string) || '');
 
       // Build source attribution line (UTM > referrer > nothing)
       let sourceLine = '';
@@ -125,11 +126,9 @@ export default async function handler(req, res) {
         sourceLine = parts.join(' / ');
         if (utm.gclid) sourceLine += ' (Google Ads)';
       } else if (referrer) {
-        // Extract domain from referrer for cleaner display
         try {
-          const refHost = new URL(referrer).hostname.replace('www.', '');
-          sourceLine = refHost;
-        } catch (e) {
+          sourceLine = new URL(referrer).hostname.replace('www.', '');
+        } catch {
           sourceLine = referrer;
         }
       }
@@ -143,39 +142,18 @@ export default async function handler(req, res) {
       notificationUrl = `https://bertrandbrands.ca${page || '/'}`;
       notificationUrlTitle = 'View Page';
       priority = -1; // Silent — no sound, no popup
-      sound = null;
+      sound = undefined;
+
     } else if (type === 'intake') {
       // Intake form submission (high priority with distinct sound)
+      const {
+        source, name, email, phone, business, website, service,
+        situation, budget, timeline, concerns, details, description,
+        challenge, context, outcome, price, offer,
+      } = body as Record<string, string | undefined>;
 
-      // Geolocation via Vercel headers (free, instant, no external API call)
-      const intakeCity = req.headers['x-vercel-ip-city'] ? decodeURIComponent(req.headers['x-vercel-ip-city']) : '';
-      const intakeRegion = req.headers['x-vercel-ip-country-region'] || '';
-      const intakeCountry = req.headers['x-vercel-ip-country'] || '';
-      let location = '';
-      if (intakeCity) {
-        location = intakeCity;
-        if (intakeRegion) location += `, ${intakeRegion}`;
-        if (intakeCountry) location += `, ${intakeCountry}`;
-      } else if (intakeCountry) {
-        location = intakeCountry;
-      }
-
-      // Source labels for notification title
-      const sourceLabels = {
-        'exploratory-guided-intake': 'Exploratory Intake',
-        'website_conversion_snapshot': 'Website Snapshot',
-        'brand-clarity-diagnostic-intake': 'Brand Diagnostic',
-        'sudbury_focus_studio': 'Sudbury Lead',
-        'unified-intake': 'V10 Intake',
-        'inline-starter': 'Starter Package Inquiry',
-        'inline-refresh': 'Refresh Package Inquiry',
-        'inline-platform': 'Platform Package Inquiry',
-        'tier-intake': 'General Intake',
-        'tier-intake-amber': 'Build Tier Inquiry',
-        'tier-intake-violet': 'Transform Tier Inquiry',
-        'tier-intake-blue': 'Care Tier Inquiry',
-      };
-      const sourceLabel = sourceLabels[source] || source || 'Intake';
+      const location = buildGeoLocation(req.headers);
+      const sourceLabel = SOURCE_LABELS[source || ''] || source || 'Intake';
 
       notificationMessage = `${name || 'Unknown'}`;
       if (email) notificationMessage += `\n${email}`;
@@ -201,8 +179,11 @@ export default async function handler(req, res) {
       notificationUrlTitle = 'View Leads';
       priority = 1; // High priority
       sound = 'cashregister';
+
     } else {
       // Generic form submission notification (normal priority with sound)
+      const { name, email, service, message } = body as Record<string, string | undefined>;
+
       notificationMessage = `New inquiry from ${name || 'Unknown'}`;
       if (email) notificationMessage += `\nEmail: ${email}`;
       if (service) notificationMessage += `\nService: ${service}`;
@@ -216,14 +197,14 @@ export default async function handler(req, res) {
     }
 
     // Build Pushover payload
-    const pushoverPayload = {
+    const pushoverPayload: PushoverPayload = {
       token: PUSHOVER_TOKEN,
       user: PUSHOVER_USER,
       message: notificationMessage,
       title: notificationTitle,
       url: notificationUrl,
       url_title: notificationUrlTitle,
-      priority: priority,
+      priority,
     };
 
     if (sound) {
@@ -242,12 +223,13 @@ export default async function handler(req, res) {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Pushover error:', errorData);
-      return res.status(500).json({ error: 'Failed to send notification' });
+      res.status(500).json({ error: 'Failed to send notification' });
+      return;
     }
 
-    return res.status(200).json({ ok: true });
+    res.status(200).json({ ok: true });
   } catch (error) {
     console.error('Notification error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 }

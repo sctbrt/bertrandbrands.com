@@ -29,9 +29,6 @@ export default defineConfig({
     '/start-here': { destination: '/intake', status: 302 },
     '/brand-website-starter-map': { destination: '/#packages', status: 302 },
 
-    // V10 → Tier migration: /start → /intake (permanent)
-    '/start': { destination: '/intake', status: 301 },
-
     // V10 service redirects (permanent)
     '/book': { destination: '/intake', status: 301 },
     '/focus-studio': { destination: '/#packages', status: 301 },

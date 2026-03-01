@@ -1,16 +1,15 @@
 // POST /api/booking/logout
 // Clears booking session cookie and deletes session from database
 
-import {
-  initializeDatabase,
-  deleteBookingSession
-} from '../_lib/db.js';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { initializeDatabase, deleteBookingSession } from '../_lib/db.js';
 import { parseCookies, buildClearCookie } from '../_lib/cookies.js';
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   // Only allow POST
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   // Initialize database if needed
@@ -33,5 +32,5 @@ export default async function handler(req, res) {
     }
   }
 
-  return res.status(200).json({ ok: true });
+  res.status(200).json({ ok: true });
 }

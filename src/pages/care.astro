@@ -4,6 +4,9 @@
  * Tri-colour gradient accent (amber + violet + blue) per user direction.
  */
 import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
+import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../lib/schema';
+import { Image } from 'astro:assets';
+import logomark from '../assets/bg-brands-logomark.png';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -14,26 +17,29 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/care"
     ogTitle="Care Plans — Bertrand Brands"
     ogDescription="Scoped monthly support after launch. From $249/mo CAD. Credits-based, not hourly."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Care Plans",
-        "description": "Scoped monthly subscription support for websites and brand systems after launch.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca"
-        },
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Care", url: "https://bertrandbrands.ca/care" }
+        ]),
+        {
+            "@type": "Service",
             "name": "Care Plans",
-            "itemListElement": [
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze" }, "price": "249", "priceCurrency": "CAD" },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Silver" }, "price": "649", "priceCurrency": "CAD" },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gold" }, "description": "Gated — limited seats" }
-            ]
+            "url": "https://bertrandbrands.ca/care",
+            "description": "Scoped monthly subscription support for websites and brand systems after launch.",
+            "provider": PROVIDER,
+            "areaServed": AREA_SERVED,
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Care Plans",
+                "itemListElement": [
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze" }, "url": "https://bertrandbrands.ca/care/bronze", "availability": "https://schema.org/InStock", "price": "249", "priceCurrency": "CAD" },
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Silver" }, "url": "https://bertrandbrands.ca/care/silver", "availability": "https://schema.org/InStock", "price": "649", "priceCurrency": "CAD" },
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gold" }, "url": "https://bertrandbrands.ca/care/gold", "availability": "https://schema.org/LimitedAvailability", "description": "Gated — limited seats" }
+                ]
+            }
         }
-    }}
+    )}
     spotlightColor="rgba(139, 92, 246, 0.15)"
 >
     <Fragment slot="head">
@@ -158,6 +164,13 @@ const currentYear = new Date().getFullYear();
             .service-footer__phone { font-size: var(--text-sm); margin-top: 0.5rem; }
             .service-footer__phone a { color: var(--text-muted); text-decoration: none; }
             .service-footer__phone a:hover { color: var(--text); }
+            .service-footer__cta { margin-bottom: 1rem; }
+            .service-footer__cta-text { font-size: var(--text-sm); color: var(--text-subtle); margin-bottom: 0.25rem; }
+            .service-footer__cta-link { font-size: var(--text-sm); color: var(--text-muted); text-decoration: none; transition: color 0.15s ease; }
+            .service-footer__cta-link:hover { color: var(--accent); }
+            .service-footer__compare { font-size: var(--text-sm); color: var(--text-subtle); margin-top: 0.5rem; }
+            .service-footer__compare a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; transition: color 0.2s ease; }
+            .service-footer__compare a:hover { color: var(--text); }
             .service-hero__illustration-wrap {
                 position: relative; display: block; margin: 0 auto 0.5rem; width: clamp(240px, 42vw, 400px);
             }
@@ -263,7 +276,7 @@ const currentYear = new Date().getFullYear();
 
             <div class="service-hero">
                 <a href="/?skip#packages" class="service-subbrand">
-                    <img src="/assets/bg-brands-logomark.png" alt="" class="service-subbrand__mark" width="40" height="40">
+                    <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
                     <span class="service-subbrand__name">Care</span>
                 </a>
 
@@ -430,6 +443,11 @@ const currentYear = new Date().getFullYear();
     </main>
 
     <footer class="service-footer">
+        <div class="service-footer__cta">
+            <p class="service-footer__cta-text">Not sure which Care plan?</p>
+            <a href="/intake?tier=blue" class="service-footer__cta-link">Start with an intake &rarr;</a>
+            <p class="service-footer__compare">or <a href="/compare">compare all tiers side by side</a></p>
+        </div>
         <p class="service-footer__text">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
         <p class="footer-division"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a> &middot; <a href="/privacy">Privacy</a></p>
         <p class="service-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">(705) 413-3705</a><span class="phone-link__desktop">(705) 413-3705</span></p>

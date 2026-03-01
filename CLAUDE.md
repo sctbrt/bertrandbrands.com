@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 11.2.3 (Current)
+## Version 12.0.0 (Current)
 
 This document is the **Bertrand Brands** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -302,6 +302,7 @@ A successful implementation:
 │   │   ├── 404.astro              # Error page
 │   │   ├── thanks.astro           # Formspree redirect
 │   │   ├── sitemapX.astro         # Ecosystem sitemap
+│   │   ├── compare.astro          # Side-by-side tier comparison (Build vs Transform vs Care)
 │   │   ├── intake.astro           # Tier-aware intake form (replaces start.astro)
 │   │   ├── build.astro            # B Build tier hub (3 offers)
 │   │   ├── transform.astro       # B Transform tier hub (3 offers)
@@ -602,12 +603,13 @@ Every page in `src/pages/` **must** include `VisitorNotify`. No exceptions. This
 1. Direct import: `import VisitorNotify from '../components/VisitorNotify.astro';` + `<VisitorNotify />` before `</BaseLayout>`
 2. Shared layout: `ServiceDetailLayout.astro` and `IntakeLayout.astro` include it automatically
 
-**Current coverage (26/26 pages):**
+**Current coverage (27/27 pages):**
 
 | Page | Source |
 |------|--------|
 | `index.astro` | Direct |
 | `intake.astro` | Via IntakeLayout |
+| `compare.astro` | Direct |
 | `care.astro` | Direct |
 | `build.astro` | Direct |
 | `transform.astro` | Direct |
@@ -868,6 +870,7 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - `/care/bronze` → Bronze plan detail (Blue)
 - `/care/silver` → Silver plan detail (Blue)
 - `/care/gold` → Gold plan detail (Blue)
+- `/compare` → Side-by-side service tier comparison (Build vs Transform vs Care)
 - `/sudbury` → Sudbury local campaign landing (Google Ads)
 - `/scottbertrand` → Scott Bertrand cross-promotion
 
@@ -1171,6 +1174,7 @@ Added `contain: layout style` to:
 | 11.2.1 | Feb 2026 | Documentation accuracy patch: Updated CLAUDE.md Section 6.1 color tokens to match V11.2.0 values (`--bg-elevated`, `--bg-subtle`, `--border`, `--glass-bg/border/edge-highlight`), removed stale Light Theme block. Updated Section 18.2 card system tokens (`--card-bg`, `--card-bg-hover`, `--card-border`, `--wrapper-bg`). Updated `tokens.css` version header from V5.0.0 to V11.2.0. Removed legacy V8.1 version tag from main.css mobile typography comment. Deleted 25 development screenshot .jpeg files from project root. |
 | 11.2.2 | Feb 2026 | Polish & hygiene batch: P0 — Replaced 2 hardcoded colors in main.css with design tokens (`var(--text)`, `var(--glass-edge-highlight)`), updated stale version header. P1 — DRY extraction: created `api/_lib/validation.js` (canonical `EMAIL_REGEX`), extended `cookies.js` with `parseCookies()` and `buildClearCookie()`, removed ~160 lines of duplicated code across 7 API files. P2 — Removed duplicate `.gitignore` entries. P3 — Deleted 5 stale root documentation files (~35 KB). P4 — Added `rel="noopener noreferrer"` to all `target="_blank"` links in `sitemapX.astro`. P5 — Replaced production `console.error` in `booking/schedule.astro` with comment. |
 | 11.2.3 | Feb 2026 | Full audit & polish pass: P0 — Deleted ~947 lines of dead V10 CSS (6 class families: `.care-plan-card`, `.contact-form`, `.core-systems`, `.exploratory`, `.exploratory-sessions`, `.start-module` + associated keyframes & responsive rules). P1 — Replaced ~42 hardcoded color values with design tokens (`var(--text)`, `var(--build-accent)`, `var(--transform-accent)`, `var(--care-accent)`, `rgba(var(--highlight-rgb), ...)`, `rgba(var(--scrim-rgb), ...)`). P2 — Replaced 7 hardcoded `font-weight` values with tokens. P3 — Verified all `target="_blank"` links have `rel="noopener noreferrer"` (all clean). P4 — Added missing meta description to `booking/schedule.astro`. P5 — Removed unused `findValidMagicLink()` export and unused `ip` param from `countRecentRequests()` in `db.js`; standardized `notify.js` response to `{ ok: true }`. P6 — Updated 13 stale version comments (removed V5.0/V5.5 tags, fixed V10 tier naming). P7 — Added IP-based rate limiting (10 req/min) to `api/booking/create-token.js`. |
+| 12.0.0 | Feb 2026 | Infrastructure modernization: Full TypeScript API migration (17 files .js→.ts with shared types, centralized rate limiter, new `create-token` endpoint). CSS split: `main.css`→`shared.css` (global) + `homepage.css` (homepage-only) for reduced page weight. Image optimization: converted all static images to `astro:assets` `<Image>` with WebP output. New pages: `/compare` (tier comparison), `/start` (outreach landing, noindex). Playwright test suite (6 suites: homepage, mobile, accessibility, navigation, redirects, SEO). Schema library (`src/lib/schema.ts`) centralizing JSON-LD generation. Added `--build-rgb`/`--transform-rgb`/`--care-rgb` tokens, replaced ~57 hardcoded RGBA values in shared.css. GA4 event tracking on confirmation pages. Added `payment-confirmed` meta description. Google Ads tracking fixes: CSP img-src for Google domains, removed phone double-conversion bug, Sudbury form bbConvert consistency. Sudbury landing rewrite: transactional hero, inline email form, trust section. |
 
 ---
 
@@ -1488,11 +1492,12 @@ Magic link system for gated booking access (client-specific). Parallels pricing 
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
+| `/api/booking/create-token` | POST | Admin endpoint: validates client email, generates magic link token, sends via Resend. Authenticated via `BOOKING_ADMIN_SECRET` header. |
 | `/api/booking/access?token=...` | GET | Consumes token, creates session, sets `bb_booking_session` cookie |
 | `/api/booking/check-access` | GET | Validates session cookie, returns `{ hasAccess: true, clientEmail }` |
 | `/api/booking/logout` | POST | Clears session cookie |
 
-**Note:** There is no `request-access` endpoint in this repo. Booking tokens are generated externally (via system-build admin dashboard or manual process). The `access.js` endpoint queries a `clients` table to resolve client email from the token's `client_id`.
+**Note:** The `create-token` endpoint is admin-only (requires `BOOKING_ADMIN_SECRET` header). The `access` endpoint queries a `clients` table to resolve client email from the token's `client_id`.
 
 **Dependency:** Requires `clients` table in Vercel Postgres (not created by `scripts/init-db.js` — managed by system-build).
 
