@@ -14,6 +14,7 @@ import SkipLink from '../components/SkipLink.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import VersionStamp from '../components/VersionStamp.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
+import { breadcrumbList, schemaGraph, PROVIDER_FULL } from '../lib/schema';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -24,43 +25,32 @@ const currentYear = new Date().getFullYear();
     canonical="https://bertrandbrands.ca/sudbury"
     ogTitle="Sudbury Web Design & Branding — Starter Sites $499 (Launch) | Bertrand Brands"
     ogDescription="Custom-coded websites from $499 — launch pricing for our first 10 Sudbury clients. Fixed pricing, fast turnaround. No templates. Based in Greater Sudbury, Ontario."
-    schemaJson={{
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "B Build — Sudbury",
-        "description": "Fixed-scope web and brand work for small businesses in Greater Sudbury and Northern Ontario.",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "Bertrand Brands — Brand & Web Systems",
-            "url": "https://bertrandbrands.ca",
-            "telephone": "+17054133705",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Greater Sudbury",
-                "addressRegion": "Ontario",
-                "addressCountry": "CA"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 46.4917,
-                "longitude": -80.9930
-            },
-            "sameAs": ["https://linkedin.com/in/sudburyon"]
-        },
-        "areaServed": [
-            { "@type": "City", "name": "Greater Sudbury", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ontario" } },
-            { "@type": "AdministrativeArea", "name": "Northern Ontario" }
-        ],
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Website & Brand Services",
-            "itemListElement": [
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site — One-Page + Contact" }, "price": "499", "priceCurrency": "CAD" },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation + Growth System" }, "description": "Full website rebuild with content strategy, conversion UX, and growth playbook" },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze — Monthly Care Plan" }, "price": "249", "priceCurrency": "CAD", "description": "Monthly website maintenance and updates" }
-            ]
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "Sudbury", url: "https://bertrandbrands.ca/sudbury" }
+        ]),
+        {
+            "@type": "Service",
+            "name": "B Build — Sudbury",
+            "url": "https://bertrandbrands.ca/sudbury",
+            "description": "Fixed-scope web and brand work for small businesses in Greater Sudbury and Northern Ontario.",
+            "provider": PROVIDER_FULL,
+            "areaServed": [
+                { "@type": "City", "name": "Greater Sudbury", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ontario" } },
+                { "@type": "AdministrativeArea", "name": "Northern Ontario" }
+            ],
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Website & Brand Services",
+                "itemListElement": [
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Starter Site — One-Page + Contact" }, "price": "499", "priceCurrency": "CAD", "url": "https://bertrandbrands.ca/build/starter-onepage", "availability": "https://schema.org/InStock" },
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Foundation + Growth System" }, "description": "Full website rebuild with content strategy, conversion UX, and growth playbook", "url": "https://bertrandbrands.ca/transform/foundation-growth" },
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bronze — Monthly Care Plan" }, "price": "249", "priceCurrency": "CAD", "description": "Monthly website maintenance and updates", "url": "https://bertrandbrands.ca/care/bronze" }
+                ]
+            }
         }
-    }}
+    )}
 >
     <Fragment slot="head">
         <!-- FAQPage Schema (second schema block) -->
@@ -466,6 +456,62 @@ const currentYear = new Date().getFullYear();
             @media (max-width: 480px) {
                 .sb-proof__number { font-size: var(--text-xl); }
                 .sb-proof__label { font-size: var(--text-2xs); }
+            }
+
+            /* ---- Hero Inline Form ---- */
+            .sb-hero-form {
+                margin-top: var(--space-md);
+                max-width: 440px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .sb-hero-form__form {
+                display: flex;
+                gap: 0.5rem;
+                align-items: stretch;
+            }
+            .sb-hero-form__input {
+                flex: 1;
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                padding: 0.75rem 1rem;
+                border-radius: var(--radius-md);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.06);
+                color: var(--text);
+                outline: none;
+                transition: border-color var(--duration-fast) ease;
+            }
+            .sb-hero-form__input::placeholder { color: var(--text-subtle); }
+            .sb-hero-form__input:focus { border-color: var(--accent); }
+            .sb-hero-form__btn {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                font-weight: 500;
+                padding: 0.75rem 1.25rem;
+                border-radius: var(--radius-md);
+                border: none;
+                background: var(--accent);
+                color: var(--text);
+                cursor: pointer;
+                white-space: nowrap;
+                transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
+            }
+            .sb-hero-form__btn:hover {
+                background: var(--accent-hover);
+                transform: translateY(-1px);
+            }
+            .sb-hero-form__note {
+                font-family: var(--font-body);
+                font-size: var(--text-2xs);
+                color: var(--text-subtle);
+                margin-top: 0.5rem;
+                text-align: center;
+            }
+            @media (max-width: 480px) {
+                .sb-hero-form__form {
+                    flex-direction: column;
+                }
             }
 
             /* ---- Starter Card (Primary Offering) ---- */
@@ -1184,14 +1230,22 @@ const currentYear = new Date().getFullYear();
             <div class="sb-hero__spotlight sb-hero__spotlight--warm"></div>
             <div class="sb-hero__spotlight sb-hero__spotlight--blue"></div>
             <div class="sb-hero__content">
-                <p class="sb-hero__eyebrow">Sudbury &amp; Northern Ontario</p>
-                <h1 class="sb-hero__title">A website that works<br>for your business.</h1>
-                <p class="sb-hero__subhead">Custom-coded sites with fixed pricing. No templates, no surprises. Strategy first, then we build. Delivered in days, not months.</p>
+                <p class="sb-hero__eyebrow">Web Design in Greater Sudbury</p>
+                <h1 class="sb-hero__title">Custom websites for<br>Sudbury small businesses.</h1>
+                <p class="sb-hero__subhead">From $499. Fixed pricing, 7&ndash;10 day delivery. No templates, no WordPress. Code you own.</p>
                 <div class="sb-hero__actions">
                     <a href="#get-started" class="sb-hero__cta">Get a free quote &rarr;</a>
                     <p class="sb-hero__or">or</p>
-                    <a href="tel:+17054133705" class="sb-hero__phone">Prefer to talk? Call <span class="sb-hero__phone-number">(705) 413-3705</span></a>
-                    <a href="#pricing" class="sb-hero__secondary">See pricing &darr;</a>
+                    <a href="tel:+17054133705" class="sb-hero__phone">Call us now: <span class="sb-hero__phone-number">(705) 413-3705</span></a>
+                    <a href="#pricing" class="sb-hero__secondary">See what&rsquo;s included &darr;</a>
+                </div>
+                <!-- Inline hero form — reduces friction, captures above-the-fold -->
+                <div class="sb-hero-form">
+                    <form class="sb-hero-form__form" id="heroForm">
+                        <input type="email" name="email" class="sb-hero-form__input" placeholder="Your email address" required aria-label="Email address">
+                        <button type="submit" class="sb-hero-form__btn">Get quote</button>
+                    </form>
+                    <p class="sb-hero-form__note">Free, no-obligation. We respond within 1 business day.</p>
                 </div>
             </div>
         </section>
@@ -1278,11 +1332,12 @@ const currentYear = new Date().getFullYear();
         <section class="sb-trust sb-fade">
             <div class="sb-container">
                 <div class="sb-trust__card">
-                    <h2 class="sb-trust__title">Why Sudbury businesses choose us</h2>
+                    <h2 class="sb-trust__title">What you get</h2>
                     <ul class="sb-trust__list">
-                        <li class="sb-trust__item">Custom-coded &mdash; no page builders or WordPress themes</li>
-                        <li class="sb-trust__item">Fixed pricing &mdash; you know the cost before we start</li>
-                        <li class="sb-trust__item">Strategy first &mdash; brand + dev team under one roof</li>
+                        <li class="sb-trust__item">A real dev team &mdash; brand strategist + full-stack developer, not freelancers</li>
+                        <li class="sb-trust__item">You own the code &mdash; no WordPress, no page builders, no vendor lock-in</li>
+                        <li class="sb-trust__item">One clear price &mdash; you approve the scope and cost before anything starts</li>
+                        <li class="sb-trust__item">Based in Sudbury &mdash; local team, remote delivery, fast turnaround</li>
                     </ul>
                 </div>
             </div>
@@ -1395,7 +1450,21 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <script is:inline>
-        // Phone click tracking now handled globally by BaseLayout
+        // Hero inline form — scrolls to full form with email pre-filled
+        (function() {
+            var heroForm = document.getElementById('heroForm');
+            if (!heroForm) return;
+            heroForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var email = heroForm.querySelector('input[name="email"]').value;
+                var fullEmail = document.getElementById('email');
+                if (fullEmail && email) fullEmail.value = email;
+                var target = document.getElementById('get-started');
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+                var nameField = document.getElementById('name');
+                if (nameField) setTimeout(function() { nameField.focus(); }, 600);
+            });
+        })();
 
         // Capture gclid from URL params for offline conversion tracking
         (function() {
@@ -1460,13 +1529,7 @@ const currentYear = new Date().getFullYear();
                         }
 
                         // Google Ads: Lead — Intake Submitted
-                        if (typeof gtag === 'function') {
-                            gtag('event', 'conversion', {
-                                'send_to': 'AW-17925090292/3B0-CJDv6vUbEPTXrONC',
-                                'value': 1.0,
-                                'currency': 'CAD'
-                            });
-                        }
+                        bbConvert('form_submit', 'sudbury_lead', 1.0);
                     } else {
                         throw new Error('Submission failed');
                     }
