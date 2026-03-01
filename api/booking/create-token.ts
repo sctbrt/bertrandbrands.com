@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import { Resend } from 'resend';
 import { sql } from '@vercel/postgres';
 import { initializeDatabase, createBookingToken } from '../_lib/db.js';
+import { generateToken } from '../_lib/crypto.js';
 import { EMAIL_REGEX } from '../_lib/validation.js';
 import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
 
@@ -19,8 +20,8 @@ const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 
 // Booking type labels for emails
 const BOOKING_TYPE_LABELS: Record<string, string> = {
-  focus_studio_kickoff: 'Build Kickoff',
-  core_services_discovery: 'Transformation Discovery'
+  build_kickoff: 'Build Kickoff',
+  transform_discovery: 'Transform Discovery'
 };
 
 interface ClientRecord {
@@ -28,15 +29,6 @@ interface ClientRecord {
   name: string;
   contact_email: string;
   company: string | null;
-}
-
-/**
- * Generate secure random token and its hash
- */
-function generateToken(): { rawToken: string; tokenHash: string } {
-  const rawToken = crypto.randomBytes(32).toString('hex');
-  const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
-  return { rawToken, tokenHash };
 }
 
 /**
@@ -240,8 +232,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
         expiresHours: BOOKING_TOKEN_TTL_HOURS
       })
     });
-
-    console.log(`Booking token created: ${normalizedEmail.substring(0, 3)}***@*** type=${bookingType} by=${createdBy || 'admin'}`);
 
     res.status(200).json({
       ok: true,

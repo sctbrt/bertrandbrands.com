@@ -8,6 +8,13 @@ import { parseCookies, buildClearCookie } from '../_lib/cookies.js';
 import { UUID_REGEX } from '../_lib/validation.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
+  const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.ca';
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') { res.status(200).end(); return; }
+
   // Only allow GET
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Method not allowed' });

@@ -11,17 +11,24 @@ import type { CalendlyEntry } from '../_lib/types.js';
 // Calendly URL map — the ONLY place these URLs exist
 // Set active: true when Calendly events are ready for use
 const CALENDLY_MAP: Record<string, CalendlyEntry> = {
-  focus_studio_kickoff: {
-    url: 'https://calendly.com/bertrandbrands/focus-studio-kickoff',
+  build_kickoff: {
+    url: 'https://calendly.com/bertrandbrands/build-kickoff',
     active: true
   },
-  core_services_discovery: {
-    url: 'https://calendly.com/bertrandbrands/core-services-discovery',
+  transform_discovery: {
+    url: 'https://calendly.com/bertrandbrands/transform-discovery',
     active: true
   }
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
+  const allowedOrigin = process.env.APP_URL || 'https://bertrandbrands.ca';
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') { res.status(200).end(); return; }
+
   // Only allow GET
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Method not allowed' });

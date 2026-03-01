@@ -1193,6 +1193,7 @@
             margin: 0;
         }
 
+        /* 600px — content-driven breakpoint, grid fits at tablet */
         @media (max-width: 600px) {
             .care-details__content {
                 padding: 0 var(--space-md) var(--space-md);

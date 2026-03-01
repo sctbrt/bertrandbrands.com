@@ -2,7 +2,9 @@
 /**
  * SkipLink — Keyboard accessibility skip-to-content link.
  * Included in all layouts via BaseLayout.
+ * Inline styles ensure visibility fix works on pages without shared.css.
  */
 ---
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
+<a href="#main-content" class="skip-link" style="position:fixed;top:-100%;left:1rem;padding:0.75rem 1rem;background:#fafafa;color:#0a0a0a;font-family:var(--font-body,'Inter',sans-serif);font-size:0.875rem;font-weight:500;border-radius:6px;z-index:10001;text-decoration:none;transition:top 0.15s ease;">Skip to main content</a>
+<style is:inline>.skip-link:focus{top:1rem !important;}</style>

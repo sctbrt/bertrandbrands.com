@@ -1529,7 +1529,7 @@ const currentYear = new Date().getFullYear();
                         }
 
                         // Google Ads: Lead — Intake Submitted
-                        bbConvert('form_submit', 'sudbury_lead', 1.0);
+                        if (typeof bbConvert === 'function') bbConvert('form_submit', 'sudbury_lead', 1.0);
                     } else {
                         throw new Error('Submission failed');
                     }

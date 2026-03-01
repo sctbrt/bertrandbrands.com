@@ -14,6 +14,7 @@ import logomark from '../assets/bg-brands-logomark.png';
 
 <BaseLayout
     title="Ecosystem Sitemap — Bertrand Brands"
+    description="Complete page listing for Bertrand Brands and related properties."
     robots="noindex"
     includeMainCss={false}
 >
@@ -74,13 +75,6 @@ import logomark from '../assets/bg-brands-logomark.png';
             .sitemap__footer a { color: var(--text-muted); text-decoration: none; }
             .sitemap__footer a:hover { color: var(--accent); }
             :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-            .skip-link {
-                position: fixed; top: -100%; left: 1rem; padding: 0.75rem 1rem;
-                background: var(--text); color: var(--bg); font-family: var(--font-body);
-                font-size: 0.875rem; font-weight: 500; border-radius: 6px;
-                z-index: 10001; text-decoration: none; transition: top 0.15s ease;
-            }
-            .skip-link:focus { top: 1rem; }
         </style>
     </Fragment>
 
@@ -103,68 +97,65 @@ import logomark from '../assets/bg-brands-logomark.png';
                 </div>
                 <div class="domain__pages">
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Main Pages</h3>
+                        <h2 class="domain__section-title">Main Pages</h2>
                         <ul class="page-list">
                             <li class="page-list__item"><a href="https://bertrandbrands.ca/" target="_blank" rel="noopener noreferrer">Homepage</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/?skip#about" target="_blank" rel="noopener noreferrer">About</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/?skip#packages" target="_blank" rel="noopener noreferrer">Services</a></li>
                             <li class="page-list__item"><a href="https://bertrandbrands.ca/?skip#process" target="_blank" rel="noopener noreferrer">How It Works</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/?skip#services" target="_blank" rel="noopener noreferrer">Services</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/?skip#about" target="_blank" rel="noopener noreferrer">About</a></li>
                             <li class="page-list__item"><a href="https://bertrandbrands.ca/?skip#contact" target="_blank" rel="noopener noreferrer">Contact</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/book" target="_blank" rel="noopener noreferrer">Book a Call</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/compare" target="_blank" rel="noopener noreferrer">Compare Services</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/intake" target="_blank" rel="noopener noreferrer">Get a Quote</a></li>
                         </ul>
                     </div>
                     <div class="domain__section">
-                        <h3 class="domain__section-title">B Conversation (Tier 1)</h3>
+                        <h2 class="domain__section-title">B Build (Amber)</h2>
                         <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/exploratory" target="_blank" rel="noopener noreferrer">Conversation Landing Page</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/clarity-session" target="_blank" rel="noopener noreferrer">Clarity Session ($145)</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/build" target="_blank" rel="noopener noreferrer">Build Hub</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/build/starter-onepage" target="_blank" rel="noopener noreferrer">Starter One-Page + Contact ($750)</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/build/starter-multipage" target="_blank" rel="noopener noreferrer">Starter Multi-Page + Contact</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/build/fullsite-booking" target="_blank" rel="noopener noreferrer">Full Site + Booking</a></li>
                         </ul>
                     </div>
                     <div class="domain__section">
-                        <h3 class="domain__section-title">B Build (Tier 2)</h3>
+                        <h2 class="domain__section-title">B Transform (Violet)</h2>
                         <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/focus-studio" target="_blank" rel="noopener noreferrer">Build Landing Page</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/starter-site" target="_blank" rel="noopener noreferrer">Starter Site ($750)</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/one-page-redesign" target="_blank" rel="noopener noreferrer">One-Page Conversion System ($1,250)</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/brandmark" target="_blank" rel="noopener noreferrer">Brandmark Kit ($950)</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/transform" target="_blank" rel="noopener noreferrer">Transform Hub</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/transform/foundation-growth" target="_blank" rel="noopener noreferrer">Website Foundation + Growth System</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/transform/smb-platform" target="_blank" rel="noopener noreferrer">SMB Platform Development</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/transform/brand-platform" target="_blank" rel="noopener noreferrer">Brand Design + Platform Development</a></li>
                         </ul>
                     </div>
                     <div class="domain__section">
-                        <h3 class="domain__section-title">B Core Systems (Tier 3)</h3>
+                        <h2 class="domain__section-title">B Care (Blue)</h2>
                         <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/core-systems" target="_blank" rel="noopener noreferrer">Core Systems Landing Page</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/brand-system-reset" target="_blank" rel="noopener noreferrer">Brand System Reset</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/digital-platform-build" target="_blank" rel="noopener noreferrer">Digital Platform Build</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/integrated-brand-platform" target="_blank" rel="noopener noreferrer">Integrated Brand + Platform</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/care" target="_blank" rel="noopener noreferrer">Care Hub</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/care/bronze" target="_blank" rel="noopener noreferrer">Bronze Plan ($249/mo)</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/care/silver" target="_blank" rel="noopener noreferrer">Silver Plan ($649/mo)</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/care/gold" target="_blank" rel="noopener noreferrer">Gold Plan (by application)</a></li>
                         </ul>
                     </div>
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Intake Forms</h3>
+                        <h2 class="domain__section-title">Campaigns</h2>
                         <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/intake/exploratory" target="_blank" rel="noopener noreferrer">Exploratory Intake</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/intake/brand-clarity-diagnostic" target="_blank" rel="noopener noreferrer">Brand Clarity Diagnostic Intake</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/intake/website-conversion-snapshot" target="_blank" rel="noopener noreferrer">Website Conversion Snapshot Intake</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/sudbury" target="_blank" rel="noopener noreferrer">Sudbury Local Campaign</a></li>
                         </ul>
                     </div>
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Ad Landing Pages</h3>
+                        <h2 class="domain__section-title">Booking &amp; Confirmation</h2>
                         <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/sudbury" target="_blank" rel="noopener noreferrer">Sudbury Build</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/brand-clarity-diagnostic" target="_blank" rel="noopener noreferrer">Brand Clarity Diagnostic</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.ca/website-conversion-snapshot" target="_blank" rel="noopener noreferrer">Website Conversion Snapshot</a></li>
-                        </ul>
-                    </div>
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Confirmation Pages</h3>
-                        <ul class="page-list">
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/booking/schedule" target="_blank" rel="noopener noreferrer">Schedule a Call</a></li>
                             <li class="page-list__item"><a href="https://bertrandbrands.ca/booking-confirmed" target="_blank" rel="noopener noreferrer">Booking Confirmed</a></li>
                             <li class="page-list__item"><a href="https://bertrandbrands.ca/payment-confirmed" target="_blank" rel="noopener noreferrer">Payment Confirmed</a></li>
                             <li class="page-list__item"><a href="https://bertrandbrands.ca/snapshot-confirmed" target="_blank" rel="noopener noreferrer">Snapshot Confirmed</a></li>
                         </ul>
                     </div>
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Utility</h3>
+                        <h2 class="domain__section-title">Utility</h2>
                         <ul class="page-list">
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/scottbertrand" target="_blank" rel="noopener noreferrer">Scott Bertrand</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+                            <li class="page-list__item"><a href="https://bertrandbrands.ca/group" target="_blank" rel="noopener noreferrer">Bertrand Group</a></li>
                             <li class="page-list__item"><a href="https://bertrandbrands.ca/thanks" target="_blank" rel="noopener noreferrer">Thank You</a></li>
                             <li class="page-list__item"><a href="https://bertrandbrands.ca/sitemapX" target="_blank" rel="noopener noreferrer">Ecosystem Sitemap</a></li>
                         </ul>
@@ -181,7 +172,7 @@ import logomark from '../assets/bg-brands-logomark.png';
                 </div>
                 <div class="domain__pages">
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Main Pages</h3>
+                        <h2 class="domain__section-title">Main Pages</h3>
                         <ul class="page-list">
                             <li class="page-list__item"><a href="https://scottbertrand.com/" target="_blank" rel="noopener noreferrer">Homepage</a></li>
                             <li class="page-list__item"><a href="https://scottbertrand.com/about" target="_blank" rel="noopener noreferrer">About</a></li>
@@ -190,7 +181,7 @@ import logomark from '../assets/bg-brands-logomark.png';
                         </ul>
                     </div>
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Content Pages</h3>
+                        <h2 class="domain__section-title">Content Pages</h3>
                         <ul class="page-list">
                             <li class="page-list__item"><a href="https://scottbertrand.com/field-notes" target="_blank" rel="noopener noreferrer">Field Notes</a></li>
                         </ul>
@@ -207,7 +198,7 @@ import logomark from '../assets/bg-brands-logomark.png';
                 </div>
                 <div class="domain__pages">
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Dashboard Pages</h3>
+                        <h2 class="domain__section-title">Dashboard Pages</h3>
                         <ul class="page-list">
                             <li class="page-list__item"><a href="https://dashboard.bertrandgroup.ca/" target="_blank" rel="noopener noreferrer">Overview</a></li>
                             <li class="page-list__item"><a href="https://dashboard.bertrandgroup.ca/leads" target="_blank" rel="noopener noreferrer">Leads</a></li>
@@ -229,7 +220,7 @@ import logomark from '../assets/bg-brands-logomark.png';
                 </div>
                 <div class="domain__pages">
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Client Portal (Delivery Room)</h3>
+                        <h2 class="domain__section-title">Client Portal (Delivery Room)</h3>
                         <ul class="page-list">
                             <li class="page-list__item"><a href="https://clients.bertrandgroup.ca/" target="_blank" rel="noopener noreferrer">Portal Home</a></li>
                             <li class="page-list__item"><a href="https://clients.bertrandgroup.ca/projects" target="_blank" rel="noopener noreferrer">My Projects</a></li>
@@ -247,7 +238,7 @@ import logomark from '../assets/bg-brands-logomark.png';
                 </div>
                 <div class="domain__pages">
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Notes</h3>
+                        <h2 class="domain__section-title">Notes</h3>
                         <ul class="page-list">
                             <li class="page-list__item"><a href="https://notes.scottbertrand.com/" target="_blank" rel="noopener noreferrer">All Notes</a></li>
                         </ul>
@@ -264,7 +255,7 @@ import logomark from '../assets/bg-brands-logomark.png';
                 </div>
                 <div class="domain__pages">
                     <div class="domain__section">
-                        <h3 class="domain__section-title">Store</h3>
+                        <h2 class="domain__section-title">Store</h3>
                         <ul class="page-list">
                             <li class="page-list__item"><a href="https://goods.scottbertrand.com/" target="_blank" rel="noopener noreferrer">Shop</a></li>
                         </ul>
@@ -274,7 +265,7 @@ import logomark from '../assets/bg-brands-logomark.png';
         </div>
 
         <footer class="sitemap__footer">
-            <p>Last updated: February 2026 &middot; <a href="/">Back to Bertrand Brands</a></p>
+            <p>Updated February 2026 &middot; <a href="/">Back to Bertrand Brands</a></p>
         </footer>
     </main>
 

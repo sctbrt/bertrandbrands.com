@@ -1154,7 +1154,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                     valid = false;
                 }
                 if (input && input.type === 'email' && input.value.trim()) {
-                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+                    if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(input.value.trim())) {
                         group.classList.add('has-error');
                         valid = false;
                     }

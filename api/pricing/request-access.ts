@@ -2,41 +2,20 @@
 // Sends magic link email for pricing access via Resend
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import crypto from 'crypto';
 import { Resend } from 'resend';
 import { initializeDatabase, createMagicLink, countRecentRequests } from '../_lib/db.js';
 import { EMAIL_REGEX } from '../_lib/validation.js';
+import { generateToken } from '../_lib/crypto.js';
+import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
 import type { PricingRequestAccessBody } from '../_lib/types.js';
 
 // Config
 const MAGIC_LINK_TTL_MINUTES = parseInt(process.env.PRICING_MAGIC_LINK_TTL_MINUTES || '15', 10);
 const APP_URL = process.env.APP_URL || 'https://bertrandbrands.ca';
 const RATE_LIMIT_EMAIL_PER_HOUR = 3;
-const RATE_LIMIT_IP_PER_HOUR = 10;
 
-// In-memory IP rate limiter (per warm instance — protects against burst abuse)
-// LIMITATION: Resets when function cold-starts. For persistent cross-instance rate limiting,
-// migrate to Vercel KV or Upstash Redis. Email-based rate limiting (via DB) is persistent.
-const ipRequestLog = new Map<string, number[]>();
-
-function checkIpRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const oneHourAgo = now - 60 * 60 * 1000;
-  const timestamps = (ipRequestLog.get(ip) || []).filter(t => t > oneHourAgo);
-  ipRequestLog.set(ip, timestamps);
-  if (timestamps.length >= RATE_LIMIT_IP_PER_HOUR) return true;
-  timestamps.push(now);
-  return false;
-}
-
-/**
- * Generate secure random token and its hash
- */
-function generateToken(): { rawToken: string; tokenHash: string } {
-  const rawToken = crypto.randomBytes(32).toString('hex');
-  const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
-  return { rawToken, tokenHash };
-}
+// In-memory IP rate limiting (resets on cold start, per-instance)
+const isRateLimited = createRateLimiter(3_600_000, 10);
 
 interface EmailTemplateParams {
   firstName: string | null;
@@ -140,15 +119,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
-  // Get client IP
-  const clientIp =
-    (typeof req.headers['x-forwarded-for'] === 'string' ? req.headers['x-forwarded-for'].split(',')[0] : undefined) ||
-    (req.headers['x-real-ip'] as string | undefined) ||
-    'unknown';
-
   // IP-based rate limiting (in-memory, per warm instance)
-  if (clientIp !== 'unknown' && checkIpRateLimit(clientIp)) {
-    console.log(`IP rate limit exceeded: ${clientIp}`);
+  const clientIp = getClientIp(req.headers);
+  if (isRateLimited(clientIp)) {
     res.status(200).json({ ok: true });
     return;
   }
@@ -158,8 +131,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     const { emailCount } = await countRecentRequests({ email: normalizedEmail });
 
     if (emailCount >= RATE_LIMIT_EMAIL_PER_HOUR) {
-      // Still return success to prevent enumeration
-      console.log(`Email rate limit exceeded: ${normalizedEmail}`);
       res.status(200).json({ ok: true });
       return;
     }
@@ -196,9 +167,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
         expiresMinutes: MAGIC_LINK_TTL_MINUTES
       })
     });
-
-    // Optional: Log for abuse review (without sensitive data)
-    console.log(`Magic link sent: ${normalizedEmail.substring(0, 3)}***@*** from ${clientIp}`);
 
     res.status(200).json({ ok: true });
 

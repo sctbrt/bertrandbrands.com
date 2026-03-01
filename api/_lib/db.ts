@@ -217,6 +217,16 @@ export async function countRecentRequests({ email }: { email: string }): Promise
   };
 }
 
+/**
+ * Look up a client's email by their ID
+ */
+export async function getClientEmail(clientId: string): Promise<string | null> {
+  const result = await sql<{ contact_email: string }>`
+    SELECT contact_email FROM clients WHERE id = ${clientId}
+  `;
+  return result.rows[0]?.contact_email || null;
+}
+
 // ============================================
 // BOOKING ACCESS FUNCTIONS
 // ============================================

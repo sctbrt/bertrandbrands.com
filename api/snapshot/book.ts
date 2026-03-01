@@ -111,19 +111,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       console.error('Pushover notification failed');
     }
 
-    // Log booking for analytics (sanitized — no PII in server logs)
-    console.log('Snapshot booking:', {
-      timestamp: new Date().toISOString(),
-      email: email.substring(0, 3) + '***',
-      source: source || 'direct',
-      offer: offer || 'website-snapshot-review',
-      rate: rate || 'standard',
-    });
-
-    res.status(200).json({
-      success: true,
-      message: 'Booking received. We\'ll confirm within 1-2 business days.'
-    });
+    res.status(200).json({ ok: true });
 
   } catch (error) {
     console.error('Booking error:', error);

@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 12.1.0 (Current)
+## Version 12.1.1 (Current)
 
 This document is the **Bertrand Brands** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -332,7 +332,8 @@ A successful implementation:
 ├── public/                        # Static assets (served as-is at /)
 │   ├── styles/
 │   │   ├── tokens.css             # Design system variables
-│   │   ├── main.css               # Main stylesheet (~5,100 lines)
+│   │   ├── shared.css             # Shared stylesheet — sub-pages, header, footer, cards (~1,900 lines)
+│   │   ├── homepage.css           # Homepage-only stylesheet — sections, intro, hero (~4,560 lines)
 │   │   ├── fonts.css              # @font-face declarations
 │   │   ├── pricing-modal.css      # Pricing modal (homepage only)
 │   │   └── founder-lightbox.css   # Founder lightbox (homepage only)
@@ -665,7 +666,8 @@ Every page in `src/pages/` **must** include `VisitorNotify`. No exceptions. This
 - **Mobile-first** media queries
 - **BEM-ish naming** for components
 - **Static CSS files** in `public/styles/` — linked via `<link>` tags, not Astro imports
-- **Homepage-only CSS** — `pricing-modal.css` and `founder-lightbox.css` loaded via head slot
+- **CSS split** — `shared.css` (header, footer, cards, sub-pages) + `homepage.css` (homepage sections, intro, hero)
+- **Homepage-only overlays** — `pricing-modal.css` and `founder-lightbox.css` loaded via head slot
 
 ---
 
@@ -842,8 +844,9 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 ### Updating styles
 
 1. Design tokens in `public/styles/tokens.css`
-2. Component styles in `public/styles/main.css`
-3. Homepage-only styles in `public/styles/pricing-modal.css` and `public/styles/founder-lightbox.css`
+2. Shared styles (header, footer, cards, sub-pages) in `public/styles/shared.css`
+3. Homepage-specific styles (sections, intro, hero) in `public/styles/homepage.css`
+4. Homepage-only overlays in `public/styles/pricing-modal.css` and `public/styles/founder-lightbox.css`
 
 ### Adding a redirect
 
@@ -933,7 +936,7 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - Shared B logomark (40px, white)
 - Tier/offer name wordmark in Fraunces (1.875rem, 300 weight)
 - Each tier uses its accent color for spotlights, borders, and accents
-- Hub pages: self-contained inline styles (not main.css)
+- Hub pages: self-contained inline styles (not shared.css/homepage.css)
 - Detail pages: inherit from `ServiceDetailLayout.astro`
 
 ### Tier Color Mapping (V11)
@@ -953,7 +956,7 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ## 18. Unified Card System (V5.3)
 
-All interactive service cards use a single card system defined in `main.css` with tier-color modifiers. Tokens in `tokens.css`.
+All interactive service cards use a single card system defined in `shared.css` with tier-color modifiers. Tokens in `tokens.css`.
 
 ### 18.1 Tier Color Tokens
 
@@ -986,7 +989,7 @@ All interactive service cards use a single card system defined in `main.css` wit
 --wrapper-padding: var(--space-lg);
 ```
 
-### 18.3 Card CSS Classes (`main.css`)
+### 18.3 Card CSS Classes (`shared.css`)
 
 **Base card**: `.tier-card` — All interactive service cards inherit from this. Provides padding, border-radius, cursor, will-change, transitions, `::before` edge glow, `::after` watermark icon, hover lift, active press.
 
@@ -1025,7 +1028,7 @@ Old page-specific class names (`.focused-studio__card`, `.fs-offering`, `.cs-off
 | `sudbury.astro` | `.sb-other__card` (×2) | `tier-card--transform tier-card--compact`, `tier-card--care tier-card--compact` |
 | `care.astro` | `.care-plan-card` (×3) | Uses `.care-plan-card` system (not `.tier-card`) |
 
-**V11 Offer Card System:** The `.offer-card__*` classes in main.css handle offer card internals (best-for chip, name, headline, price, timeline, features, revisions, meeting policy, exclusions, CTAs). These are used by `OfferCard.astro` and sit inside `.tier-card` wrappers.
+**V11 Offer Card System:** The `.offer-card__*` classes in homepage.css handle offer card internals (best-for chip, name, headline, price, timeline, features, revisions, meeting policy, exclusions, CTAs). These are used by `OfferCard.astro` and sit inside `.tier-card` wrappers.
 
 ### 18.6 Mobile & Touch Behavior
 
@@ -1176,6 +1179,7 @@ Added `contain: layout style` to:
 | 11.2.3 | Feb 2026 | Full audit & polish pass: P0 — Deleted ~947 lines of dead V10 CSS (6 class families: `.care-plan-card`, `.contact-form`, `.core-systems`, `.exploratory`, `.exploratory-sessions`, `.start-module` + associated keyframes & responsive rules). P1 — Replaced ~42 hardcoded color values with design tokens (`var(--text)`, `var(--build-accent)`, `var(--transform-accent)`, `var(--care-accent)`, `rgba(var(--highlight-rgb), ...)`, `rgba(var(--scrim-rgb), ...)`). P2 — Replaced 7 hardcoded `font-weight` values with tokens. P3 — Verified all `target="_blank"` links have `rel="noopener noreferrer"` (all clean). P4 — Added missing meta description to `booking/schedule.astro`. P5 — Removed unused `findValidMagicLink()` export and unused `ip` param from `countRecentRequests()` in `db.js`; standardized `notify.js` response to `{ ok: true }`. P6 — Updated 13 stale version comments (removed V5.0/V5.5 tags, fixed V10 tier naming). P7 — Added IP-based rate limiting (10 req/min) to `api/booking/create-token.js`. |
 | 12.0.0 | Feb 2026 | Infrastructure modernization: Full TypeScript API migration (17 files .js→.ts with shared types, centralized rate limiter, new `create-token` endpoint). CSS split: `main.css`→`shared.css` (global) + `homepage.css` (homepage-only) for reduced page weight. Image optimization: converted all static images to `astro:assets` `<Image>` with WebP output. New pages: `/compare` (tier comparison), `/start` (outreach landing, noindex). Playwright test suite (6 suites: homepage, mobile, accessibility, navigation, redirects, SEO). Schema library (`src/lib/schema.ts`) centralizing JSON-LD generation. Added `--build-rgb`/`--transform-rgb`/`--care-rgb` tokens, replaced ~57 hardcoded RGBA values in shared.css. GA4 event tracking on confirmation pages. Added `payment-confirmed` meta description. Google Ads tracking fixes: CSP img-src for Google domains, removed phone double-conversion bug, Sudbury form bbConvert consistency. Sudbury landing rewrite: transactional hero, inline email form, trust section. |
 | 12.1.0 | Feb 2026 | Tier selector redesign: Removed container border (kept gradient background) for softer, atmospheric feel. Added tier-colored radial spotlight backgrounds to each button — `radial-gradient(circle at 8% 50%)` emanating from the accent dot, intensifying on hover (8%→15%) and active (18%). Increased button padding (`1.25rem 1.75rem`), border-radius (`--radius-lg`), max-width (300px), flex basis (220px). Bumped label font to `--text-lg` (18px), subtitle to `--text-sm` (14px), accent dot to 10px. Consolidated footer from stacked phone/intake/compare elements into single horizontal text-link row with `·` separators (stacks vertically on mobile ≤480px, dots hidden). Updated all responsive breakpoints (768px, 480px) and touch device reset for new radial gradient backgrounds. |
+| 12.1.1 | Feb 2026 | Comprehensive audit pass (32 items, P0–P3). P0: Fixed broken Calendly embed on payment-confirmed, deleted orphaned start.astro, added bbConvert guard on sudbury, rewrote sitemapX with current routes. P1: Deleted ~620 lines dead V10 CSS from homepage.css, added missing `scrollHintAppear`/`scrollHintPulse` keyframes, added `visibilitychange` pause to 2 rAF loops, fixed booking/schedule logout redirect, fixed skip-link on `includeMainCss=false` pages, added CORS headers to 4 API endpoints, fixed sitemap/noindex contradictions, added compare.astro to sitemap. P2: Deduplicated `generateToken` in booking/create-token, updated stale V10 Calendly URL map + booking labels to V11, fixed heading hierarchy on care + group pages, aligned client-side email regex with canonical RFC 5321, documented non-standard 600px breakpoints, updated CLAUDE.md `main.css` references to `shared.css` + `homepage.css`. P3: Removed production console.logs, consolidated rate limiter, extracted `getClientEmail()` to shared db.ts, added meta descriptions to 5 noindex pages, added `<lastmod>` to all sitemap entries, fixed HeaderIntake default backHref, fixed `--transform-accent` token reference. |
 
 ---
 
@@ -1256,7 +1260,7 @@ Three-span hamburger button with accessibility attributes:
 Landing pages (e.g., `sudbury.astro`) and service detail pages use CSS override to show header immediately:
 
 ```css
-/* Override main.css header to be visible by default on landing pages */
+/* Override shared.css header to be visible by default on landing pages */
 .header {
     opacity: 1 !important;
     visibility: visible !important;

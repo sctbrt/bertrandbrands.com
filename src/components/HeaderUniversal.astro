@@ -115,9 +115,10 @@ import logomark from '../assets/bg-brands-logomark.png';
             var lastFrame = 0;
             var FRAME_INTERVAL = 1000 / 30;
 
+            var rafId = 0;
             function animateLights(timestamp) {
                 if (timestamp - lastFrame < FRAME_INTERVAL) {
-                    requestAnimationFrame(animateLights);
+                    rafId = requestAnimationFrame(animateLights);
                     return;
                 }
                 lastFrame = timestamp;
@@ -127,9 +128,18 @@ import logomark from '../assets/bg-brands-logomark.png';
                 if (pos2 > max2 || pos2 < min2) dir2 *= -1;
                 headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
                 headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
-                requestAnimationFrame(animateLights);
+                rafId = requestAnimationFrame(animateLights);
             }
-            requestAnimationFrame(animateLights);
+            rafId = requestAnimationFrame(animateLights);
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    cancelAnimationFrame(rafId);
+                } else {
+                    lastFrame = 0;
+                    rafId = requestAnimationFrame(animateLights);
+                }
+            });
         }
     }
 

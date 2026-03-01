@@ -485,7 +485,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
         // Update tier color based on service tier
         var tierEl = document.querySelector('.header__tier');
         if (service.tier === 'Transform') {
-            tierEl.style.color = 'var(--transform-accent)';
+            tierEl.style.color = '#8B5CF6';
         }
 
         // Initialize Calendly when ready
@@ -571,6 +571,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             var dir1X = 1, dir1Y = 1;
             var dir2X = -1, dir2Y = -1;
 
+            var rafId = 0;
             function animateBgGlow() {
                 glow1X += 0.015 * dir1X;
                 glow1Y += 0.012 * dir1Y;
@@ -586,9 +587,17 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
                 document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
                 document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
-                requestAnimationFrame(animateBgGlow);
+                rafId = requestAnimationFrame(animateBgGlow);
             }
-            requestAnimationFrame(animateBgGlow);
+            rafId = requestAnimationFrame(animateBgGlow);
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    cancelAnimationFrame(rafId);
+                } else {
+                    rafId = requestAnimationFrame(animateBgGlow);
+                }
+            });
         })();
     </script>
 

@@ -3,6 +3,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://bertrandbrands.ca/</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -10,21 +11,25 @@
   <!-- B Build tier hub -->
   <url>
     <loc>https://bertrandbrands.ca/build</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/build/starter-onepage</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/build/starter-multipage</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/build/fullsite-booking</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -32,21 +37,25 @@
   <!-- B Transform tier hub -->
   <url>
     <loc>https://bertrandbrands.ca/transform</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/transform/foundation-growth</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/transform/smb-platform</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/transform/brand-platform</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -54,35 +63,41 @@
   <!-- B Care tier hub -->
   <url>
     <loc>https://bertrandbrands.ca/care</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/care/bronze</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/care/silver</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://bertrandbrands.ca/care/gold</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- Intake -->
+  <!-- Compare -->
   <url>
-    <loc>https://bertrandbrands.ca/intake</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://bertrandbrands.ca/compare</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Local landing page -->
   <url>
     <loc>https://bertrandbrands.ca/sudbury</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -90,20 +105,15 @@
   <!-- About -->
   <url>
     <loc>https://bertrandbrands.ca/scottbertrand</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-
-  <!-- Privacy -->
-  <url>
-    <loc>https://bertrandbrands.ca/privacy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
   </url>
 
   <!-- Bertrand Group hub -->
   <url>
     <loc>https://bertrandbrands.ca/group</loc>
+    <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

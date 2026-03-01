@@ -2,13 +2,11 @@
 // Verifies booking access token, creates session, sets cookie, redirects
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sql } from '@vercel/postgres';
-import { initializeDatabase, consumeBookingToken, createBookingSession } from '../_lib/db.js';
+import { initializeDatabase, consumeBookingToken, createBookingSession, getClientEmail } from '../_lib/db.js';
 import { hashToken } from '../_lib/crypto.js';
 import { buildCookie } from '../_lib/cookies.js';
 import { errorPageHtml } from '../_lib/html.js';
 import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
-import type { ClientRow } from '../_lib/types.js';
 
 // In-memory rate limiting (resets on cold start, per-instance)
 const isRateLimited = createRateLimiter(60_000, 10);
@@ -47,7 +45,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     res.status(400).send(errorPageHtml(
       'Invalid Link',
       'This link appears to be malformed. Please request a new booking access link from your contact at Bertrand Brands.',
-      { backHref: '/book', backLabel: 'Back to Booking' }
+      { backHref: '/intake', backLabel: 'Back to Intake' }
     ));
     return;
   }
@@ -63,16 +61,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       res.status(400).send(errorPageHtml(
         'Link Expired or Already Used',
         'This booking link has either expired or has already been used. Please contact Bertrand Brands for a new link.',
-        { backHref: '/book', backLabel: 'Back to Booking' }
+        { backHref: '/intake', backLabel: 'Back to Intake' }
       ));
       return;
     }
 
     // Look up client email from the token's client_id
-    const clientResult = await sql<ClientRow>`
-      SELECT contact_email FROM clients WHERE id = ${bookingToken.client_id}
-    `;
-    const clientEmail = clientResult.rows[0]?.contact_email || '';
+    const clientEmail = await getClientEmail(bookingToken.client_id) || '';
 
     // Create new booking session
     const sessionExpiresAt = new Date(Date.now() + SESSION_TTL_MINUTES * 60 * 1000);
@@ -98,7 +93,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     res.status(500).send(errorPageHtml(
       'Something Went Wrong',
       'We encountered an error processing your request. Please try again or contact Bertrand Brands for assistance.',
-      { backHref: '/book', backLabel: 'Back to Booking' }
+      { backHref: '/intake', backLabel: 'Back to Intake' }
     ));
   }
 }

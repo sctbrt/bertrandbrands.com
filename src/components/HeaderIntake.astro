@@ -3,7 +3,7 @@
  * HeaderIntake — Intake form page header.
  * Back button + centered logo + spacer. No navigation.
  * Props:
- *   backHref — where the back button navigates (default: /exploratory)
+ *   backHref — where the back button navigates (default: /)
  *   backLabel — text for back button (default: Back)
  */
 import { Image } from 'astro:assets';
@@ -14,7 +14,7 @@ interface Props {
     backLabel?: string;
 }
 
-const { backHref = '/exploratory', backLabel = 'Back' } = Astro.props;
+const { backHref = '/', backLabel = 'Back' } = Astro.props;
 ---
 
 <header class="intake-header">
