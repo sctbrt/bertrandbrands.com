@@ -3,6 +3,7 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createRateLimiter, getClientIp } from './_lib/rate-limit.js';
+import { maskEmail } from './_lib/validation.js';
 import type { NotifyRequestBody, PushoverPayload } from './_lib/types.js';
 
 // In-memory rate limiting (resets on cold start, per-instance)
@@ -156,7 +157,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       const sourceLabel = SOURCE_LABELS[source || ''] || source || 'Intake';
 
       notificationMessage = `${name || 'Unknown'}`;
-      if (email) notificationMessage += `\n${email}`;
+      if (email) notificationMessage += `\n${maskEmail(email)}`;
       if (business) notificationMessage += `\nBusiness: ${business}`;
       if (website) notificationMessage += `\nWebsite: ${website}`;
       if (phone) notificationMessage += `\nPhone: ${phone}`;
@@ -185,7 +186,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       const { name, email, service, message } = body as Record<string, string | undefined>;
 
       notificationMessage = `New inquiry from ${name || 'Unknown'}`;
-      if (email) notificationMessage += `\nEmail: ${email}`;
+      if (email) notificationMessage += `\nEmail: ${maskEmail(email)}`;
       if (service) notificationMessage += `\nService: ${service}`;
       if (message) notificationMessage += `\n\n${message.substring(0, 200)}${message.length > 200 ? '...' : ''}`;
 

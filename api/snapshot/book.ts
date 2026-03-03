@@ -2,7 +2,7 @@
 // Endpoint: /api/snapshot/book
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { EMAIL_REGEX } from '../_lib/validation.js';
+import { EMAIL_REGEX, maskEmail } from '../_lib/validation.js';
 import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
 import type { PushoverPayload, SnapshotBookBody } from '../_lib/types.js';
 
@@ -83,7 +83,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     // Build notification message
     let message = `🎯 Website Snapshot Booking\n\n`;
     message += `Name: ${name}\n`;
-    message += `Email: ${email}\n`;
+    message += `Email: ${maskEmail(email)}\n`;
     message += `Website: ${website}\n`;
     if (concern) message += `\nConcern: ${concern}\n`;
     message += `\n📊 Campaign: ${source || 'direct'}\n`;

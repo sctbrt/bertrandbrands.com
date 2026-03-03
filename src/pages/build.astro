@@ -73,10 +73,12 @@ const currentYear = new Date().getFullYear();
             .service-page__spotlight--2 { width: 350px; height: 350px; background: rgba(217, 119, 6, 0.12); bottom: 20%; right: -5%; animation: organicBreathe 22s ease-in-out infinite 0.5s; }
 
             @keyframes organicBreathe {
-                0%, 100% { opacity: 0.85; transform: translate(0, 0) scale(1); }
-                25% { opacity: 0.95; transform: translate(15px, -10px) scale(1.05); }
-                50% { opacity: 0.75; transform: translate(-10px, 15px) scale(0.95); }
-                75% { opacity: 0.9; transform: translate(10px, 5px) scale(1.02); }
+                0%, 100% { opacity: 0.85; transform: translate(0, 0) scale(1); border-radius: 50% 50% 50% 50%; }
+                15% { opacity: 0.95; transform: translate(15px, -20px) scale(1.06); border-radius: 60% 40% 55% 45%; }
+                35% { opacity: 0.75; transform: translate(-10px, 10px) scale(0.94); border-radius: 45% 55% 40% 60%; }
+                50% { opacity: 0.9; transform: translate(20px, 5px) scale(1.02); border-radius: 55% 45% 60% 40%; }
+                70% { opacity: 0.8; transform: translate(-5px, -15px) scale(0.97); border-radius: 40% 60% 45% 55%; }
+                85% { opacity: 0.92; transform: translate(8px, 12px) scale(1.04); border-radius: 58% 42% 48% 52%; }
             }
 
             .service-subbrand { display: flex; align-items: center; justify-content: center; gap: 0.625rem; margin-bottom: 0; text-decoration: none; transition: opacity var(--duration-fast) ease; }

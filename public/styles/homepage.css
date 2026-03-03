@@ -55,13 +55,6 @@
             pointer-events: none;
         }
 
-        /* Mobile: enable pointer-events so "tap anywhere to begin" works */
-        @media (max-width: 768px) {
-            .intro.intro--static {
-                pointer-events: auto;
-                cursor: pointer;
-            }
-        }
 
         /* Fade overlay that darkens the intro when it becomes static */
         .intro__fade {
@@ -102,11 +95,6 @@
             transition: opacity 2s ease-out;
         }
 
-        /* Scroll hint fades immediately */
-        .intro.intro--hidden .intro__scroll-hint {
-            opacity: 0 !important;
-            transition: opacity 0.3s ease-out;
-        }
 
         /* Then hide the entire intro after dissolve completes */
         .intro.intro--hidden {
@@ -187,6 +175,8 @@
             will-change: auto;
         }
 
+        /* V13: Intro glows — reduced intensity + blur for quieter presence */
+
         /* Orange/amber — primary warm light, top-right */
         .intro__glow--orange {
             width: 70vmax;
@@ -195,14 +185,14 @@
             max-height: 900px;
             background: radial-gradient(
                 circle at center,
-                rgba(var(--build-rgb), 0.22) 0%,
-                rgba(var(--build-rgb), 0.06) 45%,
+                rgba(var(--build-rgb), 0.17) 0%,
+                rgba(var(--build-rgb), 0.05) 45%,
                 transparent 70%
             );
             top: -25%;
             right: -20%;
             opacity: 0;
-            filter: blur(80px);
+            filter: blur(65px);
             animation: introGlowWarm 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
         }
 
@@ -214,14 +204,14 @@
             max-height: 700px;
             background: radial-gradient(
                 circle at center,
-                rgba(var(--transform-rgb), 0.16) 0%,
-                rgba(var(--transform-rgb), 0.04) 48%,
+                rgba(var(--transform-rgb), 0.13) 0%,
+                rgba(var(--transform-rgb), 0.03) 48%,
                 transparent 70%
             );
             bottom: -20%;
             right: -10%;
             opacity: 0;
-            filter: blur(90px);
+            filter: blur(72px);
             animation: introGlowViolet 1.9s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
         }
 
@@ -233,14 +223,14 @@
             max-height: 650px;
             background: radial-gradient(
                 circle at center,
-                rgba(var(--care-rgb), 0.14) 0%,
-                rgba(var(--care-rgb), 0.04) 50%,
+                rgba(var(--care-rgb), 0.11) 0%,
+                rgba(var(--care-rgb), 0.03) 50%,
                 transparent 70%
             );
             bottom: -30%;
             left: -15%;
             opacity: 0;
-            filter: blur(100px);
+            filter: blur(80px);
             animation: introGlowCool 2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
         }
 
@@ -549,77 +539,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Scroll indicator chevron */
-        .intro__scroll-hint {
-            position: absolute;
-            bottom: 8%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 50;
-            cursor: pointer;
-        }
-
-        .intro__scroll-hint-text {
-            font-family: var(--font-body);
-            font-size: var(--text-xs);
-            font-weight: var(--font-normal);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            text-align: center;
-        }
-
-        .intro__scroll-hint svg {
-            display: block;
-            width: 32px;
-            height: 32px;
-            stroke: var(--text-muted);
-            stroke-width: 1.5;
-            fill: none;
-            margin: 0 auto;
-        }
-
-        /* Show and pulse when intro is static (ready to scroll/tap) */
-        .intro.intro--static .intro__scroll-hint {
-            pointer-events: auto;
-            animation:
-                scrollHintAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards,
-                scrollHintPulse 2.5s cubic-bezier(0.45, 0, 0.55, 1) 0.8s infinite;
-        }
-
-        /* Hide when user has scrolled */
-        .intro.intro--static.hint-hidden .intro__scroll-hint {
-            animation: scrollHintFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes scrollHintAppear {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        @keyframes scrollHintPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        @keyframes scrollHintFade {
-            to {
-                opacity: 0;
-                transform: translateX(-50%) translateY(10px);
-            }
-        }
 
         @media (prefers-reduced-motion: reduce) {
             .intro {
@@ -722,45 +641,17 @@
             transform: translateY(20px);
         }
 
-        /* Hero animations start when intro scrolls away — synced with dissolve */
+        /* V13: faster hero entrance — content readable in <1s after scroll */
         .intro-scrolled .hero__title {
-            animation: heroReveal 1.8s var(--ease-out-expo) 0.6s forwards;
+            animation: heroReveal 0.8s var(--ease-out) 0.1s forwards;
         }
 
         .hero__title span { display: block; }
 
-        /* White text glow animation - triggered by JS when scrolled to hero */
+        /* V13: hero title text glow removed — "quiet authority" refinement.
+           Title text appears at full readability without animation artifacts. */
         .hero__title-glow {
             display: inline;
-        }
-
-        .hero__title.hero-animate .hero__title-glow {
-            animation: heroTextGlow 3s ease-out forwards;
-        }
-
-        @keyframes heroTextGlow {
-            0% {
-                text-shadow: none;
-                color: var(--text);
-            }
-            30% {
-                text-shadow:
-                    0 0 30px rgba(255, 255, 255, 0.6),
-                    0 0 60px rgba(255, 255, 255, 0.4);
-                color: #fff;
-            }
-            /* Hold the glow while Systems flickers (1s delay + 1.2s animation) */
-            70% {
-                text-shadow:
-                    0 0 20px rgba(255, 255, 255, 0.4),
-                    0 0 40px rgba(255, 255, 255, 0.25);
-                color: #fff;
-            }
-            /* Fade back to normal once Systems is lit */
-            100% {
-                text-shadow: none;
-                color: var(--text);
-            }
         }
 
         .hero__title .accent {
@@ -801,18 +692,14 @@
             100% { opacity: 0.5; transform: translateY(0); }
         }
 
-        /* Fluorescent flicker using opacity for reliability */
+        /* V13: fluorescent flicker removed — accent word fades in cleanly */
         .hero__title.hero-animate .accent {
-            animation: fluorescentFlicker 0.75s ease-out 1s forwards;
+            animation: accentFadeIn 0.6s var(--ease-out) 0.4s forwards;
         }
 
-        @keyframes fluorescentFlicker {
+        @keyframes accentFadeIn {
             0% { opacity: 0; }
-            /* Quick flash */
-            15% { opacity: 0.8; }
-            30% { opacity: 0.05; }
-            /* Catches on */
-            50%, 100% { opacity: 1; }
+            100% { opacity: 1; }
         }
 
         @keyframes heroReveal {
@@ -829,8 +716,9 @@
             opacity: 0;
         }
 
+        /* V13: reduced delay for immediate readability */
         .intro-scrolled .hero__subtitle {
-            animation: fadeIn 1s ease 1.2s forwards;
+            animation: fadeIn 0.6s ease 0.3s forwards;
         }
 
         @keyframes fadeIn { to { opacity: 1; } }
@@ -839,32 +727,9 @@
             color: var(--text-muted);
         }
 
-        .intro-scrolled .hero__subtitle-glow {
-            animation: subtitleGlow 3s ease-out 2s forwards;
-        }
-
-        @keyframes subtitleGlow {
-            0% {
-                color: var(--text-muted);
-                text-shadow: none;
-            }
-            25% {
-                color: #fff;
-                text-shadow:
-                    0 0 20px rgba(255, 255, 255, 0.5),
-                    0 0 40px rgba(255, 255, 255, 0.25);
-            }
-            55% {
-                color: #fff;
-                text-shadow:
-                    0 0 12px rgba(255, 255, 255, 0.3),
-                    0 0 25px rgba(255, 255, 255, 0.12);
-            }
-            100% {
-                color: #e0e0e0;
-                text-shadow:
-                    0 0 6px rgba(255, 255, 255, 0.12);
-            }
+        /* V13: subtitle glow removed — clean text, no flash */
+        .hero__subtitle-glow {
+            color: var(--text-muted);
         }
 
         .hero__cta {
@@ -889,8 +754,9 @@
             opacity: 0;
         }
 
+        /* V13: CTAs appear shortly after title */
         .intro-scrolled .hero__cta {
-            animation: fadeIn 1s ease 1.6s forwards;
+            animation: fadeIn 0.6s ease 0.5s forwards;
         }
 
         .hero__cta:hover {
@@ -1059,220 +925,71 @@
             }
         }
 
-        /* Activate spotlights after intro scrolled - theatrical curtain lights */
+        /* V13: spotlights fade in gently then drift — no theatrical sweep */
         body.intro-scrolled .hero__spotlight--orange {
-            animation: curtainSweepOrange 6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, curtainFloatOrange 45s ease-in-out 6s infinite;
+            animation: spotlightFadeIn 1.5s ease-out forwards, heroFloatOrange 30s ease-in-out 1.5s infinite;
         }
 
         body.intro-scrolled .hero__spotlight--blue {
-            animation: curtainSweepBlue 6.5s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s forwards, curtainFloatBlue 50s ease-in-out 6.8s infinite;
+            animation: spotlightFadeIn 1.5s ease-out 0.2s forwards, heroFloatBlue 35s ease-in-out 1.7s infinite;
         }
 
         body.intro-scrolled .hero__spotlight--violet {
-            animation: curtainSweepViolet 7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.6s forwards, curtainFloatViolet 38s ease-in-out 7.6s infinite;
+            animation: spotlightFadeIn 1.5s ease-out 0.4s forwards, heroFloatViolet 28s ease-in-out 1.9s infinite;
         }
 
-        /* Theatrical curtain sweep — orange enters from far left, sweeps right then settles center-left */
-        @keyframes curtainSweepOrange {
-            0% {
-                opacity: 0;
-                transform: translate(-80%, 10%) scale(0.7);
-                filter: blur(160px);
-            }
-            15% {
-                opacity: 0.3;
-                transform: translate(-40%, -5%) scale(0.9);
-                filter: blur(140px);
-            }
-            35% {
-                opacity: 0.45;
-                transform: translate(30%, 5%) scale(1.15);
-                filter: blur(110px);
-            }
-            55% {
-                opacity: 0.4;
-                transform: translate(10%, -8%) scale(1.05);
-                filter: blur(105px);
-            }
-            80% {
-                opacity: 0.48;
-                transform: translate(-5%, 3%) scale(1.02);
-                filter: blur(100px);
-            }
-            100% {
-                opacity: 0.5;
-                transform: translate(0, 0) scale(1);
-                filter: blur(100px);
-            }
+        @keyframes spotlightFadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 0.3; }
         }
 
-        /* Theatrical curtain sweep — blue enters from far right, crosses orange, settles upper-right */
-        @keyframes curtainSweepBlue {
-            0% {
-                opacity: 0;
-                transform: translate(80%, -15%) scale(0.7);
-                filter: blur(150px);
-            }
-            15% {
-                opacity: 0.25;
-                transform: translate(40%, 10%) scale(0.85);
-                filter: blur(135px);
-            }
-            35% {
-                opacity: 0.4;
-                transform: translate(-25%, -5%) scale(1.1);
-                filter: blur(115px);
-            }
-            55% {
-                opacity: 0.35;
-                transform: translate(-8%, 8%) scale(1.03);
-                filter: blur(105px);
-            }
-            80% {
-                opacity: 0.4;
-                transform: translate(3%, -2%) scale(1.01);
-                filter: blur(100px);
-            }
-            100% {
-                opacity: 0.42;
-                transform: translate(0, 0) scale(1);
-                filter: blur(100px);
-            }
-        }
-
-        /* Theatrical curtain sweep — violet drops from above center, settles mid-stage */
-        @keyframes curtainSweepViolet {
-            0% {
-                opacity: 0;
-                transform: translate(0%, -70%) scale(0.6);
-                filter: blur(160px);
-            }
-            20% {
-                opacity: 0.2;
-                transform: translate(15%, -30%) scale(0.8);
-                filter: blur(140px);
-            }
-            40% {
-                opacity: 0.35;
-                transform: translate(-10%, 10%) scale(1.1);
-                filter: blur(115px);
-            }
-            60% {
-                opacity: 0.3;
-                transform: translate(5%, -5%) scale(1.02);
-                filter: blur(105px);
-            }
-            85% {
-                opacity: 0.35;
-                transform: translate(-2%, 2%) scale(1.01);
-                filter: blur(100px);
-            }
-            100% {
-                opacity: 0.38;
-                transform: translate(0, 0) scale(1);
-                filter: blur(100px);
-            }
-        }
+        /* V13: curtain sweeps removed — replaced by simple gentle drifts.
+           No animated filter:blur (GPU-expensive). Static blur set on element. */
 
         /* Slow drift — orange starts lower-left, drifts to upper-right area, returns */
-        @keyframes curtainFloatOrange {
+        /* V13: simplified 3-keyframe gentle drifts — opacity 0.25–0.35, no animated filter */
+        @keyframes heroFloatOrange {
             0%, 100% {
                 transform: translate(0, 0) scale(1);
-                opacity: 0.5;
-                border-radius: 50% 50% 50% 50%;
+                opacity: 0.3;
             }
-            12% {
-                transform: translate(15vw, -8vh) scale(1.06);
-                opacity: 0.45;
-                border-radius: 58% 42% 55% 45%;
-            }
-            28% {
-                transform: translate(35vw, -15vh) scale(0.95);
-                opacity: 0.4;
-                border-radius: 44% 56% 42% 58%;
-            }
-            45% {
-                transform: translate(45vw, -5vh) scale(1.04);
-                opacity: 0.48;
-                border-radius: 55% 45% 58% 42%;
-            }
-            62% {
-                transform: translate(30vw, 5vh) scale(0.96);
-                opacity: 0.42;
-                border-radius: 42% 58% 46% 54%;
-            }
-            80% {
-                transform: translate(12vw, 3vh) scale(1.03);
-                opacity: 0.47;
-                border-radius: 56% 44% 50% 50%;
-            }
-        }
-
-        /* Slow drift — blue starts upper-right, drifts to lower-left area, returns */
-        @keyframes curtainFloatBlue {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.42;
-                border-radius: 50% 50% 50% 50%;
-            }
-            12% {
-                transform: translate(-12vw, 6vh) scale(1.04);
-                opacity: 0.38;
-                border-radius: 54% 46% 48% 52%;
-            }
-            28% {
-                transform: translate(-30vw, 12vh) scale(0.96);
-                opacity: 0.35;
-                border-radius: 43% 57% 54% 46%;
-            }
-            45% {
-                transform: translate(-40vw, 5vh) scale(1.05);
-                opacity: 0.4;
-                border-radius: 57% 43% 46% 54%;
-            }
-            62% {
-                transform: translate(-25vw, -3vh) scale(0.95);
-                opacity: 0.36;
-                border-radius: 46% 54% 57% 43%;
-            }
-            80% {
-                transform: translate(-10vw, -2vh) scale(1.02);
-                opacity: 0.4;
-                border-radius: 52% 48% 43% 57%;
-            }
-        }
-
-        /* Slow drift — violet wanders centre-stage in a wide figure-eight */
-        @keyframes curtainFloatViolet {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.38;
-                border-radius: 50% 50% 50% 50%;
-            }
-            14% {
-                transform: translate(18vw, -10vh) scale(1.05);
-                opacity: 0.42;
-                border-radius: 56% 44% 52% 48%;
-            }
-            30% {
-                transform: translate(8vw, 10vh) scale(0.94);
-                opacity: 0.34;
-                border-radius: 46% 54% 44% 56%;
-            }
-            48% {
-                transform: translate(-15vw, 6vh) scale(1.03);
-                opacity: 0.4;
-                border-radius: 54% 46% 56% 44%;
+            33% {
+                transform: translate(8vw, -4vh) scale(1.03);
+                opacity: 0.25;
             }
             66% {
-                transform: translate(-10vw, -8vh) scale(0.97);
-                opacity: 0.36;
-                border-radius: 44% 56% 48% 52%;
+                transform: translate(-5vw, 3vh) scale(0.97);
+                opacity: 0.32;
             }
-            82% {
-                transform: translate(5vw, -3vh) scale(1.02);
-                opacity: 0.39;
-                border-radius: 52% 48% 54% 46%;
+        }
+
+        @keyframes heroFloatBlue {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.28;
+            }
+            33% {
+                transform: translate(-6vw, 5vh) scale(1.02);
+                opacity: 0.22;
+            }
+            66% {
+                transform: translate(4vw, -3vh) scale(0.98);
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes heroFloatViolet {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.25;
+            }
+            33% {
+                transform: translate(5vw, -6vh) scale(1.03);
+                opacity: 0.2;
+            }
+            66% {
+                transform: translate(-4vw, 4vh) scale(0.97);
+                opacity: 0.27;
             }
         }
 
@@ -1719,65 +1436,12 @@
             .title-dot--blue { box-shadow: 0 0 0.12em rgba(var(--care-rgb), 0.4); }
         }
 
-        /* Sweeping beam of light - starts from left, crosses through section */
+        /* V13: beam sweep removed — replaced with subtle static ambient glow */
         .section--process::before {
-            content: '';
-            position: absolute;
-            width: 140%;
-            height: 120%;
-            top: -10%;
-            left: 0;
-            background: linear-gradient(
-                102deg,
-                transparent 0%,
-                transparent 25%,
-                rgba(var(--build-rgb), 0.06) 32%,
-                rgba(var(--build-rgb), 0.14) 42%,
-                rgba(var(--build-rgb), 0.22) 48%,
-                rgba(var(--build-rgb), 0.18) 54%,
-                rgba(var(--build-rgb), 0.08) 64%,
-                rgba(var(--build-rgb), 0.03) 72%,
-                transparent 80%,
-                transparent 100%
-            );
-            filter: blur(8px);
-            pointer-events: none;
-            opacity: 0;
-            z-index: 0;
-            transform: translateX(-110%);
+            display: none;
         }
 
-        .section--process.reveal-triggered::before {
-            animation: beamSweep 3.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards;
-        }
-
-        @keyframes beamSweep {
-            0% {
-                opacity: 0;
-                transform: translateX(-110%) scaleY(0.92);
-            }
-            8% {
-                opacity: 0.3;
-            }
-            25% {
-                opacity: 0.4;
-                transform: translateX(-40%) scaleY(1);
-            }
-            55% {
-                opacity: 0.35;
-                transform: translateX(30%) scaleY(1.04);
-            }
-            80% {
-                opacity: 0.15;
-                transform: translateX(80%) scaleY(0.97);
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(110%) scaleY(1);
-            }
-        }
-
-        /* Ambient glow that stays after the sweep */
+        /* Subtle ambient glow at bottom of process section */
         .section--process::after {
             content: '';
             position: absolute;
@@ -1787,84 +1451,41 @@
             left: 0;
             background: radial-gradient(
                 ellipse 80% 60% at 50% 100%,
-                rgba(var(--build-rgb), 0.12) 0%,
-                rgba(var(--build-rgb), 0.05) 40%,
+                rgba(var(--build-rgb), 0.08) 0%,
+                rgba(var(--build-rgb), 0.03) 40%,
                 transparent 70%
             );
             pointer-events: none;
             opacity: 0;
             z-index: 0;
+            transition: opacity 1s ease-out;
         }
 
         .section--process.reveal-triggered::after {
-            animation: ambientFadeIn 2s ease-out 2.1s forwards;
+            opacity: 1;
         }
 
-        @keyframes ambientFadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* "clear" text glow synced with beam - starts white, gets orange glow */
+        /* "clear" text — subtle static accent, no beam sync */
         .text-spotlight--clear {
             position: relative;
             z-index: 1;
             cursor: default;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(var(--build-rgb), 0.3);
             transition: opacity 0.4s ease, text-shadow 0.4s ease;
         }
 
-        /* Hover effect: "clear" becomes clear (nearly invisible) */
         .text-spotlight--clear:hover {
             opacity: 0.08;
             text-shadow: none;
         }
 
-        .reveal.is-visible .text-spotlight--clear {
-            animation: clearTextGlow 2.5s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
-        }
-
-        @keyframes clearTextGlow {
-            0% {
-                color: var(--text);
-                text-shadow: none;
-            }
-            /* Beam approaching */
-            20% {
-                color: var(--text);
-                text-shadow: 0 0 10px rgba(var(--build-rgb), 0.2);
-            }
-            /* Beam hits - bright flash */
-            35% {
-                color: #fff;
-                text-shadow:
-                    0 0 30px rgba(var(--build-rgb), 0.9),
-                    0 0 60px rgba(var(--build-rgb), 0.6),
-                    0 0 100px rgba(var(--build-rgb), 0.3);
-            }
-            /* Beam passes, settle bright */
-            60% {
-                color: #fff;
-                text-shadow:
-                    0 0 20px var(--accent-glow),
-                    0 0 40px rgba(var(--build-rgb), 0.5);
-            }
-            /* Stay solid white with warm orange glow */
-            100% {
-                color: #fff;
-                text-shadow:
-                    0 0 12px rgba(var(--build-rgb), 0.6),
-                    0 0 25px rgba(var(--build-rgb), 0.4),
-                    0 0 45px rgba(var(--build-rgb), 0.2);
-            }
-        }
-
-        /* Surrounding text fades to translucent */
         .section__title--clear-phrase {
             font-size: clamp(2rem, 5vw, 4rem);
         }
 
         .section__title--clear-phrase .text-fade {
-            transition: color 1.5s ease 1.8s, opacity 1.5s ease 1.8s;
+            transition: color 1.5s ease 0.6s, opacity 1.5s ease 0.6s;
         }
 
         .reveal.is-visible .section__title--clear-phrase .text-fade {
@@ -2598,47 +2219,48 @@
             left: 50%;
         }
 
+        /* V13: contact spotlights — reduced 25% size, 30% lower opacity, simpler drift */
         .contact__spotlight--amber {
-            width: 700px;
-            height: 620px;
-            margin-left: -350px;
-            margin-top: -310px;
-            background: radial-gradient(ellipse 55% 50%, rgba(var(--build-rgb), 0.22) 0%, rgba(var(--build-rgb), 0.08) 40%, transparent 70%);
+            width: 525px;
+            height: 465px;
+            margin-left: -262px;
+            margin-top: -232px;
+            background: radial-gradient(ellipse 55% 50%, rgba(var(--build-rgb), 0.15) 0%, rgba(var(--build-rgb), 0.05) 40%, transparent 70%);
             border-radius: 50%;
             filter: blur(80px);
         }
 
         .contact__spotlight--violet {
-            width: 640px;
-            height: 560px;
-            margin-left: -320px;
-            margin-top: -280px;
-            background: radial-gradient(ellipse 60% 50%, rgba(var(--transform-rgb), 0.20) 0%, rgba(var(--transform-rgb), 0.07) 40%, transparent 70%);
+            width: 480px;
+            height: 420px;
+            margin-left: -240px;
+            margin-top: -210px;
+            background: radial-gradient(ellipse 60% 50%, rgba(var(--transform-rgb), 0.14) 0%, rgba(var(--transform-rgb), 0.05) 40%, transparent 70%);
             border-radius: 50%;
             filter: blur(75px);
         }
 
         .contact__spotlight--blue {
-            width: 580px;
-            height: 520px;
-            margin-left: -290px;
-            margin-top: -260px;
-            background: radial-gradient(ellipse 55% 45%, rgba(var(--care-rgb), 0.18) 0%, rgba(var(--care-rgb), 0.06) 40%, transparent 70%);
+            width: 435px;
+            height: 390px;
+            margin-left: -217px;
+            margin-top: -195px;
+            background: radial-gradient(ellipse 55% 45%, rgba(var(--care-rgb), 0.12) 0%, rgba(var(--care-rgb), 0.04) 40%, transparent 70%);
             border-radius: 50%;
             filter: blur(70px);
         }
 
-        /* Activate on scroll reveal */
+        /* V13: gentle drift instead of full orbital — 3 keyframes, longer cycles */
         .reveal.is-visible .contact__spotlight--amber {
-            animation: contactAmberOrbit 28s ease-in-out infinite;
+            animation: contactDriftAmber 32s ease-in-out infinite;
         }
 
         .reveal.is-visible .contact__spotlight--violet {
-            animation: contactVioletOrbit 34s ease-in-out 0.5s infinite;
+            animation: contactDriftViolet 38s ease-in-out 0.5s infinite;
         }
 
         .reveal.is-visible .contact__spotlight--blue {
-            animation: contactBlueOrbit 24s ease-in-out 1s infinite;
+            animation: contactDriftBlue 28s ease-in-out 1s infinite;
         }
 
         /* Three spotlights orbit around the form center (now truly centered via margins).
@@ -2647,43 +2269,23 @@
            washes over the form while the core sits just outside.
            8 evenly-spaced stops trace cos/sin positions around the circle. */
 
-        /* Amber — starts at 0° (top-center, 12 o'clock) */
-        @keyframes contactAmberOrbit {
-            0%     { opacity: 0.80; transform: translate(0, -35%) scale(1);      border-radius: 50% 50% 50% 50%; }
-            12.5%  { opacity: 0.86; transform: translate(25%, -25%) scale(1.04); border-radius: 56% 44% 52% 48%; }
-            25%    { opacity: 0.74; transform: translate(35%, 0%) scale(0.97);   border-radius: 44% 56% 58% 42%; }
-            37.5%  { opacity: 0.83; transform: translate(25%, 25%) scale(1.03);  border-radius: 52% 48% 44% 56%; }
-            50%    { opacity: 0.70; transform: translate(0, 35%) scale(0.96);    border-radius: 48% 52% 56% 44%; }
-            62.5%  { opacity: 0.82; transform: translate(-25%, 25%) scale(1.05); border-radius: 55% 45% 48% 52%; }
-            75%    { opacity: 0.75; transform: translate(-35%, 0%) scale(0.97);  border-radius: 42% 58% 54% 46%; }
-            87.5%  { opacity: 0.85; transform: translate(-25%, -25%) scale(1.02);border-radius: 54% 46% 50% 50%; }
-            100%   { opacity: 0.80; transform: translate(0, -35%) scale(1);      border-radius: 50% 50% 50% 50%; }
+        /* V13: simplified 3-keyframe gentle drifts — reduced opacity, no orbiting */
+        @keyframes contactDriftAmber {
+            0%, 100% { opacity: 0.55; transform: translate(0, -15%) scale(1); }
+            33%      { opacity: 0.62; transform: translate(12%, 8%) scale(1.02); }
+            66%      { opacity: 0.50; transform: translate(-10%, 5%) scale(0.98); }
         }
 
-        /* Violet — starts at 120° (bottom-right, 4 o'clock) */
-        @keyframes contactVioletOrbit {
-            0%     { opacity: 0.74; transform: translate(30%, 18%) scale(1);      border-radius: 50% 50% 50% 50%; }
-            12.5%  { opacity: 0.84; transform: translate(10%, 33%) scale(1.04);   border-radius: 54% 46% 55% 45%; }
-            25%    { opacity: 0.70; transform: translate(-15%, 32%) scale(0.96);  border-radius: 46% 54% 42% 58%; }
-            37.5%  { opacity: 0.82; transform: translate(-33%, 15%) scale(1.03);  border-radius: 58% 42% 50% 50%; }
-            50%    { opacity: 0.76; transform: translate(-32%, -12%) scale(0.97); border-radius: 44% 56% 55% 45%; }
-            62.5%  { opacity: 0.87; transform: translate(-14%, -32%) scale(1.05); border-radius: 52% 48% 46% 54%; }
-            75%    { opacity: 0.72; transform: translate(12%, -33%) scale(0.96);  border-radius: 48% 52% 58% 42%; }
-            87.5%  { opacity: 0.83; transform: translate(32%, -16%) scale(1.02);  border-radius: 56% 44% 48% 52%; }
-            100%   { opacity: 0.74; transform: translate(30%, 18%) scale(1);      border-radius: 50% 50% 50% 50%; }
+        @keyframes contactDriftViolet {
+            0%, 100% { opacity: 0.50; transform: translate(15%, 8%) scale(1); }
+            33%      { opacity: 0.58; transform: translate(-12%, 6%) scale(1.02); }
+            66%      { opacity: 0.46; transform: translate(0%, -12%) scale(0.98); }
         }
 
-        /* Blue — starts at 240° (bottom-left, 8 o'clock) */
-        @keyframes contactBlueOrbit {
-            0%     { opacity: 0.72; transform: translate(-30%, 18%) scale(1);     border-radius: 50% 50% 50% 50%; }
-            12.5%  { opacity: 0.83; transform: translate(-34%, -5%) scale(1.04);  border-radius: 55% 45% 48% 52%; }
-            25%    { opacity: 0.68; transform: translate(-20%, -28%) scale(0.96); border-radius: 42% 58% 56% 44%; }
-            37.5%  { opacity: 0.80; transform: translate(3%, -35%) scale(1.03);   border-radius: 56% 44% 44% 56%; }
-            50%    { opacity: 0.74; transform: translate(26%, -24%) scale(0.97);  border-radius: 48% 52% 52% 48%; }
-            62.5%  { opacity: 0.86; transform: translate(35%, 2%) scale(1.05);    border-radius: 54% 46% 56% 44%; }
-            75%    { opacity: 0.70; transform: translate(22%, 27%) scale(0.96);   border-radius: 46% 54% 44% 56%; }
-            87.5%  { opacity: 0.81; transform: translate(-5%, 35%) scale(1.02);   border-radius: 52% 48% 54% 46%; }
-            100%   { opacity: 0.72; transform: translate(-30%, 18%) scale(1);     border-radius: 50% 50% 50% 50%; }
+        @keyframes contactDriftBlue {
+            0%, 100% { opacity: 0.48; transform: translate(-12%, 8%) scale(1); }
+            33%      { opacity: 0.55; transform: translate(5%, -12%) scale(1.02); }
+            66%      { opacity: 0.44; transform: translate(10%, 6%) scale(0.98); }
         }
 
         .contact__title {
@@ -2751,37 +2353,18 @@
                 filter: blur(38px);
             }
 
-            /* Simplified 3-keyframe orbits for mobile GPU performance */
+            /* V13: mobile uses same simplified drift animations, further reduced size */
             .reveal.is-visible .contact__spotlight--amber {
-                animation: contactAmberOrbitMobile 30s ease-in-out infinite;
+                animation: contactDriftAmber 34s ease-in-out infinite;
             }
 
             .reveal.is-visible .contact__spotlight--violet {
-                animation: contactVioletOrbitMobile 36s ease-in-out 0.5s infinite;
+                animation: contactDriftViolet 40s ease-in-out 0.5s infinite;
             }
 
             .reveal.is-visible .contact__spotlight--blue {
-                animation: contactBlueOrbitMobile 26s ease-in-out 1s infinite;
+                animation: contactDriftBlue 30s ease-in-out 1s infinite;
             }
-        }
-
-        /* Mobile: 3 positions per orbit (120° spacing, 25% radius) */
-        @keyframes contactAmberOrbitMobile {
-            0%, 100% { opacity: 0.72; transform: translate(0%, -25%) scale(1); }
-            33%      { opacity: 0.82; transform: translate(22%, 13%) scale(1.03); }
-            66%      { opacity: 0.68; transform: translate(-22%, 13%) scale(0.97); }
-        }
-
-        @keyframes contactVioletOrbitMobile {
-            0%, 100% { opacity: 0.68; transform: translate(21%, 12%) scale(1); }
-            33%      { opacity: 0.80; transform: translate(-22%, 12%) scale(1.03); }
-            66%      { opacity: 0.65; transform: translate(0%, -25%) scale(0.97); }
-        }
-
-        @keyframes contactBlueOrbitMobile {
-            0%, 100% { opacity: 0.65; transform: translate(-22%, 12%) scale(1); }
-            33%      { opacity: 0.78; transform: translate(0%, -25%) scale(1.03); }
-            66%      { opacity: 0.70; transform: translate(21%, 12%) scale(0.97); }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -2793,26 +2376,7 @@
             }
         }
 
-        /* === CURSOR GLOW === */
-        @media (hover: hover) and (pointer: fine) {
-            .cursor-glow {
-                position: fixed;
-                width: 400px;
-                height: 400px;
-                border-radius: 50%;
-                background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-                pointer-events: none;
-                z-index: 0;
-                opacity: 0;
-                transform: translate(-50%, -50%);
-                transition: opacity 0.3s ease;
-                mix-blend-mode: screen;
-            }
-
-            body:hover .cursor-glow {
-                opacity: 0.3;
-            }
-        }
+        /* Cursor glow removed in V13 — "quiet authority" refinement */
 
 
         /* ============================================================
@@ -2980,16 +2544,17 @@
                 -webkit-backdrop-filter: none;
             }
 
-            /* Text glow mobile overrides — single-layer shadows, same mood */
+            /* V13: Mobile text + glow overrides — simplified, no flicker/beam */
 
-            /* Hero "Brand & Web" glow: single-layer, still fades back */
+            /* Hero title glow: removed in V13, keep structural compatibility */
             .hero__title.hero-animate .hero__title-glow {
-                animation: heroTextGlowMobile 3s ease-out forwards;
+                animation: none;
             }
 
-            /* "Based in Sudbury" glow: single-layer */
+            /* Subtitle glow: static color in V13 */
             .intro-scrolled .hero__subtitle-glow {
-                animation: subtitleGlowMobile 3s ease-out 2s forwards;
+                animation: none;
+                color: var(--text-muted);
             }
 
             /* About section spotlight sweep: single-layer, shorter */
@@ -3002,14 +2567,16 @@
                 animation: focusedGlowMobile 2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
             }
 
-            /* Process "clear" text glow: single-layer orange */
+            /* Process "clear" text: static accent color in V13 (beam removed) */
             .reveal.is-visible .text-spotlight--clear {
-                animation: clearTextGlowMobile 2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+                animation: none;
+                color: var(--accent);
+                text-shadow: 0 0 10px rgba(var(--build-rgb), 0.3);
             }
 
-            /* "Systems" flicker: fire once (already once), simplify to fade-in */
+            /* Accent word: clean fade-in (flicker removed in V13) */
             .hero__title.hero-animate .accent {
-                animation: fluorescentFlickerMobile 0.6s ease-out 1s forwards;
+                animation: accentFadeIn 0.6s var(--ease-out) 0.4s forwards;
             }
 
             /* "STUDIO" label: smaller on mobile */
@@ -3018,9 +2585,9 @@
                 margin-top: 0.5rem;
             }
 
-            /* Process beam: fade-in instead of sweep on mobile */
+            /* Process beam: removed in V13 */
             .section--process.reveal-triggered::before {
-                animation: beamFadeInMobile 1.5s ease-out 0.6s forwards;
+                display: none;
             }
 
         }
@@ -3071,41 +2638,9 @@
             }
         }
 
-        /* Mobile text glow keyframes — single-layer shadows for GPU efficiency */
+        /* heroTextGlowMobile — removed in V13 (hero text glow removed) */
 
-        @keyframes heroTextGlowMobile {
-            0% {
-                text-shadow: none;
-                color: var(--text);
-            }
-            30% {
-                text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-                color: #fff;
-            }
-            70% {
-                text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
-                color: #fff;
-            }
-            100% {
-                text-shadow: none;
-                color: var(--text);
-            }
-        }
-
-        @keyframes subtitleGlowMobile {
-            0% {
-                color: var(--text-muted);
-                text-shadow: none;
-            }
-            30% {
-                color: #fff;
-                text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
-            }
-            100% {
-                color: #e0e0e0;
-                text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
-            }
-        }
+        /* subtitleGlowMobile — removed in V13 (static color) */
 
         @keyframes textSpotlightSweepMobile {
             0% {
@@ -3141,41 +2676,9 @@
             }
         }
 
-        @keyframes clearTextGlowMobile {
-            0% {
-                color: var(--text);
-                text-shadow: none;
-            }
-            35% {
-                color: #fff;
-                text-shadow: 0 0 20px rgba(var(--build-rgb), 0.6);
-            }
-            100% {
-                color: #fff;
-                text-shadow: 0 0 10px rgba(var(--build-rgb), 0.4);
-            }
-        }
-
-        @keyframes fluorescentFlickerMobile {
-            0% { opacity: 0; }
-            40% { opacity: 0.7; }
-            60% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes beamFadeInMobile {
-            0% {
-                opacity: 0;
-                transform: translateX(0) scaleY(1);
-            }
-            50% {
-                opacity: 0.6;
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(0) scaleY(1);
-            }
-        }
+        /* clearTextGlowMobile — removed in V13 (static accent color) */
+        /* fluorescentFlickerMobile — removed in V13 (uses accentFadeIn) */
+        /* beamFadeInMobile — removed in V13 (process beam removed) */
 
         /* Even more aggressive optimizations for very small screens */
         @media (max-width: 480px) {
@@ -3396,40 +2899,42 @@
     opacity: 1;
 }
 
+/* V13: Tier group glows — reduced intensity, extended durations for quieter breathing */
+
 /* Build — Amber ambient wash */
 .tier-group[data-tier="build"]::before {
     background: radial-gradient(
         ellipse 75% 55% at 50% 50%,
-        rgba(var(--build-rgb), 0.16) 0%,
-        rgba(var(--build-rgb), 0.08) 35%,
-        rgba(var(--build-rgb), 0.03) 55%,
+        rgba(var(--build-rgb), 0.12) 0%,
+        rgba(var(--build-rgb), 0.06) 35%,
+        rgba(var(--build-rgb), 0.02) 55%,
         transparent 75%
     );
-    animation: tierGlowBuild 18s ease-in-out infinite;
+    animation: tierGlowBuild 22s ease-in-out infinite;
 }
 
 /* Transform — Violet ambient wash */
 .tier-group[data-tier="transform"]::before {
     background: radial-gradient(
         ellipse 75% 55% at 50% 50%,
-        rgba(var(--transform-rgb), 0.14) 0%,
-        rgba(var(--transform-rgb), 0.07) 35%,
-        rgba(var(--transform-rgb), 0.03) 55%,
+        rgba(var(--transform-rgb), 0.10) 0%,
+        rgba(var(--transform-rgb), 0.05) 35%,
+        rgba(var(--transform-rgb), 0.02) 55%,
         transparent 75%
     );
-    animation: tierGlowTransform 20s ease-in-out infinite;
+    animation: tierGlowTransform 25s ease-in-out infinite;
 }
 
 /* Care — Blue ambient wash */
 .tier-group[data-tier="care"]::before {
     background: radial-gradient(
         ellipse 75% 55% at 50% 50%,
-        rgba(var(--care-rgb), 0.14) 0%,
-        rgba(var(--care-rgb), 0.07) 35%,
-        rgba(var(--care-rgb), 0.03) 55%,
+        rgba(var(--care-rgb), 0.10) 0%,
+        rgba(var(--care-rgb), 0.05) 35%,
+        rgba(var(--care-rgb), 0.02) 55%,
         transparent 75%
     );
-    animation: tierGlowCare 22s ease-in-out infinite;
+    animation: tierGlowCare 28s ease-in-out infinite;
 }
 
 /* Organic breathing — Build (amber) */

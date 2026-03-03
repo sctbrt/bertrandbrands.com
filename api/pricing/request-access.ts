@@ -7,6 +7,7 @@ import { initializeDatabase, createMagicLink, countRecentRequests } from '../_li
 import { EMAIL_REGEX } from '../_lib/validation.js';
 import { generateToken } from '../_lib/crypto.js';
 import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
+import { escapeHtml } from '../_lib/html.js';
 import type { PricingRequestAccessBody } from '../_lib/types.js';
 
 // Config
@@ -27,7 +28,7 @@ interface EmailTemplateParams {
  * Build the magic link email HTML
  */
 function buildEmailHtml({ firstName, magicLink, expiresMinutes }: EmailTemplateParams): string {
-  const greeting = firstName ? `Hi ${firstName},` : 'Hi,';
+  const greeting = firstName ? `Hi ${escapeHtml(firstName)},` : 'Hi,';
 
   return `
 <!DOCTYPE html>

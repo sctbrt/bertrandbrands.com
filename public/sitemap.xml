@@ -86,12 +86,28 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Intake -->
+  <url>
+    <loc>https://bertrandbrands.ca/intake</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Compare -->
   <url>
     <loc>https://bertrandbrands.ca/compare</loc>
     <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- Privacy -->
+  <url>
+    <loc>https://bertrandbrands.ca/privacy</loc>
+    <lastmod>2026-02-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 
   <!-- Local landing page -->

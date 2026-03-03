@@ -110,7 +110,6 @@ const schemaJson = schemaGraph(
   </Fragment>
 
   <SkipLink />
-  <div class="cursor-glow" id="cursorGlow"></div>
 
   <!-- Cinematic Intro -->
   <div class="intro">
@@ -124,12 +123,6 @@ const schemaJson = schemaGraph(
           <span class="intro__brand-main">Bertrand Brands</span>
           <span class="intro__brand-sub">Brand &amp; Web Systems</span>
           <span class="intro__brand-division">a division of Bertrand Group Canada</span>
-      </div>
-      <div class="intro__scroll-hint">
-          <span class="intro__scroll-hint-text">Tap anywhere to begin</span>
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
       </div>
   </div>
 
@@ -676,40 +669,7 @@ const schemaJson = schemaGraph(
           }
       })();
 
-      // Cursor glow
-      (function() {
-          var glow = document.getElementById('cursorGlow');
-          if (!glow) return;
-          var isMobile = window.matchMedia('(max-width: 768px)').matches;
-          if (isMobile) { glow.style.display = 'none'; return; }
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { glow.style.display = 'none'; return; }
-          if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) { glow.style.display = 'none'; return; }
-
-          var mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
-          var isAnimating = false;
-
-          document.addEventListener('mousemove', function(e) {
-              mouseX = e.clientX;
-              mouseY = e.clientY;
-              if (!isAnimating) {
-                  isAnimating = true;
-                  animate();
-              }
-          });
-
-          function animate() {
-              glowX += (mouseX - glowX) * 0.08;
-              glowY += (mouseY - glowY) * 0.08;
-              glow.style.left = glowX + 'px';
-              glow.style.top = glowY + 'px';
-
-              if (Math.abs(mouseX - glowX) > 0.5 || Math.abs(mouseY - glowY) > 0.5) {
-                  requestAnimationFrame(animate);
-              } else {
-                  isAnimating = false;
-              }
-          }
-      })();
+      // Cursor glow — removed in V13 ("quiet authority" refinement)
 
       // Premium scroll-linked reveal (Apple-like progressive animations)
       (function() {
@@ -1185,7 +1145,7 @@ const schemaJson = schemaGraph(
           }
 
           // Skip intro if already seen or ?skip param
-          var introSeen = sessionStorage.getItem('bb_intro_seen');
+          var introSeen = localStorage.getItem('bb_intro_seen');
           var skipParam = params.has('skip');
           var forceIntro = params.has('intro');
           if ((introSeen || skipParam) && !forceIntro) {
@@ -1196,7 +1156,7 @@ const schemaJson = schemaGraph(
               if (heroTitle) heroTitle.classList.add('hero-animate');
               if (intro) intro.remove();
               initWordmark();
-              if (skipParam) sessionStorage.setItem('bb_intro_seen', '1');
+              if (skipParam) localStorage.setItem('bb_intro_seen', '1');
               return;
           }
 
@@ -1208,7 +1168,7 @@ const schemaJson = schemaGraph(
               var heroTitleRM = document.querySelector('.hero__title');
               if (heroTitleRM) heroTitleRM.classList.add('hero-animate');
               if (intro) intro.remove();
-              sessionStorage.setItem('bb_intro_seen', '1');
+              localStorage.setItem('bb_intro_seen', '1');
               return;
           }
 
@@ -1235,6 +1195,8 @@ const schemaJson = schemaGraph(
           });
 
           var introAnimationDuration = 3200;
+          var hasScrolledPastIntro = false;
+          var heroTitleEl = document.querySelector('.hero__title');
 
           setTimeout(function() {
               intro.classList.add('intro--static');
@@ -1242,30 +1204,34 @@ const schemaJson = schemaGraph(
               document.body.classList.add('intro-static', 'intro-complete');
               window.removeEventListener('wheel', preventScroll);
               window.removeEventListener('touchmove', preventScroll);
+
+              // Auto-dissolve: brief pause then transition to hero
+              setTimeout(function() {
+                  if (hasScrolledPastIntro) return; // scroll handler already fired
+                  hasScrolledPastIntro = true;
+                  localStorage.setItem('bb_intro_seen', '1');
+                  document.body.classList.add('intro-scrolled');
+                  intro.classList.add('intro--hidden');
+                  header.classList.add('visible');
+                  logo.classList.add('show-text');
+                  initWordmark();
+                  setTimeout(function() {
+                      header.classList.add('lights-on');
+                  }, 400);
+                  if (heroTitleEl) {
+                      heroTitleEl.classList.add('hero-animate');
+                  }
+                  window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+              }, 800);
           }, introAnimationDuration);
 
-          var hasBegun = false;
-
-          function beginSite() {
-              if (!document.body.classList.contains('intro-static') || hasBegun) return;
-              hasBegun = true;
-              sessionStorage.setItem('bb_intro_seen', '1');
-              window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-          }
-
-          document.addEventListener('click', beginSite);
-          document.addEventListener('touchstart', beginSite, { passive: true });
-
-          // Scroll handler
-          var hasScrolledPastIntro = false;
+          // Scroll handler (safety net — auto-dissolve handles the normal case)
           var lastScrollY = window.scrollY;
           var ticking = false;
           var isSnapping = false;
           var cachedViewportHeight = window.innerHeight;
           var isIntroStatic = false;
           var isHeaderVisible = false;
-          var hintHidden = false;
-          var heroTitleEl = document.querySelector('.hero__title');
 
           var resizeTimeout;
           window.addEventListener('resize', function() {
@@ -1286,11 +1252,6 @@ const schemaJson = schemaGraph(
                               ticking = false;
                               return;
                           }
-                      }
-
-                      if (!hintHidden && currentScrollY > 50) {
-                          intro.classList.add('hint-hidden');
-                          hintHidden = true;
                       }
 
                       if (!hasScrolledPastIntro && currentScrollY > cachedViewportHeight * 0.85) {
