@@ -367,12 +367,31 @@
             to { opacity: 1; }
         }
 
-        /* Logo — animated dot B (sizing override for intro context) */
+        /* Logo — animated dot B (sizing + one-shot override for intro) */
         .intro .dot-logo {
             --dot-size: clamp(14px, 2.5vw, 22px);
             --dot-gap: clamp(4px, 0.8vw, 6px);
             z-index: 1;
             margin-bottom: var(--space-md);
+        }
+
+        .intro .dot-logo__dot {
+            animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+        }
+
+        @keyframes dotAssembleOnce {
+            0% {
+                opacity: 0;
+                transform: translate(var(--sx, 0px), var(--sy, 0px)) scale(0);
+            }
+            65% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1.08);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
         }
 
         .intro__brand {
