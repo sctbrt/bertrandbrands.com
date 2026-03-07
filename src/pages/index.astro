@@ -9,6 +9,7 @@ import OfferCard from '../components/OfferCard.astro';
 import TierGroupHeader from '../components/TierGroupHeader.astro';
 import PhoneFirstCTA from '../components/PhoneFirstCTA.astro';
 import FAQ from '../components/FAQ.astro';
+import DotLogo from '../components/DotLogo.astro';
 import { Image } from 'astro:assets';
 import logomark from '../assets/bg-brands-logomark.png';
 import { breadcrumbList, schemaGraph, AREA_SERVED } from '../lib/schema';
@@ -118,7 +119,7 @@ const schemaJson = schemaGraph(
       <div class="intro__glow intro__glow--blue"></div>
       <div class="intro__fade"></div>
       <div class="intro__grid"></div>
-      <Image src={logomark} alt="" class="intro__logo" width={256} height={256} format="webp" loading="eager" fetchpriority="high" />
+      <DotLogo class="intro__logo" />
       <div class="intro__brand">
           <span class="intro__brand-main">Bertrand Brands</span>
           <span class="intro__brand-sub">Brand &amp; Web Systems</span>

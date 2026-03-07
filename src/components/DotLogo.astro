@@ -1,0 +1,108 @@
+---
+// DotLogo.astro — Animated dot-matrix "B" logo
+// Dots scatter outward then converge to form the B shape on a loop.
+// Override --dot-size and --dot-gap on the .dot-logo element to resize.
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+
+const B_GRID = [
+  [1,1,1,1,0],
+  [1,1,0,1,1],
+  [1,1,0,1,1],
+  [1,1,1,1,0],
+  [1,1,0,1,1],
+  [1,1,0,1,1],
+  [1,1,1,1,0],
+];
+
+// Build dot array with random scatter vectors and staggered delays
+const dots: Array<{ col: number; row: number; sx: number; sy: number; delay: string }> = [];
+for (let row = 0; row < B_GRID.length; row++) {
+  for (let col = 0; col < B_GRID[row].length; col++) {
+    if (B_GRID[row][col] === 1) {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 80 + Math.random() * 40; // 80–120px scatter radius
+      dots.push({
+        col,
+        row,
+        sx: Math.round(Math.cos(angle) * distance),
+        sy: Math.round(Math.sin(angle) * distance),
+        delay: (Math.random() * 0.5).toFixed(2), // 0–0.5s stagger
+      });
+    }
+  }
+}
+---
+
+<div class:list={['dot-logo', className]} role="img" aria-label="Bertrand Brands">
+  {dots.map(dot => (
+    <span
+      class="dot-logo__dot"
+      style={`left:calc(${dot.col} * var(--dl-cell));top:calc(${dot.row} * var(--dl-cell));--sx:${dot.sx}px;--sy:${dot.sy}px;animation-delay:${dot.delay}s`}
+    />
+  ))}
+</div>
+
+<style is:global>
+/* === DOT LOGO — animated B lettermark === */
+.dot-logo {
+    --dot-size: 26px;
+    --dot-gap: 10px;
+    --dl-cell: calc(var(--dot-size) + var(--dot-gap));
+    position: relative;
+    width: calc(5 * var(--dl-cell) - var(--dot-gap));
+    height: calc(7 * var(--dl-cell) - var(--dot-gap));
+}
+
+.dot-logo__dot {
+    position: absolute;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: dotAssemble 6s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+}
+
+/* Assemble → hold → dissolve → scatter → repeat */
+@keyframes dotAssemble {
+    0% {
+        opacity: 0;
+        transform: translate(var(--sx, 0px), var(--sy, 0px)) scale(0);
+    }
+    18% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1.08);
+    }
+    28% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    72% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    88% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--sx, 0px), var(--sy, 0px)) scale(0);
+    }
+}
+
+/* Reduced motion: show static B, no animation */
+@media (prefers-reduced-motion: reduce) {
+    .dot-logo__dot {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+</style>
