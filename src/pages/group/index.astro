@@ -9,7 +9,6 @@ import VisitorNotify from '../../components/VisitorNotify.astro';
 import VersionStamp from '../../components/VersionStamp.astro';
 import GesturePrevention from '../../components/GesturePrevention.astro';
 import { Image } from 'astro:assets';
-import logomark from '../../assets/bg-brands-logomark.png';
 import scottWordmark from '../../assets/scott-bertrand-logo-wordmark-light.png';
 
 const currentYear = new Date().getFullYear();
@@ -533,7 +532,7 @@ const schema = {
               <!-- Bertrand Group | Brand & Web Systems -->
               <a href="https://bertrandbrands.ca/?skip" class="bg-portfolio__tile">
                   <div class="bg-portfolio__lockup">
-                      <Image src={logomark} alt="" class="bg-portfolio__logomark" width={40} height={40} format="webp" loading="lazy" />
+                      <img src="/assets/dot-logomark.svg" alt="" class="bg-portfolio__logomark" width="40" height="40" loading="lazy" />
                       <span class="bg-portfolio__divider" aria-hidden="true"></span>
                       <span class="bg-portfolio__wordmark" style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: inherit;">Brand &amp; Web Systems</span>
                   </div>

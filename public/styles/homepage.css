@@ -307,7 +307,6 @@
                 100% {
                     opacity: 1;
                     transform: translateY(0) translateZ(0);
-                    filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
                 }
             }
 
@@ -3039,11 +3038,20 @@
 }
 
 .tier-group__logomark {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     flex-shrink: 0;
     opacity: 0.9;
     filter: brightness(0) invert(1);
+}
+
+.tier-group__sep {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.2);
+    line-height: 1;
+    flex-shrink: 0;
 }
 
 .tier-group__name {
@@ -3440,6 +3448,9 @@
         margin-bottom: 1rem;
     }
     .tier-group__logomark {
+        display: none;
+    }
+    .tier-group__sep {
         display: none;
     }
     .tier-group__name {

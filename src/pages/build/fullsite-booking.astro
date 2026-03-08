@@ -8,8 +8,7 @@ import ServiceDetailLayout from '../../layouts/ServiceDetailLayout.astro';
 import InlineIntakeForm from '../../components/InlineIntakeForm.astro';
 import StickyMobileCTA from '../../components/StickyMobileCTA.astro';
 import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../../lib/schema';
-import { Image } from 'astro:assets';
-import logomark from '../../assets/bg-brands-logomark.png';
+
 
 const currentYear = new Date().getFullYear();
 ---
@@ -52,7 +51,8 @@ const currentYear = new Date().getFullYear();
             </a>
 
             <a href="/build" class="service-subbrand">
-                <Image src={logomark} alt="" class="service-subbrand__mark" width={40} height={40} format="webp" />
+                <img src="/assets/dot-logomark.svg" alt="" class="service-subbrand__mark" width="40" height="40" />
+                <span class="service-subbrand__sep" aria-hidden="true">|</span>
                 <span class="service-subbrand__name">Full Site + Booking</span>
             </a>
 

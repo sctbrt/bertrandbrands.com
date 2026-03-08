@@ -3,16 +3,13 @@
  * FooterMain — Full footer used on homepage and hub pages.
  * Includes logomark, copyright, email, phone, and "Selected Work" link.
  */
-import { Image } from 'astro:assets';
-import logomark from '../assets/bg-brands-logomark.png';
-
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
     <div class="container">
         <div class="footer__logomark">
-            <Image src={logomark} alt="" class="footer__logomark-img" width={40} height={40} format="webp" loading="lazy" />
+            <img src="/assets/dot-logomark.svg" alt="" class="footer__logomark-img" width="40" height="40" loading="lazy" />
         </div>
         <div class="footer__cta">
             <p class="footer__cta-text">Not sure where to start?</p>
