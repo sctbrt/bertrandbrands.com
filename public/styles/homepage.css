@@ -165,9 +165,9 @@
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
-            will-change: opacity, transform;
+            will-change: opacity;
             transform: translateZ(0);
-            contain: layout style;
+            contain: layout style paint;
         }
 
         /* Cleanup will-change after intro becomes static */
@@ -185,14 +185,14 @@
             max-height: 900px;
             background: radial-gradient(
                 circle at center,
-                rgba(var(--build-rgb), 0.17) 0%,
-                rgba(var(--build-rgb), 0.05) 45%,
+                rgba(var(--build-rgb), 0.20) 0%,
+                rgba(var(--build-rgb), 0.06) 45%,
                 transparent 70%
             );
             top: -25%;
             right: -20%;
             opacity: 0;
-            filter: blur(65px);
+            filter: blur(50px);
             animation: introGlowWarm 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
         }
 
@@ -204,14 +204,14 @@
             max-height: 700px;
             background: radial-gradient(
                 circle at center,
-                rgba(var(--transform-rgb), 0.13) 0%,
-                rgba(var(--transform-rgb), 0.03) 48%,
+                rgba(var(--transform-rgb), 0.16) 0%,
+                rgba(var(--transform-rgb), 0.04) 48%,
                 transparent 70%
             );
             bottom: -20%;
             right: -10%;
             opacity: 0;
-            filter: blur(72px);
+            filter: blur(55px);
             animation: introGlowViolet 1.9s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
         }
 
@@ -223,14 +223,14 @@
             max-height: 650px;
             background: radial-gradient(
                 circle at center,
-                rgba(var(--care-rgb), 0.11) 0%,
-                rgba(var(--care-rgb), 0.03) 50%,
+                rgba(var(--care-rgb), 0.14) 0%,
+                rgba(var(--care-rgb), 0.04) 50%,
                 transparent 70%
             );
             bottom: -30%;
             left: -15%;
             opacity: 0;
-            filter: blur(80px);
+            filter: blur(60px);
             animation: introGlowCool 2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
         }
 
@@ -401,20 +401,24 @@
             }
         }
 
-        /* Mobile: skip scatter translate, simple scale-in for GPU perf */
+        /* Mobile: reduced scatter radius (30–50px vs 80–120px desktop) for GPU perf */
         @media (max-width: 768px) {
             .intro.intro--animate .dot-logo__dot {
-                animation: dotScaleIn 1.5s ease-out forwards;
+                animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards;
             }
 
-            @keyframes dotScaleIn {
+            @keyframes dotAssembleMobile {
                 0% {
                     opacity: 0;
-                    transform: scale(0);
+                    transform: translate(var(--msx, 0px), var(--msy, 0px)) scale(0);
+                }
+                70% {
+                    opacity: 1;
+                    transform: translate(0, 0) scale(1.05);
                 }
                 100% {
                     opacity: 1;
-                    transform: scale(1);
+                    transform: translate(0, 0) scale(1);
                 }
             }
         }
@@ -444,46 +448,27 @@
             line-height: 1.1;
             white-space: nowrap;
             opacity: 0;
-            background: linear-gradient(
-                105deg,
-                rgba(28, 28, 30, 1) 0%,
-                rgba(28, 28, 30, 1) 35%,
-                rgba(120, 120, 120, 1) 45%,
-                rgba(220, 220, 220, 1) 50%,
-                rgba(120, 120, 120, 1) 55%,
-                rgba(28, 28, 30, 1) 65%,
-                rgba(28, 28, 30, 1) 100%
-            );
-            background-size: 300% 100%;
-            background-position: 100% 0;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: spotlight 2.4s cubic-bezier(0.25, 0.1, 0.25, 1) 0.8s forwards;
+            color: rgba(255, 255, 255, 0);
+            animation: spotlight 2s cubic-bezier(0.25, 0.1, 0.25, 1) 0.8s forwards;
         }
 
         @keyframes spotlight {
             0% {
                 opacity: 0;
-                background-position: 100% 0;
+                color: rgba(255, 255, 255, 0);
             }
-            8% {
+            15% {
                 opacity: 1;
-                background-position: 100% 0;
+                color: rgba(255, 255, 255, 0.3);
             }
-            55% {
-                opacity: 1;
-                background-position: 0% 0;
-            }
-            70% {
-                opacity: 1;
-                color: rgba(255, 255, 255, 1);
-                text-shadow: 0 0 50px rgba(255, 255, 255, 0.25);
+            60% {
+                color: rgba(255, 255, 255, 0.85);
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
             }
             100% {
                 opacity: 1;
                 color: rgba(255, 255, 255, 1);
-                text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
             }
         }
 
