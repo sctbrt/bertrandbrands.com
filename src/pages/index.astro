@@ -1213,23 +1213,25 @@ const schemaJson = schemaGraph(
               window.removeEventListener('wheel', preventScroll);
               window.removeEventListener('touchmove', preventScroll);
 
-              // Auto-dissolve: brief pause then transition to hero
+              // Auto-dissolve: brief pause then batch all DOM writes in single frame
               setTimeout(function() {
                   if (hasScrolledPastIntro) return; // scroll handler already fired
                   hasScrolledPastIntro = true;
                   localStorage.setItem('bb_intro_seen', '1');
-                  document.body.classList.add('intro-scrolled');
-                  intro.classList.add('intro--hidden');
-                  header.classList.add('visible');
-                  logo.classList.add('show-text');
-                  initWordmark();
-                  setTimeout(function() {
-                      header.classList.add('lights-on');
-                  }, 400);
-                  if (heroTitleEl) {
-                      heroTitleEl.classList.add('hero-animate');
-                  }
-                  window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+                  requestAnimationFrame(function() {
+                      document.body.classList.add('intro-scrolled');
+                      intro.classList.add('intro--hidden');
+                      header.classList.add('visible');
+                      logo.classList.add('show-text');
+                      initWordmark();
+                      if (heroTitleEl) {
+                          heroTitleEl.classList.add('hero-animate');
+                      }
+                      window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+                      setTimeout(function() {
+                          header.classList.add('lights-on');
+                      }, 400);
+                  });
               }, 800);
           }, introAnimationDuration);
 

@@ -20,18 +20,21 @@ const B_GRID = [
 ];
 
 // Build dot array with random scatter vectors and staggered delays
-const dots: Array<{ col: number; row: number; sx: number; sy: number; delay: string }> = [];
+const dots: Array<{ col: number; row: number; sx: number; sy: number; msx: number; msy: number; delay: string }> = [];
 for (let row = 0; row < B_GRID.length; row++) {
   for (let col = 0; col < B_GRID[row].length; col++) {
     if (B_GRID[row][col] === 1) {
       const angle = Math.random() * Math.PI * 2;
-      const distance = 80 + Math.random() * 40; // 80–120px scatter radius
+      const distance = 80 + Math.random() * 40; // 80–120px scatter radius (desktop)
+      const mobileDistance = 30 + Math.random() * 20; // 30–50px scatter radius (mobile)
       dots.push({
         col,
         row,
         sx: Math.round(Math.cos(angle) * distance),
         sy: Math.round(Math.sin(angle) * distance),
-        delay: (Math.random() * 0.5).toFixed(2), // 0–0.5s stagger
+        msx: Math.round(Math.cos(angle) * mobileDistance),
+        msy: Math.round(Math.sin(angle) * mobileDistance),
+        delay: (Math.random() * 0.4).toFixed(2), // 0–0.4s stagger (tighter)
       });
     }
   }
@@ -42,7 +45,7 @@ for (let row = 0; row < B_GRID.length; row++) {
   {dots.map(dot => (
     <span
       class="dot-logo__dot"
-      style={`left:calc(${dot.col} * var(--dl-cell));top:calc(${dot.row} * var(--dl-cell));--sx:${dot.sx}px;--sy:${dot.sy}px;animation-delay:${dot.delay}s`}
+      style={`left:calc(${dot.col} * var(--dl-cell));top:calc(${dot.row} * var(--dl-cell));--sx:${dot.sx}px;--sy:${dot.sy}px;--msx:${dot.msx}px;--msy:${dot.msy}px;animation-delay:${dot.delay}s`}
     />
   ))}
 </div>
