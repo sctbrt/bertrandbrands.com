@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- F3 Android: Circular border, #e0e0e0 background -->
+  <defs>
+    <linearGradient id="dotSpanF3a" x1="168" y1="124" x2="344" y2="388" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="50%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="borderF3a" x1="0.05" y1="0" x2="0.92" y2="1">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="14%" stop-color="#C67F2E"/>
+      <stop offset="30%" stop-color="#A86AAC"/>
+      <stop offset="44%" stop-color="#8B5CF6"/>
+      <stop offset="56%" stop-color="#7B5FD9"/>
+      <stop offset="74%" stop-color="#4A68CE"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="#e0e0e0"/>
+  <circle cx="256" cy="256" r="246" fill="none" stroke="url(#borderF3a)" stroke-width="20"/>
+  <g fill="url(#dotSpanF3a)">
+    <circle cx="168" cy="124" r="17"/><circle cx="212" cy="124" r="17"/><circle cx="256" cy="124" r="17"/><circle cx="300" cy="124" r="17"/>
+    <circle cx="168" cy="168" r="17"/><circle cx="212" cy="168" r="17"/><circle cx="300" cy="168" r="17"/><circle cx="344" cy="168" r="17"/>
+    <circle cx="168" cy="212" r="17"/><circle cx="212" cy="212" r="17"/><circle cx="300" cy="212" r="17"/><circle cx="344" cy="212" r="17"/>
+    <circle cx="168" cy="256" r="17"/><circle cx="212" cy="256" r="17"/><circle cx="256" cy="256" r="17"/><circle cx="300" cy="256" r="17"/>
+    <circle cx="168" cy="300" r="17"/><circle cx="212" cy="300" r="17"/><circle cx="300" cy="300" r="17"/><circle cx="344" cy="300" r="17"/>
+    <circle cx="168" cy="344" r="17"/><circle cx="212" cy="344" r="17"/><circle cx="300" cy="344" r="17"/><circle cx="344" cy="344" r="17"/>
+    <circle cx="168" cy="388" r="17"/><circle cx="212" cy="388" r="17"/><circle cx="256" cy="388" r="17"/><circle cx="300" cy="388" r="17"/>
+  </g>
+</svg>
