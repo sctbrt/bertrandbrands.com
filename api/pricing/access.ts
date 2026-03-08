@@ -61,7 +61,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     res.setHeader('Set-Cookie', buildCookie('bb_pricing_session', session.id, maxAgeSeconds, { hostname: req.headers.host }));
 
     // Redirect to services section
-    res.setHeader('Location', `${APP_URL}/#services`);
+    res.setHeader('Location', `${APP_URL}/#packages`);
     res.status(302).end();
 
   } catch (error) {

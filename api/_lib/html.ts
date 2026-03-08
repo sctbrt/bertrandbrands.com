@@ -20,7 +20,7 @@ export function escapeHtml(str: string): string {
 export function errorPageHtml(
   title: string,
   message: string,
-  { backHref = '/#services', backLabel = 'Back to Services' }: ErrorPageOptions = {}
+  { backHref = '/#packages', backLabel = 'Back to Services' }: ErrorPageOptions = {}
 ): string {
   title = escapeHtml(title);
   message = escapeHtml(message);
