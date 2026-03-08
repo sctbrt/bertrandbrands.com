@@ -24,15 +24,18 @@
   if (params.get('utm_campaign')) utm.campaign = params.get('utm_campaign');
   if (params.get('gclid')) utm.gclid = '1';
 
-  fetch('/api/notify', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      type: 'visitor',
-      page: window.location.pathname,
-      referrer: document.referrer || '',
-      utm: Object.keys(utm).length > 0 ? utm : undefined
-    })
-  }).catch(function() {});
+  // Defer notification to avoid competing with intro animation
+  setTimeout(function() {
+    fetch('/api/notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'visitor',
+        page: window.location.pathname,
+        referrer: document.referrer || '',
+        utm: Object.keys(utm).length > 0 ? utm : undefined
+      })
+    }).catch(function() {});
+  }, 3000);
 })();
 </script>

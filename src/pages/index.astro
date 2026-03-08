@@ -1177,6 +1177,13 @@ const schemaJson = schemaGraph(
 
           document.body.classList.add('intro-playing');
 
+          // Defer dot animation until fonts loaded + first paint settled
+          document.fonts.ready.then(function() {
+              requestAnimationFrame(function() {
+                  intro.classList.add('intro--animate');
+              });
+          });
+
           function preventScroll(e) {
               if (document.body.classList.contains('intro-playing')) {
                   e.preventDefault();

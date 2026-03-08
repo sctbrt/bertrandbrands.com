@@ -376,7 +376,13 @@
             contain: layout style paint;
         }
 
+        /* Dots start paused — JS adds .intro--animate after fonts load */
         .intro .dot-logo__dot {
+            animation: none;
+            opacity: 0;
+        }
+
+        .intro.intro--animate .dot-logo__dot {
             animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards;
         }
 
@@ -397,7 +403,7 @@
 
         /* Mobile: skip scatter translate, simple scale-in for GPU perf */
         @media (max-width: 768px) {
-            .intro .dot-logo__dot {
+            .intro.intro--animate .dot-logo__dot {
                 animation: dotScaleIn 1.5s ease-out forwards;
             }
 
