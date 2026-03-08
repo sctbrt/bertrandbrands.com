@@ -373,7 +373,8 @@
             --dot-gap: clamp(4px, 0.8vw, 6px);
             z-index: 1;
             margin-bottom: var(--space-md);
-            contain: layout style paint;
+            contain: layout style;
+            overflow: visible;
         }
 
         /* Dots start paused — JS adds .intro--animate after fonts load */
