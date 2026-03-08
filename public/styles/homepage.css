@@ -754,77 +754,6 @@
             transform: translateX(4px);
         }
 
-        /* Hero scroll hint - subtle guidance */
-        .hero__scroll-hint {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            opacity: 0;
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        .hero__scroll-hint-text {
-            font-family: var(--font-body);
-            font-size: var(--text-xs);
-            font-weight: var(--font-normal);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            opacity: 0.6;
-        }
-
-        /* Desktop: "Scroll to explore", Mobile: "Swipe to explore" */
-        .hint-mobile { display: none; }
-        .hint-desktop { display: inline; }
-
-        .hero__scroll-hint-icon {
-            width: 20px;
-            height: 20px;
-            color: var(--text-muted);
-            opacity: 0.5;
-            animation: scrollHintBounce 2s ease-in-out infinite;
-        }
-
-        @keyframes scrollHintBounce {
-            0%, 100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(4px); opacity: 0.8; }
-        }
-
-        /* Show scroll hint shortly after hero content appears (1s delay) */
-        body.intro-scrolled .hero__scroll-hint {
-            animation: scrollHintFadeIn 1s ease 1s forwards;
-        }
-
-        @keyframes scrollHintFadeIn {
-            0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-
-        /* Hide scroll hint once user starts scrolling — fade up and out */
-        body.intro-scrolled.has-scrolled .hero__scroll-hint {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        /* Mobile: adjust position */
-        @media (max-width: 768px) {
-            .hero__scroll-hint {
-                bottom: 1.5rem;
-            }
-            .hero__scroll-hint-text {
-                font-size: var(--text-xs);
-            }
-            .hint-mobile { display: inline; }
-            .hint-desktop { display: none; }
-        }
-
         /* Hero background */
         .hero__bg {
             position: absolute;
@@ -1043,7 +972,7 @@
         /* === SECTION === */
         /* Containment for layout isolation */
         .section {
-            padding: var(--space-2xl) 0;
+            padding: var(--space-xl) 0;
             contain: layout style;
         }
 
@@ -1077,7 +1006,7 @@
         }
 
         .section__header {
-            margin-bottom: var(--space-xl);
+            margin-bottom: var(--space-lg);
             position: relative;
             z-index: 1;
         }
@@ -2000,7 +1929,7 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            gap: var(--space-xl);
+            gap: var(--space-lg);
             max-width: none;
         }
 
@@ -2072,7 +2001,7 @@
         @media (max-width: 768px) {
             .about {
                 flex-direction: column;
-                gap: var(--space-lg);
+                gap: var(--space-md);
             }
 
             .about__cta {
@@ -2171,7 +2100,7 @@
         /* === CONTACT === */
         .contact {
             text-align: center;
-            padding: var(--space-2xl) 0;
+            padding: var(--space-xl) 0;
             position: relative;
             overflow: visible;
         }
@@ -2279,7 +2208,7 @@
         .contact__subtitle {
             font-size: var(--text-base);
             color: var(--text-muted);
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space-md);
             max-width: 500px;
             margin-left: auto;
             margin-right: auto;
@@ -2367,21 +2296,21 @@
                 line-height: 1.5;
             }
 
-            /* --- R2: Section spacing — reduce massive gaps between sections --- */
+            /* --- R2: Section spacing — reduce gaps between sections --- */
             .section {
-                padding: 5rem 0;                         /* 12rem → 5rem */
+                padding: 4rem 0;                         /* 8rem → 4rem */
             }
 
             /* Process + About need more breathing room on mobile */
             #process {
-                padding: 6rem 0;
+                padding: 5rem 0;
             }
             #about {
-                padding: 6rem 0;
+                padding: 5rem 0;
             }
 
             .section__header {
-                margin-bottom: var(--space-md);          /* 8rem → 2rem */
+                margin-bottom: var(--space-md);          /* 4rem → 2rem */
             }
 
             .section__header--services {
@@ -2436,7 +2365,7 @@
         /* Extra-small screens: further tightening */
         @media (max-width: 480px) {
             .section {
-                padding: 3rem 0;                           /* 4rem → 3rem */
+                padding: 2.5rem 0;                         /* 4rem → 2.5rem */
             }
 
             .section__title {
@@ -2758,11 +2687,14 @@
 .faq__item {
     border-bottom: 1px solid var(--border);
 }
+.faq__item:first-child {
+    border-top: 1px solid var(--border);
+}
 .faq__item summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-sm) 0;
+    padding: var(--space-6) 0;
     cursor: pointer;
     font-size: var(--text-base);
     font-weight: var(--font-medium);
@@ -3324,6 +3256,7 @@
     padding: var(--space-md) var(--space-sm);
     margin-bottom: var(--space-lg);
     border-radius: var(--radius-lg);
+    border-top: 1px solid var(--border);
     background:
         linear-gradient(135deg,
             rgba(var(--build-rgb), 0.06) 0%,
@@ -3853,6 +3786,16 @@
 
     .tier-selector__sub {
         font-size: var(--text-xs);
+    }
+
+    .tier-selector__option[data-target-tier="build"] {
+        background: radial-gradient(circle at 8% 50%, rgba(var(--build-rgb), 0.12) 0%, transparent 65%), rgba(var(--highlight-rgb), 0.03);
+    }
+    .tier-selector__option[data-target-tier="transform"] {
+        background: radial-gradient(circle at 8% 50%, rgba(var(--transform-rgb), 0.12) 0%, transparent 65%), rgba(var(--highlight-rgb), 0.03);
+    }
+    .tier-selector__option[data-target-tier="care"] {
+        background: radial-gradient(circle at 8% 50%, rgba(var(--care-rgb), 0.12) 0%, transparent 65%), rgba(var(--highlight-rgb), 0.03);
     }
 }
 
