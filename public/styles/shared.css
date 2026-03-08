@@ -246,7 +246,7 @@
 
             /* Mobile/tablet wordmark font size */
             .header__wordmark {
-                font-size: 0.8rem;
+                font-size: 1rem;
             }
         }
 
@@ -313,11 +313,11 @@
             width: 32px;
             height: 32px;
             background: linear-gradient(135deg, var(--build-accent), var(--transform-accent), var(--care-accent));
-            -webkit-mask-image: url('/assets/bg-brands-logomark.png');
+            -webkit-mask-image: url('/assets/dot-logomark.svg');
             -webkit-mask-size: contain;
             -webkit-mask-repeat: no-repeat;
             -webkit-mask-position: center;
-            mask-image: url('/assets/bg-brands-logomark.png');
+            mask-image: url('/assets/dot-logomark.svg');
             mask-size: contain;
             mask-repeat: no-repeat;
             mask-position: center;
@@ -335,6 +335,8 @@
             width: 32px;
             height: auto;
             margin-right: 0.75rem;
+            padding-right: 0.75rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
             filter: brightness(0) invert(1);
             opacity: 0;
             transition: opacity 0.5s ease, filter 0.5s var(--ease-out);
@@ -359,7 +361,7 @@
             transition: opacity 0.5s ease;
             font-family: var(--font-display);
             font-weight: var(--font-normal);
-            font-size: 0.9rem;
+            font-size: 1rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--text);

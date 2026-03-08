@@ -10,8 +10,7 @@ import TierGroupHeader from '../components/TierGroupHeader.astro';
 import PhoneFirstCTA from '../components/PhoneFirstCTA.astro';
 import FAQ from '../components/FAQ.astro';
 import DotLogo from '../components/DotLogo.astro';
-import { Image } from 'astro:assets';
-import logomark from '../assets/bg-brands-logomark.png';
+
 import { breadcrumbList, schemaGraph, AREA_SERVED } from '../lib/schema';
 
 const currentYear = new Date().getFullYear();
@@ -147,7 +146,7 @@ const schemaJson = schemaGraph(
               <p class="hero__subtitle">
                   Sudbury-based studio. Fixed pricing, fast turnaround, no meetings unless you want one.
               </p>
-              <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+              <div style="display:flex;gap:0.625rem;flex-wrap:wrap;">
                   <a href="tel:+17054133705" class="hero__cta cta-glow phone-link__mobile">Call (705) 413-3705</a>
                   <span class="hero__cta cta-glow phone-link__desktop" aria-label="Phone number">(705) 413-3705</span>
                   <a href="#packages" class="hero__cta hero__cta--secondary" style="background:transparent;border:1px solid var(--border-hover);color:var(--text-muted);">See Services</a>
@@ -594,7 +593,7 @@ const schemaJson = schemaGraph(
       <footer class="footer">
           <div class="container">
               <div class="footer__logomark">
-                  <Image src={logomark} alt="" class="footer__logomark-img" width={40} height={40} format="webp" loading="lazy" />
+                  <img src="/assets/dot-logomark.svg" alt="" class="footer__logomark-img" width="40" height="40" loading="lazy" />
               </div>
               <div class="footer__cta">
                   <p class="footer__cta-text">Not sure where to start?</p>

@@ -1,7 +1,4 @@
 ---
-import { Image } from 'astro:assets';
-import logomark from '../assets/bg-brands-logomark.png';
-
 interface Props {
     tierName: string;
     tierClass: 'build' | 'transform' | 'care';
@@ -12,15 +9,8 @@ const { tierName, tierClass, subtitle } = Astro.props;
 ---
 
 <div class={`tier-group__header tier-group--${tierClass}`}>
-    <Image
-        src={logomark}
-        alt=""
-        class="tier-group__logomark"
-        width={32}
-        height={32}
-        format="webp"
-        loading="lazy"
-    />
+    <img src="/assets/dot-logomark.svg" alt="" class="tier-group__logomark" width="32" height="32" loading="lazy" />
+    <span class="tier-group__sep" aria-hidden="true">|</span>
     <span class="tier-group__name">{tierName}</span>
     <span class="tier-group__subtitle">{subtitle}</span>
 </div>
