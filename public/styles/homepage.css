@@ -479,7 +479,7 @@
                 #fff 900px);
             background-size: 100% 900px;
             background-repeat: no-repeat;
-            background-position: 0 calc(-600px + var(--row, 0) * -36px);
+            background-position: 0 calc(-300px + var(--row, 0) * -36px);
         }
 
         /* After-assembly + gradient: assemble white, then sweep upward */
@@ -489,20 +489,21 @@
             animation-delay: var(--dot-delay, 0s), 2s;
         }
 
-        /* During-assembly + gradient: sweep during convergence */
+        /* During-assembly + gradient: sweep during convergence.
+           Dots start colored (at colour band) and hold colour while
+           converging, then transition to white as they settle. */
         .intro--during.intro--color-gradient.intro--animate .dot-logo__dot {
             animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards,
                        dotGradientSlide 2s ease-in-out forwards;
             animation-delay: var(--dot-delay, 0s), 0s;
         }
 
-        /* Gradient slide: colour band sweeps upward through the B shape.
-           0%: dots see bottom white zone (below amber).
-           50%: colour band aligned — amber bottom, violet middle, blue top.
-           100%: dots see top white zone (above blue). Settles white. */
+        /* Gradient slide: hold colour, then sweep to white.
+           0–55%: hold at colour band — amber bottom, violet middle, blue top.
+           55–100%: sweep upward to white. Dots are fully assembled by now. */
         @keyframes dotGradientSlide {
-            0%   { background-position: 0 calc(-600px + var(--row, 0) * -36px); }
-            50%  { background-position: 0 calc(-300px + var(--row, 0) * -36px); }
+            0%   { background-position: 0 calc(-300px + var(--row, 0) * -36px); }
+            55%  { background-position: 0 calc(-300px + var(--row, 0) * -36px); }
             100% { background-position: 0 calc(var(--row, 0) * -36px); }
         }
 
