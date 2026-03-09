@@ -368,8 +368,8 @@
 
         /* Logo — animated dot B (sizing + one-shot override for intro) */
         .intro .dot-logo {
-            --dot-size: clamp(14px, 2.5vw, 22px);
-            --dot-gap: clamp(4px, 0.8vw, 6px);
+            --dot-size: clamp(10px, 1.6vw, 14px);
+            --dot-gap: clamp(3px, 0.5vw, 4px);
             z-index: 1;
             margin-bottom: var(--space-md);
             contain: layout style;
