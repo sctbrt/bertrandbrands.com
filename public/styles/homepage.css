@@ -384,6 +384,7 @@
 
         .intro.intro--animate .dot-logo__dot {
             animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+            animation-delay: var(--dot-delay, 0s);
         }
 
         @keyframes dotAssembleOnce {
@@ -405,6 +406,7 @@
         @media (max-width: 768px) {
             .intro.intro--animate .dot-logo__dot {
                 animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+                animation-delay: var(--dot-delay, 0s);
             }
 
             @keyframes dotAssembleMobile {
@@ -420,6 +422,83 @@
                     opacity: 1;
                     transform: translate(0, 0) scale(1);
                 }
+            }
+        }
+
+        /* === DOT COLOR CYCLING — tier color animation === */
+
+        /* Color delay variable (overridden by sweep/cascade classes) */
+        .intro .dot-logo__dot {
+            --color-delay: 0s;
+        }
+
+        /* --- AFTER-ASSEMBLY MODE: dots assemble white, then cycle colors --- */
+        .intro--after.intro--color-wash.intro--animate .dot-logo__dot,
+        .intro--after.intro--color-sweep.intro--animate .dot-logo__dot,
+        .intro--after.intro--color-cascade.intro--animate .dot-logo__dot {
+            animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                       dotColorAfter 1.8s ease-in-out forwards;
+            animation-delay: var(--dot-delay, 0s), calc(2s + var(--color-delay));
+        }
+
+        /* --- DURING-ASSEMBLY MODE: dots start amber, shift during convergence --- */
+        .intro--during.intro--color-wash.intro--animate .dot-logo__dot,
+        .intro--during.intro--color-sweep.intro--animate .dot-logo__dot,
+        .intro--during.intro--color-cascade.intro--animate .dot-logo__dot {
+            animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                       dotColorDuring 2s ease-in-out forwards;
+            animation-delay: var(--dot-delay, 0s), var(--color-delay);
+        }
+
+        /* Gradient style: Wash — all dots cycle together */
+        .intro--color-wash .dot-logo__dot { --color-delay: 0s; }
+
+        /* Gradient style: Sweep — left-to-right wave by column */
+        .intro--color-sweep .dot-logo__dot { --color-delay: calc(var(--col, 0) * 0.15s); }
+
+        /* Gradient style: Cascade — diagonal ripple by col + row */
+        .intro--color-cascade .dot-logo__dot { --color-delay: calc((var(--col, 0) + var(--row, 0)) * 0.07s); }
+
+        /* After-assembly keyframes: white → amber → violet → blue → white */
+        @keyframes dotColorAfter {
+            0% { background-color: #fff; }
+            20% { background-color: #D97706; }
+            45% { background-color: #8B5CF6; }
+            70% { background-color: #2563EB; }
+            100% { background-color: #fff; }
+        }
+
+        /* During-assembly keyframes: amber → violet → blue → white */
+        @keyframes dotColorDuring {
+            0% { background-color: #D97706; }
+            30% { background-color: #8B5CF6; }
+            60% { background-color: #2563EB; }
+            100% { background-color: #fff; }
+        }
+
+        /* Mobile: same effects, shorter durations */
+        @media (max-width: 768px) {
+            .intro--after.intro--color-wash.intro--animate .dot-logo__dot,
+            .intro--after.intro--color-sweep.intro--animate .dot-logo__dot,
+            .intro--after.intro--color-cascade.intro--animate .dot-logo__dot {
+                animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                           dotColorAfter 1.4s ease-in-out forwards;
+                animation-delay: var(--dot-delay, 0s), calc(1.6s + var(--color-delay));
+            }
+
+            .intro--during.intro--color-wash.intro--animate .dot-logo__dot,
+            .intro--during.intro--color-sweep.intro--animate .dot-logo__dot,
+            .intro--during.intro--color-cascade.intro--animate .dot-logo__dot {
+                animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                           dotColorDuring 1.6s ease-in-out forwards;
+                animation-delay: var(--dot-delay, 0s), var(--color-delay);
+            }
+        }
+
+        /* Reduced motion: no color cycling */
+        @media (prefers-reduced-motion: reduce) {
+            .intro .dot-logo__dot {
+                background: #fff !important;
             }
         }
 

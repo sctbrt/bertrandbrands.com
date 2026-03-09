@@ -45,7 +45,7 @@ for (let row = 0; row < B_GRID.length; row++) {
   {dots.map(dot => (
     <span
       class="dot-logo__dot"
-      style={`left:calc(${dot.col} * var(--dl-cell));top:calc(${dot.row} * var(--dl-cell));--sx:${dot.sx}px;--sy:${dot.sy}px;--msx:${dot.msx}px;--msy:${dot.msy}px;animation-delay:${dot.delay}s`}
+      style={`left:calc(${dot.col} * var(--dl-cell));top:calc(${dot.row} * var(--dl-cell));--col:${dot.col};--row:${dot.row};--sx:${dot.sx}px;--sy:${dot.sy}px;--msx:${dot.msx}px;--msy:${dot.msy}px;--dot-delay:${dot.delay}s`}
     />
   ))}
 </div>
@@ -69,6 +69,7 @@ for (let row = 0; row < B_GRID.length; row++) {
     background: #fff;
     opacity: 0;
     animation: dotAssemble 6s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+    animation-delay: var(--dot-delay, 0s);
 }
 
 /* Assemble → hold → dissolve → scatter → repeat */
