@@ -2,11 +2,12 @@
 /**
  * Maintenance — Temporary gate page.
  * Shown when the site is in maintenance mode (controlled by middleware.js).
- * Simple, branded, no navigation or forms.
+ * Uses the DotLogo animation + tri-colour glows from the homepage intro,
+ * adapted as a looping cinematic holding page.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import DotLogo from '../components/DotLogo.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
-import VersionStamp from '../components/VersionStamp.astro';
 
 ---
 
@@ -18,12 +19,25 @@ import VersionStamp from '../components/VersionStamp.astro';
     bodyClass="maintenance-body"
 >
     <main class="maintenance">
+        <!-- Tri-colour ambient glows (matching intro) -->
+        <div class="m-glow m-glow--amber" aria-hidden="true"></div>
+        <div class="m-glow m-glow--violet" aria-hidden="true"></div>
+        <div class="m-glow m-glow--blue" aria-hidden="true"></div>
+
+        <!-- Subtle grid texture -->
+        <div class="m-grid" aria-hidden="true"></div>
+
         <div class="maintenance__inner">
-            <img src="/assets/dot-logomark.svg" alt="" class="maintenance__logo" width="64" height="64" />
-            <h1 class="maintenance__brand">
-                <span class="maintenance__brand-name">Bertrand Brands</span>
-                <span class="maintenance__brand-sub">| Brand &amp; Web Systems</span>
-            </h1>
+            <!-- Animated dot-matrix B -->
+            <DotLogo class="maintenance__dot-logo" />
+
+            <div class="maintenance__text">
+                <h1 class="maintenance__brand">Bertrand Brands</h1>
+                <p class="maintenance__sub">Brand &amp; Web Systems</p>
+            </div>
+
+            <div class="maintenance__divider" aria-hidden="true"></div>
+
             <p class="maintenance__message">We're making improvements. Back shortly.</p>
             <a href="mailto:hello@bertrandgroup.ca" class="maintenance__contact">
                 hello@bertrandgroup.ca
@@ -42,62 +56,299 @@ import VersionStamp from '../components/VersionStamp.astro';
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            position: relative;
         }
 
         .maintenance {
             text-align: center;
             padding: 2rem;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
         }
 
         .maintenance__inner {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.25rem;
+            gap: 0;
         }
 
-        .maintenance__logo {
-            width: 48px;
-            height: 48px;
-            filter: brightness(0) invert(1);
-            opacity: 0.9;
+        /* DotLogo — looping animation with colour cycling */
+        .maintenance__dot-logo {
+            --dot-size: 18px;
+            --dot-gap: 7px;
+            margin-bottom: 2rem;
+        }
+
+        /* Override dot animation to include colour cycling */
+        .maintenance__dot-logo .dot-logo__dot {
+            animation: dotAssemble 6s cubic-bezier(0.33, 1, 0.68, 1) infinite,
+                       mDotColorCycle 6s ease-in-out infinite;
+        }
+
+        /* Colour cycle: shimmer during scatter/assembly, white once formed */
+        @keyframes mDotColorCycle {
+            0% { background: #D97706; }
+            5% { background: #2563EB; }
+            9% { background: #8B5CF6; }
+            13% { background: #D97706; }
+            17% { background: #2563EB; }
+            21% { background: #8B5CF6; }
+            25% { background: #D97706; }
+            28%, 100% { background: #fff; }
+        }
+
+        /* Text group */
+        .maintenance__text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .maintenance__brand {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: 0.8125rem;
-            font-weight: 400;
-            letter-spacing: 0.06em;
+            font-weight: 600;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: #a3a3a3;
-            line-height: 1.5;
+            color: #fafafa;
             margin: 0;
+            opacity: 0;
+            animation: mTextReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
         }
 
-        .maintenance__brand-name {
-            font-weight: 600;
-            color: #fafafa;
+        .maintenance__sub {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.6875rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #737373;
+            margin: 0;
+            opacity: 0;
+            animation: mTextReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+        }
+
+        .maintenance__divider {
+            width: 32px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 0 0 1.25rem;
+            opacity: 0;
+            animation: mTextReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
         }
 
         .maintenance__message {
-            font-size: 1rem;
+            font-size: 0.9375rem;
             color: #737373;
-            margin: 0.5rem 0 0;
-            line-height: 1.5;
+            margin: 0 0 1rem;
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+            opacity: 0;
+            animation: mTextReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
         }
 
         .maintenance__contact {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: #D97706;
             text-decoration: none;
             transition: color 0.2s ease;
-            margin-top: 0.25rem;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            animation: mTextReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards;
         }
 
         .maintenance__contact:hover {
             color: #fafafa;
         }
+
+        @keyframes mTextReveal {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === Tri-colour ambient glows === */
+        .m-glow {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+        }
+
+        /* Amber — top-right (primary warm) */
+        .m-glow--amber {
+            width: 60vmax;
+            height: 60vmax;
+            max-width: 800px;
+            max-height: 800px;
+            background: radial-gradient(
+                circle at center,
+                rgba(217, 119, 6, 0.15) 0%,
+                rgba(217, 119, 6, 0.04) 45%,
+                transparent 70%
+            );
+            top: -25%;
+            right: -20%;
+            filter: blur(50px);
+            animation: mGlowIn 2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards,
+                       mGlowBreathe1 20s ease-in-out 2.5s infinite;
+        }
+
+        /* Violet — bottom-right */
+        .m-glow--violet {
+            width: 50vmax;
+            height: 50vmax;
+            max-width: 650px;
+            max-height: 650px;
+            background: radial-gradient(
+                circle at center,
+                rgba(139, 92, 246, 0.12) 0%,
+                rgba(139, 92, 246, 0.03) 48%,
+                transparent 70%
+            );
+            bottom: -20%;
+            right: -10%;
+            filter: blur(55px);
+            animation: mGlowIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards,
+                       mGlowBreathe2 18s ease-in-out 2.7s infinite;
+        }
+
+        /* Blue — bottom-left (cool) */
+        .m-glow--blue {
+            width: 50vmax;
+            height: 50vmax;
+            max-width: 600px;
+            max-height: 600px;
+            background: radial-gradient(
+                circle at center,
+                rgba(37, 99, 235, 0.10) 0%,
+                rgba(37, 99, 235, 0.03) 50%,
+                transparent 70%
+            );
+            bottom: -30%;
+            left: -15%;
+            filter: blur(60px);
+            animation: mGlowIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards,
+                       mGlowBreathe3 22s ease-in-out 3s infinite;
+        }
+
+        /* Glows fade in */
+        @keyframes mGlowIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Organic breathing — amber */
+        @keyframes mGlowBreathe1 {
+            0%, 100% { transform: translate(0, 0) scale(1); border-radius: 50%; }
+            15% { transform: translate(12px, -15px) scale(1.05); border-radius: 58% 42% 55% 45%; }
+            35% { transform: translate(-8px, 8px) scale(0.95); border-radius: 45% 55% 42% 58%; }
+            50% { transform: translate(15px, 5px) scale(1.02); border-radius: 52% 48% 58% 42%; }
+            70% { transform: translate(-5px, -10px) scale(0.97); border-radius: 42% 58% 45% 55%; }
+            85% { transform: translate(6px, 10px) scale(1.03); border-radius: 56% 44% 48% 52%; }
+        }
+
+        /* Organic breathing — violet (offset rhythm) */
+        @keyframes mGlowBreathe2 {
+            0%, 100% { transform: translate(0, 0) scale(1); border-radius: 50%; }
+            20% { transform: translate(-10px, 12px) scale(1.04); border-radius: 55% 45% 48% 52%; }
+            40% { transform: translate(8px, -6px) scale(0.96); border-radius: 48% 52% 55% 45%; }
+            60% { transform: translate(-12px, -8px) scale(1.01); border-radius: 44% 56% 50% 50%; }
+            80% { transform: translate(6px, 10px) scale(0.98); border-radius: 52% 48% 44% 56%; }
+        }
+
+        /* Organic breathing — blue (counter-rhythm) */
+        @keyframes mGlowBreathe3 {
+            0%, 100% { transform: translate(0, 0) scale(1); border-radius: 50%; }
+            18% { transform: translate(10px, 8px) scale(0.97); border-radius: 46% 54% 52% 48%; }
+            38% { transform: translate(-6px, -12px) scale(1.04); border-radius: 54% 46% 42% 58%; }
+            55% { transform: translate(8px, -5px) scale(0.98); border-radius: 50% 50% 56% 44%; }
+            75% { transform: translate(-10px, 6px) scale(1.03); border-radius: 58% 42% 46% 54%; }
+        }
+
+        /* Subtle grid texture */
+        .m-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            animation: mGridFade 2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        @keyframes mGridFade {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .maintenance__dot-logo {
+                --dot-size: 14px;
+                --dot-gap: 5px;
+            }
+
+            .m-glow {
+                filter: blur(40px);
+            }
+
+            .m-glow--amber {
+                width: 70vw;
+                height: 70vw;
+            }
+
+            .m-glow--violet {
+                width: 55vw;
+                height: 55vw;
+            }
+
+            .m-glow--blue {
+                width: 55vw;
+                height: 55vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .maintenance__dot-logo {
+                --dot-size: 12px;
+                --dot-gap: 4px;
+            }
+        }
+
+        /* Reduced motion — static B, no glows, no grid */
+        @media (prefers-reduced-motion: reduce) {
+            .m-glow,
+            .m-grid {
+                animation: none;
+                display: none;
+            }
+
+            .maintenance__dot-logo .dot-logo__dot {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+
+            .maintenance__brand,
+            .maintenance__sub,
+            .maintenance__divider,
+            .maintenance__message,
+            .maintenance__contact {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
     </style>
     <VisitorNotify />
-    <VersionStamp />
 </BaseLayout>

@@ -3,7 +3,7 @@ import { next, rewrite } from '@vercel/functions';
 // ─── MAINTENANCE MODE ───────────────────────────────────
 // Set to true to gate the entire site behind /maintenance.
 // Bypass: visit any page with ?bypass to set a cookie and skip the gate.
-const MAINTENANCE_MODE = false;
+const MAINTENANCE_MODE = true;
 // ────────────────────────────────────────────────────────
 
 // ─── KNOWN BOTS (bypass geo-fence for SEO & ads) ─────

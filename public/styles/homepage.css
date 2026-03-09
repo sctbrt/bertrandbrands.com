@@ -383,7 +383,19 @@
         }
 
         .intro.intro--animate .dot-logo__dot {
-            animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+            animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                       dotColorOnce 2s ease-out forwards;
+        }
+
+        /* Colour cycle: shimmer during scatter/assembly, settle to white */
+        @keyframes dotColorOnce {
+            0% { background: #D97706; }
+            12% { background: #2563EB; }
+            22% { background: #8B5CF6; }
+            32% { background: #D97706; }
+            42% { background: #2563EB; }
+            52% { background: #8B5CF6; }
+            65%, 100% { background: #fff; }
         }
 
         @keyframes dotAssembleOnce {
@@ -404,7 +416,18 @@
         /* Mobile: reduced scatter radius (30–50px vs 80–120px desktop) for GPU perf */
         @media (max-width: 768px) {
             .intro.intro--animate .dot-logo__dot {
-                animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+                animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                           dotColorMobile 1.6s ease-out forwards;
+            }
+
+            @keyframes dotColorMobile {
+                0% { background: #D97706; }
+                13% { background: #2563EB; }
+                25% { background: #8B5CF6; }
+                37% { background: #D97706; }
+                50% { background: #2563EB; }
+                62% { background: #8B5CF6; }
+                70%, 100% { background: #fff; }
             }
 
             @keyframes dotAssembleMobile {
