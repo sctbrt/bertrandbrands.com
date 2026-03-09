@@ -447,14 +447,103 @@ import { breadcrumbList, schemaGraph } from '../lib/schema';
                 80% { opacity: 0.6; transform: translateX(-50%) scale(1.02); }
             }
 
+            /* === Mobile Tier Cards === */
+            .compare-cards { display: none; }
+
+            .compare-card {
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg, 12px);
+                padding: 1.5rem;
+                border-left: 2px solid transparent;
+            }
+            .compare-card--build { border-left-color: var(--build-accent); }
+            .compare-card--transform { border-left-color: var(--transform-accent); }
+            .compare-card--care { border-left-color: var(--care-accent); }
+
+            .compare-card__header {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-bottom: 1.25rem;
+                padding-bottom: 0.875rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            }
+
+            .compare-card__name {
+                font-family: var(--font-display, 'Inter', sans-serif);
+                font-size: var(--text-lg);
+                font-weight: 300;
+                color: var(--text);
+            }
+
+            .compare-card__group {
+                margin-bottom: 1rem;
+            }
+
+            .compare-card__category {
+                font-weight: 600;
+                font-size: var(--text-2xs);
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--text-subtle);
+                margin-bottom: 0.5rem;
+                padding-bottom: 0.375rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .compare-card__row {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                gap: 0.75rem;
+                padding: 0.5rem 0;
+                font-size: var(--text-sm);
+                line-height: 1.5;
+            }
+
+            .compare-card__row + .compare-card__row {
+                border-top: 1px solid rgba(255, 255, 255, 0.03);
+            }
+
+            .compare-card__label {
+                color: var(--text-muted);
+                flex-shrink: 0;
+                min-width: 0;
+            }
+
+            .compare-card__value {
+                color: var(--text-muted);
+                text-align: right;
+            }
+            .compare-card__value strong { color: var(--text); font-weight: 500; }
+
+            .compare-card .compare-cta {
+                display: block;
+                text-align: center;
+                margin-top: 1.25rem;
+                padding: 0.75rem 1rem;
+                min-height: 44px;
+            }
+
             /* Mobile responsive */
             @media (max-width: 768px) {
                 .compare-content { padding: 0 1rem var(--space-xl); }
-                .compare-table { font-size: var(--text-xs); }
-                .compare-table th, .compare-table td { padding: 0.625rem 0.75rem; }
+                .compare-table-wrap { display: none; }
+                .compare-cards {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.25rem;
+                    margin-bottom: var(--space-xl);
+                }
                 .compare-lane { filter: blur(70px); width: 140px; }
                 .compare-anchor { filter: blur(40px); width: 80px; height: 80px; }
                 .compare-wash { height: 140px; }
+            }
+
+            @media (max-width: 480px) {
+                .compare-card { padding: 1.25rem 1rem; }
+                .compare-card__row { font-size: var(--text-xs); }
             }
 
             @media (prefers-reduced-motion: reduce) {
@@ -618,6 +707,132 @@ import { breadcrumbList, schemaGraph } from '../lib/schema';
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Mobile tier cards (visible ≤768px only) -->
+            <div class="compare-cards">
+                <!-- Build -->
+                <div class="compare-card compare-card--build">
+                    <div class="compare-card__header">
+                        <span class="compare-tier-header__logo compare-tier-header__logo--build" aria-hidden="true"></span>
+                        <span class="compare-card__name">Build</span>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Overview</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Best for</span><span class="compare-card__value">New businesses or simple site needs</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Scope</span><span class="compare-card__value">Fixed, defined deliverables</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Offers</span><span class="compare-card__value">One-Page, Multi-Page, Full&nbsp;Site</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Pricing &amp; Timeline</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Starting price</span><span class="compare-card__value"><strong>$750 CAD</strong></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Timeline</span><span class="compare-card__value">1&ndash;4 weeks</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Pricing model</span><span class="compare-card__value">Fixed project fee</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Process</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Meetings</span><span class="compare-card__value">0 <span class="compare-dash">(optional 15-min call)</span></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Revisions</span><span class="compare-card__value">1&ndash;2 rounds</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Communication</span><span class="compare-card__value">Async-first (email/portal)</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">What's Included</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Website</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Template-assisted</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Brand strategy</span><span class="compare-card__value"><span class="compare-dash">&mdash;</span></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">CRM / Systems</span><span class="compare-card__value"><span class="compare-dash">&mdash;</span></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Booking</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Full Site only</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Analytics</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Basic</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Ongoing updates</span><span class="compare-card__value"><span class="compare-dash">&mdash;</span></span></div>
+                    </div>
+
+                    <a href="/build" class="compare-cta compare-cta--build">Explore Build &rarr;</a>
+                </div>
+
+                <!-- Transform -->
+                <div class="compare-card compare-card--transform">
+                    <div class="compare-card__header">
+                        <span class="compare-tier-header__logo compare-tier-header__logo--transform" aria-hidden="true"></span>
+                        <span class="compare-card__name">Transform</span>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Overview</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Best for</span><span class="compare-card__value">Growing businesses ready for a strategic investment</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Scope</span><span class="compare-card__value">Discovery-driven, custom scoped</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Offers</span><span class="compare-card__value">Foundation&nbsp;+&nbsp;Growth, SMB&nbsp;Platform, Brand&nbsp;+&nbsp;Platform</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Pricing &amp; Timeline</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Starting price</span><span class="compare-card__value"><strong>Custom scoped</strong></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Timeline</span><span class="compare-card__value">4&ndash;16 weeks</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Pricing model</span><span class="compare-card__value">Fixed project fee (scoped)</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Process</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Meetings</span><span class="compare-card__value">2&ndash;4 structured</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Revisions</span><span class="compare-card__value">Tied to approval gates</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Communication</span><span class="compare-card__value">Async + scheduled meetings</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">What's Included</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Website</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Custom built</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Brand strategy</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Select offers</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">CRM / Systems</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Select offers</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Booking</span><span class="compare-card__value"><span class="compare-check">&#10003;</span></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Analytics</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Full</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Ongoing updates</span><span class="compare-card__value"><span class="compare-dash">&mdash;</span></span></div>
+                    </div>
+
+                    <a href="/transform" class="compare-cta compare-cta--transform">Explore Transform &rarr;</a>
+                </div>
+
+                <!-- Care -->
+                <div class="compare-card compare-card--care">
+                    <div class="compare-card__header">
+                        <span class="compare-tier-header__logo compare-tier-header__logo--care" aria-hidden="true"></span>
+                        <span class="compare-card__name">Care</span>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Overview</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Best for</span><span class="compare-card__value">Businesses with an existing site that needs ongoing support</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Scope</span><span class="compare-card__value">Monthly credit-based support</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Offers</span><span class="compare-card__value">Bronze, Silver, Gold</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Pricing &amp; Timeline</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Starting price</span><span class="compare-card__value"><strong>$249/mo CAD</strong></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Timeline</span><span class="compare-card__value">Ongoing monthly</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Pricing model</span><span class="compare-card__value">Monthly subscription</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">Process</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Meetings</span><span class="compare-card__value">None &ndash; monthly optional</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Revisions</span><span class="compare-card__value">Within credit scope</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Communication</span><span class="compare-card__value">Async-first (email/portal)</span></div>
+                    </div>
+
+                    <div class="compare-card__group">
+                        <div class="compare-card__category">What's Included</div>
+                        <div class="compare-card__row"><span class="compare-card__label">Website</span><span class="compare-card__value"><span class="compare-dash">&mdash;</span> Existing site</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Brand strategy</span><span class="compare-card__value"><span class="compare-dash">&mdash;</span></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">CRM / Systems</span><span class="compare-card__value"><span class="compare-dash">&mdash;</span></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Booking</span><span class="compare-card__value"><span class="compare-dash">&mdash;</span></span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Analytics</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Via credits</span></div>
+                        <div class="compare-card__row"><span class="compare-card__label">Ongoing updates</span><span class="compare-card__value"><span class="compare-check">&#10003;</span> Monthly credits</span></div>
+                    </div>
+
+                    <a href="/care" class="compare-cta compare-cta--care">Explore Care &rarr;</a>
+                </div>
             </div>
 
             <!-- Help section -->

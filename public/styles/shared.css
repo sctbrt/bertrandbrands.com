@@ -350,12 +350,8 @@
             opacity: 1;
         }
 
-        /* Text-based wordmark: BERTRAND BRANDS | Brand & Web Systems
-           Separator and subtitle slide out on expand, retract on collapse.
-           Collapse transitions use shorter durations + no delay for snappy retract. */
+        /* Static wordmark: BERTRAND BRANDS */
         .header__wordmark {
-            display: inline-flex;
-            align-items: baseline;
             position: relative;
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -366,121 +362,10 @@
             text-transform: uppercase;
             color: var(--text);
             white-space: nowrap;
-            overflow: hidden;
-        }
-
-        /* Short form hidden — only used for mobile fallback */
-        .header__wordmark-short {
-            display: none;
-        }
-
-        .header__wordmark-full {
-            display: inline-flex;
-            align-items: baseline;
-            white-space: nowrap;
-            gap: 0;
-        }
-
-        /* Separator: grows from zero width outward.
-           DEFAULT = collapse transitions (fast retract, opacity fades first) */
-        .header__wordmark-sep {
-            display: inline-block;
-            font-family: var(--font-body);
-            font-weight: var(--font-light);
-            font-size: 0.85em;
-            opacity: 0;
-            max-width: 0;
-            padding: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transition: max-width 0.4s var(--ease-in-out) 0.05s,
-                        opacity 0.25s var(--ease-out),
-                        padding 0.4s var(--ease-in-out) 0.05s;
-        }
-
-        /* Subtitle: slides from left (behind separator) and fades in.
-           DEFAULT = collapse transitions (opacity fades first, then width shrinks) */
-        .header__wordmark-sub {
-            display: inline-block;
-            font-family: var(--font-display);
-            font-weight: var(--font-normal);
-            font-size: 1em;
-            letter-spacing: 0.20em;
-            opacity: 0;
-            max-width: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transform: translateX(-6px);
-            transition: max-width 0.35s var(--ease-in-out),
-                        opacity 0.2s var(--ease-out),
-                        transform 0.3s var(--ease-out);
-        }
-
-        /* Expanded state: separator and subtitle reveal.
-           EXPAND transitions override default collapse transitions with
-           longer durations and staggered delays for a smooth unfurl. */
-        .header__wordmark.is-expanded .header__wordmark-sep {
-            max-width: 2em;
-            opacity: 0.4;
-            padding: 0 0.35em;
-            transition: max-width 0.5s var(--ease-out),
-                        opacity 0.4s var(--ease-out) 0.1s,
-                        padding 0.5s var(--ease-out);
-        }
-
-        .header__wordmark.is-expanded .header__wordmark-sub {
-            max-width: 20em;
-            opacity: 0.7;
-            transform: translateX(0);
-            transition: max-width 0.6s var(--ease-out) 0.12s,
-                        opacity 0.5s var(--ease-out) 0.2s,
-                        transform 0.5s var(--ease-out) 0.15s;
-        }
-
-        /* Hover state on logo area — subtle wordmark dim */
-        .header__logo:hover .header__wordmark {
-            opacity: 0.6;
-            transition: opacity 0.4s var(--ease-out);
         }
 
         .header__logo.show-text .header__wordmark {
             opacity: 1;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .header__wordmark-sep,
-            .header__wordmark-sub {
-                transition: none !important;
-            }
-        }
-
-        /* Mobile/tablet: static short wordmark, no expand/hover animations */
-        @media (max-width: 1024px) {
-            .header__wordmark-short {
-                display: inline !important;
-            }
-            .header__wordmark-full {
-                display: none !important;
-            }
-
-            /* Disable hover effects on mobile/tablet */
-            .header__logo:hover .header__wordmark {
-                opacity: 1;
-            }
-
-            .header__logo::before {
-                display: none;
-            }
-            .header__logo:hover .header__logo-icon {
-                filter: brightness(0) invert(1);
-            }
-
-            /* Neutralize is-expanded on mobile/tablet */
-            .header__wordmark.is-expanded .header__wordmark-sep,
-            .header__wordmark.is-expanded .header__wordmark-sub {
-                max-width: 0;
-                opacity: 0;
-            }
         }
 
         /* === INTAKE HEADER === */

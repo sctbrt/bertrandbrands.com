@@ -112,7 +112,7 @@ const schemaJson = schemaGraph(
   <SkipLink />
 
   <!-- Cinematic Intro -->
-  <div class="intro">
+  <div class="intro intro--color-sweep intro--after">
       <div class="intro__glow intro__glow--orange"></div>
       <div class="intro__glow intro__glow--violet"></div>
       <div class="intro__glow intro__glow--blue"></div>
@@ -1077,45 +1077,11 @@ const schemaJson = schemaGraph(
           var logo = document.querySelector('.header__logo');
           var intro = document.querySelector('.intro');
 
-          // Smooth wordmark crossfade
+          // Show wordmark
           var wmWrap = document.querySelector('.header__wordmark');
-          var wmCollapseTimer = null;
-          var wmExpandTimer = null;
-
-          function wmExpand() {
-              if (wmWrap) wmWrap.classList.add('is-expanded');
-          }
-          function wmCollapse() {
-              if (wmWrap) wmWrap.classList.remove('is-expanded');
-          }
 
           function initWordmark() {
-              if (!wmWrap) return;
-              var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-              wmWrap.style.opacity = '1';
-              if (reducedMotion) return;
-
-              wmExpandTimer = setTimeout(function() {
-                  wmExpand();
-                  wmCollapseTimer = setTimeout(function() {
-                      wmCollapse();
-                  }, 8000);
-              }, 4000);
-
-              var logoLink = document.querySelector('.header__logo');
-              if (logoLink && window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
-                  logoLink.addEventListener('mouseenter', function() {
-                      clearTimeout(wmExpandTimer);
-                      clearTimeout(wmCollapseTimer);
-                      wmExpand();
-                  });
-                  logoLink.addEventListener('mouseleave', function() {
-                      clearTimeout(wmCollapseTimer);
-                      wmCollapseTimer = setTimeout(function() {
-                          wmCollapse();
-                      }, 1500);
-                  });
-              }
+              if (wmWrap) wmWrap.style.opacity = '1';
           }
 
           // Set intro variant from URL param

@@ -13,10 +13,7 @@
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
                 <img src="/assets/dot-logomark.svg" alt="" class="header__logo-icon" width="40" height="40" loading="eager" fetchpriority="high" />
-                <span class="header__wordmark" aria-label="Bertrand Brands | Brand &amp; Web Systems">
-                    <span class="header__wordmark-short" aria-hidden="true">BERTRAND BRANDS</span>
-                    <span class="header__wordmark-full" aria-hidden="true">BERTRAND BRANDS <span class="header__wordmark-sep">|</span> <span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
-                </span>
+                <span class="header__wordmark" aria-label="Bertrand Brands">BERTRAND BRANDS</span>
             </a>
             <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
                 <span></span>
@@ -141,53 +138,5 @@
         }
     }
 
-    /* ============================================================
-       Smooth Wordmark Crossfade
-       BERTRAND BRANDS ←→ BERTRAND BRANDS | Brand & Web Systems
-       ============================================================ */
-    var wmWrap = document.querySelector('.header__wordmark');
-    if (!wmWrap) return;
-
-    var collapseTimer = null;
-    var expandTimer = null;
-
-    function expand() {
-        wmWrap.classList.add('is-expanded');
-    }
-
-    function collapse() {
-        wmWrap.classList.remove('is-expanded');
-    }
-
-    if (reducedMotion) {
-        wmWrap.style.opacity = '1';
-        return;
-    }
-
-    wmWrap.style.opacity = '1';
-
-    /* Auto-expand after 4 seconds, collapse back after 8 */
-    expandTimer = setTimeout(function() {
-        expand();
-        collapseTimer = setTimeout(function() {
-            collapse();
-        }, 8000);
-    }, 4000);
-
-    /* Hover: expand on enter, collapse on leave (desktop only) */
-    var logoLink = document.querySelector('.header__logo');
-    if (logoLink && window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
-        logoLink.addEventListener('mouseenter', function() {
-            clearTimeout(expandTimer);
-            clearTimeout(collapseTimer);
-            expand();
-        });
-        logoLink.addEventListener('mouseleave', function() {
-            clearTimeout(collapseTimer);
-            collapseTimer = setTimeout(function() {
-                collapse();
-            }, 1500);
-        });
-    }
 })();
 </script>
