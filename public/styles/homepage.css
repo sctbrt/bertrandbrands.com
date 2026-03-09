@@ -459,6 +459,55 @@
         /* Gradient style: Cascade — diagonal ripple by col + row */
         .intro--color-cascade .dot-logo__dot { --color-delay: calc((var(--col, 0) + var(--row, 0)) * 0.07s); }
 
+        /* Gradient style: Fluid — a single amber→violet→blue gradient that
+           appears to sweep across all dots as one light. Each dot gets the same
+           wide gradient background, positioned by column so adjacent dots show
+           adjacent colours. Since each dot is small, it shows one solid colour.
+           Animating background-position slides the gradient band across. */
+
+        .intro--color-gradient .dot-logo__dot {
+            /* 540px gradient = 180px white | 180px colour band | 180px white.
+               The colour band spans the B grid width (5 × 36px = 180px).
+               Each dot is 26px, so it shows one solid-colour slice.
+               Column offset: col C's position is shifted by -(C × 36px) so
+               adjacent columns show adjacent colours in the band.
+               Animation slides all dots by -180px to move the band over them. */
+            background-image: linear-gradient(90deg,
+                #fff 0px,
+                #fff 165px,
+                #D97706 180px,
+                #8B5CF6 270px,
+                #2563EB 350px,
+                #fff 365px,
+                #fff 540px);
+            background-size: 540px 100%;
+            background-repeat: no-repeat;
+            background-position: calc(var(--col, 0) * -36px) 0;
+        }
+
+        /* After-assembly + gradient: assemble white, then sweep the colour band */
+        .intro--after.intro--color-gradient.intro--animate .dot-logo__dot {
+            animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                       dotGradientSlide 2s ease-in-out 2s forwards;
+            animation-delay: var(--dot-delay, 0s), 2s;
+        }
+
+        /* During-assembly + gradient: sweep during convergence */
+        .intro--during.intro--color-gradient.intro--animate .dot-logo__dot {
+            animation: dotAssembleOnce 2s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                       dotGradientSlide 2s ease-in-out forwards;
+            animation-delay: var(--dot-delay, 0s), 0s;
+        }
+
+        /* Gradient slide: slides the colour band across the dots.
+           0%/100%: position in white zone (col offset only).
+           50%: shifted -180px so colour band aligns with grid columns. */
+        @keyframes dotGradientSlide {
+            0%   { background-position: calc(var(--col, 0) * -36px) 0; }
+            50%  { background-position: calc(-180px + var(--col, 0) * -36px) 0; }
+            100% { background-position: calc(var(--col, 0) * -36px) 0; }
+        }
+
         /* After-assembly keyframes: white → amber → violet → blue → white */
         @keyframes dotColorAfter {
             0% { background-color: #fff; }
@@ -492,6 +541,19 @@
                 animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards,
                            dotColorDuring 1.6s ease-in-out forwards;
                 animation-delay: var(--dot-delay, 0s), var(--color-delay);
+            }
+
+            /* Mobile: gradient slide with shorter durations */
+            .intro--after.intro--color-gradient.intro--animate .dot-logo__dot {
+                animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                           dotGradientSlide 1.6s ease-in-out forwards;
+                animation-delay: var(--dot-delay, 0s), 1.6s;
+            }
+
+            .intro--during.intro--color-gradient.intro--animate .dot-logo__dot {
+                animation: dotAssembleMobile 1.6s cubic-bezier(0.33, 1, 0.68, 1) forwards,
+                           dotGradientSlide 1.6s ease-in-out forwards;
+                animation-delay: var(--dot-delay, 0s), 0s;
             }
         }
 
