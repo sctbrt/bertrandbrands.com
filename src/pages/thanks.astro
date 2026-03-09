@@ -234,6 +234,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             var dir1X = 1, dir1Y = 1;
             var dir2X = -1, dir2Y = -1;
 
+            var glowRafId = null;
             function animateBgGlow() {
                 glow1X += 0.015 * dir1X;
                 glow1Y += 0.012 * dir1Y;
@@ -249,9 +250,18 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
                 document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
                 document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
-                requestAnimationFrame(animateBgGlow);
+                glowRafId = requestAnimationFrame(animateBgGlow);
             }
-            requestAnimationFrame(animateBgGlow);
+            glowRafId = requestAnimationFrame(animateBgGlow);
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && glowRafId) {
+                    cancelAnimationFrame(glowRafId);
+                    glowRafId = null;
+                } else if (!document.hidden && !glowRafId) {
+                    glowRafId = requestAnimationFrame(animateBgGlow);
+                }
+            });
         })();
     </script>
 

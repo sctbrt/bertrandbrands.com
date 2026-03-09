@@ -654,17 +654,6 @@ const schemaJson = schemaGraph(
   </div>
 
   <script is:inline>
-      // Intro option toggle (use ?intro=2 for option 2)
-      (function() {
-          var params = new URLSearchParams(window.location.search);
-          if (params.get('intro') === '2') {
-              var introEl = document.querySelector('.intro');
-              if (introEl) introEl.classList.add('intro--option2');
-          }
-      })();
-
-      // Cursor glow — removed in V13 ("quiet authority" refinement)
-
       // Premium scroll-linked reveal (Apple-like progressive animations)
       (function() {
           var scrollEls = document.querySelectorAll('[data-scroll]');
@@ -1084,25 +1073,7 @@ const schemaJson = schemaGraph(
               if (wmWrap) wmWrap.style.opacity = '1';
           }
 
-          // Set intro variant from URL param
           var params = new URLSearchParams(window.location.search);
-          var introVariant = params.get('intro') || 'a';
-          if (intro && ['a', 'b', 'c', 'd'].includes(introVariant)) {
-              intro.setAttribute('data-intro-variant', introVariant);
-              document.body.setAttribute('data-intro-variant', introVariant);
-          }
-
-          // Variant D: time-aware period
-          if (introVariant === 'd') {
-              var now = new Date();
-              var eastern = new Date(now.toLocaleString('en-US', { timeZone: 'America/Toronto' }));
-              var hour = eastern.getHours();
-              var period = 'night';
-              if (hour >= 6 && hour < 12) period = 'morning';
-              else if (hour >= 12 && hour < 18) period = 'afternoon';
-              else if (hour >= 18 && hour < 21) period = 'evening';
-              document.body.setAttribute('data-time-period', period);
-          }
 
           // Skip intro if already seen or ?skip param
           var introSeen = localStorage.getItem('bb_intro_seen');

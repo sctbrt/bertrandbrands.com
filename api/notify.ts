@@ -11,19 +11,23 @@ const isRateLimited = createRateLimiter(60_000, 10);
 
 // Source labels for intake notification titles
 const SOURCE_LABELS: Record<string, string> = {
-  'exploratory-guided-intake': 'Exploratory Intake',
-  'website_conversion_snapshot': 'Website Snapshot',
-  'brand-clarity-diagnostic-intake': 'Brand Diagnostic',
-  'sudbury_focus_studio': 'Sudbury Lead',
-  'unified-intake': 'V10 Intake',
-  'inline-starter': 'Starter Package Inquiry',
-  'inline-refresh': 'Refresh Package Inquiry',
-  'inline-platform': 'Platform Package Inquiry',
+  // V11 tier intake sources
   'tier-intake': 'General Intake',
   'tier-intake-amber': 'Build Tier Inquiry',
   'tier-intake-violet': 'Transform Tier Inquiry',
   'tier-intake-blue': 'Care Tier Inquiry',
-  'start-landing': 'Start Page Lead',
+  // V11 inline form sources (from InlineIntakeForm.astro)
+  'inline-starter-onepage': 'Starter One-Page Inquiry',
+  'inline-starter-multipage': 'Starter Multi-Page Inquiry',
+  'inline-fullsite-booking': 'Full Site Inquiry',
+  'inline-foundation-growth': 'Foundation + Growth Inquiry',
+  'inline-smb-platform': 'SMB Platform Inquiry',
+  'inline-brand-platform': 'Brand + Platform Inquiry',
+  'inline-bronze': 'Bronze Care Inquiry',
+  'inline-silver': 'Silver Care Inquiry',
+  'inline-gold': 'Gold Care Inquiry',
+  // Campaign sources
+  'sudbury_focus_studio': 'Sudbury Lead',
 };
 
 /**

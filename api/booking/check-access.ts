@@ -18,6 +18,10 @@ const CALENDLY_MAP: Record<string, CalendlyEntry> = {
   transform_discovery: {
     url: 'https://calendly.com/bertrandbrands/transform-discovery',
     active: true
+  },
+  care_onboarding: {
+    url: 'https://calendly.com/bertrandbrands/care-onboarding',
+    active: true
   }
 };
 

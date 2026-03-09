@@ -539,20 +539,8 @@
                 opacity: 1;
                 transform: none;
             }
-            /* Show accent text and studio label without animation */
+            /* Show accent text without animation */
             .hero__title .accent {
-                opacity: 1;
-            }
-            .hero__studio {
-                opacity: 0.5;
-            }
-            /* Disable scroll hint bounce and fade-in animations */
-            .hero__scroll-hint-icon {
-                animation: none;
-                opacity: 0.5;
-            }
-            body.intro-scrolled .hero__scroll-hint {
-                animation: none;
                 opacity: 1;
             }
         }
@@ -627,11 +615,6 @@
 
         .hero__title span { display: block; }
 
-        /* V13: hero title text glow removed — "quiet authority" refinement.
-           Title text appears at full readability without animation artifacts. */
-        .hero__title-glow {
-            display: inline;
-        }
 
         .hero__title .accent {
             font-weight: var(--font-medium);
@@ -644,32 +627,6 @@
             opacity: 0;
         }
 
-        /* "STUDIO" label below Systems */
-        .hero__studio {
-            display: block;
-            font-family: var(--font-body);
-            font-size: 0.8rem;
-            font-weight: var(--font-medium);
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            color: var(--text-subtle);
-            margin-top: 0.75rem;
-            opacity: 0;
-        }
-
-        .hero__title.hero-animate .hero__studio {
-            -webkit-animation: studioReveal 0.8s ease-out 1.6s forwards;
-            animation: studioReveal 0.8s ease-out 1.6s forwards;
-        }
-
-        @-webkit-keyframes studioReveal {
-            0% { opacity: 0; -webkit-transform: translateY(6px); transform: translateY(6px); }
-            100% { opacity: 0.5; -webkit-transform: translateY(0); transform: translateY(0); }
-        }
-        @keyframes studioReveal {
-            0% { opacity: 0; transform: translateY(6px); }
-            100% { opacity: 0.5; transform: translateY(0); }
-        }
 
         /* V13: fluorescent flicker removed — accent word fades in cleanly */
         .hero__title.hero-animate .accent {
@@ -702,14 +659,6 @@
 
         @keyframes fadeIn { to { opacity: 1; } }
 
-        .hero__subtitle-glow {
-            color: var(--text-muted);
-        }
-
-        /* V13: subtitle glow removed — clean text, no flash */
-        .hero__subtitle-glow {
-            color: var(--text-muted);
-        }
 
         .hero__cta {
             display: inline-flex;
@@ -1358,8 +1307,8 @@
             top: 0;
             left: 0;
             background: radial-gradient(
-                ellipse 80% 60% at 50% 100%,
-                rgba(var(--build-rgb), 0.08) 0%,
+                ellipse 80% 60% at var(--process-glow-x, 50%) 100%,
+                rgba(var(--build-rgb), var(--process-glow-a, 0.08)) 0%,
                 rgba(var(--build-rgb), 0.03) 40%,
                 transparent 70%
             );
@@ -1371,6 +1320,15 @@
 
         .section--process.reveal-triggered::after {
             opacity: 1;
+            animation: processGlowBreathe 20s ease-in-out 1s infinite;
+        }
+
+        @keyframes processGlowBreathe {
+            0%, 100% { --process-glow-x: 50%; --process-glow-a: 0.08; }
+            20% { --process-glow-x: 47%; --process-glow-a: 0.10; }
+            45% { --process-glow-x: 53%; --process-glow-a: 0.06; }
+            70% { --process-glow-x: 48%; --process-glow-a: 0.09; }
+            85% { --process-glow-x: 52%; --process-glow-a: 0.07; }
         }
 
         /* "clear" text — subtle static accent, no beam sync */
@@ -2036,13 +1994,22 @@
             top: 0;
             left: 0;
             background: radial-gradient(
-                ellipse 80% 60% at 50% 100%,
-                rgba(var(--transform-rgb), 0.12) 0%,
+                ellipse 80% 60% at var(--about-violet-x, 50%) 100%,
+                rgba(var(--transform-rgb), var(--about-violet-a, 0.12)) 0%,
                 rgba(var(--transform-rgb), 0.05) 40%,
                 transparent 70%
             );
             pointer-events: none;
             z-index: 0;
+            animation: aboutVioletBreathe 22s ease-in-out infinite;
+        }
+
+        @keyframes aboutVioletBreathe {
+            0%, 100% { --about-violet-x: 50%; --about-violet-a: 0.12; }
+            18% { --about-violet-x: 46%; --about-violet-a: 0.14; }
+            40% { --about-violet-x: 54%; --about-violet-a: 0.09; }
+            62% { --about-violet-x: 48%; --about-violet-a: 0.13; }
+            80% { --about-violet-x: 52%; --about-violet-a: 0.10; }
         }
 
         .about__glow--blue {
@@ -2218,22 +2185,6 @@
             z-index: 1;
         }
 
-        .contact__email-fallback {
-            margin-top: var(--space-lg);
-            font-size: var(--text-sm);
-            color: var(--text-subtle);
-        }
-
-        .contact__email-fallback a {
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
-            transition: all var(--duration-fast) var(--ease-out);
-        }
-
-        .contact__email-fallback a:hover {
-            color: var(--text);
-            border-color: var(--text);
-        }
 
         /* Contact spotlights mobile optimization — smaller, less blur, simpler orbits */
         @media (max-width: 768px) {
@@ -2421,11 +2372,6 @@
                 filter: blur(30px);
             }
 
-            /* Disable scroll hint bounce - static instead */
-            .hero__scroll-hint {
-                animation: scrollHintFadeIn 1s ease 1s forwards;
-            }
-
             /* Cleanup will-change after animations complete */
             .hero__spotlight,
             .hero__gradient,
@@ -2452,18 +2398,6 @@
                 -webkit-backdrop-filter: none;
             }
 
-            /* V13: Mobile text + glow overrides — simplified, no flicker/beam */
-
-            /* Hero title glow: removed in V13, keep structural compatibility */
-            .hero__title.hero-animate .hero__title-glow {
-                animation: none;
-            }
-
-            /* Subtitle glow: static color in V13 */
-            .intro-scrolled .hero__subtitle-glow {
-                animation: none;
-                color: var(--text-muted);
-            }
 
             /* About section spotlight sweep: single-layer, shorter */
             .reveal.is-visible .text-spotlight {
@@ -2487,11 +2421,6 @@
                 animation: accentFadeIn 0.6s var(--ease-out) 0.4s forwards;
             }
 
-            /* "STUDIO" label: smaller on mobile */
-            .hero__studio {
-                font-size: 0.65rem;
-                margin-top: 0.5rem;
-            }
 
             /* Process beam: removed in V13 */
             .section--process.reveal-triggered::before {
@@ -3041,7 +2970,7 @@
     border-left-color: rgba(var(--build-rgb), 0.3);
 }
 .tier-card--transform .offer-card__best-for {
-    color: rgba(167, 139, 250, 0.7);
+    color: rgba(var(--transform-rgb), 0.7);
     border-left-color: rgba(var(--transform-rgb), 0.3);
 }
 .tier-card--care .offer-card__best-for {

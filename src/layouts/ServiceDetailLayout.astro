@@ -16,6 +16,7 @@ import BaseLayout from './BaseLayout.astro';
 import SkipLink from '../components/SkipLink.astro';
 import HeaderUniversal from '../components/HeaderUniversal.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
 import VersionStamp from '../components/VersionStamp.astro';
 
 interface Props {
@@ -276,5 +277,6 @@ const svcLabelColor = labelColor || `rgba(${r}, ${g}, ${b}, 1)`;
         </script>
     )}
     <VisitorNotify />
+    <GesturePrevention />
     <VersionStamp />
 </BaseLayout>

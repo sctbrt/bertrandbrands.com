@@ -30,6 +30,7 @@ export default defineConfig({
     '/brand-website-starter-map': { destination: '/#packages', status: 302 },
 
     // V10 service redirects (permanent)
+    '/start': { destination: '/intake', status: 301 },
     '/book': { destination: '/intake', status: 301 },
     '/focus-studio': { destination: '/#packages', status: 301 },
     '/core-services': { destination: '/#packages', status: 301 },

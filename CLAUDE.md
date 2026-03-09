@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 13.0.2 (Current)
+## Version 13.0.3 (Current)
 
 This document is the **Bertrand Brands** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -277,8 +277,12 @@ A successful implementation:
 ```
 ├── src/                           # Astro source
 │   ├── env.d.ts                   # Astro environment types
+│   ├── lib/
+│   │   └── schema.ts              # Centralized JSON-LD Schema.org generation
 │   ├── layouts/
-│   │   └── BaseLayout.astro       # Shared HTML shell (<head>, fonts, CSS, OG, Schema.org)
+│   │   ├── BaseLayout.astro       # Shared HTML shell (<head>, fonts, CSS, OG, Schema.org)
+│   │   ├── ServiceDetailLayout.astro # Shared layout for all 9 service detail pages
+│   │   └── IntakeLayout.astro     # Shared layout for intake form page
 │   ├── components/
 │   │   ├── HeaderCanonical.astro  # Homepage header (HTML only, scripts in index.astro)
 │   │   ├── HeaderUniversal.astro  # Sub-page header (nav + mobile menu + ambient lighting)
@@ -286,10 +290,10 @@ A successful implementation:
 │   │   ├── HeaderTierBadge.astro  # Confirmation page header (tier badge)
 │   │   ├── HeaderMinimal.astro    # Ad landing page header (logo only)
 │   │   ├── FooterMain.astro       # Full footer (homepage, hub pages)
-│   │   ├── FooterMinimal.astro    # Simple footer (service, intake, confirmation)
 │   │   ├── SkipLink.astro         # Accessibility skip link
 │   │   ├── VisitorNotify.astro    # Silent Pushover notification on page load (skips owner visits)
-│   │   ├── AnnouncementBanner.astro # Dismissible announcement banner
+│   │   ├── VersionStamp.astro     # Build version stamp
+│   │   ├── DotLogo.astro          # Dot-matrix B logomark SVG component
 │   │   ├── GesturePrevention.astro # iOS gesture prevention (shared across all pages)
 │   │   ├── OfferCard.astro        # V11 offer card (used in homepage tier groups)
 │   │   ├── TierGroupHeader.astro  # B logomark + tier name header for homepage
@@ -305,7 +309,7 @@ A successful implementation:
 │   │   ├── compare.astro          # Side-by-side tier comparison (Build vs Transform vs Care)
 │   │   ├── intake.astro           # Tier-aware intake form (replaces start.astro)
 │   │   ├── build.astro            # B Build tier hub (3 offers)
-│   │   ├── transform.astro       # B Transform tier hub (3 offers)
+│   │   ├── transform.astro        # B Transform tier hub (3 offers)
 │   │   ├── care.astro             # B Care hub (Bronze/Silver/Gold)
 │   │   ├── build/
 │   │   │   ├── starter-onepage.astro    # One-Page + Contact detail ($750)
@@ -324,6 +328,8 @@ A successful implementation:
 │   │   ├── payment-confirmed.astro      # Post-payment confirmation
 │   │   ├── booking-confirmed.astro      # Post-booking confirmation
 │   │   ├── snapshot-confirmed.astro     # Post-snapshot confirmation
+│   │   ├── privacy.astro          # Privacy policy
+│   │   ├── maintenance.astro      # Maintenance mode placeholder
 │   │   ├── booking/
 │   │   │   └── schedule.astro     # Calendly booking widget
 │   │   └── group/
@@ -332,34 +338,38 @@ A successful implementation:
 ├── public/                        # Static assets (served as-is at /)
 │   ├── styles/
 │   │   ├── tokens.css             # Design system variables
-│   │   ├── shared.css             # Shared stylesheet — sub-pages, header, footer, cards (~1,900 lines)
-│   │   ├── homepage.css           # Homepage-only stylesheet — sections, intro, hero (~4,560 lines)
+│   │   ├── shared.css             # Shared stylesheet — sub-pages, header, footer, cards
+│   │   ├── homepage.css           # Homepage-only stylesheet — sections, intro, hero
 │   │   ├── fonts.css              # @font-face declarations
 │   │   ├── pricing-modal.css      # Pricing modal (homepage only)
 │   │   └── founder-lightbox.css   # Founder lightbox (homepage only)
 │   ├── scripts/
 │   │   └── dot-grid-about.js      # About section dot grid animation
 │   ├── fonts/                     # Inter, Fraunces, Manrope, Sora (woff2)
-│   ├── assets/                    # Logos, images (bg-brands-logomark.png, etc.)
+│   ├── assets/                    # Logos, images (dot-logomark.svg, etc.)
 │   └── ...                        # Favicons, OG image, manifest, robots.txt, llms.txt
-├── api/                           # Vercel serverless functions (NOT processed by Astro)
-│   ├── notify.js                  # Visitor notifications → Pushover
+├── api/                           # Vercel serverless functions (TypeScript, NOT processed by Astro)
+│   ├── notify.ts                  # Visitor notifications → Pushover
 │   ├── pricing/                   # Magic link pricing gate
-│   │   ├── request-access.js      # Send magic link email
-│   │   ├── access.js              # Consume token, create session
-│   │   ├── check-access.js        # Validate session cookie
-│   │   └── logout.js              # Clear session
+│   │   ├── request-access.ts      # Send magic link email
+│   │   ├── access.ts              # Consume token, create session
+│   │   ├── check-access.ts        # Validate session cookie
+│   │   └── logout.ts              # Clear session
 │   ├── booking/                   # Magic link booking gate
-│   │   ├── access.js              # Consume token, create session
-│   │   ├── check-access.js        # Validate session cookie
-│   │   └── logout.js              # Clear session
+│   │   ├── create-token.ts        # Admin: generate magic link token, send via Resend
+│   │   ├── access.ts              # Consume token, create session
+│   │   ├── check-access.ts        # Validate session cookie
+│   │   └── logout.ts              # Clear session
 │   ├── snapshot/
-│   │   └── book.js                # Snapshot booking endpoint
+│   │   └── book.ts                # Snapshot booking endpoint
 │   └── _lib/                      # Shared helpers
-│       ├── db.js                  # Database utilities
-│       ├── crypto.js              # Token hashing (SHA-256)
-│       ├── cookies.js             # Secure cookie builder
-│       └── html.js                # HTML escaping + error page template
+│       ├── db.ts                  # Database utilities
+│       ├── crypto.ts              # Token hashing (SHA-256)
+│       ├── cookies.ts             # Secure cookie builder
+│       ├── html.ts                # HTML escaping + error page template
+│       ├── validation.ts          # Email regex + maskEmail utility
+│       ├── rate-limit.ts          # Centralized in-memory rate limiter
+│       └── types.ts               # Shared TypeScript types
 ├── scripts/
 │   └── init-db.js                 # Database table initialization
 ├── astro.config.ts                # Astro config (Vercel adapter, redirects, routing)
@@ -577,7 +587,7 @@ Pushover notifications provide real-time alerts for visitor activity, form submi
 | Google Ads CRM webhook | 1 (high) | `cashregister` | Google Ads → system-build webhook |
 
 **Architecture:**
-- **bertrandbrands.ca** — `api/notify.js` handles visitor + form + intake notifications; `api/snapshot/book.js` handles snapshot bookings directly
+- **bertrandbrands.ca** — `api/notify.ts` handles visitor + form + intake notifications; `api/snapshot/book.ts` handles snapshot bookings directly
 - **system-build** — `api/intake/formspree/route.ts` and `api/intake/google-ads/route.ts` each send Pushover notifications inline after creating leads
 
 **Geolocation (LOCKED):**
@@ -588,7 +598,7 @@ Pushover notifications provide real-time alerts for visitor activity, form submi
 
 **Source Attribution (LOCKED):**
 - `VisitorNotify.astro` captures UTM parameters (`utm_source`, `utm_medium`, `utm_campaign`) and `gclid` from the URL
-- `api/notify.js` builds a source line using priority: **UTM params > referrer domain > nothing**
+- `api/notify.ts` builds a source line using priority: **UTM params > referrer domain > nothing**
 - UTM display format: `google / cpc / sudbury-campaign (Google Ads)`
 - Referrer display format: cleaned domain only (e.g., `google.com` not `https://www.google.com/search?q=...`)
 - `gclid` presence is sent as a boolean flag (`'1'`), never the actual value (PII)
@@ -1172,7 +1182,7 @@ Added `contain: layout style` to:
 | 8.0.0 | Feb 2026 | Astro 5 migration: Migrated all 27 pages from vanilla HTML to `.astro` files with `BaseLayout` + 5 header variants + 6 shared components. File-based routing eliminates all page rewrites. Redirects moved from `vercel.json` to `astro.config.ts` (28 entries). CSS/fonts/scripts relocated from `src/` to `public/` for Astro static serving. Extracted `GesturePrevention.astro` (replaced 21 inline occurrences). Extracted `pricing-modal.css` and `founder-lightbox.css` from main.css (homepage-only loading). Fixed HeaderCanonical double-binding bug. Removed legacy JS injectors (`header.js`, `visitor-notify.js`, `announcement-banner.js`). `vercel.json` reduced to API rewrites + security headers only. Legacy HTML archived in `src/_legacy/`. |
 | 10.0.0 | Feb 2026 | V10 Offerings Reset: Restructured from 4-tier × 12-offering catalog to 3 packages (Starter $750 / Refresh / Platform) + Care plans. Phone-first conversion via Beside AI receptionist — mobile nav shows "Call Now", desktop shows "Get a Quote". New components: PackageCard, PhoneFirstCTA, FAQ. Created unified intake at `/start` replacing 3 separate intake forms. Created `/care` page with tri-colour gradient. 3 package detail pages at `/packages/starter|refresh|platform`. Deleted 15 deprecated `.astro` files (focus-studio, core-services, exploratory, clarity-session, starter-site, one-page-redesign, brandmark, brand-system-reset, digital-platform-build, integrated-brand-platform, website-conversion-snapshot, brand-clarity-diagnostic, + 3 intake pages). Rewrote all redirects in `astro.config.ts` (~50 entries). Updated homepage with 3-up PackageCard grid, Trust Stack, FAQ accordion, phone CTA. Added GA4 + Google Ads conversion tracking (`bbConvert()` helper) to BaseLayout. Updated Sudbury landing, all confirmation pages. V10 CSS: `.pkg-grid`, `.pkg-card__*`, `.phone-cta__*`, `.faq__*`, responsive nav CTA classes. |
 | 11.0.0 | Feb 2026 | V11 Service Tier Architecture: Restructured from 3 packages to 4-tier sub-brand model (B Conversation, B Build, B Transform, B Care). Homepage now shows 3 tier groups with OfferCard grid (Amber 3 offers + Violet 3 offers + Blue 3 plans). New components: OfferCard, TierGroupHeader, InlineIntakeForm, StickyMobileCTA. Created tier-aware intake at `/intake` replacing `/start` with URL params (`?tier=amber&offer=starter-onepage`). Created 3 tier hub pages (`/build`, `/transform`, updated `/care`). Created 9 individual detail pages (`/build/starter-onepage|starter-multipage|fullsite-booking`, `/transform/foundation-growth|smb-platform|brand-platform`, `/care/bronze|silver|gold`). Care plans renamed: Essentials→Bronze, Growth→Silver, Partner→Gold. Deleted V10 pages (`start.astro`, `packages/starter|refresh|platform.astro`). Added V10→V11 redirects (`/start`→`/intake`, `/packages/*`→tier pages, `/amber`→`/build`, `/violet`→`/transform`, `/blue`→`/care`). Updated all legacy redirect destinations. Nav: "Packages"→"Services", CTA→`/intake`. Updated all confirmation pages with tier hub cross-sell links. Added tier-specific Pushover source labels (`tier-intake-amber|violet|blue`). V11 CSS: `.tier-group`, `.offer-grid`, `.offer-card__*`, tier group header styles. 26 total pages (was 18). |
-| 11.1.0 | Feb 2026 | Performance, polish & technical debt. P0: Removed ~600 lines dead V10 CSS (`.focused-studio__*`, `.pkg-card__*`, V10 responsive rules) + legacy token aliases + deleted unused `PackageCard.astro`. P1: Deduplicated ~2,000 lines of shared detail page CSS into `ServiceDetailLayout.astro` using `--svc-r/g/b` custom properties (all 9 detail pages). P2: Added `/intake` to `sitemap.xml`. P3: Added `--transform-text: #A78BFA` (Violet 400, WCAG AA compliant) for violet text-on-dark contexts. P4: Added in-memory IP rate limiting (10 req/min) to `api/snapshot/book.js` and `api/booking/access.js`. P5: Added keyboard focus trap to mobile menu in `HeaderUniversal.astro`. P6: Consolidated duplicate `prefers-reduced-motion` media queries in `main.css`. P7: Replaced deprecated `e.keyCode` with `e.key` in homepage intro scroll lock. |
+| 11.1.0 | Feb 2026 | Performance, polish & technical debt. P0: Removed ~600 lines dead V10 CSS (`.focused-studio__*`, `.pkg-card__*`, V10 responsive rules) + legacy token aliases + deleted unused `PackageCard.astro`. P1: Deduplicated ~2,000 lines of shared detail page CSS into `ServiceDetailLayout.astro` using `--svc-r/g/b` custom properties (all 9 detail pages). P2: Added `/intake` to `sitemap.xml`. P3: Added `--transform-text: #A78BFA` (Violet 400, WCAG AA compliant) for violet text-on-dark contexts. P4: Added in-memory IP rate limiting (10 req/min) to `api/snapshot/book.ts` and `api/booking/access.js`. P5: Added keyboard focus trap to mobile menu in `HeaderUniversal.astro`. P6: Consolidated duplicate `prefers-reduced-motion` media queries in `main.css`. P7: Replaced deprecated `e.keyCode` with `e.key` in homepage intro scroll lock. |
 | 11.2.0 | Feb 2026 | Layer depth pass: Widened `--bg-elevated` delta from +7 to +12 RGB points (above human JND threshold), `--bg-subtle` to +18. Bumped card fill (5%→8%), card border (12%→16%), glass (2%→4%), border (8%→10%) alphas for visible surfaces. Added resting card drop shadow (`0 2px 8px -2px`) for depth without hover. Fixed orphaned 3rd offer card at tablet breakpoint (was capped at 540px, now matches sibling column width via `calc(50% - 0.5rem)`). Added RGB tuple tokens (`--bg-rgb`, `--bg-elevated-rgb`, `--highlight-rgb`, `--scrim-rgb`) and replaced ~25 hardcoded rgba values in main.css with token-driven equivalents. Replaced hardcoded vignette overlays in hub pages (build, transform, care). Removed ~250 lines of theme prototype CSS (graphite/light/partial variants) and theme switcher script from BaseLayout. |
 | 11.2.1 | Feb 2026 | Documentation accuracy patch: Updated CLAUDE.md Section 6.1 color tokens to match V11.2.0 values (`--bg-elevated`, `--bg-subtle`, `--border`, `--glass-bg/border/edge-highlight`), removed stale Light Theme block. Updated Section 18.2 card system tokens (`--card-bg`, `--card-bg-hover`, `--card-border`, `--wrapper-bg`). Updated `tokens.css` version header from V5.0.0 to V11.2.0. Removed legacy V8.1 version tag from main.css mobile typography comment. Deleted 25 development screenshot .jpeg files from project root. |
 | 11.2.2 | Feb 2026 | Polish & hygiene batch: P0 — Replaced 2 hardcoded colors in main.css with design tokens (`var(--text)`, `var(--glass-edge-highlight)`), updated stale version header. P1 — DRY extraction: created `api/_lib/validation.js` (canonical `EMAIL_REGEX`), extended `cookies.js` with `parseCookies()` and `buildClearCookie()`, removed ~160 lines of duplicated code across 7 API files. P2 — Removed duplicate `.gitignore` entries. P3 — Deleted 5 stale root documentation files (~35 KB). P4 — Added `rel="noopener noreferrer"` to all `target="_blank"` links in `sitemapX.astro`. P5 — Replaced production `console.error` in `booking/schedule.astro` with comment. |
@@ -1183,6 +1193,7 @@ Added `contain: layout style` to:
 | 13.0.0 | Mar 2026 | V13 "Quiet Authority" visual refinement + intro auto-dissolve. Visual: removed cursor-follow glow, hero text glow, process beam effect; reduced contact section spotlights from 3→2; softened tier group ambient glows (opacity 0.12→0.06); slowed CTA gradient spin (3s→6s); deleted ~500 lines dead V10/V12 CSS from homepage.css. Intro: converted from manual click/tap/scroll-to-begin to auto-dissolve (800ms pause after 3.2s animation, ~4s total); switched `sessionStorage`→`localStorage` (plays once per device ever, not per session); removed scroll hint HTML/CSS (~80 lines); kept scroll handler as safety net. API: extracted shared `maskEmail()` to `validation.ts`, added `escapeHtml()` to booking email template. Sitemap: added `<lastmod>` dates. Hub pages: minor heading/spacing tweaks on build + care. |
 | 13.0.1 | Mar 2026 | Dot-matrix B logomark rollout + sub-brand separators. Migrated all remaining components (HeaderCanonical, HeaderIntake, HeaderMinimal, HeaderTierBadge, FooterMain, TierGroupHeader) and 16 pages from PNG to SVG dot-logomark. Added `B | Name` pipe separator to all hub pages, 9 detail pages, homepage tier group headers, and ServiceDetailLayout. Reduced logomark sizes for visual balance (28px→22px→18px across breakpoints). Fixed intro dot animation fading to black on mobile (removed stale `brightness(0) invert(1)` filter from `logoRevealMobile`). Tightened hero CTA mobile gap (1rem→0.625rem). |
 | 13.0.2 | Mar 2026 | Visual cohesion audit (13 items, P0–P4). P0: Removed stale `/styles/main.css` reference from `compare.astro` (was causing console error since V12 CSS split); added Cloudflare Web Analytics domains to CSP `script-src`/`connect-src` in `vercel.json`. P1: Reduced homepage section padding from `--space-2xl` (12rem) → `--space-xl` (8rem); reduced section header margin `--space-xl` → `--space-lg`; reduced about gap and contact padding proportionally; tightened 768px/480px responsive breakpoints. P2: Removed obsolete hero scroll hint HTML + ~70 lines CSS; added `border-top` to `.intake-prompt` for visual anchoring; added `border-top` on first FAQ item; bumped FAQ summary padding `--space-sm` → `--space-6` (1.5rem). P3: Breadcrumb hover now uses tier accent color via `rgb(var(--svc-r/g/b))` in ServiceDetailLayout; intake progress text bumped from `--text-subtle` → `--text-muted`. P4: Mobile tier selector spotlight radial gradient opacity bumped 0.08 → 0.12 at 480px. |
+| 13.0.3 | Mar 2026 | Comprehensive codebase audit (P0–P2 + dead code + docs). P0: Fixed broken intro `option2` IIFE reference in index.astro; fixed HeaderCanonical wordmark collapse referencing removed `.is-collapsed` class (changed to `.is-expanded` pattern). P1: Updated `SOURCE_LABELS` in notify.ts with V11 tier names; added `care_onboarding` to `CALENDLY_MAP` in payment-confirmed; added `visibilitychange` pause/resume to 6 rAF animation loops (thanks, 404, snapshot-confirmed, booking-confirmed, HeaderTierBadge, HeaderMinimal). P2: Removed dead intro variant JS (`data-intro-variant`/`data-time-period`) from index.astro; animated 2 static glow violations — process section `::after` (`processGlowBreathe` 20s) and about violet glow (`aboutVioletBreathe` 22s) via CSS custom property animation; tokenized 2 hardcoded colors (`rgba(255,255,255,0.12)` → `var(--glass-edge-highlight)` in shared.css, `rgba(167,139,250,0.7)` → `rgba(var(--transform-rgb),0.7)` in homepage.css). Dead code: deleted ~160 lines orphaned `.care-details` CSS from shared.css; deleted unused `AnnouncementBanner.astro` and `FooterMinimal.astro` (zero imports). CLAUDE.md: rewrote Section 4 project structure (all api `.js`→`.ts`, added 12 missing files, removed 2 deleted); fixed logo asset references in Sections 22.1/22.3 (`bg-brands-logomark.png`→`dot-logomark.svg`); updated Section 25 API references to `.ts`; updated Section 25.6 utility table with `rate-limit.ts`, `types.ts`, `maskEmail()`. |
 
 ---
 
@@ -1197,7 +1208,7 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
     <div class="header__glass">
         <div class="header__inner">
             <a href="/?skip" class="header__logo">
-                <img src="/assets/bg-brands-logomark.png" alt="" class="header__logo-icon">
+                <img src="/assets/dot-logomark.svg" alt="" class="header__logo-icon">
                 <span class="header__wordmark" aria-label="Bertrand Brands | Brand &amp; Web Systems">
                     <span class="header__wordmark-short" aria-hidden="true">BERTRAND BRANDS</span>
                     <span class="header__wordmark-full" aria-hidden="true">BERTRAND BRANDS <span class="header__wordmark-sep">|</span> <span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
@@ -1246,7 +1257,7 @@ The homepage header (`src/pages/index.astro` via `HeaderCanonical.astro`) is the
 
 ### 22.3 Logo Configuration
 
-- **Logomark**: `/assets/bg-brands-logomark.png` — always present
+- **Logomark**: `/assets/dot-logomark.svg` — always present
 - **Wordmark**: Text-based animated span (Inter font). Shows "BERTRAND BRANDS" (collapsed) or "BERTRAND BRANDS | Brand & Web Systems" (expanded). Collapses after 2s, expands on hover.
 - **Link**: `/?skip` — returns to homepage, bypassing intro
 - **Alt text**: Logomark has empty alt (decorative), wordmark has aria-label "Bertrand Brands | Brand & Web Systems"
@@ -1471,7 +1482,7 @@ This exposes PII in:
 
 ## 25. API Endpoints Reference
 
-All serverless functions live in `api/` and run on Vercel Functions (Node.js). Database utilities in `api/_lib/db.js`.
+All serverless functions live in `api/` and run on Vercel Functions (Node.js). Database utilities in `api/_lib/db.ts`.
 
 ### 25.1 Pricing Gate (`api/pricing/`)
 
@@ -1536,7 +1547,7 @@ Magic link system for gated booking access (client-specific). Parallels pricing 
 
 **CORS:** Restricted to `APP_URL` origin.
 
-### 25.4 Pushover Notifications (`api/notify.js`)
+### 25.4 Pushover Notifications (`api/notify.ts`)
 
 Central notification endpoint handling three types: visitor tracking, intake submissions, and generic form inquiries.
 
@@ -1604,7 +1615,7 @@ Central notification endpoint handling three types: visitor tracking, intake sub
 
 **Owner exclusion:** `VisitorNotify.astro` checks `localStorage` for `bb_owner` flag (set via `?owner` URL param). Only visitor notifications are suppressed.
 
-### 25.5 Database Utilities (`api/_lib/db.js`)
+### 25.5 Database Utilities (`api/_lib/db.ts`)
 
 Shared module used by pricing and booking endpoints:
 - `initializeDatabase()` — Creates `pricing_magic_links` and `pricing_sessions` tables if not exists
@@ -1621,10 +1632,12 @@ Common utilities extracted from the pricing and booking access endpoints:
 
 | Module | Exports | Used By |
 |--------|---------|---------|
-| `crypto.js` | `hashToken(rawToken)` — SHA-256 hash | pricing/access, booking/access |
-| `cookies.js` | `buildCookie(name, value, maxAgeSeconds, options?)` — Secure cookie builder; `parseCookies(cookieHeader)` — Cookie header parser; `buildClearCookie(cookieName, hostname)` — Expiry cookie builder | pricing/*, booking/*, all session endpoints |
-| `html.js` | `escapeHtml(str)`, `errorPageHtml(title, message, options?)` — HTML escaping + styled error page template with configurable back link | pricing/access, booking/access |
-| `validation.js` | `EMAIL_REGEX` — RFC 5321 email validation regex (canonical, single source of truth) | pricing/request-access, snapshot/book, booking/create-token |
+| `crypto.ts` | `hashToken(rawToken)` — SHA-256 hash | pricing/access, booking/access |
+| `cookies.ts` | `buildCookie(name, value, maxAgeSeconds, options?)` — Secure cookie builder; `parseCookies(cookieHeader)` — Cookie header parser; `buildClearCookie(cookieName, hostname)` — Expiry cookie builder | pricing/*, booking/*, all session endpoints |
+| `html.ts` | `escapeHtml(str)`, `errorPageHtml(title, message, options?)` — HTML escaping + styled error page template with configurable back link | pricing/access, booking/access |
+| `validation.ts` | `EMAIL_REGEX` — RFC 5321 email validation regex; `maskEmail()` — PII masking utility | pricing/request-access, snapshot/book, booking/create-token, notify |
+| `rate-limit.ts` | `createRateLimiter()` — Centralized in-memory IP rate limiter | snapshot/book, booking/access, booking/create-token |
+| `types.ts` | Shared TypeScript interfaces for API request/response types | All API endpoints |
 
 ---
 
