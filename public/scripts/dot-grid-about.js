@@ -41,7 +41,6 @@
     }
 
     let animationId = null;
-    let centerX, centerY;
     let lastFrameTime = 0;
 
     const TARGET_FPS = isMobile ? 30 : 60;
@@ -65,8 +64,6 @@
         canvas.width = window.innerWidth * dpr;
         canvas.height = window.innerHeight * dpr;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        centerX = window.innerWidth / 2;
-        centerY = window.innerHeight / 2;
     }
 
     function draw(timestamp) {

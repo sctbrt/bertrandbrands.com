@@ -488,7 +488,8 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             tierEl.style.color = '#8B5CF6';
         }
 
-        // Initialize Calendly when ready
+        // Initialize Calendly when ready (max 50 retries = 5s)
+        var calendlyRetries = 0;
         function initCalendly() {
             if (typeof Calendly !== 'undefined') {
                 Calendly.initInlineWidget({
@@ -497,7 +498,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                     prefill: {},
                     utm: {}
                 });
-            } else {
+            } else if (calendlyRetries++ < 50) {
                 setTimeout(initCalendly, 100);
             }
         }

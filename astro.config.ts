@@ -21,9 +21,12 @@ export default defineConfig({
     '/process': { destination: '/#process', status: 302 },
     '/how-it-works': { destination: '/#process', status: 302 },
     '/contact': { destination: '/#contact', status: 302 },
-    '/portal': { destination: '/#portal', status: 302 },
-    '/client-portal': { destination: '/#portal', status: 302 },
-    '/login': { destination: '/#portal', status: 302 },
+    '/portal': { destination: 'https://clients.bertrandgroup.ca', status: 302 },
+    '/client-portal': { destination: 'https://clients.bertrandgroup.ca', status: 302 },
+    '/login': { destination: 'https://clients.bertrandgroup.ca', status: 302 },
+
+    // V10→V11 redirect (permanent)
+    '/start': { destination: '/intake', status: 301 },
 
     // Convenience (temporary)
     '/start-here': { destination: '/intake', status: 302 },
@@ -75,6 +78,7 @@ export default defineConfig({
     '/full-brand-platform-reset': { destination: '/transform/brand-platform', status: 301 },
 
     // V10 package → tier redirects (permanent)
+    '/packages': { destination: '/#packages', status: 301 },
     '/packages/starter': { destination: '/build/starter-onepage', status: 301 },
     '/packages/refresh': { destination: '/transform/foundation-growth', status: 301 },
     '/packages/platform': { destination: '/transform/brand-platform', status: 301 },
@@ -89,5 +93,8 @@ export default defineConfig({
     '/violet/smb-platform': { destination: '/transform/smb-platform', status: 301 },
     '/violet/brand-platform': { destination: '/transform/brand-platform', status: 301 },
     '/blue': { destination: '/care', status: 301 },
+    '/blue/bronze': { destination: '/care/bronze', status: 301 },
+    '/blue/silver': { destination: '/care/silver', status: 301 },
+    '/blue/gold': { destination: '/care/gold', status: 301 },
   },
 });

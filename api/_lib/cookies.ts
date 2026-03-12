@@ -11,8 +11,11 @@ export function parseCookies(cookieHeader: string | undefined): Record<string, s
   if (!cookieHeader) return {};
 
   return cookieHeader.split(';').reduce<Record<string, string>>((cookies, cookie) => {
-    const [name, value] = cookie.trim().split('=');
-    if (name && value) {
+    const idx = cookie.indexOf('=');
+    if (idx === -1) return cookies;
+    const name = cookie.slice(0, idx).trim();
+    const value = cookie.slice(idx + 1).trim();
+    if (name) {
       cookies[name] = value;
     }
     return cookies;
@@ -33,11 +36,12 @@ export function buildClearCookie(cookieName: string, hostname: string | undefine
 
   if (IS_PRODUCTION) {
     parts.push('Secure');
-    // Clear on parent domain to match how it was set
-    if (hostname && hostname.endsWith('bertrandbrands.ca')) {
-      parts.push('Domain=.bertrandbrands.ca');
-    } else {
+    // Clear on parent domain to match how it was set (same order as buildCookie)
+    const hn = hostname || '';
+    if (hn.endsWith('bertrandgroup.ca')) {
       parts.push('Domain=.bertrandgroup.ca');
+    } else if (hn.endsWith('bertrandbrands.ca')) {
+      parts.push('Domain=.bertrandbrands.ca');
     }
   }
 

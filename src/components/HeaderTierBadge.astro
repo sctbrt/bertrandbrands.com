@@ -47,9 +47,10 @@ const {
     let lastFrame = 0;
     const FRAME_INTERVAL = 1000 / 30;
 
+    var lightId;
     function animateLights(timestamp) {
         if (timestamp - lastFrame < FRAME_INTERVAL) {
-            requestAnimationFrame(animateLights);
+            lightId = requestAnimationFrame(animateLights);
             return;
         }
         lastFrame = timestamp;
@@ -59,8 +60,12 @@ const {
         if (pos2 > 90 || pos2 < 60) dir2 *= -1;
         headerGlass.style.setProperty('--orange-pos-1', pos1 + '%');
         headerGlass.style.setProperty('--orange-pos-2', pos2 + '%');
-        requestAnimationFrame(animateLights);
+        lightId = requestAnimationFrame(animateLights);
     }
-    requestAnimationFrame(animateLights);
+    lightId = requestAnimationFrame(animateLights);
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) { cancelAnimationFrame(lightId); }
+        else { lightId = requestAnimationFrame(animateLights); }
+    });
 })();
 </script>

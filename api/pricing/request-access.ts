@@ -46,7 +46,7 @@ function buildEmailHtml({ firstName, magicLink, expiresMinutes }: EmailTemplateP
     <p style="margin: 0 0 24px 0; font-size: 15px;">
       Here's your link to view pricing for our advanced services. Pricing varies by scope, so this gives you a starting point before we discuss your specific needs.
     </p>
-    <a href="${magicLink}"
+    <a href="${escapeHtml(magicLink)}"
        style="display: inline-block; background: #0a0a0a; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 15px;">
       View Pricing
     </a>

@@ -142,7 +142,7 @@ const schemaJson = schemaGraph(
           <div class="hero__spotlight hero__spotlight--violet"></div>
 
           <div class="hero__content">
-              <h1 class="hero__title">We build brands and web systems for businesses that need <span class="accent">clarity.</span></h1>
+              <h1 class="hero__title">We build brands and <span class="accent">web systems</span> for businesses that need clarity.</h1>
               <p class="hero__subtitle">
                   Sudbury-based studio. Fixed pricing, fast turnaround, no meetings unless you want one.
               </p>
@@ -654,15 +654,6 @@ const schemaJson = schemaGraph(
   </div>
 
   <script is:inline>
-      // Intro option toggle (use ?intro=2 for option 2)
-      (function() {
-          var params = new URLSearchParams(window.location.search);
-          if (params.get('intro') === '2') {
-              var introEl = document.querySelector('.intro');
-              if (introEl) introEl.classList.add('intro--option2');
-          }
-      })();
-
       // Cursor glow — removed in V13 ("quiet authority" refinement)
 
       // Premium scroll-linked reveal (Apple-like progressive animations)
@@ -948,7 +939,7 @@ const schemaJson = schemaGraph(
           if (!toggle || !nav) return;
 
           function getFocusableElements() {
-              return nav.querySelectorAll('a, button');
+              return [toggle].concat(Array.from(nav.querySelectorAll('a, button')));
           }
 
           function openMenu() {
@@ -978,7 +969,7 @@ const schemaJson = schemaGraph(
               link.addEventListener('click', closeMenu);
           });
 
-          nav.addEventListener('keydown', function(e) {
+          document.addEventListener('keydown', function(e) {
               if (!nav.classList.contains('is-open')) return;
 
               if (e.key === 'Escape') {

@@ -358,8 +358,8 @@ const {
                 if (response.ok) {
                     // Set intake completed cookie (24-hour expiry)
                     var expires = new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
-                    var emailHash = btoa(formData.get('email')).substring(0, 16);
-                    document.cookie = 'bb_intake_completed=' + emailHash + '; expires=' + expires + '; path=/; domain=.bertrandgroup.ca; secure; samesite=lax';
+                    var emailTag = btoa(formData.get('email')).substring(0, 16);
+                    document.cookie = 'bb_intake_completed=' + emailTag + '; expires=' + expires + '; path=/; secure; samesite=lax';
 
                     // Show success state
                     if (card) card.style.display = 'none';

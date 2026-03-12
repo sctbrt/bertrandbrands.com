@@ -410,6 +410,10 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                     <div><span>Transform</span><br><span class="explore-next__desc">Bigger commitments, discovery-led</span></div>
                     <span class="explore-next__arrow">&rarr;</span>
                 </a>
+                <a href="/care" class="explore-next__link">
+                    <div><span>Care</span><br><span class="explore-next__desc">Ongoing support after launch</span></div>
+                    <span class="explore-next__arrow">&rarr;</span>
+                </a>
             </div>
         </div>
 
@@ -493,6 +497,7 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             var dir1X = 1, dir1Y = 1;
             var dir2X = -1, dir2Y = -1;
 
+            var bgGlowId;
             function animateBgGlow() {
                 glow1X += 0.015 * dir1X;
                 glow1Y += 0.012 * dir1Y;
@@ -508,9 +513,13 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 document.body.style.setProperty('--bg-glow-1-y', glow1Y + '%');
                 document.body.style.setProperty('--bg-glow-2-x', glow2X + '%');
                 document.body.style.setProperty('--bg-glow-2-y', glow2Y + '%');
-                requestAnimationFrame(animateBgGlow);
+                bgGlowId = requestAnimationFrame(animateBgGlow);
             }
-            requestAnimationFrame(animateBgGlow);
+            bgGlowId = requestAnimationFrame(animateBgGlow);
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) { cancelAnimationFrame(bgGlowId); }
+                else { bgGlowId = requestAnimationFrame(animateBgGlow); }
+            });
         })();
     </script>
 

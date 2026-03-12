@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Dot-matrix B logomark — white dots on transparent -->
+  <!-- Dot-matrix B logomark — black dots, inverted to white via CSS filter -->
   <g fill="#000">
     <circle cx="144" cy="88" r="22"/><circle cx="200" cy="88" r="22"/><circle cx="256" cy="88" r="22"/><circle cx="312" cy="88" r="22"/>
     <circle cx="144" cy="144" r="22"/><circle cx="200" cy="144" r="22"/><circle cx="312" cy="144" r="22"/><circle cx="368" cy="144" r="22"/>

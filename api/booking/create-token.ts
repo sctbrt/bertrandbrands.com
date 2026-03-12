@@ -85,7 +85,7 @@ function buildEmailHtml({ firstName, bookingLink, bookingTypeLabel, expiresHours
     <p style="margin: 0 0 24px 0; font-size: 15px;">
       Your <strong>${escapeHtml(bookingTypeLabel)}</strong> call is ready to be scheduled. Use the link below to pick a time that works for you.
     </p>
-    <a href="${bookingLink}"
+    <a href="${escapeHtml(bookingLink)}"
        style="display: inline-block; background: #0a0a0a; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 15px;">
       Schedule Your Call
     </a>
@@ -145,9 +145,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   }
 
   const authHeader = req.headers['x-admin-secret'] as string | undefined;
+  const authBuf = authHeader ? Buffer.from(authHeader) : Buffer.alloc(0);
+  const secretBuf = Buffer.from(adminSecret);
   if (!authHeader ||
-      authHeader.length !== adminSecret.length ||
-      !crypto.timingSafeEqual(Buffer.from(authHeader), Buffer.from(adminSecret))) {
+      authBuf.length !== secretBuf.length ||
+      !crypto.timingSafeEqual(authBuf, secretBuf)) {
     res.status(401).json({ error: 'Unauthorized' });
     return;
   }

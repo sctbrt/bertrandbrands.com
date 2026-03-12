@@ -81,7 +81,7 @@ const GEO_BLOCKED_HTML = `<!DOCTYPE html>
 </head>
 <body>
     <main class="geo-block">
-        <img src="/assets/bg-brands-logomark.png" alt="" class="geo-block__logo" width="40" height="40">
+        <img src="/assets/dot-logomark.svg" alt="" class="geo-block__logo" width="40" height="40" style="filter: brightness(0) invert(1);">
         <h1 class="geo-block__title">This site serves Canadian clients only.</h1>
         <p class="geo-block__message">Bertrand Brands is a studio based in Sudbury, Ontario, serving businesses across Canada. If you believe this is an error, contact us at hello@bertrandgroup.ca</p>
     </main>
@@ -126,7 +126,7 @@ function divisionEntryPage() {
         "alternateName": "Bertrand Group | Brand & Web Systems",
         "description": "Brand, web, and systems design division of Bertrand Group. Based in Greater Sudbury, Ontario.",
         "url": "https://bertrandbrands.ca",
-        "logo": "https://bertrandbrands.ca/assets/bg-brands-logomark.png",
+        "logo": "https://bertrandbrands.ca/assets/dot-logomark.svg",
         "email": "hello@bertrandgroup.ca",
         "telephone": "+17054133705",
         "address": {
@@ -220,7 +220,7 @@ function divisionEntryPage() {
 </head>
 <body>
     <main class="entry" role="main">
-        <img src="https://bertrandbrands.ca/assets/bg-brands-logomark.png" alt="Bertrand Brands logomark" class="entry__logo" width="48" height="48">
+        <img src="https://bertrandbrands.ca/assets/dot-logomark.svg" alt="Bertrand Brands logomark" class="entry__logo" width="48" height="48" style="filter: brightness(0) invert(1);">
         <p class="entry__division">A division of <a href="https://bertrandgroup.ca" class="entry__parent-link">Bertrand Group</a></p>
         <h1 class="entry__name">Bertrand Brands</h1>
         <p class="entry__sub">Brand, web, and systems design studio based in Sudbury, Ontario. Strategy, websites, and digital platforms for businesses that value clarity.</p>
@@ -273,9 +273,9 @@ export default function middleware(request) {
 
     if (allowedCountries.length > 0) {
         const cookies = request.headers.get('cookie') || '';
-        const hasBypass = cookies.includes('bb_maintenance_bypass=1');
+        const hasGeoBypass = cookies.includes('bb_geo_bypass=1');
 
-        if (!hasBypass && !url.searchParams.has('bypass')) {
+        if (!hasGeoBypass && !url.searchParams.has('bypass')) {
             // Let known bots through so Google can index, ads can verify,
             // and social platforms can generate link previews.
             const userAgent = request.headers.get('user-agent') || '';

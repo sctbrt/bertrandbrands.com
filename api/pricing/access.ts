@@ -6,6 +6,10 @@ import { initializeDatabase, consumeMagicLink, createPricingSession } from '../_
 import { hashToken } from '../_lib/crypto.js';
 import { buildCookie } from '../_lib/cookies.js';
 import { errorPageHtml } from '../_lib/html.js';
+import { createRateLimiter, getClientIp } from '../_lib/rate-limit.js';
+
+// In-memory rate limiting (resets on cold start, per-instance)
+const isRateLimited = createRateLimiter(60_000, 10);
 
 // Config
 const SESSION_TTL_MINUTES = parseInt(process.env.PRICING_SESSION_TTL_MINUTES || '240', 10);
@@ -15,6 +19,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   // Only allow GET
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  // Rate limit by IP
+  const ip = getClientIp(req.headers);
+  if (isRateLimited(ip)) {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(429).send(errorPageHtml(
+      'Too Many Requests',
+      'Please wait a moment before trying again.',
+      { backHref: '/', backLabel: 'Back to Home' }
+    ));
     return;
   }
 

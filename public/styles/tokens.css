@@ -139,8 +139,8 @@
   --duration-fast: 0.3s;
   --duration-normal: 300ms;
   --duration-medium: 0.6s;
-  --duration-slow: 1.2s;
-  --duration-slower: 700ms;
+  --duration-slow: 700ms;
+  --duration-slower: 1.2s;
   --duration-slowest: 1000ms;
 
   /* Easings */

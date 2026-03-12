@@ -156,13 +156,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       const location = buildGeoLocation(req.headers);
       const sourceLabel = SOURCE_LABELS[source || ''] || source || 'Intake';
 
-      notificationMessage = `${name || 'Unknown'}`;
-      if (email) notificationMessage += `\n${maskEmail(email)}`;
-      if (business) notificationMessage += `\nBusiness: ${business}`;
-      if (website) notificationMessage += `\nWebsite: ${website}`;
-      if (phone) notificationMessage += `\nPhone: ${phone}`;
-      if (service) notificationMessage += `\nService: ${service}`;
-      if (price) notificationMessage += `\nPrice: ${price}`;
+      notificationMessage = `${(name || 'Unknown').substring(0, 200)}`;
+      if (email) notificationMessage += `\n${maskEmail(email.substring(0, 254))}`;
+      if (business) notificationMessage += `\nBusiness: ${business.substring(0, 200)}`;
+      if (website) notificationMessage += `\nWebsite: ${website.substring(0, 500)}`;
+      if (phone) notificationMessage += `\nPhone: ${phone.substring(0, 30)}`;
+      if (service) notificationMessage += `\nService: ${service.substring(0, 200)}`;
+      if (price) notificationMessage += `\nPrice: ${price.substring(0, 50)}`;
       if (situation) notificationMessage += `\nSituation: ${situation}`;
       if (budget) notificationMessage += `\nBudget: ${budget}`;
       if (timeline) notificationMessage += `\nTimeline: ${timeline}`;
@@ -172,7 +172,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       if (challenge) notificationMessage += `\nChallenge: ${challenge.substring(0, 200)}`;
       if (context) notificationMessage += `\nContext: ${context.substring(0, 200)}`;
       if (outcome) notificationMessage += `\nOutcome: ${outcome.substring(0, 200)}`;
-      if (offer) notificationMessage += `\nOffer: ${offer}`;
+      if (offer) notificationMessage += `\nOffer: ${offer.substring(0, 200)}`;
       if (location) notificationMessage += `\n📌 ${location}`;
 
       notificationTitle = `New ${sourceLabel}`;
@@ -185,9 +185,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       // Generic form submission notification (normal priority with sound)
       const { name, email, service, message } = body as Record<string, string | undefined>;
 
-      notificationMessage = `New inquiry from ${name || 'Unknown'}`;
-      if (email) notificationMessage += `\nEmail: ${maskEmail(email)}`;
-      if (service) notificationMessage += `\nService: ${service}`;
+      notificationMessage = `New inquiry from ${(name || 'Unknown').substring(0, 200)}`;
+      if (email) notificationMessage += `\nEmail: ${maskEmail(email.substring(0, 254))}`;
+      if (service) notificationMessage += `\nService: ${service.substring(0, 200)}`;
       if (message) notificationMessage += `\n\n${message.substring(0, 200)}${message.length > 200 ? '...' : ''}`;
 
       notificationTitle = 'BG Brands Inquiry';

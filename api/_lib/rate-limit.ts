@@ -15,6 +15,7 @@ export function createRateLimiter(
   const map = new Map<string, RateLimitEntry>();
 
   // Periodic cleanup to prevent memory leak (every 5 minutes)
+  // .unref() prevents this timer from keeping the process alive
   setInterval(() => {
     const now = Date.now();
     for (const [key, entry] of map) {
@@ -22,7 +23,7 @@ export function createRateLimiter(
         map.delete(key);
       }
     }
-  }, 5 * 60 * 1000);
+  }, 5 * 60 * 1000).unref();
 
   return function isRateLimited(key: string): boolean {
     const now = Date.now();
