@@ -489,8 +489,11 @@
                 background: radial-gradient(
                     circle at center,
                     rgba(var(--build-rgb), 0.18) 0%,
-                    rgba(var(--build-rgb), 0.05) 50%,
-                    transparent 70%
+                    rgba(var(--build-rgb), 0.12) 22%,
+                    rgba(var(--build-rgb), 0.05) 42%,
+                    rgba(var(--build-rgb), 0.015) 58%,
+                    rgba(var(--build-rgb), 0.003) 66%,
+                    transparent 75%
                 );
             }
 
@@ -503,8 +506,11 @@
                 background: radial-gradient(
                     circle at center,
                     rgba(var(--transform-rgb), 0.14) 0%,
-                    rgba(var(--transform-rgb), 0.04) 50%,
-                    transparent 70%
+                    rgba(var(--transform-rgb), 0.09) 22%,
+                    rgba(var(--transform-rgb), 0.04) 42%,
+                    rgba(var(--transform-rgb), 0.012) 58%,
+                    rgba(var(--transform-rgb), 0.003) 66%,
+                    transparent 75%
                 );
             }
 
