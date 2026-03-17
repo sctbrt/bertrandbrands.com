@@ -10,6 +10,7 @@ import TierGroupHeader from '../components/TierGroupHeader.astro';
 import PhoneFirstCTA from '../components/PhoneFirstCTA.astro';
 import FAQ from '../components/FAQ.astro';
 import DotLogo from '../components/DotLogo.astro';
+import BPOSSection from '../components/BPOSSection.astro';
 
 import { breadcrumbList, schemaGraph, AREA_SERVED } from '../lib/schema';
 
@@ -520,6 +521,9 @@ const schemaJson = schemaGraph(
               </div>
           </div>
       </section>
+
+      <!-- B-POS -->
+      <BPOSSection />
 
       <!-- About -->
       <section class="section" id="about">

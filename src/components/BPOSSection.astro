@@ -1,0 +1,267 @@
+---
+/**
+ * BPOSSection — B-POS pricing cards for bertrandbrands.ca homepage.
+ * Matches the existing tier-card / offer-card design language.
+ */
+---
+
+<section class="section section--alt" id="bpos">
+    <div class="container">
+        <div class="section__header reveal" data-scroll="fade-up">
+            <p class="section__label">Software</p>
+            <h2 class="section__title">B-POS <span class="bpos-title-accent">Restaurant POS</span></h2>
+            <p class="section__scope">Offline-first point of sale for dine-in, bar, and takeout. Runs on any device.</p>
+        </div>
+
+        <!-- Billing toggle -->
+        <div class="bpos-toggle reveal" data-scroll="fade-up" id="bposBillingToggle">
+            <button class="bpos-toggle__btn active" data-billing="month" type="button">Monthly</button>
+            <button class="bpos-toggle__btn" data-billing="year" type="button">
+                Annual
+                <span class="bpos-toggle__badge">Save 20%</span>
+            </button>
+        </div>
+
+        <!-- Early Bird -->
+        <p class="bpos-early-bird reveal" data-scroll="fade-up">
+            <span class="bpos-early-bird__tag">Limited</span>
+            Early Bird — First 10 customers lock in pricing for life
+        </p>
+
+        <div class="bpos-grid reveal" data-scroll="cascade" id="bposPlanGrid">
+            <!-- Standard -->
+            <div class="tier-card tier-card--build bpos-plan" data-plan="standard">
+                <h3 class="offer-card__name">Standard</h3>
+                <p class="offer-card__headline">Everything you need to run service</p>
+
+                <div class="bpos-plan__pricing">
+                    <span class="bpos-plan__price-early" data-month="$59" data-year="$564">$59</span>
+                    <span class="bpos-plan__price-regular" data-month="$99" data-year="$948">$99</span>
+                    <span class="bpos-plan__period" data-month="/mo" data-year="/yr">/mo</span>
+                </div>
+                <p class="bpos-plan__savings" data-month="" data-year="Save $240/yr"></p>
+
+                <ul class="offer-card__features">
+                    <li>Full POS — orders, payments, floor plan</li>
+                    <li>Up to 3 terminals</li>
+                    <li>Cash & card payments</li>
+                    <li>Receipt printing</li>
+                    <li>Basic reporting</li>
+                    <li>Menu management</li>
+                    <li>Employee PIN login</li>
+                </ul>
+
+                <div class="offer-card__actions">
+                    <a href="#" class="offer-card__cta offer-card__cta--primary">Start Free Trial</a>
+                    <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="offer-card__cta offer-card__cta--secondary">Try the demo &rarr;</a>
+                </div>
+            </div>
+
+            <!-- Pro -->
+            <div class="tier-card tier-card--build tier-card--featured bpos-plan" data-plan="pro">
+                <span class="bpos-plan__badge">Most Popular</span>
+                <h3 class="offer-card__name">Pro</h3>
+                <p class="offer-card__headline">Full suite for serious operations</p>
+
+                <div class="bpos-plan__pricing">
+                    <span class="bpos-plan__price-early" data-month="$129" data-year="$1,236">$129</span>
+                    <span class="bpos-plan__price-regular" data-month="$199" data-year="$1,908">$199</span>
+                    <span class="bpos-plan__period" data-month="/mo" data-year="/yr">/mo</span>
+                </div>
+                <p class="bpos-plan__savings" data-month="" data-year="Save $480/yr"></p>
+
+                <ul class="offer-card__features">
+                    <li>Everything in Standard, plus:</li>
+                    <li>Unlimited terminals</li>
+                    <li>Kitchen Display System (KDS)</li>
+                    <li>Bar tabs & happy hour pricing</li>
+                    <li>Inventory management</li>
+                    <li>Advanced reporting & P&L</li>
+                    <li>Employee scheduling & tips</li>
+                    <li>Gift cards & private room booking</li>
+                    <li>Multi-terminal sync</li>
+                    <li>Cloud backup</li>
+                </ul>
+
+                <div class="offer-card__actions">
+                    <a href="#" class="offer-card__cta offer-card__cta--primary">Start Free Trial</a>
+                    <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="offer-card__cta offer-card__cta--secondary">Try the demo &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="bpos-footnote reveal" data-scroll="fade-up">
+            14-day free trial. No credit card required. Cancel anytime.
+        </p>
+    </div>
+</section>
+
+<style>
+    .bpos-title-accent {
+        color: var(--accent);
+    }
+
+    /* Billing toggle */
+    .bpos-toggle {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        background: rgba(var(--highlight-rgb), 0.04);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 3px;
+        max-width: 280px;
+        margin: 0 auto var(--space-sm);
+    }
+    .bpos-toggle__btn {
+        flex: 1;
+        background: none;
+        border: none;
+        color: var(--text-subtle);
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: var(--font-medium);
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all var(--duration-fast) ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+    .bpos-toggle__btn.active {
+        background: rgba(var(--highlight-rgb), 0.08);
+        color: var(--text);
+    }
+    .bpos-toggle__badge {
+        font-size: 0.625rem;
+        background: var(--accent);
+        color: #000;
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-weight: var(--font-semibold);
+        letter-spacing: 0.02em;
+    }
+
+    /* Early Bird */
+    .bpos-early-bird {
+        text-align: center;
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+        margin-bottom: var(--space-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    .bpos-early-bird__tag {
+        font-size: 0.625rem;
+        font-weight: var(--font-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        border-radius: 3px;
+        padding: 1px 6px;
+    }
+
+    /* Plan grid */
+    .bpos-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
+        max-width: 720px;
+        margin: 0 auto var(--space-md);
+    }
+
+    /* Plan-specific overrides */
+    .bpos-plan {
+        cursor: default;
+    }
+    .bpos-plan__badge {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--accent);
+        color: #000;
+        font-family: var(--font-body);
+        font-size: 0.625rem;
+        font-weight: var(--font-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 3px 10px;
+        border-radius: 4px;
+        white-space: nowrap;
+        z-index: 1;
+    }
+    .bpos-plan__pricing {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        margin: var(--space-xs) 0 4px;
+    }
+    .bpos-plan__price-early {
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: var(--font-semibold);
+        color: var(--accent);
+    }
+    .bpos-plan__price-regular {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--text-subtle);
+        text-decoration: line-through;
+    }
+    .bpos-plan__period {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        color: var(--text-subtle);
+    }
+    .bpos-plan__savings {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        color: var(--accent);
+        min-height: 1.2em;
+    }
+
+    /* Footnote */
+    .bpos-footnote {
+        text-align: center;
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: var(--font-light);
+        color: var(--text-subtle);
+    }
+
+    @media (max-width: 640px) {
+        .bpos-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script is:inline>
+    (function() {
+        var toggle = document.getElementById('bposBillingToggle');
+        var grid = document.getElementById('bposPlanGrid');
+        if (!toggle || !grid) return;
+
+        var buttons = toggle.querySelectorAll('.bpos-toggle__btn');
+
+        buttons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var billing = btn.getAttribute('data-billing');
+                buttons.forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+
+                // Update prices
+                grid.querySelectorAll('[data-' + billing + ']').forEach(function(el) {
+                    el.textContent = el.getAttribute('data-' + billing);
+                });
+            });
+        });
+    })();
+</script>
