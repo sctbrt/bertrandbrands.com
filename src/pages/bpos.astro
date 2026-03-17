@@ -484,6 +484,16 @@ const currentYear = new Date().getFullYear();
                 filter: brightness(0.9);
                 transform: translateY(-1px);
             }
+            .bpos-plan__cta--subscribe {
+                background: rgba(217, 119, 6, 0.10);
+                border: 1px solid rgba(217, 119, 6, 0.3);
+                color: rgb(217, 119, 6);
+                font-weight: 600;
+            }
+            .bpos-plan__cta--subscribe:hover {
+                background: rgba(217, 119, 6, 0.20);
+                transform: translateY(-1px);
+            }
             .bpos-plan__cta--secondary {
                 background: rgba(217, 119, 6, 0.08);
                 border: 1px solid rgba(217, 119, 6, 0.2);
@@ -494,6 +504,120 @@ const currentYear = new Date().getFullYear();
             .bpos-plan__cta--secondary:hover {
                 background: rgba(217, 119, 6, 0.15);
                 color: var(--text);
+            }
+
+            /* Trial modal */
+            .bpos-trial-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                background: rgba(0,0,0,0.7);
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+            }
+            .bpos-trial-overlay.is-open { display: flex; }
+            .bpos-trial-modal {
+                background: var(--bg-secondary, #141210);
+                border: 1px solid rgba(217, 119, 6, 0.2);
+                border-radius: 16px;
+                padding: 32px;
+                max-width: 420px;
+                width: 100%;
+                position: relative;
+            }
+            .bpos-trial-modal__title {
+                font-family: var(--font-display, Inter, sans-serif);
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--text, #f5f5f5);
+                margin-bottom: 4px;
+            }
+            .bpos-trial-modal__subtitle {
+                font-size: 13px;
+                color: var(--text-muted, #999);
+                margin-bottom: 24px;
+            }
+            .bpos-trial-modal__close {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                background: none;
+                border: none;
+                color: var(--text-muted, #999);
+                font-size: 20px;
+                cursor: pointer;
+                padding: 4px 8px;
+                line-height: 1;
+            }
+            .bpos-trial-field {
+                margin-bottom: 16px;
+            }
+            .bpos-trial-field label {
+                display: block;
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--text-subtle, #aaa);
+                margin-bottom: 6px;
+            }
+            .bpos-trial-field input {
+                width: 100%;
+                padding: 10px 12px;
+                font-size: 14px;
+                font-family: var(--font-body, Inter, sans-serif);
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 8px;
+                color: var(--text, #f5f5f5);
+                outline: none;
+                transition: border-color 0.15s;
+            }
+            .bpos-trial-field input:focus {
+                border-color: rgba(217, 119, 6, 0.5);
+            }
+            .bpos-trial-submit {
+                width: 100%;
+                padding: 12px;
+                font-size: 15px;
+                font-weight: 700;
+                font-family: var(--font-body, Inter, sans-serif);
+                background: rgb(217, 119, 6);
+                color: #0a0a0a;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                margin-top: 8px;
+                transition: filter 0.15s;
+            }
+            .bpos-trial-submit:hover { filter: brightness(0.9); }
+            .bpos-trial-submit:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+            .bpos-trial-error {
+                color: #ef4444;
+                font-size: 12px;
+                margin-top: 8px;
+                display: none;
+            }
+            .bpos-trial-success {
+                text-align: center;
+                padding: 24px 0;
+            }
+            .bpos-trial-success__key {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 18px;
+                font-weight: 600;
+                color: rgb(217, 119, 6);
+                letter-spacing: 0.04em;
+                margin: 16px 0;
+                padding: 12px;
+                background: rgba(217, 119, 6, 0.08);
+                border: 1px solid rgba(217, 119, 6, 0.2);
+                border-radius: 8px;
             }
             .bpos-pricing__footnote {
                 text-align: center;
@@ -737,7 +861,8 @@ const currentYear = new Date().getFullYear();
                             <li>Menu management</li>
                             <li>Employee PIN login</li>
                         </ul>
-                        <a href="#" class="bpos-plan__cta bpos-plan__cta--primary">Start Free Trial</a>
+                        <button type="button" class="bpos-plan__cta bpos-plan__cta--primary bpos-trial-btn" data-plan="standard">Start Free Trial</button>
+                        <button type="button" class="bpos-plan__cta bpos-plan__cta--subscribe" data-plan="standard">Subscribe</button>
                         <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos-plan__cta bpos-plan__cta--secondary">Try the demo &rarr;</a>
                     </div>
 
@@ -764,7 +889,8 @@ const currentYear = new Date().getFullYear();
                             <li>Multi-terminal sync</li>
                             <li>Cloud backup</li>
                         </ul>
-                        <a href="#" class="bpos-plan__cta bpos-plan__cta--primary">Start Free Trial</a>
+                        <button type="button" class="bpos-plan__cta bpos-plan__cta--primary bpos-trial-btn" data-plan="pro">Start Free Trial</button>
+                        <button type="button" class="bpos-plan__cta bpos-plan__cta--subscribe" data-plan="pro">Subscribe</button>
                         <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos-plan__cta bpos-plan__cta--secondary">Try the demo &rarr;</a>
                     </div>
                 </div>
@@ -842,6 +968,48 @@ const currentYear = new Date().getFullYear();
         <p class="service-footer__phone"><a href="tel:+17054133705" class="phone-link__mobile">(705) 413-3705</a><span class="phone-link__desktop">(705) 413-3705</span></p>
     </footer>
 
+    <!-- Trial modal -->
+    <div class="bpos-trial-overlay" id="bposTrialOverlay">
+        <div class="bpos-trial-modal">
+            <button class="bpos-trial-modal__close" type="button" id="bposTrialClose">&times;</button>
+            <div id="bposTrialForm">
+                <p class="bpos-trial-modal__title">Start your free trial</p>
+                <p class="bpos-trial-modal__subtitle">14 days, no credit card. Your license key is generated instantly.</p>
+                <input type="hidden" id="bposTrialPlan" value="standard" />
+                <div class="bpos-trial-field">
+                    <label for="bposTrialName">Restaurant Name</label>
+                    <input type="text" id="bposTrialName" placeholder="e.g. Chez Marcel" required />
+                </div>
+                <div class="bpos-trial-field">
+                    <label for="bposTrialContact">Your Name</label>
+                    <input type="text" id="bposTrialContact" placeholder="First Last" required />
+                </div>
+                <div class="bpos-trial-field">
+                    <label for="bposTrialEmail">Email</label>
+                    <input type="email" id="bposTrialEmail" placeholder="you@restaurant.com" required />
+                </div>
+                <div class="bpos-trial-field">
+                    <label for="bposTrialPhone">Phone <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+                    <input type="tel" id="bposTrialPhone" placeholder="(555) 123-4567" />
+                </div>
+                <button type="button" class="bpos-trial-submit" id="bposTrialSubmit">Get License Key</button>
+                <p class="bpos-trial-error" id="bposTrialError"></p>
+            </div>
+            <div id="bposTrialSuccess" class="bpos-trial-success" style="display:none">
+                <p class="bpos-trial-modal__title">You're in!</p>
+                <p class="bpos-trial-modal__subtitle">Your 14-day trial license key:</p>
+                <div class="bpos-trial-success__key" id="bposTrialKey"></div>
+                <p style="font-size:13px;color:var(--text-muted,#999);margin-top:12px">
+                    Enter this key when you launch B-POS.<br/>
+                    We've also sent it to your email.
+                </p>
+                <a href="https://pos.bertrandgroup.ca" class="bpos-plan__cta bpos-plan__cta--primary" style="display:inline-block;margin-top:20px;padding:12px 32px;text-decoration:none">
+                    Launch B-POS &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
     <StickyMobileCTA
         href="#pricing"
         text="Start Free Trial"
@@ -852,36 +1020,170 @@ const currentYear = new Date().getFullYear();
 </ServiceDetailLayout>
 
 <script is:inline>
-    /* Billing toggle */
     (function() {
+        var API_BASE = 'https://bpos-api.bertrandbrands.workers.dev';
+        var currentBilling = 'month';
+
+        /* Billing toggle */
         var toggle = document.getElementById('bposToggle');
         var grid = document.getElementById('bposPlans');
-        if (!toggle || !grid) return;
-
-        var buttons = toggle.querySelectorAll('.bpos-toggle__btn');
-        buttons.forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var billing = btn.getAttribute('data-billing');
-                buttons.forEach(function(b) { b.classList.remove('active'); });
-                btn.classList.add('active');
-                grid.querySelectorAll('[data-' + billing + ']').forEach(function(el) {
-                    el.textContent = el.getAttribute('data-' + billing);
+        if (toggle && grid) {
+            var buttons = toggle.querySelectorAll('.bpos-toggle__btn');
+            buttons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    currentBilling = btn.getAttribute('data-billing');
+                    buttons.forEach(function(b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    grid.querySelectorAll('[data-' + currentBilling + ']').forEach(function(el) {
+                        el.textContent = el.getAttribute('data-' + currentBilling);
+                    });
                 });
             });
-        });
-    })();
+        }
 
-    /* FAQ accordion */
-    (function() {
+        /* FAQ accordion */
         var faq = document.getElementById('bposFaq');
-        if (!faq) return;
-        faq.querySelectorAll('.bpos-faq__q').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var item = btn.closest('.bpos-faq__item');
-                var wasOpen = item.classList.contains('is-open');
-                faq.querySelectorAll('.bpos-faq__item').forEach(function(i) { i.classList.remove('is-open'); });
-                if (!wasOpen) item.classList.add('is-open');
+        if (faq) {
+            faq.querySelectorAll('.bpos-faq__q').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var item = btn.closest('.bpos-faq__item');
+                    var wasOpen = item.classList.contains('is-open');
+                    faq.querySelectorAll('.bpos-faq__item').forEach(function(i) { i.classList.remove('is-open'); });
+                    if (!wasOpen) item.classList.add('is-open');
+                });
+            });
+        }
+
+        /* Trial modal */
+        var overlay = document.getElementById('bposTrialOverlay');
+        var closeBtn = document.getElementById('bposTrialClose');
+        var formDiv = document.getElementById('bposTrialForm');
+        var successDiv = document.getElementById('bposTrialSuccess');
+        var submitBtn = document.getElementById('bposTrialSubmit');
+        var errorEl = document.getElementById('bposTrialError');
+        var planInput = document.getElementById('bposTrialPlan');
+
+        function openTrialModal(plan) {
+            planInput.value = plan;
+            formDiv.style.display = '';
+            successDiv.style.display = 'none';
+            errorEl.style.display = 'none';
+            overlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTrialModal() {
+            overlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', closeTrialModal);
+        if (overlay) overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closeTrialModal();
+        });
+
+        /* Trial form submit */
+        if (submitBtn) {
+            submitBtn.addEventListener('click', async function() {
+                var name = document.getElementById('bposTrialName').value.trim();
+                var contact = document.getElementById('bposTrialContact').value.trim();
+                var email = document.getElementById('bposTrialEmail').value.trim();
+                var phone = document.getElementById('bposTrialPhone').value.trim();
+
+                if (!name || !contact || !email) {
+                    errorEl.textContent = 'Please fill in all required fields.';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Generating...';
+                errorEl.style.display = 'none';
+
+                try {
+                    var res = await fetch(API_BASE + '/trial', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            restaurantName: name,
+                            contactName: contact,
+                            email: email,
+                            phone: phone || undefined
+                        })
+                    });
+
+                    var data = await res.json();
+
+                    if (!res.ok) {
+                        throw new Error(data.error || 'Something went wrong');
+                    }
+
+                    document.getElementById('bposTrialKey').textContent = data.licenseKey;
+                    formDiv.style.display = 'none';
+                    successDiv.style.display = '';
+
+                    /* GA4 event */
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', {
+                            event_category: 'bpos',
+                            event_label: planInput.value + '_trial',
+                            value: 0
+                        });
+                    }
+                } catch (err) {
+                    errorEl.textContent = err.message || 'Failed to generate trial. Please try again.';
+                    errorEl.style.display = 'block';
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Get License Key';
+                }
+            });
+        }
+
+        /* Subscribe buttons → Stripe Checkout */
+        document.querySelectorAll('.bpos-plan__cta--subscribe').forEach(function(btn) {
+            btn.addEventListener('click', async function() {
+                var plan = btn.getAttribute('data-plan');
+                btn.disabled = true;
+                btn.textContent = 'Redirecting...';
+
+                try {
+                    var res = await fetch(API_BASE + '/checkout', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            plan: plan,
+                            billing: currentBilling,
+                            earlyBird: currentBilling === 'year',
+                            successUrl: window.location.origin + '/bpos?checkout=success',
+                            cancelUrl: window.location.origin + '/bpos?checkout=cancelled'
+                        })
+                    });
+
+                    var data = await res.json();
+                    if (!res.ok) throw new Error(data.error);
+
+                    window.location.href = data.url;
+                } catch (err) {
+                    alert('Could not start checkout: ' + (err.message || 'Please try again.'));
+                    btn.disabled = false;
+                    btn.textContent = 'Subscribe';
+                }
             });
         });
+
+        /* Trial buttons → open modal */
+        document.querySelectorAll('.bpos-trial-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                openTrialModal(btn.getAttribute('data-plan'));
+            });
+        });
+
+        /* Handle checkout success/cancel URL params */
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('checkout') === 'success') {
+            alert('Payment successful! Check your email for your license key.');
+            window.history.replaceState({}, '', '/bpos');
+        }
     })();
 </script>
