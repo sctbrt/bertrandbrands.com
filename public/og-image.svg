@@ -1,0 +1,340 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <!-- Amber color at various opacities -->
+    <style>
+      .dot { fill: #D97706; }
+      .line { stroke: #D97706; fill: none; }
+      .line-faint { stroke: #1a1916; stroke-opacity: 0.18; fill: none; }
+      .line-subtle { stroke: #1a1916; stroke-opacity: 0.3; fill: none; }
+      .line-medium { stroke: #D97706; stroke-opacity: 0.5; fill: none; }
+      .circle-guide { stroke: #1a1916; stroke-opacity: 0.22; fill: none; }
+      .tick { stroke: #1a1916; stroke-opacity: 0.35; fill: none; }
+      .label { fill: #1a1916; fill-opacity: 0.3; font-family: 'Inter', 'Helvetica Neue', sans-serif; font-size: 9px; letter-spacing: 0.08em; }
+      .line-amber { stroke: #D97706; stroke-opacity: 0.2; fill: none; }
+      .circle-amber { stroke: #D97706; stroke-opacity: 0.15; fill: none; }
+      .node { fill: #1a1916; fill-opacity: 0.3; }
+      .node-amber { fill: #D97706; fill-opacity: 0.25; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#F5F0E8"/>
+
+  <!-- ============================================ -->
+  <!-- ARCHITECTURAL CONSTRUCTION LINES             -->
+  <!-- ============================================ -->
+
+  <!-- Major grid lines (full canvas span) -->
+  <line class="line-faint" x1="0" y1="315" x2="1200" y2="315" stroke-width="1"/>
+  <line class="line-faint" x1="600" y1="0" x2="600" y2="630" stroke-width="1"/>
+
+  <!-- B bounding box guides (full canvas span) -->
+  <line class="line-faint" x1="0" y1="112" x2="1200" y2="112" stroke-width="1" stroke-dasharray="2,6"/>
+  <line class="line-faint" x1="0" y1="518" x2="1200" y2="518" stroke-width="1" stroke-dasharray="2,6"/>
+  <line class="line-faint" x1="465" y1="0" x2="465" y2="630" stroke-width="1" stroke-dasharray="2,6"/>
+  <line class="line-faint" x1="735" y1="0" x2="735" y2="630" stroke-width="1" stroke-dasharray="2,6"/>
+
+  <!-- Row guides through each dot row (full canvas span) -->
+  <line class="line-faint" x1="0" y1="180" x2="1200" y2="180" stroke-width="0.5" stroke-dasharray="1,8"/>
+  <line class="line-faint" x1="0" y1="247" x2="1200" y2="247" stroke-width="0.5" stroke-dasharray="1,8"/>
+  <line class="line-faint" x1="0" y1="383" x2="1200" y2="383" stroke-width="0.5" stroke-dasharray="1,8"/>
+  <line class="line-faint" x1="0" y1="450" x2="1200" y2="450" stroke-width="0.5" stroke-dasharray="1,8"/>
+
+  <!-- Column guides through each dot column (full canvas span) -->
+  <line class="line-faint" x1="532" y1="0" x2="532" y2="630" stroke-width="0.5" stroke-dasharray="1,8"/>
+  <line class="line-faint" x1="668" y1="0" x2="668" y2="630" stroke-width="0.5" stroke-dasharray="1,8"/>
+
+  <!-- Diagonal construction lines through B center -->
+  <line class="line-faint" x1="300" y1="15" x2="900" y2="615" stroke-width="0.5" stroke-dasharray="3,8"/>
+  <line class="line-faint" x1="900" y1="15" x2="300" y2="615" stroke-width="0.5" stroke-dasharray="3,8"/>
+
+  <!-- ============================================ -->
+  <!-- CONSTRUCTION CIRCLES                         -->
+  <!-- ============================================ -->
+
+  <!-- Large outer construction circle -->
+  <circle class="circle-guide" cx="600" cy="315" r="240" stroke-width="1"/>
+
+  <!-- B bounding circle -->
+  <circle class="circle-guide" cx="600" cy="315" r="168" stroke-width="1"/>
+
+  <!-- Upper bump arc -->
+  <circle class="circle-guide" cx="668" cy="237" r="78" stroke-width="1"/>
+
+  <!-- Lower bump arc -->
+  <circle class="circle-guide" cx="668" cy="369" r="78" stroke-width="1"/>
+
+  <!-- Inner structure circle (dashed) -->
+  <circle class="circle-guide" cx="600" cy="315" r="105" stroke-width="1" stroke-dasharray="3,5"/>
+
+  <!-- Center alignment circle -->
+  <circle class="circle-guide" cx="600" cy="315" r="42" stroke-width="1"/>
+
+  <!-- Tangent arcs at far edges -->
+  <path class="circle-guide" d="M 200,315 A 280,280 0 0,1 280,100" stroke-width="0.75" stroke-dasharray="2,6"/>
+  <path class="circle-guide" d="M 1000,315 A 280,280 0 0,0 920,530" stroke-width="0.75" stroke-dasharray="2,6"/>
+
+  <!-- ============================================ -->
+  <!-- CORNER REGISTRATION / CROP MARKS             -->
+  <!-- ============================================ -->
+
+  <!-- Inner crop marks (around B) -->
+  <line class="line-medium" x1="420" y1="68" x2="420" y2="92" stroke-width="1"/>
+  <line class="line-medium" x1="420" y1="68" x2="444" y2="68" stroke-width="1"/>
+  <line class="line-medium" x1="780" y1="68" x2="780" y2="92" stroke-width="1"/>
+  <line class="line-medium" x1="756" y1="68" x2="780" y2="68" stroke-width="1"/>
+  <line class="line-medium" x1="420" y1="562" x2="420" y2="538" stroke-width="1"/>
+  <line class="line-medium" x1="420" y1="562" x2="444" y2="562" stroke-width="1"/>
+  <line class="line-medium" x1="780" y1="562" x2="780" y2="538" stroke-width="1"/>
+  <line class="line-medium" x1="756" y1="562" x2="780" y2="562" stroke-width="1"/>
+
+  <!-- Outer crop marks (near canvas edges) -->
+  <line class="line-subtle" x1="80" y1="30" x2="80" y2="60" stroke-width="0.75"/>
+  <line class="line-subtle" x1="80" y1="30" x2="110" y2="30" stroke-width="0.75"/>
+  <line class="line-subtle" x1="1120" y1="30" x2="1120" y2="60" stroke-width="0.75"/>
+  <line class="line-subtle" x1="1090" y1="30" x2="1120" y2="30" stroke-width="0.75"/>
+  <line class="line-subtle" x1="80" y1="600" x2="80" y2="570" stroke-width="0.75"/>
+  <line class="line-subtle" x1="80" y1="600" x2="110" y2="600" stroke-width="0.75"/>
+  <line class="line-subtle" x1="1120" y1="600" x2="1120" y2="570" stroke-width="0.75"/>
+  <line class="line-subtle" x1="1090" y1="600" x2="1120" y2="600" stroke-width="0.75"/>
+
+  <!-- ============================================ -->
+  <!-- DIMENSION / MEASUREMENT LINES                -->
+  <!-- ============================================ -->
+
+  <!-- Top dimension line spanning full B width -->
+  <line class="line-subtle" x1="465" y1="78" x2="735" y2="78" stroke-width="1"/>
+  <line class="tick" x1="465" y1="72" x2="465" y2="84" stroke-width="1"/>
+  <line class="tick" x1="735" y1="72" x2="735" y2="84" stroke-width="1"/>
+  <line class="tick" x1="600" y1="74" x2="600" y2="82" stroke-width="0.75"/>
+
+  <!-- Left dimension line spanning full B height -->
+  <line class="line-subtle" x1="432" y1="112" x2="432" y2="518" stroke-width="1"/>
+  <line class="tick" x1="426" y1="112" x2="438" y2="112" stroke-width="1"/>
+  <line class="tick" x1="426" y1="518" x2="438" y2="518" stroke-width="1"/>
+  <line class="tick" x1="428" y1="315" x2="436" y2="315" stroke-width="0.75"/>
+
+  <!-- Right dimension line (partial, for bump width) -->
+  <line class="line-subtle" x1="768" y1="180" x2="768" y2="450" stroke-width="0.75" stroke-dasharray="2,4"/>
+  <line class="tick" x1="762" y1="180" x2="774" y2="180" stroke-width="0.75"/>
+  <line class="tick" x1="762" y1="450" x2="774" y2="450" stroke-width="0.75"/>
+
+  <!-- Bottom measurement ruler (extended) -->
+  <g fill="#1a1916" fill-opacity="0.18">
+    <circle cx="200" cy="555" r="1.5"/>
+    <circle cx="218" cy="555" r="1"/>
+    <circle cx="236" cy="555" r="1"/>
+    <circle cx="254" cy="555" r="1.5"/>
+    <circle cx="272" cy="555" r="1"/>
+    <circle cx="290" cy="555" r="1"/>
+    <circle cx="308" cy="555" r="1.5"/>
+    <circle cx="326" cy="555" r="1"/>
+    <circle cx="344" cy="555" r="1"/>
+    <circle cx="362" cy="555" r="1.5"/>
+    <circle cx="380" cy="555" r="1"/>
+    <circle cx="398" cy="555" r="1"/>
+    <circle cx="416" cy="555" r="1.5"/>
+    <circle cx="434" cy="555" r="1"/>
+    <circle cx="452" cy="555" r="1"/>
+    <circle cx="470" cy="555" r="1.5"/>
+    <circle cx="488" cy="555" r="1"/>
+    <circle cx="506" cy="555" r="1"/>
+    <circle cx="524" cy="555" r="1.5"/>
+    <circle cx="542" cy="555" r="1"/>
+    <circle cx="560" cy="555" r="1"/>
+    <circle cx="578" cy="555" r="1.5"/>
+    <circle cx="596" cy="555" r="1"/>
+    <circle cx="614" cy="555" r="1"/>
+    <circle cx="632" cy="555" r="1.5"/>
+    <circle cx="650" cy="555" r="1"/>
+    <circle cx="668" cy="555" r="1"/>
+    <circle cx="686" cy="555" r="1.5"/>
+    <circle cx="704" cy="555" r="1"/>
+    <circle cx="722" cy="555" r="1"/>
+    <circle cx="740" cy="555" r="1.5"/>
+    <circle cx="758" cy="555" r="1"/>
+    <circle cx="776" cy="555" r="1"/>
+    <circle cx="794" cy="555" r="1.5"/>
+    <circle cx="812" cy="555" r="1"/>
+    <circle cx="830" cy="555" r="1"/>
+    <circle cx="848" cy="555" r="1.5"/>
+    <circle cx="866" cy="555" r="1"/>
+    <circle cx="884" cy="555" r="1"/>
+    <circle cx="902" cy="555" r="1.5"/>
+    <circle cx="920" cy="555" r="1"/>
+    <circle cx="938" cy="555" r="1"/>
+    <circle cx="956" cy="555" r="1.5"/>
+    <circle cx="974" cy="555" r="1"/>
+    <circle cx="992" cy="555" r="1"/>
+    <circle cx="1010" cy="555" r="1.5"/>
+  </g>
+
+  <!-- Top measurement ruler (extended) -->
+  <g fill="#1a1916" fill-opacity="0.12">
+    <circle cx="200" cy="48" r="1.5"/>
+    <circle cx="218" cy="48" r="1"/>
+    <circle cx="236" cy="48" r="1"/>
+    <circle cx="254" cy="48" r="1.5"/>
+    <circle cx="272" cy="48" r="1"/>
+    <circle cx="290" cy="48" r="1"/>
+    <circle cx="308" cy="48" r="1.5"/>
+    <circle cx="326" cy="48" r="1"/>
+    <circle cx="344" cy="48" r="1"/>
+    <circle cx="362" cy="48" r="1.5"/>
+    <circle cx="380" cy="48" r="1"/>
+    <circle cx="398" cy="48" r="1"/>
+    <circle cx="416" cy="48" r="1.5"/>
+    <circle cx="434" cy="48" r="1"/>
+    <circle cx="452" cy="48" r="1"/>
+    <circle cx="470" cy="48" r="1.5"/>
+    <circle cx="488" cy="48" r="1"/>
+    <circle cx="506" cy="48" r="1"/>
+    <circle cx="524" cy="48" r="1.5"/>
+    <circle cx="542" cy="48" r="1"/>
+    <circle cx="560" cy="48" r="1"/>
+    <circle cx="578" cy="48" r="1.5"/>
+    <circle cx="596" cy="48" r="1"/>
+    <circle cx="614" cy="48" r="1"/>
+    <circle cx="632" cy="48" r="1.5"/>
+    <circle cx="650" cy="48" r="1"/>
+    <circle cx="668" cy="48" r="1"/>
+    <circle cx="686" cy="48" r="1.5"/>
+    <circle cx="704" cy="48" r="1"/>
+    <circle cx="722" cy="48" r="1"/>
+    <circle cx="740" cy="48" r="1.5"/>
+    <circle cx="758" cy="48" r="1"/>
+    <circle cx="776" cy="48" r="1"/>
+    <circle cx="794" cy="48" r="1.5"/>
+    <circle cx="812" cy="48" r="1"/>
+    <circle cx="830" cy="48" r="1"/>
+    <circle cx="848" cy="48" r="1.5"/>
+    <circle cx="866" cy="48" r="1"/>
+    <circle cx="884" cy="48" r="1"/>
+    <circle cx="902" cy="48" r="1.5"/>
+    <circle cx="920" cy="48" r="1"/>
+    <circle cx="938" cy="48" r="1"/>
+    <circle cx="956" cy="48" r="1.5"/>
+    <circle cx="974" cy="48" r="1"/>
+    <circle cx="992" cy="48" r="1"/>
+    <circle cx="1010" cy="48" r="1.5"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- ANNOTATION LABELS                            -->
+  <!-- ============================================ -->
+  <text class="label" x="748" y="81">270</text>
+  <text class="label" x="435" y="325" text-anchor="end" transform="rotate(-90, 435, 325)">406</text>
+  <text class="label" x="775" y="320" transform="rotate(-90, 775, 320)">270</text>
+
+  <!-- ============================================ -->
+  <!-- DOT-MATRIX B (centered at 600, 315)          -->
+  <!-- Mapped from 512 viewBox: scale ~1.21x        -->
+  <!-- Offset: cx = (origX - 256) * 1.21 + 600      -->
+  <!--         cy = (origY - 256) * 1.21 + 315      -->
+  <!-- ============================================ -->
+
+  <g class="dot">
+    <!-- Row 1 (y=88): 4 dots -->
+    <circle cx="464.6" cy="111.8" r="17"/>
+    <circle cx="532.4" cy="111.8" r="17"/>
+    <circle cx="600.0" cy="111.8" r="17"/>
+    <circle cx="667.7" cy="111.8" r="17"/>
+
+    <!-- Row 2 (y=144): 4 dots -->
+    <circle cx="464.6" cy="179.6" r="17"/>
+    <circle cx="532.4" cy="179.6" r="17"/>
+    <circle cx="667.7" cy="179.6" r="17"/>
+    <circle cx="735.4" cy="179.6" r="17"/>
+
+    <!-- Row 3 (y=200): 4 dots -->
+    <circle cx="464.6" cy="247.2" r="17"/>
+    <circle cx="532.4" cy="247.2" r="17"/>
+    <circle cx="667.7" cy="247.2" r="17"/>
+    <circle cx="735.4" cy="247.2" r="17"/>
+
+    <!-- Row 4 (y=256): 4 dots — middle crossbar -->
+    <circle cx="464.6" cy="315.0" r="17"/>
+    <circle cx="532.4" cy="315.0" r="17"/>
+    <circle cx="600.0" cy="315.0" r="17"/>
+    <circle cx="667.7" cy="315.0" r="17"/>
+
+    <!-- Row 5 (y=312): 4 dots -->
+    <circle cx="464.6" cy="382.8" r="17"/>
+    <circle cx="532.4" cy="382.8" r="17"/>
+    <circle cx="667.7" cy="382.8" r="17"/>
+    <circle cx="735.4" cy="382.8" r="17"/>
+
+    <!-- Row 6 (y=368): 4 dots -->
+    <circle cx="464.6" cy="450.4" r="17"/>
+    <circle cx="532.4" cy="450.4" r="17"/>
+    <circle cx="667.7" cy="450.4" r="17"/>
+    <circle cx="735.4" cy="450.4" r="17"/>
+
+    <!-- Row 7 (y=424): 4 dots -->
+    <circle cx="464.6" cy="518.2" r="17"/>
+    <circle cx="532.4" cy="518.2" r="17"/>
+    <circle cx="600.0" cy="518.2" r="17"/>
+    <circle cx="667.7" cy="518.2" r="17"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- AMBER ACCENT GEOMETRY (depth layer)          -->
+  <!-- ============================================ -->
+
+  <!-- Amber construction arcs radiating from B -->
+  <circle class="circle-amber" cx="600" cy="315" r="300" stroke-width="1"/>
+  <circle class="circle-amber" cx="600" cy="315" r="350" stroke-width="0.75" stroke-dasharray="4,8"/>
+
+  <!-- Amber tangent lines from B corners outward -->
+  <line class="line-amber" x1="465" y1="112" x2="180" y2="0" stroke-width="0.75"/>
+  <line class="line-amber" x1="735" y1="112" x2="1020" y2="0" stroke-width="0.75"/>
+  <line class="line-amber" x1="465" y1="518" x2="180" y2="630" stroke-width="0.75"/>
+  <line class="line-amber" x1="735" y1="518" x2="1020" y2="630" stroke-width="0.75"/>
+
+  <!-- Amber horizontal accent lines -->
+  <line class="line-amber" x1="80" y1="315" x2="420" y2="315" stroke-width="1"/>
+  <line class="line-amber" x1="780" y1="315" x2="1120" y2="315" stroke-width="1"/>
+
+  <!-- Golden section arcs -->
+  <path class="circle-amber" d="M 600,315 Q 600,112 465,112" stroke-width="0.75" stroke-dasharray="3,6"/>
+  <path class="circle-amber" d="M 600,315 Q 600,518 735,518" stroke-width="0.75" stroke-dasharray="3,6"/>
+
+  <!-- ============================================ -->
+  <!-- INTERSECTION NODES                           -->
+  <!-- ============================================ -->
+
+  <!-- Nodes where major lines cross (small dots marking intersections) -->
+  <!-- Center crosshair -->
+  <line class="line-subtle" x1="592" y1="315" x2="608" y2="315" stroke-width="1"/>
+  <line class="line-subtle" x1="600" y1="307" x2="600" y2="323" stroke-width="1"/>
+  <circle class="node" cx="600" cy="315" r="2.5"/>
+
+  <!-- Grid intersection nodes -->
+  <circle class="node" cx="465" cy="112" r="2"/>
+  <circle class="node" cx="735" cy="112" r="2"/>
+  <circle class="node" cx="465" cy="518" r="2"/>
+  <circle class="node" cx="735" cy="518" r="2"/>
+  <circle class="node" cx="465" cy="315" r="2"/>
+  <circle class="node" cx="735" cy="315" r="2"/>
+  <circle class="node" cx="600" cy="112" r="2"/>
+  <circle class="node" cx="600" cy="518" r="2"/>
+  <circle class="node" cx="532" cy="315" r="1.5"/>
+  <circle class="node" cx="668" cy="315" r="1.5"/>
+
+  <!-- Amber accent nodes at key positions -->
+  <circle class="node-amber" cx="465" cy="180" r="2"/>
+  <circle class="node-amber" cx="465" cy="247" r="2"/>
+  <circle class="node-amber" cx="465" cy="383" r="2"/>
+  <circle class="node-amber" cx="465" cy="450" r="2"/>
+  <circle class="node-amber" cx="735" cy="180" r="2"/>
+  <circle class="node-amber" cx="735" cy="247" r="2"/>
+  <circle class="node-amber" cx="735" cy="383" r="2"/>
+  <circle class="node-amber" cx="735" cy="450" r="2"/>
+
+  <!-- Far-field intersection nodes -->
+  <circle class="node" cx="80" cy="315" r="1.5"/>
+  <circle class="node" cx="1120" cy="315" r="1.5"/>
+  <circle class="node" cx="600" cy="48" r="1.5"/>
+  <circle class="node" cx="600" cy="555" r="1.5"/>
+
+</svg>

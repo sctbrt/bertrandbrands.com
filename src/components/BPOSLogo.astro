@@ -1,0 +1,206 @@
+---
+/**
+ * BPOSLogo.astro — Reusable animated B·POS logo lockup
+ *
+ * Features: Dot-matrix B with tri-colour gradient, ·POS text,
+ * 3D orbiting arc, electric outer glow.
+ *
+ * Props:
+ *   tag      — HTML heading tag or 'div' (default: 'div')
+ *   size     — 'lg' (homepage teaser) | 'hero' (product page hero) | 'sm' (inline)
+ *   id       — optional id attribute on the name element
+ *   noArc    — disable the orbiting arc (default: false)
+ *   noGlow   — disable the electric glow (default: false)
+ */
+
+interface Props {
+    tag?: 'h1' | 'h2' | 'h3' | 'div' | 'span';
+    size?: 'lg' | 'hero' | 'sm';
+    id?: string;
+    noArc?: boolean;
+    noGlow?: boolean;
+}
+
+const { tag: Tag = 'div', size = 'lg', id, noArc = false, noGlow = false } = Astro.props;
+
+const nameClass = [
+    'bpos-logo__name',
+    `bpos-logo--${size}`,
+    noGlow ? '' : 'bpos-logo--glow',
+].filter(Boolean).join(' ');
+---
+
+<div class={noArc ? 'bpos-logo' : 'bpos-logo bpos-logo__arc-wrap'}>
+    {!noArc && <div class="bpos-logo__arc" aria-hidden="true"></div>}
+    <Tag class={nameClass} id={id}>
+        <span class="bpos-logo__gradient">
+            <svg class="bpos-logo__dotB" viewBox="100 50 310 420" aria-hidden="true">
+                <defs>
+                    <linearGradient id="bposLogoGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#D97706"/>
+                        <stop offset="45%" stop-color="#8B5CF6"/>
+                        <stop offset="100%" stop-color="#60A5FA"/>
+                    </linearGradient>
+                </defs>
+                <g fill="url(#bposLogoGrad)">
+                    <circle cx="144" cy="88" r="22"/><circle cx="200" cy="88" r="22"/>
+                    <circle cx="256" cy="88" r="22"/><circle cx="312" cy="88" r="22"/>
+                    <circle cx="144" cy="144" r="22"/><circle cx="200" cy="144" r="22"/>
+                    <circle cx="312" cy="144" r="22"/><circle cx="368" cy="144" r="22"/>
+                    <circle cx="144" cy="200" r="22"/><circle cx="200" cy="200" r="22"/>
+                    <circle cx="312" cy="200" r="22"/><circle cx="368" cy="200" r="22"/>
+                    <circle cx="144" cy="256" r="22"/><circle cx="200" cy="256" r="22"/>
+                    <circle cx="256" cy="256" r="22"/><circle cx="312" cy="256" r="22"/>
+                    <circle cx="144" cy="312" r="22"/><circle cx="200" cy="312" r="22"/>
+                    <circle cx="312" cy="312" r="22"/><circle cx="368" cy="312" r="22"/>
+                    <circle cx="144" cy="368" r="22"/><circle cx="200" cy="368" r="22"/>
+                    <circle cx="312" cy="368" r="22"/><circle cx="368" cy="368" r="22"/>
+                    <circle cx="144" cy="424" r="22"/><circle cx="200" cy="424" r="22"/>
+                    <circle cx="256" cy="424" r="22"/><circle cx="312" cy="424" r="22"/>
+                </g>
+            </svg><span class="bpos-logo__dot"></span>POS
+        </span>
+    </Tag>
+</div>
+
+<style>
+    /* ── Base ── */
+    .bpos-logo {
+        display: inline-block;
+        text-align: center;
+    }
+
+    .bpos-logo__name {
+        font-family: var(--font-display);
+        font-weight: 300;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin: 0;
+    }
+
+    /* ── Sizes ── */
+    .bpos-logo--lg {
+        font-size: clamp(3.5rem, 10vw, 6rem);
+    }
+    .bpos-logo--hero {
+        font-size: clamp(4rem, 12vw, 8rem);
+    }
+    .bpos-logo--sm {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    /* ── Electric glow ── */
+    .bpos-logo--glow {
+        filter: drop-shadow(0 0 1px rgba(139, 92, 246, 0.7))
+                drop-shadow(0 0 3px rgba(139, 92, 246, 0.45))
+                drop-shadow(0 0 1px rgba(96, 165, 250, 0.5));
+    }
+
+    /* ── Gradient text ── */
+    .bpos-logo__gradient {
+        background: linear-gradient(135deg, #D97706 0%, #8B5CF6 45%, #60A5FA 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* ── Dot-matrix B ── */
+    .bpos-logo__dotB {
+        display: inline-block;
+        height: 0.78em;
+        width: auto;
+        vertical-align: -0.06em;
+        margin-right: 0.02em;
+    }
+
+    /* ── Middle dot ── */
+    .bpos-logo__dot {
+        display: inline-block;
+        width: 0.18em;
+        height: 0.18em;
+        border-radius: 50%;
+        background: #8B5CF6;
+        vertical-align: 0.25em;
+        margin: 0 0.05em;
+    }
+
+    /* ── 3D Orbit arc ── */
+    .bpos-logo__arc-wrap {
+        position: relative;
+        perspective: 800px;
+    }
+
+    .bpos-logo__arc-wrap .bpos-logo__name {
+        position: relative;
+        z-index: 2;
+    }
+
+    .bpos-logo__arc {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 160%;
+        height: 160%;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        background: conic-gradient(
+            from 180deg,
+            transparent 0deg,
+            transparent 150deg,
+            rgba(96, 165, 250, 0.08) 190deg,
+            rgba(139, 92, 246, 0.3) 230deg,
+            rgba(217, 119, 6, 0.18) 265deg,
+            transparent 310deg,
+            transparent 360deg
+        );
+        mask-image: radial-gradient(ellipse at center, transparent 52%, black 56%, black 62%, transparent 66%);
+        -webkit-mask-image: radial-gradient(ellipse at center, transparent 52%, black 56%, black 62%, transparent 66%);
+        filter: blur(4px);
+        animation: bposLogoOrbit 20s linear infinite;
+    }
+
+    /* Front arc layer */
+    .bpos-logo__arc::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            rgba(96, 165, 250, 0.2) 15deg,
+            rgba(139, 92, 246, 0.35) 40deg,
+            rgba(217, 119, 6, 0.12) 65deg,
+            transparent 95deg,
+            transparent 360deg
+        );
+        mask-image: radial-gradient(ellipse at center, transparent 52%, black 56%, black 62%, transparent 66%);
+        -webkit-mask-image: radial-gradient(ellipse at center, transparent 52%, black 56%, black 62%, transparent 66%);
+        filter: blur(3px);
+        z-index: 3;
+    }
+
+    @keyframes bposLogoOrbit {
+        0%   { transform: translate(-50%, -50%) rotateX(60deg) rotateY(0deg) rotate(0deg); opacity: 0.65; }
+        8%   { transform: translate(-50.3%, -49.2%) rotateX(57deg) rotateY(2deg) rotate(32deg); opacity: 0.8; }
+        18%  { transform: translate(-49.5%, -50.5%) rotateX(63deg) rotateY(-1.5deg) rotate(72deg); opacity: 0.55; }
+        28%  { transform: translate(-50.8%, -49.8%) rotateX(58deg) rotateY(3deg) rotate(112deg); opacity: 0.85; }
+        38%  { transform: translate(-49.2%, -50.2%) rotateX(64deg) rotateY(-2deg) rotate(148deg); opacity: 0.5; }
+        48%  { transform: translate(-50.5%, -49.5%) rotateX(59deg) rotateY(1.5deg) rotate(185deg); opacity: 0.75; }
+        58%  { transform: translate(-49.8%, -50.8%) rotateX(62deg) rotateY(-2.5deg) rotate(222deg); opacity: 0.6; }
+        68%  { transform: translate(-50.2%, -49.2%) rotateX(56deg) rotateY(2.5deg) rotate(260deg); opacity: 0.9; }
+        78%  { transform: translate(-49.5%, -50.5%) rotateX(63deg) rotateY(-1deg) rotate(298deg); opacity: 0.55; }
+        88%  { transform: translate(-50.5%, -49.8%) rotateX(58deg) rotateY(2deg) rotate(332deg); opacity: 0.8; }
+        100% { transform: translate(-50%, -50%) rotateX(60deg) rotateY(0deg) rotate(360deg); opacity: 0.65; }
+    }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+        .bpos-logo__arc {
+            animation: none;
+            transform: translate(-50%, -50%) rotateX(60deg);
+            opacity: 0.6;
+        }
+    }
+</style>
