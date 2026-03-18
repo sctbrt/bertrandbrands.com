@@ -74,6 +74,172 @@ const currentYear = new Date().getFullYear();
 >
     <Fragment slot="head">
         <style is:inline>
+            /* ── BPOS Color Tokens ─────────────────────────── */
+            :root {
+                --bpos-blue: #60A5FA;
+                --bpos-blue-bright: #93C5FD;
+                --bpos-blue-dim: rgba(96, 165, 250, 0.12);
+                --bpos-amber: #E8D5B0;
+                --bpos-amber-dim: rgba(232, 213, 176, 0.08);
+                --bpos-amber-glow: rgba(232, 213, 176, 0.06);
+                --bpos-blue-glow: rgba(96, 165, 250, 0.08);
+                --bpos-violet: #A78BFA;
+                --bpos-violet-dim: rgba(167, 139, 250, 0.08);
+            }
+
+            /* ── Override parent Bertrand Brands warm tones ── */
+            .service-page {
+                background: #050810 !important;
+                background-image:
+                    radial-gradient(ellipse 120% 50% at 20% 0%, rgba(167, 139, 250, 0.04) 0%, transparent 50%),
+                    radial-gradient(ellipse 100% 60% at 80% 100%, rgba(96, 165, 250, 0.03) 0%, transparent 50%) !important;
+            }
+            .service-page__spotlight--1,
+            .service-page__spotlight--2 {
+                display: none !important;
+            }
+            .sticky-cta__button {
+                background: linear-gradient(135deg, #60A5FA, #3B82F6) !important;
+                color: #050a14 !important;
+                font-weight: 700 !important;
+                box-shadow: 0 0 16px rgba(96, 165, 250, 0.3);
+            }
+            .sticky-cta {
+                border-top: 1px solid rgba(96, 165, 250, 0.15) !important;
+                background: rgba(5, 8, 16, 0.95) !important;
+            }
+            .service-back {
+                color: var(--bpos-blue) !important;
+                border-color: rgba(96, 165, 250, 0.15) !important;
+                background: rgba(96, 165, 250, 0.04) !important;
+            }
+            .service-back:hover {
+                border-color: rgba(96, 165, 250, 0.3) !important;
+                background: rgba(96, 165, 250, 0.08) !important;
+            }
+
+            /* ── Trial modal ──────────────────────────────── */
+            .bpos-trial-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                background: rgba(0,0,0,0.75);
+                backdrop-filter: blur(4px);
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+            }
+            .bpos-trial-overlay.is-open { display: flex; }
+            .bpos-trial-modal {
+                background: #0e1117;
+                border: 1px solid rgba(96, 165, 250, 0.15);
+                border-radius: 16px;
+                padding: 32px;
+                max-width: 420px;
+                width: 100%;
+                position: relative;
+                box-shadow: 0 0 60px rgba(96, 165, 250, 0.06), 0 0 60px rgba(232, 213, 176, 0.04);
+            }
+            .bpos-trial-modal__title {
+                font-family: var(--font-display, Inter, sans-serif);
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--text, #f5f5f5);
+                margin-bottom: 4px;
+            }
+            .bpos-trial-modal__subtitle {
+                font-size: 13px;
+                color: var(--text-muted, #999);
+                margin-bottom: 24px;
+            }
+            .bpos-trial-modal__close {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                background: none;
+                border: none;
+                color: var(--text-muted, #999);
+                font-size: 20px;
+                cursor: pointer;
+                padding: 4px 8px;
+                line-height: 1;
+            }
+            .bpos-trial-field {
+                margin-bottom: 16px;
+            }
+            .bpos-trial-field label {
+                display: block;
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--text-subtle, #aaa);
+                margin-bottom: 6px;
+            }
+            .bpos-trial-field input {
+                width: 100%;
+                padding: 10px 12px;
+                font-size: 14px;
+                font-family: var(--font-body, Inter, sans-serif);
+                background: rgba(96, 165, 250, 0.04);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 8px;
+                color: var(--text, #f5f5f5);
+                outline: none;
+                transition: border-color 0.15s, box-shadow 0.15s;
+                box-sizing: border-box;
+            }
+            .bpos-trial-field input:focus {
+                border-color: rgba(96, 165, 250, 0.4);
+                box-shadow: 0 0 12px rgba(96, 165, 250, 0.08);
+            }
+            .bpos-trial-submit {
+                width: 100%;
+                padding: 12px;
+                font-size: 15px;
+                font-weight: 700;
+                font-family: var(--font-body, Inter, sans-serif);
+                background: linear-gradient(135deg, #60A5FA, #3B82F6);
+                color: #050a14;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                margin-top: 8px;
+                transition: all 0.2s;
+                box-shadow: 0 0 16px rgba(96, 165, 250, 0.25);
+            }
+            .bpos-trial-submit:hover {
+                box-shadow: 0 0 24px rgba(96, 165, 250, 0.4);
+                transform: translateY(-1px);
+            }
+            .bpos-trial-submit:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                box-shadow: none;
+            }
+            .bpos-trial-error {
+                color: #ef4444;
+                font-size: 12px;
+                margin-top: 8px;
+                display: none;
+            }
+            .bpos-trial-success {
+                text-align: center;
+                padding: 24px 0;
+            }
+            .bpos-trial-success__key {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--bpos-amber);
+                letter-spacing: 0.04em;
+                margin: 16px 0;
+                padding: 12px;
+                background: rgba(232, 213, 176, 0.06);
+                border: 1px solid rgba(232, 213, 176, 0.2);
+                border-radius: 8px;
+            }
         </style>
     </Fragment>
 
