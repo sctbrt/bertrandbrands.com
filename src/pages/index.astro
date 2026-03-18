@@ -10,8 +10,6 @@ import TierGroupHeader from '../components/TierGroupHeader.astro';
 import PhoneFirstCTA from '../components/PhoneFirstCTA.astro';
 import FAQ from '../components/FAQ.astro';
 import DotLogo from '../components/DotLogo.astro';
-import BPOSSection from '../components/BPOSSection.astro';
-
 import { breadcrumbList, schemaGraph, AREA_SERVED } from '../lib/schema';
 
 const currentYear = new Date().getFullYear();
@@ -522,9 +520,6 @@ const schemaJson = schemaGraph(
           </div>
       </section>
 
-      <!-- B-POS -->
-      <BPOSSection />
-
       <!-- About -->
       <section class="section" id="about">
           <div class="about__glow--violet" aria-hidden="true"></div>
@@ -567,6 +562,18 @@ const schemaJson = schemaGraph(
               </div>
           </div>
       </section>
+
+      <!-- B-POS teaser -->
+      <div class="bpos-teaser reveal" data-scroll="fade-up">
+          <div class="container">
+              <a href="/bpos" class="bpos-teaser__card">
+                  <span class="bpos-teaser__label">Also from Bertrand Group</span>
+                  <span class="bpos-teaser__title">B-POS <span class="bpos-teaser__sep">—</span> Restaurant Point of Sale</span>
+                  <span class="bpos-teaser__desc">Offline-first. Runs on any device. Zero processing fees.</span>
+                  <span class="bpos-teaser__link">Learn more &rarr;</span>
+              </a>
+          </div>
+      </div>
 
       <!-- Contact -->
       <section class="section" id="contact">

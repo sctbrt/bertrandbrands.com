@@ -1,245 +1,799 @@
 ---
 /**
- * BPOSSection — B-POS pricing cards for bertrandbrands.ca homepage.
- * Matches the existing tier-card / offer-card design language.
+ * BPOSSection — Cinematic B-POS showcase for bertrandbrands.ca.
+ * Apple-esque product introduction: hero → features → pricing.
+ * Dark island with its own brand identity (blue-to-amber sweep).
+ *
+ * Pricing from CLAUDE.md §22:
+ *   Standard: $79/mo or $69/mo annual ($828/yr)
+ *   Pro:      $129/mo or $109/mo annual ($1,308/yr)
+ *   Early Bird: $49/mo annual ($588/yr) — first 10 customers
  */
 ---
 
-<section class="section section--alt" id="bpos">
-    <div class="container">
-        <div class="section__header reveal" data-scroll="fade-up">
-            <p class="section__label">Software</p>
-            <h2 class="section__title">B-POS <span class="bpos-title-accent">Restaurant POS</span></h2>
-            <p class="section__scope">Offline-first point of sale for dine-in, bar, and takeout. Runs on any device.</p>
-        </div>
+<section class="bpos" id="bpos">
+    <!-- Ambient glow layers -->
+    <div class="bpos__glow bpos__glow--blue"></div>
+    <div class="bpos__glow bpos__glow--amber"></div>
 
-        <!-- Billing toggle -->
-        <div class="bpos-toggle reveal" data-scroll="fade-up" id="bposBillingToggle">
-            <button class="bpos-toggle__btn active" data-billing="month" type="button">Monthly</button>
-            <button class="bpos-toggle__btn" data-billing="year" type="button">
-                Annual
-                <span class="bpos-toggle__badge">Save 20%</span>
-            </button>
-        </div>
+    <div class="bpos__inner">
 
-        <!-- Early Bird -->
-        <p class="bpos-early-bird reveal" data-scroll="fade-up">
-            <span class="bpos-early-bird__tag">Limited</span>
-            Early Bird — First 10 customers lock in pricing for life
-        </p>
+        <!-- ═══════════════════════════════════════════════════════
+             HERO — Cinematic product introduction
+             ═══════════════════════════════════════════════════════ -->
+        <div class="bpos__hero reveal" data-scroll="fade-up">
+            <p class="bpos__hero-label">Introducing</p>
+            <h2 class="bpos__hero-title">
+                B-POS
+            </h2>
+            <p class="bpos__hero-subtitle">
+                Restaurant Point of Sale
+            </p>
+            <p class="bpos__hero-desc">
+                Offline-first. Runs on any device. Zero processing fees.
+            </p>
+            <p class="bpos__hero-origin">Made in Sudbury, Ontario 🇨🇦</p>
 
-        <div class="bpos-grid reveal" data-scroll="cascade" id="bposPlanGrid">
-            <!-- Standard -->
-            <div class="tier-card tier-card--build bpos-plan" data-plan="standard">
-                <h3 class="offer-card__name">Standard</h3>
-                <p class="offer-card__headline">Everything you need to run service</p>
-
-                <div class="bpos-plan__pricing">
-                    <span class="bpos-plan__price-early" data-month="$59" data-year="$564">$59</span>
-                    <span class="bpos-plan__price-regular" data-month="$99" data-year="$948">$99</span>
-                    <span class="bpos-plan__period" data-month="/mo" data-year="/yr">/mo</span>
-                </div>
-                <p class="bpos-plan__savings" data-month="" data-year="Save $240/yr"></p>
-
-                <ul class="offer-card__features">
-                    <li>Full POS — orders, payments, floor plan</li>
-                    <li>Up to 3 terminals</li>
-                    <li>Cash & card payments</li>
-                    <li>Receipt printing</li>
-                    <li>Basic reporting</li>
-                    <li>Menu management</li>
-                    <li>Employee PIN login</li>
-                </ul>
-
-                <div class="offer-card__actions">
-                    <a href="/bpos#pricing" class="offer-card__cta offer-card__cta--primary">Start Free Trial</a>
-                    <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="offer-card__cta offer-card__cta--secondary">Try the demo &rarr;</a>
+            <!-- Product shot in device frame -->
+            <div class="bpos__hero-device">
+                <div class="bpos__device-frame">
+                    <div class="bpos__device-screen">
+                        <img
+                            src="/assets/bpos-og-hero.png"
+                            alt="B-POS restaurant point of sale interface"
+                            width="960"
+                            height="540"
+                            loading="lazy"
+                        />
+                    </div>
+                    <!-- Reflection -->
+                    <div class="bpos__device-reflection"></div>
                 </div>
             </div>
 
-            <!-- Pro -->
-            <div class="tier-card tier-card--build tier-card--featured bpos-plan" data-plan="pro">
-                <span class="bpos-plan__badge">Most Popular</span>
-                <h3 class="offer-card__name">Pro</h3>
-                <p class="offer-card__headline">Full suite for serious operations</p>
-
-                <div class="bpos-plan__pricing">
-                    <span class="bpos-plan__price-early" data-month="$129" data-year="$1,236">$129</span>
-                    <span class="bpos-plan__price-regular" data-month="$199" data-year="$1,908">$199</span>
-                    <span class="bpos-plan__period" data-month="/mo" data-year="/yr">/mo</span>
-                </div>
-                <p class="bpos-plan__savings" data-month="" data-year="Save $480/yr"></p>
-
-                <ul class="offer-card__features">
-                    <li>Everything in Standard, plus:</li>
-                    <li>Unlimited terminals</li>
-                    <li>Kitchen Display System (KDS)</li>
-                    <li>Bar tabs & happy hour pricing</li>
-                    <li>Inventory management</li>
-                    <li>Advanced reporting & P&L</li>
-                    <li>Employee scheduling & tips</li>
-                    <li>Gift cards & private room booking</li>
-                    <li>Multi-terminal sync</li>
-                    <li>Cloud backup</li>
-                </ul>
-
-                <div class="offer-card__actions">
-                    <a href="/bpos#pricing" class="offer-card__cta offer-card__cta--primary">Start Free Trial</a>
-                    <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="offer-card__cta offer-card__cta--secondary">Try the demo &rarr;</a>
-                </div>
+            <!-- CTA row below hero -->
+            <div class="bpos__hero-ctas">
+                <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos__cta bpos__cta--primary">
+                    Try the Demo
+                </a>
+                <a href="#bpos-pricing" class="bpos__cta bpos__cta--ghost">
+                    See Pricing ↓
+                </a>
             </div>
         </div>
 
-        <p class="bpos-footnote reveal" data-scroll="fade-up">
-            14-day free trial. No credit card required. Cancel anytime.
-        </p>
+        <!-- ═══════════════════════════════════════════════════════
+             STATS — Key numbers
+             ═══════════════════════════════════════════════════════ -->
+        <div class="bpos__stats reveal" data-scroll="fade-up">
+            <div class="bpos__stat">
+                <span class="bpos__stat-value">$0</span>
+                <span class="bpos__stat-label">Processing Fees</span>
+            </div>
+            <div class="bpos__stat-divider"></div>
+            <div class="bpos__stat">
+                <span class="bpos__stat-value">100%</span>
+                <span class="bpos__stat-label">Offline Capable</span>
+            </div>
+            <div class="bpos__stat-divider"></div>
+            <div class="bpos__stat">
+                <span class="bpos__stat-value">Any</span>
+                <span class="bpos__stat-label">Device</span>
+            </div>
+            <div class="bpos__stat-divider"></div>
+            <div class="bpos__stat">
+                <span class="bpos__stat-value">52</span>
+                <span class="bpos__stat-label">Seats Supported</span>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════
+             FEATURES — Scroll-reveal cards
+             ═══════════════════════════════════════════════════════ -->
+        <div class="bpos__features">
+            <div class="bpos__feature reveal" data-scroll="fade-up">
+                <div class="bpos__feature-icon">🗺️</div>
+                <h3 class="bpos__feature-title">Interactive Floor Plan</h3>
+                <p class="bpos__feature-desc">
+                    Booths, high tops, bar seats, and private rooms. Drag to arrange.
+                    Real-time status colors show availability at a glance.
+                </p>
+            </div>
+            <div class="bpos__feature reveal" data-scroll="fade-up">
+                <div class="bpos__feature-icon">📋</div>
+                <h3 class="bpos__feature-title">Full Order Lifecycle</h3>
+                <p class="bpos__feature-desc">
+                    Courses, modifiers, split checks by seat or item. Allergen alerts.
+                    Auto-gratuity. Everything from seat to settlement.
+                </p>
+            </div>
+            <div class="bpos__feature reveal" data-scroll="fade-up">
+                <div class="bpos__feature-icon">🍸</div>
+                <h3 class="bpos__feature-title">Bar & Lounge</h3>
+                <p class="bpos__feature-desc">
+                    Open tabs, happy hour pricing, drink recipes, pour tracking.
+                    Auto-close at 2 AM with card-on-file charging.
+                </p>
+            </div>
+            <div class="bpos__feature reveal" data-scroll="fade-up">
+                <div class="bpos__feature-icon">🖥️</div>
+                <h3 class="bpos__feature-title">Kitchen Display</h3>
+                <p class="bpos__feature-desc">
+                    Station-based routing, course firing, timing alerts.
+                    Allergy banners that can't be dismissed. 86 board in real-time.
+                </p>
+            </div>
+            <div class="bpos__feature reveal" data-scroll="fade-up">
+                <div class="bpos__feature-icon">📊</div>
+                <h3 class="bpos__feature-title">Full P&L Reporting</h3>
+                <p class="bpos__feature-desc">
+                    Revenue by category, COGS, labor cost, margins.
+                    ROI/PIP auto-calculation. CSV and PDF export.
+                </p>
+            </div>
+            <div class="bpos__feature reveal" data-scroll="fade-up">
+                <div class="bpos__feature-icon">🔒</div>
+                <h3 class="bpos__feature-title">Offline-First Architecture</h3>
+                <p class="bpos__feature-desc">
+                    Every terminal holds a full database. Internet goes down?
+                    Keep serving. Data syncs when you're back online.
+                </p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════
+             SAVINGS CALLOUT
+             ═══════════════════════════════════════════════════════ -->
+        <div class="bpos__savings reveal" data-scroll="fade-up">
+            <div class="bpos__savings-amount">$14,400<span>/yr</span></div>
+            <p class="bpos__savings-text">
+                That's how much a restaurant doing $50K/mo saves by switching from Toast or Square.
+                <strong>B-POS charges zero processing fees.</strong> Bring your own processor.
+            </p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════
+             PRICING
+             ═══════════════════════════════════════════════════════ -->
+        <div class="bpos__pricing" id="bpos-pricing">
+            <h3 class="bpos__pricing-title reveal" data-scroll="fade-up">Simple, Honest Pricing</h3>
+            <p class="bpos__pricing-sub reveal" data-scroll="fade-up">No contracts. No processing fees. Cancel anytime.</p>
+
+            <!-- Billing toggle -->
+            <div class="bpos__toggle reveal" data-scroll="fade-up" id="bposBillingToggle">
+                <button class="bpos__toggle-btn active" data-billing="month" type="button">Monthly</button>
+                <button class="bpos__toggle-btn" data-billing="year" type="button">
+                    Annual
+                    <span class="bpos__toggle-badge">Save 13–15%</span>
+                </button>
+            </div>
+
+            <!-- Early Bird -->
+            <p class="bpos__early reveal" data-scroll="fade-up">
+                <span class="bpos__early-tag">Limited</span>
+                Early Bird — First 10 customers lock in <strong>$49/mo</strong> for life
+            </p>
+
+            <!-- Plan cards -->
+            <div class="bpos__plans reveal" data-scroll="cascade" id="bposPlanGrid">
+                <!-- Standard -->
+                <div class="bpos__card" data-plan="standard">
+                    <div class="bpos__card-header">
+                        <h4 class="bpos__card-name">Standard</h4>
+                        <p class="bpos__card-desc">Everything you need to run service</p>
+                    </div>
+                    <div class="bpos__card-price">
+                        <span class="bpos__price" data-month="$79" data-year="$828">$79</span>
+                        <span class="bpos__period" data-month="/mo" data-year="/yr">/mo</span>
+                    </div>
+                    <p class="bpos__annual-note" data-month="" data-year="$69/mo billed annually"></p>
+                    <div class="bpos__card-divider"></div>
+                    <ul class="bpos__plan-features">
+                        <li>Full POS — orders, payments, floor plan</li>
+                        <li>Up to 4 terminals</li>
+                        <li>Cash &amp; card payments (BYO processor)</li>
+                        <li>Receipt printing</li>
+                        <li>Basic daily reporting</li>
+                        <li>Menu management &amp; allergen tracking</li>
+                        <li>Employee PIN login</li>
+                        <li>Multi-terminal LAN sync</li>
+                    </ul>
+                    <div class="bpos__card-actions">
+                        <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos__cta bpos__cta--outline">Try the Demo</a>
+                    </div>
+                </div>
+
+                <!-- Pro -->
+                <div class="bpos__card bpos__card--pro" data-plan="pro">
+                    <span class="bpos__card-badge">Most Popular</span>
+                    <div class="bpos__card-header">
+                        <h4 class="bpos__card-name">Pro</h4>
+                        <p class="bpos__card-desc">Full suite for serious operations</p>
+                    </div>
+                    <div class="bpos__card-price">
+                        <span class="bpos__price bpos__price--accent" data-month="$129" data-year="$1,308">$129</span>
+                        <span class="bpos__period" data-month="/mo" data-year="/yr">/mo</span>
+                    </div>
+                    <p class="bpos__annual-note" data-month="" data-year="$109/mo billed annually"></p>
+                    <div class="bpos__card-divider"></div>
+                    <ul class="bpos__plan-features">
+                        <li class="bpos__plan-features-inherit">Everything in Standard, plus:</li>
+                        <li>Up to 8 terminals</li>
+                        <li>Kitchen Display System (KDS)</li>
+                        <li>Bar tabs &amp; happy hour pricing</li>
+                        <li>Inventory management &amp; COGS</li>
+                        <li>Advanced reporting &amp; full P&amp;L</li>
+                        <li>Employee scheduling &amp; tips</li>
+                        <li>Gift cards &amp; private room booking</li>
+                        <li>AI-powered insights &amp; forecasting</li>
+                        <li>Cloud backup &amp; custom branding</li>
+                    </ul>
+                    <div class="bpos__card-actions">
+                        <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos__cta bpos__cta--primary">Start Free Trial</a>
+                        <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos__cta bpos__cta--ghost">Try the Demo →</a>
+                    </div>
+                </div>
+            </div>
+
+            <p class="bpos__footnote reveal" data-scroll="fade-up">
+                14-day free trial &middot; No credit card required &middot; Cancel anytime
+            </p>
+        </div>
     </div>
 </section>
 
 <style>
-    .bpos-title-accent {
-        color: var(--accent);
+    /* ══════════════════════════════════════════════════════════
+       B-POS SECTION — Dark island, own brand identity
+       ══════════════════════════════════════════════════════════ */
+    .bpos {
+        position: relative;
+        background: #050508;
+        padding: 6rem 1.5rem 5rem;
+        overflow: hidden;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        width: 100vw;
     }
 
-    /* Billing toggle */
-    .bpos-toggle {
+    /* Ambient glows */
+    .bpos__glow { position: absolute; inset: 0; pointer-events: none; }
+    .bpos__glow--blue {
+        background: radial-gradient(ellipse 50% 30% at 25% 15%, rgba(59,130,246,0.07), transparent);
+    }
+    .bpos__glow--amber {
+        background: radial-gradient(ellipse 40% 30% at 75% 85%, rgba(245,158,11,0.05), transparent);
+    }
+
+    .bpos__inner {
+        position: relative;
+        max-width: 1080px;
+        margin: 0 auto;
+        z-index: 1;
+    }
+
+    /* ── HERO ──────────────────────────────────────────────── */
+    .bpos__hero {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .bpos__hero-label {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        color: #60a5fa;
+        margin-bottom: 1rem;
+    }
+
+    .bpos__hero-title {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(3.5rem, 10vw, 6rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        margin: 0;
+        background: linear-gradient(135deg, #e8e6de 0%, #f0eee6 40%, #60a5fa 70%, #f59e0b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .bpos__hero-subtitle {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+        font-weight: 300;
+        color: #8a8a9a;
+        margin-top: 0.5rem;
+        letter-spacing: 0.02em;
+    }
+
+    .bpos__hero-desc {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        color: #555;
+        margin-top: 1rem;
+        letter-spacing: 0.01em;
+    }
+
+    .bpos__hero-origin {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #444;
+        margin-top: 0.75rem;
+    }
+
+    /* Device frame */
+    .bpos__hero-device {
+        margin: 3rem auto 2.5rem;
+        max-width: 860px;
+        perspective: 1200px;
+    }
+
+    .bpos__device-frame {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #0a0a0f;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow:
+            0 0 0 1px rgba(255,255,255,0.04),
+            0 20px 60px rgba(0,0,0,0.6),
+            0 0 80px rgba(59,130,246,0.06);
+        transform: rotateX(2deg);
+        transition: transform 0.6s ease;
+    }
+
+    .bpos__device-frame:hover {
+        transform: rotateX(0deg);
+    }
+
+    .bpos__device-screen img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .bpos__device-reflection {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            165deg,
+            rgba(255,255,255,0.03) 0%,
+            transparent 40%
+        );
+        pointer-events: none;
+    }
+
+    /* Hero CTAs */
+    .bpos__hero-ctas {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+
+    /* ── STATS ─────────────────────────────────────────────── */
+    .bpos__stats {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        margin-bottom: 5rem;
+        padding: 2rem 0;
+    }
+
+    .bpos__stat { text-align: center; }
+
+    .bpos__stat-value {
+        display: block;
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
+        font-weight: 700;
+        color: #f0eee6;
+        letter-spacing: -0.01em;
+    }
+
+    .bpos__stat-label {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .bpos__stat-divider {
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(180deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+
+    /* ── FEATURES ──────────────────────────────────────────── */
+    .bpos__features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 5rem;
+    }
+
+    .bpos__feature {
+        padding: 2rem;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        transition: border-color 300ms ease, background 300ms ease;
+    }
+
+    .bpos__feature:hover {
+        border-color: rgba(59,130,246,0.2);
+        background: rgba(59,130,246,0.03);
+    }
+
+    .bpos__feature-icon {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .bpos__feature-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #e0e0e0;
+        margin: 0 0 0.5rem;
+    }
+
+    .bpos__feature-desc {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8125rem;
+        color: #777;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* ── SAVINGS CALLOUT ───────────────────────────────────── */
+    .bpos__savings {
+        text-align: center;
+        margin-bottom: 5rem;
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(245,158,11,0.03));
+        border: 1px solid rgba(59,130,246,0.12);
+    }
+
+    .bpos__savings-amount {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #60a5fa, #f59e0b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .bpos__savings-amount span {
+        font-size: 0.4em;
+        font-weight: 400;
+        opacity: 0.7;
+    }
+
+    .bpos__savings-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        color: #777;
+        max-width: 560px;
+        margin: 1rem auto 0;
+        line-height: 1.6;
+    }
+
+    .bpos__savings-text strong {
+        color: #ccc;
+    }
+
+    /* ── PRICING ───────────────────────────────────────────── */
+    .bpos__pricing {
+        text-align: center;
+    }
+
+    .bpos__pricing-title {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 600;
+        color: #f0eee6;
+        margin: 0 0 0.5rem;
+    }
+
+    .bpos__pricing-sub {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9375rem;
+        color: #666;
+        margin-bottom: 2rem;
+    }
+
+    /* Toggle */
+    .bpos__toggle {
         display: flex;
         justify-content: center;
         gap: 2px;
-        background: rgba(var(--highlight-rgb), 0.04);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
         padding: 3px;
-        max-width: 280px;
-        margin: 0 auto var(--space-sm);
+        max-width: 300px;
+        margin: 0 auto 1rem;
     }
-    .bpos-toggle__btn {
+
+    .bpos__toggle-btn {
         flex: 1;
         background: none;
         border: none;
-        color: var(--text-subtle);
-        font-family: var(--font-body);
-        font-size: var(--text-xs);
-        font-weight: var(--font-medium);
+        color: #666;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8125rem;
+        font-weight: 500;
         padding: 0.5rem 1rem;
-        border-radius: 6px;
+        border-radius: 8px;
         cursor: pointer;
-        transition: all var(--duration-fast) ease;
+        transition: all 150ms ease;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 6px;
     }
-    .bpos-toggle__btn.active {
-        background: rgba(var(--highlight-rgb), 0.08);
-        color: var(--text);
-    }
-    .bpos-toggle__badge {
-        font-size: 0.625rem;
-        background: var(--accent);
-        color: #000;
-        padding: 1px 5px;
-        border-radius: 3px;
-        font-weight: var(--font-semibold);
-        letter-spacing: 0.02em;
+
+    .bpos__toggle-btn.active {
+        background: rgba(255,255,255,0.08);
+        color: #e0e0e0;
     }
 
-    /* Early Bird */
-    .bpos-early-bird {
-        text-align: center;
-        font-family: var(--font-body);
-        font-size: var(--text-xs);
-        color: var(--text-muted);
-        margin-bottom: var(--space-md);
+    .bpos__toggle-badge {
+        font-size: 0.5625rem;
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: #fff;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+
+    /* Early bird */
+    .bpos__early {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8125rem;
+        color: #666;
+        margin-bottom: 2rem;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
     }
-    .bpos-early-bird__tag {
-        font-size: 0.625rem;
-        font-weight: var(--font-semibold);
+
+    .bpos__early strong { color: #60a5fa; }
+
+    .bpos__early-tag {
+        font-size: 0.5625rem;
+        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: var(--accent);
-        border: 1px solid var(--accent);
-        border-radius: 3px;
-        padding: 1px 6px;
+        color: #f59e0b;
+        border: 1px solid rgba(245,158,11,0.4);
+        border-radius: 4px;
+        padding: 2px 8px;
     }
 
-    /* Plan grid */
-    .bpos-grid {
+    /* Plan cards */
+    .bpos__plans {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: var(--space-sm);
-        max-width: 720px;
-        margin: 0 auto var(--space-md);
+        gap: 1.25rem;
+        max-width: 780px;
+        margin: 0 auto 2rem;
+        text-align: left;
     }
 
-    /* Plan-specific overrides */
-    .bpos-plan {
-        cursor: default;
+    .bpos__card {
+        position: relative;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 16px;
+        padding: 2rem;
+        transition: border-color 200ms ease;
     }
-    .bpos-plan__badge {
+
+    .bpos__card:hover { border-color: rgba(255,255,255,0.12); }
+
+    .bpos__card--pro {
+        border-color: rgba(59,130,246,0.3);
+        background: rgba(59,130,246,0.03);
+    }
+
+    .bpos__card--pro:hover { border-color: rgba(59,130,246,0.5); }
+
+    .bpos__card-badge {
         position: absolute;
-        top: -10px;
+        top: -11px;
         left: 50%;
         transform: translateX(-50%);
-        background: var(--accent);
-        color: #000;
-        font-family: var(--font-body);
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: #fff;
+        font-family: 'Inter', sans-serif;
         font-size: 0.625rem;
-        font-weight: var(--font-semibold);
+        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        padding: 3px 10px;
-        border-radius: 4px;
+        padding: 4px 14px;
+        border-radius: 6px;
         white-space: nowrap;
-        z-index: 1;
     }
-    .bpos-plan__pricing {
+
+    .bpos__card-name {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #f0eee6;
+        margin: 0;
+    }
+
+    .bpos__card-desc {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8125rem;
+        color: #666;
+        margin-top: 0.25rem;
+    }
+
+    .bpos__card-price {
         display: flex;
         align-items: baseline;
-        gap: 6px;
-        margin: var(--space-xs) 0 4px;
+        gap: 4px;
+        margin: 1rem 0 0.25rem;
     }
-    .bpos-plan__price-early {
-        font-family: var(--font-display);
-        font-size: clamp(1.5rem, 3vw, 2rem);
-        font-weight: var(--font-semibold);
-        color: var(--accent);
+
+    .bpos__price {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        font-weight: 700;
+        color: #f0eee6;
     }
-    .bpos-plan__price-regular {
-        font-family: var(--font-body);
-        font-size: var(--text-sm);
-        color: var(--text-subtle);
-        text-decoration: line-through;
+
+    .bpos__price--accent {
+        background: linear-gradient(135deg, #60a5fa, #93c5fd);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
-    .bpos-plan__period {
-        font-family: var(--font-body);
-        font-size: var(--text-xs);
-        color: var(--text-subtle);
+
+    .bpos__period {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8125rem;
+        color: #555;
     }
-    .bpos-plan__savings {
-        font-family: var(--font-body);
-        font-size: var(--text-xs);
-        color: var(--accent);
+
+    .bpos__annual-note {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        color: #60a5fa;
         min-height: 1.2em;
     }
 
-    /* Footnote */
-    .bpos-footnote {
-        text-align: center;
-        font-family: var(--font-body);
-        font-size: var(--text-xs);
-        font-weight: var(--font-light);
-        color: var(--text-subtle);
+    .bpos__card-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+        margin: 1.25rem 0;
     }
 
-    @media (max-width: 640px) {
-        .bpos-grid {
-            grid-template-columns: 1fr;
-        }
+    .bpos__plan-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+    }
+
+    .bpos__plan-features li {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8125rem;
+        color: #999;
+        padding-left: 1.4rem;
+        position: relative;
+        line-height: 1.4;
+    }
+
+    .bpos__plan-features li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #3b82f6;
+        font-weight: 600;
+    }
+
+    .bpos__plan-features-inherit {
+        font-weight: 500;
+        color: #bbb !important;
+    }
+
+    .bpos__plan-features-inherit::before {
+        content: '' !important;
+    }
+
+    /* CTAs / Buttons */
+    .bpos__card-actions {
+        margin-top: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .bpos__cta {
+        display: inline-block;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 0.75rem 2rem;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 200ms ease;
+    }
+
+    .bpos__cta--primary {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: #fff;
+    }
+
+    .bpos__cta--primary:hover {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        box-shadow: 0 4px 24px rgba(59,130,246,0.35);
+        transform: translateY(-1px);
+    }
+
+    .bpos__cta--outline {
+        background: transparent;
+        color: #999;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .bpos__cta--outline:hover {
+        border-color: rgba(255,255,255,0.2);
+        color: #ddd;
+    }
+
+    .bpos__cta--ghost {
+        background: none;
+        color: #666;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .bpos__cta--ghost:hover { color: #60a5fa; }
+
+    /* Footnote */
+    .bpos__footnote {
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        color: #444;
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 768px) {
+        .bpos { padding: 4rem 1rem 3rem; }
+        .bpos__features { grid-template-columns: 1fr; }
+        .bpos__plans { grid-template-columns: 1fr; }
+        .bpos__stats { flex-wrap: wrap; gap: 1.5rem; }
+        .bpos__stat-divider { display: none; }
+        .bpos__hero-ctas { flex-direction: column; align-items: center; }
+        .bpos__savings { padding: 2rem 1.5rem; }
+    }
+
+    @media (max-width: 1024px) and (min-width: 769px) {
+        .bpos__features { grid-template-columns: repeat(2, 1fr); }
     }
 </style>
 
@@ -249,7 +803,7 @@
         var grid = document.getElementById('bposPlanGrid');
         if (!toggle || !grid) return;
 
-        var buttons = toggle.querySelectorAll('.bpos-toggle__btn');
+        var buttons = toggle.querySelectorAll('.bpos__toggle-btn');
 
         buttons.forEach(function(btn) {
             btn.addEventListener('click', function() {
@@ -257,9 +811,9 @@
                 buttons.forEach(function(b) { b.classList.remove('active'); });
                 btn.classList.add('active');
 
-                // Update prices
                 grid.querySelectorAll('[data-' + billing + ']').forEach(function(el) {
-                    el.textContent = el.getAttribute('data-' + billing);
+                    var val = el.getAttribute('data-' + billing);
+                    if (val !== null) el.textContent = val;
                 });
             });
         });
