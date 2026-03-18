@@ -27,7 +27,7 @@ import { breadcrumbList, schemaGraph, PROVIDER } from '../lib/schema';
     )}
 >
     <Fragment slot="head">
-        <style>
+        <style is:inline>
             /* Landing-page header visibility override */
             .header { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateY(0) !important; }
             .header__logo-icon { opacity: 1 !important; }
@@ -221,6 +221,10 @@ import { breadcrumbList, schemaGraph, PROVIDER } from '../lib/schema';
                 }
                 .tk-hero {
                     padding: var(--space-lg) 0 var(--space-md);
+                }
+                .tk-hero__glow {
+                    width: 100%;
+                    height: 300px;
                 }
                 .tk-hero__subtitle {
                     font-size: var(--text-base);
