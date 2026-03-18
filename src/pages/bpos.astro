@@ -207,13 +207,29 @@ const currentYear = new Date().getFullYear();
             .bpos-hero__title em {
                 font-style: normal;
                 font-weight: 500;
-                background: linear-gradient(135deg, #60A5FA 0%, #818CF8 25%, #A78BFA 45%, #C4A6FF 55%, #E8D5B0 75%, #F5E6CC 100%);
+                background: linear-gradient(135deg, #60A5FA 0%, #818CF8 20%, #A78BFA 40%, #D4A76A 60%, #F5C842 80%, #FFE066 100%);
+                background-size: 200% 200%;
+                animation: heroGradientPool 28s ease-in-out infinite;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
                 text-shadow: none;
                 position: relative;
                 filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.3)) drop-shadow(0 0 40px rgba(167, 139, 250, 0.15));
+            }
+            @keyframes heroGradientPool {
+                0% { background-position: 0% 40%; }
+                18% { background-position: 65% 20%; }
+                38% { background-position: 100% 55%; }
+                58% { background-position: 40% 80%; }
+                78% { background-position: 10% 60%; }
+                100% { background-position: 0% 40%; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .bpos-hero__title em {
+                    animation: none;
+                    background-size: 100% 100%;
+                }
             }
             .bpos-hero__sub {
                 font-family: var(--font-body);
