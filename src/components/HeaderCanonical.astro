@@ -11,7 +11,7 @@
 <header class="header">
     <div class="header__glass">
         <div class="header__inner">
-            <a href="/?skip" class="header__logo">
+            <a href="/" class="header__logo">
                 <img src="/assets/dot-logomark.svg" alt="" class="header__logo-icon" width="40" height="40" loading="eager" fetchpriority="high" />
                 <span class="header__wordmark" aria-label="Bertrand Brands">BERTRAND BRANDS</span>
             </a>
@@ -24,6 +24,19 @@
                 <a href="#packages" class="header__link">Services</a>
                 <a href="#process" class="header__link">How It Works</a>
                 <a href="#about" class="header__link">About</a>
+                <div class="header__dropdown">
+                    <button class="header__link header__dropdown-trigger" aria-expanded="false" aria-haspopup="true">Products <svg class="header__dropdown-chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <div class="header__dropdown-menu" role="menu">
+                        <a href="/bpos" class="header__dropdown-item" role="menuitem">
+                            <span class="header__dropdown-item-name">B·POS</span>
+                            <span class="header__dropdown-item-desc">Restaurant POS</span>
+                        </a>
+                        <a href="/therakeep" class="header__dropdown-item" role="menuitem">
+                            <span class="header__dropdown-item-name">TheraKeep</span>
+                            <span class="header__dropdown-item-desc">Therapy Practice Suite</span>
+                        </a>
+                    </div>
+                </div>
                 <a href="tel:+17054133705" class="header__link header__link--cta header__link--cta-call">Call Now</a>
                 <a href="/intake" class="header__link header__link--cta header__link--cta-form">Get a Quote</a>
                 <span class="header__divider" aria-hidden="true"></span>

@@ -1,0 +1,303 @@
+---
+/**
+ * TheraKeep — Coming-soon product landing page for TheraKeep therapy practice suite.
+ * Sage green accent. Hero + feature overview + interest capture.
+ * Uses BaseLayout + HeaderUniversal + VisitorNotify directly (not ServiceDetailLayout).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderUniversal from '../components/HeaderUniversal.astro';
+import FooterMinimal from '../components/FooterMinimal.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+import SkipLink from '../components/SkipLink.astro';
+import { breadcrumbList, schemaGraph, PROVIDER } from '../lib/schema';
+---
+
+<BaseLayout
+    title="TheraKeep — Practice Management for Psychotherapists | Bertrand Brands"
+    description="SOAP notes, scheduling, billing, and client management built for psychotherapists. Custom-tailored, offline-capable, with direct human support. Coming soon."
+    canonical="https://bertrandbrands.ca/therakeep"
+    ogTitle="TheraKeep — Practice Management for Psychotherapists"
+    ogDescription="SOAP notes, scheduling, billing, and client management built for psychotherapists. Coming soon from Bertrand Brands."
+    schemaJson={schemaGraph(
+        breadcrumbList([
+            { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
+            { name: "TheraKeep", url: "https://bertrandbrands.ca/therakeep" }
+        ])
+    )}
+>
+    <Fragment slot="head">
+        <style>
+            /* Landing-page header visibility override */
+            .header { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateY(0) !important; }
+            .header__logo-icon { opacity: 1 !important; }
+            .header__wordmark { opacity: 1 !important; }
+
+            /* ── TheraKeep page tokens ── */
+            :root {
+                --tk-sage: #86B384;
+                --tk-sage-rgb: 134, 179, 132;
+            }
+
+            /* ── Hero ── */
+            .tk-hero {
+                padding: var(--space-xl) 0 var(--space-lg);
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .tk-hero__glow {
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                width: 700px;
+                height: 400px;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(ellipse at center,
+                    rgba(var(--tk-sage-rgb), 0.07) 0%,
+                    rgba(var(--tk-sage-rgb), 0.02) 50%,
+                    transparent 70%);
+                pointer-events: none;
+                z-index: 0;
+                animation: tkGlowBreathe 20s ease-in-out infinite;
+            }
+
+            @keyframes tkGlowBreathe {
+                0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+                35% { opacity: 1; transform: translate(-48%, -52%) scale(1.05); }
+                65% { opacity: 0.85; transform: translate(-52%, -48%) scale(0.97); }
+            }
+
+            .tk-hero__inner {
+                position: relative;
+                z-index: 1;
+                max-width: 640px;
+                margin: 0 auto;
+            }
+
+            .tk-hero__badge {
+                display: inline-block;
+                font-family: var(--font-body);
+                font-size: var(--text-xs);
+                font-weight: 500;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--tk-sage);
+                background: rgba(var(--tk-sage-rgb), 0.08);
+                border: 1px solid rgba(var(--tk-sage-rgb), 0.15);
+                border-radius: 100px;
+                padding: 0.35rem 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .tk-hero__title {
+                font-family: var(--font-display);
+                font-size: clamp(2.5rem, 7vw, 4rem);
+                font-weight: 300;
+                letter-spacing: -0.02em;
+                line-height: 1.1;
+                color: var(--text);
+                margin-bottom: 1.5rem;
+            }
+
+            .tk-hero__subtitle {
+                font-family: var(--font-body);
+                font-size: var(--text-lg);
+                font-weight: 400;
+                color: var(--text-muted);
+                line-height: 1.6;
+                margin-bottom: 2.5rem;
+            }
+
+            /* ── Features ── */
+            .tk-features {
+                padding: var(--space-lg) 0;
+            }
+
+            .tk-features__grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+                max-width: 900px;
+                margin: 0 auto;
+            }
+
+            .tk-feature {
+                text-align: left;
+                padding: 1.75rem;
+                background: rgba(var(--tk-sage-rgb), 0.04);
+                border: 1px solid rgba(var(--tk-sage-rgb), 0.08);
+                border-radius: var(--radius-lg);
+                transition: border-color var(--duration-fast) var(--ease-out);
+            }
+
+            .tk-feature:hover {
+                border-color: rgba(var(--tk-sage-rgb), 0.2);
+            }
+
+            .tk-feature__name {
+                font-family: var(--font-body);
+                font-size: var(--text-base);
+                font-weight: 600;
+                color: var(--text);
+                margin-bottom: 0.5rem;
+            }
+
+            .tk-feature__desc {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                font-weight: 400;
+                color: var(--text-muted);
+                line-height: 1.5;
+            }
+
+            /* ── Interest capture ── */
+            .tk-interest {
+                padding: var(--space-lg) 0 var(--space-xl);
+                text-align: center;
+            }
+
+            .tk-interest__card {
+                max-width: 480px;
+                margin: 0 auto;
+                padding: 2.5rem;
+                background: rgba(var(--tk-sage-rgb), 0.04);
+                border: 1px solid rgba(var(--tk-sage-rgb), 0.1);
+                border-radius: var(--radius-lg);
+            }
+
+            .tk-interest__heading {
+                font-family: var(--font-display);
+                font-size: var(--text-2xl);
+                font-weight: 300;
+                color: var(--text);
+                margin-bottom: 0.75rem;
+            }
+
+            .tk-interest__text {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+            }
+
+            .tk-interest__cta {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35em;
+                font-family: var(--font-body);
+                font-size: var(--text-base);
+                font-weight: 500;
+                color: #fff;
+                background: rgba(var(--tk-sage-rgb), 0.15);
+                border: 1px solid rgba(var(--tk-sage-rgb), 0.3);
+                border-radius: 100px;
+                padding: 0.65rem 1.75rem;
+                text-decoration: none;
+                transition: all var(--duration-fast) var(--ease-out);
+            }
+
+            .tk-interest__cta:hover {
+                background: rgba(var(--tk-sage-rgb), 0.25);
+                border-color: rgba(var(--tk-sage-rgb), 0.5);
+                text-decoration: none;
+            }
+
+            /* ── Divider ── */
+            .tk-divider {
+                width: 60px;
+                height: 1px;
+                background: rgba(var(--tk-sage-rgb), 0.15);
+                margin: 0 auto;
+            }
+
+            /* ── Responsive ── */
+            @media (max-width: 768px) {
+                .tk-features__grid {
+                    grid-template-columns: 1fr;
+                    gap: 1rem;
+                }
+                .tk-hero {
+                    padding: var(--space-lg) 0 var(--space-md);
+                }
+                .tk-hero__subtitle {
+                    font-size: var(--text-base);
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .tk-hero__glow {
+                    animation: none !important;
+                }
+            }
+        </style>
+    </Fragment>
+
+    <SkipLink />
+    <HeaderUniversal />
+
+    <main id="main-content">
+
+        <!-- Hero -->
+        <section class="tk-hero">
+            <div class="tk-hero__glow" aria-hidden="true"></div>
+            <div class="container tk-hero__inner">
+                <span class="tk-hero__badge">Coming Soon</span>
+                <h1 class="tk-hero__title">TheraKeep</h1>
+                <p class="tk-hero__subtitle">Practice management built for psychotherapists. SOAP notes, scheduling, billing, and client management&mdash;all in one place.</p>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="tk-features">
+            <div class="container">
+                <div class="tk-features__grid">
+                    <div class="tk-feature">
+                        <p class="tk-feature__name">SOAP Notes</p>
+                        <p class="tk-feature__desc">Structured clinical documentation designed around how therapists actually work.</p>
+                    </div>
+                    <div class="tk-feature">
+                        <p class="tk-feature__name">Client Management</p>
+                        <p class="tk-feature__desc">Intake, history, and session tracking in a single view. No hunting across tabs.</p>
+                    </div>
+                    <div class="tk-feature">
+                        <p class="tk-feature__name">Scheduling</p>
+                        <p class="tk-feature__desc">Booking, reminders, and availability management without the overhead.</p>
+                    </div>
+                    <div class="tk-feature">
+                        <p class="tk-feature__name">Billing</p>
+                        <p class="tk-feature__desc">Invoicing, receipts, and insurance-ready documentation. Clean and simple.</p>
+                    </div>
+                    <div class="tk-feature">
+                        <p class="tk-feature__name">Offline Capable</p>
+                        <p class="tk-feature__desc">Works without a connection. Your notes and schedule stay accessible regardless.</p>
+                    </div>
+                    <div class="tk-feature">
+                        <p class="tk-feature__name">Direct Support</p>
+                        <p class="tk-feature__desc">Real human support from the team that built it. Custom tailoring available.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="tk-divider" aria-hidden="true"></div>
+
+        <!-- Interest capture -->
+        <section class="tk-interest">
+            <div class="container">
+                <div class="tk-interest__card">
+                    <h2 class="tk-interest__heading">Interested?</h2>
+                    <p class="tk-interest__text">TheraKeep is currently in development. Reach out and we'll keep you in the loop as we get closer to launch.</p>
+                    <a href="/intake" class="tk-interest__cta">Get in touch <span aria-hidden="true">&rsaquo;</span></a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <FooterMinimal />
+    <GesturePrevention />
+    <VisitorNotify />
+</BaseLayout>

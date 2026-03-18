@@ -1,7 +1,7 @@
 ---
 /**
  * 404 — Page Not Found.
- * Self-contained page with inline styles. Does not use main.css.
+ * Self-contained page with inline styles. Does not use shared.css/homepage.css.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SkipLink from '../components/SkipLink.astro';
@@ -97,10 +97,10 @@ import GesturePrevention from '../components/GesturePrevention.astro';
             Let's get you back on track.
         </p>
         <div class="error-page__actions">
-            <a href="/" class="error-page__link error-page__link--primary">
+            <a href="/?skip" class="error-page__link error-page__link--primary">
                 Back to homepage
             </a>
-            <a href="/#contact" class="error-page__link error-page__link--secondary">
+            <a href="/?skip#contact" class="error-page__link error-page__link--secondary">
                 Get in touch
             </a>
         </div>

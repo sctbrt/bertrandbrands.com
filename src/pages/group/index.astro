@@ -1,7 +1,7 @@
 ---
 /**
  * Bertrand Group — Corporate identity page.
- * Standalone page with its own reset, custom header, and no main.css.
+ * Standalone page with its own reset, custom header, and no shared.css/homepage.css.
  * Migrated from src/_legacy/pages/group/index.html
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -497,7 +497,7 @@ const schema = {
   <!-- Header -->
   <header class="bg-header">
       <div class="bg-header__inner">
-          <a href="/" class="bg-header__logo">
+          <a href="/?skip" class="bg-header__logo">
               <span class="bg-header__name">Bertrand Group</span>
           </a>
           <a href="https://bertrandbrands.ca/?skip" class="bg-header__link">Studio &rarr;</a>

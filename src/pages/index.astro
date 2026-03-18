@@ -564,16 +564,38 @@ const schemaJson = schemaGraph(
       </section>
 
       <!-- B-POS teaser -->
-      <div class="bpos-teaser reveal" data-scroll="fade-up">
+      <section class="bpos-teaser" aria-labelledby="bpos-intro-heading">
+          <div class="bpos-teaser__glow" aria-hidden="true"></div>
           <div class="container">
-              <a href="/bpos" class="bpos-teaser__card">
-                  <span class="bpos-teaser__label">Also from Bertrand Group</span>
-                  <span class="bpos-teaser__title">B-POS <span class="bpos-teaser__sep">—</span> Restaurant Point of Sale</span>
-                  <span class="bpos-teaser__desc">Offline-first. Runs on any device. Zero processing fees.</span>
-                  <span class="bpos-teaser__link">Learn more &rarr;</span>
-              </a>
+              <div class="bpos-teaser__header reveal" data-scroll="fade-up">
+                  <p class="bpos-teaser__intro">Introducing</p>
+                  <h2 class="bpos-teaser__name" id="bpos-intro-heading">
+                      <span class="bpos-teaser__name-gradient">
+                          <span class="bpos-teaser__b-wrap">
+                              <svg class="bpos-teaser__dotB" viewBox="100 50 310 420" aria-hidden="true"><defs><linearGradient id="bposDotGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D97706"/><stop offset="45%" stop-color="#8B5CF6"/><stop offset="100%" stop-color="#60A5FA"/></linearGradient></defs><g fill="url(#bposDotGrad)"><circle cx="144" cy="88" r="22"/><circle cx="200" cy="88" r="22"/><circle cx="256" cy="88" r="22"/><circle cx="312" cy="88" r="22"/><circle cx="144" cy="144" r="22"/><circle cx="200" cy="144" r="22"/><circle cx="312" cy="144" r="22"/><circle cx="368" cy="144" r="22"/><circle cx="144" cy="200" r="22"/><circle cx="200" cy="200" r="22"/><circle cx="312" cy="200" r="22"/><circle cx="368" cy="200" r="22"/><circle cx="144" cy="256" r="22"/><circle cx="200" cy="256" r="22"/><circle cx="256" cy="256" r="22"/><circle cx="312" cy="256" r="22"/><circle cx="144" cy="312" r="22"/><circle cx="200" cy="312" r="22"/><circle cx="312" cy="312" r="22"/><circle cx="368" cy="312" r="22"/><circle cx="144" cy="368" r="22"/><circle cx="200" cy="368" r="22"/><circle cx="312" cy="368" r="22"/><circle cx="368" cy="368" r="22"/><circle cx="144" cy="424" r="22"/><circle cx="200" cy="424" r="22"/><circle cx="256" cy="424" r="22"/><circle cx="312" cy="424" r="22"/></g></svg>
+                          </span><span class="bpos-teaser__dot"></span>POS
+                      </span>
+                  </h2>
+                  <p class="bpos-teaser__tagline">Restaurant point of sale that works everywhere&mdash;even offline.</p>
+                  <a href="/bpos" class="bpos-teaser__cta">Learn more <span aria-hidden="true">&rsaquo;</span></a>
+              </div>
           </div>
-      </div>
+      </section>
+
+      <!-- TheraKeep teaser -->
+      <section class="therakeep-teaser" aria-labelledby="therakeep-intro-heading">
+          <div class="therakeep-teaser__glow" aria-hidden="true"></div>
+          <div class="container">
+              <div class="therakeep-teaser__header reveal" data-scroll="fade-up">
+                  <p class="therakeep-teaser__intro">Coming soon</p>
+                  <h2 class="therakeep-teaser__name" id="therakeep-intro-heading">
+                      <span class="therakeep-teaser__name-text">TheraKeep</span>
+                  </h2>
+                  <p class="therakeep-teaser__tagline">Practice management built for psychotherapists&mdash;SOAP notes, scheduling, billing, and more.</p>
+                  <a href="/therakeep" class="therakeep-teaser__cta">Learn more <span aria-hidden="true">&rsaquo;</span></a>
+              </div>
+          </div>
+      </section>
 
       <!-- Contact -->
       <section class="section" id="contact">
@@ -945,7 +967,7 @@ const schemaJson = schemaGraph(
       (function() {
           var toggle = document.querySelector('.header__toggle');
           var nav = document.querySelector('.header__nav');
-          var navLinks = document.querySelectorAll('.header__link');
+          var navLinks = document.querySelectorAll('.header__link:not(.header__dropdown-trigger), .header__dropdown-item');
 
           if (!toggle || !nav) return;
 
@@ -1006,6 +1028,19 @@ const schemaJson = schemaGraph(
                   }
               }
           });
+
+          // Products dropdown
+          var dropTrigger = document.querySelector('.header__dropdown-trigger');
+          if (dropTrigger) {
+              dropTrigger.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                  var expanded = dropTrigger.getAttribute('aria-expanded') === 'true';
+                  dropTrigger.setAttribute('aria-expanded', !expanded);
+              });
+              document.addEventListener('click', function() {
+                  dropTrigger.setAttribute('aria-expanded', 'false');
+              });
+          }
 
           // Gentle pulse on hamburger after 5-6 seconds (mobile only)
           var hasInteracted = false;
@@ -1441,6 +1476,9 @@ const schemaJson = schemaGraph(
       })();
 
   </script>
+
+  <!-- B·POS canvas light trail -->
+  <!-- B·POS breathing glow handled by CSS keyframes only -->
 
   <!-- Floating Phone Button -->
   <a href="tel:+17054133705" class="floating-phone" aria-label="Call Bertrand Brands" title="+1 (705) 413-3705">

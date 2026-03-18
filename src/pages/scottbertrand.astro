@@ -4,6 +4,7 @@ import HeaderUniversal from '../components/HeaderUniversal.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import VersionStamp from '../components/VersionStamp.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
+import SkipLink from '../components/SkipLink.astro';
 import { Image } from 'astro:assets';
 import scottWordmark from '../assets/scott-bertrand-logo-wordmark-light.png';
 
@@ -842,6 +843,7 @@ const schemaJson = {
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Universal Header -->
+  <SkipLink />
   <HeaderUniversal />
 
   <!-- Dot Grid Background -->

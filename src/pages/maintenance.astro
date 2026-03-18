@@ -8,6 +8,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DotLogo from '../components/DotLogo.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+import SkipLink from '../components/SkipLink.astro';
 
 ---
 
@@ -350,5 +352,7 @@ import VisitorNotify from '../components/VisitorNotify.astro';
             }
         }
     </style>
+    <SkipLink />
+    <GesturePrevention />
     <VisitorNotify />
 </BaseLayout>
