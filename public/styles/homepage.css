@@ -952,6 +952,11 @@
             overflow: visible;
         }
 
+        /* Contact is the last content section — tighten bottom padding */
+        #contact {
+            padding-bottom: var(--space-lg);  /* 128px → 64px */
+        }
+
         .section--alt {
             background: var(--bg-elevated);
             position: relative;
@@ -4084,6 +4089,10 @@
 
 
 .bpos-teaser__name-gradient {
+    color: #fff;
+}
+
+.bpos-teaser__name-white {
     color: #fff;
 }
 

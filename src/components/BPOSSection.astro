@@ -9,6 +9,7 @@
  *   Pro:      $129/mo or $109/mo annual ($1,308/yr)
  *   Early Bird: $49/mo annual ($588/yr) — first 10 customers
  */
+import BPOSLogo from './BPOSLogo.astro';
 ---
 
 <section class="bpos" id="bpos">
@@ -23,9 +24,7 @@
              ═══════════════════════════════════════════════════════ -->
         <div class="bpos__hero reveal" data-scroll="fade-up">
             <p class="bpos__hero-label">Introducing</p>
-            <h2 class="bpos__hero-title">
-                B-POS
-            </h2>
+            <BPOSLogo tag="h2" size="hero" variant="white" noArc />
             <p class="bpos__hero-subtitle">
                 Restaurant Point of Sale
             </p>
@@ -145,7 +144,7 @@
              SAVINGS CALLOUT
              ═══════════════════════════════════════════════════════ -->
         <div class="bpos__savings reveal" data-scroll="fade-up">
-            <div class="bpos__savings-amount">Your processor.<span> Your rates.</span></div>
+            <div class="bpos__savings-amount">Your processor. Your rates.</div>
             <p class="bpos__savings-text">
                 Most POS platforms lock you into their payment processing and take a cut of every transaction.
                 <strong>B·POS doesn't touch your payments.</strong> Use whatever processor gives you the best rate — Square, Stripe, Clover, or your bank.
@@ -199,7 +198,8 @@
                         <li>Multi-terminal LAN sync</li>
                     </ul>
                     <div class="bpos__card-actions">
-                        <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos__cta bpos__cta--outline">Try the Demo</a>
+                        <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos__cta bpos__cta--primary">Start Free Trial</a>
+                        <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos__cta bpos__cta--ghost">Try the Demo &rarr;</a>
                     </div>
                 </div>
 
@@ -480,11 +480,6 @@
         background-clip: text;
     }
 
-    .bpos__savings-amount span {
-        font-size: 0.4em;
-        font-weight: 400;
-        opacity: 0.7;
-    }
 
     .bpos__savings-text {
         font-family: 'Inter', sans-serif;
@@ -567,26 +562,34 @@
     /* Early bird */
     .bpos__early {
         font-family: 'Inter', sans-serif;
-        font-size: 0.8125rem;
-        color: #666;
+        font-size: 0.875rem;
+        color: var(--text-muted, #a3a3a3);
         margin-bottom: 2rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
+        background: rgba(245, 158, 11, 0.05);
+        border: 1px solid rgba(245, 158, 11, 0.12);
+        border-radius: 8px;
+        padding: 0.6rem 1.25rem;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .bpos__early strong { color: #60a5fa; }
 
     .bpos__early-tag {
-        font-size: 0.5625rem;
-        font-weight: 600;
+        font-size: 0.625rem;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
         color: #f59e0b;
         border: 1px solid rgba(245,158,11,0.4);
         border-radius: 4px;
-        padding: 2px 8px;
+        padding: 3px 8px;
+        flex-shrink: 0;
     }
 
     /* Plan cards */

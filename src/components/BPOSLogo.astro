@@ -2,15 +2,14 @@
 /**
  * BPOSLogo.astro — Reusable animated B·POS logo lockup
  *
- * Features: Dot-matrix B with tri-colour gradient, ·POS text,
- * 3D orbiting arc, electric outer glow.
+ * Features: Dot-matrix B, ·POS text, comet light-strike orbit.
  *
  * Props:
  *   tag      — HTML heading tag or 'div' (default: 'div')
  *   size     — 'lg' (homepage teaser) | 'hero' (product page hero) | 'sm' (inline)
  *   id       — optional id attribute on the name element
  *   noArc    — disable the orbiting arc (default: false)
- *   noGlow   — disable the electric glow (default: false)
+ *   variant  — 'gradient' (tri-colour) | 'white' (all white) (default: 'gradient')
  */
 
 interface Props {
@@ -18,31 +17,31 @@ interface Props {
     size?: 'lg' | 'hero' | 'sm';
     id?: string;
     noArc?: boolean;
-    noGlow?: boolean;
+    variant?: 'gradient' | 'white';
 }
 
-const { tag: Tag = 'div', size = 'lg', id, noArc = false, noGlow = false } = Astro.props;
+const { tag: Tag = 'div', size = 'lg', id, noArc = false, variant = 'gradient' } = Astro.props;
+const isWhite = variant === 'white';
 
 const nameClass = [
     'bpos-logo__name',
     `bpos-logo--${size}`,
-    noGlow ? '' : 'bpos-logo--glow',
 ].filter(Boolean).join(' ');
 ---
 
 <div class={noArc ? 'bpos-logo' : 'bpos-logo bpos-logo__arc-wrap'}>
     {!noArc && <div class="bpos-logo__arc" aria-hidden="true"></div>}
     <Tag class={nameClass} id={id}>
-        <span class="bpos-logo__gradient">
+        <span class={isWhite ? 'bpos-logo__text bpos-logo__text--white' : 'bpos-logo__text bpos-logo__text--gradient'}>
             <svg class="bpos-logo__dotB" viewBox="100 50 310 420" aria-hidden="true">
                 <defs>
                     <linearGradient id="bposLogoGrad" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#D97706"/>
-                        <stop offset="45%" stop-color="#8B5CF6"/>
-                        <stop offset="100%" stop-color="#60A5FA"/>
+                        <stop offset="0%" stop-color={isWhite ? '#ffffff' : '#D97706'}/>
+                        <stop offset="45%" stop-color={isWhite ? '#ffffff' : '#8B5CF6'}/>
+                        <stop offset="100%" stop-color={isWhite ? '#e0e0e0' : '#60A5FA'}/>
                     </linearGradient>
                 </defs>
-                <g fill="url(#bposLogoGrad)">
+                <g fill={isWhite ? '#ffffff' : 'url(#bposLogoGrad)'}>
                     <circle cx="144" cy="88" r="22"/><circle cx="200" cy="88" r="22"/>
                     <circle cx="256" cy="88" r="22"/><circle cx="312" cy="88" r="22"/>
                     <circle cx="144" cy="144" r="22"/><circle cx="200" cy="144" r="22"/>
@@ -58,7 +57,7 @@ const nameClass = [
                     <circle cx="144" cy="424" r="22"/><circle cx="200" cy="424" r="22"/>
                     <circle cx="256" cy="424" r="22"/><circle cx="312" cy="424" r="22"/>
                 </g>
-            </svg><span class="bpos-logo__dot"></span>POS
+            </svg><span class={isWhite ? 'bpos-logo__dot bpos-logo__dot--white' : 'bpos-logo__dot'}></span>POS
         </span>
     </Tag>
 </div>
@@ -89,19 +88,16 @@ const nameClass = [
         font-size: clamp(1.5rem, 4vw, 2.5rem);
     }
 
-    /* ── Electric glow ── */
-    .bpos-logo--glow {
-        filter: drop-shadow(0 0 1px rgba(139, 92, 246, 0.7))
-                drop-shadow(0 0 3px rgba(139, 92, 246, 0.45))
-                drop-shadow(0 0 1px rgba(96, 165, 250, 0.5));
-    }
-
-    /* ── Gradient text ── */
-    .bpos-logo__gradient {
+    /* ── Text variants ── */
+    .bpos-logo__text--gradient {
         background: linear-gradient(135deg, #D97706 0%, #8B5CF6 45%, #60A5FA 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+    }
+
+    .bpos-logo__text--white {
+        color: #ffffff;
     }
 
     /* ── Dot-matrix B ── */
@@ -123,11 +119,15 @@ const nameClass = [
         vertical-align: 0.25em;
         margin: 0 0.05em;
     }
+    .bpos-logo__dot--white {
+        background: #ffffff;
+    }
 
-    /* ── 3D Orbit arc ── */
+    /* ── Comet orbit arc (Saturn ring) ── */
     .bpos-logo__arc-wrap {
         position: relative;
-        perspective: 800px;
+        perspective: 900px;
+        overflow: visible;
     }
 
     .bpos-logo__arc-wrap .bpos-logo__name {
@@ -139,28 +139,63 @@ const nameClass = [
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 160%;
-        height: 160%;
+        width: 130%;
+        height: 220%;
         border-radius: 50%;
         pointer-events: none;
         z-index: 0;
+        transform-origin: center center;
+        /* Back pass: dimmer atmospheric tail — feels "behind" the text */
         background: conic-gradient(
-            from 180deg,
+            from 0deg,
             transparent 0deg,
-            transparent 150deg,
-            rgba(96, 165, 250, 0.08) 190deg,
-            rgba(139, 92, 246, 0.3) 230deg,
-            rgba(217, 119, 6, 0.18) 265deg,
-            transparent 310deg,
+            transparent 160deg,
+            rgba(96, 165, 250, 0.015) 200deg,
+            rgba(139, 92, 246, 0.04) 240deg,
+            rgba(167, 139, 250, 0.08) 265deg,
+            rgba(217, 119, 6, 0.15) 285deg,
+            rgba(245, 158, 11, 0.35) 295deg,
+            rgba(255, 220, 120, 0.55) 301deg,
+            rgba(255, 255, 255, 0.7) 305deg,
+            rgba(255, 220, 120, 0.4) 309deg,
+            rgba(245, 158, 11, 0.18) 318deg,
+            rgba(96, 165, 250, 0.05) 335deg,
+            transparent 355deg,
             transparent 360deg
         );
-        mask-image: radial-gradient(ellipse at center, transparent 52%, black 56%, black 62%, transparent 66%);
-        -webkit-mask-image: radial-gradient(ellipse at center, transparent 52%, black 56%, black 62%, transparent 66%);
-        filter: blur(4px);
-        animation: bposLogoOrbit 20s linear infinite;
+        /* Thicker ring band for more presence */
+        mask-image: radial-gradient(ellipse at center, transparent 40%, black 44%, black 56%, transparent 60%);
+        -webkit-mask-image: radial-gradient(ellipse at center, transparent 40%, black 44%, black 56%, transparent 60%);
+        filter: blur(3px);
+        animation: bposComet 16s linear infinite;
     }
 
-    /* Front arc layer */
+    /* Front-pass flare — brighter, sharper, feels "in front" of text */
+    .bpos-logo__arc::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            transparent 290deg,
+            rgba(245, 158, 11, 0.25) 297deg,
+            rgba(255, 220, 120, 0.8) 302deg,
+            rgba(255, 255, 255, 1) 305deg,
+            rgba(255, 220, 120, 0.6) 308deg,
+            rgba(217, 119, 6, 0.2) 315deg,
+            transparent 326deg,
+            transparent 360deg
+        );
+        /* Tighter band — sharper leading edge */
+        mask-image: radial-gradient(ellipse at center, transparent 42%, black 46%, black 54%, transparent 58%);
+        -webkit-mask-image: radial-gradient(ellipse at center, transparent 42%, black 46%, black 54%, transparent 58%);
+        filter: blur(1px);
+        z-index: 3;
+    }
+
+    /* Bloom halo — soft outward glow around the comet head */
     .bpos-logo__arc::after {
         content: '';
         position: absolute;
@@ -169,38 +204,37 @@ const nameClass = [
         background: conic-gradient(
             from 0deg,
             transparent 0deg,
-            rgba(96, 165, 250, 0.2) 15deg,
-            rgba(139, 92, 246, 0.35) 40deg,
-            rgba(217, 119, 6, 0.12) 65deg,
-            transparent 95deg,
+            transparent 295deg,
+            rgba(245, 158, 11, 0.06) 300deg,
+            rgba(255, 220, 120, 0.15) 303deg,
+            rgba(255, 255, 255, 0.2) 305deg,
+            rgba(255, 220, 120, 0.12) 307deg,
+            rgba(245, 158, 11, 0.04) 312deg,
+            transparent 320deg,
             transparent 360deg
         );
-        mask-image: radial-gradient(ellipse at center, transparent 52%, black 56%, black 62%, transparent 66%);
-        -webkit-mask-image: radial-gradient(ellipse at center, transparent 52%, black 56%, black 62%, transparent 66%);
-        filter: blur(3px);
-        z-index: 3;
+        /* Wider band — bleeds outward past the ring for atmospheric bloom */
+        mask-image: radial-gradient(ellipse at center, transparent 34%, black 40%, black 60%, transparent 66%);
+        -webkit-mask-image: radial-gradient(ellipse at center, transparent 34%, black 40%, black 60%, transparent 66%);
+        filter: blur(8px);
+        z-index: 1;
     }
 
-    @keyframes bposLogoOrbit {
-        0%   { transform: translate(-50%, -50%) rotateX(60deg) rotateY(0deg) rotate(0deg); opacity: 0.65; }
-        8%   { transform: translate(-50.3%, -49.2%) rotateX(57deg) rotateY(2deg) rotate(32deg); opacity: 0.8; }
-        18%  { transform: translate(-49.5%, -50.5%) rotateX(63deg) rotateY(-1.5deg) rotate(72deg); opacity: 0.55; }
-        28%  { transform: translate(-50.8%, -49.8%) rotateX(58deg) rotateY(3deg) rotate(112deg); opacity: 0.85; }
-        38%  { transform: translate(-49.2%, -50.2%) rotateX(64deg) rotateY(-2deg) rotate(148deg); opacity: 0.5; }
-        48%  { transform: translate(-50.5%, -49.5%) rotateX(59deg) rotateY(1.5deg) rotate(185deg); opacity: 0.75; }
-        58%  { transform: translate(-49.8%, -50.8%) rotateX(62deg) rotateY(-2.5deg) rotate(222deg); opacity: 0.6; }
-        68%  { transform: translate(-50.2%, -49.2%) rotateX(56deg) rotateY(2.5deg) rotate(260deg); opacity: 0.9; }
-        78%  { transform: translate(-49.5%, -50.5%) rotateX(63deg) rotateY(-1deg) rotate(298deg); opacity: 0.55; }
-        88%  { transform: translate(-50.5%, -49.8%) rotateX(58deg) rotateY(2deg) rotate(332deg); opacity: 0.8; }
-        100% { transform: translate(-50%, -50%) rotateX(60deg) rotateY(0deg) rotate(360deg); opacity: 0.65; }
+    @keyframes bposComet {
+        /* Smooth rotation + gentle tilt drift + opacity depth */
+        0%   { transform: translate(-50%, -50%) rotateX(62deg) rotateY(0deg) rotate(0deg); opacity: 0.7; }
+        25%  { transform: translate(-50%, -50%) rotateX(60deg) rotateY(1.5deg) rotate(90deg); opacity: 0.45; }
+        50%  { transform: translate(-50%, -50%) rotateX(63deg) rotateY(0deg) rotate(180deg); opacity: 0.7; }
+        75%  { transform: translate(-50%, -50%) rotateX(60deg) rotateY(-1.5deg) rotate(270deg); opacity: 1; }
+        100% { transform: translate(-50%, -50%) rotateX(62deg) rotateY(0deg) rotate(360deg); opacity: 0.7; }
     }
 
     /* ── Reduced motion ── */
     @media (prefers-reduced-motion: reduce) {
         .bpos-logo__arc {
             animation: none;
-            transform: translate(-50%, -50%) rotateX(60deg);
-            opacity: 0.6;
+            transform: translate(-50%, -50%) rotateX(62deg);
+            opacity: 0.5;
         }
     }
 </style>
