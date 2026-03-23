@@ -110,7 +110,8 @@ const schemaJson = schemaGraph(
 
   <SkipLink />
 
-  <!-- Cinematic Intro -->
+  <!-- Cinematic Intro: hide immediately if already seen (prevents flash before JS runs) -->
+  <script is:inline>try{if(localStorage.getItem('bb_intro_seen')||new URLSearchParams(location.search).has('skip')){document.write('<style>.intro{display:none!important}</style>');}}catch(e){}</script>
   <div class="intro">
       <div class="intro__glow intro__glow--orange"></div>
       <div class="intro__glow intro__glow--violet"></div>
