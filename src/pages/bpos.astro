@@ -1,8 +1,9 @@
 ---
 /**
- * B-POS — Dedicated product landing page for B-POS Restaurant POS.
+ * B-POS — Dedicated product landing page for B-POS Food Service POS.
  * Electric blue/violet/starlight accent palette. Hero + features + screenshots + pricing + FAQ.
  * Uses ServiceDetailLayout (HeaderUniversal + VisitorNotify included via layout).
+ * NOTE: noindex — page is in development, not yet public.
  */
 import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
@@ -13,15 +14,16 @@ const currentYear = new Date().getFullYear();
 ---
 
 <ServiceDetailLayout
-    title="B-POS — Offline-First Restaurant POS | Bertrand Brands"
-    description="Full-suite restaurant POS for dine-in, bar, and takeout. Offline-first, runs on any device. From $59/mo."
+    title="B-POS — Offline-First Food Service POS | Bertrand Brands"
+    description="Full-suite food service POS for dine-in, bar, and takeout. Offline-first, runs on any device. From $59/mo."
     canonical="https://bertrandbrands.ca/bpos"
-    ogTitle="B-POS — Restaurant POS That Works Offline"
-    ogDescription="Full-suite restaurant POS for dine-in, bar, and takeout. Offline-first, runs on any device. From $59/mo."
+    ogTitle="B-POS — Food Service POS That Works Offline"
+    ogDescription="Full-suite food service POS for dine-in, bar, and takeout. Offline-first, runs on any device. From $59/mo."
     ogImage="https://bertrandbrands.ca/assets/bpos-og-hero.png"
+    robots="noindex, nofollow"
     spotlightColor="rgba(96, 165, 250, 0.10)"
     accentRgb="245, 158, 11"
-    serviceName="B-POS Restaurant POS"
+    serviceName="B-POS Food Service POS"
     serviceTier="software"
     serviceSlug="bpos"
     servicePrice="59"
@@ -32,11 +34,11 @@ const currentYear = new Date().getFullYear();
         ]),
         {
             "@type": "SoftwareApplication",
-            "name": "B-POS Restaurant POS",
+            "name": "B-POS Food Service POS",
             "url": "https://bertrandbrands.ca/bpos",
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "Web, macOS, Windows, iOS, Android",
-            "description": "Offline-first, full-suite restaurant point of sale for dine-in, bar, and takeout. Runs on any device.",
+            "description": "Offline-first, full-suite food service point of sale for dine-in, bar, and takeout. Runs on any device.",
             "provider": PROVIDER,
             "areaServed": AREA_SERVED,
             "offers": [
@@ -290,7 +292,7 @@ const currentYear = new Date().getFullYear();
                 <p class="bpos-trial-modal__subtitle">14 days, no credit card. Your license key is generated instantly.</p>
                 <input type="hidden" id="bposTrialPlan" value="standard" />
                 <div class="bpos-trial-field">
-                    <label for="bposTrialName">Restaurant Name</label>
+                    <label for="bposTrialName">Business Name</label>
                     <input type="text" id="bposTrialName" placeholder="e.g. Chez Marcel" required />
                 </div>
                 <div class="bpos-trial-field">
@@ -299,7 +301,7 @@ const currentYear = new Date().getFullYear();
                 </div>
                 <div class="bpos-trial-field">
                     <label for="bposTrialEmail">Email</label>
-                    <input type="email" id="bposTrialEmail" placeholder="you@restaurant.com" required />
+                    <input type="email" id="bposTrialEmail" placeholder="you@business.com" required />
                 </div>
                 <div class="bpos-trial-field">
                     <label for="bposTrialPhone">Phone <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
