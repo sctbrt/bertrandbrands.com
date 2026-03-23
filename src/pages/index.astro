@@ -86,6 +86,9 @@ const schemaJson = schemaGraph(
   <Fragment slot="head">
     <link rel="stylesheet" href="/styles/homepage.css" />
     <link rel="stylesheet" href="/styles/founder-lightbox.css" />
+    <!-- Intro skip: runs in <head> before any body paint — no document.write needed -->
+    <script is:inline>try{if(localStorage.getItem('bb_intro_seen')||new URLSearchParams(location.search).has('skip')){document.documentElement.classList.add('no-intro');}}catch(e){}</script>
+    <style is:inline>html.no-intro .intro{display:none!important}</style>
     <style is:inline>
         /* V12 concept: editorial sentence hero (overrides shared.css fragment-style sizing) */
         .hero__content {
@@ -110,8 +113,6 @@ const schemaJson = schemaGraph(
 
   <SkipLink />
 
-  <!-- Cinematic Intro: hide immediately if already seen (prevents flash before JS runs) -->
-  <script is:inline>try{if(localStorage.getItem('bb_intro_seen')||new URLSearchParams(location.search).has('skip')){document.write('<style>.intro{display:none!important}</style>');}}catch(e){}</script>
   <div class="intro">
       <div class="intro__glow intro__glow--orange"></div>
       <div class="intro__glow intro__glow--violet"></div>
