@@ -1123,9 +1123,7 @@ const schemaJson = schemaGraph(
           }
 
           // Skip intro if already seen or ?skip param
-          // Intro permanently disabled — set flag for all visitors
-          localStorage.setItem('bb_intro_seen', '1');
-          var introSeen = true;
+          var introSeen = localStorage.getItem('bb_intro_seen');
           var skipParam = params.has('skip');
           var forceIntro = params.has('intro');
           if ((introSeen || skipParam) && !forceIntro) {
