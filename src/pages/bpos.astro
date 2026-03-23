@@ -1,504 +1,671 @@
 ---
 /**
- * B-POS — Dedicated product landing page for B-POS Food Service POS.
- * Electric blue/violet/starlight accent palette. Hero + features + screenshots + pricing + FAQ.
- * Uses ServiceDetailLayout (HeaderUniversal + VisitorNotify included via layout).
- * NOTE: noindex — page is in development, not yet public.
+ * B·POS — Food Service POS one-pager.
+ * Electric blue/amber/violet palette inspired by the comet arc in BPOSLogo.
+ * App icon hero, sweeping electric background, feature pillars, interest capture.
  */
-import ServiceDetailLayout from '../layouts/ServiceDetailLayout.astro';
-import StickyMobileCTA from '../components/StickyMobileCTA.astro';
-import BPOSSection from '../components/BPOSSection.astro';
-import { breadcrumbList, schemaGraph, PROVIDER, AREA_SERVED } from '../lib/schema';
-
-const currentYear = new Date().getFullYear();
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderUniversal from '../components/HeaderUniversal.astro';
+import FooterMinimal from '../components/FooterMinimal.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+import SkipLink from '../components/SkipLink.astro';
+import { breadcrumbList, schemaGraph, PROVIDER } from '../lib/schema';
 ---
 
-<ServiceDetailLayout
-    title="B-POS — Offline-First Food Service POS | Bertrand Brands"
-    description="Full-suite food service POS for dine-in, bar, and takeout. Offline-first, runs on any device. From $59/mo."
+<BaseLayout
+    title="B·POS — Food Service POS | Bertrand Brands"
+    description="Point of sale built for food service. Offline-first, runs on any device, bring your own processor. Coming soon from Bertrand Brands."
     canonical="https://bertrandbrands.ca/bpos"
-    ogTitle="B-POS — Food Service POS That Works Offline"
-    ogDescription="Full-suite food service POS for dine-in, bar, and takeout. Offline-first, runs on any device. From $59/mo."
+    ogTitle="B·POS — Food Service POS"
+    ogDescription="Point of sale built for food service. Offline-first, runs on any device, bring your own processor."
     ogImage="https://bertrandbrands.ca/assets/bpos-og-hero.png"
-    robots="noindex, nofollow"
-    spotlightColor="rgba(96, 165, 250, 0.10)"
-    accentRgb="245, 158, 11"
-    serviceName="B-POS Food Service POS"
-    serviceTier="software"
-    serviceSlug="bpos"
-    servicePrice="59"
     schemaJson={schemaGraph(
         breadcrumbList([
             { name: "Bertrand Brands", url: "https://bertrandbrands.ca/" },
-            { name: "B-POS", url: "https://bertrandbrands.ca/bpos" }
-        ]),
-        {
-            "@type": "SoftwareApplication",
-            "name": "B-POS Food Service POS",
-            "url": "https://bertrandbrands.ca/bpos",
-            "applicationCategory": "BusinessApplication",
-            "operatingSystem": "Web, macOS, Windows, iOS, Android",
-            "description": "Offline-first, full-suite food service point of sale for dine-in, bar, and takeout. Runs on any device.",
-            "provider": PROVIDER,
-            "areaServed": AREA_SERVED,
-            "offers": [
-                {
-                    "@type": "Offer",
-                    "name": "B-POS Standard",
-                    "price": "59",
-                    "priceCurrency": "CAD",
-                    "priceSpecification": {
-                        "@type": "UnitPriceSpecification",
-                        "price": "59",
-                        "priceCurrency": "CAD",
-                        "billingDuration": "P1M"
-                    },
-                    "availability": "https://schema.org/InStock",
-                    "description": "Full POS with orders, payments, floor plan, up to 3 terminals."
-                },
-                {
-                    "@type": "Offer",
-                    "name": "B-POS Pro",
-                    "price": "129",
-                    "priceCurrency": "CAD",
-                    "priceSpecification": {
-                        "@type": "UnitPriceSpecification",
-                        "price": "129",
-                        "priceCurrency": "CAD",
-                        "billingDuration": "P1M"
-                    },
-                    "availability": "https://schema.org/InStock",
-                    "description": "Everything in Standard plus unlimited terminals, KDS, inventory, advanced reporting."
-                }
-            ]
-        }
+            { name: "B·POS", url: "https://bertrandbrands.ca/bpos" }
+        ])
     )}
 >
     <Fragment slot="head">
         <style is:inline>
-            /* ── BPOS Color Tokens ─────────────────────────── */
+            /* ── Header visibility override (sub-page) ── */
+            .header { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateY(0) !important; }
+            .header__logo-icon { opacity: 1 !important; }
+            .header__wordmark { opacity: 1 !important; }
+
+            /* ── Page tokens ── */
             :root {
-                --bpos-blue: #60A5FA;
-                --bpos-blue-bright: #93C5FD;
-                --bpos-blue-dim: rgba(96, 165, 250, 0.12);
-                --bpos-amber: #E8D5B0;
-                --bpos-amber-dim: rgba(232, 213, 176, 0.08);
-                --bpos-amber-glow: rgba(232, 213, 176, 0.06);
-                --bpos-blue-glow: rgba(96, 165, 250, 0.08);
-                --bpos-violet: #A78BFA;
-                --bpos-violet-dim: rgba(167, 139, 250, 0.08);
+                --bp-blue:        #60A5FA;
+                --bp-blue-bright: #93C5FD;
+                --bp-amber:       #F59E0B;
+                --bp-amber-light: #FCD34D;
+                --bp-violet:      #8B5CF6;
+                --bp-bg:          #050810;
+                --bp-blue-rgb:    96, 165, 250;
+                --bp-amber-rgb:   245, 158, 11;
+                --bp-violet-rgb:  139, 92, 246;
             }
 
-            /* ── Override parent Bertrand Brands warm tones ── */
-            .service-page {
-                background: #050810 !important;
-                background-image:
-                    radial-gradient(ellipse 120% 50% at 20% 0%, rgba(167, 139, 250, 0.04) 0%, transparent 50%),
-                    radial-gradient(ellipse 100% 60% at 80% 100%, rgba(96, 165, 250, 0.03) 0%, transparent 50%) !important;
-            }
-            .service-page__spotlight--1,
-            .service-page__spotlight--2 {
-                display: none !important;
-            }
-            .sticky-cta__button {
-                background: linear-gradient(135deg, #60A5FA, #3B82F6) !important;
-                color: #050a14 !important;
-                font-weight: 700 !important;
-                box-shadow: 0 0 16px rgba(96, 165, 250, 0.3);
-            }
-            .sticky-cta {
-                border-top: 1px solid rgba(96, 165, 250, 0.15) !important;
-                background: rgba(5, 8, 16, 0.95) !important;
-            }
-            .service-back {
-                color: var(--bpos-blue) !important;
-                border-color: rgba(96, 165, 250, 0.15) !important;
-                background: rgba(96, 165, 250, 0.04) !important;
-            }
-            .service-back:hover {
-                border-color: rgba(96, 165, 250, 0.3) !important;
-                background: rgba(96, 165, 250, 0.08) !important;
+            /* ── Page shell ── */
+            .bpos-page {
+                background: var(--bp-bg);
+                min-height: 100vh;
+                color: var(--text);
             }
 
-            /* ── Trial modal ──────────────────────────────── */
-            .bpos-trial-overlay {
-                display: none;
+            /* ── Electric sweep — background hero accent ── */
+            .bpos-sweep {
                 position: fixed;
-                inset: 0;
-                z-index: 9999;
-                background: rgba(0,0,0,0.75);
-                backdrop-filter: blur(4px);
+                top: 0; left: 0; right: 0; bottom: 0;
+                pointer-events: none;
+                z-index: 0;
+                overflow: hidden;
+            }
+
+            .bpos-sweep__arc {
+                position: absolute;
+                top: -30%;
+                left: -20%;
+                width: 140%;
+                height: 140%;
+                border-radius: 50%;
+                background: conic-gradient(
+                    from 200deg,
+                    transparent 0deg,
+                    transparent 40deg,
+                    rgba(var(--bp-blue-rgb), 0.008) 60deg,
+                    rgba(var(--bp-violet-rgb), 0.014) 75deg,
+                    rgba(var(--bp-amber-rgb), 0.025) 88deg,
+                    rgba(255, 220, 120, 0.05) 94deg,
+                    rgba(255, 255, 255, 0.07) 97deg,
+                    rgba(255, 220, 120, 0.04) 100deg,
+                    rgba(var(--bp-amber-rgb), 0.018) 108deg,
+                    rgba(var(--bp-blue-rgb), 0.006) 125deg,
+                    transparent 145deg,
+                    transparent 360deg
+                );
+                mask-image: radial-gradient(ellipse at 40% 40%, transparent 30%, black 38%, black 62%, transparent 72%);
+                -webkit-mask-image: radial-gradient(ellipse at 40% 40%, transparent 30%, black 38%, black 62%, transparent 72%);
+                filter: blur(12px);
+                animation: sweepRotate 60s linear infinite;
+                opacity: 0.7;
+            }
+
+            .bpos-sweep__glow-blue {
+                position: absolute;
+                top: 10%; right: -10%;
+                width: 60vw; height: 60vw;
+                max-width: 700px; max-height: 700px;
+                background: radial-gradient(ellipse at center,
+                    rgba(var(--bp-blue-rgb), 0.05) 0%,
+                    rgba(var(--bp-blue-rgb), 0.02) 40%,
+                    transparent 70%);
+                animation: glowDrift 22s ease-in-out infinite;
+            }
+
+            .bpos-sweep__glow-amber {
+                position: absolute;
+                bottom: 5%; left: -5%;
+                width: 50vw; height: 50vw;
+                max-width: 600px; max-height: 600px;
+                background: radial-gradient(ellipse at center,
+                    rgba(var(--bp-amber-rgb), 0.04) 0%,
+                    rgba(var(--bp-amber-rgb), 0.01) 45%,
+                    transparent 70%);
+                animation: glowDrift 28s ease-in-out infinite reverse;
+            }
+
+            @keyframes sweepRotate {
+                from { transform: rotate(0deg); }
+                to   { transform: rotate(360deg); }
+            }
+
+            @keyframes glowDrift {
+                0%, 100% { opacity: 0.8; transform: translate(0, 0) scale(1); }
+                30%      { opacity: 1;   transform: translate(20px, -15px) scale(1.04); }
+                60%      { opacity: 0.75; transform: translate(-10px, 12px) scale(0.96); }
+            }
+
+            /* ── Container ── */
+            .bpos-container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 0 2rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            /* ── Hero ── */
+            .bpos-hero {
+                padding: var(--space-xl) 0 var(--space-lg);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                position: relative;
+            }
+
+            /* App icon */
+            .bpos-icon-wrap {
+                position: relative;
+                display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 24px;
+                width: 136px;
+                height: 136px;
+                margin-bottom: 2.5rem;
             }
-            .bpos-trial-overlay.is-open { display: flex; }
-            .bpos-trial-modal {
-                background: #0e1117;
-                border: 1px solid rgba(96, 165, 250, 0.15);
-                border-radius: 16px;
-                padding: 32px;
-                max-width: 420px;
-                width: 100%;
+
+            .bpos-icon {
+                width: 136px;
+                height: 136px;
+                border-radius: 30px;
+                background: linear-gradient(150deg, #0c1424 0%, #0d1a2e 60%, #09101e 100%);
+                border: 1px solid rgba(var(--bp-blue-rgb), 0.18);
+                box-shadow:
+                    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+                    0 2px 0 rgba(255, 255, 255, 0.06) inset,
+                    0 0 30px rgba(var(--bp-blue-rgb), 0.14),
+                    0 0 70px rgba(var(--bp-blue-rgb), 0.07),
+                    0 0 120px rgba(var(--bp-amber-rgb), 0.04),
+                    0 20px 60px rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 position: relative;
-                box-shadow: 0 0 60px rgba(96, 165, 250, 0.06), 0 0 60px rgba(232, 213, 176, 0.04);
+                z-index: 2;
+                animation: iconGlow 18s ease-in-out infinite;
             }
-            .bpos-trial-modal__title {
-                font-family: var(--font-display, Inter, sans-serif);
-                font-size: 18px;
-                font-weight: 600;
-                color: var(--text, #f5f5f5);
-                margin-bottom: 4px;
+
+            @keyframes iconGlow {
+                0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 2px 0 rgba(255,255,255,0.06) inset, 0 0 30px rgba(var(--bp-blue-rgb),0.14), 0 0 70px rgba(var(--bp-blue-rgb),0.07), 0 0 120px rgba(var(--bp-amber-rgb),0.04), 0 20px 60px rgba(0,0,0,0.5); }
+                40%      { box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, 0 2px 0 rgba(255,255,255,0.07) inset, 0 0 40px rgba(var(--bp-blue-rgb),0.20), 0 0 90px rgba(var(--bp-blue-rgb),0.10), 0 0 150px rgba(var(--bp-amber-rgb),0.06), 0 20px 60px rgba(0,0,0,0.5); }
             }
-            .bpos-trial-modal__subtitle {
-                font-size: 13px;
-                color: var(--text-muted, #999);
-                margin-bottom: 24px;
+
+            .bpos-icon__b {
+                width: 68px;
+                height: auto;
             }
-            .bpos-trial-modal__close {
+
+            /* Comet ring orbiting the icon */
+            .bpos-icon-ring {
                 position: absolute;
-                top: 16px;
-                right: 16px;
-                background: none;
-                border: none;
-                color: var(--text-muted, #999);
-                font-size: 20px;
-                cursor: pointer;
-                padding: 4px 8px;
-                line-height: 1;
+                top: 50%;
+                left: 50%;
+                width: 220%;
+                height: 220%;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1;
+                background: conic-gradient(
+                    from 0deg,
+                    transparent 0deg,
+                    transparent 150deg,
+                    rgba(var(--bp-blue-rgb), 0.01) 190deg,
+                    rgba(var(--bp-violet-rgb), 0.04) 230deg,
+                    rgba(var(--bp-amber-rgb), 0.12) 272deg,
+                    rgba(245, 158, 11, 0.32) 284deg,
+                    rgba(255, 220, 120, 0.55) 291deg,
+                    rgba(255, 255, 255, 0.75) 296deg,
+                    rgba(255, 220, 120, 0.45) 301deg,
+                    rgba(var(--bp-amber-rgb), 0.18) 310deg,
+                    rgba(var(--bp-blue-rgb), 0.04) 330deg,
+                    transparent 350deg,
+                    transparent 360deg
+                );
+                mask-image: radial-gradient(ellipse at center, transparent 40%, black 45%, black 55%, transparent 60%);
+                -webkit-mask-image: radial-gradient(ellipse at center, transparent 40%, black 45%, black 55%, transparent 60%);
+                filter: blur(2.5px);
+                animation: ringComet 10s linear infinite;
             }
-            .bpos-trial-field {
-                margin-bottom: 16px;
+
+            /* Bloom halo around comet head */
+            .bpos-icon-ring::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 50%;
+                background: conic-gradient(
+                    from 0deg,
+                    transparent 0deg,
+                    transparent 285deg,
+                    rgba(var(--bp-amber-rgb), 0.08) 291deg,
+                    rgba(255, 220, 120, 0.18) 295deg,
+                    rgba(255, 255, 255, 0.22) 297deg,
+                    rgba(255, 220, 120, 0.14) 299deg,
+                    rgba(var(--bp-amber-rgb), 0.05) 305deg,
+                    transparent 315deg,
+                    transparent 360deg
+                );
+                mask-image: radial-gradient(ellipse at center, transparent 32%, black 38%, black 62%, transparent 68%);
+                -webkit-mask-image: radial-gradient(ellipse at center, transparent 32%, black 38%, black 62%, transparent 68%);
+                filter: blur(6px);
             }
-            .bpos-trial-field label {
-                display: block;
-                font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 0.08em;
+
+            @keyframes ringComet {
+                0%   { transform: translate(-50%, -50%) rotateX(62deg) rotateY(0deg) rotate(0deg);   opacity: 0.65; }
+                25%  { transform: translate(-50%, -50%) rotateX(60deg) rotateY(1deg)  rotate(90deg);  opacity: 0.45; }
+                50%  { transform: translate(-50%, -50%) rotateX(63deg) rotateY(0deg)  rotate(180deg); opacity: 0.65; }
+                75%  { transform: translate(-50%, -50%) rotateX(60deg) rotateY(-1deg) rotate(270deg); opacity: 0.9; }
+                100% { transform: translate(-50%, -50%) rotateX(62deg) rotateY(0deg)  rotate(360deg); opacity: 0.65; }
+            }
+
+            /* ── Hero text ── */
+            .bpos-hero__badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-family: var(--font-body);
+                font-size: var(--text-xs);
+                font-weight: 500;
+                letter-spacing: 0.1em;
                 text-transform: uppercase;
-                color: var(--text-subtle, #aaa);
-                margin-bottom: 6px;
+                color: var(--bp-blue);
+                background: rgba(var(--bp-blue-rgb), 0.08);
+                border: 1px solid rgba(var(--bp-blue-rgb), 0.15);
+                border-radius: 100px;
+                padding: 0.35rem 1rem;
+                margin-bottom: 1.75rem;
             }
-            .bpos-trial-field input {
-                width: 100%;
-                padding: 10px 12px;
-                font-size: 14px;
-                font-family: var(--font-body, Inter, sans-serif);
-                background: rgba(96, 165, 250, 0.04);
-                border: 1px solid rgba(255,255,255,0.1);
-                border-radius: 8px;
-                color: var(--text, #f5f5f5);
-                outline: none;
-                transition: border-color 0.15s, box-shadow 0.15s;
-                box-sizing: border-box;
+
+            .bpos-hero__badge-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--bp-blue);
+                animation: badgePulse 2.5s ease-in-out infinite;
             }
-            .bpos-trial-field input:focus {
-                border-color: rgba(96, 165, 250, 0.4);
-                box-shadow: 0 0 12px rgba(96, 165, 250, 0.08);
+
+            @keyframes badgePulse {
+                0%, 100% { opacity: 1; transform: scale(1); }
+                50%      { opacity: 0.4; transform: scale(0.7); }
             }
-            .bpos-trial-submit {
-                width: 100%;
-                padding: 12px;
-                font-size: 15px;
-                font-weight: 700;
-                font-family: var(--font-body, Inter, sans-serif);
-                background: linear-gradient(135deg, #60A5FA, #3B82F6);
-                color: #050a14;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                margin-top: 8px;
-                transition: all 0.2s;
-                box-shadow: 0 0 16px rgba(96, 165, 250, 0.25);
+
+            .bpos-hero__name {
+                font-family: var(--font-display);
+                font-size: clamp(3rem, 9vw, 6.5rem);
+                font-weight: 300;
+                letter-spacing: -0.04em;
+                line-height: 1;
+                margin: 0 0 0.5rem;
+                background: linear-gradient(135deg, var(--bp-amber-light) 0%, #ffffff 35%, var(--bp-blue-bright) 70%, var(--bp-blue) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
-            .bpos-trial-submit:hover {
-                box-shadow: 0 0 24px rgba(96, 165, 250, 0.4);
-                transform: translateY(-1px);
+
+            .bpos-hero__sub {
+                font-family: var(--font-body);
+                font-size: var(--text-lg);
+                font-weight: 400;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: rgba(var(--bp-blue-rgb), 0.6);
+                margin: 0 0 1.75rem;
             }
-            .bpos-trial-submit:disabled {
-                opacity: 0.6;
-                cursor: not-allowed;
-                box-shadow: none;
+
+            .bpos-hero__tagline {
+                font-family: var(--font-body);
+                font-size: clamp(1.0625rem, 2.5vw, 1.25rem);
+                font-weight: 400;
+                color: var(--text-muted);
+                line-height: 1.65;
+                max-width: 520px;
+                margin: 0 auto 2.5rem;
             }
-            .bpos-trial-error {
-                color: #ef4444;
-                font-size: 12px;
-                margin-top: 8px;
-                display: none;
+
+            .bpos-hero__origin {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                color: var(--text-subtle);
+                margin-top: 3rem;
             }
-            .bpos-trial-success {
+
+            /* ── Divider ── */
+            .bpos-divider {
+                width: 1px;
+                height: 4rem;
+                background: linear-gradient(to bottom, transparent, rgba(var(--bp-blue-rgb), 0.2), transparent);
+                margin: 0 auto;
+            }
+
+            /* ── Pillars ── */
+            .bpos-pillars {
+                padding: var(--space-lg) 0;
+            }
+
+            .bpos-pillars__grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1px;
+                background: rgba(var(--bp-blue-rgb), 0.06);
+                border: 1px solid rgba(var(--bp-blue-rgb), 0.08);
+                border-radius: var(--radius-lg);
+                overflow: hidden;
+            }
+
+            .bpos-pillar {
+                padding: 2rem 1.5rem;
+                background: rgba(var(--bp-bg), 0);
+                transition: background var(--duration-fast) var(--ease-out);
                 text-align: center;
-                padding: 24px 0;
             }
-            .bpos-trial-success__key {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 18px;
+
+            .bpos-pillar:hover {
+                background: rgba(var(--bp-blue-rgb), 0.07);
+            }
+
+            .bpos-pillar__icon {
+                width: 36px;
+                height: 36px;
+                margin: 0 auto 1rem;
+                color: var(--bp-blue);
+                opacity: 0.7;
+            }
+
+            .bpos-pillar__name {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
                 font-weight: 600;
-                color: var(--bpos-amber);
-                letter-spacing: 0.04em;
-                margin: 16px 0;
-                padding: 12px;
-                background: rgba(232, 213, 176, 0.06);
-                border: 1px solid rgba(232, 213, 176, 0.2);
+                color: var(--text);
+                margin-bottom: 0.4rem;
+                letter-spacing: 0.01em;
+            }
+
+            .bpos-pillar__desc {
+                font-family: var(--font-body);
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+                line-height: 1.5;
+            }
+
+            /* ── Interest capture ── */
+            .bpos-interest {
+                padding: var(--space-lg) 0 var(--space-xl);
+                text-align: center;
+            }
+
+            .bpos-interest__card {
+                max-width: 500px;
+                margin: 0 auto;
+                padding: 2.5rem 2rem;
+                background: rgba(var(--bp-blue-rgb), 0.04);
+                border: 1px solid rgba(var(--bp-blue-rgb), 0.1);
+                border-radius: var(--radius-lg);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .bpos-interest__card::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0;
+                height: 1px;
+                background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(var(--bp-amber-rgb), 0.4) 30%,
+                    rgba(255, 255, 255, 0.6) 50%,
+                    rgba(var(--bp-blue-rgb), 0.4) 70%,
+                    transparent 100%);
+            }
+
+            .bpos-interest__heading {
+                font-family: var(--font-display);
+                font-size: var(--text-2xl);
+                font-weight: 300;
+                color: var(--text);
+                margin-bottom: 0.625rem;
+                letter-spacing: -0.02em;
+            }
+
+            .bpos-interest__text {
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                margin-bottom: 1.75rem;
+                line-height: 1.55;
+            }
+
+            .bpos-interest__form {
+                display: flex;
+                gap: 0.625rem;
+            }
+
+            .bpos-interest__email {
+                flex: 1;
+                padding: 0.75rem 1rem;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(var(--bp-blue-rgb), 0.15);
                 border-radius: 8px;
+                color: var(--text);
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                outline: none;
+                transition: border-color var(--duration-fast) var(--ease-out);
+            }
+
+            .bpos-interest__email::placeholder { color: var(--text-subtle); }
+
+            .bpos-interest__email:focus {
+                border-color: rgba(var(--bp-blue-rgb), 0.35);
+            }
+
+            .bpos-interest__submit {
+                padding: 0.75rem 1.25rem;
+                background: linear-gradient(135deg,
+                    rgba(var(--bp-amber-rgb), 0.9) 0%,
+                    rgba(var(--bp-amber-rgb), 0.7) 100%);
+                border: 1px solid rgba(var(--bp-amber-rgb), 0.4);
+                border-radius: 8px;
+                color: #050810;
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                font-weight: 600;
+                cursor: pointer;
+                white-space: nowrap;
+                transition: opacity var(--duration-fast) var(--ease-out),
+                            transform var(--duration-fast) var(--ease-out);
+            }
+
+            .bpos-interest__submit:hover { opacity: 0.9; transform: translateY(-1px); }
+            .bpos-interest__submit:active { transform: translateY(0); }
+
+            .bpos-interest__thanks {
+                display: none;
+                font-family: var(--font-body);
+                font-size: var(--text-sm);
+                color: var(--bp-blue-bright);
+                padding: 0.75rem;
+            }
+
+            /* ── Responsive ── */
+            @media (max-width: 768px) {
+                .bpos-pillars__grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .bpos-icon { width: 112px; height: 112px; border-radius: 24px; }
+                .bpos-icon__b { width: 54px; }
+                .bpos-interest__form { flex-direction: column; }
+                .bpos-interest__card { padding: 2rem 1.5rem; }
+            }
+
+            @media (max-width: 480px) {
+                .bpos-pillars__grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            /* ── Reduced motion ── */
+            @media (prefers-reduced-motion: reduce) {
+                .bpos-sweep__arc,
+                .bpos-sweep__glow-blue,
+                .bpos-sweep__glow-amber,
+                .bpos-icon,
+                .bpos-hero__badge-dot,
+                .bpos-icon-ring { animation: none !important; }
             }
         </style>
     </Fragment>
 
-    <main id="main-content">
-        <BPOSSection />
-    </main>
+    <SkipLink />
+    <HeaderUniversal />
 
-    <script is:inline>
-    /* Reveal on scroll — IntersectionObserver for BPOSSection */
-    (function() {
-        var reveals = document.querySelectorAll('.reveal');
-        if (!reveals.length) return;
-
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            reveals.forEach(function(el) { el.classList.add('is-visible'); });
-            return;
-        }
-
-        var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-        reveals.forEach(function(el) { observer.observe(el); });
-    })();
-    </script>
-
-    <footer class="service-footer">
-        <div class="service-footer__cta">
-            <p class="service-footer__cta-text">Questions?</p>
-            <a href="mailto:hello@bertrandgroup.ca" class="service-footer__cta-link">hello@bertrandgroup.ca</a>
-        </div>
-        <p class="service-footer__text">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
-        <p class="footer-division"><a href="https://bertrandgroup.ca" target="_blank" rel="noopener noreferrer">A division of Bertrand Group Canada</a> &middot; <a href="/privacy">Privacy</a></p>
-        <p class="service-footer__phone"><a href="tel:+17054133705">(705) 413-3705</a></p>
-    </footer>
-
-    <!-- Trial modal -->
-    <div class="bpos-trial-overlay" id="bposTrialOverlay">
-        <div class="bpos-trial-modal">
-            <button class="bpos-trial-modal__close" type="button" id="bposTrialClose">&times;</button>
-            <div id="bposTrialForm">
-                <p class="bpos-trial-modal__title">Start your free trial</p>
-                <p class="bpos-trial-modal__subtitle">14 days, no credit card. Your license key is generated instantly.</p>
-                <input type="hidden" id="bposTrialPlan" value="standard" />
-                <div class="bpos-trial-field">
-                    <label for="bposTrialName">Business Name</label>
-                    <input type="text" id="bposTrialName" placeholder="e.g. Chez Marcel" required />
-                </div>
-                <div class="bpos-trial-field">
-                    <label for="bposTrialContact">Your Name</label>
-                    <input type="text" id="bposTrialContact" placeholder="First Last" required />
-                </div>
-                <div class="bpos-trial-field">
-                    <label for="bposTrialEmail">Email</label>
-                    <input type="email" id="bposTrialEmail" placeholder="you@business.com" required />
-                </div>
-                <div class="bpos-trial-field">
-                    <label for="bposTrialPhone">Phone <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
-                    <input type="tel" id="bposTrialPhone" placeholder="(555) 123-4567" />
-                </div>
-                <button type="button" class="bpos-trial-submit" id="bposTrialSubmit">Get License Key</button>
-                <p class="bpos-trial-error" id="bposTrialError"></p>
-            </div>
-            <div id="bposTrialSuccess" class="bpos-trial-success" style="display:none">
-                <p class="bpos-trial-modal__title">You're in!</p>
-                <p class="bpos-trial-modal__subtitle">Your 14-day trial license key:</p>
-                <div class="bpos-trial-success__key" id="bposTrialKey"></div>
-                <p style="font-size:13px;color:var(--text-muted,#999);margin-top:12px">
-                    Enter this key when you launch B-POS.<br/>
-                    We've also sent it to your email.
-                </p>
-                <a href="https://pos.bertrandgroup.ca" target="_blank" rel="noopener noreferrer" class="bpos-plan__cta bpos-plan__cta--primary" style="display:inline-block;margin-top:20px;padding:12px 32px;text-decoration:none">
-                    Launch B-POS &rarr;
-                </a>
-            </div>
-        </div>
+    <!-- Fixed electric sweep background -->
+    <div class="bpos-sweep" aria-hidden="true">
+        <div class="bpos-sweep__arc"></div>
+        <div class="bpos-sweep__glow-blue"></div>
+        <div class="bpos-sweep__glow-amber"></div>
     </div>
 
-    <StickyMobileCTA
-        href="https://pos.bertrandgroup.ca"
-        text="Try B·POS Free"
-        subtext="Live demo — no signup required"
-        heroSelector=".bpos-hero"
-        formSelector=".service-footer"
-    />
-</ServiceDetailLayout>
+    <main id="main-content" class="bpos-page">
+        <div class="bpos-container">
 
-<script is:inline>
-    (function() {
-        var API_BASE = 'https://bpos-api.bertrandbrands.workers.dev';
-        var currentBilling = 'month';
+            <!-- ── Hero ── -->
+            <section class="bpos-hero">
 
-        /* Billing toggle */
-        var toggle = document.getElementById('bposToggle');
-        var grid = document.getElementById('bposPlans');
-        if (toggle && grid) {
-            var buttons = toggle.querySelectorAll('.bpos-toggle__btn');
-            buttons.forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    currentBilling = btn.getAttribute('data-billing');
-                    buttons.forEach(function(b) { b.classList.remove('active'); });
-                    btn.classList.add('active');
-                    grid.querySelectorAll('[data-' + currentBilling + ']').forEach(function(el) {
-                        el.textContent = el.getAttribute('data-' + currentBilling);
-                    });
-                });
-            });
-        }
+                <!-- App icon with orbiting comet ring -->
+                <div class="bpos-icon-wrap">
+                    <div class="bpos-icon-ring"></div>
+                    <div class="bpos-icon">
+                        <svg class="bpos-icon__b" viewBox="100 50 310 420" aria-hidden="true">
+                            <g fill="#ffffff">
+                                <circle cx="144" cy="88"  r="22"/><circle cx="200" cy="88"  r="22"/>
+                                <circle cx="256" cy="88"  r="22"/><circle cx="312" cy="88"  r="22"/>
+                                <circle cx="144" cy="144" r="22"/><circle cx="200" cy="144" r="22"/>
+                                <circle cx="312" cy="144" r="22"/><circle cx="368" cy="144" r="22"/>
+                                <circle cx="144" cy="200" r="22"/><circle cx="200" cy="200" r="22"/>
+                                <circle cx="312" cy="200" r="22"/><circle cx="368" cy="200" r="22"/>
+                                <circle cx="144" cy="256" r="22"/><circle cx="200" cy="256" r="22"/>
+                                <circle cx="256" cy="256" r="22"/><circle cx="312" cy="256" r="22"/>
+                                <circle cx="144" cy="312" r="22"/><circle cx="200" cy="312" r="22"/>
+                                <circle cx="312" cy="312" r="22"/><circle cx="368" cy="312" r="22"/>
+                                <circle cx="144" cy="368" r="22"/><circle cx="200" cy="368" r="22"/>
+                                <circle cx="312" cy="368" r="22"/><circle cx="368" cy="368" r="22"/>
+                                <circle cx="144" cy="424" r="22"/><circle cx="200" cy="424" r="22"/>
+                                <circle cx="256" cy="424" r="22"/><circle cx="312" cy="424" r="22"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
 
-        /* FAQ accordion */
-        var faq = document.getElementById('bposFaq');
-        if (faq) {
-            faq.querySelectorAll('.bpos-faq__q').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    var item = btn.closest('.bpos-faq__item');
-                    var wasOpen = item.classList.contains('is-open');
-                    faq.querySelectorAll('.bpos-faq__item').forEach(function(i) { i.classList.remove('is-open'); });
-                    if (!wasOpen) item.classList.add('is-open');
-                });
-            });
-        }
+                <!-- Badge -->
+                <div class="bpos-hero__badge">
+                    <span class="bpos-hero__badge-dot"></span>
+                    Coming Soon
+                </div>
 
-        /* Trial modal */
-        var overlay = document.getElementById('bposTrialOverlay');
-        var closeBtn = document.getElementById('bposTrialClose');
-        var formDiv = document.getElementById('bposTrialForm');
-        var successDiv = document.getElementById('bposTrialSuccess');
-        var submitBtn = document.getElementById('bposTrialSubmit');
-        var errorEl = document.getElementById('bposTrialError');
-        var planInput = document.getElementById('bposTrialPlan');
+                <!-- Name -->
+                <h1 class="bpos-hero__name">B·POS</h1>
+                <p class="bpos-hero__sub">Food Service</p>
 
-        function openTrialModal(plan) {
-            planInput.value = plan;
-            formDiv.style.display = '';
-            successDiv.style.display = 'none';
-            errorEl.style.display = 'none';
-            overlay.classList.add('is-open');
-            document.body.style.overflow = 'hidden';
-        }
+                <!-- Tagline -->
+                <p class="bpos-hero__tagline">
+                    Point of sale built for the way food service actually works.
+                    Offline-first, runs on any device, no locked-in processor.
+                </p>
 
-        function closeTrialModal() {
-            overlay.classList.remove('is-open');
-            document.body.style.overflow = '';
-        }
+                <p class="bpos-hero__origin">Made in Sudbury, Ontario&nbsp;🇨🇦</p>
+            </section>
 
-        if (closeBtn) closeBtn.addEventListener('click', closeTrialModal);
-        if (overlay) overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) closeTrialModal();
+            <div class="bpos-divider"></div>
+
+            <!-- ── Pillars ── -->
+            <section class="bpos-pillars" aria-label="Key features">
+                <div class="bpos-pillars__grid">
+
+                    <div class="bpos-pillar">
+                        <svg class="bpos-pillar__icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path d="M18 3v6M18 27v6M3 18h6M27 18h6" stroke-linecap="round"/>
+                            <circle cx="18" cy="18" r="8"/>
+                            <circle cx="18" cy="18" r="3" fill="currentColor" stroke="none"/>
+                        </svg>
+                        <p class="bpos-pillar__name">Offline-first</p>
+                        <p class="bpos-pillar__desc">Works without internet. Syncs when connection returns.</p>
+                    </div>
+
+                    <div class="bpos-pillar">
+                        <svg class="bpos-pillar__icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <rect x="4" y="8" width="28" height="18" rx="2"/>
+                            <path d="M10 30h16M14 26v4M22 26v4" stroke-linecap="round"/>
+                        </svg>
+                        <p class="bpos-pillar__name">Any device</p>
+                        <p class="bpos-pillar__desc">iPad, tablet, desktop, or phone. No proprietary hardware.</p>
+                    </div>
+
+                    <div class="bpos-pillar">
+                        <svg class="bpos-pillar__icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <rect x="5" y="10" width="26" height="18" rx="2"/>
+                            <path d="M11 19h4M21 19h4M13 23h10" stroke-linecap="round"/>
+                            <path d="M18 7v3" stroke-linecap="round"/>
+                        </svg>
+                        <p class="bpos-pillar__name">Own processor</p>
+                        <p class="bpos-pillar__desc">Zero processing markup. Bring your existing provider.</p>
+                    </div>
+
+                    <div class="bpos-pillar">
+                        <svg class="bpos-pillar__icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path d="M8 28s0-8 10-8 10 8 10 8" stroke-linecap="round"/>
+                            <circle cx="18" cy="14" r="5"/>
+                            <path d="M26 14c2 1 4 3 4 6" stroke-linecap="round"/>
+                        </svg>
+                        <p class="bpos-pillar__name">Human support</p>
+                        <p class="bpos-pillar__desc">Direct access. Not a ticket queue — a person who knows your setup.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ── Interest capture ── -->
+            <section class="bpos-interest" aria-labelledby="bpos-interest-heading">
+                <div class="bpos-interest__card">
+                    <h2 class="bpos-interest__heading" id="bpos-interest-heading">Get early access</h2>
+                    <p class="bpos-interest__text">
+                        We're building this with a small group of food service operators.<br>
+                        Leave your email and we'll reach out when seats open.
+                    </p>
+                    <form class="bpos-interest__form" id="bposInterestForm" novalidate>
+                        <input
+                            type="email"
+                            class="bpos-interest__email"
+                            id="bposEmail"
+                            placeholder="your@email.com"
+                            required
+                            autocomplete="email"
+                        />
+                        <button type="submit" class="bpos-interest__submit">Notify me</button>
+                    </form>
+                    <p class="bpos-interest__thanks" id="bposThanks">
+                        You're on the list. We'll be in touch.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <FooterMinimal />
+    <GesturePrevention />
+    <VisitorNotify />
+
+    <script is:inline>
+    (function () {
+        var form = document.getElementById('bposInterestForm');
+        var thanks = document.getElementById('bposThanks');
+        if (!form) return;
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var email = document.getElementById('bposEmail').value.trim();
+            if (!email) return;
+            // Send to notify API as a form-type notification
+            fetch('/api/notify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'form', name: 'B·POS Interest', email: email, service: 'bpos-early-access', message: 'Early access interest from /bpos' })
+            }).catch(function () {});
+            form.style.display = 'none';
+            if (thanks) thanks.style.display = 'block';
         });
-
-        /* Trial form submit */
-        if (submitBtn) {
-            submitBtn.addEventListener('click', async function() {
-                var name = document.getElementById('bposTrialName').value.trim();
-                var contact = document.getElementById('bposTrialContact').value.trim();
-                var email = document.getElementById('bposTrialEmail').value.trim();
-                var phone = document.getElementById('bposTrialPhone').value.trim();
-
-                if (!name || !contact || !email) {
-                    errorEl.textContent = 'Please fill in all required fields.';
-                    errorEl.style.display = 'block';
-                    return;
-                }
-
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Generating...';
-                errorEl.style.display = 'none';
-
-                try {
-                    var res = await fetch(API_BASE + '/trial', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            restaurantName: name,
-                            contactName: contact,
-                            email: email,
-                            phone: phone || undefined
-                        })
-                    });
-
-                    var data = await res.json();
-
-                    if (!res.ok) {
-                        throw new Error(data.error || 'Something went wrong');
-                    }
-
-                    document.getElementById('bposTrialKey').textContent = data.licenseKey;
-                    formDiv.style.display = 'none';
-                    successDiv.style.display = '';
-
-                    /* GA4 event */
-                    if (typeof gtag === 'function') {
-                        gtag('event', 'generate_lead', {
-                            event_category: 'bpos',
-                            event_label: planInput.value + '_trial',
-                            value: 0
-                        });
-                    }
-                } catch (err) {
-                    errorEl.textContent = err.message || 'Failed to generate trial. Please try again.';
-                    errorEl.style.display = 'block';
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Get License Key';
-                }
-            });
-        }
-
-        /* Subscribe buttons → Stripe Checkout */
-        document.querySelectorAll('.bpos-plan__cta--subscribe').forEach(function(btn) {
-            btn.addEventListener('click', async function() {
-                var plan = btn.getAttribute('data-plan');
-                btn.disabled = true;
-                btn.textContent = 'Redirecting...';
-
-                try {
-                    var res = await fetch(API_BASE + '/checkout', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            plan: plan,
-                            billing: currentBilling,
-                            earlyBird: currentBilling === 'year',
-                            successUrl: window.location.origin + '/bpos?checkout=success',
-                            cancelUrl: window.location.origin + '/bpos?checkout=cancelled'
-                        })
-                    });
-
-                    var data = await res.json();
-                    if (!res.ok) throw new Error(data.error);
-
-                    window.location.href = data.url;
-                } catch (err) {
-                    alert('Could not start checkout: ' + (err.message || 'Please try again.'));
-                    btn.disabled = false;
-                    btn.textContent = 'Subscribe';
-                }
-            });
-        });
-
-        /* Trial buttons → open modal */
-        document.querySelectorAll('.bpos-trial-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                openTrialModal(btn.getAttribute('data-plan'));
-            });
-        });
-
-        /* Handle checkout success/cancel URL params */
-        var params = new URLSearchParams(window.location.search);
-        if (params.get('checkout') === 'success') {
-            alert('Payment successful! Check your email for your license key.');
-            window.history.replaceState({}, '', '/bpos');
-        }
     })();
-</script>
+    </script>
+</BaseLayout>

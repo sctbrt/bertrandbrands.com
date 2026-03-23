@@ -1135,7 +1135,10 @@ const schemaJson = schemaGraph(
               if (heroTitle) heroTitle.classList.add('hero-animate');
               if (intro) intro.remove();
               initWordmark();
-              if (skipParam) localStorage.setItem('bb_intro_seen', '1');
+              if (skipParam) {
+                  localStorage.setItem('bb_intro_seen', '1');
+                  history.replaceState(null, '', '/');
+              }
               return;
           }
 
