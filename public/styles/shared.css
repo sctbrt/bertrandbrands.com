@@ -564,8 +564,19 @@
                 display: block;
                 transform: none;
             }
+            .header__dropdown-item {
+                padding: 0.5rem 0;
+                gap: 0.2rem;
+            }
             .header__dropdown-item-name {
                 font-size: var(--text-base);
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: var(--text-muted);
+            }
+            .header__dropdown-item-desc {
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
             }
             /* Suppress blocky focus outline in mobile menu — use text color instead */
             .header__nav .header__link:focus-visible {
@@ -778,6 +789,10 @@
             cursor: pointer;
             font-family: inherit;
             gap: 0.3em;
+            -webkit-appearance: none;
+            appearance: none;
+            color: inherit;
+            padding: 0;
         }
 
         .header__dropdown-chevron {
