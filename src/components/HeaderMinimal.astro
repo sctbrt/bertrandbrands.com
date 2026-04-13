@@ -69,6 +69,14 @@ const {
 )}
 
 {variant === 'standard' && (
+    <style is:inline>
+        @media (max-width: 640px) {
+            .header-minimal__phone { display: none !important; }
+        }
+    </style>
+)}
+
+{variant === 'standard' && (
     <script is:inline>
     /* Ambient lighting + wordmark crossfade for minimal header */
     (function() {
