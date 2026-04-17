@@ -171,7 +171,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     const combined: QuestionnaireStep[] = addendum ? [...STANDARD_STEPS, addendum] : STANDARD_STEPS;
 
     const requiredCheck = validateAllRequired(combined, session.responses);
-    if (!requiredCheck.ok) {
+    if ('missing' in requiredCheck) {
       res.status(400).json({
         error: 'Some required answers are missing',
         missing: requiredCheck.missing,

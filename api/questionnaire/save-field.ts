@@ -99,7 +99,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     }
 
     const validated = validateFieldValue(field, value);
-    if (!validated.ok) {
+    if ('reason' in validated) {
       res.status(400).json({ error: validated.reason });
       return;
     }
