@@ -2,7 +2,7 @@
 /**
  * /questionnaire — Brand Discovery Questionnaire
  *
- * Accessed only via magic link (redeemed through /api/questionnaire/access).
+ * Accessed only via magic link (redeemed through /api/questionnaire?action=access).
  * The session cookie `bb_questionnaire_session` gates the content client-side;
  * this page itself is public (static HTML) but shows "link expired" unless the
  * cookie is valid.
@@ -15,7 +15,7 @@
  *   - prefers-reduced-motion skips animations
  *
  * Step 9 (optional addendum) is rendered client-side from data returned by
- * /api/questionnaire/check-access — only clients whose session references a
+ * /api/questionnaire?action=check-access — only clients whose session references a
  * registered addendum see it.
  */
 import IntakeLayout from '../layouts/IntakeLayout.astro';
@@ -581,7 +581,7 @@ import { STANDARD_STEPS } from '../lib/questionnaire-schema.ts';
             // ---- Initialization: check the session ----
             async function init() {
                 try {
-                    const res = await fetch('/api/questionnaire/check-access', {
+                    const res = await fetch('/api/questionnaire?action=check-access', {
                         method: 'GET',
                         credentials: 'include',
                         headers: { Accept: 'application/json' },
@@ -743,7 +743,7 @@ import { STANDARD_STEPS } from '../lib/questionnaire-schema.ts';
             async function saveField(fieldKey, value) {
                 try {
                     setSavedIndicator('Saving\u2026');
-                    const res = await fetch('/api/questionnaire/save-field', {
+                    const res = await fetch('/api/questionnaire?action=save-field', {
                         method: 'POST',
                         credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
@@ -980,7 +980,7 @@ import { STANDARD_STEPS } from '../lib/questionnaire-schema.ts';
                 submitBtn.disabled = true;
 
                 try {
-                    const res = await fetch('/api/questionnaire/complete', {
+                    const res = await fetch('/api/questionnaire?action=complete', {
                         method: 'POST',
                         credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
