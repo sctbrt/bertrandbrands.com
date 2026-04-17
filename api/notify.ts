@@ -20,10 +20,13 @@ const SOURCE_LABELS: Record<string, string> = {
   'inline-refresh': 'Refresh Package Inquiry',
   'inline-platform': 'Platform Package Inquiry',
   'tier-intake': 'General Intake',
+  'tier-intake-simple': 'Simple Intake',
   'tier-intake-amber': 'Build Tier Inquiry',
   'tier-intake-violet': 'Transform Tier Inquiry',
   'tier-intake-blue': 'Care Tier Inquiry',
   'start-landing': 'Start Page Lead',
+  'questionnaire-invite-sent': 'Questionnaire Invite Sent',
+  'questionnaire-completed': 'Brand Discovery Questionnaire Completed',
 };
 
 /**
@@ -176,7 +179,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
       if (location) notificationMessage += `\n📌 ${location}`;
 
       notificationTitle = `New ${sourceLabel}`;
-      notificationUrl = 'https://dash.bertrandgroup.ca/leads';
+      notificationUrl = 'https://dash.bertrandbrands.ca/leads';
       notificationUrlTitle = 'View Leads';
       priority = 1; // High priority
       sound = 'cashregister';

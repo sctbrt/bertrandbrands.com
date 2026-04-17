@@ -1,9 +1,67 @@
         /* ============================================================
            BERTRAND GROUP — Brand & Web Systems
-           V12.0 Homepage Styles
+           V13.5 Homepage Styles
            Loaded on index.astro only: intro, hero, sections, about,
            process, contact, FAQ, tier groups, offer cards, pricing.
            ============================================================ */
+
+        /* === INTRO SKIP: snap-to-final-state overrides ===
+           html.no-intro is set synchronously in <head> when the user has
+           already seen the cinematic intro (localStorage `bb_intro_seen`)
+           or arrived with ?skip. Without these rules, the skip branch still
+           fires every one-time entry animation (header descend, fluorescent
+           flicker, hero reveals, spotlight fade-in) on every reload.
+           These overrides snap those to final state. Infinite ambient
+           motion (header lights, spotlight drift) still runs. */
+        html.no-intro .header {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+        html.no-intro .header.lights-on .header__glass::before {
+            transition: none !important;
+        }
+        html.no-intro .header__logo-icon,
+        html.no-intro .header__wordmark {
+            transition: none !important;
+        }
+        html.no-intro .header__logo.show-text .header__logo-icon,
+        html.no-intro .header__logo.show-text .header__wordmark {
+            opacity: 1 !important;
+        }
+        html.no-intro .hero__title,
+        html.no-intro .hero__subtitle,
+        html.no-intro .hero__cta {
+            opacity: 1 !important;
+            transform: none !important;
+            animation: none !important;
+        }
+        html.no-intro .hero__title .accent {
+            opacity: 1 !important;
+            animation: none !important;
+        }
+        html.no-intro body.intro-scrolled .hero__spotlight--orange {
+            animation: heroFloatOrange 30s ease-in-out infinite !important;
+            opacity: 0.3;
+        }
+        html.no-intro body.intro-scrolled .hero__spotlight--blue {
+            animation: heroFloatBlue 35s ease-in-out infinite !important;
+            opacity: 0.28;
+        }
+        html.no-intro body.intro-scrolled .hero__spotlight--violet {
+            animation: heroFloatViolet 28s ease-in-out infinite !important;
+            opacity: 0.25;
+        }
+        @media (max-width: 768px) {
+            html.no-intro body.intro-scrolled .hero__spotlight--orange,
+            html.no-intro body.intro-scrolled .hero__spotlight--blue,
+            html.no-intro body.intro-scrolled .hero__spotlight--violet {
+                animation: none !important;
+                opacity: 0.3;
+            }
+        }
 
         /* === CINEMATIC INTRO === */
         /* Lock scroll while intro animation is playing */

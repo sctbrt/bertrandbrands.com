@@ -21,9 +21,9 @@ export default defineConfig({
     '/process': { destination: '/#process', status: 302 },
     '/how-it-works': { destination: '/#process', status: 302 },
     '/contact': { destination: '/#contact', status: 302 },
-    '/portal': { destination: 'https://clients.bertrandgroup.ca', status: 302 },
-    '/client-portal': { destination: 'https://clients.bertrandgroup.ca', status: 302 },
-    '/login': { destination: 'https://clients.bertrandgroup.ca', status: 302 },
+    '/portal': { destination: 'https://clients.bertrandbrands.ca', status: 302 },
+    '/client-portal': { destination: 'https://clients.bertrandbrands.ca', status: 302 },
+    '/login': { destination: 'https://clients.bertrandbrands.ca', status: 302 },
 
     // V10→V11 redirect (permanent)
     '/start': { destination: '/intake', status: 301 },

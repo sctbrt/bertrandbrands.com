@@ -17,7 +17,7 @@ const currentYear = new Date().getFullYear();
 const homepageFAQ = [
     { question: "How much does a website cost?", answer: "Our Starter One-Page site is $750 CAD. Multi-page builds and Transform-tier projects are scoped to your needs \u2014 <a href='/intake'>fill out an intake form</a> or call us for a quote." },
     { question: "How long does a project take?", answer: "Build-tier sites launch in 7 days to 4 weeks depending on scope. Transform projects take 4\u201312+ weeks. Care plan requests are handled on a monthly cycle." },
-    { question: "Do I need to attend meetings?", answer: "Build projects are async-first \u2014 zero meetings by default with an optional 15-minute clarification call. Transform projects include 2\u20134 structured meetings. Care requests are handled asynchronously." },
+    { question: "Do I need to attend meetings?", answer: "All meetings are optional. Build and Care projects are async by default \u2014 request a check-in any time. Transform projects suggest up to four structured check-ins (Discovery, Direction Approval, Pre-Launch QA), but you can skip any for fully async delivery." },
     { question: "How many revisions do I get?", answer: "Starter One-Page includes 1 revision round. Multi-Page and Full Site builds include 2 rounds. Transform revisions are tied to approval gates in the project timeline." },
     { question: "What if I'm not sure what I need?", answer: "Call us at <a href='tel:+17054133705'>(705) 413-3705</a> or <a href='/intake'>fill out a general intake form</a>. Our intake process helps us understand your situation and route you to the right service." },
     { question: "Do you offer ongoing support?", answer: "Yes. Our <a href='/care'>Care plans</a> start at $249/month (Bronze) for scoped maintenance, updates, and conversion tuning. Silver and Gold plans offer more credits and faster response." },
@@ -215,7 +215,7 @@ const schemaJson = schemaGraph(
                           ctaHref="/intake?tier=amber&offer=starter-onepage"
                           detailHref="/build/starter-onepage"
                           revisionRounds={1}
-                          meetingPolicy="0 meetings"
+                          meetingPolicy="Optional"
                           features={[
                               "One-page marketing website",
                               "Mobile-first, fast-loading",
@@ -237,11 +237,11 @@ const schemaJson = schemaGraph(
                           bestFor="Multi-page site needed"
                           timeline="2\u20133 weeks"
                           tierClass="build"
-                          ctaText="Request a Quote"
+                          ctaText="Get started"
                           ctaHref="/intake?tier=amber&offer=starter-multipage"
                           detailHref="/build/starter-multipage"
                           revisionRounds={2}
-                          meetingPolicy="0 meetings"
+                          meetingPolicy="Optional"
                           features={[
                               "3\u20135 page marketing website",
                               "Mobile-first, fast-loading",
@@ -263,11 +263,11 @@ const schemaJson = schemaGraph(
                           bestFor="Ready for online booking"
                           timeline="3\u20134 weeks"
                           tierClass="build"
-                          ctaText="Request a Quote"
+                          ctaText="Get started"
                           ctaHref="/intake?tier=amber&offer=fullsite-booking"
                           detailHref="/build/fullsite-booking"
                           revisionRounds={2}
-                          meetingPolicy="0 meetings"
+                          meetingPolicy="Optional"
                           features={[
                               "5\u201310 page website",
                               "Booking or scheduling integration",
@@ -296,10 +296,10 @@ const schemaJson = schemaGraph(
                           bestFor="Outgrown your site"
                           timeline="4\u20138 weeks"
                           tierClass="transform"
-                          ctaText="Request a Quote"
+                          ctaText="Get started"
                           ctaHref="/intake?tier=violet&offer=foundation-growth"
                           detailHref="/transform/foundation-growth"
-                          meetingPolicy="2\u20134 meetings"
+                          meetingPolicy="Up to 4 optional"
                           features={[
                               "Full website rebuild",
                               "Content strategy + IA",
@@ -319,11 +319,11 @@ const schemaJson = schemaGraph(
                           bestFor="Multiple systems needed"
                           timeline="6\u201312 weeks"
                           tierClass="transform"
-                          ctaText="Request a Quote"
+                          ctaText="Get started"
                           ctaHref="/intake?tier=violet&offer=smb-platform"
                           detailHref="/transform/smb-platform"
                           featured={true}
-                          meetingPolicy="2\u20134 meetings"
+                          meetingPolicy="Up to 4 optional"
                           features={[
                               "Multi-page website or application",
                               "CRM, portals, or dashboards",
@@ -342,10 +342,10 @@ const schemaJson = schemaGraph(
                           bestFor="Full rebrand + build"
                           timeline="8\u201316 weeks"
                           tierClass="transform"
-                          ctaText="Request a Quote"
+                          ctaText="Get started"
                           ctaHref="/intake?tier=violet&offer=brand-platform"
                           detailHref="/transform/brand-platform"
-                          meetingPolicy="2\u20134 meetings"
+                          meetingPolicy="Up to 4 optional"
                           features={[
                               "Brand strategy + identity system",
                               "Logo, typography, color system",
@@ -375,7 +375,7 @@ const schemaJson = schemaGraph(
                           tierClass="care"
                           ctaHref="/intake?tier=blue&offer=bronze"
                           detailHref="/care/bronze"
-                          meetingPolicy="0 meetings"
+                          meetingPolicy="Optional"
                           features={[
                               "4 credits per month",
                               "Response within 1 business day",
@@ -414,7 +414,7 @@ const schemaJson = schemaGraph(
                           ctaText="Apply"
                           ctaHref="/intake?tier=blue&offer=gold"
                           detailHref="/care/gold"
-                          meetingPolicy="1\u20132x monthly"
+                          meetingPolicy="1\u20132 monthly"
                           features={[
                               "24 credits per month",
                               "Same business day response",

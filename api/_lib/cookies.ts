@@ -36,11 +36,9 @@ export function buildClearCookie(cookieName: string, hostname: string | undefine
 
   if (IS_PRODUCTION) {
     parts.push('Secure');
-    // Clear on parent domain to match how it was set (same order as buildCookie)
+    // Clear on parent domain to match how it was set
     const hn = hostname || '';
-    if (hn.endsWith('bertrandgroup.ca')) {
-      parts.push('Domain=.bertrandgroup.ca');
-    } else if (hn.endsWith('bertrandbrands.ca')) {
+    if (hn.endsWith('bertrandbrands.ca')) {
       parts.push('Domain=.bertrandbrands.ca');
     }
   }
@@ -67,14 +65,11 @@ export function buildCookie(
 
   if (IS_PRODUCTION) {
     parts.push('Secure');
-    // Set cookie domain based on which domain served the request
+    // Set cookie domain for cross-subdomain sharing
     const hostname = options.hostname || '';
-    if (hostname.endsWith('bertrandgroup.ca')) {
-      parts.push('Domain=.bertrandgroup.ca');
-    } else if (hostname.endsWith('bertrandbrands.ca')) {
+    if (hostname.endsWith('bertrandbrands.ca')) {
       parts.push('Domain=.bertrandbrands.ca');
     }
-    // Fallback: let browser set domain to exact origin
   }
 
   return parts.join('; ');

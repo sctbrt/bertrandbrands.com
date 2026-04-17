@@ -1,0 +1,1024 @@
+---
+/**
+ * /questionnaire — Brand Discovery Questionnaire
+ *
+ * Accessed only via magic link (redeemed through /api/questionnaire/access).
+ * The session cookie `bb_questionnaire_session` gates the content client-side;
+ * this page itself is public (static HTML) but shows "link expired" unless the
+ * cookie is valid.
+ *
+ * Wizard behaviour mirrors intake.astro patterns:
+ *   - `data-step` elements toggle .active class
+ *   - Auto-save on every field change (debounced 1s)
+ *   - Saved/Saving indicator
+ *   - Enter key does NOT advance steps
+ *   - prefers-reduced-motion skips animations
+ *
+ * Step 9 (optional addendum) is rendered client-side from data returned by
+ * /api/questionnaire/check-access — only clients whose session references a
+ * registered addendum see it.
+ */
+import IntakeLayout from '../layouts/IntakeLayout.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+import { STANDARD_STEPS } from '../lib/questionnaire-schema.ts';
+---
+
+<IntakeLayout
+    title="Brand Discovery Questionnaire — Bertrand Brands"
+    description="Your project onboarding questionnaire."
+    canonical="https://bertrandbrands.ca/questionnaire"
+    robots="noindex, nofollow"
+    backHref="/"
+    backLabel="Home"
+>
+    <Fragment slot="head">
+        <style is:inline>
+            .q-page {
+                min-height: 100vh;
+                padding-top: 80px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .q-content {
+                max-width: 640px;
+                margin: 0 auto;
+                padding: var(--space-md, 1.5rem) 1.5rem var(--space-2xl, 4rem);
+            }
+
+            .q-hero {
+                text-align: center;
+                margin-bottom: var(--space-lg);
+            }
+
+            .q-title {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: clamp(1.75rem, 4vw, 2.25rem);
+                font-weight: 300;
+                line-height: 1.2;
+                color: var(--text);
+                margin-bottom: var(--space-xs);
+            }
+
+            .q-subtitle {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                line-height: 1.6;
+            }
+
+            .q-subtitle strong { color: var(--text); font-weight: 500; }
+
+            /* Progress */
+            .q-progress { margin-bottom: var(--space-xl); }
+
+            .q-progress__bar {
+                height: 3px;
+                background: var(--border);
+                border-radius: 2px;
+                overflow: hidden;
+            }
+
+            .q-progress__fill {
+                height: 100%;
+                background: linear-gradient(90deg,
+                    rgba(217, 119, 6, 1),
+                    rgba(139, 92, 246, 1),
+                    rgba(37, 99, 235, 1));
+                transition: width 0.3s ease;
+                width: 0;
+            }
+
+            .q-progress__meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: var(--text-xs);
+                color: var(--text-muted);
+                margin-top: var(--space-xs);
+            }
+
+            .q-saved {
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                min-height: 1rem;
+            }
+            .q-saved.is-visible { opacity: 1; }
+            .q-saved--error { color: #EF4444; }
+
+            /* Step */
+            .q-form { display: flex; flex-direction: column; gap: var(--space-md); position: relative; }
+
+            .q-step {
+                display: none;
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            .q-step.active {
+                display: block;
+                animation: qStepReveal 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+            }
+
+            @keyframes qStepReveal {
+                0%   { opacity: 0; transform: translateY(12px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+
+            .q-step__title {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: var(--text-lg);
+                font-weight: 500;
+                color: var(--text);
+                margin-bottom: 0.25rem;
+            }
+
+            .q-step__intro {
+                font-size: var(--text-sm);
+                color: var(--text-muted);
+                margin-bottom: var(--space-md);
+                line-height: 1.55;
+            }
+
+            /* Field group */
+            .q-group {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                margin-bottom: var(--space-md);
+            }
+            fieldset.q-group { border: none; padding: 0; margin-inline: 0; min-inline-size: 0; }
+
+            .q-label {
+                font-size: var(--text-sm);
+                font-weight: 500;
+                color: var(--text);
+                line-height: 1.4;
+            }
+            .q-label .q-required {
+                color: var(--accent);
+                margin-left: 0.2rem;
+            }
+            .q-label .q-optional {
+                font-weight: 400;
+                color: var(--text-subtle);
+                font-size: var(--text-xs);
+                margin-left: 0.3rem;
+            }
+
+            .q-hint {
+                font-size: var(--text-xs);
+                color: var(--text-subtle);
+                line-height: 1.5;
+                margin-top: -0.1rem;
+            }
+
+            .q-input,
+            .q-textarea {
+                background: var(--bg-alt, #0d0d0d);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-md);
+                padding: 0.875rem 1rem;
+                font-size: var(--text-base);
+                color: var(--text);
+                font-family: inherit;
+                transition: border-color var(--duration-fast) var(--ease-out);
+                width: 100%;
+            }
+            .q-input:focus,
+            .q-textarea:focus {
+                outline: none;
+                border-color: var(--accent);
+            }
+            .q-input::placeholder,
+            .q-textarea::placeholder { color: var(--text-subtle); }
+            .q-textarea { min-height: 120px; resize: vertical; }
+
+            /* Radio / checkbox card style */
+            .q-options {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .q-option {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.75rem;
+                padding: 0.75rem 1rem;
+                background: var(--bg-alt, #0d0d0d);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-md);
+                cursor: pointer;
+                transition: border-color var(--duration-fast) var(--ease-out),
+                            background var(--duration-fast) var(--ease-out);
+                min-height: 44px;
+            }
+            .q-option:hover { border-color: var(--text-subtle); }
+            .q-option input {
+                margin-top: 0.15rem;
+                accent-color: var(--accent);
+                flex: 0 0 auto;
+            }
+            .q-option__label {
+                font-size: var(--text-sm);
+                color: var(--text);
+                line-height: 1.4;
+            }
+            .q-option.is-selected {
+                border-color: var(--accent);
+                background: rgba(217, 119, 6, 0.04);
+            }
+
+            /* Error state */
+            .q-error {
+                font-size: var(--text-xs);
+                color: #EF4444;
+                margin-top: 0.25rem;
+                display: none;
+            }
+            .q-group.has-error .q-error { display: block; }
+            .q-group.has-error .q-input,
+            .q-group.has-error .q-textarea { border-color: #EF4444; }
+            .q-group.has-error .q-option { border-color: rgba(239, 68, 68, 0.4); }
+
+            /* Navigation */
+            .q-nav {
+                display: flex;
+                gap: var(--space-sm);
+                margin-top: var(--space-lg);
+            }
+
+            .q-btn {
+                flex: 1;
+                padding: 0.875rem 1.5rem;
+                border-radius: var(--radius-md);
+                font-size: var(--text-sm);
+                font-weight: 500;
+                cursor: pointer;
+                transition: all var(--duration-fast) var(--ease-out);
+                min-height: 44px;
+                text-align: center;
+                font-family: inherit;
+            }
+
+            .q-btn--back {
+                background: transparent;
+                border: 1px solid var(--border);
+                color: var(--text-muted);
+                flex: 0 0 auto;
+            }
+            .q-btn--back:hover:not(:disabled) { border-color: var(--text-subtle); color: var(--text); }
+            .q-btn--back:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+
+            .q-btn--next,
+            .q-btn--submit {
+                position: relative;
+                background: var(--bg-elevated);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                color: var(--text);
+                overflow: hidden;
+            }
+            .q-btn--next::before,
+            .q-btn--submit::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                padding: 1px;
+                background: linear-gradient(90deg,
+                    rgba(217, 119, 6, 0.4),
+                    rgba(139, 92, 246, 0.4),
+                    rgba(37, 99, 235, 0.4),
+                    rgba(217, 119, 6, 0.4));
+                background-size: 300% 100%;
+                animation: qBtnGradientShift 6s linear infinite;
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                opacity: 0.5;
+                pointer-events: none;
+            }
+            .q-btn--next:hover::before,
+            .q-btn--submit:hover::before { opacity: 1; }
+
+            @keyframes qBtnGradientShift {
+                0% { background-position: 0 0; }
+                100% { background-position: 300% 0; }
+            }
+
+            .q-btn--loading { position: relative; color: transparent !important; }
+            .q-btn--loading::after {
+                content: '';
+                position: absolute;
+                width: 20px; height: 20px;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-top-color: #fff;
+                border-radius: 50%;
+                animation: qSpin 0.6s linear infinite;
+            }
+            @keyframes qSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+            /* Gate screens (no session / already-submitted / loading) */
+            .q-gate {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1rem;
+                padding: var(--space-xl) 0;
+                color: var(--text-muted);
+                font-size: var(--text-sm);
+                line-height: 1.6;
+            }
+            .q-gate h2 {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: var(--text-xl);
+                font-weight: 400;
+                color: var(--text);
+                margin: 0;
+            }
+            .q-gate a {
+                color: var(--accent);
+                text-decoration: none;
+                border-bottom: 1px solid rgba(217, 119, 6, 0.4);
+            }
+            .q-gate a:hover { border-bottom-color: var(--accent); }
+
+            .q-hidden { display: none !important; }
+
+            /* Mobile */
+            @media (max-width: 768px) {
+                .q-page { padding-top: 72px; }
+                .q-content { padding: var(--space-md) 1rem var(--space-2xl); }
+                .q-option { padding: 0.875rem 1rem; }
+            }
+            @media (max-width: 480px) {
+                .q-title { font-size: 1.5rem; }
+                .q-nav { flex-direction: column-reverse; }
+                .q-btn--back, .q-btn--next, .q-btn--submit { width: 100%; flex: 1 1 auto; }
+            }
+
+            /* Reduced motion */
+            @media (prefers-reduced-motion: reduce) {
+                .q-step.active { animation: none; opacity: 1; transform: none; }
+                .q-progress__fill { transition: none; }
+                .q-btn--next::before, .q-btn--submit::before { animation: none; }
+                .q-saved { transition: none; }
+            }
+        </style>
+    </Fragment>
+
+    <GesturePrevention />
+
+    <main id="main" class="q-page">
+        <div class="q-content">
+            <!-- Gate: loading (shown first while we check the session) -->
+            <div id="qGateLoading" class="q-gate">
+                <p>Loading your questionnaire&hellip;</p>
+            </div>
+
+            <!-- Gate: no valid session -->
+            <div id="qGateNoAccess" class="q-gate q-hidden">
+                <h2>This link is no longer active</h2>
+                <p>
+                    Your access link has expired or already been used.<br>
+                    Reach out to us and we&rsquo;ll send a fresh one.
+                </p>
+                <p>
+                    <a href="mailto:hello@bertrandgroup.ca">hello@bertrandgroup.ca</a>
+                    &middot;
+                    <a href="tel:+17054133705">(705) 413-3705</a>
+                </p>
+            </div>
+
+            <!-- Gate: already submitted -->
+            <div id="qGateCompleted" class="q-gate q-hidden">
+                <h2>Thank you &mdash; we&rsquo;ve got your answers</h2>
+                <p>
+                    You&rsquo;ve already submitted this questionnaire. If you need to add
+                    or change something, just reply to our email and we&rsquo;ll take it from there.
+                </p>
+            </div>
+
+            <!-- Main form (hidden until check-access confirms the session) -->
+            <div id="qFormWrap" class="q-hidden">
+                <div class="q-hero">
+                    <h1 class="q-title">Brand Discovery Questionnaire</h1>
+                    <p class="q-subtitle">
+                        <span id="qGreeting">Take your time, keep it simple, don&rsquo;t overthink it.</span><br>
+                        Short answers are great. Everything saves automatically.
+                    </p>
+                </div>
+
+                <div class="q-progress">
+                    <div class="q-progress__bar">
+                        <div class="q-progress__fill" id="qProgressFill"></div>
+                    </div>
+                    <div class="q-progress__meta">
+                        <span id="qProgressText">Step 1 of 8</span>
+                        <span id="qSavedIndicator" class="q-saved" aria-live="polite"></span>
+                    </div>
+                </div>
+
+                <form id="qForm" class="q-form" autocomplete="off" novalidate>
+                    {STANDARD_STEPS.map((step) => (
+                        <section class="q-step" data-step={step.index}>
+                            <h2 class="q-step__title">{step.title}</h2>
+                            <p class="q-step__intro">{step.intro}</p>
+                            {step.fields.map((field) => (
+                                <div class="q-group" data-field-key={field.key} data-field-type={field.type}>
+                                    {field.type === 'text' ? (
+                                        <>
+                                            <label class="q-label" for={`q_${field.key}`}>
+                                                {field.label}
+                                                {field.required && <span class="q-required" aria-hidden="true">*</span>}
+                                            </label>
+                                            {field.hint && <p class="q-hint">{field.hint}</p>}
+                                            <input
+                                                class="q-input"
+                                                id={`q_${field.key}`}
+                                                type="text"
+                                                name={field.key}
+                                                maxlength={field.maxLength ?? 500}
+                                                aria-required={field.required ? 'true' : 'false'}
+                                            />
+                                            <div class="q-error"></div>
+                                        </>
+                                    ) : field.type === 'textarea' ? (
+                                        <>
+                                            <label class="q-label" for={`q_${field.key}`}>
+                                                {field.label}
+                                                {field.required && <span class="q-required" aria-hidden="true">*</span>}
+                                            </label>
+                                            {field.hint && <p class="q-hint">{field.hint}</p>}
+                                            <textarea
+                                                class="q-textarea"
+                                                id={`q_${field.key}`}
+                                                name={field.key}
+                                                maxlength={field.maxLength ?? 4000}
+                                                aria-required={field.required ? 'true' : 'false'}
+                                            ></textarea>
+                                            <div class="q-error"></div>
+                                        </>
+                                    ) : field.type === 'radio' ? (
+                                        <fieldset class="q-group" style="border:none;padding:0;margin:0">
+                                            <legend class="q-label">
+                                                {field.label}
+                                                {field.required && <span class="q-required" aria-hidden="true">*</span>}
+                                            </legend>
+                                            {field.hint && <p class="q-hint">{field.hint}</p>}
+                                            <div class="q-options">
+                                                {field.options?.map((opt) => (
+                                                    <label class="q-option">
+                                                        <input
+                                                            type="radio"
+                                                            name={field.key}
+                                                            value={opt.value}
+                                                        />
+                                                        <span class="q-option__label">{opt.label}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                            <div class="q-error"></div>
+                                        </fieldset>
+                                    ) : field.type === 'checkbox' ? (
+                                        <fieldset class="q-group" style="border:none;padding:0;margin:0">
+                                            <legend class="q-label">
+                                                {field.label}
+                                                {field.required && <span class="q-required" aria-hidden="true">*</span>}
+                                            </legend>
+                                            {field.hint && <p class="q-hint">{field.hint}</p>}
+                                            <div class="q-options" data-max-select={field.maxSelect ?? ''}>
+                                                {field.options?.map((opt) => (
+                                                    <label class="q-option">
+                                                        <input
+                                                            type="checkbox"
+                                                            name={field.key}
+                                                            value={opt.value}
+                                                        />
+                                                        <span class="q-option__label">{opt.label}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                            <div class="q-error"></div>
+                                        </fieldset>
+                                    ) : null}
+                                </div>
+                            ))}
+                        </section>
+                    ))}
+
+                    {/* Addendum step (9) is injected client-side if the session has one */}
+                    <section class="q-step q-hidden" data-step="9" id="qStepAddendum">
+                        <h2 class="q-step__title" id="qAddendumTitle"></h2>
+                        <p class="q-step__intro" id="qAddendumIntro"></p>
+                        <div id="qAddendumFields"></div>
+                    </section>
+
+                    <div class="q-nav">
+                        <button type="button" class="q-btn q-btn--back" id="qBackBtn" disabled>
+                            Back
+                        </button>
+                        <button type="button" class="q-btn q-btn--next" id="qNextBtn">
+                            Next
+                        </button>
+                        <button type="button" class="q-btn q-btn--submit q-hidden" id="qSubmitBtn">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script is:inline define:vars={{ standardStepCount: STANDARD_STEPS.length }}>
+        (function () {
+            'use strict';
+
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // DOM refs
+            const gateLoading = document.getElementById('qGateLoading');
+            const gateNoAccess = document.getElementById('qGateNoAccess');
+            const gateCompleted = document.getElementById('qGateCompleted');
+            const formWrap = document.getElementById('qFormWrap');
+            const form = document.getElementById('qForm');
+            const greetingEl = document.getElementById('qGreeting');
+            const progressFill = document.getElementById('qProgressFill');
+            const progressText = document.getElementById('qProgressText');
+            const savedIndicator = document.getElementById('qSavedIndicator');
+            const backBtn = document.getElementById('qBackBtn');
+            const nextBtn = document.getElementById('qNextBtn');
+            const submitBtn = document.getElementById('qSubmitBtn');
+            const stepAddendum = document.getElementById('qStepAddendum');
+            const addendumTitle = document.getElementById('qAddendumTitle');
+            const addendumIntro = document.getElementById('qAddendumIntro');
+            const addendumFields = document.getElementById('qAddendumFields');
+
+            // State
+            let currentStep = 1;
+            let totalSteps = standardStepCount;
+            let addendumStep = null; // full QuestionnaireStep object or null
+            let fieldSchemaMap = new Map(); // fieldKey -> { type, required, options, maxSelect }
+            let savedTimers = new Map(); // fieldKey -> setTimeout handle
+            let savedIndicatorTimer = null;
+
+            // Show a gate screen, hide others
+            function showGate(name) {
+                [gateLoading, gateNoAccess, gateCompleted].forEach((el) => el.classList.add('q-hidden'));
+                formWrap.classList.add('q-hidden');
+                if (name === 'loading') gateLoading.classList.remove('q-hidden');
+                if (name === 'no-access') gateNoAccess.classList.remove('q-hidden');
+                if (name === 'completed') gateCompleted.classList.remove('q-hidden');
+                if (name === 'form') formWrap.classList.remove('q-hidden');
+            }
+
+            // ---- Initialization: check the session ----
+            async function init() {
+                try {
+                    const res = await fetch('/api/questionnaire/check-access', {
+                        method: 'GET',
+                        credentials: 'include',
+                        headers: { Accept: 'application/json' },
+                    });
+                    if (!res.ok) { showGate('no-access'); return; }
+
+                    const data = await res.json();
+                    if (!data.hasAccess) { showGate('no-access'); return; }
+                    if (data.status === 'completed') { showGate('completed'); return; }
+
+                    // Personalize greeting
+                    if (data.clientName) {
+                        const first = String(data.clientName).split(' ')[0];
+                        greetingEl.textContent = 'Hi ' + first + ' \u2014 take your time, keep it simple.';
+                    }
+
+                    // Build field schema map for the 8 standard steps
+                    buildStandardSchemaMap();
+
+                    // If this project has an addendum, render step 9 dynamically
+                    if (data.addendumStep) {
+                        addendumStep = data.addendumStep;
+                        renderAddendumStep(addendumStep);
+                        totalSteps = standardStepCount + 1;
+                    }
+
+                    // Hydrate previous responses
+                    if (data.responses) hydrateResponses(data.responses);
+
+                    // Jump to the resume step
+                    currentStep = Math.max(1, Math.min(Number(data.currentStep) || 1, totalSteps));
+
+                    // Show the form and render
+                    showGate('form');
+                    updateStepUI();
+                } catch (err) {
+                    console.error('check-access failed', err);
+                    showGate('no-access');
+                }
+            }
+
+            // Build the schema map for the standard 8 steps (reads data-* attrs off the DOM)
+            function buildStandardSchemaMap() {
+                form.querySelectorAll('.q-group[data-field-key]').forEach((group) => {
+                    const key = group.getAttribute('data-field-key');
+                    const type = group.getAttribute('data-field-type');
+                    const options = Array.from(group.querySelectorAll('input[type="radio"], input[type="checkbox"]'))
+                        .map((inp) => inp.value);
+                    const optsWrap = group.querySelector('.q-options');
+                    const maxSelect = optsWrap?.getAttribute('data-max-select');
+                    const isRequired = !!group.querySelector('.q-required');
+                    fieldSchemaMap.set(key, {
+                        type,
+                        required: isRequired,
+                        options,
+                        maxSelect: maxSelect ? parseInt(maxSelect, 10) : null,
+                    });
+                });
+            }
+
+            // Build the addendum step HTML and register its fields in the schema map
+            function renderAddendumStep(step) {
+                addendumTitle.textContent = step.title;
+                addendumIntro.textContent = step.intro;
+                addendumFields.innerHTML = '';
+                for (const field of step.fields) {
+                    const group = document.createElement('div');
+                    group.className = 'q-group';
+                    group.setAttribute('data-field-key', field.key);
+                    group.setAttribute('data-field-type', field.type);
+
+                    const reqStar = field.required ? '<span class="q-required" aria-hidden="true">*</span>' : '';
+                    const hintHtml = field.hint ? `<p class="q-hint">${escapeHtml(field.hint)}</p>` : '';
+                    const inputId = `q_${field.key}`;
+
+                    if (field.type === 'text') {
+                        group.innerHTML = `
+                            <label class="q-label" for="${inputId}">${escapeHtml(field.label)}${reqStar}</label>
+                            ${hintHtml}
+                            <input class="q-input" id="${inputId}" type="text" name="${field.key}" maxlength="${field.maxLength ?? 500}" aria-required="${field.required ? 'true' : 'false'}" />
+                            <div class="q-error"></div>
+                        `;
+                    } else if (field.type === 'textarea') {
+                        group.innerHTML = `
+                            <label class="q-label" for="${inputId}">${escapeHtml(field.label)}${reqStar}</label>
+                            ${hintHtml}
+                            <textarea class="q-textarea" id="${inputId}" name="${field.key}" maxlength="${field.maxLength ?? 4000}" aria-required="${field.required ? 'true' : 'false'}"></textarea>
+                            <div class="q-error"></div>
+                        `;
+                    } else if (field.type === 'radio' || field.type === 'checkbox') {
+                        const optsHtml = (field.options || []).map((opt) =>
+                            `<label class="q-option"><input type="${field.type}" name="${field.key}" value="${escapeHtml(opt.value)}" /><span class="q-option__label">${escapeHtml(opt.label)}</span></label>`
+                        ).join('');
+                        const maxSelectAttr = field.type === 'checkbox' && field.maxSelect ? ` data-max-select="${field.maxSelect}"` : '';
+                        group.innerHTML = `
+                            <fieldset class="q-group" style="border:none;padding:0;margin:0">
+                                <legend class="q-label">${escapeHtml(field.label)}${reqStar}</legend>
+                                ${hintHtml}
+                                <div class="q-options"${maxSelectAttr}>${optsHtml}</div>
+                                <div class="q-error"></div>
+                            </fieldset>
+                        `;
+                    }
+
+                    addendumFields.appendChild(group);
+                    fieldSchemaMap.set(field.key, {
+                        type: field.type,
+                        required: !!field.required,
+                        options: (field.options || []).map((o) => o.value),
+                        maxSelect: field.maxSelect || null,
+                    });
+                }
+                stepAddendum.classList.remove('q-hidden');
+            }
+
+            function escapeHtml(s) {
+                return String(s)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+
+            // ---- Hydration: populate inputs from saved responses ----
+            function hydrateResponses(responses) {
+                for (const [key, value] of Object.entries(responses || {})) {
+                    const schema = fieldSchemaMap.get(key);
+                    if (!schema) continue;
+
+                    if (schema.type === 'text' || schema.type === 'textarea') {
+                        const el = form.querySelector(`[name="${CSS.escape(key)}"]`);
+                        if (el && typeof value === 'string') {
+                            el.value = value;
+                        }
+                    } else if (schema.type === 'radio') {
+                        if (typeof value === 'string' && value) {
+                            const el = form.querySelector(`input[type="radio"][name="${CSS.escape(key)}"][value="${CSS.escape(String(value))}"]`);
+                            if (el) {
+                                el.checked = true;
+                                el.closest('.q-option')?.classList.add('is-selected');
+                            }
+                        }
+                    } else if (schema.type === 'checkbox') {
+                        if (Array.isArray(value)) {
+                            for (const v of value) {
+                                const el = form.querySelector(`input[type="checkbox"][name="${CSS.escape(key)}"][value="${CSS.escape(String(v))}"]`);
+                                if (el) {
+                                    el.checked = true;
+                                    el.closest('.q-option')?.classList.add('is-selected');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ---- Auto-save: debounced per field ----
+            async function saveField(fieldKey, value) {
+                try {
+                    setSavedIndicator('Saving\u2026');
+                    const res = await fetch('/api/questionnaire/save-field', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ fieldKey, value, currentStep }),
+                    });
+                    if (!res.ok) {
+                        const data = await res.json().catch(() => ({}));
+                        if (res.status === 401) { showGate('no-access'); return; }
+                        setSavedIndicator(`Couldn\u2019t save: ${data.error || 'try again'}`, true);
+                        return;
+                    }
+                    setSavedIndicator('Saved');
+                } catch (err) {
+                    console.error('save-field network error', err);
+                    setSavedIndicator('Couldn\u2019t save \u2014 check your connection', true);
+                }
+            }
+
+            function setSavedIndicator(text, isError) {
+                savedIndicator.textContent = text;
+                savedIndicator.classList.toggle('q-saved--error', !!isError);
+                savedIndicator.classList.add('is-visible');
+                clearTimeout(savedIndicatorTimer);
+                savedIndicatorTimer = setTimeout(() => {
+                    savedIndicator.classList.remove('is-visible');
+                }, isError ? 4000 : 1200);
+            }
+
+            // Collect the value for a given fieldKey from current DOM state
+            function collectFieldValue(fieldKey) {
+                const schema = fieldSchemaMap.get(fieldKey);
+                if (!schema) return '';
+                if (schema.type === 'text' || schema.type === 'textarea') {
+                    const el = form.querySelector(`[name="${CSS.escape(fieldKey)}"]`);
+                    return el ? el.value : '';
+                }
+                if (schema.type === 'radio') {
+                    const el = form.querySelector(`input[type="radio"][name="${CSS.escape(fieldKey)}"]:checked`);
+                    return el ? el.value : '';
+                }
+                if (schema.type === 'checkbox') {
+                    return Array.from(form.querySelectorAll(`input[type="checkbox"][name="${CSS.escape(fieldKey)}"]:checked`))
+                        .map((el) => el.value);
+                }
+                return '';
+            }
+
+            function scheduleSave(fieldKey, delay = 900) {
+                clearTimeout(savedTimers.get(fieldKey));
+                const handle = setTimeout(() => {
+                    const value = collectFieldValue(fieldKey);
+                    saveField(fieldKey, value);
+                }, delay);
+                savedTimers.set(fieldKey, handle);
+            }
+
+            // ---- Event delegation on the form ----
+            form.addEventListener('input', (e) => {
+                const target = e.target;
+                if (!target || !target.name) return;
+                const group = target.closest('.q-group[data-field-key]');
+                if (!group) return;
+                const key = group.getAttribute('data-field-key');
+                if (!key) return;
+
+                // Clear any error state as user corrects
+                group.classList.remove('has-error');
+                scheduleSave(key, 900);
+            });
+
+            form.addEventListener('change', (e) => {
+                const target = e.target;
+                if (!target || !target.name) return;
+                const group = target.closest('.q-group[data-field-key]');
+                if (!group) return;
+                const key = group.getAttribute('data-field-key');
+                if (!key) return;
+
+                group.classList.remove('has-error');
+
+                // Update .is-selected state on option cards
+                if (target.type === 'radio') {
+                    group.querySelectorAll('.q-option').forEach((opt) => opt.classList.remove('is-selected'));
+                    target.closest('.q-option')?.classList.add('is-selected');
+                } else if (target.type === 'checkbox') {
+                    target.closest('.q-option')?.classList.toggle('is-selected', target.checked);
+
+                    // Enforce maxSelect if set
+                    const optsWrap = group.querySelector('.q-options');
+                    const maxSelect = optsWrap?.getAttribute('data-max-select');
+                    if (maxSelect && target.checked) {
+                        const limit = parseInt(maxSelect, 10);
+                        const checked = group.querySelectorAll('input[type="checkbox"]:checked');
+                        if (checked.length > limit) {
+                            target.checked = false;
+                            target.closest('.q-option')?.classList.remove('is-selected');
+                            const errEl = group.querySelector('.q-error');
+                            if (errEl) errEl.textContent = `Please pick up to ${limit}.`;
+                            group.classList.add('has-error');
+                            return;
+                        }
+                    }
+                }
+
+                // Radio/checkbox changes save immediately (no keystroke debounce needed)
+                scheduleSave(key, target.type === 'radio' || target.type === 'checkbox' ? 100 : 900);
+            });
+
+            // Enter key does NOT advance steps (users often press Enter from a text field without meaning to submit)
+            form.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.target && e.target.tagName === 'INPUT' && e.target.type === 'text') {
+                    e.preventDefault();
+                }
+            });
+
+            // ---- Validation (per step) ----
+            function validateStep(stepIndex) {
+                const stepEl = form.querySelector(`.q-step[data-step="${stepIndex}"]`);
+                if (!stepEl) return { ok: true };
+
+                let firstInvalid = null;
+                const groups = stepEl.querySelectorAll('.q-group[data-field-key]');
+                groups.forEach((group) => {
+                    group.classList.remove('has-error');
+                    const key = group.getAttribute('data-field-key');
+                    const schema = fieldSchemaMap.get(key);
+                    if (!schema || !schema.required) return;
+
+                    const value = collectFieldValue(key);
+                    let missing = false;
+                    if (schema.type === 'checkbox') missing = !Array.isArray(value) || value.length === 0;
+                    else missing = !value || (typeof value === 'string' && value.trim() === '');
+
+                    if (missing) {
+                        group.classList.add('has-error');
+                        const errEl = group.querySelector('.q-error');
+                        if (errEl) errEl.textContent = buildMissingMessage(group);
+                        if (!firstInvalid) firstInvalid = group;
+                    }
+                });
+
+                if (firstInvalid) {
+                    const focusable = firstInvalid.querySelector('input, textarea');
+                    if (focusable) focusable.focus({ preventScroll: true });
+                    firstInvalid.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+                    return { ok: false };
+                }
+                return { ok: true };
+            }
+
+            function buildMissingMessage(group) {
+                const label = group.querySelector('.q-label, legend');
+                const fieldName = label ? label.textContent.replace('*', '').trim() : 'this field';
+                return `Please fill in ${fieldName.toLowerCase()}.`;
+            }
+
+            // ---- Step navigation ----
+            function updateStepUI() {
+                // Show the current step, hide others
+                form.querySelectorAll('.q-step').forEach((stepEl) => {
+                    const idx = parseInt(stepEl.getAttribute('data-step') || '0', 10);
+                    stepEl.classList.toggle('active', idx === currentStep);
+                    stepEl.classList.toggle('q-hidden', idx !== currentStep && (idx <= totalSteps));
+                });
+
+                // Progress
+                const pct = Math.round((currentStep / totalSteps) * 100);
+                progressFill.style.width = `${pct}%`;
+                progressText.textContent = `Step ${currentStep} of ${totalSteps}`;
+
+                // Back disabled on step 1
+                backBtn.disabled = currentStep <= 1;
+
+                // Final-step button swap
+                if (currentStep === totalSteps) {
+                    nextBtn.classList.add('q-hidden');
+                    submitBtn.classList.remove('q-hidden');
+                } else {
+                    nextBtn.classList.remove('q-hidden');
+                    submitBtn.classList.add('q-hidden');
+                }
+
+                // Scroll to top of form
+                form.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+            }
+
+            nextBtn.addEventListener('click', () => {
+                if (!validateStep(currentStep).ok) return;
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateStepUI();
+                    // Persist the new currentStep alongside a sentinel save
+                    // (fires even if no fields changed on this step)
+                    persistCurrentStep();
+                }
+            });
+
+            backBtn.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateStepUI();
+                    persistCurrentStep();
+                }
+            });
+
+            // Persist currentStep by saving an empty string on a non-sensitive pinned field.
+            // Cheaper approach: piggyback on the next real save. Instead, we use a dedicated
+            // ping-save of the FIRST field in the current step (its current value, so no mutation).
+            function persistCurrentStep() {
+                const stepEl = form.querySelector(`.q-step[data-step="${currentStep}"]`);
+                if (!stepEl) return;
+                const firstGroup = stepEl.querySelector('.q-group[data-field-key]');
+                if (!firstGroup) return;
+                const key = firstGroup.getAttribute('data-field-key');
+                if (!key) return;
+                scheduleSave(key, 100); // quick save to update current_step on the server
+            }
+
+            // ---- Submit ----
+            submitBtn.addEventListener('click', async () => {
+                if (!validateStep(currentStep).ok) return;
+
+                // Flush any pending saves first
+                for (const handle of savedTimers.values()) clearTimeout(handle);
+                const pendingSaves = [];
+                savedTimers.forEach((handle, key) => {
+                    const value = collectFieldValue(key);
+                    pendingSaves.push(saveField(key, value));
+                });
+                savedTimers.clear();
+                await Promise.all(pendingSaves);
+
+                submitBtn.classList.add('q-btn--loading');
+                submitBtn.disabled = true;
+
+                try {
+                    const res = await fetch('/api/questionnaire/complete', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({}),
+                    });
+
+                    if (res.ok) {
+                        window.location.href = '/questionnaire-confirmed';
+                        return;
+                    }
+
+                    const data = await res.json().catch(() => ({}));
+                    submitBtn.classList.remove('q-btn--loading');
+                    submitBtn.disabled = false;
+
+                    if (data.missing && Array.isArray(data.missing)) {
+                        // Surface the first missing field by jumping to its step
+                        const firstMissingKey = data.missing[0];
+                        const firstGroup = form.querySelector(`.q-group[data-field-key="${CSS.escape(firstMissingKey)}"]`);
+                        const ownerStep = firstGroup?.closest('.q-step');
+                        const stepIdx = ownerStep ? parseInt(ownerStep.getAttribute('data-step') || '1', 10) : 1;
+                        currentStep = stepIdx;
+                        updateStepUI();
+                        validateStep(currentStep);
+                        setSavedIndicator('Some required answers are missing', true);
+                    } else {
+                        setSavedIndicator(data.error || 'Couldn\u2019t submit \u2014 please try again', true);
+                    }
+                } catch (err) {
+                    console.error('submit failed', err);
+                    submitBtn.classList.remove('q-btn--loading');
+                    submitBtn.disabled = false;
+                    setSavedIndicator('Couldn\u2019t submit \u2014 check your connection', true);
+                }
+            });
+
+            // Start
+            init();
+        })();
+    </script>
+</IntakeLayout>

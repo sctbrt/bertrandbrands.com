@@ -33,6 +33,35 @@ export interface ClientRow {
   contact_email: string;
 }
 
+// Questionnaire rows
+export type QuestionnaireStatus = 'in_progress' | 'completed';
+
+export interface QuestionnaireProjectRow {
+  id: string;
+  name: string;
+  addendum_key: string | null;
+}
+
+export interface QuestionnaireTokenRow {
+  id: string;
+  project_id: string;
+  client_email: string;
+  client_name: string | null;
+}
+
+export interface QuestionnaireSessionRow {
+  id: string;
+  project_id: string;
+  client_email: string;
+  client_name: string | null;
+  status: QuestionnaireStatus;
+  current_step: number;
+  responses: Record<string, unknown>;
+  field_updated_at: Record<string, string>;
+  expires_at: string;
+  completed_at: string | null;
+}
+
 // ============================================
 // DB FUNCTION PARAMS
 // ============================================
@@ -60,6 +89,36 @@ export interface CreateBookingSessionParams {
   clientId: string;
   bookingType: string;
   clientEmail: string;
+  expiresAt: string;
+}
+
+export interface CreateQuestionnaireTokenParams {
+  projectId: string;
+  clientEmail: string;
+  clientName: string | null;
+  tokenHash: string;
+  expiresAt: string;
+  createdBy: string;
+}
+
+export interface UpsertQuestionnaireProjectParams {
+  id: string;
+  name: string;
+  addendumKey: string | null;
+}
+
+export interface FindOrCreateQuestionnaireSessionParams {
+  projectId: string;
+  clientEmail: string;
+  clientName: string | null;
+  expiresAt: string;
+}
+
+export interface SaveQuestionnaireFieldParams {
+  sessionId: string;
+  fieldKey: string;
+  value: unknown;
+  currentStep?: number;
   expiresAt: string;
 }
 

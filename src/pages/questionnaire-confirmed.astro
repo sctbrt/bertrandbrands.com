@@ -1,0 +1,166 @@
+---
+/**
+ * /questionnaire-confirmed — Post-submission confirmation.
+ * Shown after a client submits their Brand Discovery Questionnaire.
+ * Self-contained inline styles (mirrors snapshot-confirmed pattern).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkipLink from '../components/SkipLink.astro';
+import HeaderTierBadge from '../components/HeaderTierBadge.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+import VersionStamp from '../components/VersionStamp.astro';
+import GesturePrevention from '../components/GesturePrevention.astro';
+---
+
+<BaseLayout
+    title="Thank You — Brand Discovery Questionnaire Received"
+    description="Your questionnaire has been received. We'll review and follow up within 48 hours."
+    robots="noindex, nofollow"
+    includeMainCss={false}
+>
+    <Fragment slot="head">
+        <style is:inline>
+            *, *::before, *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html { touch-action: pan-x pan-y; }
+            @supports (-webkit-touch-callout: none) {
+                html { -webkit-text-size-adjust: 100%; }
+            }
+
+            :root {
+                --bg: #0a0a0a;
+                --bg-elevated: #161618;
+                --text: #fafafa;
+                --text-muted: #a3a3a3;
+                --text-subtle: #737373;
+                --accent: #D97706;
+                --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                --border: rgba(255, 255, 255, 0.10);
+            }
+
+            html, body { height: 100%; }
+
+            body {
+                font-family: var(--font-body);
+                background: var(--bg);
+                color: var(--text);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                padding: 2rem;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            /* Soft tri-colour breathing glow — matches the "completed" moment of the journey */
+            body::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background:
+                    radial-gradient(600px circle at 25% 30%, rgba(217, 119, 6, 0.06), transparent 60%),
+                    radial-gradient(700px circle at 75% 40%, rgba(139, 92, 246, 0.06), transparent 60%),
+                    radial-gradient(500px circle at 50% 80%, rgba(37, 99, 235, 0.06), transparent 60%);
+                pointer-events: none;
+                animation: qcBreathe 24s ease-in-out infinite;
+            }
+
+            @keyframes qcBreathe {
+                0%, 100% { opacity: 0.9; }
+                50% { opacity: 1; }
+            }
+
+            .qc-content {
+                max-width: 520px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .qc-title {
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: clamp(1.75rem, 5vw, 2.5rem);
+                font-weight: 300;
+                line-height: 1.2;
+                color: var(--text);
+                margin-bottom: 1rem;
+            }
+
+            .qc-body {
+                font-size: 1rem;
+                line-height: 1.7;
+                color: var(--text-muted);
+                margin-bottom: 2rem;
+            }
+
+            .qc-body strong { color: var(--text); font-weight: 500; }
+
+            .qc-meta {
+                font-size: 0.8125rem;
+                color: var(--text-subtle);
+                line-height: 1.6;
+                margin-top: 2rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid var(--border);
+            }
+
+            .qc-meta a {
+                color: var(--accent);
+                text-decoration: none;
+                border-bottom: 1px solid rgba(217, 119, 6, 0.4);
+                transition: border-color 0.2s;
+            }
+            .qc-meta a:hover { border-bottom-color: var(--accent); }
+
+            .qc-cta {
+                display: inline-block;
+                margin-top: 1rem;
+                padding: 0.75rem 1.5rem;
+                background: transparent;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                color: var(--text);
+                text-decoration: none;
+                font-size: 0.875rem;
+                font-weight: 500;
+                transition: border-color 0.2s, background 0.2s;
+            }
+            .qc-cta:hover {
+                border-color: var(--text-subtle);
+                background: rgba(255, 255, 255, 0.04);
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                body::before { animation: none; }
+            }
+        </style>
+    </Fragment>
+
+    <GesturePrevention />
+    <SkipLink />
+    <HeaderTierBadge tierLabel="Discovery" tierColor="rgba(217, 119, 6, 0.9)" />
+
+    <main id="main" class="qc-content">
+        <h1 class="qc-title">Thank you.</h1>
+        <p class="qc-body">
+            We&rsquo;ve got your answers. We&rsquo;ll review them carefully and
+            follow up within <strong>48 hours</strong> with our take and next steps.
+        </p>
+        <a class="qc-cta" href="/">Back to bertrandbrands.ca</a>
+        <div class="qc-meta">
+            Questions in the meantime?<br>
+            <a href="mailto:hello@bertrandgroup.ca">hello@bertrandgroup.ca</a>
+            &middot;
+            <a href="tel:+17054133705">(705) 413-3705</a>
+        </div>
+    </main>
+
+    <VisitorNotify />
+    <VersionStamp />
+</BaseLayout>

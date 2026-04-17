@@ -1,6 +1,6 @@
 # CLAUDE.md - Bertrand Brands
 
-## Version 13.1.0 (Current)
+## Version 13.5.0 (Current)
 
 This document is the **Bertrand Brands** studio site guide. For full ecosystem context, see `/Users/scottbertrand/Sites/scottbertrand.com/CLAUDE.md`.
 
@@ -112,9 +112,9 @@ Claude must not add tiers, invent offers, or exceed these limits.
 
 | Offer | Slug | Price | Timeline | Revisions | Meetings |
 |-------|------|-------|----------|-----------|----------|
-| Starter Site — One-Page + Contact | `starter-onepage` | $750 CAD | 7–10 days | 1 round | 0 (optional 15-min call) |
-| Starter Site — Multi-Page + Contact | `starter-multipage` | Scoped | 2–3 weeks | 2 rounds | 0 (optional 15-min call) |
-| Full Site — Multi-Page + Booking | `fullsite-booking` | Scoped | 3–4 weeks | 2 rounds | 0 (optional 15-min call) |
+| Starter Site — One-Page + Contact | `starter-onepage` | $750 CAD | 7–10 days | 1 round | Optional (request any time) |
+| Starter Site — Multi-Page + Contact | `starter-multipage` | Scoped | 2–3 weeks | 2 rounds | Optional (request any time) |
+| Full Site — Multi-Page + Booking | `fullsite-booking` | Scoped | 3–4 weeks | 2 rounds | Optional (request any time) |
 
 **Intake URL format:** `/intake?tier=amber&offer={slug}`
 
@@ -124,11 +124,11 @@ Claude must not add tiers, invent offers, or exceed these limits.
 
 | Offer | Slug | Price | Timeline | Revisions | Meetings |
 |-------|------|-------|----------|-----------|----------|
-| Website Foundation + Growth System | `foundation-growth` | Scoped | 4–8 weeks | Tied to approval gates | 2–4 |
-| SMB Platform Development | `smb-platform` | Scoped | 6–12 weeks | Tied to approval gates | 2–4 |
-| Brand Design + Platform Development | `brand-platform` | Scoped | 8–16 weeks | Tied to approval gates | 2–4 |
+| Website Foundation + Growth System | `foundation-growth` | Scoped | 4–8 weeks | Tied to approval gates | Up to 4 optional |
+| SMB Platform Development | `smb-platform` | Scoped | 6–12 weeks | Tied to approval gates | Up to 4 optional |
+| Brand Design + Platform Development | `brand-platform` | Scoped | 8–16 weeks | Tied to approval gates | Up to 4 optional |
 
-**Meeting types:** Discovery, Direction Approval, Pre-Launch QA, Optional Training
+**Suggested check-ins (all optional):** Discovery, Direction Approval, Pre-Launch QA. Clients can skip any for fully async delivery.
 
 **Intake URL format:** `/intake?tier=violet&offer={slug}`
 
@@ -860,7 +860,8 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 
 ### Active Pages (File-based routes)
 - `/` → Homepage (3 tier groups, FAQ, phone CTA)
-- `/intake` → Tier-aware intake form (`?tier=amber&offer=starter-onepage`)
+- `/intake` → **Simple 6-field intake form** (default, ~10-second fill). Accepts `?tier=amber|violet|blue&offer=<slug>` to pre-select the "What do you need help with?" radio.
+- `/intake?full=1` → Detailed tier-aware intake wizard (3-step, previous default). Tier params still honoured. Accessed via "Switch to the detailed form" link on the simple view.
 - `/care` → B Care hub page (Bronze/Silver/Gold plans)
 - `/build` → B Build hub page (3 offers)
 - `/transform` → B Transform hub page (3 offers)
@@ -876,6 +877,8 @@ Consistent status colors across all pages using semi-transparent backgrounds wit
 - `/compare` → Side-by-side service tier comparison (Build vs Transform vs Care)
 - `/sudbury` → Sudbury local campaign landing (Google Ads)
 - `/scottbertrand` → Scott Bertrand cross-promotion
+- `/questionnaire` → Magic-link-gated Brand Discovery Questionnaire (client onboarding, `noindex, nofollow`)
+- `/questionnaire-confirmed` → Post-submission confirmation for the questionnaire (`noindex, nofollow`)
 
 ### Booking & Confirmation Routes
 - `/booking/schedule` → Calendly inline widget
@@ -1184,6 +1187,9 @@ Added `contain: layout style` to:
 | 13.0.1 | Mar 2026 | Dot-matrix B logomark rollout + sub-brand separators. Migrated all remaining components (HeaderCanonical, HeaderIntake, HeaderMinimal, HeaderTierBadge, FooterMain, TierGroupHeader) and 16 pages from PNG to SVG dot-logomark. Added `B | Name` pipe separator to all hub pages, 9 detail pages, homepage tier group headers, and ServiceDetailLayout. Reduced logomark sizes for visual balance (28px→22px→18px across breakpoints). Fixed intro dot animation fading to black on mobile (removed stale `brightness(0) invert(1)` filter from `logoRevealMobile`). Tightened hero CTA mobile gap (1rem→0.625rem). |
 | 13.0.2 | Mar 2026 | Visual cohesion audit (13 items, P0–P4). P0: Removed stale `/styles/main.css` reference from `compare.astro` (was causing console error since V12 CSS split); added Cloudflare Web Analytics domains to CSP `script-src`/`connect-src` in `vercel.json`. P1: Reduced homepage section padding from `--space-2xl` (12rem) → `--space-xl` (8rem); reduced section header margin `--space-xl` → `--space-lg`; reduced about gap and contact padding proportionally; tightened 768px/480px responsive breakpoints. P2: Removed obsolete hero scroll hint HTML + ~70 lines CSS; added `border-top` to `.intake-prompt` for visual anchoring; added `border-top` on first FAQ item; bumped FAQ summary padding `--space-sm` → `--space-6` (1.5rem). P3: Breadcrumb hover now uses tier accent color via `rgb(var(--svc-r/g/b))` in ServiceDetailLayout; intake progress text bumped from `--text-subtle` → `--text-muted`. P4: Mobile tier selector spotlight radial gradient opacity bumped 0.08 → 0.12 at 480px. |
 | 13.1.0 | Mar 2026 | Homepage layout fix + tri-colour living accents. Removed full `<BPOSSection />` embed (~800 lines) from homepage conversion funnel (was between Process and About, breaking narrative arc). Replaced with lightweight B-POS teaser card between FAQ and Contact linking to `/bpos`. Added tri-colour living gradient accents across homepage: section label `::before` lines sweep amber→violet→blue (8s loop); process connectors use tri-colour gradient with 12s sweep; process ring hover shows layered amber/violet/blue box shadows; outcome dots use tier-specific colors (amber/violet/blue) with soft glows; B-POS teaser card gets tri-colour gradient border on hover. Added B-POS product page at `/bpos` with dedicated `BPOSSection.astro` component. New assets: `bpos-og-hero.png`, `bpos-logo-mark.png`, `bpos-logo.png`. All new animations respect `prefers-reduced-motion`. |
+| 13.3.0 | Apr 2026 | Intake simplification for 65+ usability (Workstream A of a broader ecosystem pass). `/intake` now renders a **simple 6-field form** as default (Name, Email, Phone, "What do you need help with?" 4-option radio, "Best way to reach you" 3-option radio, optional "Anything else?" textarea). Tier params (`?tier=amber\|violet\|blue&offer=<slug>`) pre-select the matching "need" radio and propagate through to Formspree subject + Pushover source. The existing 3-step tier-aware wizard is preserved behind `/intake?full=1`, reachable via a "Switch to the detailed form" link. Both views share the same `intake.astro` file with a client-side view toggle. Legibility fixes across both: visible required-field asterisks, plain-language field-specific error messages, back button shown in ghost/disabled state on wizard step 1 (instead of hidden), wizard step scroll respects `prefers-reduced-motion`, Enter key no longer auto-advances wizard steps. Added `tier-intake-simple` source label to `api/notify.ts`. Form-level error element (`simpleFormError`) replaces the previous approach of surfacing fetch-failure errors on the notes field. Part 1 of a plan also covering a post-intake questionnaire and client-portal simplification (both in the `system-build` repo). |
+| 13.4.0 | Apr 2026 | **Workstream B — Brand Discovery Questionnaire.** New magic-link-gated client onboarding flow at `/questionnaire` + confirmation at `/questionnaire-confirmed`. 8-step wizard (35+ fields across Basics, Vision, Audience, Products, Look & Feel, Website, Timeline & Priorities, Anything Else) with auto-save on every field change (debounced 1s, sliding 30-day session) and an optional project-specific step 9 (addendum system). Schema defined once in `src/lib/questionnaire-schema.ts` — rendered by the Astro page and re-validated server-side on every save. Code-defined addendums live in `src/lib/questionnaire-addendums/<key>.ts` with a static registry in `index.ts`; first slot registered for `hang-in-there` (placeholder content). Three new Postgres tables (`questionnaire_projects`, `questionnaire_tokens`, `questionnaire_sessions` with JSONB `responses` + `field_updated_at`) + 8 new helpers in `api/_lib/db.ts`. Six new TypeScript API endpoints under `api/questionnaire/`: `create-token` (admin-gated via new `QUESTIONNAIRE_ADMIN_SECRET`), `access`, `check-access`, `save-field`, `complete`, `logout`. On completion: Pushover high-priority ping (`source: 'questionnaire-completed'`) + Resend HTML-table summary email to `QUESTIONNAIRE_ADMIN_EMAIL` (defaults to `hello@bertrandgroup.ca`). Reuses existing `_lib/crypto`, `_lib/cookies`, `_lib/html`, `_lib/validation`, `_lib/rate-limit`. New Section 26 in CLAUDE.md documents the full flow. Minimal-admin scope — full admin list/view/PDF export deferred to `system-build` where the real CRM lives. Workstream C (portal simplification, system-build repo) still pending. |
+| 13.5.0 | Apr 2026 | **Tier-consistency pass (5 fixes).** (1) Logo-click intro replay: added `html.no-intro` CSS overrides in `homepage.css` so reveal animations (fluorescent flicker, header descend, hero fade-in, spotlight fade-in) no longer re-fire on every reload when the intro has already been seen; infinite ambient drift still runs. (2) Meetings framing unified to "optional throughout" across all three tiers — Build "0 meetings" → "Optional (request any time)", Transform "2–4 meetings" → "Up to 4 optional" (with "suggested Discovery/Direction Approval/Pre-Launch QA; skip for fully async" caveat), Care preserved (Bronze "Optional", Silver "Monthly optional", Gold "1–2 monthly"). Homepage FAQ answer + §1.4 spec tables updated. (3) CTA verb standardized to `Get started →` across all Build + Transform detail pages, all homepage OfferCards, and the Transform hub. Gold keeps `Apply →` for scarcity framing. OfferCard default prop changed from `Get Started` to `Get started`. (4) Detail-page section order unified to story-first (What's included → Not included → Best for → stats grid) across all 9 detail pages; Build's 3 pages were the outliers and now match Transform/Care. (5) `/compare` Build timeline corrected from "1–4 weeks" to "7 days – 4 weeks" (desktop table + mobile card); Meetings row reframed for all tiers. Touched 17 files. |
 
 ---
 
@@ -1585,6 +1591,7 @@ Central notification endpoint handling three types: visitor tracking, intake sub
 
 **Source labels (intake type):**
 - `tier-intake` → "General Intake"
+- `tier-intake-simple` → "Simple Intake" (V13.3 default — 6-field simple form at `/intake`)
 - `tier-intake-amber` → "Build Tier Inquiry"
 - `tier-intake-violet` → "Transform Tier Inquiry"
 - `tier-intake-blue` → "Care Tier Inquiry"
@@ -1596,6 +1603,8 @@ Central notification endpoint handling three types: visitor tracking, intake sub
 - `website_conversion_snapshot` → "Website Snapshot" (legacy)
 - `brand-clarity-diagnostic-intake` → "Brand Diagnostic" (legacy)
 - `sudbury_focus_studio` → "Sudbury Lead"
+- `questionnaire-invite-sent` → "Questionnaire Invite Sent" (v13.4+, reserved for future logging)
+- `questionnaire-completed` → "Brand Discovery Questionnaire Completed" (v13.4+, fired by `api/questionnaire/complete`)
 
 **Called by:**
 - `src/components/VisitorNotify.astro` — visitor tracking on every page load
@@ -1624,8 +1633,97 @@ Common utilities extracted from the pricing and booking access endpoints:
 |--------|---------|---------|
 | `crypto.js` | `hashToken(rawToken)` — SHA-256 hash | pricing/access, booking/access |
 | `cookies.js` | `buildCookie(name, value, maxAgeSeconds, options?)` — Secure cookie builder; `parseCookies(cookieHeader)` — Cookie header parser; `buildClearCookie(cookieName, hostname)` — Expiry cookie builder | pricing/*, booking/*, all session endpoints |
-| `html.js` | `escapeHtml(str)`, `errorPageHtml(title, message, options?)` — HTML escaping + styled error page template with configurable back link | pricing/access, booking/access |
-| `validation.js` | `EMAIL_REGEX` — RFC 5321 email validation regex (canonical, single source of truth) | pricing/request-access, snapshot/book, booking/create-token |
+| `html.js` | `escapeHtml(str)`, `errorPageHtml(title, message, options?)` — HTML escaping + styled error page template with configurable back link | pricing/access, booking/access, questionnaire/access |
+| `validation.js` | `EMAIL_REGEX` — RFC 5321 email validation regex (canonical, single source of truth); `UUID_REGEX`; `maskEmail(email)` | pricing/request-access, snapshot/book, booking/create-token, questionnaire/* |
+
+---
+
+## 26. Brand Discovery Questionnaire (v13.4)
+
+Magic-link-gated client onboarding questionnaire at `/questionnaire`. Used after a project kicks off to capture the client's brand vision, audience, products, look/feel, website goals, and timeline. Admin triggers an invite; client receives a link; client fills out 8 steps (plus optional project-specific 9th step); auto-saves each field; on submit, admin gets a Pushover ping and a full HTML summary email.
+
+### 26.1 Flow
+
+1. Admin: `POST /api/questionnaire/create-token` with `X-Admin-Secret: $QUESTIONNAIRE_ADMIN_SECRET` and `{ projectId, clientEmail, clientName? }`. Endpoint generates a 32-byte token, stores its SHA-256 hash, and sends a Resend email with the magic link. Token TTL: **14 days**.
+2. Client clicks link → `GET /api/questionnaire/access?token=...` atomically consumes the token, upserts a `questionnaire_sessions` row, sets `bb_questionnaire_session` cookie (30-day sliding window, HttpOnly, SameSite=Lax, Secure in prod, Domain=`.bertrandbrands.ca`), and 302s to `/questionnaire`.
+3. `/questionnaire` calls `GET /api/questionnaire/check-access` → hydrates existing responses + resumes at saved `current_step`. If the project has an addendum, the addendum step (9) is rendered client-side from the definition in the response.
+4. Every field change → debounced `POST /api/questionnaire/save-field` (1s). Validates field existence + value shape against the canonical schema. `"Saving…" → "Saved"` indicator surfaces success/failure.
+5. Final step "Submit" → `POST /api/questionnaire/complete` → validates all required fields, marks `status='completed'`, fires Pushover (`source: 'questionnaire-completed'`) + sends HTML-table summary email to `QUESTIONNAIRE_ADMIN_EMAIL` (default `hello@bertrandgroup.ca`). Client is redirected to `/questionnaire-confirmed`.
+
+### 26.2 Database tables (created by `initializeDatabase()` in `api/_lib/db.ts`)
+
+- `questionnaire_projects` (id TEXT PK, name, addendum_key NULLABLE, created_at) — registry of projects that can issue questionnaires. Seeded with `('default', 'Default Project', NULL)`.
+- `questionnaire_tokens` (id UUID, project_id FK, client_email, client_name, token_hash UNIQUE, expires_at, used_at, created_by, created_at).
+- `questionnaire_sessions` (id UUID, project_id FK, client_email, client_name, status TEXT DEFAULT 'in_progress', current_step INT DEFAULT 1, responses JSONB, field_updated_at JSONB, expires_at, completed_at, created_at, updated_at).
+
+JSONB for `responses` is the deliberate choice — a completed form has ~40 fields and auto-saves run rapidly. A per-field row shape would mean 40+ writes to finish a form and zero querying benefit. `jsonb_set()` gives us atomic partial updates; `field_updated_at` is a parallel JSONB that records per-field timestamps in a single row.
+
+### 26.3 Schema module (single source of truth)
+
+`src/lib/questionnaire-schema.ts` defines all 8 standard steps, every field's `key`/`label`/`hint`/`type`/`options`/`required`/`maxLength`/`maxSelect`, and helpers: `getFieldByKey`, `validateFieldValue`, `computeResumeStep`, `validateAllRequired`, `serializeResponsesAsHtmlTable`, `serializeResponsesAsPlainText`. Imported by both the Astro page (render) and the API endpoints (validate). Client never defines what's valid — the server always re-checks against this module.
+
+### 26.4 Addendum system (project-specific step 9)
+
+Each project can opt into an extra step via `questionnaire_projects.addendum_key`. Keys map to TypeScript files in `src/lib/questionnaire-addendums/<key>.ts`, each exporting a `QuestionnaireStep`. Registry lives in `src/lib/questionnaire-addendums/index.ts` (static imports — Vercel/Astro resolve these at build).
+
+**To add a new project addendum:**
+1. Create `src/lib/questionnaire-addendums/your-key.ts` exporting `{ addendum: QuestionnaireStep }`.
+2. Register it in `src/lib/questionnaire-addendums/index.ts`.
+3. Insert/update the `questionnaire_projects` row with `addendum_key = 'your-key'`.
+4. Deploy. Any session created for that project from then on will see the extra step.
+
+Currently registered: `hang-in-there` (placeholder content — replace before the first Hang In There client uses it).
+
+### 26.5 API endpoints (all under `api/questionnaire/`)
+
+| Endpoint | Method | Auth | Purpose |
+|----------|--------|------|---------|
+| `/api/questionnaire/create-token` | POST | `X-Admin-Secret` header (`QUESTIONNAIRE_ADMIN_SECRET`) | Generate magic link + email to client |
+| `/api/questionnaire/access?token=...` | GET | Raw token in URL | Consume token, create/refresh session, set cookie, redirect to `/questionnaire` |
+| `/api/questionnaire/check-access` | GET | `bb_questionnaire_session` cookie | Return session state + response hydration data + addendum step (if any) |
+| `/api/questionnaire/save-field` | POST | Session cookie | Validate + JSONB-update a single field; refresh session expiry |
+| `/api/questionnaire/complete` | POST | Session cookie | Mark completed, fire Pushover, send admin summary email |
+| `/api/questionnaire/logout` | POST | Session cookie | Clear the cookie (DB row is preserved for future magic-link resume) |
+
+### 26.6 Environment variables
+
+- `QUESTIONNAIRE_ADMIN_SECRET` (required) — secret compared timing-safe against the `X-Admin-Secret` header. Separate from `BOOKING_ADMIN_SECRET` so either can be rotated without collateral.
+- `QUESTIONNAIRE_ADMIN_EMAIL` (optional, default `hello@bertrandgroup.ca`) — where the completion summary email is delivered.
+- Reuses: `POSTGRES_URL`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `PUSHOVER_USER_KEY`, `PUSHOVER_API_TOKEN`, `APP_URL`.
+
+### 26.7 Rate limiting
+
+- `create-token`: 10/min per IP (shared `createRateLimiter` helper).
+- `access`: 10/min per IP.
+- `save-field`: 120/min per **session** (not per IP — allows rapid typing, caps abuse).
+- `complete`, `logout`, `check-access`: no additional rate limit (session cookie is itself a gate).
+
+### 26.8 Triggering a questionnaire (admin workflow)
+
+```bash
+# Seed a project (one-time; 'default' is seeded automatically)
+curl -X POST "$APP_URL/api/questionnaire/create-token" \
+  -H "X-Admin-Secret: $QUESTIONNAIRE_ADMIN_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "projectId": "default",
+    "clientEmail": "client@example.com",
+    "clientName": "Jane Doe",
+    "createdBy": "scott"
+  }'
+```
+
+Expected response: `{ "ok": true, "projectId": "default", "projectName": "Default Project", "expiresAt": "...", "emailSent": true }`.
+
+To issue against a project with an addendum, first insert the project row (via `upsertQuestionnaireProject` helper or a direct SQL INSERT), then call the same endpoint with `projectId` set to that slug.
+
+### 26.9 Deferred / future work (not in v13.4)
+
+- Admin UI for listing/viewing/editing responses in this repo (target: `system-build`).
+- PDF export of responses (target: `system-build` or Chromium print-to-PDF).
+- Client-facing thank-you email on completion (optional v13.4.1 addition).
+- Admin-editable addendum questions (would require a `questionnaire_addendum_fields` table + admin UI).
+- Admin-side full list + filter across clients/projects (belongs in `system-build`).
 
 ---
 
