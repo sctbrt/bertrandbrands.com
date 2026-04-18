@@ -278,6 +278,35 @@ const effectiveOgDescription = ogDescription || description;
         .header__wordmark { font-size: 0.9rem; }
         .header__link--cta-call { display: inline-flex; }
         .header__link--cta-form { display: none; }
+        /* Mobile dropdown: centered inline stack (critical — renders correctly
+           on iOS Safari even when the deferred shared.css hasn't applied yet) */
+        .header__dropdown { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .header__dropdown-trigger {
+          background: transparent; border: 0; margin: 0; padding: 0.5rem 0;
+          font: inherit; color: var(--text-muted); cursor: pointer;
+          -webkit-appearance: none; appearance: none;
+          display: inline-flex; align-items: center; gap: 0.3em;
+          font-size: var(--text-xl); text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .header__dropdown-menu {
+          position: static; transform: none; opacity: 1; visibility: visible;
+          pointer-events: auto; background: none; border: none; padding: 0;
+          min-width: unset; display: none; text-align: center;
+        }
+        .header__dropdown-trigger[aria-expanded="true"] + .header__dropdown-menu {
+          display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+        }
+        .header__dropdown-item {
+          display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+          padding: 0.5rem 1rem; text-decoration: none;
+        }
+        .header__dropdown-item-name {
+          font-size: var(--text-base); text-transform: uppercase;
+          letter-spacing: 0.04em; color: var(--text-muted);
+        }
+        .header__dropdown-item-desc {
+          font-size: var(--text-xs); color: var(--text-subtle);
+        }
       }
       .intake-header {
         position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
