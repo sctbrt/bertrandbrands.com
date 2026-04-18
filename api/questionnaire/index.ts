@@ -73,10 +73,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     case 'complete':       return completeHandler(req, res);
     case 'logout':         return logoutHandler(req, res);
     case 'create-token':   return createTokenHandler(req, res);
+    case '_diag-init':     return diagInitHandler(req, res);
     default:
       res.status(404).json({ error: 'Unknown action' });
       return;
   }
+}
+
+// ============================================================================
+// _diag-init — TEMPORARY diagnostic. Admin-gated. Explicitly runs
+// initializeDatabase() and returns the full success/error response.
+// Remove once DB is confirmed working.
+// ============================================================================
+
+async function diagInitHandler(req: VercelRequest, res: VercelResponse): Promise<void> {
+  const adminSecret = process.env.QUESTIONNAIRE_ADMIN_SECRET;
+  if (!adminSecret) {
+    res.status(500).json({ error: 'Server misconfigured' });
+    return;
+  }
+  const authHeader = req.headers['x-admin-secret'] as string | undefined;
+  const authBuf = authHeader ? Buffer.from(authHeader) : Buffer.alloc(0);
+  const secretBuf = Buffer.from(adminSecret);
+  if (!authHeader || authBuf.length !== secretBuf.length || !crypto.timingSafeEqual(authBuf, secretBuf)) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+  const hasPostgresUrl = !!process.env.POSTGRES_URL;
+  const postgresUrlPreview = process.env.POSTGRES_URL
+    ? process.env.POSTGRES_URL.replace(/:[^@/]+@/, ':***@').slice(0, 80) + '…'
+    : null;
+  const initResult = await initializeDatabase();
+  res.status(200).json({
+    hasPostgresUrl,
+    postgresUrlPreview,
+    initResult,
+  });
 }
 
 // ============================================================================
