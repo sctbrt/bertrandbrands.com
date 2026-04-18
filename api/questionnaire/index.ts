@@ -653,7 +653,7 @@ async function createTokenHandler(req: VercelRequest, res: VercelResponse): Prom
     const firstName = trimmedName ? trimmedName.split(' ')[0] : '';
 
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
+    const sendResult = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'Bertrand Brands <hello@bertrandgroup.ca>',
       to: normalizedEmail,
       subject: `Your Brand Discovery Questionnaire — ${project.name}`,
@@ -670,6 +670,16 @@ async function createTokenHandler(req: VercelRequest, res: VercelResponse): Prom
         expiresDays: TOKEN_TTL_DAYS,
       }),
     });
+
+    if (sendResult.error) {
+      console.error('Resend send error:', JSON.stringify(sendResult.error));
+      res.status(502).json({
+        ok: false,
+        error: 'Email dispatch failed',
+        resendError: sendResult.error,
+      });
+      return;
+    }
 
     res.status(200).json({
       ok: true,
