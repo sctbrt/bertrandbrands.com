@@ -65,6 +65,11 @@ const effectiveOgDescription = ogDescription || description;
   {effectiveOgDescription && <meta name="twitter:description" content={effectiveOgDescription} />}
   <meta name="twitter:image" content={ogImage} />
 
+  {/* Disable iOS Safari's auto-detection of phone numbers / dates / addresses
+      as tappable links — otherwise plain strings like "Brand & Web Systems"
+      get underlined and colored as if they were phone/email/address links. */}
+  <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
+
   {/* Favicon & Touch Icons */}
   <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
