@@ -274,8 +274,12 @@ export default function middleware(request) {
     if (allowedCountries.length > 0) {
         const cookies = request.headers.get('cookie') || '';
         const hasGeoBypass = cookies.includes('bb_geo_bypass=1');
+        // Magic-link session holders bypass geo — they've been authorized
+        // by the admin who issued their link, so country of access doesn't
+        // matter. Covers pricing gate, booking gate, and questionnaire.
+        const hasMagicLinkSession = /\bbb_(pricing|booking|questionnaire)_session=/.test(cookies);
 
-        if (!hasGeoBypass && !url.searchParams.has('bypass')) {
+        if (!hasGeoBypass && !hasMagicLinkSession && !url.searchParams.has('bypass')) {
             // Let known bots through so Google can index, ads can verify,
             // and social platforms can generate link previews.
             const userAgent = request.headers.get('user-agent') || '';
