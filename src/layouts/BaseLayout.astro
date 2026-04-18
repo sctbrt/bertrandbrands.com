@@ -232,17 +232,23 @@ const effectiveOgDescription = ogDescription || description;
       .header__toggle { display: none; }
       .header__link--cta-call { display: none; }
       .header__link--cta-form { display: inline-flex; }
-      .header__dropdown { position: relative; display: inline-flex; align-items: center; }
-      .header__dropdown-trigger {
-        background: transparent; border: 0; margin: 0; padding: 0.5rem 0;
-        font: inherit; color: inherit; cursor: pointer;
-        -webkit-appearance: none; appearance: none;
-        display: inline-flex; align-items: center; gap: 0.3em;
-        text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--text-xs);
-        line-height: 1; white-space: nowrap;
+      /* Dropdown styling — desktop only. Mobile is handled by the
+         @media (max-width: 1024px) block below (renders inline inside the
+         mobile menu panel). Unmediated desktop rules would otherwise
+         position the menu absolute and push it off-screen on mobile. */
+      @media (min-width: 1025px) {
+        .header__dropdown { position: relative; display: inline-flex; align-items: center; }
+        .header__dropdown-trigger {
+          background: transparent; border: 0; margin: 0; padding: 0.5rem 0;
+          font: inherit; color: inherit; cursor: pointer;
+          -webkit-appearance: none; appearance: none;
+          display: inline-flex; align-items: center; gap: 0.3em;
+          text-transform: uppercase; letter-spacing: 0.04em; font-size: var(--text-xs);
+          line-height: 1; white-space: nowrap;
+        }
+        .header__dropdown-menu { position: absolute; display: none; z-index: 100; }
+        .header__dropdown-trigger[aria-expanded="true"] + .header__dropdown-menu { display: block; }
       }
-      .header__dropdown-menu { position: absolute; display: none; z-index: 100; }
-      .header__dropdown-trigger[aria-expanded="true"] + .header__dropdown-menu { display: block; }
       @media (max-width: 1024px) {
         .header__toggle {
           display: flex; width: 24px; height: 24px; flex-direction: column;
