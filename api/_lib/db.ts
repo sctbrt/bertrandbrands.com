@@ -64,21 +64,14 @@ export async function initializeDatabase(): Promise<{ success: boolean; error?: 
       ON pricing_sessions(expires_at)
     `;
 
-    // Create clients table (referenced by booking access flow)
-    await sql`
-      CREATE TABLE IF NOT EXISTS clients (
-        id TEXT PRIMARY KEY,
-        name TEXT NOT NULL,
-        contact_email TEXT NOT NULL,
-        company TEXT,
-        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-      )
-    `;
-
-    await sql`
-      CREATE INDEX IF NOT EXISTS idx_clients_email
-      ON clients(contact_email)
-    `;
+    // NOTE: The `clients` table is owned by the system-build project
+    // (CRM at dash.bertrandbrands.ca). Both projects share this Neon DB.
+    // We do NOT create or index `clients` here — system-build's schema
+    // uses different column names and our CREATE INDEX would fail,
+    // aborting the rest of initializeDatabase(). The booking endpoints
+    // in this codebase query `clients.contact_email` which doesn't
+    // match system-build's schema — booking create-token is broken
+    // until we reconcile column names (tracked separately).
 
     // Create booking_access_tokens table
     await sql`
