@@ -2,11 +2,11 @@
 /**
  * /questionnaire-confirmed — Post-submission confirmation.
  * Shown after a client submits their Brand Discovery Questionnaire.
- * Self-contained inline styles (mirrors snapshot-confirmed pattern).
+ * Self-contained inline styles. No HeaderTierBadge — this is a moment,
+ * not a navigable page. Quiet, editorial.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SkipLink from '../components/SkipLink.astro';
-import HeaderTierBadge from '../components/HeaderTierBadge.astro';
 import VisitorNotify from '../components/VisitorNotify.astro';
 import VersionStamp from '../components/VersionStamp.astro';
 import GesturePrevention from '../components/GesturePrevention.astro';
@@ -33,13 +33,15 @@ import GesturePrevention from '../components/GesturePrevention.astro';
 
             :root {
                 --bg: #0a0a0a;
-                --bg-elevated: #161618;
                 --text: #fafafa;
                 --text-muted: #a3a3a3;
                 --text-subtle: #737373;
-                --accent: #D97706;
+                --amber: #D97706;
+                --violet: #8B5CF6;
+                --blue: #2563EB;
+                --border: rgba(255, 255, 255, 0.08);
+                --font-display: halyard-display, 'Inter', -apple-system, sans-serif;
                 --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-                --border: rgba(255, 255, 255, 0.10);
             }
 
             html, body { height: 100%; }
@@ -50,114 +52,213 @@ import GesturePrevention from '../components/GesturePrevention.astro';
                 color: var(--text);
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                justify-content: center;
                 min-height: 100vh;
-                padding: 2rem;
-                text-align: center;
+                padding: 0 1.5rem;
                 position: relative;
                 overflow: hidden;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
 
-            /* Soft tri-colour breathing glow — matches the "completed" moment of the journey */
+            /* Tri-colour ambient glow — amber → violet → blue, breathing */
             body::before {
                 content: '';
                 position: absolute;
                 inset: 0;
                 background:
-                    radial-gradient(600px circle at 25% 30%, rgba(217, 119, 6, 0.06), transparent 60%),
-                    radial-gradient(700px circle at 75% 40%, rgba(139, 92, 246, 0.06), transparent 60%),
-                    radial-gradient(500px circle at 50% 80%, rgba(37, 99, 235, 0.06), transparent 60%);
+                    radial-gradient(700px circle at 20% 20%, rgba(217, 119, 6, 0.10), transparent 55%),
+                    radial-gradient(800px circle at 80% 40%, rgba(139, 92, 246, 0.09), transparent 55%),
+                    radial-gradient(600px circle at 50% 90%, rgba(37, 99, 235, 0.08), transparent 55%);
                 pointer-events: none;
-                animation: qcBreathe 24s ease-in-out infinite;
+                animation: qcBreathe 22s ease-in-out infinite;
+                z-index: 0;
             }
 
             @keyframes qcBreathe {
-                0%, 100% { opacity: 0.9; }
-                50% { opacity: 1; }
+                0%, 100% { opacity: 0.85; transform: scale(1); }
+                50%      { opacity: 1;    transform: scale(1.03); }
             }
 
-            .qc-content {
-                max-width: 520px;
+            main {
+                max-width: 560px;
+                width: 100%;
+                margin: 0 auto;
+                padding: clamp(3rem, 10vh, 6rem) 0 clamp(2rem, 6vh, 4rem);
+                display: flex;
+                flex-direction: column;
+                gap: clamp(1.5rem, 4vh, 2.5rem);
                 position: relative;
                 z-index: 1;
+                flex: 1;
+                animation: qcFadeUp 0.9s cubic-bezier(0.33, 1, 0.68, 1) both;
+            }
+
+            @keyframes qcFadeUp {
+                from { opacity: 0; transform: translateY(12px); }
+                to   { opacity: 1; transform: translateY(0); }
+            }
+
+            /* Tri-colour dot cluster — a compact visual mark for the moment */
+            .qc-marker {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+                margin-bottom: 0.5rem;
+            }
+            .qc-marker__dot {
+                width: 8px; height: 8px; border-radius: 50%;
+                animation: qcDotPulse 2.4s ease-in-out infinite;
+            }
+            .qc-marker__dot--amber  { background: var(--amber);  animation-delay: 0s; }
+            .qc-marker__dot--violet { background: var(--violet); animation-delay: 0.3s; }
+            .qc-marker__dot--blue   { background: var(--blue);   animation-delay: 0.6s; }
+            .qc-marker__label {
+                margin-left: 0.25rem;
+                font-size: 0.7rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--text-subtle);
+            }
+
+            @keyframes qcDotPulse {
+                0%, 100% { opacity: 0.4; transform: scale(1); }
+                50%      { opacity: 1;   transform: scale(1.15); }
             }
 
             .qc-title {
-                font-family: 'Inter', -apple-system, sans-serif;
-                font-size: clamp(1.75rem, 5vw, 2.5rem);
+                font-family: var(--font-display);
+                font-size: clamp(2.5rem, 7vw, 4rem);
                 font-weight: 300;
-                line-height: 1.2;
+                line-height: 1.05;
+                letter-spacing: -0.01em;
                 color: var(--text);
-                margin-bottom: 1rem;
             }
 
-            .qc-body {
-                font-size: 1rem;
-                line-height: 1.7;
+            .qc-lead {
+                font-size: clamp(1rem, 1.4vw, 1.125rem);
+                line-height: 1.65;
                 color: var(--text-muted);
-                margin-bottom: 2rem;
+                max-width: 44ch;
             }
+            .qc-lead strong { color: var(--text); font-weight: 500; }
 
-            .qc-body strong { color: var(--text); font-weight: 500; }
-
-            .qc-meta {
-                font-size: 0.8125rem;
-                color: var(--text-subtle);
-                line-height: 1.6;
-                margin-top: 2rem;
-                padding-top: 1.5rem;
+            /* Next-steps — three numbered beats */
+            .qc-steps {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 0.5rem;
+                padding-top: 2rem;
                 border-top: 1px solid var(--border);
             }
-
-            .qc-meta a {
-                color: var(--accent);
-                text-decoration: none;
-                border-bottom: 1px solid rgba(217, 119, 6, 0.4);
-                transition: border-color 0.2s;
+            .qc-step {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 1rem;
+                align-items: baseline;
             }
-            .qc-meta a:hover { border-bottom-color: var(--accent); }
-
-            .qc-cta {
-                display: inline-block;
-                margin-top: 1rem;
-                padding: 0.75rem 1.5rem;
-                background: transparent;
-                border: 1px solid var(--border);
-                border-radius: 8px;
-                color: var(--text);
-                text-decoration: none;
+            .qc-step__num {
+                font-family: var(--font-display);
                 font-size: 0.875rem;
-                font-weight: 500;
-                transition: border-color 0.2s, background 0.2s;
+                color: var(--text-subtle);
+                font-variant-numeric: tabular-nums;
+                min-width: 1.25rem;
             }
-            .qc-cta:hover {
-                border-color: var(--text-subtle);
-                background: rgba(255, 255, 255, 0.04);
+            .qc-step__text {
+                font-size: 0.9375rem;
+                line-height: 1.55;
+                color: var(--text-muted);
+            }
+            .qc-step__text strong { color: var(--text); font-weight: 500; }
+
+            /* Footer row — contact + back */
+            .qc-foot {
+                margin-top: auto;
+                padding-top: 2rem;
+                border-top: 1px solid var(--border);
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem 1.5rem;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 0.8125rem;
+                color: var(--text-subtle);
+            }
+            .qc-foot a {
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+            .qc-foot a:hover { color: var(--text); }
+
+            .qc-back {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.625rem 1rem;
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                color: var(--text-muted);
+                text-decoration: none;
+                font-size: 0.8125rem;
+                transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+            }
+            .qc-back:hover {
+                border-color: rgba(255, 255, 255, 0.2);
+                color: var(--text);
+                background: rgba(255, 255, 255, 0.03);
+            }
+            .qc-back__arrow {
+                display: inline-block;
+                transform: scaleX(-1);
+                opacity: 0.6;
             }
 
             @media (prefers-reduced-motion: reduce) {
                 body::before { animation: none; }
+                main { animation: none; }
+                .qc-marker__dot { animation: none; opacity: 1; }
             }
         </style>
     </Fragment>
 
     <GesturePrevention />
     <SkipLink />
-    <HeaderTierBadge tierLabel="Discovery" tierColor="rgba(217, 119, 6, 0.9)" />
 
-    <main id="main" class="qc-content">
-        <h1 class="qc-title">Thank you.</h1>
-        <p class="qc-body">
-            We&rsquo;ve got your answers. We&rsquo;ll review them carefully and
-            follow up within <strong>48 hours</strong> with our take and next steps.
+    <main id="main">
+        <div>
+            <div class="qc-marker" aria-hidden="true">
+                <span class="qc-marker__dot qc-marker__dot--amber"></span>
+                <span class="qc-marker__dot qc-marker__dot--violet"></span>
+                <span class="qc-marker__dot qc-marker__dot--blue"></span>
+                <span class="qc-marker__label">Received</span>
+            </div>
+            <h1 class="qc-title">Thank you.</h1>
+        </div>
+
+        <p class="qc-lead">
+            We&rsquo;ve got your answers. We&rsquo;ll review them carefully and follow up within
+            <strong>48 hours</strong> with our take and next steps.
         </p>
-        <a class="qc-cta" href="/">Back to bertrandbrands.ca</a>
-        <div class="qc-meta">
-            Questions in the meantime?<br>
-            <a href="mailto:hello@bertrandgroup.ca">hello@bertrandgroup.ca</a>
-            &middot;
-            <a href="tel:+17054133705">(705) 413-3705</a>
+
+        <ol class="qc-steps" aria-label="What happens next">
+            <li class="qc-step">
+                <span class="qc-step__num">01</span>
+                <span class="qc-step__text"><strong>We read everything.</strong> Every answer, twice.</span>
+            </li>
+            <li class="qc-step">
+                <span class="qc-step__num">02</span>
+                <span class="qc-step__text"><strong>We write you back.</strong> Our read, any follow-up questions, and a recommended direction.</span>
+            </li>
+            <li class="qc-step">
+                <span class="qc-step__num">03</span>
+                <span class="qc-step__text"><strong>We begin.</strong> Either a short call or a fixed scope &mdash; whichever serves the work.</span>
+            </li>
+        </ol>
+
+        <div class="qc-foot">
+            <span>Need something sooner? <a href="mailto:hello@bertrandgroup.ca">hello@bertrandgroup.ca</a> &middot; <a href="tel:+17054133705">(705) 413-3705</a></span>
+            <a class="qc-back" href="/"><span class="qc-back__arrow">&rarr;</span> Home</a>
         </div>
     </main>
 
