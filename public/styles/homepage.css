@@ -1001,6 +1001,7 @@
         .section {
             padding: var(--space-xl) 0;
             contain: layout style;
+            scroll-margin-top: 6rem;  /* clear the fixed header on anchor jumps */
         }
 
         /* About section needs visible overflow for ambient glows */

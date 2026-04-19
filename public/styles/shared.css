@@ -518,17 +518,30 @@
                 display: flex;
             }
 
-            .header__nav.is-open::before,
-            .header__nav.is-open::after {
+            /* Scrim — dims the page behind the floating pill menu */
+            .header__nav.is-open::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                width: 100vw;
+                height: 100vh;
+                height: 100dvh;
+                background: rgba(0, 0, 0, 0.5);
+                border-radius: 0;
+                filter: none;
                 opacity: 1;
-                animation: menuGlowBreathe 18s ease-in-out infinite;
+                animation: none;
+                pointer-events: none;
+                z-index: -1;
             }
 
+            /* Disable the violet glow pseudo-element */
             .header__nav.is-open::after {
-                animation: menuGlowBreatheAlt 21s ease-in-out 0.4s infinite;
+                opacity: 0;
+                animation: none;
             }
             .header__nav .header__link {
-                font-size: var(--text-xl);
+                font-size: var(--text-lg);
             }
             .header__nav .header__link--portal {
                 font-size: var(--text-sm);
@@ -559,7 +572,7 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 0.3em;
-                font-size: var(--text-xl);
+                font-size: var(--text-lg);
             }
             .header__dropdown-menu {
                 position: static;
@@ -743,7 +756,7 @@
             .header__nav.is-open::before,
             .header__nav.is-open::after {
                 animation: none;
-                opacity: 0.7;
+                opacity: 0;
             }
         }
 
