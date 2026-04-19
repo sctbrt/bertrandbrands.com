@@ -75,6 +75,17 @@
         });
     });
 
+    /* Close menu when tapping outside the pill (on the scrim) */
+    nav.addEventListener('click', function(e) {
+        if (e.target === nav) {
+            nav.classList.remove('is-open');
+            toggle.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+            if (header) header.classList.remove('nav-open');
+            document.body.style.overflow = '';
+        }
+    });
+
     /* Products dropdown */
     var dropTrigger = document.querySelector('.header__dropdown-trigger');
     if (dropTrigger) {

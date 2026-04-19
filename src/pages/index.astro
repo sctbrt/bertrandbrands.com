@@ -985,6 +985,11 @@ const schemaJson = schemaGraph(
               link.addEventListener('click', closeMenu);
           });
 
+          /* Close menu when tapping outside the pill (on the scrim) */
+          nav.addEventListener('click', function(e) {
+              if (e.target === nav) closeMenu();
+          });
+
           document.addEventListener('keydown', function(e) {
               if (!nav.classList.contains('is-open')) return;
 
