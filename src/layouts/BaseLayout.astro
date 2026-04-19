@@ -347,6 +347,25 @@ const effectiveOgDescription = ogDescription || description;
 
   {/* Astro View Transitions — smooth page navigation */}
   <ClientRouter fallback="none" />
+
+  {/* View transition fixes */}
+  <script is:inline>
+    /* 1. Scroll-to-top on navigation (fixes BPOS/TheraKeep landing at bottom) */
+    document.addEventListener('astro:after-swap', function() {
+      if (!window.location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
+    });
+
+    /* 2. Force full reload for /?skip routes (homepage intro scripts don't
+       re-execute during view transitions, breaking the cinematic skip logic) */
+    document.addEventListener('astro:before-preparation', function(e) {
+      if (e.to && new URL(e.to, location.origin).searchParams.has('skip')) {
+        e.preventDefault();
+        window.location.href = e.to;
+      }
+    });
+  </script>
 </head>
 <body class={bodyClass}>
   {/* GTM noscript fallback — only renders when PUBLIC_GTM_ID is set */}
