@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototype C — Living Canvas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #080808;
+    --plane-1: #0E0E0E;
+    --plane-2: #141414;
+    --plane-3: #1A1A1A;
+    --plane-4: #212121;
+    --text: #ECECEC;
+    --text-muted: #8A8A8A;
+    --text-subtle: #555555;
+    --accent: #F59E0B;
+    --accent-dim: rgba(245,158,11,0.08);
+    --border: rgba(255,255,255,0.06);
+    --border-warm: rgba(245,158,11,0.15);
+    --tier-build: #F59E0B;
+    --tier-transform: #A78BFA;
+    --tier-care: #60A5FA;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; justify-content: center;
+    background: var(--plane-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .tabs button {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 14px 28px;
+    border: none; background: none;
+    color: var(--text-subtle); cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .tabs button:hover { color: var(--text-muted); }
+  .tabs button.active { color: var(--accent); }
+  .tabs button.active::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 25%; right: 25%;
+    height: 1px; background: var(--accent);
+  }
+  .view { display: none; padding-top: 48px; min-height: 100vh; }
+  .view.active { display: block; }
+
+  /* ══════════════════════════════════════
+     PUBLIC SITE — Living Canvas
+     ══════════════════════════════════════ */
+  .pub { position: relative; overflow: hidden; }
+
+  #constellation {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+
+  .pub-header {
+    position: relative; z-index: 2;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--plane-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .pub-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .pub-logo-mark {
+    width: 32px; height: 42px;
+    position: relative;
+  }
+  .pub-logo-mark span {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+  }
+  .pub-logo:hover .pub-logo-mark span {
+    transform: scale(1.4);
+  }
+  .pub-logo-text {
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 500;
+    color: var(--text);
+  }
+  .pub-logo-sub {
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    color: var(--text-subtle);
+    display: block;
+  }
+  .pub-nav { display: flex; gap: 28px; align-items: center; }
+  .pub-nav a {
+    font-size: 0.8125rem; color: var(--text-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .pub-nav a:hover { color: var(--text); }
+  .pub-nav-cta {
+    color: var(--bg) !important;
+    background: var(--accent);
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  .pub-nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px -4px rgba(245,158,11,0.3);
+  }
+
+  /* Hero */
+  .pub-hero {
+    position: relative; z-index: 1;
+    padding: 120px 48px 60px;
+    max-width: 920px;
+  }
+  .pub-hero__eyebrow {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .pub-hero__eyebrow::before {
+    content: ''; width: 32px; height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+  .pub-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 5.5vw, 4.25rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .pub-hero h1 em {
+    font-style: italic; font-weight: 300;
+    background: linear-gradient(135deg, var(--tier-build), var(--tier-transform));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .pub-hero__sub {
+    font-size: 1.0625rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+  .pub-hero__actions {
+    display: flex; gap: 16px; align-items: center;
+  }
+  .pub-hero__cta-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.9375rem; font-weight: 600;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pub-hero__cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -6px rgba(245,158,11,0.35);
+  }
+  .pub-hero__cta-secondary {
+    font-size: 0.875rem; font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .pub-hero__cta-secondary:hover { color: var(--text); border-color: var(--text-muted); }
+
+  /* Brand voice */
+  .pub-voice {
+    position: relative; z-index: 1;
+    max-width: 920px;
+    padding: 48px;
+  }
+  .pub-voice__text {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 600px;
+  }
+  .pub-voice__text strong {
+    font-weight: 700;
+    font-style: normal;
+    color: var(--text);
+  }
+  .pub-voice__attr {
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+    margin-top: 16px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Tier section */
+  .pub-tier {
+    position: relative; z-index: 1;
+    max-width: 960px;
+    padding: 0 48px;
+    margin: 40px auto 80px;
+  }
+  .pub-tier__header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .pub-tier__dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    box-shadow: 0 0 12px currentColor;
+  }
+  .pub-tier__name {
+    font-family: var(--font-display);
+    font-size: 0.875rem; font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .pub-tier__tagline {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 300;
+    font-size: 0.8125rem;
+    margin-left: 12px;
+    color: var(--text-subtle);
+  }
+
+  .pub-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .pub-card {
+    background: var(--plane-3);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    border-radius: 10px;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .pub-card:hover { transform: translateY(-4px); }
+  .pub-card--build:hover {
+    border-color: rgba(245,158,11,0.2);
+    box-shadow: 0 16px 40px -12px rgba(245,158,11,0.12);
+  }
+  .pub-card--transform:hover {
+    border-color: rgba(167,139,250,0.2);
+    box-shadow: 0 16px 40px -12px rgba(167,139,250,0.12);
+  }
+  .pub-card--care:hover {
+    border-color: rgba(96,165,250,0.2);
+    box-shadow: 0 16px 40px -12px rgba(96,165,250,0.12);
+  }
+  /* Top edge glow */
+  .pub-card::after {
+    content: ''; position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .pub-card:hover::after { opacity: 1; }
+  .pub-card--build::after { background: linear-gradient(90deg, transparent, var(--tier-build), transparent); }
+  .pub-card--transform::after { background: linear-gradient(90deg, transparent, var(--tier-transform), transparent); }
+  .pub-card--care::after { background: linear-gradient(90deg, transparent, var(--tier-care), transparent); }
+
+  .pub-card__name {
+    font-family: var(--font-display);
+    font-size: 1.125rem; font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .pub-card__hook {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-style: italic; font-weight: 300;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .pub-card__desc {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .pub-card__footer {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .pub-card__price {
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 700;
+  }
+  .pub-card__timeline {
+    font-size: 0.6875rem;
+    color: var(--text-subtle);
+  }
+  .pub-card__arrow {
+    font-size: 0.8125rem;
+    color: var(--text-subtle);
+    transition: color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .pub-card:hover .pub-card__arrow {
+    color: var(--text);
+    transform: translateX(3px);
+  }
+
+  /* Process */
+  .pub-process {
+    position: relative; z-index: 1;
+    max-width: 960px;
+    padding: 0 48px 80px;
+    margin: 0 auto;
+  }
+  .pub-process__label {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 32px;
+  }
+  .pub-process__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .pub-process__step {
+    padding: 28px;
+    position: relative;
+    border-left: 1px solid var(--border);
+  }
+  .pub-process__step:first-child { border-left: none; }
+  .pub-process__num {
+    font-family: var(--font-display);
+    font-size: 3rem; font-weight: 700;
+    line-height: 1;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, var(--accent), rgba(245,158,11,0.15));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .pub-process__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .pub-process__desc {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* Footer */
+  .pub-footer {
+    position: relative; z-index: 1;
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .pub-footer__left {
+    font-family: var(--font-display);
+    font-size: 0.875rem; font-weight: 500;
+  }
+  .pub-footer__right {
+    font-size: 0.75rem; color: var(--text-subtle);
+  }
+  .pub-footer__right a { color: var(--text-muted); text-decoration: none; }
+  .pub-footer__right a:hover { color: var(--accent); }
+
+  /* ══════════════════════════════════════
+     DASHBOARD — Cool Dark
+     ══════════════════════════════════════ */
+  .dash {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    min-height: 100vh;
+    background: #070A0D;
+    color: var(--text);
+  }
+  .dash-sidebar {
+    background: #0C0F13;
+    border-right: 1px solid rgba(255,255,255,0.04);
+    padding: 28px 0;
+  }
+  .dash-sidebar__brand {
+    padding: 0 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    margin-bottom: 20px;
+  }
+  .dash-sidebar__brand-name {
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 500;
+    color: var(--text);
+  }
+  .dash-sidebar__brand-sub {
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(236,236,236,0.25);
+    margin-top: 2px;
+  }
+  .dash-nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 24px;
+    font-size: 0.8125rem;
+    color: rgba(236,236,236,0.35);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .dash-nav-item:hover { color: rgba(236,236,236,0.6); background: rgba(255,255,255,0.02); }
+  .dash-nav-item.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: rgba(245,158,11,0.04);
+  }
+  .dash-nav-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: currentColor; opacity: 0.5;
+  }
+  .dash-nav-item.active .dash-nav-dot { background: var(--accent); opacity: 1; }
+  .dash-nav-badge {
+    margin-left: auto;
+    font-size: 0.6875rem; font-weight: 600;
+    padding: 1px 7px; border-radius: 4px;
+    background: rgba(245,158,11,0.12);
+    color: var(--accent);
+  }
+  .dash-nav-sep { height: 1px; background: rgba(255,255,255,0.03); margin: 12px 24px; }
+
+  .dash-main { padding: 32px 40px; }
+
+  .dash-greeting {
+    margin-bottom: 32px;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(167,139,250,0.03), rgba(96,165,250,0.02));
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+    position: relative; overflow: hidden;
+  }
+  .dash-greeting::after {
+    content: '';
+    position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+    width: 80px; height: 100px;
+    background-image: radial-gradient(circle, rgba(245,158,11,0.05) 2px, transparent 2px);
+    background-size: 12px 12px;
+    pointer-events: none;
+  }
+  .dash-greeting h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem; font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .dash-greeting p {
+    font-size: 0.875rem; color: rgba(236,236,236,0.5);
+  }
+  .dash-greeting__quip {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 300;
+    font-size: 0.8125rem;
+    color: rgba(236,236,236,0.25);
+    margin-top: 10px;
+  }
+
+  .dash-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .dash-stat {
+    background: #0F1216;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 22px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .dash-stat:hover {
+    border-color: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+  }
+  .dash-stat__label {
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 8px;
+  }
+  .dash-stat__value {
+    font-family: var(--font-display);
+    font-size: 2.25rem; font-weight: 700;
+    line-height: 1;
+  }
+  .dash-stat--hot .dash-stat__value { color: var(--accent); }
+  .dash-stat--hot:hover {
+    border-color: rgba(245,158,11,0.15);
+    box-shadow: 0 8px 24px -8px rgba(245,158,11,0.1);
+  }
+
+  .dash-section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px;
+  }
+  .dash-section-label {
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .dash-section-link {
+    font-size: 0.75rem; color: var(--text-subtle);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .dash-section-link:hover { color: var(--accent); }
+
+  .dash-lead {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    margin-bottom: 2px;
+    cursor: pointer;
+  }
+  .dash-lead:hover { background: rgba(255,255,255,0.02); }
+  .dash-lead__name { font-size: 0.875rem; font-weight: 500; }
+  .dash-lead__meta {
+    font-size: 0.75rem; color: rgba(236,236,236,0.3);
+    margin-top: 2px;
+  }
+  .dash-lead__meta .location {
+    color: rgba(236,236,236,0.2);
+  }
+  .dash-badge {
+    font-size: 0.625rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 5px;
+  }
+  .dash-badge--new { background: rgba(245,158,11,0.1); color: var(--tier-build); }
+  .dash-badge--contacted { background: rgba(96,165,250,0.08); color: var(--tier-care); }
+
+  /* ══════════════════════════════════════
+     CLIENT PORTAL — Warm Dark
+     ══════════════════════════════════════ */
+  .portal {
+    background: #0A0908;
+    color: var(--text);
+    min-height: 100vh;
+  }
+  .portal-header {
+    padding: 18px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: #100F0D;
+    border-bottom: 1px solid rgba(245,158,11,0.06);
+  }
+  .portal-brand {
+    font-family: var(--font-display);
+    font-size: 0.875rem; font-weight: 500; color: var(--text);
+  }
+  .portal-brand span { color: var(--text-subtle); font-weight: 400; }
+  .portal-user {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .portal-user__name { font-size: 0.8125rem; color: var(--text-muted); }
+  .portal-user__avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--tier-build), var(--tier-transform));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: white;
+  }
+
+  .portal-main { max-width: 780px; margin: 0 auto; padding: 48px; }
+
+  .portal-welcome {
+    padding: 32px;
+    background: #110F0C;
+    border: 1px solid rgba(245,158,11,0.06);
+    border-radius: 12px;
+    margin-bottom: 44px;
+    position: relative; overflow: hidden;
+  }
+  .portal-welcome::after {
+    content: '';
+    position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
+    width: 64px; height: 84px;
+    background-image: radial-gradient(circle, rgba(245,158,11,0.07) 2px, transparent 2px);
+    background-size: 10px 10px;
+    pointer-events: none;
+  }
+  .portal-welcome h2 {
+    font-family: var(--font-display);
+    font-size: 1.375rem; font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .portal-welcome p {
+    font-size: 0.875rem; color: var(--text-muted);
+  }
+  .portal-welcome__note {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 300;
+    font-size: 0.8125rem;
+    color: rgba(236,236,236,0.3);
+    margin-top: 14px;
+    padding-left: 14px;
+    border-left: 2px solid rgba(245,158,11,0.2);
+  }
+
+  .portal-label {
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 12px;
+  }
+
+  .portal-project {
+    background: #12100E;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.3s;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+  }
+  .portal-project:hover { transform: translateY(-2px); }
+  .portal-project--transform {
+    border-left-color: var(--tier-transform);
+  }
+  .portal-project--transform:hover {
+    border-color: rgba(167,139,250,0.15);
+    box-shadow: 0 8px 24px -8px rgba(167,139,250,0.08);
+    border-left-color: var(--tier-transform);
+  }
+  .portal-project--build {
+    border-left-color: var(--tier-build);
+  }
+  .portal-project--build:hover {
+    border-color: rgba(245,158,11,0.15);
+    box-shadow: 0 8px 24px -8px rgba(245,158,11,0.08);
+    border-left-color: var(--tier-build);
+  }
+
+  .portal-project__top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .portal-project__name {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 1rem;
+  }
+  .portal-pill {
+    font-size: 0.625rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 5px;
+  }
+  .portal-pill--progress { background: rgba(167,139,250,0.1); color: var(--tier-transform); }
+  .portal-pill--pending { background: rgba(245,158,11,0.1); color: var(--tier-build); }
+
+  .portal-project__milestone {
+    font-size: 0.8125rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .portal-project__milestone::before {
+    content: ''; width: 4px; height: 4px;
+    border-radius: 50%; background: var(--accent);
+  }
+  .portal-project__hint {
+    font-family: var(--font-display);
+    font-style: italic; font-weight: 300;
+    font-size: 0.8125rem;
+    color: rgba(236,236,236,0.25);
+    margin-top: 8px;
+  }
+
+  .portal-invoice-section { margin-top: 32px; }
+  .portal-invoice {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .portal-invoice__id { font-size: 0.875rem; font-weight: 500; }
+  .portal-invoice__desc {
+    font-size: 0.75rem; color: var(--text-subtle); margin-top: 2px;
+  }
+  .portal-invoice__amount {
+    font-family: var(--font-display);
+    font-size: 1.0625rem; font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .pub-cards, .pub-process__grid { grid-template-columns: 1fr; }
+    .pub-nav { display: none; }
+    .pub-hero, .pub-voice, .pub-tier, .pub-process { padding-left: 24px; padding-right: 24px; }
+    .pub-header, .pub-footer { padding-left: 24px; padding-right: 24px; }
+    .dash { grid-template-columns: 1fr; }
+    .dash-sidebar { display: none; }
+    .dash-stats { grid-template-columns: repeat(2, 1fr); }
+    .dash-main { padding: 24px; }
+    .portal-main { padding: 32px 24px; }
+    .portal-header { padding: 16px 24px; }
+    .pub-process__step { border-left: none; border-top: 1px solid var(--border); }
+    .pub-process__step:first-child { border-top: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #constellation { display: none; }
+    .pub-card, .dash-stat, .portal-project { transition: none; }
+    .pub-card:hover, .dash-stat:hover, .portal-project:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="active" onclick="showView('public')">Public Site</button>
+  <button onclick="showView('dashboard')">Dashboard</button>
+  <button onclick="showView('portal')">Client Portal</button>
+</div>
+
+<!-- ═══ PUBLIC SITE ═══ -->
+<div id="public" class="view active pub">
+  <canvas id="constellation"></canvas>
+
+  <header class="pub-header">
+    <a class="pub-logo" href="#">
+      <div class="pub-logo-mark" id="logoDots"></div>
+      <div>
+        <span class="pub-logo-text">Bertrand Brands</span>
+        <span class="pub-logo-sub">Brand &amp; Web Systems</span>
+      </div>
+    </a>
+    <nav class="pub-nav">
+      <a href="#">Services</a>
+      <a href="#">Process</a>
+      <a href="#">About</a>
+      <a href="#" class="pub-nav-cta">Start a project</a>
+    </nav>
+  </header>
+
+  <div class="pub-hero">
+    <div class="pub-hero__eyebrow">Sudbury Studio &mdash; Canada-Wide</div>
+    <h1>We don't redesign websites. We build the <em>system underneath.</em></h1>
+    <p class="pub-hero__sub">Fixed-scope brand and web systems for businesses that are tired of vague proposals, endless revisions, and websites that look nice but don't convert.</p>
+    <div class="pub-hero__actions">
+      <a href="#" class="pub-hero__cta-primary">Start a project &rarr;</a>
+      <a href="#" class="pub-hero__cta-secondary">See our work</a>
+    </div>
+  </div>
+
+  <div class="pub-voice">
+    <p class="pub-voice__text">"You'll know the price before we start. You'll know the timeline before we start. You'll know <strong>exactly what you're getting</strong> before we start. That's the whole point."</p>
+    <p class="pub-voice__attr">Scott Bertrand, Founder</p>
+  </div>
+
+  <div class="pub-tier">
+    <div class="pub-tier__header">
+      <div class="pub-tier__dot" style="color: var(--tier-build); background: var(--tier-build);"></div>
+      <div class="pub-tier__name" style="color: var(--tier-build);">B Build</div>
+      <div class="pub-tier__tagline">Quick, clean, done.</div>
+    </div>
+    <div class="pub-cards">
+      <div class="pub-card pub-card--build">
+        <div class="pub-card__name">Starter Site</div>
+        <div class="pub-card__hook">"I need a site that works, and I needed it yesterday."</div>
+        <div class="pub-card__desc">One-page + contact form. Custom-coded, strategy-first. No themes, no WordPress, no drama.</div>
+        <div class="pub-card__footer">
+          <span class="pub-card__price">$750</span>
+          <span class="pub-card__timeline">7-10 days &nbsp;<span class="pub-card__arrow">&rarr;</span></span>
+        </div>
+      </div>
+      <div class="pub-card pub-card--build">
+        <div class="pub-card__name">Multi-Page Starter</div>
+        <div class="pub-card__hook">"One page isn't enough, but I don't need the kitchen sink."</div>
+        <div class="pub-card__desc">Multi-page site with structured navigation and content hierarchy. Same quality, more room.</div>
+        <div class="pub-card__footer">
+          <span class="pub-card__price">Scoped</span>
+          <span class="pub-card__timeline">2-3 weeks &nbsp;<span class="pub-card__arrow">&rarr;</span></span>
+        </div>
+      </div>
+      <div class="pub-card pub-card--build">
+        <div class="pub-card__name">Full Site + Booking</div>
+        <div class="pub-card__hook">"I want people to book, not just browse."</div>
+        <div class="pub-card__desc">Complete website with integrated booking, conversion UX, and the pipeline to match.</div>
+        <div class="pub-card__footer">
+          <span class="pub-card__price">Scoped</span>
+          <span class="pub-card__timeline">3-4 weeks &nbsp;<span class="pub-card__arrow">&rarr;</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-process">
+    <div class="pub-process__label">How it actually works</div>
+    <div class="pub-process__grid">
+      <div class="pub-process__step">
+        <div class="pub-process__num">01</div>
+        <div class="pub-process__name">Tell us what's broken.</div>
+        <div class="pub-process__desc">No 47-question intake form. A real conversation about where you are, where you want to be, and what's in the way.</div>
+      </div>
+      <div class="pub-process__step">
+        <div class="pub-process__num">02</div>
+        <div class="pub-process__name">We scope it. You sign it.</div>
+        <div class="pub-process__desc">Fixed price, fixed timeline, fixed deliverables. The proposal is the contract. No surprises, no scope creep, no awkward invoices.</div>
+      </div>
+      <div class="pub-process__step">
+        <div class="pub-process__num">03</div>
+        <div class="pub-process__name">We build. You launch.</div>
+        <div class="pub-process__desc">Custom-coded, tested, and handed off with everything you need. Not a mockup. Not a deck. A working system you actually own.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-footer">
+    <div class="pub-footer__left">Bertrand Brands</div>
+    <div class="pub-footer__right">
+      Sudbury, ON &nbsp;&middot;&nbsp;
+      <a href="#">hello@bertrandgroup.ca</a> &nbsp;&middot;&nbsp;
+      <a href="#">(705) 413-3705</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="dashboard" class="view">
+  <div class="dash">
+    <aside class="dash-sidebar">
+      <div class="dash-sidebar__brand">
+        <div class="dash-sidebar__brand-name">Bertrand Group</div>
+        <div class="dash-sidebar__brand-sub">CRM &middot; Internal</div>
+      </div>
+      <div class="dash-nav-item active">
+        <span class="dash-nav-dot"></span> Overview
+      </div>
+      <div class="dash-nav-item">
+        <span class="dash-nav-dot"></span> Intakes
+        <span class="dash-nav-badge">2</span>
+      </div>
+      <div class="dash-nav-item">
+        <span class="dash-nav-dot"></span> Leads
+        <span class="dash-nav-badge">3</span>
+      </div>
+      <div class="dash-nav-item">
+        <span class="dash-nav-dot"></span> Clients
+      </div>
+      <div class="dash-nav-sep"></div>
+      <div class="dash-nav-item">
+        <span class="dash-nav-dot"></span> Projects
+      </div>
+      <div class="dash-nav-item">
+        <span class="dash-nav-dot"></span> Invoices
+        <span class="dash-nav-badge">2</span>
+      </div>
+      <div class="dash-nav-item">
+        <span class="dash-nav-dot"></span> Care
+      </div>
+      <div class="dash-nav-sep"></div>
+      <div class="dash-nav-item">
+        <span class="dash-nav-dot"></span> Templates
+      </div>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-greeting">
+        <h2>Afternoon, Scott.</h2>
+        <p>3 new leads, 2 invoices need attention, 4 projects in motion.</p>
+        <p class="dash-greeting__quip">The pipeline's healthy. Maybe take Sunday off this time.</p>
+      </div>
+
+      <div class="dash-stats">
+        <div class="dash-stat dash-stat--hot">
+          <div class="dash-stat__label">New Leads</div>
+          <div class="dash-stat__value">3</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat__label">Clients</div>
+          <div class="dash-stat__value">12</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat__label">Active</div>
+          <div class="dash-stat__value">4</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat__label">Unpaid</div>
+          <div class="dash-stat__value">2</div>
+        </div>
+      </div>
+
+      <div class="dash-section-header">
+        <div class="dash-section-label">Recent Leads</div>
+        <a href="#" class="dash-section-link">View all &rarr;</a>
+      </div>
+      <div class="dash-lead">
+        <div>
+          <div class="dash-lead__name">Sarah Mitchell</div>
+          <div class="dash-lead__meta">Northern Roots Co. &middot; Website redesign &middot; <span class="location">Sudbury</span></div>
+        </div>
+        <span class="dash-badge dash-badge--new">New</span>
+      </div>
+      <div class="dash-lead">
+        <div>
+          <div class="dash-lead__name">James Proulx</div>
+          <div class="dash-lead__meta">Proulx Electric &middot; Starter site &middot; <span class="location">Val Caron</span></div>
+        </div>
+        <span class="dash-badge dash-badge--new">New</span>
+      </div>
+      <div class="dash-lead">
+        <div>
+          <div class="dash-lead__name">Maria Chen</div>
+          <div class="dash-lead__meta">Chen Wellness &middot; Care plan &middot; <span class="location">Toronto</span></div>
+        </div>
+        <span class="dash-badge dash-badge--contacted">Contacted</span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ═══ CLIENT PORTAL ═══ -->
+<div id="portal" class="view">
+  <div class="portal">
+    <header class="portal-header">
+      <div class="portal-brand">Bertrand Group <span>&rsaquo; Projects</span></div>
+      <div class="portal-user">
+        <span class="portal-user__name">Sarah Mitchell</span>
+        <div class="portal-user__avatar">SM</div>
+      </div>
+    </header>
+    <main class="portal-main">
+      <div class="portal-welcome">
+        <h2>Welcome back, Sarah.</h2>
+        <p>Here's where Northern Roots stands.</p>
+        <p class="portal-welcome__note">Your next approval gate is April 12th. We'll ping you the day before&mdash;nothing to stress about until then.</p>
+      </div>
+
+      <div class="portal-label">Active Projects</div>
+
+      <div class="portal-project portal-project--transform">
+        <div class="portal-project__top">
+          <div class="portal-project__name">Website Redesign</div>
+          <span class="portal-pill portal-pill--progress">In Progress</span>
+        </div>
+        <div class="portal-project__milestone">Design direction approval &mdash; Apr 12</div>
+        <div class="portal-project__hint">We're down to two strong directions. You'll see both with our recommendation.</div>
+      </div>
+
+      <div class="portal-project portal-project--build">
+        <div class="portal-project__top">
+          <div class="portal-project__name">Brand Identity</div>
+          <span class="portal-pill portal-pill--pending">Pending</span>
+        </div>
+        <div class="portal-project__milestone">Logo concepts review &mdash; Apr 8</div>
+        <div class="portal-project__hint">Three concepts ready. One in particular we think you'll love.</div>
+      </div>
+
+      <div class="portal-invoice-section">
+        <div class="portal-label">Recent Invoices</div>
+        <div class="portal-invoice">
+          <div>
+            <div class="portal-invoice__id">INV-0047</div>
+            <div class="portal-invoice__desc">Website Foundation &mdash; Milestone 1</div>
+          </div>
+          <div class="portal-invoice__amount">$1,250.00</div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  document.getElementById('constellation').style.display = id === 'public' ? 'block' : 'none';
+}
+
+/* Logo dot-matrix B */
+(function() {
+  const c = document.getElementById('logoDots');
+  if (!c) return;
+  const p = [[1,1,1,1],[1,0,0,1],[1,1,1,0],[1,0,0,1],[1,1,1,0],[1,0,0,1],[1,1,1,1]];
+  p.forEach((row, y) => {
+    row.forEach((on, x) => {
+      if (!on) return;
+      const d = document.createElement('span');
+      d.style.cssText = `position:absolute;width:4px;height:4px;border-radius:50%;background:var(--accent);left:${x*8}px;top:${y*5.5}px;`;
+      c.appendChild(d);
+    });
+  });
+})();
+
+/* Dot constellation */
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const canvas = document.getElementById('constellation');
+  const ctx = canvas.getContext('2d');
+  let dots = [], animId, scrollY = 0;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initDots();
+  }
+  function initDots() {
+    dots = [];
+    const s = 52;
+    const cols = Math.ceil(canvas.width / s), rows = Math.ceil(canvas.height / s);
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        dots.push({
+          x: c * s + s/2 + (Math.random() - 0.5) * 10,
+          y: r * s + s/2 + (Math.random() - 0.5) * 10,
+          base: 0.04 + Math.random() * 0.03,
+          phase: Math.random() * Math.PI * 2,
+        });
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const cy = canvas.height * 0.3;
+    dots.forEach(d => {
+      const dist = Math.abs(d.y - cy);
+      const prox = Math.max(0, 1 - dist / (canvas.height * 0.4));
+      const breathe = Math.sin(t * 0.0004 + d.phase) * 0.015;
+      const a = d.base + prox * 0.06 + breathe;
+      // Color shifts: warm near top, cool below
+      const warmth = Math.max(0, 1 - d.y / canvas.height);
+      const r = Math.round(245 * warmth + 96 * (1 - warmth));
+      const g = Math.round(158 * warmth + 165 * (1 - warmth));
+      const b = Math.round(11 * warmth + 250 * (1 - warmth));
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, 1, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(a, 0.15)})`;
+      ctx.fill();
+    });
+    animId = requestAnimationFrame(draw);
+  }
+  resize();
+  animId = requestAnimationFrame(draw);
+  window.addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(animId);
+    else animId = requestAnimationFrame(draw);
+  });
+})();
+</script>
+</body>
+</html>

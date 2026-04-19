@@ -455,16 +455,32 @@
                 height: 100dvh;
                 background: rgba(var(--bg-rgb), 0.98);
                 backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(50px) saturate(1.8) brightness(1.1);
+                backdrop-filter: blur(50px) saturate(1.8) brightness(1.1);
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                gap: 2rem;
+                gap: 1.25rem;
                 z-index: 1100; /* Above intro (1000) */
-                padding: 4rem 2rem calc(2rem + env(safe-area-inset-bottom, 0px));
+                padding: 2.5rem 2rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
                 box-sizing: border-box;
                 overflow-y: auto;
                 overflow-x: hidden;
+                /* Liquid glass pill shape */
+                width: calc(100vw - 3rem);
+                max-width: 320px;
+                max-height: calc(100dvh - 6rem);
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                bottom: auto; right: auto;
+                height: auto;
+                background: rgba(var(--bg-rgb), 0.65);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 2rem;
+                box-shadow:
+                    0 8px 40px rgba(0, 0, 0, 0.5),
+                    0 0 0 0.5px rgba(255, 255, 255, 0.08) inset,
+                    0 1px 0 rgba(255, 255, 255, 0.1) inset;
             }
 
             /* Ambient accent backlighting — tri-colour organic glows */
@@ -541,11 +557,11 @@
                 animation: none;
             }
             .header__nav .header__link {
-                font-size: var(--text-lg);
+                font-size: var(--text-base);
             }
             .header__nav .header__link--portal {
-                font-size: var(--text-sm);
-                margin-top: 1rem;
+                font-size: var(--text-xs);
+                margin-top: 0.5rem;
             }
             .header__nav .header__divider {
                 display: none;
@@ -572,7 +588,7 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 0.3em;
-                font-size: var(--text-lg);
+                font-size: var(--text-base);
             }
             .header__dropdown-menu {
                 position: static;

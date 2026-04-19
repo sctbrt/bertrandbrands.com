@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototype B — Warm Minimalism</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #FAFAF8;
+    --bg-warm: #F5F3EE;
+    --surface: #FFFFFF;
+    --text: #1C1C1C;
+    --text-muted: #5E5E5E;
+    --text-subtle: #999999;
+    --border: #E8E7E4;
+    --accent: #1C1C1C;
+    --accent-warm: #C06A00;
+    --tier-build: #B8943A;
+    --tier-transform: #8B7DB5;
+    --tier-care: #6E8FB5;
+    --font-serif: 'Source Serif 4', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; justify-content: center;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .tabs button {
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 14px 28px;
+    border: none; background: none;
+    color: var(--text-subtle); cursor: pointer;
+    transition: color 0.15s;
+    position: relative;
+  }
+  .tabs button:hover { color: var(--text-muted); }
+  .tabs button.active { color: var(--text); }
+  .tabs button.active::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 30%; right: 30%;
+    height: 1px; background: var(--text);
+  }
+  .view { display: none; padding-top: 48px; min-height: 100vh; }
+  .view.active { display: block; }
+
+  /* ══════════════════════════════════════
+     PUBLIC SITE
+     ══════════════════════════════════════ */
+
+  .pub-header {
+    padding: 28px 48px;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .pub-wordmark {
+    font-family: var(--font-serif);
+    font-size: 1.25rem; font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .pub-nav { display: flex; gap: 32px; align-items: baseline; }
+  .pub-nav a {
+    font-size: 0.875rem; color: var(--text-muted);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .pub-nav a:hover { color: var(--text); }
+  .pub-nav-cta {
+    color: var(--text) !important; font-weight: 600;
+    border-bottom: 1.5px solid var(--text);
+    padding-bottom: 2px;
+    transition: border-color 0.15s !important;
+  }
+  .pub-nav-cta:hover { border-color: var(--accent-warm) !important; color: var(--accent-warm) !important; }
+
+  /* Hero — massive serif, personality in the words */
+  .pub-hero {
+    max-width: 800px;
+    padding: 100px 48px 0;
+  }
+  .pub-hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(3.25rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    margin-bottom: 32px;
+  }
+  .pub-hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+  }
+  .pub-hero__sub {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 440px;
+  }
+  .pub-hero__sub strong { color: var(--text); font-weight: 600; }
+
+  /* Spacers */
+  .spacer { height: 120px; }
+  .spacer--sm { height: 64px; }
+
+  /* Brand voice pull-quote */
+  .pub-voice {
+    max-width: 800px;
+    padding: 0 48px;
+    display: flex; gap: 24px; align-items: flex-start;
+  }
+  .pub-voice__bar {
+    width: 2px; min-height: 100%;
+    background: var(--accent-warm);
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+  .pub-voice__text {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.45;
+    color: var(--text);
+    font-style: italic;
+  }
+  .pub-voice__text strong {
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  /* Section labels */
+  .pub-label {
+    max-width: 800px; padding: 0 48px;
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-subtle);
+    margin-bottom: 48px;
+  }
+
+  /* Offer blocks */
+  .pub-offers { max-width: 800px; padding: 0 48px; }
+  .pub-offer {
+    padding: 36px 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: start;
+    transition: background 0.2s;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 4px;
+  }
+  .pub-offer:hover { background: rgba(0,0,0,0.015); }
+  .pub-offer:last-child { border-bottom: 1px solid var(--border); }
+
+  .pub-offer__left {}
+  .pub-offer__tier {
+    font-size: 0.6875rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pub-offer__tier::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+  }
+  .pub-offer--build .pub-offer__tier { color: var(--tier-build); }
+  .pub-offer--build .pub-offer__tier::before { background: var(--tier-build); }
+  .pub-offer--transform .pub-offer__tier { color: var(--tier-transform); }
+  .pub-offer--transform .pub-offer__tier::before { background: var(--tier-transform); }
+  .pub-offer--care .pub-offer__tier { color: var(--tier-care); }
+  .pub-offer--care .pub-offer__tier::before { background: var(--tier-care); }
+
+  .pub-offer__name {
+    font-family: var(--font-serif);
+    font-size: 1.5rem; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .pub-offer__price {
+    font-size: 0.9375rem; font-weight: 600; color: var(--text);
+  }
+  .pub-offer__timeline {
+    font-size: 0.8125rem; color: var(--text-subtle);
+    margin-top: 2px;
+  }
+
+  .pub-offer__right {}
+  .pub-offer__hook {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .pub-offer__desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .pub-offer__link {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .pub-offer__link:hover { border-color: var(--accent-warm); color: var(--accent-warm); }
+
+  /* Footer */
+  .pub-footer {
+    padding: 60px 48px 40px;
+    max-width: 800px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 0.8125rem;
+  }
+  .pub-footer__left {
+    font-family: var(--font-serif);
+    font-weight: 600; color: var(--text);
+  }
+  .pub-footer__right { color: var(--text-subtle); }
+  .pub-footer__right a { color: var(--text-muted); text-decoration: none; }
+  .pub-footer__right a:hover { color: var(--accent-warm); }
+
+  /* ══════════════════════════════════════
+     DASHBOARD
+     ══════════════════════════════════════ */
+  .dash {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+    background: var(--bg);
+  }
+  .dash-sidebar { padding: 32px 0 32px 32px; }
+  .dash-sidebar__brand {
+    font-family: var(--font-serif);
+    font-size: 1rem; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .dash-sidebar__sub {
+    font-size: 0.6875rem;
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 40px;
+  }
+  .dash-nav a {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 8px 0;
+    transition: color 0.15s;
+    position: relative;
+  }
+  .dash-nav a:hover { color: var(--text); }
+  .dash-nav a.active {
+    color: var(--text); font-weight: 600;
+  }
+  .dash-nav a.active::before {
+    content: '';
+    position: absolute; left: -16px; top: 50%; transform: translateY(-50%);
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--accent-warm);
+  }
+  .dash-nav-badge {
+    font-size: 0.6875rem; font-weight: 600;
+    color: var(--accent-warm);
+    margin-left: 6px;
+  }
+  .dash-nav-gap { height: 20px; }
+
+  .dash-main {
+    padding: 40px 48px;
+    border-left: 1px solid var(--border);
+  }
+
+  .dash-greeting {
+    margin-bottom: 48px;
+  }
+  .dash-greeting h2 {
+    font-family: var(--font-serif);
+    font-size: 2rem; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .dash-greeting p {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+  }
+  .dash-greeting__quip {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.875rem;
+    color: var(--text-subtle);
+    margin-top: 8px;
+  }
+
+  .dash-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 56px;
+    background: var(--surface);
+  }
+  .dash-stat {
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+  .dash-stat:last-child { border-right: none; }
+  .dash-stat:hover { background: var(--bg-warm); }
+  .dash-stat__value {
+    font-family: var(--font-serif);
+    font-size: 2.5rem; font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .dash-stat--hot .dash-stat__value { color: var(--accent-warm); }
+  .dash-stat__label {
+    font-size: 0.8125rem;
+    color: var(--text-subtle);
+  }
+
+  .dash-table-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 12px;
+  }
+  .dash-table-label {
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-subtle);
+  }
+  .dash-table-link {
+    font-size: 0.8125rem; color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.15s;
+  }
+  .dash-table-link:hover { color: var(--accent-warm); border-color: var(--accent-warm); }
+
+  .dash-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    transition: background 0.15s;
+    margin: 0 -12px; padding-left: 12px; padding-right: 12px;
+    border-radius: 3px;
+  }
+  .dash-row:hover { background: rgba(0,0,0,0.015); }
+  .dash-row__name { font-size: 0.9375rem; font-weight: 500; }
+  .dash-row__sub { font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px; }
+  .dash-pill {
+    font-size: 0.6875rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 3px 12px; border-radius: 3px;
+  }
+  .dash-pill--new { background: rgba(184,148,58,0.08); color: var(--tier-build); }
+  .dash-pill--contacted { background: rgba(110,143,181,0.08); color: var(--tier-care); }
+
+  /* ══════════════════════════════════════
+     CLIENT PORTAL
+     ══════════════════════════════════════ */
+  .portal { background: var(--bg); min-height: 100vh; }
+  .portal-header {
+    padding: 24px 48px;
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .portal-brand {
+    font-family: var(--font-serif);
+    font-size: 0.9375rem; font-weight: 600; color: var(--text);
+  }
+  .portal-brand span { font-weight: 400; color: var(--text-subtle); }
+  .portal-user-name {
+    font-size: 0.875rem; color: var(--text-muted);
+  }
+
+  .portal-main { max-width: 680px; padding: 56px 48px; }
+
+  .portal-welcome { margin-bottom: 56px; }
+  .portal-welcome h2 {
+    font-family: var(--font-serif);
+    font-size: 1.75rem; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .portal-welcome p {
+    color: var(--text-muted); font-size: 0.9375rem;
+  }
+  .portal-welcome__note {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.875rem;
+    color: var(--text-subtle);
+    margin-top: 12px;
+    padding-left: 16px;
+    border-left: 2px solid var(--accent-warm);
+  }
+
+  .portal-label {
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-subtle);
+    margin-bottom: 16px;
+  }
+
+  .portal-project {
+    padding: 24px 0 24px 20px;
+    border-top: 1px solid var(--border);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin: 0 -12px; padding-right: 12px;
+    border-radius: 3px;
+  }
+  .portal-project:hover { background: rgba(0,0,0,0.015); }
+  .portal-project::before {
+    content: '';
+    position: absolute; left: 0; top: 24px;
+    width: 3px; height: calc(100% - 48px);
+    border-radius: 2px;
+    transition: opacity 0.2s;
+  }
+  .portal-project--transform::before { background: var(--tier-transform); }
+  .portal-project--build::before { background: var(--tier-build); }
+
+  .portal-project__top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .portal-project__name {
+    font-family: var(--font-serif);
+    font-weight: 700; font-size: 1.0625rem;
+  }
+  .portal-status {
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .portal-project__milestone {
+    font-size: 0.875rem; color: var(--text-muted);
+  }
+  .portal-project__hint {
+    font-family: var(--font-serif);
+    font-style: italic; font-weight: 300;
+    font-size: 0.8125rem; color: var(--text-subtle);
+    margin-top: 6px;
+  }
+
+  .portal-invoice {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 0;
+    border-top: 1px solid var(--border);
+  }
+  .portal-invoice:last-child { border-bottom: 1px solid var(--border); }
+  .portal-invoice__id {
+    font-weight: 600; font-size: 0.9375rem;
+  }
+  .portal-invoice__desc {
+    font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px;
+  }
+  .portal-invoice__amount {
+    font-family: var(--font-serif);
+    font-size: 1.125rem; font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .pub-hero { padding: 80px 24px 0; }
+    .pub-offers, .pub-label, .pub-voice, .pub-footer { padding-left: 24px; padding-right: 24px; }
+    .pub-offer { grid-template-columns: 1fr; gap: 12px; }
+    .pub-header { padding: 20px 24px; }
+    .pub-nav { display: none; }
+    .dash { grid-template-columns: 1fr; }
+    .dash-sidebar { display: none; }
+    .dash-stats { grid-template-columns: repeat(2, 1fr); }
+    .dash-stat:nth-child(2) { border-right: none; }
+    .dash-main { padding: 32px 24px; }
+    .portal-main, .portal-header { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="active" onclick="showView('public')">Public Site</button>
+  <button onclick="showView('dashboard')">Dashboard</button>
+  <button onclick="showView('portal')">Client Portal</button>
+</div>
+
+<!-- ═══ PUBLIC SITE ═══ -->
+<div id="public" class="view active">
+  <header class="pub-header">
+    <div class="pub-wordmark">Bertrand Brands</div>
+    <nav class="pub-nav">
+      <a href="#">Services</a>
+      <a href="#">Process</a>
+      <a href="#">About</a>
+      <a href="#" class="pub-nav-cta">Start a project</a>
+    </nav>
+  </header>
+
+  <div class="pub-hero">
+    <h1>Your brand<br>deserves a<br><em>system,</em><br>not a site.</h1>
+    <p class="pub-hero__sub">We design and build <strong>fixed-scope</strong> brand and web systems for businesses that are done with vague timelines and bloated invoices. Sudbury studio, Canada-wide work.</p>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="pub-voice">
+    <div class="pub-voice__bar"></div>
+    <p class="pub-voice__text">We don't sell hours. We sell <strong>outcomes</strong>. You'll know the price, the timeline, and the deliverables before we touch a single pixel.</p>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="pub-label">What we build</div>
+
+  <div class="pub-offers">
+    <div class="pub-offer pub-offer--build">
+      <div class="pub-offer__left">
+        <div class="pub-offer__tier">Build</div>
+        <div class="pub-offer__name">Starter Site</div>
+        <div class="pub-offer__price">$750</div>
+        <div class="pub-offer__timeline">7-10 days</div>
+      </div>
+      <div class="pub-offer__right">
+        <div class="pub-offer__hook">"I need something real, and I need it fast."</div>
+        <div class="pub-offer__desc">One-page website with contact form. Custom-coded, strategy-first. No themes, no drag-and-drop, no WordPress. Just clean code that does what it's supposed to do.</div>
+        <a href="#" class="pub-offer__link">See what's included &rarr;</a>
+      </div>
+    </div>
+
+    <div class="pub-offer pub-offer--transform">
+      <div class="pub-offer__left">
+        <div class="pub-offer__tier">Transform</div>
+        <div class="pub-offer__name">Foundation + Growth</div>
+        <div class="pub-offer__price">Scoped</div>
+        <div class="pub-offer__timeline">4-8 weeks</div>
+      </div>
+      <div class="pub-offer__right">
+        <div class="pub-offer__hook">"My site exists, but it's not pulling its weight."</div>
+        <div class="pub-offer__desc">A full website rebuild with content strategy, conversion UX, and a growth system that actually compounds. This isn't a redesign&mdash;it's the infrastructure your business should have started with.</div>
+        <a href="#" class="pub-offer__link">See what's included &rarr;</a>
+      </div>
+    </div>
+
+    <div class="pub-offer pub-offer--care">
+      <div class="pub-offer__left">
+        <div class="pub-offer__tier">Care</div>
+        <div class="pub-offer__name">Bronze Plan</div>
+        <div class="pub-offer__price">$249/mo</div>
+        <div class="pub-offer__timeline">Ongoing</div>
+      </div>
+      <div class="pub-offer__right">
+        <div class="pub-offer__hook">"I want someone I trust, not a ticket system."</div>
+        <div class="pub-offer__desc">Monthly website maintenance. 4 credits, 3-5 day turnaround. No meetings, no retainers, no surprises. Just steady, reliable care from the team that built it.</div>
+        <a href="#" class="pub-offer__link">See what's included &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="pub-footer">
+    <div class="pub-footer__left">Bertrand Brands</div>
+    <div class="pub-footer__right">
+      Sudbury, ON &nbsp;&middot;&nbsp;
+      <a href="#">hello@bertrandgroup.ca</a> &nbsp;&middot;&nbsp;
+      <a href="#">(705) 413-3705</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="dashboard" class="view">
+  <div class="dash">
+    <aside class="dash-sidebar">
+      <div class="dash-sidebar__brand">Bertrand Group</div>
+      <div class="dash-sidebar__sub">CRM</div>
+      <nav class="dash-nav">
+        <a href="#" class="active">Overview</a>
+        <a href="#">Intakes <span class="dash-nav-badge">2</span></a>
+        <a href="#">Leads <span class="dash-nav-badge">3</span></a>
+        <a href="#">Clients</a>
+        <div class="dash-nav-gap"></div>
+        <a href="#">Projects</a>
+        <a href="#">Invoices <span class="dash-nav-badge">2</span></a>
+        <a href="#">Care</a>
+        <div class="dash-nav-gap"></div>
+        <a href="#">Templates</a>
+      </nav>
+    </aside>
+    <main class="dash-main">
+      <div class="dash-greeting">
+        <h2>Afternoon, Scott.</h2>
+        <p>3 new leads this week, 2 invoices still pending, 4 projects in motion.</p>
+        <p class="dash-greeting__quip">Not bad for a studio that doesn't cold-call.</p>
+      </div>
+
+      <div class="dash-stats">
+        <div class="dash-stat dash-stat--hot">
+          <div class="dash-stat__value">3</div>
+          <div class="dash-stat__label">New Leads</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat__value">12</div>
+          <div class="dash-stat__label">Clients</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat__value">4</div>
+          <div class="dash-stat__label">Active Projects</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat__value">2</div>
+          <div class="dash-stat__label">Unpaid Invoices</div>
+        </div>
+      </div>
+
+      <div class="dash-table-header">
+        <div class="dash-table-label">Recent Leads</div>
+        <a href="#" class="dash-table-link">View all &rarr;</a>
+      </div>
+      <div class="dash-row">
+        <div>
+          <div class="dash-row__name">Sarah Mitchell</div>
+          <div class="dash-row__sub">Northern Roots Co. &middot; Website redesign &middot; Sudbury</div>
+        </div>
+        <span class="dash-pill dash-pill--new">New</span>
+      </div>
+      <div class="dash-row">
+        <div>
+          <div class="dash-row__name">James Proulx</div>
+          <div class="dash-row__sub">Proulx Electric &middot; Starter site &middot; Val Caron</div>
+        </div>
+        <span class="dash-pill dash-pill--new">New</span>
+      </div>
+      <div class="dash-row">
+        <div>
+          <div class="dash-row__name">Maria Chen</div>
+          <div class="dash-row__sub">Chen Wellness &middot; Care plan inquiry &middot; Toronto</div>
+        </div>
+        <span class="dash-pill dash-pill--contacted">Contacted</span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ═══ CLIENT PORTAL ═══ -->
+<div id="portal" class="view">
+  <div class="portal">
+    <header class="portal-header">
+      <div class="portal-brand">Bertrand Group <span>&rsaquo; Projects</span></div>
+      <div class="portal-user-name">Sarah Mitchell</div>
+    </header>
+    <main class="portal-main">
+      <div class="portal-welcome">
+        <h2>Hey, Sarah.</h2>
+        <p>Here's where things stand with Northern Roots.</p>
+        <p class="portal-welcome__note">Your next approval gate is April 12th. We'll send you a heads up the day before&mdash;nothing to do until then.</p>
+      </div>
+
+      <div class="portal-label">Active Projects</div>
+
+      <div class="portal-project portal-project--transform">
+        <div class="portal-project__top">
+          <div class="portal-project__name">Website Redesign</div>
+          <span class="portal-status">In Progress</span>
+        </div>
+        <div class="portal-project__milestone">Next: Design direction approval &mdash; Apr 12</div>
+        <div class="portal-project__hint">We're exploring two directions. You'll see both with rationale.</div>
+      </div>
+
+      <div class="portal-project portal-project--build">
+        <div class="portal-project__top">
+          <div class="portal-project__name">Brand Identity</div>
+          <span class="portal-status">Pending</span>
+        </div>
+        <div class="portal-project__milestone">Next: Logo concepts review &mdash; Apr 8</div>
+        <div class="portal-project__hint">Three concepts ready. One we're particularly excited about.</div>
+      </div>
+
+      <div style="height: 40px;"></div>
+      <div class="portal-label">Recent Invoices</div>
+
+      <div class="portal-invoice">
+        <div>
+          <div class="portal-invoice__id">INV-0047</div>
+          <div class="portal-invoice__desc">Website Foundation &mdash; Milestone 1</div>
+        </div>
+        <div class="portal-invoice__amount">$1,250.00</div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
