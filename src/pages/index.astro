@@ -1116,6 +1116,29 @@ const schemaJson = schemaGraph(
               if (wmWrap) wmWrap.style.opacity = '1';
           }
 
+          // Force the intro into its completed state — used by the bfcache
+          // restore handler and the skip paths. Idempotent.
+          function completeIntroImmediately() {
+              try { localStorage.setItem('bb_intro_seen', '1'); } catch (e) {}
+              document.documentElement.classList.add('no-intro');
+              if (logo) logo.classList.add('show-text');
+              if (header) header.classList.add('visible', 'lights-on');
+              document.body.classList.remove('intro-playing', 'intro-static');
+              document.body.classList.add('intro-complete', 'intro-scrolled');
+              var heroTitle = document.querySelector('.hero__title');
+              if (heroTitle) heroTitle.classList.add('hero-animate');
+              var introEl = document.querySelector('.intro');
+              if (introEl && introEl.parentNode) introEl.remove();
+              initWordmark();
+          }
+
+          // Swipe-back / bfcache restore: when the browser restores a cached
+          // homepage (persisted === true), force completion so users don't
+          // land on a frozen mid-intro frame.
+          window.addEventListener('pageshow', function(e) {
+              if (e.persisted) completeIntroImmediately();
+          });
+
           // Set intro variant from URL param
           var params = new URLSearchParams(window.location.search);
           var introVariant = params.get('intro') || 'a';
@@ -1168,6 +1191,11 @@ const schemaJson = schemaGraph(
           }
 
           if (!intro || !logo || !header) return;
+
+          // Mark intro as seen immediately — not at the end — so that if the
+          // user navigates away mid-play and returns via swipe-back/forward
+          // (fresh load path), the intro doesn't replay.
+          try { localStorage.setItem('bb_intro_seen', '1'); } catch (e) {}
 
           document.body.classList.add('intro-playing');
 
