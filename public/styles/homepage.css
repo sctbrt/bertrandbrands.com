@@ -6,13 +6,14 @@
            ============================================================ */
 
         /* === INTRO SKIP: snap-to-final-state overrides ===
-           html.no-intro is set synchronously in <head> when the user has
-           already seen the cinematic intro (localStorage `bb_intro_seen`)
-           or arrived with ?skip. Without these rules, the skip branch still
-           fires every one-time entry animation (header descend, fluorescent
-           flicker, hero reveals, spotlight fade-in) on every reload.
-           These overrides snap those to final state. Infinite ambient
-           motion (header lights, spotlight drift) still runs. */
+           html.no-intro is set synchronously in <head> whenever the intro
+           should not play — i.e. the user has already played it once in
+           this browser session (sessionStorage `bb_intro_seen`) or arrived
+           with ?skip. Without these rules, the skip branch still fires every
+           one-time entry animation (header descend, fluorescent flicker,
+           hero reveals, spotlight fade-in) on every reload. These overrides
+           snap those to final state. Infinite ambient motion (header lights,
+           spotlight drift) still runs. */
         html.no-intro .header {
             opacity: 1 !important;
             transform: none !important;

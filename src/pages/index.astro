@@ -86,8 +86,20 @@ const schemaJson = schemaGraph(
   <Fragment slot="head">
     <link rel="stylesheet" href="/styles/homepage.css" />
     <link rel="stylesheet" href="/styles/founder-lightbox.css" />
-    <!-- Intro skip: runs in <head> before any body paint — no document.write needed -->
-    <script is:inline>try{if(localStorage.getItem('bb_intro_seen')||new URLSearchParams(location.search).has('skip')){document.documentElement.classList.add('no-intro');}}catch(e){}</script>
+    <!-- Intro policy: plays exactly once per browser session, the very first
+         time the user loads the homepage. Every subsequent load in that
+         session (swipe-back, home-button click, reload, tab nav, or any
+         other path) sees `no-intro` and skips straight to the hero. New
+         browser session / new tab / cleared sessionStorage = plays again.
+         `?intro` (optionally `?intro=a|b|c|d`) forces replay for testing. -->
+    <script is:inline>try{
+      var p = new URLSearchParams(location.search);
+      if (p.has('intro')) {
+        /* forced replay — let intro play */
+      } else if (sessionStorage.getItem('bb_intro_seen') || p.has('skip')) {
+        document.documentElement.classList.add('no-intro');
+      }
+    }catch(e){}</script>
     <style is:inline>html.no-intro .intro{display:none!important}</style>
     <style is:inline>
         /* V12 concept: editorial sentence hero (overrides shared.css fragment-style sizing) */
@@ -1116,10 +1128,10 @@ const schemaJson = schemaGraph(
               if (wmWrap) wmWrap.style.opacity = '1';
           }
 
-          // Force the intro into its completed state — used by the bfcache
-          // restore handler and the skip paths. Idempotent.
+          // Force the intro into its completed state. Idempotent. Used by
+          // the skip path, the bfcache handler, and the visibility fallback.
           function completeIntroImmediately() {
-              try { localStorage.setItem('bb_intro_seen', '1'); } catch (e) {}
+              try { sessionStorage.setItem('bb_intro_seen', '1'); } catch (e) {}
               document.documentElement.classList.add('no-intro');
               if (logo) logo.classList.add('show-text');
               if (header) header.classList.add('visible', 'lights-on');
@@ -1127,14 +1139,17 @@ const schemaJson = schemaGraph(
               document.body.classList.add('intro-complete', 'intro-scrolled');
               var heroTitle = document.querySelector('.hero__title');
               if (heroTitle) heroTitle.classList.add('hero-animate');
+              var pageEl = document.querySelector('.page');
+              if (pageEl) pageEl.style.marginTop = '0';
               var introEl = document.querySelector('.intro');
               if (introEl && introEl.parentNode) introEl.remove();
               initWordmark();
           }
 
-          // Swipe-back / bfcache restore: when the browser restores a cached
-          // homepage (persisted === true), force completion so users don't
-          // land on a frozen mid-intro frame.
+          // bfcache / Page Cache restore: browser restores a cached page in
+          // its prior (possibly mid-intro) state. pageshow with persisted=true
+          // is the reliable signal. Force completion so users never land on
+          // a stuck intro frame.
           window.addEventListener('pageshow', function(e) {
               if (e.persisted) completeIntroImmediately();
           });
@@ -1159,43 +1174,30 @@ const schemaJson = schemaGraph(
               document.body.setAttribute('data-time-period', period);
           }
 
-          // Skip intro if already seen or ?skip param
-          var introSeen = localStorage.getItem('bb_intro_seen');
+          // Once-per-session policy: skip if already played in this session or
+          // if ?skip was passed. `?intro` (or `?intro=a|b|c|d`) forces replay.
+          var introSeen = null;
+          try { introSeen = sessionStorage.getItem('bb_intro_seen'); } catch (e) {}
           var skipParam = params.has('skip');
           var forceIntro = params.has('intro');
           if ((introSeen || skipParam) && !forceIntro) {
-              if (logo) logo.classList.add('show-text');
-              if (header) header.classList.add('visible', 'lights-on');
-              document.body.classList.add('intro-complete', 'intro-scrolled');
-              var heroTitle = document.querySelector('.hero__title');
-              if (heroTitle) heroTitle.classList.add('hero-animate');
-              if (intro) intro.remove();
-              initWordmark();
-              if (skipParam) {
-                  localStorage.setItem('bb_intro_seen', '1');
-                  history.replaceState(null, '', '/');
-              }
+              completeIntroImmediately();
+              if (skipParam) history.replaceState(null, '', '/');
               return;
           }
 
           // Skip for reduced motion
           if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-              if (logo) logo.classList.add('show-text');
-              if (header) header.classList.add('visible', 'lights-on');
-              document.body.classList.add('intro-complete', 'intro-scrolled');
-              var heroTitleRM = document.querySelector('.hero__title');
-              if (heroTitleRM) heroTitleRM.classList.add('hero-animate');
-              if (intro) intro.remove();
-              localStorage.setItem('bb_intro_seen', '1');
+              completeIntroImmediately();
               return;
           }
 
           if (!intro || !logo || !header) return;
 
-          // Mark intro as seen immediately — not at the end — so that if the
-          // user navigates away mid-play and returns via swipe-back/forward
-          // (fresh load path), the intro doesn't replay.
-          try { localStorage.setItem('bb_intro_seen', '1'); } catch (e) {}
+          // Mark intro as seen for this session as soon as it begins playing,
+          // so even if the user navigates away mid-play their next load
+          // within the session skips straight to the hero.
+          try { sessionStorage.setItem('bb_intro_seen', '1'); } catch (e) {}
 
           document.body.classList.add('intro-playing');
 
@@ -1239,7 +1241,7 @@ const schemaJson = schemaGraph(
               setTimeout(function() {
                   if (hasScrolledPastIntro) return; // scroll handler already fired
                   hasScrolledPastIntro = true;
-                  localStorage.setItem('bb_intro_seen', '1');
+                  try { sessionStorage.setItem('bb_intro_seen', '1'); } catch (e) {}
                   requestAnimationFrame(function() {
                       document.body.classList.add('intro-scrolled');
                       intro.classList.add('intro--hidden');
