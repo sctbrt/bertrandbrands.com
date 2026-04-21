@@ -981,6 +981,13 @@ const schemaJson = schemaGraph(
               if (isOpen) { closeMenu(); } else { openMenu(); }
           });
 
+          /* Failsafe: release body scroll if viewport widens past mobile */
+          window.addEventListener('resize', function() {
+              if (nav.classList.contains('is-open') && window.innerWidth > 1024) {
+                  closeMenu();
+              }
+          }, { passive: true });
+
           navLinks.forEach(function(link) {
               link.addEventListener('click', closeMenu);
           });
@@ -1218,6 +1225,19 @@ const schemaJson = schemaGraph(
                       setTimeout(function() {
                           header.classList.add('lights-on');
                       }, 400);
+
+                      // After fade-out completes (2.5s delay + 0.5s animation),
+                      // dismantle intro: drop the 100vh margin, remove intro element,
+                      // and pull scroll back so the hero stays visually anchored.
+                      // This prevents users from scrolling back into empty space
+                      // and removes the need for a snap-lock.
+                      setTimeout(function() {
+                          if (!intro) return;
+                          var scrollY = window.scrollY;
+                          document.body.classList.remove('intro-static');
+                          window.scrollTo(0, Math.max(0, scrollY - cachedViewportHeight));
+                          if (intro.parentNode) intro.remove();
+                      }, 3100);
                   });
               }, 800);
           }, introAnimationDuration);
@@ -1264,10 +1284,13 @@ const schemaJson = schemaGraph(
                           if (heroTitleEl) {
                               heroTitleEl.classList.add('hero-animate');
                           }
-                      }
-
-                      if (hasScrolledPastIntro && currentScrollY < cachedViewportHeight) {
-                          window.scrollTo(0, cachedViewportHeight);
+                          setTimeout(function() {
+                              if (!intro) return;
+                              var scrollNow = window.scrollY;
+                              document.body.classList.remove('intro-static');
+                              window.scrollTo(0, Math.max(0, scrollNow - cachedViewportHeight));
+                              if (intro.parentNode) intro.remove();
+                          }, 3100);
                       }
 
                       if (isHeaderVisible && currentScrollY > cachedViewportHeight + 100) {
@@ -1401,8 +1424,7 @@ const schemaJson = schemaGraph(
           if (!sections.length) return;
 
           var params = new URLSearchParams(window.location.search);
-          var isMobile = window.matchMedia('(max-width: 768px)').matches;
-          var scrollMode = params.get('scroll') || (isMobile ? 'fullpage' : 'free');
+          var scrollMode = params.get('scroll') || 'free';
 
           function isIntroActive() {
               return document.body.classList.contains('intro-playing') ||

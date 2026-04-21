@@ -366,6 +366,16 @@
             opacity: 1;
         }
 
+        /* Narrow viewports: hide wordmark text, keep the dotted B */
+        @media (max-width: 360px) {
+            .header__wordmark { display: none; }
+            .header__logo-icon {
+                margin-right: 0;
+                padding-right: 0;
+                border-right: 0;
+            }
+        }
+
         /* === INTAKE HEADER === */
         .intake-header {
             position: fixed;
@@ -429,6 +439,13 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--text);
+            white-space: nowrap;
+        }
+
+        /* Narrow viewports: hide wordmark text, keep the dotted B */
+        @media (max-width: 360px) {
+            .intake-header__logo-text { display: none; }
+            .intake-header__logo { gap: 0; }
         }
 
         .intake-header__spacer {

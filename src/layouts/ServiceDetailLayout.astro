@@ -80,7 +80,7 @@ const svcLabelColor = labelColor || `rgba(${r}, ${g}, ${b}, 1)`;
             @supports (-webkit-touch-callout: none) { html { -webkit-text-size-adjust: 100%; } }
 
             /* === SHARED SERVICE DETAIL STYLES === */
-            .service-page { min-height: 100vh; padding-top: 80px; position: relative; overflow: hidden; }
+            .service-page { min-height: 100vh; min-height: 100dvh; padding-top: 80px; position: relative; overflow-x: clip; }
 
             .service-page__spotlight { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; will-change: transform, opacity; }
             .service-page__spotlight--1 { width: 400px; height: 400px; background: rgba(var(--svc-r), var(--svc-g), var(--svc-b), 0.15); top: 10%; left: -10%; animation: organicBreathe 18s ease-in-out infinite; }

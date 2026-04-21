@@ -71,7 +71,7 @@ const currentYear = new Date().getFullYear();
 >
     <Fragment slot="head">
         <style is:inline>
-            .service-page { min-height: 100vh; padding-top: 80px; position: relative; overflow: hidden; }
+            .service-page { min-height: 100vh; min-height: 100dvh; padding-top: 80px; position: relative; overflow-x: clip; }
 
             .service-page__spotlight { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; will-change: transform, opacity; }
             .service-page__spotlight--1 { width: 400px; height: 400px; background: rgba(139, 92, 246, 0.15); top: 10%; left: -10%; animation: organicBreathe 18s ease-in-out infinite; }

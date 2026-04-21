@@ -43,7 +43,7 @@ const currentYear = new Date().getFullYear();
 >
     <Fragment slot="head">
         <style is:inline>
-            .service-page { min-height: 100vh; padding-top: 80px; position: relative; overflow: hidden; }
+            .service-page { min-height: 100vh; min-height: 100dvh; padding-top: 80px; position: relative; overflow-x: clip; }
 
             /* Tri-colour gradient spotlights: amber, violet, blue */
             .service-page__spotlight { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; will-change: transform, opacity; }

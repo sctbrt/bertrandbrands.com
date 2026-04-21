@@ -35,7 +35,11 @@ const {
             .ad-header__inner { max-width: var(--container-max); margin: 0 auto; display: flex; align-items: center; justify-content: center; }
             .ad-header__logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--text); }
             .ad-header__logo-icon { width: 24px; height: auto; filter: brightness(0) invert(1); }
-            .ad-header__logo-text { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); }
+            .ad-header__logo-text { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); white-space: nowrap; }
+            @media (max-width: 360px) {
+                .ad-header__logo-text { display: none; }
+                .ad-header__logo { gap: 0; }
+            }
         </style>
         <div class="ad-header__inner">
             <span class="ad-header__logo">
@@ -50,10 +54,7 @@ const {
             <div class="header__inner">
                 <a href="/" class="header__logo">
                     <img src="/assets/dot-logomark.svg" alt="" class="header__logo-icon" width="40" height="40" loading="eager" fetchpriority="high" />
-                    <span class="header__wordmark" aria-label="Bertrand Brands | Brand &amp; Web Systems">
-                        <span class="header__wordmark-short" aria-hidden="true">BERTRAND BRANDS</span>
-                        <span class="header__wordmark-full" aria-hidden="true">BERTRAND BRANDS <span class="header__wordmark-sep">|</span> <span class="header__wordmark-sub">Brand &amp; Web Systems</span></span>
-                    </span>
+                    <span class="header__wordmark" aria-label="Bertrand Brands">BERTRAND BRANDS</span>
                 </a>
                 {!centered && (
                     <div style="display: flex; align-items: center; gap: 1.25rem;">
@@ -114,46 +115,8 @@ const {
             });
         }
 
-        /* Smooth wordmark crossfade */
         var wmWrap = document.querySelector('.header__wordmark');
-        if (!wmWrap) return;
-
-        var collapseTimer = null;
-        var expandTimer = null;
-
-        function expand() { wmWrap.classList.add('is-expanded'); }
-        function collapse() { wmWrap.classList.remove('is-expanded'); }
-
-        if (reducedMotion) {
-            wmWrap.style.opacity = '1';
-            return;
-        }
-
-        wmWrap.style.opacity = '1';
-
-        /* Auto-expand after 4s, collapse after 8s */
-        expandTimer = setTimeout(function() {
-            expand();
-            collapseTimer = setTimeout(function() {
-                collapse();
-            }, 8000);
-        }, 4000);
-
-        /* Hover: expand on enter, collapse on leave (desktop only) */
-        var logoLink = document.querySelector('.header__logo');
-        if (logoLink && window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
-            logoLink.addEventListener('mouseenter', function() {
-                clearTimeout(expandTimer);
-                clearTimeout(collapseTimer);
-                expand();
-            });
-            logoLink.addEventListener('mouseleave', function() {
-                clearTimeout(collapseTimer);
-                collapseTimer = setTimeout(function() {
-                    collapse();
-                }, 1500);
-            });
-        }
+        if (wmWrap) wmWrap.style.opacity = '1';
     })();
     </script>
 )}

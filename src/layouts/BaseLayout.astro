@@ -216,16 +216,17 @@ const effectiveOgDescription = ogDescription || description;
       .header__logo-icon { width: 32px; height: auto; margin-right: 0.75rem; filter: brightness(0) invert(1); opacity: 0; }
       .header__logo.show-text .header__logo-icon { opacity: 1; }
       .header__wordmark {
-        display: inline-flex; align-items: baseline; opacity: 0;
+        display: inline-flex; align-items: center; opacity: 0;
         font-family: var(--font-display); font-weight: var(--font-normal);
         font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase;
         color: var(--text); white-space: nowrap; overflow: hidden;
       }
       .header__logo.show-text .header__wordmark { opacity: 1; }
-      .header__wordmark-short { display: none; }
-      .header__wordmark-full { display: inline-flex; align-items: baseline; white-space: nowrap; }
-      .header__wordmark-sep { display: inline-block; opacity: 0; max-width: 0; overflow: hidden; }
-      .header__wordmark-sub { display: inline-block; opacity: 0; max-width: 0; overflow: hidden; }
+      /* Narrow viewports: hide wordmark, keep the dotted B */
+      @media (max-width: 360px) {
+        .header__wordmark { display: none; }
+        .header__logo-icon { margin-right: 0; padding-right: 0; border-right: 0; }
+      }
       .header__nav { display: flex; align-items: center; gap: 1.5rem; }
       .header__link { font-size: var(--text-xs); color: var(--text-muted); padding: 0.5rem 0; white-space: nowrap; }
       .header__link--cta { color: var(--accent); font-weight: var(--font-medium); }
@@ -296,8 +297,6 @@ const effectiveOgDescription = ogDescription || description;
         .header__nav.is-open .header__link { font-size: var(--text-base); }
         .header__nav.is-open .header__link--cta-call { display: inline-flex; }
         .header__nav.is-open .header__link--cta-form { display: inline-flex; }
-        .header__wordmark-short { display: inline !important; }
-        .header__wordmark-full { display: none !important; }
         .header__wordmark { font-size: 0.9rem; }
         .header__link--cta-call { display: inline-flex; }
         .header__link--cta-form { display: none; }
