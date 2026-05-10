@@ -1169,24 +1169,17 @@ const schemaJson = schemaGraph(
               if (e.persisted) completeIntroImmediately();
           });
 
-          // Set intro variant from URL param
+          // Set intro variant from URL param. Default 'c' (v13.7.0 — Pull Focus
+          // staggered: dotted B + wordmark resolve together via a focus pull
+          // with per-dot stagger). Variant 'a' (scatter+converge) still
+          // reachable as ?intro=a; 'b' (synced) and 'd' (center-out) reachable
+          // as ?intro=b|d. All four use the same opt-in attribute, so the URL
+          // override always wins over the default below.
           var params = new URLSearchParams(window.location.search);
-          var introVariant = params.get('intro') || 'a';
+          var introVariant = params.get('intro') || 'c';
           if (intro && ['a', 'b', 'c', 'd'].includes(introVariant)) {
               intro.setAttribute('data-intro-variant', introVariant);
               document.body.setAttribute('data-intro-variant', introVariant);
-          }
-
-          // Variant D: time-aware period
-          if (introVariant === 'd') {
-              var now = new Date();
-              var eastern = new Date(now.toLocaleString('en-US', { timeZone: 'America/Toronto' }));
-              var hour = eastern.getHours();
-              var period = 'night';
-              if (hour >= 6 && hour < 12) period = 'morning';
-              else if (hour >= 12 && hour < 18) period = 'afternoon';
-              else if (hour >= 18 && hour < 21) period = 'evening';
-              document.body.setAttribute('data-time-period', period);
           }
 
           // Once-per-session policy: skip if already played in this session or

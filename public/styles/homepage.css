@@ -596,6 +596,181 @@
         }
 
 
+        /* === V14 INTRO VARIANTS B / C / D — PULL FOCUS ON THE WHOLE COMPOSITION ===
+           All three variants share C's wordmark blur-pull and the soft
+           amber/violet/cool ambient haze. They differ only in HOW the B
+           dots resolve: synced (b), staggered (c), or center-out (d).
+           Selected via ?intro=b|c|d URL param. Variant A unchanged. */
+
+        /* Shared: hide grid + division */
+        .intro[data-intro-variant="b"] .intro__grid,
+        .intro[data-intro-variant="c"] .intro__grid,
+        .intro[data-intro-variant="d"] .intro__grid,
+        .intro[data-intro-variant="b"] .intro__brand-division,
+        .intro[data-intro-variant="c"] .intro__brand-division,
+        .intro[data-intro-variant="d"] .intro__brand-division {
+            display: none;
+        }
+
+        /* Cancel variant A's scatter+converge for b/c/d — dots stay in
+           their B-shape positions; the per-variant rules below drive opacity,
+           filter, and scale. */
+        .intro[data-intro-variant="b"].intro--animate .dot-logo__dot,
+        .intro[data-intro-variant="c"].intro--animate .dot-logo__dot,
+        .intro[data-intro-variant="d"].intro--animate .dot-logo__dot {
+            transform: none;
+            animation: none;
+            opacity: 0;
+            will-change: filter, transform, opacity;
+        }
+
+        /* Shared atmospheric haze backdrop (was variant C's pullFocusBackdrop). */
+        .intro[data-intro-variant="b"] .intro__glow,
+        .intro[data-intro-variant="c"] .intro__glow,
+        .intro[data-intro-variant="d"] .intro__glow {
+            background: none;
+            width: 50vmax;
+            height: 50vmax;
+            max-width: 700px;
+            max-height: 700px;
+            top: 50%;
+            bottom: auto;
+            right: auto;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(120px);
+            opacity: 0;
+            animation: pullFocusBackdrop 4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+        }
+
+        .intro[data-intro-variant="b"] .intro__glow--orange,
+        .intro[data-intro-variant="c"] .intro__glow--orange,
+        .intro[data-intro-variant="d"] .intro__glow--orange {
+            left: 35%;
+            background: rgba(var(--build-rgb), 0.55);
+            animation-delay: 0s;
+        }
+
+        .intro[data-intro-variant="b"] .intro__glow--violet,
+        .intro[data-intro-variant="c"] .intro__glow--violet,
+        .intro[data-intro-variant="d"] .intro__glow--violet {
+            left: 50%;
+            background: rgba(var(--transform-rgb), 0.5);
+            animation-delay: 100ms;
+        }
+
+        .intro[data-intro-variant="b"] .intro__glow--blue,
+        .intro[data-intro-variant="c"] .intro__glow--blue,
+        .intro[data-intro-variant="d"] .intro__glow--blue {
+            left: 65%;
+            background: rgba(var(--care-rgb), 0.45);
+            animation-delay: 200ms;
+        }
+
+        @keyframes pullFocusBackdrop {
+            0%   { opacity: 0; }
+            25%  { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+
+        /* Shared wordmark + subtitle treatment (the "C" mechanic the user picked) */
+        .intro[data-intro-variant="b"] .intro__brand-main,
+        .intro[data-intro-variant="c"] .intro__brand-main,
+        .intro[data-intro-variant="d"] .intro__brand-main {
+            opacity: 0;
+            color: rgba(255, 255, 255, 1);
+            animation: pullFocusBrand 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+        }
+
+        .intro[data-intro-variant="b"] .intro__brand-sub,
+        .intro[data-intro-variant="c"] .intro__brand-sub,
+        .intro[data-intro-variant="d"] .intro__brand-sub {
+            animation: variantSubFade 0.8s cubic-bezier(0.33, 1, 0.68, 1) 2.7s forwards;
+        }
+
+        @keyframes pullFocusBrand {
+            0%   { opacity: 0; filter: blur(40px); transform: scale(1.04); letter-spacing: 0.35em; }
+            35%  { opacity: 1; }
+            100% { opacity: 1; filter: blur(0);     transform: scale(1);    letter-spacing: 0.2em; }
+        }
+
+        @keyframes variantSubFade {
+            to { opacity: 0.6; }
+        }
+
+        /* === SHARED DOT FOCUS-PULL KEYFRAME ===
+           Each B dot starts as a soft, oversized luminous blob and resolves
+           to a crisp pixel — the same focus-pull gesture as the wordmark,
+           applied to every dot. Per-variant rules below choose the
+           animation-delay strategy (synced / staggered / center-out). */
+
+        @keyframes pullFocusDot {
+            0%   { opacity: 0; filter: blur(10px); transform: scale(1.4); }
+            35%  { opacity: 1; }
+            100% { opacity: 1; filter: blur(0);    transform: scale(1); }
+        }
+
+        @keyframes pullFocusDotMobile {
+            0%   { opacity: 0; filter: blur(6px); transform: scale(1.3); }
+            45%  { opacity: 1; }
+            100% { opacity: 1; filter: blur(0);   transform: scale(1); }
+        }
+
+        /* === VARIANT B — PULL FOCUS, SYNCED ===
+           All B dots focus together at the same moment as the wordmark.
+           One unified focus-pull on the entire composition. */
+        .intro[data-intro-variant="b"].intro--animate .dot-logo__dot {
+            animation: pullFocusDot 2.4s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+        }
+
+        /* === VARIANT C — PULL FOCUS, STAGGERED (recommended) ===
+           Each dot focuses on its own schedule using the existing per-dot
+           --dot-delay (0–0.4s random). Polaroid-developing-unevenly feel,
+           but every dot gets a real transformation arc. */
+        .intro[data-intro-variant="c"].intro--animate .dot-logo__dot {
+            animation: pullFocusDot 1.8s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+            animation-delay: calc(0.3s + var(--dot-delay, 0s));
+        }
+
+        /* === VARIANT D — PULL FOCUS, CENTER-OUT ===
+           Dots resolve in radial order from the centre of the B (col 2,
+           row 3) outward. Squared distance keeps the math abs()-free.
+           Max distance² = (4-2)² + (6-3)² = 4 + 9 = 13. */
+        .intro[data-intro-variant="d"].intro--animate .dot-logo__dot {
+            animation: pullFocusDot 1.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+            animation-delay: calc(0.3s
+                + (((var(--col, 0) - 2) * (var(--col, 0) - 2))
+                  + ((var(--row, 0) - 3) * (var(--row, 0) - 3))) * 0.04s);
+        }
+
+        /* Mobile: lighter blur for GPU; swap dot keyframe + soften haze */
+        @media (max-width: 768px) {
+            .intro[data-intro-variant="b"] .intro__glow,
+            .intro[data-intro-variant="c"] .intro__glow,
+            .intro[data-intro-variant="d"] .intro__glow {
+                filter: blur(60px);
+            }
+
+            .intro[data-intro-variant="b"] .intro__brand-main,
+            .intro[data-intro-variant="c"] .intro__brand-main,
+            .intro[data-intro-variant="d"] .intro__brand-main {
+                animation: pullFocusBrandMobile 2.2s cubic-bezier(0.33, 1, 0.68, 1) 0.6s forwards;
+            }
+            @keyframes pullFocusBrandMobile {
+                0%   { opacity: 0; filter: blur(20px); transform: scale(1.03); letter-spacing: 0.3em; }
+                40%  { opacity: 1; }
+                100% { opacity: 1; filter: blur(0);     transform: scale(1);    letter-spacing: 0.2em; }
+            }
+
+            /* Swap dot keyframe to mobile version (lighter blur). */
+            .intro[data-intro-variant="b"].intro--animate .dot-logo__dot,
+            .intro[data-intro-variant="c"].intro--animate .dot-logo__dot,
+            .intro[data-intro-variant="d"].intro--animate .dot-logo__dot {
+                animation-name: pullFocusDotMobile;
+            }
+        }
+
+
         @media (prefers-reduced-motion: reduce) {
             .intro {
                 display: none;
