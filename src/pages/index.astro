@@ -977,7 +977,7 @@ const schemaJson = schemaGraph(
       (function() {
           var toggle = document.querySelector('.header__toggle');
           var nav = document.querySelector('.header__nav');
-          var navLinks = document.querySelectorAll('.header__link:not(.header__dropdown-trigger), .header__dropdown-item');
+          var navLinks = document.querySelectorAll('.header__link');
 
           if (!toggle || !nav) return;
 
@@ -1050,19 +1050,6 @@ const schemaJson = schemaGraph(
                   }
               }
           });
-
-          // Products dropdown
-          var dropTrigger = document.querySelector('.header__dropdown-trigger');
-          if (dropTrigger) {
-              dropTrigger.addEventListener('click', function(e) {
-                  e.stopPropagation();
-                  var expanded = dropTrigger.getAttribute('aria-expanded') === 'true';
-                  dropTrigger.setAttribute('aria-expanded', !expanded);
-              });
-              document.addEventListener('click', function() {
-                  dropTrigger.setAttribute('aria-expanded', 'false');
-              });
-          }
 
           // Gentle pulse on hamburger after 5-6 seconds (mobile only)
           var hasInteracted = false;
