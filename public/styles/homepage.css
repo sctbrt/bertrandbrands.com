@@ -936,7 +936,7 @@
             text-transform: uppercase;
             text-decoration: none;
             transition: all var(--duration-normal) var(--ease-out);
-            border-radius: var(--radius-sm);
+            border-radius: var(--radius-pill);
             margin-top: var(--space-md);
 
             opacity: 0;
@@ -3455,7 +3455,7 @@
     align-items: center;
     justify-content: center;
     padding: 0.625rem 1.25rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
     text-decoration: none;
@@ -3704,7 +3704,7 @@
     align-items: center;
     padding: 1.25rem 1.75rem;
     border: 1px solid rgba(var(--highlight-rgb), 0.06);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-pill);
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
