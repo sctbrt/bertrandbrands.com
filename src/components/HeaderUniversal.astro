@@ -22,13 +22,22 @@
             </button>
             <nav class="header__nav" id="mainNav">
               <div class="header__nav-pill">
-                <a href="/?skip#packages" class="header__link" data-astro-reload>Services</a>
-                <a href="/?skip#process" class="header__link" data-astro-reload>How It Works</a>
-                <a href="/?skip#about" class="header__link" data-astro-reload>About</a>
+                <div class="header__dropdown">
+                  <button class="header__dropdown-trigger header__link" type="button" aria-controls="mainMenu" aria-expanded="false">
+                    Menu
+                    <svg class="header__dropdown-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                      <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <div class="header__dropdown-menu" id="mainMenu" role="menu">
+                    <a href="/?skip#packages" class="header__dropdown-item" role="menuitem" data-astro-reload><span class="header__dropdown-item-name">Services</span></a>
+                    <a href="/?skip#process" class="header__dropdown-item" role="menuitem" data-astro-reload><span class="header__dropdown-item-name">How It Works</span></a>
+                    <a href="/?skip#about" class="header__dropdown-item" role="menuitem" data-astro-reload><span class="header__dropdown-item-name">About</span></a>
+                    <a href="/compare" class="header__dropdown-item" role="menuitem"><span class="header__dropdown-item-name">Compare</span></a>
+                  </div>
+                </div>
                 <a href="tel:+17054133705" class="header__link header__link--cta header__link--cta-call">Call Now</a>
                 <a href="/intake" class="header__link header__link--cta header__link--cta-form">Get a Quote</a>
-                <span class="header__divider" aria-hidden="true"></span>
-                <a href="https://clients.bertrandbrands.ca" class="header__link header__link--portal cta-glow">Client Portal</a>
               </div>
             </nav>
         </div>
@@ -65,7 +74,7 @@
         }
     }, { passive: true });
 
-    nav.querySelectorAll('a').forEach(function(link) {
+    nav.querySelectorAll('a:not(.header__dropdown-trigger)').forEach(function(link) {
         link.addEventListener('click', function() {
             nav.classList.remove('is-open');
             toggle.classList.remove('is-open');
@@ -164,5 +173,43 @@
         }
     }
 
+})();
+
+/* Header dropdown toggle (desktop primary, also wires up the inline-expand
+   pattern on mobile inside the drawer). One trigger today (Menu) but written
+   to support multiple if any future dropdowns return. */
+(function() {
+    var triggers = document.querySelectorAll('.header__dropdown-trigger');
+    if (!triggers.length) return;
+
+    function closeAll(except) {
+        triggers.forEach(function(t) {
+            if (t !== except) t.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    triggers.forEach(function(trigger) {
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var open = trigger.getAttribute('aria-expanded') === 'true';
+            closeAll(trigger);
+            trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        triggers.forEach(function(trigger) {
+            var dropdown = trigger.closest('.header__dropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key !== 'Escape') return;
+        closeAll(null);
+    });
 })();
 </script>

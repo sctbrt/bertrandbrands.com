@@ -657,6 +657,9 @@
             padding: 10px;
             box-sizing: content-box;
         }
+        /* Magnetic-snap toggle (V14 lab variant E). Lines collide at
+           center, middle vanishes, outer two rotate ±45° to form X.
+           Heavy under-/over-shoot bezier gives the kinetic "snap" feel. */
         .header__toggle span {
             display: block;
             width: 100%;
@@ -664,16 +667,19 @@
             background: var(--text);
             border-radius: 1px;
             filter: brightness(0) invert(1);
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+            transition: transform 0.46s cubic-bezier(0.9, -0.4, 0.1, 1.4),
+                        opacity 0.28s ease;
         }
         .header__toggle.is-open span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: translateY(11px) rotate(45deg);
         }
         .header__toggle.is-open span:nth-child(2) {
+            transform: scale(0);
             opacity: 0;
         }
         .header__toggle.is-open span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
+            transform: translateY(-11px) rotate(-45deg);
         }
         @media (max-width: 1024px) {
             .header__toggle {

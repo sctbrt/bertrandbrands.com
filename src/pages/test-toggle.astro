@@ -1,0 +1,1201 @@
+---
+/**
+ * Hamburger toggle animation comparison.
+ * Private, unlisted: noindex, nofollow, not in sitemap, not linked.
+ *
+ * Self-contained styles (no shared.css). Two functional toggles side-by-side.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+---
+
+<BaseLayout
+    title="Toggle test — A, B, C, D"
+    description="Hamburger toggle animation comparison"
+    robots="noindex, nofollow"
+    includeMainCss={false}
+>
+    <main class="lab">
+        <header class="lab__header">
+            <p class="lab__eyebrow">Hamburger toggle</p>
+            <h1 class="lab__title">Pick one: A through O.</h1>
+            <p class="lab__sub">Fifteen variants. Click each toggle independently, or use auto-play to loop them all in sync. A is linework; B/C/D/F/K/L/M/N/O are dot-matrix family; E is kinetic; G is 3D; H is the brand mark; I is typography; J is color inversion.</p>
+            <div class="lab__controls">
+                <button id="autoplay" class="lab__autoplay" type="button" aria-pressed="false">
+                    <span class="lab__autoplay-dot" aria-hidden="true"></span>
+                    Auto-play all (1.6s loop)
+                </button>
+            </div>
+        </header>
+
+        <div class="lab__grid">
+            <article class="lab__card">
+                <p class="lab__card-label">A &mdash; Pen-stroke draw</p>
+                <p class="lab__card-desc">
+                    Lines aren't morphed &mdash; they're <em>drawn and un-drawn</em>
+                    via SVG <code>stroke-dashoffset</code>. Hamburger lines retract
+                    left-to-right with a small stagger; X lines simultaneously draw
+                    in. Suggests calligraphy, not mechanics. <em>Distinct concept
+                    from the dot-matrix family.</em>
+                </p>
+                <button class="lab__toggle lab__toggle--a" type="button" aria-label="Toggle A">
+                    <svg class="lab__toggle-strokes" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <line class="lab__stroke lab__stroke--ham" x1="3"  y1="6"  x2="21" y2="6"  data-line="0"/>
+                        <line class="lab__stroke lab__stroke--ham" x1="3"  y1="12" x2="21" y2="12" data-line="1"/>
+                        <line class="lab__stroke lab__stroke--ham" x1="3"  y1="18" x2="21" y2="18" data-line="2"/>
+                        <line class="lab__stroke lab__stroke--x"   x1="5"  y1="5"  x2="19" y2="19" data-line="0"/>
+                        <line class="lab__stroke lab__stroke--x"   x1="19" y1="5"  x2="5"  y2="19" data-line="1"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">B &mdash; Pixel-grid morph</p>
+                <p class="lab__card-desc">
+                    The icon is a 5&times;5 dot matrix &mdash; same DNA as the dotted-B
+                    logomark. Hamburger and X are two patterns drawn in the same fixed
+                    grid. On toggle, dots fade in/out in a top-down wave; the corner
+                    + center anchors stay lit throughout. <em>On-brand, no rotation
+                    theater, ~440ms total.</em>
+                </p>
+                <button class="lab__toggle lab__toggle--b" type="button" aria-label="Toggle B">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <!-- Row 0 -->
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both" data-row="0"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-row="0"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-row="0"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-row="0"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both" data-row="0"/>
+                        <!-- Row 1 (X-only inner) -->
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-row="1"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-row="1"/>
+                        <!-- Row 2 (middle hamburger line + center X anchor) -->
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-row="2"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-row="2"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both" data-row="2"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-row="2"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-row="2"/>
+                        <!-- Row 3 (X-only inner) -->
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"    data-row="3"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"    data-row="3"/>
+                        <!-- Row 4 -->
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both" data-row="4"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-row="4"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-row="4"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-row="4"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both" data-row="4"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">C &mdash; B refined</p>
+                <p class="lab__card-desc">
+                    Same morph as B, but: (1) center-out <em>radial</em> stagger
+                    &mdash; dots ripple outward from the middle; (2) anchors briefly
+                    pulse (scale 1.18, full opacity) during the gesture &mdash; heartbeat
+                    on the constants; (3) anchors stay slightly brighter at rest.
+                    <em>Recommended bundle.</em>
+                </p>
+                <button class="lab__toggle lab__toggle--c" type="button" aria-label="Toggle C">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <!-- Row 0 -->
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <!-- Row 1 (X-only inner) -->
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <!-- Row 2 (middle hamburger line + center anchor) -->
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both" data-tier="0"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <!-- Row 3 (X-only inner) -->
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <!-- Row 4 -->
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">D &mdash; Signature (C + Pull Focus)</p>
+                <p class="lab__card-desc">
+                    Everything C does, plus a <em>Pull Focus</em> tie-in: mid-transition,
+                    the entire grid briefly goes soft (~1.2px blur) then resolves crisp.
+                    Direct callback to the v13.7 intro mechanic &mdash; the toggle becomes
+                    part of a brand language, not a one-off widget.
+                </p>
+                <button class="lab__toggle lab__toggle--d" type="button" aria-label="Toggle D">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <!-- Row 0 -->
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <!-- Row 1 (X-only inner) -->
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <!-- Row 2 (middle hamburger line + center anchor) -->
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both" data-tier="0"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <!-- Row 3 (X-only inner) -->
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <!-- Row 4 -->
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">E &mdash; Magnetic snap</p>
+                <p class="lab__card-desc">
+                    Three lines slide vertically and <em>collide</em> at center
+                    (kinetic, almost audible), then the outer two rotate outward
+                    as X arms. The middle vanishes at impact.
+                </p>
+                <button class="lab__toggle lab__toggle--e" type="button" aria-label="Toggle E">
+                    <svg class="lab__toggle-mag" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <line class="lab__mag-line" x1="3" y1="6"  x2="21" y2="6"  data-line="top"/>
+                        <line class="lab__mag-line" x1="3" y1="12" x2="21" y2="12" data-line="mid"/>
+                        <line class="lab__mag-line" x1="3" y1="18" x2="21" y2="18" data-line="bot"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">F &mdash; Spring overshoot</p>
+                <p class="lab__card-desc">
+                    Same dot matrix as B, but with a <em>theatrical</em> bouncy
+                    easing curve. Dots overshoot ~30% past their target then
+                    settle. Personality at the cost of restraint.
+                </p>
+                <button class="lab__toggle lab__toggle--f" type="button" aria-label="Toggle F">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both" data-tier="0"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">G &mdash; Origami fold</p>
+                <p class="lab__card-desc">
+                    The toggle <em>flips 180&deg;</em> on its Y axis like a card.
+                    Front face is hamburger, back face is X. Paper-folding metaphor,
+                    cinematic feel.
+                </p>
+                <button class="lab__toggle lab__toggle--g" type="button" aria-label="Toggle G">
+                    <span class="lab__flipper">
+                        <span class="lab__flipper-face lab__flipper-face--front">
+                            <svg viewBox="0 0 24 24" width="80" height="80" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <line x1="3" y1="6"  x2="21" y2="6"/>
+                                <line x1="3" y1="12" x2="21" y2="12"/>
+                                <line x1="3" y1="18" x2="21" y2="18"/>
+                            </svg>
+                        </span>
+                        <span class="lab__flipper-face lab__flipper-face--back">
+                            <svg viewBox="0 0 24 24" width="80" height="80" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <line x1="5"  y1="5" x2="19" y2="19"/>
+                                <line x1="19" y1="5" x2="5"  y2="19"/>
+                            </svg>
+                        </span>
+                    </span>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">H &mdash; Logomark cameo</p>
+                <p class="lab__card-desc">
+                    The actual <em>dotted-B logomark</em> sits in the toggle.
+                    On click, the 28 B dots fade out, 9 X dots fade in. Brand
+                    mark literally is the menu icon. Maximally on-brand.
+                </p>
+                <button class="lab__toggle lab__toggle--h" type="button" aria-label="Toggle H">
+                    <svg class="lab__toggle-logo" viewBox="0 0 512 512" width="80" height="80" aria-hidden="true">
+                        <g class="lab__logo-b" fill="currentColor">
+                            <circle cx="144" cy="88"  r="22"/><circle cx="200" cy="88"  r="22"/><circle cx="256" cy="88"  r="22"/><circle cx="312" cy="88"  r="22"/>
+                            <circle cx="144" cy="144" r="22"/><circle cx="200" cy="144" r="22"/><circle cx="312" cy="144" r="22"/><circle cx="368" cy="144" r="22"/>
+                            <circle cx="144" cy="200" r="22"/><circle cx="200" cy="200" r="22"/><circle cx="312" cy="200" r="22"/><circle cx="368" cy="200" r="22"/>
+                            <circle cx="144" cy="256" r="22"/><circle cx="200" cy="256" r="22"/><circle cx="256" cy="256" r="22"/><circle cx="312" cy="256" r="22"/>
+                            <circle cx="144" cy="312" r="22"/><circle cx="200" cy="312" r="22"/><circle cx="312" cy="312" r="22"/><circle cx="368" cy="312" r="22"/>
+                            <circle cx="144" cy="368" r="22"/><circle cx="200" cy="368" r="22"/><circle cx="312" cy="368" r="22"/><circle cx="368" cy="368" r="22"/>
+                            <circle cx="144" cy="424" r="22"/><circle cx="200" cy="424" r="22"/><circle cx="256" cy="424" r="22"/><circle cx="312" cy="424" r="22"/>
+                        </g>
+                        <g class="lab__logo-x" fill="currentColor">
+                            <circle cx="88"  cy="88"  r="32"/><circle cx="424" cy="88"  r="32"/>
+                            <circle cx="172" cy="172" r="32"/><circle cx="340" cy="172" r="32"/>
+                            <circle cx="256" cy="256" r="32"/>
+                            <circle cx="172" cy="340" r="32"/><circle cx="340" cy="340" r="32"/>
+                            <circle cx="88"  cy="424" r="32"/><circle cx="424" cy="424" r="32"/>
+                        </g>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">I &mdash; Glyph swap</p>
+                <p class="lab__card-desc">
+                    Two real typographic characters cross-dissolve:
+                    <em>&equiv;</em> becomes <em>&times;</em>. No morph, no
+                    animation theater &mdash; just type. Completely different
+                    visual family.
+                </p>
+                <button class="lab__toggle lab__toggle--i" type="button" aria-label="Toggle I">
+                    <span class="lab__glyph lab__glyph--ham" aria-hidden="true">&equiv;</span>
+                    <span class="lab__glyph lab__glyph--x" aria-hidden="true">&times;</span>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">J &mdash; Negative-space invert</p>
+                <p class="lab__card-desc">
+                    Click flips the whole button: dark background becomes white,
+                    white lines become dark. Hamburger and X exist as <em>negative
+                    space</em> within the inverted surface. Design-magazine move.
+                </p>
+                <button class="lab__toggle lab__toggle--j" type="button" aria-label="Toggle J">
+                    <svg class="lab__toggle-invert" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <g class="lab__invert-ham">
+                            <line x1="3" y1="6"  x2="21" y2="6"/>
+                            <line x1="3" y1="12" x2="21" y2="12"/>
+                            <line x1="3" y1="18" x2="21" y2="18"/>
+                        </g>
+                        <g class="lab__invert-x">
+                            <line x1="5"  y1="5" x2="19" y2="19"/>
+                            <line x1="19" y1="5" x2="5"  y2="19"/>
+                        </g>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">K &mdash; Snap-cut</p>
+                <p class="lab__card-desc">
+                    <em>No animation.</em> Click swaps hamburger and X instantly.
+                    The anti-choice &mdash; confident, decisive, ages well. Reads
+                    as utility, not theater.
+                </p>
+                <button class="lab__toggle lab__toggle--k" type="button" aria-label="Toggle K">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">L &mdash; Asymmetric timing</p>
+                <p class="lab__card-desc">
+                    Same dot grid as C, but with directional personality: open
+                    is slow and deliberate (~450ms), close is brisk (~180ms).
+                    Opening feels like a <em>reveal</em>, closing like dismissal.
+                </p>
+                <button class="lab__toggle lab__toggle--l" type="button" aria-label="Toggle L">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">M &mdash; Inhale / exhale</p>
+                <p class="lab__card-desc">
+                    L's asymmetric timing plus a <em>scale shimmer</em>: opening
+                    the whole grid briefly inflates (scale 1.08) like a breath in,
+                    closing it sharply contracts. Organic, intentional.
+                </p>
+                <button class="lab__toggle lab__toggle--m" type="button" aria-label="Toggle M">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"/>
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">N &mdash; Amber flash</p>
+                <p class="lab__card-desc">
+                    C plus a chromatic accent: at the peak of the transition the
+                    anchors briefly flash <em>amber</em> (your Build accent)
+                    before returning to white. Punctuation in color.
+                </p>
+                <button class="lab__toggle lab__toggle--n" type="button" aria-label="Toggle N">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both" data-tier="0"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                    </svg>
+                </button>
+            </article>
+
+            <article class="lab__card">
+                <p class="lab__card-label">O &mdash; Tier-color flash</p>
+                <p class="lab__card-desc">
+                    N taken further: anchors cycle through <em>amber &rarr;
+                    violet &rarr; blue</em> across the gesture &mdash; your
+                    three tier colors, all in motion. Brand DNA. Possibly too busy.
+                </p>
+                <button class="lab__toggle lab__toggle--o" type="button" aria-label="Toggle O">
+                    <svg class="lab__toggle-grid" viewBox="0 0 24 24" width="80" height="80" aria-hidden="true">
+                        <circle cx="2"  cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="2"  r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="2"  r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="7"  r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="2"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="7"  cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="12" cy="12" r="1.5" class="lab__dot lab__dot--both" data-tier="0"/>
+                        <circle cx="17" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="1"/>
+                        <circle cx="22" cy="12" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="7"  cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="17" cy="17" r="1.5" class="lab__dot lab__dot--x"    data-tier="2"/>
+                        <circle cx="2"  cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                        <circle cx="7"  cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="12" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="3"/>
+                        <circle cx="17" cy="22" r="1.5" class="lab__dot lab__dot--ham"  data-tier="4"/>
+                        <circle cx="22" cy="22" r="1.5" class="lab__dot lab__dot--both" data-tier="5"/>
+                    </svg>
+                </button>
+            </article>
+        </div>
+
+        <p class="lab__note">
+            Each toggle is independent. The current production header uses the
+            classic 2014-era rotate-and-translate trick &mdash; both A and B replace it.
+        </p>
+    </main>
+    <VisitorNotify />
+</BaseLayout>
+
+<style is:inline>
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #161618;
+      --text: #fafafa;
+      --text-muted: #a3a3a3;
+      --text-subtle: #737373;
+      --accent: #D97706;
+      --border: rgba(255, 255, 255, 0.10);
+      --border-hover: rgba(255, 255, 255, 0.20);
+      --font-display: halyard-display, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    .lab {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem) clamp(3rem, 8vw, 6rem);
+    }
+
+    .lab__header { margin-bottom: 3rem; }
+    .lab__eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin-bottom: 1rem;
+    }
+    .lab__title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .lab__sub {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 560px;
+    }
+
+    .lab {
+      max-width: 1400px;
+    }
+    .lab__grid {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 1100px) {
+      .lab__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 720px) {
+      .lab__grid { grid-template-columns: 1fr; }
+    }
+
+    .lab__card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+    }
+    .lab__card-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .lab__card-desc {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.65;
+      min-height: 5rem;
+    }
+    .lab__card-desc em {
+      color: var(--text);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .lab__note {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-subtle);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       Auto-play control
+       ============================================================ */
+    .lab__controls {
+      margin-top: 1.5rem;
+    }
+    .lab__autoplay {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      padding: 0.625rem 1.125rem 0.625rem 0.875rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+    .lab__autoplay:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+    .lab__autoplay-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-subtle);
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .lab__autoplay[aria-pressed="true"] {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+    .lab__autoplay[aria-pressed="true"] .lab__autoplay-dot {
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: autoplayPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes autoplayPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ============================================================
+       Shared toggle button shell — bumped to 140px so the icon is
+       actually evaluable
+       ============================================================ */
+    .lab__toggle {
+      align-self: center;
+      width: 140px;
+      height: 140px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, border-color 0.25s ease;
+      margin-top: 1rem;
+      color: var(--text);
+    }
+    .lab__toggle:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--border-hover);
+    }
+    .lab__toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* ============================================================
+       Variant A — Pen-stroke draw
+       Hamburger and X are SVG <line>s using stroke-dasharray and
+       stroke-dashoffset to retract or draw themselves. No morphing,
+       no rotation — the lines live in two separate sets that
+       cross-fade via stroke geometry alone.
+       ============================================================ */
+    .lab__toggle--a .lab__toggle-strokes {
+      color: var(--text);
+      overflow: visible;
+    }
+    .lab__toggle--a .lab__stroke {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.36s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    /* Closed state: hamburger drawn, X retracted */
+    .lab__toggle--a .lab__stroke--ham {
+      stroke-dasharray: 18;       /* line length = 21 - 3 = 18 */
+      stroke-dashoffset: 0;
+    }
+    .lab__toggle--a .lab__stroke--x {
+      stroke-dasharray: 20;       /* line length ≈ 19.8 */
+      stroke-dashoffset: 20;
+    }
+    /* Open state: hamburger retracted, X drawn */
+    .lab__toggle--a.is-open .lab__stroke--ham {
+      stroke-dashoffset: 18;
+    }
+    .lab__toggle--a.is-open .lab__stroke--x {
+      stroke-dashoffset: 0;
+    }
+    /* Internal stagger — top hamburger first, X arms slightly offset */
+    .lab__toggle--a .lab__stroke--ham[data-line="0"] { transition-delay: 0ms; }
+    .lab__toggle--a .lab__stroke--ham[data-line="1"] { transition-delay: 40ms; }
+    .lab__toggle--a .lab__stroke--ham[data-line="2"] { transition-delay: 80ms; }
+    .lab__toggle--a .lab__stroke--x[data-line="0"]   { transition-delay: 0ms; }
+    .lab__toggle--a .lab__stroke--x[data-line="1"]   { transition-delay: 70ms; }
+
+    /* ============================================================
+       Variant B — Pixel-grid morph (5×5 dot matrix)
+       Hamburger and X are two patterns drawn in the same fixed
+       grid. Five dots (corners + center) belong to both patterns
+       and stay lit throughout — they are anchors. Ham-only and
+       x-only dots cross-fade with a top→bottom row stagger.
+       ============================================================ */
+    .lab__toggle--b .lab__toggle-grid {
+      color: var(--text);
+      overflow: visible;
+    }
+    .lab__toggle--b .lab__dot {
+      fill: currentColor;
+      transform-origin: center;
+      transform-box: fill-box;
+      transition:
+        opacity 0.30s ease,
+        transform 0.34s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+
+    /* Closed state: hamburger pattern + anchors lit, X-only off */
+    .lab__toggle--b .lab__dot--ham,
+    .lab__toggle--b .lab__dot--both {
+      opacity: 0.92;
+      transform: scale(1);
+    }
+    .lab__toggle--b .lab__dot--x {
+      opacity: 0;
+      transform: scale(0.25);
+    }
+
+    /* Open state: X pattern + anchors lit, ham-only off */
+    .lab__toggle--b.is-open .lab__dot--ham {
+      opacity: 0;
+      transform: scale(0.25);
+    }
+    .lab__toggle--b.is-open .lab__dot--x {
+      opacity: 0.92;
+      transform: scale(1);
+    }
+    /* .lab__dot--both intentionally unchanged across states */
+
+    /* Wave stagger top→bottom by row */
+    .lab__toggle--b .lab__dot[data-row="0"] { transition-delay: 0ms; }
+    .lab__toggle--b .lab__dot[data-row="1"] { transition-delay: 35ms; }
+    .lab__toggle--b .lab__dot[data-row="2"] { transition-delay: 70ms; }
+    .lab__toggle--b .lab__dot[data-row="3"] { transition-delay: 105ms; }
+    .lab__toggle--b .lab__dot[data-row="4"] { transition-delay: 140ms; }
+
+    /* ============================================================
+       Variant C — Refined pixel-grid (center-out + anchor pulse +
+       brighter anchors). Same DOM shape as B, swap stagger basis.
+       ============================================================ */
+    .lab__toggle--c .lab__toggle-grid {
+      color: var(--text);
+      overflow: visible;
+    }
+    .lab__toggle--c .lab__dot {
+      fill: currentColor;
+      transform-origin: center;
+      transform-box: fill-box;
+      transition:
+        opacity 0.30s ease,
+        transform 0.34s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+
+    /* Closed: hamburger + anchors lit. Anchors brighter (1.0 vs 0.82). */
+    .lab__toggle--c .lab__dot--ham { opacity: 0.82; transform: scale(1); }
+    .lab__toggle--c .lab__dot--both { opacity: 1; transform: scale(1); }
+    .lab__toggle--c .lab__dot--x { opacity: 0; transform: scale(0.25); }
+
+    /* Open: X + anchors lit */
+    .lab__toggle--c.is-open .lab__dot--ham {
+      opacity: 0;
+      transform: scale(0.25);
+    }
+    .lab__toggle--c.is-open .lab__dot--x {
+      opacity: 0.82;
+      transform: scale(1);
+    }
+
+    /* Center-out radial stagger (data-tier 0 = center, 5 = corners) */
+    .lab__toggle--c .lab__dot[data-tier="0"] { transition-delay: 0ms; }
+    .lab__toggle--c .lab__dot[data-tier="1"] { transition-delay: 30ms; }
+    .lab__toggle--c .lab__dot[data-tier="2"] { transition-delay: 55ms; }
+    .lab__toggle--c .lab__dot[data-tier="3"] { transition-delay: 80ms; }
+    .lab__toggle--c .lab__dot[data-tier="4"] { transition-delay: 105ms; }
+    .lab__toggle--c .lab__dot[data-tier="5"] { transition-delay: 130ms; }
+
+    /* Anchor pulse — runs on every toggle via .is-pulsing class (added by JS) */
+    .lab__toggle--c.is-pulsing .lab__dot--both {
+      animation: anchorPulse 0.46s ease;
+    }
+    @keyframes anchorPulse {
+      0%   { transform: scale(1);    opacity: 1; }
+      40%  { transform: scale(1.18); opacity: 1; }
+      100% { transform: scale(1);    opacity: 1; }
+    }
+
+    /* ============================================================
+       Variant D — C + Pull Focus blur tie-in
+       Mid-transition the entire grid briefly softens, then resolves.
+       Direct callback to v13.7 intro mechanic.
+       ============================================================ */
+    .lab__toggle--d .lab__toggle-grid {
+      color: var(--text);
+      overflow: visible;
+    }
+    .lab__toggle--d .lab__dot {
+      fill: currentColor;
+      transform-origin: center;
+      transform-box: fill-box;
+      transition:
+        opacity 0.30s ease,
+        transform 0.34s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .lab__toggle--d .lab__dot--ham { opacity: 0.82; transform: scale(1); }
+    .lab__toggle--d .lab__dot--both { opacity: 1; transform: scale(1); }
+    .lab__toggle--d .lab__dot--x { opacity: 0; transform: scale(0.25); }
+
+    .lab__toggle--d.is-open .lab__dot--ham {
+      opacity: 0;
+      transform: scale(0.25);
+    }
+    .lab__toggle--d.is-open .lab__dot--x {
+      opacity: 0.82;
+      transform: scale(1);
+    }
+
+    .lab__toggle--d .lab__dot[data-tier="0"] { transition-delay: 0ms; }
+    .lab__toggle--d .lab__dot[data-tier="1"] { transition-delay: 30ms; }
+    .lab__toggle--d .lab__dot[data-tier="2"] { transition-delay: 55ms; }
+    .lab__toggle--d .lab__dot[data-tier="3"] { transition-delay: 80ms; }
+    .lab__toggle--d .lab__dot[data-tier="4"] { transition-delay: 105ms; }
+    .lab__toggle--d .lab__dot[data-tier="5"] { transition-delay: 130ms; }
+
+    .lab__toggle--d.is-pulsing .lab__dot--both {
+      animation: anchorPulse 0.46s ease;
+    }
+    /* Pull Focus blur on the whole grid */
+    .lab__toggle--d.is-pulsing .lab__toggle-grid {
+      animation: pullFocus 0.50s ease;
+    }
+    @keyframes pullFocus {
+      0%   { filter: blur(0); }
+      45%  { filter: blur(1.4px); }
+      100% { filter: blur(0); }
+    }
+
+    /* ============================================================
+       Variant E — Magnetic snap
+       Three lines slide vertically to collide at center, then outer
+       two rotate 45° to form X. Middle vanishes at the impact moment.
+       Heavy under-/over-shoot bezier gives the "snap" feel.
+       ============================================================ */
+    .lab__toggle--e .lab__toggle-mag { color: var(--text); overflow: visible; }
+    .lab__toggle--e .lab__mag-line {
+      fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round;
+      transform-origin: center; transform-box: fill-box;
+      transition: transform 0.46s cubic-bezier(0.9, -0.4, 0.1, 1.4),
+                  opacity 0.28s ease;
+    }
+    .lab__toggle--e .lab__mag-line[data-line="top"] { transform: translateY(0); }
+    .lab__toggle--e .lab__mag-line[data-line="mid"] { transform: scale(1); opacity: 1; }
+    .lab__toggle--e .lab__mag-line[data-line="bot"] { transform: translateY(0); }
+    .lab__toggle--e.is-open .lab__mag-line[data-line="top"] {
+      transform: translateY(6px) rotate(45deg);
+    }
+    .lab__toggle--e.is-open .lab__mag-line[data-line="mid"] {
+      transform: scale(0); opacity: 0;
+    }
+    .lab__toggle--e.is-open .lab__mag-line[data-line="bot"] {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* ============================================================
+       Variant F — Spring overshoot
+       Same dot matrix as B; heavy overshoot bezier for theatrical pop.
+       ============================================================ */
+    .lab__toggle--f .lab__toggle-grid { color: var(--text); overflow: visible; }
+    .lab__toggle--f .lab__dot {
+      fill: currentColor;
+      transform-origin: center; transform-box: fill-box;
+      transition: opacity 0.36s ease,
+                  transform 0.44s cubic-bezier(0.34, 2.0, 0.55, 0.95);
+    }
+    .lab__toggle--f .lab__dot--ham,
+    .lab__toggle--f .lab__dot--both { opacity: 0.92; transform: scale(1); }
+    .lab__toggle--f .lab__dot--x    { opacity: 0; transform: scale(0.25); }
+    .lab__toggle--f.is-open .lab__dot--ham { opacity: 0; transform: scale(0.25); }
+    .lab__toggle--f.is-open .lab__dot--x   { opacity: 0.92; transform: scale(1); }
+    .lab__toggle--f .lab__dot[data-tier="0"] { transition-delay: 0ms; }
+    .lab__toggle--f .lab__dot[data-tier="1"] { transition-delay: 30ms; }
+    .lab__toggle--f .lab__dot[data-tier="2"] { transition-delay: 55ms; }
+    .lab__toggle--f .lab__dot[data-tier="3"] { transition-delay: 80ms; }
+    .lab__toggle--f .lab__dot[data-tier="4"] { transition-delay: 105ms; }
+    .lab__toggle--f .lab__dot[data-tier="5"] { transition-delay: 130ms; }
+
+    /* ============================================================
+       Variant G — Origami fold (card flip)
+       Whole icon flips 180° on Y axis. Front face = hamburger,
+       back face = X. CSS 3D transforms with preserve-3d.
+       ============================================================ */
+    .lab__toggle--g { perspective: 600px; }
+    .lab__toggle--g .lab__flipper {
+      position: relative;
+      width: 80px; height: 80px;
+      transform-style: preserve-3d;
+      transition: transform 0.62s cubic-bezier(0.65, 0, 0.35, 1);
+      color: var(--text);
+    }
+    .lab__toggle--g .lab__flipper-face {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .lab__toggle--g .lab__flipper-face--back { transform: rotateY(180deg); }
+    .lab__toggle--g.is-open .lab__flipper { transform: rotateY(180deg); }
+
+    /* ============================================================
+       Variant H — Logomark cameo
+       Inline dotted-B logomark cross-fades with a 9-dot X pattern.
+       Subtle scale anchors the transition.
+       ============================================================ */
+    .lab__toggle--h .lab__toggle-logo { color: var(--text); }
+    .lab__toggle--h .lab__logo-b,
+    .lab__toggle--h .lab__logo-x {
+      transition: opacity 0.36s ease,
+                  transform 0.42s cubic-bezier(0.34, 1.4, 0.64, 1);
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+    .lab__toggle--h .lab__logo-b { opacity: 1; transform: scale(1); }
+    .lab__toggle--h .lab__logo-x { opacity: 0; transform: scale(0.65); }
+    .lab__toggle--h.is-open .lab__logo-b { opacity: 0; transform: scale(0.65); }
+    .lab__toggle--h.is-open .lab__logo-x { opacity: 1; transform: scale(1); }
+
+    /* ============================================================
+       Variant I — Glyph swap (≡ ↔ ×)
+       Real Unicode characters cross-dissolve. No vector tricks.
+       ============================================================ */
+    .lab__toggle--i .lab__glyph {
+      position: absolute;
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 64px;
+      line-height: 1;
+      color: var(--text);
+      transition: opacity 0.26s ease, transform 0.26s ease;
+      display: block;
+    }
+    .lab__toggle--i .lab__glyph--ham { opacity: 1; transform: scale(1); letter-spacing: -0.05em; }
+    .lab__toggle--i .lab__glyph--x   { opacity: 0; transform: scale(0.8); }
+    .lab__toggle--i.is-open .lab__glyph--ham { opacity: 0; transform: scale(0.8); }
+    .lab__toggle--i.is-open .lab__glyph--x   { opacity: 1; transform: scale(1); }
+
+    /* ============================================================
+       Variant J — Negative-space invert
+       Toggle background flips dark → light on open. Lines swap to
+       the opposite color via currentColor inheritance.
+       ============================================================ */
+    .lab__toggle--j {
+      transition: background-color 0.36s ease,
+                  border-color 0.36s ease,
+                  color 0.36s ease;
+    }
+    .lab__toggle--j .lab__invert-ham,
+    .lab__toggle--j .lab__invert-x {
+      transition: opacity 0.28s ease;
+    }
+    .lab__toggle--j .lab__invert-ham { opacity: 1; }
+    .lab__toggle--j .lab__invert-x   { opacity: 0; }
+    .lab__toggle--j.is-open {
+      background-color: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+    }
+    .lab__toggle--j.is-open .lab__invert-ham { opacity: 0; }
+    .lab__toggle--j.is-open .lab__invert-x   { opacity: 1; }
+
+    /* ============================================================
+       Variant K — Snap-cut (no animation)
+       Same dot grid as B, but every transition / animation disabled.
+       ============================================================ */
+    .lab__toggle--k .lab__toggle-grid { color: var(--text); }
+    .lab__toggle--k .lab__dot {
+      fill: currentColor;
+      transition: none !important;
+      animation: none !important;
+    }
+    .lab__toggle--k .lab__dot--ham,
+    .lab__toggle--k .lab__dot--both { opacity: 0.92; }
+    .lab__toggle--k .lab__dot--x    { opacity: 0; }
+    .lab__toggle--k.is-open .lab__dot--ham { opacity: 0; }
+    .lab__toggle--k.is-open .lab__dot--x   { opacity: 0.92; }
+
+    /* ============================================================
+       Variant L — Asymmetric timing
+       Same dot grid; JS sets --toggle-dur per direction.
+       Open ~0.45s, close ~0.20s.
+       ============================================================ */
+    .lab__toggle--l .lab__toggle-grid { color: var(--text); overflow: visible; }
+    .lab__toggle--l .lab__dot {
+      fill: currentColor;
+      transform-origin: center; transform-box: fill-box;
+      transition: opacity var(--toggle-dur, 0.45s) ease,
+                  transform calc(var(--toggle-dur, 0.45s) + 0.04s) cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .lab__toggle--l .lab__dot--ham,
+    .lab__toggle--l .lab__dot--both { opacity: 0.92; transform: scale(1); }
+    .lab__toggle--l .lab__dot--x    { opacity: 0; transform: scale(0.25); }
+    .lab__toggle--l.is-open .lab__dot--ham { opacity: 0; transform: scale(0.25); }
+    .lab__toggle--l.is-open .lab__dot--x   { opacity: 0.92; transform: scale(1); }
+
+    /* ============================================================
+       Variant M — Inhale / exhale
+       L's directional timing plus a brief scale shimmer on the whole
+       SVG: ~1.08 on open (breath in), ~0.94 on close (sharp contract).
+       Driven by is-opening / is-closing classes from JS.
+       ============================================================ */
+    .lab__toggle--m .lab__toggle-grid {
+      color: var(--text); overflow: visible;
+      transform-origin: center;
+    }
+    .lab__toggle--m .lab__dot {
+      fill: currentColor;
+      transform-origin: center; transform-box: fill-box;
+      transition: opacity var(--toggle-dur, 0.45s) ease,
+                  transform calc(var(--toggle-dur, 0.45s) + 0.04s) cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .lab__toggle--m .lab__dot--ham,
+    .lab__toggle--m .lab__dot--both { opacity: 0.92; transform: scale(1); }
+    .lab__toggle--m .lab__dot--x    { opacity: 0; transform: scale(0.25); }
+    .lab__toggle--m.is-open .lab__dot--ham { opacity: 0; transform: scale(0.25); }
+    .lab__toggle--m.is-open .lab__dot--x   { opacity: 0.92; transform: scale(1); }
+    .lab__toggle--m.is-opening .lab__toggle-grid { animation: inhale 0.46s ease; }
+    .lab__toggle--m.is-closing .lab__toggle-grid { animation: exhale 0.22s ease; }
+    @keyframes inhale {
+      0%   { transform: scale(1); }
+      55%  { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    @keyframes exhale {
+      0%   { transform: scale(1); }
+      55%  { transform: scale(0.94); }
+      100% { transform: scale(1); }
+    }
+
+    /* ============================================================
+       Variant N — Amber flash
+       C plus a single chromatic punctuation: anchors flash amber at
+       the peak of the transition.
+       ============================================================ */
+    .lab__toggle--n .lab__toggle-grid { color: var(--text); overflow: visible; }
+    .lab__toggle--n .lab__dot {
+      fill: currentColor;
+      transform-origin: center; transform-box: fill-box;
+      transition: opacity 0.30s ease,
+                  transform 0.34s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .lab__toggle--n .lab__dot--ham  { opacity: 0.82; transform: scale(1); }
+    .lab__toggle--n .lab__dot--both { opacity: 1;    transform: scale(1); }
+    .lab__toggle--n .lab__dot--x    { opacity: 0;    transform: scale(0.25); }
+    .lab__toggle--n.is-open .lab__dot--ham { opacity: 0; transform: scale(0.25); }
+    .lab__toggle--n.is-open .lab__dot--x   { opacity: 0.82; transform: scale(1); }
+    .lab__toggle--n .lab__dot[data-tier="0"] { transition-delay: 0ms; }
+    .lab__toggle--n .lab__dot[data-tier="1"] { transition-delay: 30ms; }
+    .lab__toggle--n .lab__dot[data-tier="2"] { transition-delay: 55ms; }
+    .lab__toggle--n .lab__dot[data-tier="3"] { transition-delay: 80ms; }
+    .lab__toggle--n .lab__dot[data-tier="4"] { transition-delay: 105ms; }
+    .lab__toggle--n .lab__dot[data-tier="5"] { transition-delay: 130ms; }
+    .lab__toggle--n.is-pulsing .lab__dot--both {
+      animation: anchorAmberFlash 0.48s ease;
+    }
+    @keyframes anchorAmberFlash {
+      0%   { fill: currentColor; transform: scale(1); }
+      40%  { fill: #D97706; transform: scale(1.18); }
+      100% { fill: currentColor; transform: scale(1); }
+    }
+
+    /* ============================================================
+       Variant O — Tier-color flash
+       N taken further: amber → violet → blue cycle on anchors.
+       ============================================================ */
+    .lab__toggle--o .lab__toggle-grid { color: var(--text); overflow: visible; }
+    .lab__toggle--o .lab__dot {
+      fill: currentColor;
+      transform-origin: center; transform-box: fill-box;
+      transition: opacity 0.30s ease,
+                  transform 0.34s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .lab__toggle--o .lab__dot--ham  { opacity: 0.82; transform: scale(1); }
+    .lab__toggle--o .lab__dot--both { opacity: 1;    transform: scale(1); }
+    .lab__toggle--o .lab__dot--x    { opacity: 0;    transform: scale(0.25); }
+    .lab__toggle--o.is-open .lab__dot--ham { opacity: 0; transform: scale(0.25); }
+    .lab__toggle--o.is-open .lab__dot--x   { opacity: 0.82; transform: scale(1); }
+    .lab__toggle--o .lab__dot[data-tier="0"] { transition-delay: 0ms; }
+    .lab__toggle--o .lab__dot[data-tier="1"] { transition-delay: 30ms; }
+    .lab__toggle--o .lab__dot[data-tier="2"] { transition-delay: 55ms; }
+    .lab__toggle--o .lab__dot[data-tier="3"] { transition-delay: 80ms; }
+    .lab__toggle--o .lab__dot[data-tier="4"] { transition-delay: 105ms; }
+    .lab__toggle--o .lab__dot[data-tier="5"] { transition-delay: 130ms; }
+    .lab__toggle--o.is-pulsing .lab__dot--both {
+      animation: anchorTierCycle 0.58s ease;
+    }
+    @keyframes anchorTierCycle {
+      0%   { fill: currentColor; transform: scale(1); }
+      22%  { fill: #D97706;      transform: scale(1.18); }
+      50%  { fill: #8B5CF6;      transform: scale(1.18); }
+      78%  { fill: #2563EB;      transform: scale(1.18); }
+      100% { fill: currentColor; transform: scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lab__toggle--a .lab__stroke,
+      .lab__toggle--b .lab__dot,
+      .lab__toggle--c .lab__dot,
+      .lab__toggle--d .lab__dot,
+      .lab__toggle--e .lab__mag-line,
+      .lab__toggle--f .lab__dot,
+      .lab__toggle--g .lab__flipper,
+      .lab__toggle--h .lab__logo-b,
+      .lab__toggle--h .lab__logo-x,
+      .lab__toggle--i .lab__glyph,
+      .lab__toggle--j,
+      .lab__toggle--l .lab__dot,
+      .lab__toggle--m .lab__dot,
+      .lab__toggle--n .lab__dot,
+      .lab__toggle--o .lab__dot {
+        transition: none !important;
+        transition-delay: 0ms !important;
+      }
+      .lab__toggle--c.is-pulsing .lab__dot--both,
+      .lab__toggle--d.is-pulsing .lab__dot--both,
+      .lab__toggle--d.is-pulsing .lab__toggle-grid,
+      .lab__toggle--m.is-opening .lab__toggle-grid,
+      .lab__toggle--m.is-closing .lab__toggle-grid,
+      .lab__toggle--n.is-pulsing .lab__dot--both,
+      .lab__toggle--o.is-pulsing .lab__dot--both {
+        animation: none !important;
+      }
+    }
+</style>
+
+<script is:inline>
+    function toggleOne(btn) {
+        var willOpen = !btn.classList.contains('is-open');
+
+        /* L, M: directional duration via CSS variable */
+        if (btn.matches('.lab__toggle--l, .lab__toggle--m')) {
+            btn.style.setProperty('--toggle-dur', willOpen ? '0.45s' : '0.20s');
+        }
+
+        btn.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+
+        /* C/D/N/O use .is-pulsing to re-trigger their keyframe animations
+           (anchor pulse, Pull Focus blur, amber flash, tier-color cycle).
+           CSS alone can't re-fire keyframes per toggle. */
+        if (btn.matches('.lab__toggle--c, .lab__toggle--d, .lab__toggle--n, .lab__toggle--o')) {
+            btn.classList.add('is-pulsing');
+            setTimeout(function() { btn.classList.remove('is-pulsing'); }, 600);
+        }
+
+        /* M: direction-tagged classes drive the inhale/exhale shimmer */
+        if (btn.classList.contains('lab__toggle--m')) {
+            var dirClass = willOpen ? 'is-opening' : 'is-closing';
+            var dur = willOpen ? 470 : 230;
+            btn.classList.add(dirClass);
+            setTimeout(function() { btn.classList.remove(dirClass); }, dur);
+        }
+    }
+
+    document.querySelectorAll('.lab__toggle').forEach(function(btn) {
+        btn.addEventListener('click', function() { toggleOne(btn); });
+    });
+
+    /* Auto-play: triggers all four toggles in sync every 1.6s */
+    (function() {
+        var btn = document.getElementById('autoplay');
+        if (!btn) return;
+        var timer = null;
+        var toggles = document.querySelectorAll('.lab__toggle');
+
+        function tick() { toggles.forEach(toggleOne); }
+
+        btn.addEventListener('click', function() {
+            var on = btn.getAttribute('aria-pressed') === 'true';
+            if (on) {
+                clearInterval(timer);
+                timer = null;
+                btn.setAttribute('aria-pressed', 'false');
+            } else {
+                tick();
+                timer = setInterval(tick, 1600);
+                btn.setAttribute('aria-pressed', 'true');
+            }
+        });
+    })();
+</script>

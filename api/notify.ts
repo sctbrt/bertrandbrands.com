@@ -24,6 +24,7 @@ const SOURCE_LABELS: Record<string, string> = {
   'tier-intake-amber': 'Build Tier Inquiry',
   'tier-intake-violet': 'Transform Tier Inquiry',
   'tier-intake-blue': 'Care Tier Inquiry',
+  'discovery-ncp': 'NCP Discovery Session',
   'start-landing': 'Start Page Lead',
   'questionnaire-invite-sent': 'Questionnaire Invite Sent',
   'questionnaire-completed': 'Brand Discovery Questionnaire Completed',

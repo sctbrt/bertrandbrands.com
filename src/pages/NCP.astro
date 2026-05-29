@@ -1,0 +1,1412 @@
+---
+/**
+ * Private discovery questionnaire for Mike Fulcher / NCP Electrical.
+ * Served at /NCP (vanity URL sent directly to the client).
+ *
+ * - Unlisted: noindex, nofollow, not in sitemap, not linked from any nav.
+ *   Companion to the warm-intro letter at /welcome/mike-fulcher.
+ * - Self-contained styles (no shared.css classes). V14 surface — dark/amber/glass.
+ * - On finish: POSTs answers to Formspree + /api/notify (source: 'discovery-ncp'),
+ *   then offers the client a copy via copy / download / print.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import VisitorNotify from '../components/VisitorNotify.astro';
+---
+
+<BaseLayout
+    title="NCP Electrical · Discovery Session — Bertrand Brands"
+    description="A short, tap-friendly discovery session to shape NCP Electrical's brand and website with Bertrand Brands."
+    robots="noindex, nofollow"
+>
+    <div class="discovery">
+        <div class="discovery__glow" aria-hidden="true"></div>
+        <div class="discovery__glow discovery__glow--violet" aria-hidden="true"></div>
+        <div class="discovery__glow discovery__glow--blue" aria-hidden="true"></div>
+
+        <div class="topbar">
+            <div class="topbar__inner">
+                <div class="brandlock">
+                    <img src="/assets/dot-logomark.svg" alt="" class="brandlock__mark" width="26" height="26" loading="eager" fetchpriority="high" />
+                    <div class="brandlock__text">
+                        <small>Bertrand Brands</small>
+                        <strong>Discovery Session</strong>
+                    </div>
+                </div>
+                <div class="stepcount" id="ncpStep">Welcome</div>
+            </div>
+            <div class="progress"><i id="ncpBar"></i></div>
+        </div>
+
+        <main class="wrap" id="ncpWrap"></main>
+
+        <nav class="navbar" aria-label="Questionnaire navigation">
+            <div class="navbar__inner">
+                <button class="btn btn-ghost" id="ncpBack" type="button">Back</button>
+                <button class="btn btn-primary" id="ncpNext" type="button">Begin</button>
+            </div>
+        </nav>
+
+        <div class="toast" id="ncpToast" role="status" aria-live="polite">Copied</div>
+    </div>
+
+    <VisitorNotify />
+</BaseLayout>
+
+<style is:inline>
+    /* ============================================================
+       NCP Electrical — Discovery Session
+       V14 surface, self-contained. All selectors scoped under
+       .discovery so the deferred shared.css can't cascade in.
+       Brand remap: light "paper" original → BB dark / amber / glass.
+       ============================================================ */
+
+    /* BaseLayout injects a desktop-only phone modal (gated on includeMainCss).
+       Its hide rules live in shared.css, which this page loads deferred — if
+       that deferred media-swap loses the race, the modal renders unstyled in
+       normal flow (a stray "Please call (705) 413-3705" fragment). This page
+       has no tel: links and never opens it, so hard-hide it unconditionally. */
+    .phone-modal-backdrop { display: none !important; }
+
+    .discovery {
+        /* Local remap — original semantic names point at BB tokens. */
+        --ink: var(--text);
+        --ink-soft: var(--text);
+        --muted: var(--text-muted);
+        --faint: var(--text-subtle);
+        --line: var(--border);
+        --line-strong: var(--border-hover);
+        --paper-2: rgba(var(--highlight-rgb), 0.03);
+        --card: rgba(var(--highlight-rgb), 0.04);
+        --accent: var(--build-accent);
+        --accent-deep: var(--build-accent-hover);
+        --accent-wash: rgba(var(--build-rgb), 0.13);
+        --good: var(--color-success);
+        --radius: var(--radius-lg);
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 28px rgba(0, 0, 0, 0.45);
+        --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.5), 0 18px 44px rgba(0, 0, 0, 0.6);
+        /* Tri-colour (Conversation-tier signature): amber -> violet -> blue */
+        --tri-gradient: linear-gradient(120deg, #D97706 0%, #8B5CF6 52%, #2563EB 100%);
+        --tri-gradient-text: linear-gradient(95deg, #F59E0B, #A78BFA 55%, #60A5FA);
+        --tri-sweep: linear-gradient(90deg, #D97706, #8B5CF6, #2563EB, #8B5CF6, #D97706);
+        --btn-tri-shadow: 0 4px 16px rgba(139, 92, 246, 0.28);
+        --btn-tri-shadow-lift: 0 8px 24px rgba(139, 92, 246, 0.4);
+
+        position: relative;
+        min-height: 100vh;
+        min-height: 100dvh;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-body);
+        line-height: 1.5;
+    }
+
+    /* Living ambient tri-tone glow — three counter-rhythm breathers (LOCKED: ambient light moves) */
+    .discovery__glow {
+        position: fixed;
+        top: -15vh;
+        right: -10vw;
+        width: 70vw;
+        height: 70vw;
+        max-width: 820px;
+        max-height: 820px;
+        background: radial-gradient(circle at center,
+            rgba(var(--build-rgb), 0.10) 0%,
+            rgba(var(--build-rgb), 0.04) 38%,
+            transparent 70%);
+        filter: blur(50px);
+        pointer-events: none;
+        z-index: 0;
+        animation: ncpBreathe 22s var(--ease-in-out) infinite;
+    }
+    .discovery__glow--violet {
+        position: fixed;
+        top: 28vh;
+        left: -18vw;
+        width: 58vw;
+        height: 58vw;
+        max-width: 680px;
+        max-height: 680px;
+        background: radial-gradient(circle at center,
+            rgba(var(--transform-rgb), 0.09) 0%,
+            rgba(var(--transform-rgb), 0.035) 40%,
+            transparent 70%);
+        filter: blur(55px);
+        pointer-events: none;
+        z-index: 0;
+        animation: ncpBreatheViolet 26s var(--ease-in-out) -6s infinite;
+    }
+    .discovery__glow--blue {
+        position: fixed;
+        bottom: -16vh;
+        right: 4vw;
+        width: 62vw;
+        height: 62vw;
+        max-width: 720px;
+        max-height: 720px;
+        background: radial-gradient(circle at center,
+            rgba(var(--care-rgb), 0.08) 0%,
+            rgba(var(--care-rgb), 0.03) 40%,
+            transparent 70%);
+        filter: blur(60px);
+        pointer-events: none;
+        z-index: 0;
+        animation: ncpBreatheBlue 30s var(--ease-in-out) -14s infinite;
+    }
+
+    @keyframes ncpBreathe {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+        30% { transform: translate(-3vw, 2vh) scale(1.06); opacity: 1; }
+        60% { transform: translate(2vw, -2vh) scale(0.96); opacity: 0.8; }
+    }
+    @keyframes ncpBreatheViolet {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+        35% { transform: translate(3vw, -2vh) scale(1.07); opacity: 0.95; }
+        70% { transform: translate(-2vw, 3vh) scale(0.95); opacity: 0.7; }
+    }
+    @keyframes ncpBreatheBlue {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.75; }
+        40% { transform: translate(-3vw, -2vh) scale(1.05); opacity: 0.9; }
+        75% { transform: translate(2vw, 2vh) scale(0.96); opacity: 0.65; }
+    }
+
+    .discovery .eyebrow {
+        font-family: var(--font-body);
+        font-size: var(--text-2xs);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: var(--font-medium);
+    }
+
+    .discovery .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 20px 168px;
+    }
+
+    /* ---------- top bar / progress ---------- */
+    .discovery .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        backdrop-filter: saturate(1.4) blur(var(--glass-blur));
+        -webkit-backdrop-filter: saturate(1.4) blur(var(--glass-blur));
+        background: rgba(var(--bg-rgb), 0.72);
+        border-bottom: 1px solid var(--line);
+    }
+    .discovery .topbar__inner {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 14px 20px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+    .discovery .brandlock { display: flex; align-items: center; gap: 12px; }
+    .discovery .brandlock__mark {
+        width: 34px;
+        height: auto;
+        display: block;
+        filter: brightness(0) invert(1);
+        opacity: 0.95;
+    }
+    .discovery .brandlock__text { transform: translateY(2px); }
+    .discovery .brandlock__text small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.24em;
+        line-height: 1;
+        margin-bottom: 1px;
+        color: var(--muted);
+        text-transform: uppercase;
+    }
+    .discovery .brandlock__text strong {
+        font-family: var(--font-display);
+        font-weight: var(--font-normal);
+        font-size: 15px;
+        line-height: 1;
+        letter-spacing: 0.01em;
+        color: var(--ink);
+    }
+    .discovery .stepcount {
+        font-size: var(--text-xs);
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        white-space: nowrap;
+    }
+    .discovery .progress { height: 3px; background: var(--line); width: 100%; }
+    .discovery .progress > i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: var(--tri-sweep);
+        background-size: 300% 100%;
+        box-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
+        transition: width 0.4s var(--ease-out);
+        animation: ncpTriSweep 10s linear infinite;
+    }
+    @keyframes ncpTriSweep {
+        from { background-position: 0 0; }
+        to { background-position: 300% 0; }
+    }
+
+    /* ---------- screens ---------- */
+    .discovery .screen { display: none; animation: ncpRise 0.45s var(--ease-out); }
+    .discovery .screen.active { display: block; }
+    @keyframes ncpRise {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: none; }
+    }
+
+    .discovery .sec-head { padding: 48px 0 8px; }
+    .discovery .sec-head .eyebrow { margin-bottom: 14px; }
+    .discovery .sec-head h2 {
+        font-family: var(--font-display);
+        font-weight: var(--font-light);
+        font-size: clamp(26px, 5vw, 38px);
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        color: var(--ink);
+    }
+    .discovery .sec-head p {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: var(--text-base);
+        max-width: 56ch;
+        line-height: 1.6;
+    }
+
+    /* ---------- question block ---------- */
+    .discovery .q {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 22px 22px 24px;
+        margin-top: 18px;
+        box-shadow: var(--shadow);
+    }
+    .discovery .q-num {
+        font-size: var(--text-2xs);
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        font-weight: var(--font-semibold);
+        text-transform: uppercase;
+    }
+    .discovery .q-label {
+        font-family: var(--font-body);
+        font-weight: var(--font-semibold);
+        font-size: var(--text-lg);
+        letter-spacing: -0.01em;
+        margin-top: 6px;
+        line-height: 1.3;
+        color: var(--ink);
+    }
+    .discovery .q-help { color: var(--muted); font-size: var(--text-sm); margin-top: 5px; }
+    .discovery .q-body { margin-top: 16px; }
+
+    /* option grids */
+    .discovery .opts { display: grid; gap: 10px; }
+    .discovery .opts.cols-1 { grid-template-columns: 1fr; }
+    .discovery .opts.cols-2 { grid-template-columns: 1fr 1fr; }
+    .discovery .opts.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 560px) { .discovery .opts.cols-3 { grid-template-columns: 1fr 1fr; } }
+
+    .discovery .opt {
+        position: relative;
+        border: 1.5px solid var(--line-strong);
+        background: var(--paper-2);
+        border-radius: var(--radius);
+        padding: 13px 14px;
+        cursor: pointer;
+        user-select: none;
+        transition: border-color 0.15s, background 0.15s, transform 0.08s, box-shadow 0.15s;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-size: var(--text-sm);
+        font-weight: var(--font-medium);
+        color: var(--muted);
+        min-height: 50px;
+    }
+    .discovery .opt:hover {
+        border-color: rgba(var(--build-rgb), 0.55);
+        background: rgba(var(--highlight-rgb), 0.06);
+        color: var(--ink);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow);
+    }
+    .discovery .opt:active { transform: translateY(0); }
+    .discovery .opt:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+    .discovery .opt .dot {
+        flex: 0 0 auto;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid var(--line-strong);
+        transition: 0.15s;
+        position: relative;
+    }
+    .discovery .opt.multi .dot { border-radius: 6px; }
+    .discovery .opt.sel {
+        border-color: var(--accent);
+        background: var(--accent-wash);
+        color: var(--ink);
+        font-weight: var(--font-semibold);
+    }
+    .discovery .opt.sel .dot { border-color: var(--accent); background: var(--accent); }
+    .discovery .opt.sel .dot::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 8px;
+        height: 8px;
+        border-radius: inherit;
+        background: #fff;
+    }
+    .discovery .opt.multi.sel .dot::after {
+        width: 6px;
+        height: 10px;
+        border-radius: 0;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg) translate(-1px, -1px);
+        background: transparent;
+        top: 2px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    /* swatches */
+    .discovery .swatch { flex-direction: column; align-items: flex-start; gap: 9px; padding: 13px; }
+    .discovery .swatch .chips {
+        display: flex;
+        gap: 0;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        width: 100%;
+        height: 34px;
+        border: 1px solid rgba(var(--highlight-rgb), 0.1);
+    }
+    .discovery .swatch .chips span { flex: 1; }
+    .discovery .swatch .cap { font-size: var(--text-sm); font-weight: var(--font-semibold); }
+
+    /* slider */
+    .discovery .slider-wrap { padding: 6px 2px 2px; }
+    .discovery .slider-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+    .discovery .slider-val {
+        font-family: var(--font-display);
+        font-weight: var(--font-normal);
+        font-size: var(--text-2xl);
+        color: var(--accent);
+    }
+    .discovery .slider-val small {
+        font-family: var(--font-body);
+        font-weight: var(--font-medium);
+        font-size: var(--text-sm);
+        color: var(--muted);
+    }
+    .discovery input[type=range] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: var(--radius-pill);
+        background: var(--line-strong);
+        outline: none;
+        margin: 10px 0 4px;
+    }
+    .discovery input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--bg-elevated);
+        border: 3px solid var(--accent);
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(var(--build-rgb), 0.45);
+        transition: transform 0.1s;
+    }
+    .discovery input[type=range]::-webkit-slider-thumb:active { transform: scale(1.12); }
+    .discovery input[type=range]::-moz-range-thumb {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--bg-elevated);
+        border: 3px solid var(--accent);
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(var(--build-rgb), 0.45);
+    }
+    .discovery input[type=range]:focus-visible::-webkit-slider-thumb {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+    .discovery .ends {
+        display: flex;
+        justify-content: space-between;
+        font-size: var(--text-xs);
+        color: var(--muted);
+        font-weight: var(--font-semibold);
+    }
+    .discovery .ends span:first-child { text-align: left; }
+    .discovery .ends span:last-child { text-align: right; }
+
+    /* spectrum */
+    .discovery .spectrum .ends span { max-width: 45%; }
+    .discovery .spectrum-read {
+        text-align: center;
+        font-size: var(--text-xs);
+        color: var(--accent);
+        letter-spacing: 0.08em;
+        margin-top: 8px;
+        font-weight: var(--font-semibold);
+        text-transform: uppercase;
+    }
+
+    /* text input */
+    .discovery .txt {
+        width: 100%;
+        border: 1.5px solid var(--line-strong);
+        background: var(--paper-2);
+        border-radius: var(--radius);
+        padding: 13px 14px;
+        font: inherit;
+        font-size: var(--text-sm);
+        color: var(--ink);
+        transition: 0.15s;
+    }
+    .discovery .txt::placeholder { color: var(--faint); }
+    .discovery .txt:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: rgba(var(--highlight-rgb), 0.05);
+        box-shadow: 0 0 0 4px rgba(var(--build-rgb), 0.15);
+    }
+    .discovery textarea.txt { resize: vertical; min-height: 90px; line-height: 1.5; }
+    .discovery .optional-tag {
+        font-size: var(--text-2xs);
+        letter-spacing: 0.12em;
+        color: var(--good);
+        text-transform: uppercase;
+        font-weight: var(--font-semibold);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        background: rgba(34, 197, 94, 0.1);
+        padding: 2px 7px;
+        border-radius: var(--radius-pill);
+        margin-left: 8px;
+    }
+
+    /* ---------- cover ---------- */
+    .discovery .cover { text-align: left; padding: 60px 0 0; }
+    .discovery .cover .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--line-strong);
+        background: var(--card);
+        border-radius: var(--radius-pill);
+        padding: 7px 14px;
+        margin-bottom: 26px;
+    }
+    .discovery .cover .kicker b {
+        font-size: var(--text-2xs);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: var(--font-medium);
+        color: var(--muted);
+    }
+    .discovery .spark {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px var(--accent-wash);
+    }
+    .discovery .cover h1 {
+        font-family: var(--font-display);
+        font-weight: var(--font-light);
+        font-size: clamp(34px, 8vw, 60px);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+    }
+    .discovery .cover h1 em {
+        font-style: normal;
+        background: var(--tri-gradient-text);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: ncpTriShift 12s var(--ease-in-out) infinite;
+    }
+    @keyframes ncpTriShift {
+        0%, 100% { background-position: 0 0; }
+        50% { background-position: 100% 0; }
+    }
+    .discovery .cover .lede {
+        margin-top: 20px;
+        font-size: var(--text-lg);
+        color: var(--ink);
+        max-width: 54ch;
+        line-height: 1.6;
+    }
+    .discovery .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .discovery .meta {
+        border: 1px solid var(--line);
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 12px 16px;
+        box-shadow: var(--shadow);
+    }
+    .discovery .meta small {
+        display: block;
+        font-size: var(--text-2xs);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--faint);
+    }
+    .discovery .meta b {
+        font-family: var(--font-display);
+        font-weight: var(--font-normal);
+        font-size: var(--text-base);
+        color: var(--ink);
+    }
+    .discovery .cover-note {
+        margin-top: 30px;
+        padding: 16px 18px;
+        border-left: 3px solid var(--accent);
+        background: var(--paper-2);
+        border-radius: 0 var(--radius) var(--radius) 0;
+        font-size: var(--text-sm);
+        color: var(--muted);
+        line-height: 1.6;
+    }
+
+    /* ---------- footer nav ---------- */
+    .discovery .navbar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        background: rgba(var(--bg-rgb), 0.85);
+        backdrop-filter: saturate(1.6) blur(var(--glass-blur));
+        -webkit-backdrop-filter: saturate(1.6) blur(var(--glass-blur));
+        border-top: 1px solid var(--line);
+    }
+    .discovery .navbar__inner {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px));
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    .discovery .btn {
+        font: inherit;
+        font-weight: var(--font-semibold);
+        font-size: var(--text-sm);
+        border-radius: var(--radius-pill);
+        padding: 14px 22px;
+        cursor: pointer;
+        border: 1.5px solid transparent;
+        transition: 0.15s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+    }
+    .discovery .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .discovery .btn-primary {
+        background: var(--tri-gradient);
+        background-size: 160% 100%;
+        background-position: 0 0;
+        color: #fff;
+        flex: 1;
+        box-shadow: var(--btn-tri-shadow);
+    }
+    .discovery .btn-primary:hover {
+        background-position: 100% 0;
+        transform: translateY(-1px);
+        box-shadow: var(--btn-tri-shadow-lift);
+    }
+    .discovery .btn-accent {
+        background: var(--tri-gradient);
+        background-size: 160% 100%;
+        background-position: 0 0;
+        color: #fff;
+        box-shadow: var(--btn-tri-shadow);
+    }
+    .discovery .btn-accent:hover {
+        background-position: 100% 0;
+        transform: translateY(-1px);
+        box-shadow: var(--btn-tri-shadow-lift);
+    }
+    .discovery .btn-ghost {
+        background: transparent;
+        border-color: var(--line-strong);
+        color: var(--muted);
+    }
+    .discovery .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+    .discovery .btn[disabled] {
+        opacity: 0.35;
+        cursor: not-allowed;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* ---------- review ---------- */
+    .discovery .done-badge {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background: var(--good);
+        display: grid;
+        place-items: center;
+        margin-bottom: 18px;
+    }
+    .discovery .done-badge::after {
+        content: "";
+        width: 14px;
+        height: 24px;
+        border: solid #fff;
+        border-width: 0 4px 4px 0;
+        transform: rotate(45deg) translate(-1px, -2px);
+    }
+    .discovery .summary {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--card);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+    .discovery .summary textarea {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        padding: 20px;
+        font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 12.5px;
+        line-height: 1.7;
+        color: var(--muted);
+        resize: vertical;
+        min-height: 340px;
+    }
+    .discovery .summary textarea:focus { outline: none; }
+    .discovery .export-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .discovery .ncp-spinner {
+        width: 42px;
+        height: 42px;
+        margin-bottom: 18px;
+        border-radius: 50%;
+        border: 3px solid var(--line);
+        border-top-color: var(--accent);
+        animation: ncpSpin 0.8s linear infinite;
+    }
+    @keyframes ncpSpin { to { transform: rotate(360deg); } }
+    .discovery .keepcopy {
+        margin-top: 30px;
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+    }
+    .discovery .keepcopy__label {
+        display: block;
+        font-size: var(--text-sm);
+        color: var(--muted);
+        margin-bottom: 12px;
+    }
+    .discovery .summary-print { display: none; }
+    .discovery .toast {
+        position: fixed;
+        bottom: 92px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: var(--text);
+        color: var(--bg);
+        padding: 11px 20px;
+        border-radius: var(--radius-pill);
+        font-size: var(--text-sm);
+        font-weight: var(--font-semibold);
+        opacity: 0;
+        transition: 0.3s;
+        pointer-events: none;
+        z-index: 60;
+        box-shadow: var(--shadow-lift);
+    }
+    .discovery .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* reduced motion — global rule also zeroes durations; this is belt + suspenders */
+    @media (prefers-reduced-motion: reduce) {
+        .discovery__glow,
+        .discovery__glow--violet,
+        .discovery__glow--blue { animation: none; }
+        .discovery .progress > i { animation: none; }
+        .discovery .cover h1 em { animation: none; }
+        .discovery .screen { animation: none; }
+        .discovery .ncp-spinner { animation: none; }
+    }
+
+    @media print {
+        .discovery .topbar,
+        .discovery .navbar,
+        .discovery .export-row,
+        .discovery .done-badge,
+        .discovery .ncp-spinner,
+        .discovery .keepcopy,
+        .discovery .sec-head--review,
+        .discovery__glow { display: none !important; }
+        .discovery { background: #fff; color: #111; }
+        .discovery .summary { border-color: #ccc; box-shadow: none; }
+        .discovery .summary textarea { min-height: auto; height: auto; color: #111; }
+        .discovery .summary-print {
+            display: block !important;
+            white-space: pre-wrap;
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #111;
+        }
+        .discovery .wrap { padding-bottom: 20px; }
+    }
+</style>
+
+<script is:inline>
+/* ============================================================
+   NCP ELECTRICAL — DISCOVERY QUESTIONNAIRE
+   Data-driven. On finish: submits to Formspree + /api/notify, then
+   offers a self-contained export (copy / download / print).
+   View-Transitions safe: idempotent boot() on astro:page-load.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var COVER = { type: 'cover' };
+  var REVIEW = { type: 'review' };
+
+  var SECTIONS = [
+    {
+      eyebrow: 'Section 1 of 10',
+      title: 'The basics',
+      sub: 'Quick facts to get us started. A few of these are pre-filled, just confirm or tweak.',
+      questions: [
+        { id: 'biz', type: 'text', label: 'Business name', value: 'NCP Electrical' },
+        { id: 'namekeep', type: 'radio', label: "The name NCP Electrical — what's the plan?", cols: 2,
+          options: ['Keep it exactly', 'Open to refining it', 'Want a fresh name', "Let's discuss"] },
+        { id: 'contact', type: 'text', label: 'Your name', value: 'Mike Fulcher' },
+        { id: 'email', type: 'text', label: 'Best email', optional: true, placeholder: 'name@example.com' },
+        { id: 'phone', type: 'text', label: 'Best phone', optional: true, placeholder: '(705) 000-0000' },
+        { id: 'years', type: 'slider', label: 'Years in business', min: 0, max: 40, step: 1, suffix: 'years', topcap: '40+', default: 5 },
+        { id: 'team', type: 'radio', label: 'How big is the team right now?', cols: 3,
+          options: ['Just me', '2 to 5', '6 to 10', '11 to 25', '25+'] },
+        { id: 'base', type: 'radio', label: 'Where do you operate from?', cols: 2,
+          options: ['Home based', 'Shop or office', 'Shop plus yard', 'Multiple locations'] },
+        { id: 'radius', type: 'slider', label: 'How far do you travel for a typical job?', min: 0, max: 200, step: 10, suffix: 'km', topcap: '200+', default: 50 },
+      ]
+    },
+    {
+      eyebrow: 'Section 2 of 10',
+      title: 'The work you do',
+      sub: 'Tap everything that applies. This tells us what NCP actually sells day to day.',
+      questions: [
+        { id: 'worktypes', type: 'checkbox', label: 'What kind of electrical work do you do?', cols: 2,
+          options: ['Residential', 'Commercial', 'Industrial', 'Mining / heavy industry', 'New construction', 'Renovations & service', 'Emergency call-outs', 'Panel upgrades', 'EV charger installs', 'Generators / backup power', 'Solar & renewables', 'Data / low voltage', 'Lighting / pot lights', 'Inspections / ESA'] },
+        { id: 'workmix', type: 'radio', label: 'Where does most of your work come from?', cols: 2,
+          options: ['Mostly residential', 'Mostly commercial', 'Mostly industrial', 'A pretty even mix'] },
+        { id: 'wantmore', type: 'checkbox', label: 'Which of these do you want MORE of?', cols: 2,
+          options: ['Residential', 'Commercial', 'Industrial', 'Mining contracts', 'Service calls', 'Big install jobs', 'Recurring / maintenance', 'Honestly, just more of all'] },
+        { id: 'emergency', type: 'radio', label: 'Do you offer 24/7 emergency service?', cols: 3,
+          options: ['Yes, always', 'Sometimes', 'No'] },
+        { id: 'license', type: 'radio', label: 'How is NCP licensed?', cols: 2,
+          options: ['Licensed contractor (ECRA/ESA)', 'Master Electrician', 'Journeyman', "Let's discuss it"] },
+      ]
+    },
+    {
+      eyebrow: 'Section 3 of 10',
+      title: 'Who you serve',
+      sub: 'Understanding your customers shapes how the brand should sound and look.',
+      questions: [
+        { id: 'customer', type: 'radio', label: 'Who is your main customer?', cols: 2,
+          options: ['Homeowners', 'Property managers / landlords', 'Builders / general contractors', 'Local businesses', 'Mines / industrial clients', 'Municipal / government', 'A mix of these'] },
+        { id: 'jobsize', type: 'spectrum', label: 'What is your job-size sweet spot?',
+          left: 'Quick service calls', right: 'Large contracts' },
+        { id: 'leads', type: 'checkbox', label: 'Where do most of your jobs come from today?', cols: 2,
+          options: ['Word of mouth', 'Repeat customers', 'Google search', 'Facebook / social', 'Referrals from builders', 'Truck & signage', 'Home shows', 'Online reviews', 'Not really sure'] },
+        { id: 'steady', type: 'spectrum', label: 'How steady is the work flowing in?',
+          left: 'Feast or famine', right: 'Booked solid' },
+      ]
+    },
+    {
+      eyebrow: 'Section 4 of 10',
+      title: 'How you stand out',
+      sub: 'What makes a customer pick NCP over the next electrician in the phone listings?',
+      questions: [
+        { id: 'edge', type: 'checkbox', label: 'Why is NCP the right call? Tap all that ring true.', cols: 2,
+          options: ['We show up on time', 'Quality of our work', 'Fair pricing', 'Fast response', 'Strong safety record', 'Years of experience', 'Clean & tidy work', 'Honest, no surprises', 'Specialized expertise', 'We build relationships'] },
+        { id: 'price', type: 'spectrum', label: 'Where do you sit on price?',
+          left: 'Budget friendly', right: 'Premium' },
+        { id: 'size', type: 'spectrum', label: 'How should NCP come across?',
+          left: 'Small & local', right: 'Large & established' },
+        { id: 'threat', type: 'radio', label: 'What is the biggest thing standing in your way?', cols: 2,
+          options: ['Bigger competitors', 'Cheaper competitors', 'Getting noticed at all', 'Looking professional enough', 'Not enough leads coming in'] },
+      ]
+    },
+    {
+      eyebrow: 'Section 5 of 10',
+      title: 'Brand personality',
+      sub: 'Slide each one toward whatever feels most like NCP. There are no wrong answers, go with your gut.',
+      questions: [
+        { id: 'p_modern', type: 'spectrum', label: 'Traditional or modern?', left: 'Traditional', right: 'Modern' },
+        { id: 'p_friendly', type: 'spectrum', label: 'Serious or friendly?', left: 'Serious', right: 'Friendly' },
+        { id: 'p_refined', type: 'spectrum', label: 'Rugged or refined?', left: 'Rugged', right: 'Refined' },
+        { id: 'p_personal', type: 'spectrum', label: 'Corporate or personal?', left: 'Corporate', right: 'Personal / family run' },
+        { id: 'p_bold', type: 'spectrum', label: 'Understated or bold?', left: 'Understated', right: 'Bold' },
+        { id: 'archetype', type: 'radio', label: 'If NCP were a person, who would it be?', cols: 2,
+          options: ['The reliable veteran', 'The skilled craftsman', 'The modern pro', 'The friendly neighbour', 'The industrial powerhouse', 'The safety-first expert'] },
+        { id: 'feel', type: 'checkbox', label: 'How should customers feel about NCP?', cols: 3,
+          options: ['Trustworthy', 'Professional', 'Fast', 'Safe', 'Fair', 'Expert', 'Local', 'Premium', 'Friendly', 'Dependable'] },
+      ]
+    },
+    {
+      eyebrow: 'Section 6 of 10',
+      title: 'Look & feel',
+      sub: 'First instincts on the visual direction. We will refine all of this together later.',
+      questions: [
+        { id: 'colours', type: 'swatch', label: 'Which colour directions pull you in?', cols: 2,
+          options: [
+            { cap: 'Electric blue & yellow', chips: ['#1f6feb', '#f5c518', '#0d2b54'] },
+            { cap: 'Bold red & black', chips: ['#d22d2d', '#1a1a1a', '#e8e8e8'] },
+            { cap: 'Industrial orange & charcoal', chips: ['#e8902e', '#2b2f36', '#cfcabd'] },
+            { cap: 'Deep navy & steel', chips: ['#16335c', '#8a97a8', '#e3e7ec'] },
+            { cap: 'Green & slate (eco)', chips: ['#2f8f5b', '#384047', '#dfe4df'] },
+            { cap: 'Black & gold (premium)', chips: ['#141414', '#c9a24a', '#f0ece2'] },
+            { cap: 'Open to your ideas', chips: ['#bdb8ac', '#d8d3c7', '#efece4'] }
+          ] },
+        { id: 'style', type: 'radio', label: 'What overall style feels right?', cols: 2,
+          options: ['Clean & minimal', 'Bold & industrial', 'Classic & trustworthy', 'Modern & tech-forward', 'Rugged & utility'] },
+        { id: 'keepcolours', type: 'radio', label: 'Do you have current brand colours you want to keep?', cols: 3,
+          options: ['Yes, keep them', 'Open to change', 'Start fresh'] },
+        { id: 'logofeel', type: 'checkbox', label: 'The logo should feel...', cols: 3,
+          options: ['Strong', 'Simple', 'Trustworthy', 'Modern', 'Established', 'Energetic', 'Premium', 'Approachable'] },
+        { id: 'avoid', type: 'checkbox', label: "Anything you definitely DON'T want?", cols: 2,
+          options: ['Too corporate', 'Too flashy / loud', 'Too trendy', 'Too cheap-looking', 'No hard nos'] },
+      ]
+    },
+    {
+      eyebrow: 'Section 7 of 10',
+      title: 'What you have now',
+      sub: 'A quick audit of where things stand today so we know what we are building on.',
+      questions: [
+        { id: 'have', type: 'checkbox', label: 'What does NCP already have?', cols: 2,
+          options: ['Logo', 'Website', 'Vehicle wraps / decals', 'Uniforms / shirts', 'Business cards', 'Yard / lawn signs', 'Building signage', 'Facebook page', 'Instagram', 'Google Business profile', 'Quote / invoice templates', 'None of these yet'] },
+        { id: 'brandhappy', type: 'slider', label: 'How happy are you with your current brand?', min: 1, max: 10, step: 1, suffix: '/ 10', default: 5 },
+        { id: 'webhappy', type: 'slider', label: 'How happy are you with your current website?', min: 0, max: 10, step: 1, suffix: '/ 10', default: 5, zerocap: 'No site' },
+        { id: 'frustration', type: 'radio', label: 'Biggest frustration with what you have now?', cols: 2,
+          options: ['Looks outdated', 'Inconsistent / messy', "Doesn't reflect our quality", 'Hard to update', 'No materials at all', 'Honestly happy with it'] },
+      ]
+    },
+    {
+      eyebrow: 'Section 8 of 10',
+      title: 'Your website',
+      sub: 'The website is usually the hardest-working part of the brand. A few quick calls on what it needs to do.',
+      questions: [
+        { id: 'sitejob', type: 'radio', label: "What is the website's #1 job?", cols: 2,
+          options: ['Get the phone ringing', 'Show off our work', 'Let people request quotes online', 'Look credible & legit', 'Not sure, guide me'] },
+        { id: 'sitefeatures', type: 'checkbox', label: "What should the website include? Tap all you'd like.", cols: 2,
+          options: ['Services we offer', 'Photo gallery of jobs', 'Customer reviews', 'Service area / map', 'Contact form', 'Request a quote online', 'Online booking', 'About / meet the team', 'Tap-to-call button', 'Emergency call-out info', 'FAQ', 'Not sure yet, guide me'] },
+        { id: 'photos', type: 'radio', label: 'Do you have photos of your work we can use?', cols: 2,
+          options: ['Yes, lots of good ones', 'A few phone snaps', "No, we'd need them", 'Not sure'] },
+        { id: 'domain', type: 'radio', label: 'Do you already own a website address (domain)?', cols: 3,
+          options: ['Yes, we own one', 'No, need one', 'Not sure'] },
+        { id: 'reviews', type: 'radio', label: 'Any online reviews we can feature?', cols: 2,
+          options: ['Yes, lots of good ones', 'A handful', 'None yet', 'Not sure'] },
+      ]
+    },
+    {
+      eyebrow: 'Section 9 of 10',
+      title: 'The project',
+      sub: 'What you actually want out of working together, and the practical details.',
+      questions: [
+        { id: 'why', type: 'radio', label: 'What is prompting this project now?', cols: 2,
+          options: ['Just starting out', 'Growing fast, need to look the part', 'Losing work to better-looking competitors', 'Rebrand / fresh start', 'Big opportunity coming up', 'Just time for an upgrade', "Let's discuss"] },
+        { id: 'deliverables', type: 'checkbox', label: 'What do you want from this project?', cols: 2,
+          options: ['Logo / identity', 'Full brand package', 'Website', 'Vehicle wraps', 'Uniforms / apparel', 'Yard & building signage', 'Business cards', 'Social media templates', 'Quote / invoice templates', 'Marketing / ads', 'Booking & scheduling system', 'Not sure yet, need guidance'] },
+        { id: 'goal', type: 'radio', label: 'If this project nails ONE thing, it should be...', cols: 2,
+          options: ['Get more leads', 'Look more professional', 'Be able to charge more', 'Stand out from competitors', 'Grow the team', 'Win bigger contracts', 'Expand into new services'] },
+        { id: 'timeline', type: 'radio', label: 'What is your timeline?', cols: 2,
+          options: ['ASAP', 'Next 1 to 3 months', '3 to 6 months', 'Flexible, no rush'] },
+        { id: 'budget', type: 'radio', label: 'Rough budget range you have in mind?', cols: 3,
+          options: ['Under $2.5k', '$2.5k to $5k', '$5k to $10k', '$10k to $25k', '$25k+', 'Need guidance'] },
+        { id: 'decision', type: 'radio', label: 'Who makes the final call?', cols: 2,
+          options: ['Just me', 'Me + business partner', 'Me + spouse / family', 'A small team'] },
+      ]
+    },
+    {
+      eyebrow: 'Section 10 of 10',
+      title: 'Running the day',
+      sub: 'The behind-the-scenes side. Even great branding falls flat if the operations behind it feel chaotic.',
+      questions: [
+        { id: 'timeloss', type: 'checkbox', label: 'Where do you lose the most time?', cols: 2,
+          options: ['Scheduling jobs', 'Writing quotes', 'Invoicing & getting paid', 'Chasing follow-ups', 'Booking & dispatch', 'Paperwork & admin', 'Getting reviews', 'Hiring & staffing', 'None of this, really'] },
+        { id: 'tools', type: 'checkbox', label: 'What tools do you use to run things now?', cols: 2,
+          options: ['Pen & paper', 'Spreadsheets', 'QuickBooks', 'Jobber', 'Housecall Pro', 'ServiceTitan', 'Texts & phone calls', 'Nothing formal'] },
+        { id: 'opshelp', type: 'spectrum', label: 'How interested are you in help streamlining all this?',
+          left: 'Not a priority', right: 'Very interested' },
+        { id: 'reach', type: 'radio', label: 'Best way to reach you?', cols: 2,
+          options: ['Call', 'Text', 'Email', 'In person'] },
+        { id: 'extra', type: 'text', area: true, optional: true, label: 'Anything else we should know?', placeholder: 'Totally optional. Only if something is on your mind.' },
+      ]
+    },
+  ];
+
+  var FLOW = [COVER].concat(SECTIONS, [REVIEW]);
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function boot() {
+    var root = document.querySelector('.discovery');
+    if (!root || root.dataset.booted === '1') return;
+    root.dataset.booted = '1';
+
+    var answers = {};
+    var idx = 0;
+    var submitState = 'idle'; // idle | sending | sent | error
+
+    var wrap = root.querySelector('#ncpWrap');
+    var bar = root.querySelector('#ncpBar');
+    var stepEl = root.querySelector('#ncpStep');
+    var backBtn = root.querySelector('#ncpBack');
+    var nextBtn = root.querySelector('#ncpNext');
+    var toastEl = root.querySelector('#ncpToast');
+    var navbarEl = root.querySelector('.navbar');
+    if (!wrap || !bar || !stepEl || !backBtn || !nextBtn) return;
+
+    /* ---------- rendering ---------- */
+    function render() {
+      var node = FLOW[idx];
+      var total = SECTIONS.length;
+
+      var pct = 0;
+      if (node.type === 'cover') pct = 2;
+      else if (node.type === 'review') pct = 100;
+      else pct = (idx / (total + 1)) * 100;
+      bar.style.width = pct + '%';
+
+      if (node.type === 'cover') stepEl.textContent = 'Welcome';
+      else if (node.type === 'review') stepEl.textContent = 'Complete';
+      else stepEl.textContent = 'Step ' + idx + ' / ' + total;
+
+      backBtn.style.visibility = idx === 0 ? 'hidden' : 'visible';
+      if (node.type === 'review') {
+        nextBtn.style.display = 'none';
+        backBtn.textContent = 'Back to questions';
+      } else {
+        if (navbarEl) navbarEl.style.display = '';
+        nextBtn.style.display = 'inline-flex';
+        nextBtn.style.flex = '1';
+        backBtn.textContent = 'Back';
+        if (node.type === 'cover') { nextBtn.textContent = 'Begin'; nextBtn.className = 'btn btn-accent'; }
+        else if (node === SECTIONS[SECTIONS.length - 1]) { nextBtn.textContent = 'Finish'; nextBtn.className = 'btn btn-primary'; }
+        else { nextBtn.textContent = 'Continue'; nextBtn.className = 'btn btn-primary'; }
+      }
+
+      if (node.type === 'cover') { wrap.innerHTML = coverHTML(); }
+      else if (node.type === 'review') { renderReview(); return; }
+      else { wrap.innerHTML = sectionHTML(node); }
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      bindInputs();
+    }
+
+    function coverHTML() {
+      return '' +
+      '<div class="screen active cover">' +
+        '<span class="kicker"><i class="spark"></i><b>Client Discovery</b></span>' +
+        '<h1>Let\'s get to know<br><em>NCP Electrical.</em></h1>' +
+        '<p class="lede">This is a short, tap-friendly session to help us understand your business, your customers, and what you want this project to do for you. Most questions are buttons and sliders, so it should take about 8 to 10 minutes.</p>' +
+        '<div class="meta-row">' +
+          '<div class="meta"><small>Prepared for</small><b>Mike Fulcher</b></div>' +
+          '<div class="meta"><small>Business</small><b>NCP Electrical</b></div>' +
+          '<div class="meta"><small>Location</small><b>Greater Sudbury, ON</b></div>' +
+        '</div>' +
+        '<div class="cover-note">There are no right or wrong answers. Go with your first instinct. Anything you skip, we will simply cover in conversation. When you are done, just tap Finish and your answers come straight to us.</div>' +
+      '</div>';
+    }
+
+    function sectionHTML(sec) {
+      var h = '<div class="screen active">' +
+        '<div class="sec-head"><div class="eyebrow">' + esc(sec.eyebrow) + '</div><h2>' + esc(sec.title) + '</h2><p>' + esc(sec.sub) + '</p></div>';
+      sec.questions.forEach(function (q, i) {
+        h += '<div class="q">' +
+          '<div class="q-num">Q' + String(i + 1).padStart(2, '0') + '</div>' +
+          '<div class="q-label">' + esc(q.label) + (q.optional ? '<span class="optional-tag">Optional</span>' : '') + '</div>' +
+          (q.help ? '<div class="q-help">' + esc(q.help) + '</div>' : '') +
+          '<div class="q-body">' + fieldHTML(q) + '</div>' +
+        '</div>';
+      });
+      h += '</div>';
+      return h;
+    }
+
+    function fieldHTML(q) {
+      var a = answers[q.id];
+      if (q.type === 'text') {
+        var pre = a != null ? a : (q.value || '');
+        if (q.area) return '<textarea class="txt" data-id="' + q.id + '" placeholder="' + esc(q.placeholder || '') + '">' + esc(pre) + '</textarea>';
+        return '<input class="txt" type="text" data-id="' + q.id + '" placeholder="' + esc(q.placeholder || '') + '" value="' + esc(pre) + '">';
+      }
+      if (q.type === 'radio' || q.type === 'checkbox') {
+        var multi = q.type === 'checkbox';
+        var cols = q.cols || 1;
+        var h = '<div class="opts cols-' + cols + '">';
+        q.options.forEach(function (opt) {
+          var sel = multi ? (Array.isArray(a) && a.indexOf(opt) > -1) : (a === opt);
+          h += '<div class="opt ' + (multi ? 'multi' : '') + ' ' + (sel ? 'sel' : '') + '" role="button" tabindex="0" aria-pressed="' + (sel ? 'true' : 'false') + '" data-id="' + q.id + '" data-val="' + esc(opt) + '" data-multi="' + multi + '">' +
+            '<span class="dot"></span><span>' + esc(opt) + '</span></div>';
+        });
+        return h + '</div>';
+      }
+      if (q.type === 'swatch') {
+        var cols2 = q.cols || 2;
+        var hs = '<div class="opts cols-' + cols2 + '">';
+        q.options.forEach(function (opt) {
+          var sel = (a === opt.cap);
+          var chips = opt.chips.map(function (c) { return '<span style="background:' + esc(c) + '"></span>'; }).join('');
+          hs += '<div class="opt swatch ' + (sel ? 'sel' : '') + '" role="button" tabindex="0" aria-pressed="' + (sel ? 'true' : 'false') + '" data-id="' + q.id + '" data-val="' + esc(opt.cap) + '" data-multi="false">' +
+            '<div class="chips">' + chips + '</div><div class="cap">' + esc(opt.cap) + '</div></div>';
+        });
+        return hs + '</div>';
+      }
+      if (q.type === 'slider') {
+        var val = a != null ? a : q.default;
+        var display = sliderLabel(q, val);
+        return '<div class="slider-wrap" data-id="' + q.id + '">' +
+          '<div class="slider-top"><span class="slider-val">' + display + '</span></div>' +
+          '<input type="range" min="' + q.min + '" max="' + q.max + '" step="' + q.step + '" value="' + val + '" ' +
+            'data-id="' + q.id + '" data-suffix="' + esc(q.suffix || '') + '" data-topcap="' + esc(q.topcap || '') + '" data-zerocap="' + esc(q.zerocap || '') + '" aria-label="' + esc(q.label) + '">' +
+          '<div class="ends"><span>' + q.min + '</span><span>' + esc(q.topcap || q.max) + '</span></div>' +
+        '</div>';
+      }
+      if (q.type === 'spectrum') {
+        var sv = a != null ? a : 50;
+        return '<div class="slider-wrap spectrum" data-id="' + q.id + '">' +
+          '<input type="range" min="0" max="100" step="1" value="' + sv + '" data-id="' + q.id + '" data-left="' + esc(q.left) + '" data-right="' + esc(q.right) + '" data-spectrum="1" aria-label="' + esc(q.label) + '">' +
+          '<div class="ends"><span>' + esc(q.left) + '</span><span>' + esc(q.right) + '</span></div>' +
+          '<div class="spectrum-read" id="read-' + q.id + '">' + spectrumRead(sv, q.left, q.right) + '</div>' +
+        '</div>';
+      }
+      return '';
+    }
+
+    function sliderLabel(q, val) {
+      if (q.zerocap && Number(val) === Number(q.min)) return q.zerocap;
+      var v = val;
+      if (q.topcap && Number(val) === Number(q.max)) v = q.topcap;
+      return esc(v) + ' <small>' + esc(q.suffix || '') + '</small>';
+    }
+    function spectrumRead(val, left, right) {
+      val = Number(val);
+      if (val <= 33) return 'Closer to: ' + left.toUpperCase();
+      if (val >= 67) return 'Closer to: ' + right.toUpperCase();
+      return 'Right in the middle';
+    }
+
+    /* ---------- binding ---------- */
+    function toggleOpt(el) {
+      var id = el.dataset.id, val = el.dataset.val, multi = el.dataset.multi === 'true';
+      if (multi) {
+        if (!Array.isArray(answers[id])) answers[id] = [];
+        var i = answers[id].indexOf(val);
+        if (i > -1) { answers[id].splice(i, 1); el.classList.remove('sel'); el.setAttribute('aria-pressed', 'false'); }
+        else { answers[id].push(val); el.classList.add('sel'); el.setAttribute('aria-pressed', 'true'); }
+      } else {
+        answers[id] = val;
+        el.parentElement.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('sel'); o.setAttribute('aria-pressed', 'false'); });
+        el.classList.add('sel'); el.setAttribute('aria-pressed', 'true');
+      }
+    }
+
+    function bindInputs() {
+      wrap.querySelectorAll('.opt').forEach(function (el) {
+        el.addEventListener('click', function () { toggleOpt(el); });
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); toggleOpt(el); }
+        });
+      });
+      wrap.querySelectorAll('.txt').forEach(function (el) {
+        if (answers[el.dataset.id] == null && el.value) answers[el.dataset.id] = el.value;
+        el.addEventListener('input', function () { answers[el.dataset.id] = el.value; });
+      });
+      wrap.querySelectorAll('input[type=range]').forEach(function (el) {
+        el.addEventListener('input', function () {
+          var id = el.dataset.id; answers[id] = Number(el.value);
+          if (el.dataset.spectrum) {
+            var r = wrap.querySelector('#read-' + id);
+            if (r) r.textContent = spectrumRead(el.value, el.dataset.left, el.dataset.right);
+          } else {
+            var sw = el.closest('.slider-wrap');
+            var q = findQ(id);
+            sw.querySelector('.slider-val').innerHTML = sliderLabel(q, el.value);
+          }
+        });
+        if (answers[el.dataset.id] == null) answers[el.dataset.id] = Number(el.value);
+      });
+    }
+    function findQ(id) {
+      for (var s = 0; s < SECTIONS.length; s++) {
+        for (var j = 0; j < SECTIONS[s].questions.length; j++) {
+          if (SECTIONS[s].questions[j].id === id) return SECTIONS[s].questions[j];
+        }
+      }
+      return {};
+    }
+
+    /* ---------- navigation ---------- */
+    function go(dir) {
+      idx += dir;
+      if (idx < 0) idx = 0;
+      if (idx > FLOW.length - 1) idx = FLOW.length - 1;
+      render();
+    }
+
+    /* ---------- review / submit / export ---------- */
+    function renderReview() {
+      nextBtn.style.display = 'none';
+
+      if (submitState === 'sent') {
+        if (navbarEl) navbarEl.style.display = 'none';
+        wrap.innerHTML = thankYouHTML();
+        bindReview();
+      } else if (submitState === 'error') {
+        if (navbarEl) navbarEl.style.display = '';
+        backBtn.style.visibility = 'visible';
+        backBtn.textContent = 'Back to questions';
+        wrap.innerHTML = errorHTML();
+        bindReview();
+      } else if (submitState === 'sending') {
+        if (navbarEl) navbarEl.style.display = '';
+        backBtn.style.visibility = 'hidden';
+        wrap.innerHTML = sendingHTML();
+      } else {
+        // idle — kick off the send, show the sending state in the meantime
+        submitState = 'sending';
+        if (navbarEl) navbarEl.style.display = '';
+        backBtn.style.visibility = 'hidden';
+        wrap.innerHTML = sendingHTML();
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        submitDiscovery().then(function (r) {
+          submitState = (r && r.ok) ? 'sent' : 'error';
+          renderReview();
+        }).catch(function () {
+          submitState = 'error';
+          renderReview();
+        });
+        return;
+      }
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function submitDiscovery() {
+      var nm = (answers.contact || 'Mike Fulcher');
+
+      // Instant heads-up via Pushover (fire-and-forget; never gates success)
+      try {
+        fetch('/api/notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'intake',
+            source: 'discovery-ncp',
+            name: nm,
+            email: answers.email || '',
+            phone: answers.phone || '',
+            business: answers.biz || 'NCP Electrical',
+            service: 'Discovery Session'
+          })
+        }).catch(function () {});
+      } catch (e) {}
+
+      // Formspree delivers the full summary by email — this call gates success
+      return fetch('https://formspree.io/f/xnjjgoay', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'NCP Electrical — Discovery session complete',
+          source: 'discovery-ncp',
+          entry_type: 'DISCOVERY',
+          name: nm,
+          email: answers.email || '',
+          phone: answers.phone || '',
+          business: answers.biz || 'NCP Electrical',
+          summary: buildSummary()
+        })
+      }).then(function (res) {
+        return { ok: !!(res && res.ok) };
+      }, function () {
+        return { ok: false };
+      });
+    }
+
+    function sendingHTML() {
+      return '<div class="screen active">' +
+        '<div class="sec-head" style="padding-top:46px">' +
+          '<div class="ncp-spinner" aria-hidden="true"></div>' +
+          '<div class="eyebrow">Sending</div>' +
+          '<h2>Sending your answers&hellip;</h2>' +
+          '<p>One moment, this only takes a second.</p>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function thankYouHTML() {
+      var first = (answers.contact || 'Mike Fulcher').trim().split(/\s+/)[0] || 'there';
+      return '<div class="screen active">' +
+        '<div class="sec-head sec-head--review" style="padding-top:46px">' +
+          '<div class="done-badge" aria-hidden="true"></div>' +
+          '<div class="eyebrow">All sent</div>' +
+          '<h2>Thank you, ' + esc(first) + '.</h2>' +
+          '<p>Your answers are on their way to Bertrand Brands. We will read through everything and reach out shortly, usually within one business day. There is nothing else you need to do.</p>' +
+        '</div>' +
+        '<div class="keepcopy">' +
+          '<span class="keepcopy__label">Want a copy for your records?</span>' +
+          '<div class="export-row">' +
+            '<button class="btn btn-ghost" type="button" data-act="download">Download a copy</button>' +
+            '<button class="btn btn-ghost" type="button" data-act="print">Print / Save PDF</button>' +
+          '</div>' +
+        '</div>' +
+        '<pre class="summary-print" aria-hidden="true">' + esc(buildSummary()) + '</pre>' +
+      '</div>';
+    }
+
+    function errorHTML() {
+      return '<div class="screen active">' +
+        '<div class="sec-head sec-head--review" style="padding-top:46px">' +
+          '<div class="eyebrow">Almost there</div>' +
+          '<h2>We could not send it automatically.</h2>' +
+          '<p>No problem, your answers are safe right here. Tap Try again, or send them over with any of the buttons below.</p>' +
+        '</div>' +
+        '<div class="summary"><textarea id="ncpSummary" spellcheck="false">' + esc(buildSummary()) + '</textarea></div>' +
+        '<div class="export-row">' +
+          '<button class="btn btn-accent" type="button" data-act="retry">Try again</button>' +
+          '<button class="btn btn-ghost" type="button" data-act="copy">Copy summary</button>' +
+          '<button class="btn btn-ghost" type="button" data-act="download">Download as file</button>' +
+          '<button class="btn btn-ghost" type="button" data-act="print">Print / Save PDF</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function bindReview() {
+      var row = wrap.querySelector('.export-row');
+      if (!row) return;
+      row.querySelectorAll('[data-act]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var act = b.dataset.act;
+          if (act === 'copy') copySummary();
+          else if (act === 'download') downloadSummary();
+          else if (act === 'print') window.print();
+          else if (act === 'retry') { submitState = 'idle'; renderReview(); }
+        });
+      });
+    }
+
+    function fmt(v) {
+      if (v == null || v === '') return '(skipped)';
+      if (Array.isArray(v)) return v.length ? v.join(', ') : '(skipped)';
+      return v;
+    }
+    function fmtSpectrum(id) {
+      var q = findQ(id); var v = answers[id];
+      if (v == null) return '(skipped)';
+      return spectrumRead(v, q.left, q.right).replace('Closer to: ', '').replace('Right in the middle', 'Balanced (middle)') + '  [' + v + '/100]';
+    }
+    function fmtSlider(id) {
+      var q = findQ(id); var v = answers[id];
+      if (v == null) return '(skipped)';
+      if (q.zerocap && v === q.min) return q.zerocap;
+      var out = (q.topcap && v === q.max) ? q.topcap : v;
+      return out + ' ' + (q.suffix || '');
+    }
+
+    function buildSummary() {
+      var d = new Date();
+      var date = d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+      var L = [];
+      L.push('NCP ELECTRICAL  -  DISCOVERY SUMMARY');
+      L.push('Prepared with Bertrand Brands  |  ' + date);
+      L.push('Greater Sudbury, Ontario');
+      L.push('==================================================');
+      SECTIONS.forEach(function (sec) {
+        L.push('');
+        L.push('# ' + sec.title.toUpperCase());
+        L.push('--------------------------------------------------');
+        sec.questions.forEach(function (q) {
+          var val;
+          if (q.type === 'spectrum') val = fmtSpectrum(q.id);
+          else if (q.type === 'slider') val = fmtSlider(q.id);
+          else val = fmt(answers[q.id]);
+          L.push('• ' + q.label);
+          L.push('    > ' + val);
+        });
+      });
+      L.push('');
+      L.push('==================================================');
+      L.push('End of summary. Reviewed by Bertrand Brands.');
+      return L.join('\n');
+    }
+
+    function getSummaryText() {
+      var box = wrap.querySelector('#ncpSummary');
+      return box ? box.value : buildSummary();
+    }
+    function copySummary() {
+      var box = wrap.querySelector('#ncpSummary');
+      var ok = false;
+      if (box) {
+        box.select(); box.setSelectionRange(0, 999999);
+        try { ok = document.execCommand('copy'); } catch (e) {}
+      }
+      if (navigator.clipboard) { navigator.clipboard.writeText(getSummaryText()).then(function () {}, function () {}); ok = true; }
+      toast(ok ? 'Summary copied' : 'Select all and copy');
+    }
+    function downloadSummary() {
+      var blob = new Blob([getSummaryText()], { type: 'text/plain' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'NCP-Electrical-Discovery.txt';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      toast('File downloaded');
+    }
+    function toast(msg) {
+      if (!toastEl) return;
+      toastEl.textContent = msg; toastEl.classList.add('show');
+      setTimeout(function () { toastEl.classList.remove('show'); }, 1900);
+    }
+
+    backBtn.addEventListener('click', function () { go(-1); });
+    nextBtn.addEventListener('click', function () { go(1); });
+
+    render();
+  }
+
+  if (!window.__ncpDiscoveryBound) {
+    window.__ncpDiscoveryBound = true;
+    document.addEventListener('astro:page-load', boot);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>

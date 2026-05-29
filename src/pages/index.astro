@@ -639,7 +639,7 @@ const schemaJson = schemaGraph(
               <div class="footer__inner">
                   <div class="footer__left">
                       <p class="footer__copyright">&copy; {currentYear} Bertrand Brands. All rights reserved.</p>
-                      <p class="footer__parent"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a> &middot; <a href="/privacy">Privacy</a></p>
+                      <p class="footer__parent"><a href="https://bertrandgroup.ca">A division of Bertrand Group Canada</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="https://clients.bertrandbrands.ca">Client Portal</a></p>
                   </div>
                   <div class="footer__contact">
                       <a href="mailto:hello@bertrandgroup.ca" class="footer__link">hello@bertrandgroup.ca</a>
@@ -977,7 +977,10 @@ const schemaJson = schemaGraph(
       (function() {
           var toggle = document.querySelector('.header__toggle');
           var nav = document.querySelector('.header__nav');
-          var navLinks = document.querySelectorAll('.header__link');
+          /* Anything that should close the mobile menu when clicked. Excludes
+             the dropdown trigger (which toggles inline expand inside the drawer),
+             but includes dropdown items (real nav links). */
+          var navLinks = document.querySelectorAll('.header__link:not(.header__dropdown-trigger), .header__dropdown-item');
 
           if (!toggle || !nav) return;
 
@@ -1089,6 +1092,42 @@ const schemaJson = schemaGraph(
               });
               bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
           }
+      })();
+
+      // Header dropdown toggle (Menu) — desktop primary, mobile inline-expand
+      (function() {
+          var triggers = document.querySelectorAll('.header__dropdown-trigger');
+          if (!triggers.length) return;
+
+          function closeAll(except) {
+              triggers.forEach(function(t) {
+                  if (t !== except) t.setAttribute('aria-expanded', 'false');
+              });
+          }
+
+          triggers.forEach(function(trigger) {
+              trigger.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  var open = trigger.getAttribute('aria-expanded') === 'true';
+                  closeAll(trigger);
+                  trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+              });
+          });
+
+          document.addEventListener('click', function(e) {
+              triggers.forEach(function(trigger) {
+                  var dropdown = trigger.closest('.header__dropdown');
+                  if (dropdown && !dropdown.contains(e.target)) {
+                      trigger.setAttribute('aria-expanded', 'false');
+                  }
+              });
+          });
+
+          document.addEventListener('keydown', function(e) {
+              if (e.key !== 'Escape') return;
+              closeAll(null);
+          });
       })();
 
       // Clickable offer cards — container navigates to detail page,

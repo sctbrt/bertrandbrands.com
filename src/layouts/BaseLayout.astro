@@ -261,10 +261,13 @@ const effectiveOgDescription = ogDescription || description;
           justify-content: space-between; background: none; border: none;
           cursor: pointer; padding: 10px; box-sizing: content-box;
         }
-        .header__toggle span { display: block; width: 100%; height: 2px; background: var(--text); transition: transform 0.3s ease, opacity 0.3s ease; }
-        .header__toggle.is-open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .header__toggle.is-open span:nth-child(2) { opacity: 0; }
-        .header__toggle.is-open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        /* Magnetic-snap toggle (V14 lab variant E). Lines slide vertically
+           to collide at center, middle vanishes at impact, outer two rotate
+           ±45° to form X. Heavy under-/over-shoot bezier gives the "snap". */
+        .header__toggle span { display: block; width: 100%; height: 2px; background: var(--text); transform-origin: center; transition: transform 0.46s cubic-bezier(0.9, -0.4, 0.1, 1.4), opacity 0.28s ease; }
+        .header__toggle.is-open span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
+        .header__toggle.is-open span:nth-child(2) { transform: scale(0); opacity: 0; }
+        .header__toggle.is-open span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
         .header__nav { display: none; }
         .header__nav.is-open {
           display: flex; position: fixed;
